@@ -1,148 +1,133 @@
-/* Verhuisbedrijf De Reus - site scripts
- * Vervangt de Wix-runtime, die buiten Wix alleen fouten geeft. */
+/* Verhuisbedrijf De Reus · site scripts */
 (function () {
   'use strict';
 
-  /* 1. Scherpe afbeeldingen
-   * De HTML bevat kleine, wazige placeholders (w_49, blur_2). Wix wisselt die
-   * normaal via JS om. Hier: blur eruit en de maat afstemmen op het scherm. */
-  function imageInfo(img) {
-    var wrap = img.closest('wow-image[data-image-info]');
-    if (!wrap) return null;
-    try { return { box: wrap, data: JSON.parse(wrap.getAttribute('data-image-info')) }; } catch (e) { return null; }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 1. Mobiel menu: lade van rechts, focus blijft in de lade */
+  var knop = document.getElementById('menuknop');
+  var lade = document.getElementById('lade');
+  var paneel = lade && lade.querySelector('.lade__paneel');
+  var vorige = null;
+  function zetLade(open) {
+    if (!lade) return;
+    lade.classList.toggle('is-open', open);
+    lade.setAttribute('aria-hidden', open ? 'false' : 'true');
+    document.body.classList.toggle('lade-open', open);
+    knop.setAttribute('aria-expanded', String(open));
+    if (open) {
+      vorige = document.activeElement;
+      lade.querySelector('.lade__sluit').focus();
+    } else if (vorige) {
+      vorige.focus(); vorige = null;
+    }
   }
-
-  function sharpenImages() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    document.querySelectorAll('img[src*="static.wixstatic.com/media/"]').forEach(function (img) {
-      var src = img.getAttribute('src');
-      var m = src.match(/\/(fill|fit)\/w_(\d+),h_(\d+)([^/]*)\//);
-      if (!m) return;
-
-      // Afbeeldingen met Wix-data: URL opbouwen zoals Wix dat doet,
-      // inclusief de aparte uitsnede voor mobiel (sourceSets).
-      var info = imageInfo(img);
-      if (info && info.data.imageData && info.data.imageData.displayMode === 'fill') {
-        var d = info.data.imageData;
-        var crop = d.crop;
-        (info.data.sourceSets || []).forEach(function (s) {
-          if (s.mediaQuery && window.matchMedia(s.mediaQuery).matches && s.crop) crop = s.crop;
-        });
-        var r = info.box.getBoundingClientRect();
-        if (r.width && r.height) {
-          var W = Math.ceil(r.width * dpr), H = Math.ceil(r.height * dpr);
-          var cropPart = crop ? 'crop/x_' + crop.x + ',y_' + crop.y + ',w_' + crop.width + ',h_' + crop.height + '/' : '';
-          var url = 'https://static.wixstatic.com/media/' + d.uri + '/v1/' + cropPart +
-            'fill/w_' + W + ',h_' + H + m[4].replace(/,blur_\d+/, '') + '/' + src.split('/').pop();
-          if (url !== src) img.setAttribute('src', url);
-          return;
-        }
-      }
-
-      var w = +m[2], h = +m[3];
-      var shown = img.getBoundingClientRect().width || img.parentElement.getBoundingClientRect().width;
-      var k = Math.max(1, Math.ceil((shown * dpr) / w * 10) / 10);
-      var params = m[4].replace(/,blur_\d+/, '');
-      var next = src.replace(m[0], '/' + m[1] + '/w_' + Math.round(w * k) + ',h_' + Math.round(h * k) + params + '/');
-      if (next !== src) img.setAttribute('src', next);
+  if (knop && lade) {
+    knop.addEventListener('click', function () { zetLade(true); });
+    lade.querySelector('.lade__sluit').addEventListener('click', function () { zetLade(false); });
+    lade.querySelector('.lade__scrim').addEventListener('click', function () { zetLade(false); });
+    lade.addEventListener('click', function (e) { if (e.target.closest('a')) { vorige = null; zetLade(false); } });
+    document.addEventListener('keydown', function (e) {
+      if (!lade.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { zetLade(false); return; }
+      if (e.key !== 'Tab') return;
+      var f = paneel.querySelectorAll('a, button');
+      var eerste = f[0], laatste = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === eerste) { e.preventDefault(); laatste.focus(); }
+      else if (!e.shiftKey && document.activeElement === laatste) { e.preventDefault(); eerste.focus(); }
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 1023 && lade.classList.contains('is-open')) zetLade(false);
     });
   }
 
-  /* 2. Menu-ankers (Home, Over ons, Diensten, Werkwijze, Contact, Offerte aanvragen) */
-  var anchors = {
-    SCROLL_TO_TOP: null,
-    'anchors-mjj6dcf9': 'comp-miw17n40', // Over ons
-    'anchors-mjj6csct': 'comp-miyob6cm', // Diensten
-    'anchors-mjj6dpfc': 'comp-mj5w5r6z', // Werkwijze
-    'anchors-mjj6dy97': 'comp-mj8s1xg3', // Contact
-    'anchors-mjj6dtls': 'comp-mj5zpanx'  // Offerte aanvragen
-  };
-
-  document.addEventListener('click', function (e) {
-    var link = e.target.closest('[data-anchor]');
-    if (!link) return;
-    var key = link.getAttribute('data-anchor');
-    if (!(key in anchors)) return;
-    e.preventDefault();
-    closeMenu();
-    var target = anchors[key] && document.getElementById(anchors[key]);
-    var top = target ? target.getBoundingClientRect().top + window.scrollY : 0;
-    window.scrollTo({ top: top, behavior: 'smooth' });
-  });
-
-  /* 3. Hamburgermenu (mobiel) */
-  var OPEN = 'HamburgerOverlay547129737--isMenuOpen';
-  var overlay = document.querySelector('[data-hook="hamburger-overlay-root"]');
-  var openBtn = document.querySelector('.wixui-hamburger-open-button');
-
-  function setMenu(open) {
-    if (!overlay) return;
-    overlay.classList.toggle(OPEN, open);
-    overlay.setAttribute('data-visible', open ? 'true' : 'false');
-    overlay.querySelectorAll('[aria-hidden]').forEach(function (el) {
-      el.setAttribute('aria-hidden', open ? 'false' : 'true');
-    });
-    if (openBtn) openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    document.documentElement.style.overflow = open ? 'hidden' : '';
+  /* 2. Header: transparant over de hero, vaste lichte balk zodra de utilitybalk uit beeld is */
+  var header = document.querySelector('.header');
+  var utility = document.querySelector('.utility');
+  var utilityH = 0;
+  function meet() {
+    utilityH = utility ? utility.offsetHeight : 0;
+    document.documentElement.style.setProperty('--dr-utility-h', utilityH + 'px');
   }
-  function closeMenu() { setMenu(false); }
+  function scrol() { header.classList.toggle('is-vast', window.scrollY > utilityH); }
+  meet();
+  window.addEventListener('resize', function () { meet(); scrol(); });
+  window.addEventListener('scroll', scrol, { passive: true });
+  scrol();
 
-  if (openBtn) openBtn.addEventListener('click', function () { setMenu(true); });
-  document.querySelectorAll('.wixui-hamburger-close-button').forEach(function (btn) {
-    btn.addEventListener('click', closeMenu);
-  });
-  if (overlay) overlay.addEventListener('click', function (e) {
-    if (e.target.getAttribute('data-hook') === 'hamburger-overlay-dialog') closeMenu();
-  });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
-
-  /* 4. Entree-animaties
-   * In de CSS staan animaties op "paused" tot data-motion-enter="done".
-   * Wix start ze bij het in beeld scrollen; dat doen we hier ook. */
-  function startMotion(el) {
-    el.style.animationPlayState = 'running';
-    el.addEventListener('animationend', function () {
-      el.setAttribute('data-motion-enter', 'done');
-      el.style.animationPlayState = '';
-    }, { once: true });
-  }
-
-  var waiting = Array.prototype.filter.call(document.querySelectorAll('[id^="comp-"]'), function (el) {
-    var cs = getComputedStyle(el);
-    return cs.animationName !== 'none' && cs.animationPlayState.indexOf('paused') !== -1;
-  });
-
+  /* 3. Actief menu-item bij scrollen */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"], .lade__nav a[href^="#"]'));
   if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        io.unobserve(entry.target);
-        startMotion(entry.target);
+    var io = new IntersectionObserver(function (items) {
+      items.forEach(function (it) {
+        if (!it.isIntersecting) return;
+        links.forEach(function (a) {
+          if (a.getAttribute('href') === '#' + it.target.id) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
       });
-    }, { threshold: 0.1 });
-    waiting.forEach(function (el) { io.observe(el); });
-  } else {
-    waiting.forEach(function (el) { el.setAttribute('data-motion-enter', 'done'); });
-  }
-
-  // <picture><source> (aparte mobiele uitsnede): zelfde placeholder, zelfde fix
-  function sharpenSources() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    document.querySelectorAll('picture source[srcset*="static.wixstatic.com/media/"]').forEach(function (s) {
-      var box = s.closest('wow-image') || s.parentElement;
-      var r = box.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      var W = Math.ceil(r.width * dpr), H = Math.ceil(r.height * dpr);
-      var set = s.getAttribute('srcset');
-      var next = set.replace(/\/(fill|fit)\/w_\d+,h_\d+([^/]*)\//, function (all, mode, params) {
-        return '/' + mode + '/w_' + W + ',h_' + H + params.replace(/,blur_\d+/, '') + '/';
-      });
-      if (next !== set) s.setAttribute('srcset', next);
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['over-ons', 'diensten', 'werkwijze', 'contact'].forEach(function (id) {
+      var el = document.getElementById(id); if (el) io.observe(el);
     });
+
   }
 
-  sharpenSources();
-  sharpenImages();
-  var t;
-  window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(function () { sharpenSources(); sharpenImages(); }, 200); });
+  /* 5. Formulieren: controle met duidelijke foutmelding (merkboek 7.3) */
+  function geldig(input) {
+    var v = input.value.trim();
+    if (input.required && !v) return false;
+    if (v && input.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    if (v && input.type === 'tel') return v.replace(/[^\d]/g, '').length >= 10;
+    return true;
+  }
+  function toon(input, ok) {
+    var fout = input.getAttribute('aria-describedby') && document.getElementById(input.getAttribute('aria-describedby'));
+    input.setAttribute('aria-invalid', String(!ok));
+    if (fout) fout.hidden = ok;
+  }
+  document.querySelectorAll('form.formulier').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      var eerste = null;
+      form.querySelectorAll('input, textarea').forEach(function (inp) {
+        var ok = geldig(inp);
+        toon(inp, ok);
+        if (!ok && !eerste) eerste = inp;
+      });
+      if (eerste) { e.preventDefault(); eerste.focus(); return; }
+      var m = form.querySelector('.melding');
+      if (!m) { m = document.createElement('p'); m.className = 'melding'; m.setAttribute('role', 'status'); form.appendChild(m); }
+      m.textContent = '✓ Bedankt! Uw e-mailprogramma opent met de aanvraag. Verstuur die mail, dan belt uw verhuisadviseur u binnen 24 uur.';
+    });
+    form.addEventListener('input', function (e) {
+      if (e.target.getAttribute('aria-invalid') === 'true') toon(e.target, geldig(e.target));
+    });
+  });
+
+  /* 6. Contact: nu bereikbaar? Tijden in Nederlandse tijd, ook als de bezoeker in het buitenland zit */
+  var status = document.querySelector('.bereikbaar');
+  if (status && window.Intl) {
+    try {
+      var delen = {};
+      new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+        .formatToParts(new Date()).forEach(function (d) { delen[d.type] = d.value; });
+      var dag = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(delen.weekday);
+      var nu = parseInt(delen.hour, 10) * 60 + parseInt(delen.minute, 10);
+      var zondag = dag === 0;
+      var open = zondag ? 9 * 60 : 8 * 60, dicht = zondag ? 17 * 60 : 20 * 60;
+      var isOpen = nu >= open && nu < dicht;
+      var tekst = status.querySelector('.bereikbaar__tekst');
+      if (isOpen) {
+        tekst.textContent = 'Nu bereikbaar, tot ' + (zondag ? '17.00' : '20.00') + ' uur';
+      } else {
+        var morgenZondag = nu >= dicht && dag === 6;
+        var vanaf = nu < open ? (zondag ? '09.00' : '08.00') : (morgenZondag ? '09.00' : '08.00');
+        tekst.textContent = 'Nu gesloten, ' + (nu < open ? 'vandaag' : 'morgen') + ' weer bereikbaar vanaf ' + vanaf + ' uur';
+        status.classList.add('is-dicht');
+      }
+      status.hidden = false;
+      var rij = document.querySelector('.openingstijden [data-dagen="' + (zondag ? '0' : '1-6') + '"]');
+      if (rij) rij.classList.add('is-vandaag');
+    } catch (e) { /* zonder status is de pagina ook compleet */ }
+  }
 })();

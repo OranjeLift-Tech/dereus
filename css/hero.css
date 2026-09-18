@@ -1,0 +1,141 @@
+/* Verhuisbedrijf De Reus · hero in Kievit-stijl
+ * Foto over de volle breedte, titel in het midden, de Reus als uitsnede op het podium
+ * en een offertekaart die over de onderrand van de foto valt. Komt na style.css en 3d.css. */
+
+.hero--foto {
+  background: transparent;
+  overflow: visible;
+  padding: calc(var(--dr-header-h) + clamp(8px, 2vw, 28px)) 0 0;
+  text-align: center;
+  --kaart-over: 150px; /* zoveel steekt de kaart onder de foto uit */
+}
+.hero--foto + .sectie { padding-top: var(--dr-sectie); }
+
+/* ---------- achtergrond ---------- */
+.hero--foto .hero__bg { bottom: var(--kaart-over); background: var(--dr-diepblauw); }
+.hero__bgfoto {
+  position: absolute; inset: -3%; width: 106%; height: 106%; max-width: none;
+  object-fit: cover; object-position: 60% 45%;
+  translate: calc(var(--px, 0) * 12px) calc(var(--py, 0) * 8px);
+}
+.hero__waas {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8,24,60,.93) 0%, rgba(8,24,60,.66) 40%, rgba(10,32,80,.6) 70%, rgba(8,24,60,.9) 100%),
+    radial-gradient(ellipse at 50% 70%, rgba(23,70,162,0) 0%, rgba(15,45,107,.45) 75%);
+}
+.hero--foto .hero__gloed { right: auto; left: 50%; top: 18%; margin-left: -450px; opacity: .8; }
+
+/* huisdaken links en rechts, zoals de logovormen bij De Kievit */
+.hero__deco {
+  position: absolute; width: clamp(160px, 17vw, 280px); height: auto;
+  fill: none; stroke: rgba(255,255,255,.16); stroke-width: 9; stroke-linejoin: miter;
+  pointer-events: none;
+}
+.hero__deco path + path { stroke: rgba(255,204,51,.45); }
+.hero__deco--l { left: 5%; top: 48%; translate: calc(var(--px, 0) * -18px) calc(var(--py, 0) * -12px); }
+.hero__deco--r { right: 4%; top: 36%; width: clamp(200px, 21vw, 340px); translate: calc(var(--px, 0) * 24px) calc(var(--py, 0) * 14px); }
+
+/* ---------- titel ---------- */
+.hero__kop { position: relative; z-index: 2; }
+.hero--foto .label { justify-content: center; }
+.hero--foto .display {
+  max-width: 24ch; margin: 0 auto var(--dr-space-4);
+  font-size: clamp(2.25rem, 4vw, 3.6rem); text-wrap: balance;
+  text-shadow: 0 4px 24px rgba(6,20,55,.45);
+}
+.hero--foto .intro { max-width: 44ch; margin: 0 auto; color: rgba(255,255,255,.92); text-shadow: 0 2px 12px rgba(6,20,55,.5); }
+
+/* ---------- podium met de Reus ---------- */
+.hero__podium { position: relative; z-index: 1; width: min(760px, 92%); margin: clamp(16px, 2.4vw, 36px) auto 0; }
+.hero__podium .scene__in {
+  aspect-ratio: auto; height: clamp(300px, 34vw, 470px);
+  transform: rotateX(calc(var(--py, 0) * -5deg)) rotateY(calc(var(--px, 0) * 8deg));
+}
+.hero__podium .reus {
+  left: 50%; right: auto; bottom: calc(var(--kaart-over) * -1 + 40px);
+  height: calc(100% + var(--kaart-over) + 10px); width: auto;
+  translate: -50% 0;
+  filter: drop-shadow(0 26px 30px rgba(6,20,55,.55));
+}
+.hero__podium .kubus--a { --s: 74px; left: 8%; top: 30%; }
+.hero__podium .kubus--b { --s: 56px; right: 10%; left: auto; top: 6%; }
+.hero__podium .zwevend { left: auto; right: -2%; bottom: 34%; text-align: left; }
+
+/* ---------- offertekaart ---------- */
+.hero__kaart {
+  position: relative; z-index: 3;
+  margin-top: calc(var(--kaart-over) * -1 + 20px);
+  padding: clamp(24px, 3.4vw, 44px);
+  border-radius: 28px;
+  border-top: 5px solid var(--dr-goudgeel);
+  background: var(--dr-koningsblauw);
+  background-image: linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,0) 45%);
+  color: var(--dr-wit); text-align: left;
+  box-shadow: 0 2px 0 rgba(255,255,255,.08) inset, var(--diepte-schaduw-hoog);
+}
+.hero__kaartkop { display: flex; gap: 24px 40px; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+.hero__kaarttitel { font-family: var(--dr-font-kop); font-size: clamp(1.625rem, 2.6vw, 2.25rem); line-height: 1.1; margin: 0 0 10px; color: var(--dr-wit); }
+.hero__kaartkop p { margin: 0; max-width: 56ch; color: rgba(255,255,255,.9); }
+.hero__kaartkop strong { color: var(--dr-goudgeel); }
+
+.hero__keurmerken {
+  display: flex; flex: none; align-items: stretch;
+  border: 1px solid rgba(255,255,255,.2); border-radius: 999px; padding: 6px 8px;
+  background: rgba(15,45,107,.45);
+}
+.hero__keurmerk {
+  display: flex; align-items: center; gap: 10px; padding: 6px 16px;
+  color: var(--dr-wit); text-decoration: none; font-size: .8125rem; line-height: 1.2;
+}
+.hero__keurmerk + .hero__keurmerk { border-left: 1px solid rgba(255,255,255,.2); }
+.hero__keurmerk strong { font-family: var(--dr-font-kop); font-size: 1rem; }
+.hero__keurmerk .ic { width: 26px; height: 26px; color: var(--dr-goudgeel); }
+.hero__keurmerk-g { width: 30px; height: 30px; background: var(--dr-wit); border-radius: 50%; padding: 5px; }
+
+.hero__velden {
+  display: grid; grid-template-columns: 1fr 1fr 1fr auto; align-items: center;
+  background: var(--dr-wit); border-radius: 999px; padding: 8px 8px 8px 12px;
+  box-shadow: 0 0 0 4px rgba(255,204,51,.35);
+}
+.hero__veld { display: flex; flex-direction: column; gap: 2px; padding: 6px 18px; min-width: 0; }
+.hero__veld + .hero__veld { border-left: 1px solid var(--dr-lijn); }
+.hero__veld span { font-size: .6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dr-steengrijs); }
+.hero__veld input {
+  border: 0; padding: 2px 0; background: transparent; width: 100%;
+  font: inherit; font-size: 1rem; color: var(--dr-inkt);
+}
+.hero__veld input::placeholder { color: #8A93A5; }
+.hero__veld input:focus { outline: none; }
+.hero__veld:focus-within span { color: var(--dr-koningsblauw); }
+.hero__velden .knop { border-radius: 999px; white-space: nowrap; }
+
+/* ---------- tablet en telefoon ---------- */
+@media (max-width: 1023px) {
+  .hero__kaartkop { flex-direction: column; }
+  .hero__velden { grid-template-columns: 1fr 1fr 1fr; border-radius: 24px; padding: 8px; row-gap: 8px; }
+  .hero__velden .knop { grid-column: 1 / -1; justify-content: center; }
+  .hero__podium .zwevend { right: -4%; }
+}
+@media (max-width: 760px) {
+  .hero--foto { --kaart-over: 110px; }
+  .hero--foto .display { font-size: clamp(2rem, 9vw, 2.6rem); }
+  .hero__deco--l { left: -12%; top: 60%; }
+  .hero__deco--r { right: -14%; top: 22%; }
+  .hero__podium { width: 100%; }
+  .hero__podium .scene__in { height: 300px; }
+  .hero__podium .kubus--a { --s: 52px; left: 2%; top: 38%; }
+  .hero__podium .kubus--b { --s: 40px; right: 4%; top: 4%; }
+  .hero__podium .zwevend { right: 10%; bottom: 30%; padding: 8px 12px 8px 8px; font-size: .75rem; }
+  .hero__podium .zwevend__ic { width: 32px; height: 32px; }
+  .hero__kaart { border-radius: 22px; }
+  .hero__keurmerken { border-radius: 16px; width: 100%; justify-content: space-between; padding: 4px; }
+  .hero__keurmerk { padding: 6px 8px; flex-direction: column; text-align: center; gap: 4px; font-size: .6875rem; }
+  .hero__velden { grid-template-columns: 1fr; }
+  .hero__veld + .hero__veld { border-left: 0; border-top: 1px solid var(--dr-lijn); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__bgfoto { animation: none; translate: none; }
+  .hero__deco { translate: none; }
+}

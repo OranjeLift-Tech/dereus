@@ -1,0 +1,42 @@
+/* ---------- werkwijze: vijf stappen met echte foto's (vervangt de getekende route) ---------- */
+.stappen-foto { list-style: none; margin: 0 0 40px; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.sfoto {
+  position: relative; display: flex; flex-direction: column;
+  background: var(--dr-wit); color: var(--dr-inkt); border-radius: var(--dr-radius-m);
+  box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 24px 44px -22px rgba(4,16,44,.7), 0 8px 16px -10px rgba(4,16,44,.45);
+}
+.sfoto__beeld { margin: 0; aspect-ratio: 56 / 38; overflow: hidden; border-radius: var(--dr-radius-m) var(--dr-radius-m) 0 0; background: var(--dr-ijsblauw); }
+.sfoto__beeld img { display: block; width: 100%; height: 100%; object-fit: cover; transition: scale 600ms var(--dr-ease); }
+.sfoto:hover .sfoto__beeld img { scale: 1.05; }
+.sfoto__tekst { position: relative; padding: 34px 20px 22px; flex: 1; }
+.sfoto__nr {
+  position: absolute; top: -24px; left: 18px; z-index: 1;
+  width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--dr-goudgeel); color: var(--dr-diepblauw); border: 4px solid var(--dr-wit);
+  font: 900 1.375rem/1 var(--dr-font-kop); box-shadow: 0 6px 12px -4px rgba(4,16,44,.45);
+}
+/* de route: gele stippellijn van nummer naar nummer */
+.sfoto:not(:last-child) .sfoto__tekst::before {
+  content: ""; position: absolute; top: 0; left: 66px; width: calc(100% - 46px);
+  border-top: 3px dashed var(--dr-goudgeel); translate: 0 -50%; pointer-events: none;
+}
+.sfoto h3 { font-size: 1.25rem; font-weight: 700; color: var(--dr-diepblauw); margin-bottom: 8px; }
+.sfoto p { color: var(--dr-steengrijs); font-size: .9688rem; line-height: 1.6; }
+.sfoto.tilt::after { border-radius: var(--dr-radius-m); }
+
+@media (max-width: 1100px) {
+  .stappen-foto { grid-template-columns: repeat(2, 1fr); }
+  .sfoto:last-child { grid-column: 1 / -1; flex-direction: row; }
+  .sfoto:last-child .sfoto__beeld { flex: 0 0 50%; aspect-ratio: auto; border-radius: var(--dr-radius-m) 0 0 var(--dr-radius-m); }
+  .sfoto:last-child .sfoto__tekst { padding: 28px 24px 24px 44px; }
+  .sfoto:last-child .sfoto__nr { top: 24px; left: -24px; }
+  .sfoto .sfoto__tekst::before { display: none; }
+}
+@media (max-width: 600px) {
+  .stappen-foto { grid-template-columns: 1fr; gap: 16px; margin-bottom: 28px; }
+  .sfoto:last-child { flex-direction: column; }
+  .sfoto:last-child .sfoto__beeld { flex: none; aspect-ratio: 56 / 38; border-radius: var(--dr-radius-m) var(--dr-radius-m) 0 0; }
+  .sfoto:last-child .sfoto__tekst { padding: 34px 20px 22px; }
+  .sfoto:last-child .sfoto__nr { top: -24px; left: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .sfoto__beeld img { transition: none; } .sfoto:hover .sfoto__beeld img { scale: none; } }

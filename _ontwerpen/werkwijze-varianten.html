@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Werkwijze · 8 ontwerpen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@600;700;800;900&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dr-koningsblauw: #1746A2;
+  --dr-goudgeel: #FFCC33;
+  --dr-diepblauw: #0F2D6B;
+  --dr-ijsblauw: #E8EEF8;
+  --dr-zonlicht: #FFF3CC;
+  --dr-goud-hover: #F2B90F;
+  --dr-goud-actief: #D9A400;
+  --dr-wit: #FFFFFF;
+  --dr-mist: #F4F6FA;
+  --dr-lijn: #D5DBE6;
+  --dr-steengrijs: #5B6475;
+  --dr-inkt: #141A26;
+  --dr-goed: #1B7F46;
+  --karton: #C9955B;
+  --karton-licht: #DDB07A;
+  --karton-donker: #A8743F;
+  --dr-radius-s: 8px; --dr-radius-m: 12px; --dr-radius-l: 20px;
+  --dr-schaduw: 0 4px 16px rgba(15,45,107,.10);
+  --dr-schaduw-hoog: 0 12px 32px rgba(15,45,107,.16);
+  --dr-font-kop: "Roboto Condensed", "Arial Narrow", sans-serif;
+  --dr-font: Roboto, Arial, sans-serif;
+  --dr-ease: cubic-bezier(.2,.7,.2,1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; font-family: var(--dr-font); font-size: 1.0625rem; line-height: 1.65; color: var(--dr-inkt); background: var(--dr-wit); overflow-x: hidden; }
+img { max-width: 100%; height: auto; display: block; }
+h2, h3, p, ol, ul { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+.ic { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.wrap { max-width: 1296px; margin: 0 auto; padding: 0 48px; }
+@media (max-width: 1023px) { .wrap { padding: 0 32px; } }
+@media (max-width: 639px) { .wrap { padding: 0 16px; } }
+
+/* ---------- gedeeld ---------- */
+.label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--dr-font-kop); font-size: .8125rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--dr-koningsblauw); margin-bottom: 12px; }
+.label::before { content: ""; width: 18px; height: 10px; background: var(--dr-goudgeel); clip-path: polygon(0 100%, 50% 0, 100% 100%); }
+.label--geel { color: var(--dr-goudgeel); }
+.h2 { font-family: var(--dr-font-kop); font-weight: 800; font-size: clamp(1.875rem, 1.5rem + 1.4vw, 2.5rem); line-height: 1.1; color: var(--dr-koningsblauw); letter-spacing: -.01em; }
+.h2--wit { color: var(--dr-wit); }
+mark { background: linear-gradient(transparent 58%, var(--dr-goudgeel) 58%, var(--dr-goudgeel) 92%, transparent 92%); color: inherit; padding: 0 .06em; }
+.donker mark { background: none; color: var(--dr-goudgeel); padding: 0; }
+.kop-midden { text-align: center; margin-bottom: 56px; }
+h3 { font-family: var(--dr-font-kop); font-weight: 700; font-size: 1.25rem; line-height: 1.2; color: var(--dr-koningsblauw); }
+.stap-tekst { color: var(--dr-steengrijs); font-size: 1rem; line-height: 1.6; }
+.knop { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 12px 24px; font-family: var(--dr-font-kop); font-size: 1.0625rem; font-weight: 700; text-decoration: none; border-radius: var(--dr-radius-s); background: var(--dr-goudgeel); color: var(--dr-diepblauw); box-shadow: 0 4px 0 var(--dr-goud-actief), 0 10px 20px rgba(15,45,107,.18); transition: transform .2s var(--dr-ease), box-shadow .2s var(--dr-ease), background .2s; white-space: nowrap; }
+.knop:hover { background: var(--dr-goud-hover); transform: translateY(-2px); box-shadow: 0 6px 0 var(--dr-goud-actief), 0 14px 26px rgba(15,45,107,.22); }
+.knop:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--dr-goud-actief), 0 4px 10px rgba(15,45,107,.18); }
+.knop .ic { width: 20px; height: 20px; stroke-width: 2.2; }
+.cta-mini { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-top: 56px; padding: 24px 32px; border-radius: var(--dr-radius-l); background: var(--dr-ijsblauw); }
+.cta-mini__kop { font-family: var(--dr-font-kop); font-weight: 800; font-size: 1.5rem; line-height: 1.15; color: var(--dr-koningsblauw); }
+.cta-mini p + p { color: var(--dr-inkt); }
+.donker .cta-mini { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); }
+.donker .cta-mini__kop { color: var(--dr-wit); }
+.donker .cta-mini p + p { color: rgba(255,255,255,.8); }
+@media (max-width: 640px) { .cta-mini { padding: 24px; } .cta-mini .knop { width: 100%; } }
+
+/* ---------- ontwerp-pagina (navigatie + etiketten) ---------- */
+.gids { position: sticky; top: 0; z-index: 50; background: rgba(15,45,107,.96); backdrop-filter: blur(8px); color: var(--dr-wit); }
+.gids__in { display: flex; align-items: center; gap: 16px; height: 60px; overflow-x: auto; scrollbar-width: none; }
+.gids__in::-webkit-scrollbar { display: none; }
+.gids__titel { font-family: var(--dr-font-kop); font-weight: 800; font-size: 1.05rem; white-space: nowrap; margin-right: 8px; }
+.gids a { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 99px; color: var(--dr-wit); text-decoration: none; font-size: .875rem; font-weight: 500; background: rgba(255,255,255,.08); }
+.gids a b { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--dr-goudgeel); color: var(--dr-diepblauw); font-size: .75rem; }
+.gids a:hover { background: rgba(255,255,255,.18); }
+.intro-pagina { background: var(--dr-mist); padding: 40px 0; border-bottom: 1px solid var(--dr-lijn); }
+.intro-pagina h1 { font-family: var(--dr-font-kop); font-weight: 800; font-size: 2rem; color: var(--dr-diepblauw); margin: 0 0 6px; }
+.intro-pagina p { color: var(--dr-steengrijs); max-width: 70ch; }
+.variant-kop { background: var(--dr-inkt); color: var(--dr-wit); }
+.variant-kop .wrap { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; padding-top: 14px; padding-bottom: 14px; }
+.variant-kop strong { font-family: var(--dr-font-kop); font-size: 1.125rem; letter-spacing: .02em; }
+.variant-kop strong span { color: var(--dr-goudgeel); }
+.variant-kop em { font-style: normal; color: rgba(255,255,255,.7); font-size: .9375rem; }
+.sectie { padding: clamp(64px, 8vw, 96px) 0; position: relative; overflow: hidden; }
+
+/* scroll-onthulling */
+.opkomst { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--dr-ease), transform .7s var(--dr-ease); }
+.is-zichtbaar .opkomst, .opkomst.is-zichtbaar { opacity: 1; transform: none; }
+.is-zichtbaar .opkomst:nth-child(2) { transition-delay: .1s; }
+.is-zichtbaar .opkomst:nth-child(3) { transition-delay: .2s; }
+.is-zichtbaar .opkomst:nth-child(4) { transition-delay: .3s; }
+.is-zichtbaar .opkomst:nth-child(5) { transition-delay: .4s; }
+
+/* =========================================================
+   1 · DE ROUTE — verhuiswagen rijdt over de weg langs de stappen
+   ========================================================= */
+.v1 { background: linear-gradient(180deg, var(--dr-wit), var(--dr-mist)); }
+.v1__weg { position: relative; height: 64px; margin: 0 0 40px; border-radius: 32px; background: linear-gradient(180deg, #3A4252, #262C38); box-shadow: inset 0 -6px 0 rgba(0,0,0,.25), 0 16px 30px rgba(15,45,107,.22); }
+.v1__weg::before { content: ""; position: absolute; left: 32px; right: 32px; top: 50%; height: 4px; margin-top: -2px; background: repeating-linear-gradient(90deg, var(--dr-goudgeel) 0 28px, transparent 28px 52px); border-radius: 2px; }
+.v1__wagen { position: absolute; top: -26px; left: 0; width: 120px; transform: translateX(0); transition: transform 3.2s cubic-bezier(.45,.05,.3,1); filter: drop-shadow(0 10px 8px rgba(0,0,0,.3)); z-index: 2; }
+.v1.is-zichtbaar .v1__wagen { transform: translateX(calc(var(--wegbreedte, 1000px) - 120px)); }
+.v1__stops { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+.v1__stop { position: relative; text-align: center; }
+.v1__pin { position: relative; width: 56px; height: 56px; margin: -84px auto 32px; display: grid; place-items: center; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--dr-goudgeel); box-shadow: 0 8px 18px rgba(15,45,107,.25), inset 0 -4px 0 var(--dr-goud-actief); z-index: 3; }
+.v1__pin span { transform: rotate(45deg); font-family: var(--dr-font-kop); font-weight: 900; font-size: 1.5rem; color: var(--dr-diepblauw); }
+.v1__stop h3 { margin-bottom: 8px; }
+.v1__ic { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-bottom: 12px; border-radius: 12px; background: var(--dr-ijsblauw); color: var(--dr-koningsblauw); }
+@media (max-width: 900px) {
+  .v1__baan { position: relative; padding-left: 88px; }
+  .v1__weg { position: absolute; left: 0; top: 0; bottom: 0; width: 56px; height: auto; margin: 0; }
+  .v1__weg::before { left: 50%; right: auto; top: 28px; bottom: 28px; width: 4px; height: auto; margin: 0 0 0 -2px; background: repeating-linear-gradient(180deg, var(--dr-goudgeel) 0 24px, transparent 24px 44px); }
+  .v1__wagen { display: none; }
+  .v1__stops { grid-template-columns: 1fr; gap: 32px; }
+  .v1__stop { text-align: left; }
+  .v1__pin { position: absolute; left: -80px; top: 0; margin: 0; width: 48px; height: 48px; }
+  .v1__ic { display: none; }
+}
+
+/* =========================================================
+   2 · DOZENSTAPEL — elke stap is een 3D-verhuisdoos, als een trap
+   ========================================================= */
+.v2 { background: var(--dr-wit); }
+.v2__rij { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; align-items: start; }
+.v2__stap { display: flex; flex-direction: column; }
+.v2__stap:nth-child(1) { margin-top: 160px; }
+.v2__stap:nth-child(2) { margin-top: 120px; }
+.v2__stap:nth-child(3) { margin-top: 80px; }
+.v2__stap:nth-child(4) { margin-top: 40px; }
+.v2__doos { position: relative; height: 128px; margin: 26px 18px 28px 0; background: linear-gradient(180deg, var(--karton-licht), var(--karton)); border-radius: 4px; box-shadow: 0 22px 30px -8px rgba(15,45,107,.35); }
+.v2__doos::before { content: ""; position: absolute; left: 0; right: -18px; top: -18px; height: 18px; background: linear-gradient(90deg, #E8C08F, #D9A86F); transform-origin: bottom left; clip-path: polygon(18px 0, 100% 0, calc(100% - 18px) 100%, 0 100%); }
+.v2__doos::after { content: ""; position: absolute; top: -18px; right: -18px; bottom: 18px; width: 18px; background: linear-gradient(180deg, var(--karton-donker), #8E6033); clip-path: polygon(0 18px, 100% 0, 100% calc(100% - 18px), 0 100%); height: calc(100% + 18px); }
+.v2__tape { position: absolute; left: 50%; top: -18px; width: 30px; height: 60px; margin-left: -24px; background: linear-gradient(90deg, rgba(255,255,255,.35), rgba(255,255,255,.15)); border-left: 1px solid rgba(0,0,0,.08); border-right: 1px solid rgba(0,0,0,.08); }
+.v2__nr { position: absolute; left: 14px; bottom: 10px; font-family: var(--dr-font-kop); font-weight: 900; font-size: 4rem; line-height: 1; color: var(--dr-koningsblauw); opacity: .9; mix-blend-mode: multiply; }
+.v2__logo { position: absolute; right: 12px; bottom: 14px; padding: 3px 8px; border: 2px solid var(--dr-diepblauw); border-radius: 4px; font-family: var(--dr-font-kop); font-weight: 800; font-size: .7rem; letter-spacing: .12em; color: var(--dr-diepblauw); opacity: .75; transform: rotate(-4deg); }
+.v2__pijl { position: absolute; right: 10px; top: 12px; width: 26px; color: var(--dr-diepblauw); opacity: .55; }
+.v2__stap h3 { margin-bottom: 8px; }
+.v2 .opkomst { transform: translateY(60px); }
+.v2.is-zichtbaar .opkomst { transform: none; }
+@media (max-width: 1000px) {
+  .v2__rij { grid-template-columns: repeat(2, 1fr); }
+  .v2__stap:nth-child(n) { margin-top: 0; }
+  .v2__stap:last-child { grid-column: 1 / -1; max-width: 50%; }
+}
+@media (max-width: 560px) { .v2__rij { grid-template-columns: 1fr; } .v2__stap:last-child { max-width: none; } }
+
+/* =========================================================
+   3 · VERHUISLABELS — stappen als verzendlabels met tape
+   ========================================================= */
+.v3 { background: var(--dr-ijsblauw); background-image: radial-gradient(rgba(23,70,162,.08) 1px, transparent 1px); background-size: 22px 22px; }
+.v3__rij { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+.v3__label { position: relative; padding: 36px 20px 20px; background: var(--dr-wit); border-radius: 6px; box-shadow: 0 2px 0 var(--dr-lijn), 0 18px 30px -12px rgba(15,45,107,.35); transition: transform .3s var(--dr-ease); }
+.v3__label:nth-child(odd) { transform: rotate(-1.6deg); }
+.v3__label:nth-child(even) { transform: rotate(1.4deg) translateY(14px); }
+.v3__label:hover { transform: rotate(0) translateY(-6px); }
+.v3__tape { position: absolute; top: -14px; left: 50%; width: 90px; height: 28px; margin-left: -45px; background: rgba(255,204,51,.75); transform: rotate(-3deg); box-shadow: 0 2px 4px rgba(0,0,0,.08); clip-path: polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 2% 96%, 0 50%); }
+.v3__kop { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 2px dashed var(--dr-lijn); font-family: "Roboto Mono", monospace; font-size: .75rem; font-weight: 700; letter-spacing: .08em; color: var(--dr-steengrijs); }
+.v3__kop b { font-family: var(--dr-font-kop); font-size: 2.25rem; line-height: 1; color: var(--dr-koningsblauw); letter-spacing: 0; }
+.v3__label h3 { margin-bottom: 8px; }
+.v3__streep { width: calc(100% - 58px); height: 26px; margin-top: 18px; background: repeating-linear-gradient(90deg, var(--dr-inkt) 0 2px, transparent 2px 4px, var(--dr-inkt) 4px 5px, transparent 5px 8px, var(--dr-inkt) 8px 11px, transparent 11px 12px); opacity: .8; }
+.v3__stempel { position: absolute; right: 12px; bottom: 22px; padding: 2px 8px; border: 2px solid var(--dr-goed); color: var(--dr-goed); border-radius: 4px; font-family: var(--dr-font-kop); font-weight: 800; font-size: .7rem; letter-spacing: .1em; transform: rotate(-12deg); opacity: 0; transition: opacity .3s .8s, transform .4s .8s cubic-bezier(.3,1.6,.5,1); }
+.is-zichtbaar .v3__stempel { opacity: .85; transform: rotate(-12deg) scale(1); }
+.v3__label--laatst { background: var(--dr-zonlicht); }
+@media (max-width: 1100px) { .v3__rij { grid-template-columns: repeat(3, 1fr); row-gap: 40px; } }
+@media (max-width: 720px) { .v3__rij { grid-template-columns: 1fr; } .v3__label:nth-child(n) { transform: none; } }
+
+/* =========================================================
+   4 · VAN OUD NAAR NIEUW ADRES — donkerblauw, route met pins
+   ========================================================= */
+.v4 { background: radial-gradient(1200px 500px at 50% -10%, #1F56BF 0%, var(--dr-diepblauw) 60%); color: var(--dr-wit); }
+.v4 .label { color: var(--dr-goudgeel); }
+.v4__kaart { position: relative; display: grid; grid-template-columns: 110px 1fr 110px; align-items: center; gap: 12px; margin-bottom: 40px; }
+.v4__huis { text-align: center; font-family: var(--dr-font-kop); font-weight: 700; font-size: .875rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+.v4__huis svg { width: 84px; height: 84px; margin: 0 auto 6px; filter: drop-shadow(0 10px 14px rgba(0,0,0,.35)); }
+.v4__route { position: relative; height: 120px; }
+.v4__route svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.v4__lijn { fill: none; stroke: var(--dr-goudgeel); stroke-width: 3; stroke-dasharray: 8 10; stroke-linecap: round; }
+.v4__lijn-achter { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 14; stroke-linecap: round; }
+.v4__pins { position: absolute; inset: 0; }
+.v4__pin { position: absolute; transform: translate(-50%, -100%); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50% 50% 50% 0; rotate: -45deg; background: var(--dr-goudgeel); box-shadow: 0 8px 14px rgba(0,0,0,.35); }
+.v4__pin b { rotate: 45deg; font-family: var(--dr-font-kop); font-weight: 900; color: var(--dr-diepblauw); }
+.v4__stappen { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.v4__stap { padding: 22px 20px; border-radius: var(--dr-radius-m); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); transition: background .3s, transform .3s var(--dr-ease); }
+.v4__stap:hover { background: rgba(255,255,255,.12); transform: translateY(-4px); }
+.v4__stap small { display: block; font-family: var(--dr-font-kop); font-weight: 700; font-size: .8125rem; letter-spacing: .14em; color: var(--dr-goudgeel); margin-bottom: 6px; }
+.v4__stap h3 { color: var(--dr-wit); margin-bottom: 8px; }
+.v4__stap p { color: rgba(255,255,255,.75); font-size: .9688rem; line-height: 1.6; }
+@media (max-width: 1000px) { .v4__stappen { grid-template-columns: 1fr 1fr; } .v4__kaart { grid-template-columns: 70px 1fr 70px; } .v4__huis svg { width: 56px; height: 56px; } }
+@media (max-width: 600px) { .v4__stappen { grid-template-columns: 1fr; } .v4__kaart { display: none; } }
+
+/* =========================================================
+   5 · MET DE REUS — mascotte + tijdlijn die geel volloopt
+   ========================================================= */
+.v5 { background: var(--dr-wit); }
+.v5__grid { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: center; }
+.v5__reus { position: relative; }
+.v5__huis { position: absolute; left: 6%; right: 6%; bottom: 3%; top: 18%; filter: drop-shadow(0 30px 40px rgba(15,45,107,.28)); }
+.v5__huis::before { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, var(--dr-goudgeel), #FFB800); clip-path: polygon(50% 0, 100% 32%, 100% 100%, 0 100%, 0 32%); }
+.v5__reus img { position: relative; width: 78%; margin: 0 auto; filter: drop-shadow(0 26px 22px rgba(15,45,107,.35)); animation: zweef 5s ease-in-out infinite; }
+.v5__ballon { position: absolute; right: -8px; top: 12%; z-index: 2; max-width: 190px; padding: 12px 16px; background: var(--dr-diepblauw); color: var(--dr-wit); border-radius: 16px 16px 16px 4px; font-family: var(--dr-font-kop); font-weight: 700; font-size: 1.05rem; line-height: 1.25; box-shadow: var(--dr-schaduw-hoog); }
+.v5__ballon span { color: var(--dr-goudgeel); }
+@keyframes zweef { 50% { transform: translateY(-10px); } }
+.v5__lijst { position: relative; margin-top: 32px; }
+.v5__lijst::before, .v5__lijst::after { content: ""; position: absolute; left: 27px; top: 28px; bottom: 28px; width: 4px; border-radius: 2px; background: var(--dr-ijsblauw); }
+.v5__lijst::after { background: linear-gradient(var(--dr-goudgeel), var(--dr-goud-hover)); transform-origin: top; transform: scaleY(0); transition: transform 2.4s var(--dr-ease) .3s; }
+.v5.is-zichtbaar .v5__lijst::after { transform: scaleY(1); }
+.v5__stap { position: relative; display: grid; grid-template-columns: 58px 1fr; gap: 20px; padding: 14px 0; }
+.v5__nr { position: relative; z-index: 1; display: grid; place-items: center; width: 58px; height: 58px; padding-top: 10px; background: var(--dr-goudgeel); clip-path: polygon(50% 0, 100% 36%, 100% 100%, 0 100%, 0 36%); font-family: var(--dr-font-kop); font-weight: 900; font-size: 1.4rem; color: var(--dr-diepblauw); }
+.v5__stap > div { padding: 14px 20px 16px; border-radius: var(--dr-radius-m); background: var(--dr-mist); transition: background .3s, box-shadow .3s, transform .3s var(--dr-ease); }
+.v5__stap:hover > div { background: var(--dr-wit); box-shadow: var(--dr-schaduw-hoog); transform: translateX(6px); }
+.v5__stap h3 { margin-bottom: 4px; }
+@media (max-width: 900px) { .v5__grid { grid-template-columns: 1fr; gap: 24px; } .v5__reus { max-width: 360px; margin: 0 auto; } }
+
+/* =========================================================
+   6 · VERHUISPLANNING — klembord met afvinklijst
+   ========================================================= */
+.v6 { background: linear-gradient(135deg, var(--dr-mist) 0%, var(--dr-ijsblauw) 100%); }
+.v6__grid { display: grid; grid-template-columns: 7fr 5fr; gap: 64px; align-items: center; }
+.v6__bord { position: relative; padding: 22px; border-radius: 18px; background: linear-gradient(145deg, #8A5A2E, #6E4520); box-shadow: 0 40px 60px -20px rgba(15,45,107,.45), inset 0 2px 0 rgba(255,255,255,.15); transform: perspective(1400px) rotateX(6deg) rotateY(-8deg); transition: transform .6s var(--dr-ease); }
+.v6__bord:hover { transform: perspective(1400px) rotateX(0) rotateY(0); }
+.v6__klem { position: absolute; top: -22px; left: 50%; width: 150px; height: 44px; margin-left: -75px; border-radius: 10px 10px 6px 6px; background: linear-gradient(180deg, #D9DEE7, #9AA3B2); box-shadow: 0 6px 10px rgba(0,0,0,.3), inset 0 2px 0 #fff; z-index: 2; }
+.v6__klem::before { content: ""; position: absolute; left: 50%; top: 8px; width: 40px; height: 14px; margin-left: -20px; border-radius: 8px; background: #6E4520; box-shadow: inset 0 2px 3px rgba(0,0,0,.4); }
+.v6__papier { padding: 44px 32px 28px; border-radius: 6px; background: var(--dr-wit); background-image: repeating-linear-gradient(180deg, transparent 0 39px, var(--dr-ijsblauw) 39px 40px); }
+.v6__titel { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 3px solid var(--dr-koningsblauw); }
+.v6__titel strong { font-family: var(--dr-font-kop); font-weight: 800; font-size: 1.5rem; color: var(--dr-koningsblauw); }
+.v6__titel small { font-family: "Roboto Mono", monospace; font-size: .75rem; color: var(--dr-steengrijs); }
+.v6__item { display: grid; grid-template-columns: 32px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px dashed var(--dr-lijn); }
+.v6__item:last-child { border-bottom: 0; }
+.v6__vink { position: relative; width: 30px; height: 30px; margin-top: 2px; border: 2.5px solid var(--dr-koningsblauw); border-radius: 7px; background: var(--dr-wit); }
+.v6__vink svg { position: absolute; inset: -6px -4px 0 0; width: 38px; height: 34px; stroke: var(--dr-goed); stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 40; stroke-dashoffset: 40; transition: stroke-dashoffset .45s ease; }
+.v6.is-zichtbaar .v6__vink svg { stroke-dashoffset: 0; }
+.v6.is-zichtbaar .v6__item:nth-child(2) svg { transition-delay: .4s; }
+.v6.is-zichtbaar .v6__item:nth-child(3) svg { transition-delay: .8s; }
+.v6.is-zichtbaar .v6__item:nth-child(4) svg { transition-delay: 1.2s; }
+.v6.is-zichtbaar .v6__item:nth-child(5) svg { transition-delay: 1.6s; }
+.v6__item h3 { font-size: 1.125rem; margin-bottom: 2px; }
+.v6__item h3 span { color: var(--dr-steengrijs); font-weight: 600; margin-right: 6px; }
+.v6__item p { font-size: .9688rem; }
+.v6__zij p.v6__intro { color: var(--dr-steengrijs); font-size: 1.125rem; margin: 16px 0 28px; }
+.v6__feiten { display: grid; gap: 12px; margin-bottom: 32px; }
+.v6__feiten li { display: flex; align-items: center; gap: 12px; font-weight: 500; }
+.v6__feiten .ic { width: 36px; height: 36px; padding: 7px; border-radius: 10px; background: var(--dr-goudgeel); color: var(--dr-diepblauw); }
+@media (max-width: 900px) { .v6__grid { grid-template-columns: 1fr; gap: 56px; } .v6__bord { transform: none; } .v6__zij { order: -1; } }
+@media (max-width: 560px) { .v6__papier { padding: 40px 18px 20px; } .v6__bord { padding: 12px; } }
+
+/* =========================================================
+   7 · DE TRAP NAAR UW NIEUWE HUIS — oplopende 3D-treden
+   ========================================================= */
+.v7 { background: var(--dr-diepblauw); color: var(--dr-wit); }
+.v7::before { content: ""; position: absolute; right: -10%; top: -30%; width: 70%; height: 160%; background: linear-gradient(135deg, rgba(255,255,255,.06), transparent 60%); clip-path: polygon(50% 0, 100% 30%, 100% 100%, 0 100%, 0 30%); }
+.v7 .label { color: var(--dr-goudgeel); }
+.v7__trap { position: relative; display: grid; grid-template-columns: repeat(5, 1fr) 150px; gap: 14px; align-items: end; perspective: 1400px; }
+.v7__trap { padding-top: 40px; }
+.v7__trede { position: relative; transform-style: preserve-3d; }
+.v7__trede:nth-child(2) { margin-bottom: 45px; }
+.v7__trede:nth-child(3) { margin-bottom: 90px; }
+.v7__trede:nth-child(4) { margin-bottom: 135px; }
+.v7__trede:nth-child(5) { margin-bottom: 180px; }
+.v7__huis { margin-bottom: 200px; }
+.v7__kaart { position: relative; padding: 22px 18px 20px; min-height: 230px; border-radius: 14px 14px 4px 4px; background: linear-gradient(180deg, #FFFFFF, #EEF2FA); color: var(--dr-inkt); transform: rotateX(8deg); transform-origin: bottom; box-shadow: 0 14px 0 #0A1F4D, 0 30px 40px rgba(0,0,0,.4); transition: transform .4s var(--dr-ease); }
+.v7__trede:hover .v7__kaart { transform: rotateX(0) translateY(-8px); }
+.v7__nr { position: absolute; top: -26px; left: 18px; display: grid; place-items: center; width: 52px; height: 52px; padding-top: 8px; background: var(--dr-goudgeel); clip-path: polygon(50% 0, 100% 38%, 100% 100%, 0 100%, 0 38%); font-family: var(--dr-font-kop); font-weight: 900; font-size: 1.4rem; color: var(--dr-diepblauw); }
+.v7__kaart h3 { margin: 18px 0 8px; font-size: 1.15rem; }
+.v7__kaart p { font-size: .9375rem; }
+.v7__huis { align-self: end; text-align: center; margin-top: 0; }
+.v7__huis svg { width: 150px; height: 170px; filter: drop-shadow(0 20px 20px rgba(0,0,0,.45)); }
+.v7__huis small { display: block; font-family: var(--dr-font-kop); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--dr-goudgeel); }
+.v7__sleutel { transform-origin: 50% 20%; animation: sleutel 3s ease-in-out infinite; }
+@keyframes sleutel { 50% { transform: rotate(-12deg); } }
+@media (max-width: 1100px) { .v7__trap { grid-template-columns: repeat(3, 1fr); row-gap: 48px; } .v7__trede:nth-child(n) { margin-bottom: 0; } .v7__huis { display: none; } }
+@media (max-width: 640px) { .v7__trap { grid-template-columns: 1fr; } .v7__kaart { min-height: 0; transform: none; } }
+
+/* =========================================================
+   8 · STAP-VOOR-STAP — klikbare tabbladen met verhuiswagen op balk
+   ========================================================= */
+.v8 { background: var(--dr-wit); }
+.v8__balk { --inzet: 40px; position: relative; margin: 0 auto 28px; padding-top: 44px; max-width: 980px; }
+.v8__spoor { position: absolute; left: var(--inzet); right: var(--inzet); top: 74px; height: 6px; border-radius: 3px; background: var(--dr-ijsblauw); }
+.v8__voortgang { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 3px; background: linear-gradient(90deg, var(--dr-goudgeel), var(--dr-goud-hover)); transition: width .6s var(--dr-ease); }
+.v8__wagen { position: absolute; z-index: 2; top: 0; left: var(--inzet); width: 64px; transform: translateX(-50%); transition: left .6s var(--dr-ease); filter: drop-shadow(0 6px 5px rgba(15,45,107,.3)); }
+.v8__tabs { position: relative; display: flex; justify-content: space-between; }
+.v8__tab { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 80px; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; }
+.v8__tab .v8__bol { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: var(--dr-wit); border: 3px solid var(--dr-lijn); color: var(--dr-steengrijs); font-family: var(--dr-font-kop); font-weight: 900; font-size: 1.35rem; transition: all .3s var(--dr-ease); }
+.v8__tab small { font-family: var(--dr-font-kop); font-weight: 700; font-size: .875rem; line-height: 1.15; color: var(--dr-steengrijs); text-align: center; }
+.v8__tab.is-klaar .v8__bol { background: var(--dr-koningsblauw); border-color: var(--dr-koningsblauw); color: var(--dr-wit); }
+.v8__tab[aria-selected="true"] .v8__bol { background: var(--dr-goudgeel); border-color: var(--dr-goudgeel); color: var(--dr-diepblauw); transform: scale(1.12); box-shadow: 0 0 0 8px rgba(255,204,51,.25); }
+.v8__tab[aria-selected="true"] small { color: var(--dr-koningsblauw); }
+.v8__tab:focus-visible { outline: none; }
+.v8__tab:focus-visible .v8__bol { box-shadow: 0 0 0 3px var(--dr-koningsblauw); }
+.v8__paneel { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px; max-width: 980px; margin: 56px auto 0; padding: 40px 48px; border-radius: 24px; background: linear-gradient(135deg, var(--dr-koningsblauw), var(--dr-diepblauw)); color: var(--dr-wit); box-shadow: 0 30px 60px -20px rgba(15,45,107,.55); overflow: hidden; }
+.v8__paneel[hidden] { display: none; }
+.v8__paneel .v8__groot { font-family: var(--dr-font-kop); font-weight: 900; font-size: 1rem; letter-spacing: .14em; color: var(--dr-goudgeel); }
+.v8__paneel h3 { color: var(--dr-wit); font-size: 2rem; margin: 6px 0 12px; }
+.v8__paneel p { color: rgba(255,255,255,.85); font-size: 1.125rem; }
+.v8__beeld { position: relative; display: grid; place-items: center; min-height: 220px; }
+.v8__beeld::before { content: ""; position: absolute; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(255,204,51,.35), transparent 70%); }
+.v8__beeld .ic { position: relative; width: 150px; height: 150px; stroke-width: 1.2; color: var(--dr-goudgeel); filter: drop-shadow(0 16px 18px rgba(0,0,0,.4)); animation: zweef 4s ease-in-out infinite; }
+.v8__nav { display: flex; gap: 12px; margin-top: 24px; }
+.v8__nav button { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 16px; border-radius: var(--dr-radius-s); border: 2px solid rgba(255,255,255,.5); background: transparent; color: var(--dr-wit); font-family: var(--dr-font-kop); font-weight: 700; font-size: 1rem; cursor: pointer; }
+.v8__nav button:hover { background: rgba(255,255,255,.12); }
+.v8__nav button[disabled] { opacity: .35; cursor: default; }
+@media (max-width: 760px) {
+  .v8__tab small { display: none; }
+  .v8__tab { width: 52px; } .v8__tab .v8__bol { width: 48px; height: 48px; }
+  .v8__balk { --inzet: 26px; } .v8__spoor { top: 68px; }
+  .v8__paneel { grid-template-columns: 1fr; padding: 28px 24px; gap: 8px; }
+  .v8__beeld { min-height: 140px; order: -1; } .v8__beeld .ic { width: 100px; height: 100px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .opkomst { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-formulier" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 10h7M8.5 13.5h7M8.5 17h4"/></symbol>
+  <symbol id="i-telefoon" viewBox="0 0 24 24"><path d="M5 4h3.5l1.5 4-2 1.3a11 11 0 0 0 6.7 6.7L16 14l4 1.5V19a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-offerte" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M14.5 12.5a3 3 0 1 0 0 3.5M9 13.4h4.5M9 15.2h4.5"/></symbol>
+  <symbol id="i-agenda" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></symbol>
+  <symbol id="i-wagen" viewBox="0 0 24 24"><path d="M2.5 6.5h11v10h-11z"/><path d="M13.5 10h4l3 3.5v3h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+  <symbol id="i-pijl" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-schild" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-euro" viewBox="0 0 24 24"><path d="M17 6.5A7 7 0 1 0 17 17.5"/><path d="M4 10h9M4 14h9"/></symbol>
+  <symbol id="i-klok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+</svg>
+
+<!-- De verhuiswagen (gebruikt in 1 en 8) -->
+<template id="wagen-svg">
+  <svg viewBox="0 0 120 64" aria-hidden="true">
+    <rect x="2" y="6" width="74" height="44" rx="4" fill="#1746A2"/>
+    <rect x="2" y="6" width="74" height="8" rx="4" fill="#2A5CC0"/>
+    <text x="39" y="35" text-anchor="middle" font-family="Roboto Condensed, Arial Narrow, sans-serif" font-weight="900" font-size="13" fill="#FFCC33" letter-spacing="1">DE REUS</text>
+    <path d="M76 18h22l16 16v16H76z" fill="#FFCC33"/>
+    <path d="M82 22h14l11 12H82z" fill="#BFE0FF"/>
+    <rect x="2" y="46" width="112" height="6" rx="2" fill="#0F2D6B"/>
+    <circle cx="24" cy="54" r="9" fill="#141A26"/><circle cx="24" cy="54" r="3.5" fill="#D5DBE6"/>
+    <circle cx="94" cy="54" r="9" fill="#141A26"/><circle cx="94" cy="54" r="3.5" fill="#D5DBE6"/>
+    <rect x="110" y="38" width="6" height="4" rx="1" fill="#FFF3CC"/>
+  </svg>
+</template>
+
+<nav class="gids" aria-label="Ontwerpen">
+  <div class="wrap gids__in">
+    <span class="gids__titel">Werkwijze · 8 ontwerpen</span>
+    <a href="#v1"><b>1</b>De route</a>
+    <a href="#v2"><b>2</b>Dozenstapel</a>
+    <a href="#v3"><b>3</b>Verhuislabels</a>
+    <a href="#v4"><b>4</b>Oud → nieuw adres</a>
+    <a href="#v5"><b>5</b>Met de Reus</a>
+    <a href="#v6"><b>6</b>Verhuisplanning</a>
+    <a href="#v7"><b>7</b>De trap</a>
+    <a href="#v8"><b>8</b>Stap voor stap</a>
+  </div>
+</nav>
+
+<header class="intro-pagina">
+  <div class="wrap">
+    <h1>Werkwijze-sectie: 8 ontwerpen</h1>
+    <p>Zelfde tekst als de site, zelfde merkkleuren en letters. Scroll naar beneden: de animaties starten als een ontwerp in beeld komt. Kies een nummer, dan zetten we die in de homepage.</p>
+  </div>
+</header>
+
+<!-- ============ 1 ============ -->
+<div class="variant-kop" id="v1"><div class="wrap"><strong><span>1 ·</span> De route</strong><em>Een verhuiswagen van De Reus rijdt over de weg langs alle 5 stappen.</em></div></div>
+<section class="sectie v1" data-zien>
+  <div class="wrap">
+    <header class="kop-midden"><p class="label">Werkwijze</p><h2 class="h2">Zo werkt het boeken van uw <mark>verhuizing</mark></h2></header>
+    <div class="v1__baan">
+      <div class="v1__weg"><div class="v1__wagen" data-wagen></div></div>
+      <ol class="v1__stops">
+        <li class="v1__stop opkomst"><div class="v1__pin"><span>1</span></div><span class="v1__ic"><svg class="ic"><use href="#i-formulier"/></svg></span><h3>Offerte aanvragen</h3><p class="stap-tekst">Via het formulier laat u uw gegevens en verhuisdatum achter.</p></li>
+        <li class="v1__stop opkomst"><div class="v1__pin"><span>2</span></div><span class="v1__ic"><svg class="ic"><use href="#i-telefoon"/></svg></span><h3>Persoonlijk contact</h3><p class="stap-tekst">Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p></li>
+        <li class="v1__stop opkomst"><div class="v1__pin"><span>3</span></div><span class="v1__ic"><svg class="ic"><use href="#i-offerte"/></svg></span><h3>Offerte ontvangen</h3><p class="stap-tekst">U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p></li>
+        <li class="v1__stop opkomst"><div class="v1__pin"><span>4</span></div><span class="v1__ic"><svg class="ic"><use href="#i-agenda"/></svg></span><h3>Planning bevestigen</h3><p class="stap-tekst">Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p></li>
+        <li class="v1__stop opkomst"><div class="v1__pin"><span>5</span></div><span class="v1__ic"><svg class="ic"><use href="#i-wagen"/></svg></span><h3>Verhuisdag</h3><p class="stap-tekst">U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p></li>
+      </ol>
+    </div>
+    <div class="cta-mini"><div><p class="cta-mini__kop">Klaar om uw verhuizing zorgeloos te regelen?</p><p>Vraag vrijblijvend een offerte aan.</p></div><a class="knop" href="#v1">Offerte aanvragen <svg class="ic"><use href="#i-pijl"/></svg></a></div>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<div class="variant-kop" id="v2"><div class="wrap"><strong><span>2 ·</span> Dozenstapel</strong><em>Elke stap is een 3D-verhuisdoos met tape, oplopend als een trap.</em></div></div>
+<section class="sectie v2" data-zien>
+  <div class="wrap">
+    <header class="kop-midden"><p class="label">Werkwijze</p><h2 class="h2">Zo werkt het boeken van uw <mark>verhuizing</mark></h2></header>
+    <ol class="v2__rij">
+      <li class="v2__stap opkomst"><div class="v2__doos"><span class="v2__tape"></span><svg class="v2__pijl ic" viewBox="0 0 24 24"><path d="M12 20V5M7 10l5-5 5 5"/></svg><b class="v2__nr">1</b><span class="v2__logo">DE REUS</span></div><h3>Offerte aanvragen</h3><p class="stap-tekst">Via het formulier laat u uw gegevens en verhuisdatum achter.</p></li>
+      <li class="v2__stap opkomst"><div class="v2__doos"><span class="v2__tape"></span><svg class="v2__pijl ic" viewBox="0 0 24 24"><path d="M12 20V5M7 10l5-5 5 5"/></svg><b class="v2__nr">2</b><span class="v2__logo">DE REUS</span></div><h3>Persoonlijk contact</h3><p class="stap-tekst">Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p></li>
+      <li class="v2__stap opkomst"><div class="v2__doos"><span class="v2__tape"></span><svg class="v2__pijl ic" viewBox="0 0 24 24"><path d="M12 20V5M7 10l5-5 5 5"/></svg><b class="v2__nr">3</b><span class="v2__logo">DE REUS</span></div><h3>Offerte ontvangen</h3><p class="stap-tekst">U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p></li>
+      <li class="v2__stap opkomst"><div class="v2__doos"><span class="v2__tape"></span><svg class="v2__pijl ic" viewBox="0 0 24 24"><path d="M12 20V5M7 10l5-5 5 5"/></svg><b class="v2__nr">4</b><span class="v2__logo">DE REUS</span></div><h3>Planning bevestigen</h3><p class="stap-tekst">Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p></li>
+      <li class="v2__stap opkomst"><div class="v2__doos"><span class="v2__tape"></span><svg class="v2__pijl ic" viewBox="0 0 24 24"><path d="M12 20V5M7 10l5-5 5 5"/></svg><b class="v2__nr">5</b><span class="v2__logo">DE REUS</span></div><h3>Verhuisdag</h3><p class="stap-tekst">U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p></li>
+    </ol>
+    <div class="cta-mini"><div><p class="cta-mini__kop">Klaar om uw verhuizing zorgeloos te regelen?</p><p>Vraag vrijblijvend een offerte aan.</p></div><a class="knop" href="#v2">Offerte aanvragen <svg class="ic"><use href="#i-pijl"/></svg></a></div>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<div class="variant-kop" id="v3"><div class="wrap"><strong><span>3 ·</span> Verhuislabels</strong><em>Stappen als verzendlabels met gele tape, barcode en een "OK"-stempel.</em></div></div>
+<section class="sectie v3" data-zien>
+  <div class="wrap">
+    <header class="kop-midden"><p class="label">Werkwijze</p><h2 class="h2">Zo werkt het boeken van uw <mark>verhuizing</mark></h2></header>
+    <ol class="v3__rij">
+      <li class="v3__label opkomst"><span class="v3__tape"></span><div class="v3__kop"><span>STAP</span><b>01</b></div><h3>Offerte aanvragen</h3><p class="stap-tekst">Via het formulier laat u uw gegevens en verhuisdatum achter.</p><span class="v3__stempel">OK</span><div class="v3__streep"></div></li>
+      <li class="v3__label opkomst"><span class="v3__tape"></span><div class="v3__kop"><span>STAP</span><b>02</b></div><h3>Persoonlijk contact</h3><p class="stap-tekst">Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p><span class="v3__stempel">OK</span><div class="v3__streep"></div></li>
+      <li class="v3__label opkomst"><span class="v3__tape"></span><div class="v3__kop"><span>STAP</span><b>03</b></div><h3>Offerte ontvangen</h3><p class="stap-tekst">U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p><span class="v3__stempel">OK</span><div class="v3__streep"></div></li>
+      <li class="v3__label opkomst"><span class="v3__tape"></span><div class="v3__kop"><span>STAP</span><b>04</b></div><h3>Planning bevestigen</h3><p class="stap-tekst">Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p><span class="v3__stempel">OK</span><div class="v3__streep"></div></li>
+      <li class="v3__label v3__label--laatst opkomst"><span class="v3__tape"></span><div class="v3__kop"><span>STAP</span><b>05</b></div><h3>Verhuisdag</h3><p class="stap-tekst">U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p><span class="v3__stempel">OK</span><div class="v3__streep"></div></li>
+    </ol>
+    <div class="cta-mini" style="background:var(--dr-wit);box-shadow:var(--dr-schaduw-hoog)"><div><p class="cta-mini__kop">Klaar om uw verhuizing zorgeloos te regelen?</p><p>Vraag vrijblijvend een offerte aan.</p></div><a class="knop" href="#v3">Offerte aanvragen <svg class="ic"><use href="#i-pijl"/></svg></a></div>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<div class="variant-kop" id="v4"><div class="wrap"><strong><span>4 ·</span> Van oud naar nieuw adres</strong><em>Donkerblauwe sectie: route van uw oude naar uw nieuwe huis, met 5 pins.</em></div></div>
+<section class="sectie v4 donker" data-zien>
+  <div class="wrap">
+    <header class="kop-midden"><p class="label">Werkwijze</p><h2 class="h2 h2--wit">Zo werkt het boeken van uw <mark>verhuizing</mark></h2></header>
+    <div class="v4__kaart" aria-hidden="true">
+      <div class="v4__huis"><svg viewBox="0 0 64 64"><path d="M8 30 32 10l24 20v26H8z" fill="#E8EEF8"/><path d="M4 32 32 8l28 24" fill="none" stroke="#FFCC33" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="26" y="38" width="12" height="18" fill="#1746A2"/></svg>Oud adres</div>
+      <div class="v4__route">
+        <svg viewBox="0 0 1000 120" preserveAspectRatio="none"><path class="v4__lijn-achter" d="M0 90 C 150 90, 150 30, 250 30 S 400 90, 500 90 S 650 30, 750 30 S 900 90, 1000 90"/><path class="v4__lijn" d="M0 90 C 150 90, 150 30, 250 30 S 400 90, 500 90 S 650 30, 750 30 S 900 90, 1000 90"/></svg>
+        <div class="v4__pins">
+          <span class="v4__pin" style="left:8%;top:74%"><b>1</b></span>
+          <span class="v4__pin" style="left:25%;top:25%"><b>2</b></span>
+          <span class="v4__pin" style="left:50%;top:75%"><b>3</b></span>
+          <span class="v4__pin" style="left:75%;top:25%"><b>4</b></span>
+          <span class="v4__pin" style="left:92%;top:74%"><b>5</b></span>
+        </div>
+      </div>
+      <div class="v4__huis"><svg viewBox="0 0 64 64"><path d="M8 30 32 10l24 20v26H8z" fill="#FFCC33"/><path d="M4 32 32 8l28 24" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="26" y="38" width="12" height="18" fill="#0F2D6B"/><path d="M22 26l4 4 8-8" fill="none" stroke="#0F2D6B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Nieuw adres</div>
+    </div>
+    <ol class="v4__stappen">
+      <li class="v4__stap opkomst"><small>STAP 1</small><h3>Offerte aanvragen</h3><p>Via het formulier laat u uw gegevens en verhuisdatum achter.</p></li>
+      <li class="v4__stap opkomst"><small>STAP 2</small><h3>Persoonlijk contact</h3><p>Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p></li>
+      <li class="v4__stap opkomst"><small>STAP 3</small><h3>Offerte ontvangen</h3><p>U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p></li>
+      <li class="v4__stap opkomst"><small>STAP 4</small><h3>Planning bevestigen</h3><p>Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p></li>
+      <li class="v4__stap opkomst"><small>STAP 5</small><h3>Verhuisdag</h3><p>U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p></li>
+    </ol>
+    <div class="cta-mini"><div><p class="cta-mini__kop">Klaar om uw verhuizing zorgeloos te regelen?</p><p>Vraag vrijblijvend een offerte aan.</p></div><a class="knop" href="#v4">Offerte aanvragen <svg class="ic"><use href="#i-pijl"/></svg></a></div>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<div class="variant-kop" id="v5"><div class="wrap"><strong><span>5 ·</span> Met de Reus</strong><em>De mascotte in een geel huis, naast een tijdlijn die geel volloopt.</em></div></div>
+<section class="sectie v5" data-zien>
+  <div class="wrap v5__grid">
+    <div class="v5__reus">
+      <span class="v5__huis" aria-hidden="true"></span>
+      <p class="v5__ballon">In <span>5 stappen</span> geregeld!</p>
+      <img src="../img/reus-verhuizer.webp" alt="De Reus: een sterke verhuizer met een verhuisdoos." width="760" height="1140" loading="lazy">
+    </div>
+    <div>
+      <p class="label">Werkwijze</p><h2 class="h2">Zo werkt het boeken van uw <mark>verhuizing</mark></h2>
+      <ol class="v5__lijst">
+        <li class="v5__stap opkomst"><span class="v5__nr">1</span><div><h3>Offerte aanvragen</h3><p class="stap-tekst">Via het formulier laat u uw gegevens en verhuisdatum achter.</p></div></li>
+        <li class="v5__stap opkomst"><span class="v5__nr">2</span><div><h3>Persoonlijk contact</h3><p class="stap-tekst">Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p></div></li>
+        <li class="v5__stap opkomst"><span class="v5__nr">3</span><div><h3>Offerte ontvangen</h3><p class="stap-tekst">U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p></div></li>
+        <li class="v5__stap opkomst"><span class="v5__nr">4</span><div><h3>Planning bevestigen</h3><p class="stap-tekst">Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p></div></li>
+        <li class="v5__stap opkomst"><span class="v5__nr">5</span><div><h3>Verhuisdag</h3><p class="stap-tekst">U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p></div></li>
+      </ol>
+      <div class="cta-mini" style="margin-top:32px"><div><p class="cta-mini__kop">Klaar om uw verhuizing zorgeloos te regelen?</p><p>Vraag vrijblijvend een offerte aan.</p></div><a class="knop" href="#v5">Offerte aanvragen <svg class="ic"><use href="#i-pijl"/></svg></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<div class="variant-kop" id="v6"><div class="wrap"><strong><span>6 ·</span> Verhuisplanning</strong><em>Een 3D-klembord; de vinkjes worden één voor één gezet als het in beeld komt.</em></div></div>
+<section class="sectie v6" data-zien>
+  <div class="wrap v6__grid">
+    <div class="v6__bord">
+      <span class="v6__klem" aria-hidden="true"></span>
+      <div class="v6__papier">
+        <div class="v6__titel"><strong>Uw verhuisplanning</strong><small>DE REUS · DEN HAAG</small></div>
+        <ol>
+          <li class="v6__item"><span class="v6__vink"><svg viewBox="0 0 38 34"><path d="M8 18l7 7L32 6"/></svg></span><div><h3><span>1.</span>Offerte aanvragen</h3><p class="stap-tekst">Via het formulier laat u uw gegevens en verhuisdatum achter.</p></div></li>
+          <li class="v6__item"><span class="v6__vink"><svg viewBox="0 0 38 34"><path d="M8 18l7 7L32 6"/></svg></span><div><h3><span>2.</span>Persoonlijk contact</h3><p class="stap-tekst">Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p></div></li>
+          <li class="v6__item"><span class="v6__vink"><svg viewBox="0 0 38 34"><path d="M8 18l7 7L32 6"/></svg></span><div><h3><span>3.</span>Offerte ontvangen</h3><p class="stap-tekst">U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p></div></li>
+          <li class="v6__item"><span class="v6__vink"><svg viewBox="0 0 38 34"><path d="M8 18l7 7L32 6"/></svg></span><div><h3><span>4.</span>Planning bevestigen</h3><p class="stap-tekst">Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p></div></li>
+          <li class="v6__item"><span class="v6__vink"><svg viewBox="0 0 38 34"><path d="M8 18l7 7L32 6"/></svg></span><div><h3><span>5.</span>Verhuisdag</h3><p class="stap-tekst">U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p></div></li>
+        </ol>
+      </div>
+    </div>
+    <div class="v6__zij">
+      <p class="label">Werkwijze</p><h2 class="h2">Zo werkt het boeken van uw <mark>verhuizing</mark></h2>
+      <p class="v6__intro">Klaar om uw verhuizing zorgeloos te regelen? Vraag vrijblijvend een offerte aan.</p>
+      <ul class="v6__feiten">
+        <li><svg class="ic"><use href="#i-euro"/></svg>Vrijblijvende offerte</li>
+        <li><svg class="ic"><use href="#i-schild"/></svg>Standaard verzekerd</li>
+        <li><svg class="ic"><use href="#i-klok"/></svg>Reactie binnen 24 uur</li>
+      </ul>
+      <a class="knop" href="#v6">Offerte aanvragen <svg class="ic"><use href="#i-pijl"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7 ============ -->
+<div class="variant-kop" id="v7"><div class="wrap"><strong><span>7 ·</span> De trap naar uw nieuwe huis</strong><em>Oplopende 3D-treden op donkerblauw, bovenaan wacht het nieuwe huis met sleutel.</em></div></div>
+<section class="sectie v7 donker" data-zien>
+  <div class="wrap">
+    <header class="kop-midden"><p class="label">Werkwijze</p><h2 class="h2 h2--wit">Zo werkt het boeken van uw <mark>verhuizing</mark></h2></header>
+    <ol class="v7__trap">
+      <li class="v7__trede opkomst"><div class="v7__kaart"><span class="v7__nr">1</span><h3>Offerte aanvragen</h3><p class="stap-tekst">Via het formulier laat u uw gegevens en verhuisdatum achter.</p></div></li>
+      <li class="v7__trede opkomst"><div class="v7__kaart"><span class="v7__nr">2</span><h3>Persoonlijk contact</h3><p class="stap-tekst">Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p></div></li>
+      <li class="v7__trede opkomst"><div class="v7__kaart"><span class="v7__nr">3</span><h3>Offerte ontvangen</h3><p class="stap-tekst">U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p></div></li>
+      <li class="v7__trede opkomst"><div class="v7__kaart"><span class="v7__nr">4</span><h3>Planning bevestigen</h3><p class="stap-tekst">Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p></div></li>
+      <li class="v7__trede opkomst"><div class="v7__kaart"><span class="v7__nr">5</span><h3>Verhuisdag</h3><p class="stap-tekst">U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p></div></li>
+      <li class="v7__huis" aria-hidden="true">
+        <svg viewBox="0 0 150 170">
+          <path d="M20 80 75 32l55 48v80H20z" fill="#FFCC33"/>
+          <path d="M10 86 75 28l65 58" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="58" y="112" width="34" height="48" rx="3" fill="#0F2D6B"/>
+          <rect x="34" y="92" width="22" height="20" rx="2" fill="#E8EEF8"/><rect x="94" y="92" width="22" height="20" rx="2" fill="#E8EEF8"/>
+          <g class="v7__sleutel"><circle cx="75" cy="10" r="8" fill="none" stroke="#FFCC33" stroke-width="4"/><path d="M75 18v16M75 28h6M75 33h5" stroke="#FFCC33" stroke-width="4" stroke-linecap="round"/></g>
+        </svg>
+        <small>Uw nieuwe huis</small>
+      </li>
+    </ol>
+    <div class="cta-mini"><div><p class="cta-mini__kop">Klaar om uw verhuizing zorgeloos te regelen?</p><p>Vraag vrijblijvend een offerte aan.</p></div><a class="knop" href="#v7">Offerte aanvragen <svg class="ic"><use href="#i-pijl"/></svg></a></div>
+  </div>
+</section>
+
+<!-- ============ 8 ============ -->
+<div class="variant-kop" id="v8"><div class="wrap"><strong><span>8 ·</span> Stap voor stap</strong><em>Klikbare stappen: de verhuiswagen rijdt naar de gekozen stap. Compact, handig op mobiel.</em></div></div>
+<section class="sectie v8" data-zien>
+  <div class="wrap">
+    <header class="kop-midden"><p class="label">Werkwijze</p><h2 class="h2">Zo werkt het boeken van uw <mark>verhuizing</mark></h2></header>
+    <div class="v8__balk">
+      <div class="v8__spoor"><span class="v8__voortgang" data-voortgang></span></div><div class="v8__wagen" data-wagen data-wagen8></div>
+      <div class="v8__tabs" role="tablist" aria-label="Stappen">
+        <button class="v8__tab" role="tab" id="t1" aria-controls="p1" aria-selected="true"><span class="v8__bol">1</span><small>Offerte aanvragen</small></button>
+        <button class="v8__tab" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1"><span class="v8__bol">2</span><small>Persoonlijk contact</small></button>
+        <button class="v8__tab" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1"><span class="v8__bol">3</span><small>Offerte ontvangen</small></button>
+        <button class="v8__tab" role="tab" id="t4" aria-controls="p4" aria-selected="false" tabindex="-1"><span class="v8__bol">4</span><small>Planning bevestigen</small></button>
+        <button class="v8__tab" role="tab" id="t5" aria-controls="p5" aria-selected="false" tabindex="-1"><span class="v8__bol">5</span><small>Verhuisdag</small></button>
+      </div>
+    </div>
+    <div class="v8__paneel" role="tabpanel" id="p1" aria-labelledby="t1"><div><span class="v8__groot">STAP 1 VAN 5</span><h3>Offerte aanvragen</h3><p>Via het formulier laat u uw gegevens en verhuisdatum achter.</p><div class="v8__nav"><button data-vorige>← Vorige</button><button data-volgende>Volgende →</button></div></div><div class="v8__beeld"><svg class="ic"><use href="#i-formulier"/></svg></div></div>
+    <div class="v8__paneel" role="tabpanel" id="p2" aria-labelledby="t2" hidden><div><span class="v8__groot">STAP 2 VAN 5</span><h3>Persoonlijk contact</h3><p>Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p><div class="v8__nav"><button data-vorige>← Vorige</button><button data-volgende>Volgende →</button></div></div><div class="v8__beeld"><svg class="ic"><use href="#i-telefoon"/></svg></div></div>
+    <div class="v8__paneel" role="tabpanel" id="p3" aria-labelledby="t3" hidden><div><span class="v8__groot">STAP 3 VAN 5</span><h3>Offerte ontvangen</h3><p>U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p><div class="v8__nav"><button data-vorige>← Vorige</button><button data-volgende>Volgende →</button></div></div><div class="v8__beeld"><svg class="ic"><use href="#i-offerte"/></svg></div></div>
+    <div class="v8__paneel" role="tabpanel" id="p4" aria-labelledby="t4" hidden><div><span class="v8__groot">STAP 4 VAN 5</span><h3>Planning bevestigen</h3><p>Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p><div class="v8__nav"><button data-vorige>← Vorige</button><button data-volgende>Volgende →</button></div></div><div class="v8__beeld"><svg class="ic"><use href="#i-agenda"/></svg></div></div>
+    <div class="v8__paneel" role="tabpanel" id="p5" aria-labelledby="t5" hidden><div><span class="v8__groot">STAP 5 VAN 5</span><h3>Verhuisdag</h3><p>U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p><div class="v8__nav"><button data-vorige>← Vorige</button><button data-volgende>Volgende →</button></div></div><div class="v8__beeld"><svg class="ic"><use href="#i-wagen"/></svg></div></div>
+    <div class="cta-mini"><div><p class="cta-mini__kop">Klaar om uw verhuizing zorgeloos te regelen?</p><p>Vraag vrijblijvend een offerte aan.</p></div><a class="knop" href="#v8">Offerte aanvragen <svg class="ic"><use href="#i-pijl"/></svg></a></div>
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+  // verhuiswagen invoegen
+  var tpl = document.getElementById('wagen-svg');
+  document.querySelectorAll('[data-wagen]').forEach(function (el) { el.appendChild(tpl.content.cloneNode(true)); });
+
+  // 1: wagen rijdt tot het einde van de weg
+  function wegbreedte() {
+    var weg = document.querySelector('.v1__weg');
+    if (weg) weg.style.setProperty('--wegbreedte', weg.clientWidth + 'px');
+  }
+  wegbreedte(); window.addEventListener('resize', wegbreedte);
+
+  // animaties starten als een ontwerp in beeld komt
+  var secties = document.querySelectorAll('[data-zien]');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (items) {
+      items.forEach(function (it) {
+        if (it.isIntersecting) { it.target.classList.add('is-zichtbaar'); io.unobserve(it.target); }
+      });
+    }, { threshold: 0.25 });
+    secties.forEach(function (s) { io.observe(s); });
+  } else {
+    secties.forEach(function (s) { s.classList.add('is-zichtbaar'); });
+  }
+
+  // 8: tabbladen
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.v8__tab'));
+  var voortgang = document.querySelector('[data-voortgang]');
+  var wagen = document.querySelector('[data-wagen8]');
+  function kies(i, focus) {
+    tabs.forEach(function (t, n) {
+      var actief = n === i;
+      t.setAttribute('aria-selected', actief);
+      t.tabIndex = actief ? 0 : -1;
+      t.classList.toggle('is-klaar', n < i);
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !actief;
+    });
+    var pct = (i / (tabs.length - 1)) * 100;
+    voortgang.style.width = pct + '%';
+    wagen.style.left = 'calc(var(--inzet) + (100% - 2 * var(--inzet)) * ' + (pct / 100) + ')';
+    var paneel = document.getElementById(tabs[i].getAttribute('aria-controls'));
+    paneel.querySelector('[data-vorige]').disabled = i === 0;
+    paneel.querySelector('[data-volgende]').disabled = i === tabs.length - 1;
+    if (focus) tabs[i].focus();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { kies(i); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') kies(Math.min(i + 1, tabs.length - 1), true);
+      if (e.key === 'ArrowLeft') kies(Math.max(i - 1, 0), true);
+    });
+  });
+  document.querySelectorAll('[data-vorige]').forEach(function (b) { b.addEventListener('click', function () { kies(Math.max(0, tabs.findIndex(function (t) { return t.getAttribute('aria-selected') === 'true'; }) - 1)); }); });
+  document.querySelectorAll('[data-volgende]').forEach(function (b) { b.addEventListener('click', function () { kies(Math.min(tabs.length - 1, tabs.findIndex(function (t) { return t.getAttribute('aria-selected') === 'true'; }) + 1)); }); });
+  kies(0);
+})();
+</script>
+</body>
+</html>
