@@ -5,9 +5,9 @@
 .hero--foto {
   background: transparent;
   overflow: visible;
-  padding: calc(var(--dr-header-h) + clamp(8px, 2vw, 28px)) 0 0;
+  padding: calc(var(--dr-header-h) - clamp(0px, 1.5vw, 24px)) 0 0;
   text-align: center;
-  --kaart-over: 150px; /* zoveel steekt de kaart onder de foto uit */
+  --kaart-over: 118px; /* zoveel steekt de kaart onder de foto uit */
 }
 .hero--foto + .sectie { padding-top: var(--dr-sectie); }
 
@@ -40,16 +40,16 @@
 .hero__kop { position: relative; z-index: 2; }
 .hero--foto .label { justify-content: center; }
 .hero--foto .display {
-  max-width: 24ch; margin: 0 auto var(--dr-space-4);
-  font-size: clamp(2.25rem, 4vw, 3.6rem); text-wrap: balance;
+  max-width: 30ch; margin: 0 auto var(--dr-space-3);
+  font-size: clamp(2.1rem, 3.3vw, 3.15rem); line-height: 1.04; text-wrap: balance;
   text-shadow: 0 4px 24px rgba(6,20,55,.45);
 }
-.hero--foto .intro { max-width: 44ch; margin: 0 auto; color: rgba(255,255,255,.92); text-shadow: 0 2px 12px rgba(6,20,55,.5); }
+.hero--foto .intro { max-width: 60ch; margin: 0 auto; font-size: clamp(1.0625rem, 1.3vw, 1.25rem); color: rgba(255,255,255,.92); text-shadow: 0 2px 12px rgba(6,20,55,.5); }
 
 /* ---------- podium met de Reus ---------- */
-.hero__podium { position: relative; z-index: 1; width: min(760px, 92%); margin: clamp(16px, 2.4vw, 36px) auto 0; }
+.hero__podium { position: relative; z-index: 1; width: min(760px, 92%); margin: clamp(4px, 1vw, 16px) auto 0; }
 .hero__podium .scene__in {
-  aspect-ratio: auto; height: clamp(300px, 34vw, 470px);
+  aspect-ratio: auto; height: clamp(220px, 21vw, 320px);
   transform: rotateX(calc(var(--py, 0) * -5deg)) rotateY(calc(var(--px, 0) * 8deg));
 }
 .hero__podium .reus {
@@ -58,15 +58,15 @@
   translate: -50% 0;
   filter: drop-shadow(0 26px 30px rgba(6,20,55,.55));
 }
-.hero__podium .kubus--a { --s: 74px; left: 8%; top: 30%; }
-.hero__podium .kubus--b { --s: 56px; right: 10%; left: auto; top: 6%; }
-.hero__podium .zwevend { left: auto; right: -2%; bottom: 34%; text-align: left; }
+.hero__podium .kubus--a { --s: 64px; left: 10%; top: 26%; }
+.hero__podium .kubus--b { --s: 48px; right: 12%; left: auto; top: 2%; }
+.hero__podium .zwevend { left: auto; right: 0; bottom: 46%; text-align: left; width: max-content; white-space: nowrap; }
 
 /* ---------- offertekaart ---------- */
 .hero__kaart {
   position: relative; z-index: 3;
   margin-top: calc(var(--kaart-over) * -1 + 20px);
-  padding: clamp(24px, 3.4vw, 44px);
+  padding: clamp(22px, 2.6vw, 34px) clamp(22px, 3.2vw, 44px);
   border-radius: 28px;
   border-top: 5px solid var(--dr-goudgeel);
   background: var(--dr-koningsblauw);
@@ -74,7 +74,7 @@
   color: var(--dr-wit); text-align: left;
   box-shadow: 0 2px 0 rgba(255,255,255,.08) inset, var(--diepte-schaduw-hoog);
 }
-.hero__kaartkop { display: flex; gap: 24px 40px; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+.hero__kaartkop { display: flex; gap: 20px 40px; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
 .hero__kaarttitel { font-family: var(--dr-font-kop); font-size: clamp(1.625rem, 2.6vw, 2.25rem); line-height: 1.1; margin: 0 0 10px; color: var(--dr-wit); }
 .hero__kaartkop p { margin: 0; max-width: 56ch; color: rgba(255,255,255,.9); }
 .hero__kaartkop strong { color: var(--dr-goudgeel); }
@@ -118,12 +118,12 @@
   .hero__podium .zwevend { right: -4%; }
 }
 @media (max-width: 760px) {
-  .hero--foto { --kaart-over: 110px; }
+  .hero--foto { --kaart-over: 96px; }
   .hero--foto .display { font-size: clamp(2rem, 9vw, 2.6rem); }
   .hero__deco--l { left: -12%; top: 60%; }
   .hero__deco--r { right: -14%; top: 22%; }
   .hero__podium { width: 100%; }
-  .hero__podium .scene__in { height: 300px; }
+  .hero__podium .scene__in { height: 240px; }
   .hero__podium .kubus--a { --s: 52px; left: 2%; top: 38%; }
   .hero__podium .kubus--b { --s: 40px; right: 4%; top: 4%; }
   .hero__podium .zwevend { right: 10%; bottom: 30%; padding: 8px 12px 8px 8px; font-size: .75rem; }
@@ -138,4 +138,13 @@
 @media (prefers-reduced-motion: reduce) {
   .hero__bgfoto { animation: none; translate: none; }
   .hero__deco { translate: none; }
+}
+
+/* geen beweging meer: scene plat, lagen gewoon op volgorde (kaartje vóór de Reus) */
+.hero__podium .scene__in, .hero__podium .laag { transform-style: flat; }
+.hero__podium .scene__in { transform: none; }
+.hero__podium .laag { transform: none; }
+@media (max-width: 760px) {
+  .hero__podium { margin-top: 18px; }
+  .hero__podium .zwevend { display: none; }
 }

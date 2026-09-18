@@ -190,42 +190,39 @@
 .review__naam span { grid-column: 2; white-space: nowrap; font-size: .8125rem; }
 .beloftes__doos img { width: 190px; }
 
-/* ---------- cijfers: schuine band, van links naar rechts omhoog (zoals de band op de-kievit.nl) ---------- */
+/* ---------- cijfers: gele band met een zachte golf, links laag en rechts hoog ---------- */
 .cijfers {
-  --schuin: -4deg;
+  --golf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='none'%3E%3Cpath d='M0 60 C 380 60 760 0 1200 8 L 1200 244 C 760 236 380 300 0 300 Z'/%3E%3C/svg%3E");
   position: relative; z-index: 1;
-  background: linear-gradient(var(--dr-wit) 50%, var(--dr-ijsblauw) 50%);
+  background: var(--dr-ijsblauw);
   padding: clamp(84px, 9vw, 120px) 0;
   box-shadow: none;
 }
 .cijfers::before, .cijfers::after {
-  content: ""; position: absolute; left: -2%; right: -2%;
-  transform: skewY(var(--schuin)); backface-visibility: hidden; pointer-events: none;
+  content: ""; position: absolute; left: 0; right: 0; pointer-events: none;
+  -webkit-mask: var(--golf) 0 0 / 100% 100% no-repeat; mask: var(--golf) 0 0 / 100% 100% no-repeat;
 }
 .cijfers::before {
-  top: 40px; bottom: 40px; z-index: -1;
+  top: 36px; bottom: 44px; z-index: -1;
   background:
     linear-gradient(100deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.28) 45%, rgba(255,255,255,0) 60%),
     linear-gradient(90deg, var(--dr-goudgeel), var(--dr-goud-hover));
   background-size: 250% 100%, 100% 100%;
-  box-shadow: 0 24px 40px -16px rgba(15,45,107,.35);
 }
-/* blauwe lijn onder de band, zelfde hoek */
-.cijfers::after { bottom: 29px; height: 12px; background: var(--dr-koningsblauw); z-index: -1; }
+/* blauwe lijn onder de band: dezelfde golf, iets lager erachter */
+.cijfers::after { top: 48px; bottom: 32px; z-index: -2; background: var(--dr-koningsblauw); filter: drop-shadow(0 18px 24px rgba(15,45,107,.3)); }
 
-/* de cijfers lopen mee met de helling */
+/* de cijfers lopen licht mee met de golf */
 @media (min-width: 701px) {
-  .cijfers li:nth-child(1) { transform: translateY(32px); }
-  .cijfers li:nth-child(2) { transform: translateY(11px); }
-  .cijfers li:nth-child(3) { transform: translateY(-11px); }
-  .cijfers li:nth-child(4) { transform: translateY(-32px); }
+  .cijfers li:nth-child(1) { transform: translateY(18px); }
+  .cijfers li:nth-child(2) { transform: translateY(8px); }
+  .cijfers li:nth-child(3) { transform: translateY(-4px); }
+  .cijfers li:nth-child(4) { transform: translateY(-10px); }
 }
 @media (max-width: 700px) {
-  .cijfers { --schuin: -7deg; padding: 96px 0; }
-  .cijfers::before { top: 44px; bottom: 44px; }
-  .cijfers::after { bottom: 35px; height: 10px; }
-  .cijfers li:nth-child(odd) { transform: translateY(12px); }
-  .cijfers li:nth-child(even) { transform: translateY(-12px); }
+  .cijfers { padding: 96px 0; }
+  .cijfers::before { top: 40px; bottom: 48px; }
+  .cijfers::after { top: 50px; bottom: 38px; }
 }
 
 
@@ -277,3 +274,75 @@
 @media (prefers-reduced-motion: reduce) {
   .rit, .rit.tilt { transform: none !important; }
 }
+
+/* ---------- aanvraag: eigen kleur, zodat het niet één blok lijkt met de werkwijze erboven ---------- */
+#aanvraag.sectie--diep {
+  background:
+    radial-gradient(900px 480px at 88% 0%, rgba(255,255,255,.12), rgba(255,255,255,0) 60%),
+    linear-gradient(180deg, #1D52B8 0%, var(--dr-koningsblauw) 100%);
+  border-top: 6px solid var(--dr-goudgeel);
+}
+
+/* ---------- diensten met echte foto's ---------- */
+.dienst--foto { padding: 0; gap: 0; overflow: hidden; border-top: 0; }
+.dienst__foto { position: relative; margin: 0; aspect-ratio: 4 / 3; overflow: hidden; background: var(--dr-ijsblauw); }
+.dienst__foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dienst__foto::after {
+  /* gele merkrand onder de foto */
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--dr-goudgeel);
+}
+.dienst__bron { position: absolute; right: 6px; bottom: 8px; z-index: 1; font-size: .625rem; line-height: 1; }
+.dienst__bron a { color: #fff; text-decoration: none; background: rgba(15,45,107,.6); padding: 3px 6px; border-radius: 4px; }
+.dienst__tekst { position: relative; display: flex; align-items: center; gap: 12px; padding: 0 18px 18px; }
+.dienst__tekst .tegel {
+  margin-top: -24px; flex: none; background-color: var(--dr-wit);
+  box-shadow: 0 0 0 4px var(--dr-wit), 0 8px 16px rgba(15,45,107,.18);
+}
+.dienst__tekst h4 { padding-top: 14px; }
+.dienst--foto:hover .dienst__tekst .tegel { background: var(--dr-koningsblauw); color: var(--dr-wit); }
+@media (max-width: 640px) {
+  .dienst__tekst { flex-direction: column; align-items: flex-start; gap: 6px; padding: 0 12px 14px; }
+  .dienst__tekst .tegel { width: 40px; height: 40px; margin-top: -20px; }
+  .dienst__tekst h4 { padding-top: 0; font-size: 1rem; hyphens: auto; overflow-wrap: anywhere; }
+  .dienst__bron { font-size: .5rem; right: 4px; bottom: 6px; }
+}
+
+/* ---------- echte foto's op de pagina ---------- */
+.fotokader { position: relative; margin: 0; border-radius: var(--dr-radius-l); }
+.fotokader img { display: block; width: 100%; height: auto; border-radius: var(--dr-radius-l); position: relative; z-index: 1; box-shadow: var(--diepte-schaduw-hoog); }
+.fotokader::before {
+  /* geel vlak achter de foto, iets verschoven: geeft diepte */
+  content: ""; position: absolute; inset: 0; border-radius: var(--dr-radius-l);
+  background: var(--dr-goudgeel); transform: translate(14px, 14px);
+}
+.fotokader--over { margin-top: 32px; max-width: 380px; }
+.fotokader--verwachten { margin-bottom: 28px; }
+.fotokader--verwachten::before { background: var(--dr-ijsblauw); }
+.fotokader--aanvraag { margin-top: 32px; max-width: 460px; }
+.fotokader--aanvraag::before { background: rgba(255,204,51,.9); }
+.verwachten__zij { position: sticky; top: 130px; }
+.verwachten__zij .spoed { position: relative; top: 0; }
+@media (max-width: 1023px) { .verwachten__zij { position: relative; top: 0; } }
+@media (max-width: 900px) { .fotokader--over, .fotokader--aanvraag { max-width: 100%; margin-right: 14px; } }
+
+/* werkwijze: foto bovenaan elke trede */
+.trap__stapfoto { margin: -22px -18px 12px; border-radius: 14px 14px 0 0; overflow: hidden; aspect-ratio: 16 / 10; }
+.trap__stapfoto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.trap__kaart .trap__nr { z-index: 1; }
+.trap__kaart h3 { margin-top: 26px; }
+
+
+/* ---------- over ons: verhuizer stapt uit de foto (vast, geen beweging) ---------- */
+.uitfoto { --boven: 27%; --rechts: 5%; position: relative; margin: 20px 0 0; width: 100%; max-width: 440px; aspect-ratio: 640 / 954; }
+.uitfoto > * { position: absolute; inset: 0; width: 100%; height: 100%; }
+.uitfoto__vlak, .uitfoto__schaduw { inset: var(--boven) var(--rechts) 0 0; width: auto; height: auto; border-radius: var(--dr-radius-l); }
+.uitfoto__vlak { background: var(--dr-goudgeel); transform: translate(18px, 18px); }
+.uitfoto__schaduw { box-shadow: 0 30px 60px -20px rgba(15,45,107,.45); }
+.uitfoto__achter { object-fit: cover; clip-path: inset(var(--boven) var(--rechts) 0 0 round var(--dr-radius-l)); }
+.uitfoto__uit {
+  object-fit: cover;
+  /* alles boven de lijst mag eruit, rechts alleen de arm; onderaan blijft hij binnen de lijst */
+  clip-path: polygon(0 0, 100% 0, 100% 70%, calc(100% - var(--rechts)) 70%, calc(100% - var(--rechts)) 96%, 0 96%);
+  filter: drop-shadow(0 18px 18px rgba(11,31,69,.35));
+}
+@media (max-width: 900px) { .uitfoto { max-width: 340px; margin: 12px auto 36px; } }

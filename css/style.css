@@ -391,6 +391,8 @@ body.lade-open .mobielbalk { display: none; }
 /* ---------- over ons ---------- */
 .over { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
 .over__tekst { display: grid; gap: var(--dr-space-4); }
+/* tekst rechts verticaal gecentreerd naast de kop en de illustratie links */
+@media (min-width: 901px) { .over__tekst { align-self: center; } }
 .belkaart {
   display: flex; gap: 16px; align-items: center; margin-top: var(--dr-space-3);
   padding: 20px 24px; border-radius: var(--dr-radius-m);
@@ -413,7 +415,12 @@ body.lade-open .mobielbalk { display: none; }
   background: var(--dr-koningsblauw); color: var(--dr-wit); stroke-width: 3;
 }
 .vinklijst--licht .ic { background: var(--dr-goudgeel); color: var(--dr-diepblauw); }
-@media (max-width: 900px) { .offerte, .aanvraag, .contact { grid-template-columns: 1fr; gap: 40px; } }
+/* tekst en kaart bovenaan gelijk: label op dezelfde hoogte als de kaarttitel */
+.offerte { align-items: start; }
+.offerte__tekst { padding-top: calc(clamp(24px, 3vw, 40px) + 4px); }
+.offerte .formulier .h3 { font-size: clamp(1.125rem, 1rem + .4vw, 1.3125rem); line-height: 1.3; color: var(--dr-diepblauw); text-wrap: balance; }
+.offerte .formulier__sub { font-size: .9375rem; }
+@media (max-width: 900px) { .offerte, .aanvraag, .contact { grid-template-columns: 1fr; gap: 40px; } .offerte__tekst { padding-top: 0; } }
 
 /* formulier (merkboek 7.3) */
 .formulier { border-top: 4px solid var(--dr-goudgeel); }
@@ -474,7 +481,101 @@ body.lade-open .mobielbalk { display: none; }
 .spoed__kop { font-family: var(--dr-font-kop); font-weight: 800; font-size: 1.75rem; line-height: 1.15; margin-bottom: var(--dr-space-5); position: relative; }
 .tijden { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; margin-top: var(--dr-space-5); padding-top: var(--dr-space-5); border-top: 1px solid rgba(255,255,255,.2); font-size: .9375rem; }
 .tijden dd { font-weight: 700; text-align: right; }
-@media (max-width: 1023px) { .verwachten { grid-template-columns: 1fr; gap: 40px; } .spoed { position: relative; top: 0; } }
+/* achtergrond: zacht ijsblauw, stippen linksboven en het dak uit het logo achter de spoedkaart */
+.sectie--verwachten {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: linear-gradient(180deg, var(--dr-wit) 0%, var(--dr-ijsblauw) 100%);
+}
+.sectie--verwachten::before {
+  content: ""; position: absolute; left: 0; top: 0; width: 46%; height: 70%; z-index: -1; pointer-events: none;
+  background: radial-gradient(circle at 1.5px 1.5px, rgba(23,70,162,.16) 1.5px, transparent 0) 0 0 / 22px 22px;
+  -webkit-mask: radial-gradient(ellipse 100% 100% at 0 0, #000 20%, transparent 70%);
+  mask: radial-gradient(ellipse 100% 100% at 0 0, #000 20%, transparent 70%);
+}
+.sectie--verwachten::after {
+  content: ""; position: absolute; right: -6%; bottom: -1px; width: 58%; height: 88%; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(23,70,162,.07), rgba(23,70,162,.02));
+  clip-path: polygon(50% 0, 100% 42%, 100% 100%, 0 100%, 0 42%);
+}
+
+/* spoedkaart: even hoog als de linkerkolom, van label tot en met de offerteknop */
+@media (min-width: 1024px) {
+  .verwachten { align-items: stretch; }
+  .spoed { position: relative; top: 0; display: flex; flex-direction: column; }
+}
+.spoed { background: linear-gradient(160deg, var(--dr-koningsblauw) 0%, var(--dr-diepblauw) 100%); padding: 36px 40px 30px; }
+.spoed__kop { font-size: clamp(1.75rem, 1.3rem + 1vw, 2.25rem); }
+.spoed .knop--breed { min-height: 60px; font-size: 1.375rem; letter-spacing: .02em; }
+.spoed .knop--breed .ic { width: 24px; height: 24px; }
+.spoed .tijden { margin-top: var(--dr-space-4); padding-top: var(--dr-space-4); font-size: 1rem; }
+
+/* echte smartphone in het midden: belscherm naar De Reus, licht gekanteld */
+.spoed__bel { position: relative; flex: 1 1 auto; display: grid; place-items: center; min-height: 212px; margin: 0 0 16px; perspective: 900px; }
+.spoed__ring {
+  position: absolute; left: 50%; top: 50%; width: 170px; height: 170px; margin: -85px 0 0 -85px; border-radius: 50%;
+  border: 2px solid rgba(255,204,51,.45); opacity: 0; animation: spoed-ring 2.8s var(--dr-ease) infinite;
+}
+.spoed__ring:nth-child(2) { animation-delay: 1.4s; }
+@keyframes spoed-ring { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(2); opacity: 0; } }
+
+.toestel {
+  position: relative; z-index: 1; width: 136px; height: 276px; margin: -28px 0; padding: 6px; border-radius: 30px;   /* marge vangt de verkleining (scale .8) op */
+  /* aluminium rand + zwarte glasrand */
+  background: linear-gradient(135deg, #5B6475 0%, #1B2232 30%, #0B0F18 55%, #3A4252 100%);
+  box-shadow:
+    inset 0 0 0 1.5px rgba(255,255,255,.22),
+    inset 0 0 0 4px #05070C,
+    0 2px 0 rgba(255,255,255,.08),
+    -18px 30px 40px rgba(0,0,0,.45),
+    -4px 8px 12px rgba(0,0,0,.35);
+  transform: rotateY(-16deg) rotateX(6deg) rotateZ(4deg) scale(.8);
+  animation: toestel-zweef 5s ease-in-out infinite;
+}
+@keyframes toestel-zweef { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+.toestel__knop { position: absolute; width: 3px; border-radius: 2px; background: linear-gradient(90deg, #6B7385, #2A3140); }
+.toestel__knop--aan { right: -2px; top: 78px; height: 38px; }
+.toestel__knop--vol1 { left: -2px; top: 64px; height: 26px; }
+.toestel__knop--vol2 { left: -2px; top: 96px; height: 26px; }
+
+.toestel__scherm {
+  position: relative; height: 100%; border-radius: 24px; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; padding: 30px 10px 14px; text-align: center;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(23,70,162,.9), transparent 70%),
+    linear-gradient(180deg, #16305F 0%, #0B1834 100%);
+  color: #fff;
+}
+/* glans over het glas */
+.toestel__scherm::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 38%);
+}
+.toestel__eiland { position: absolute; top: 8px; left: 50%; width: 44px; height: 13px; margin-left: -22px; border-radius: 8px; background: #000; }
+.toestel__status { position: absolute; top: 8px; left: 14px; right: 12px; display: flex; justify-content: space-between; align-items: center; font: 600 8px/13px var(--dr-font); }
+.toestel__status i { width: 14px; height: 7px; border-radius: 2px; border: 1px solid rgba(255,255,255,.8); background: linear-gradient(90deg, #fff 70%, transparent 70%); background-clip: content-box; padding: 1px; }
+.toestel__foto {
+  display: grid; place-items: center; width: 58px; height: 58px; margin: 6px 0 8px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 0 3px rgba(255,204,51,.9), 0 6px 14px rgba(0,0,0,.35);
+}
+.toestel__foto img { width: 44px; height: auto; }
+.toestel__naam { font: 700 .8125rem/1.15 var(--dr-font-kop); }
+.toestel__nr { margin-top: 3px; font: 500 .6875rem/1.2 var(--dr-font); color: rgba(255,255,255,.75); letter-spacing: .02em; }
+.toestel__bellen { margin-top: 6px; font: 500 .625rem/1 var(--dr-font); color: var(--dr-goudgeel); }
+.toestel__bellen span { animation: toestel-punt 1.2s infinite; }
+.toestel__bellen span:nth-child(2) { animation-delay: .2s; }
+.toestel__bellen span:nth-child(3) { animation-delay: .4s; }
+@keyframes toestel-punt { 0%, 60%, 100% { opacity: .2; } 30% { opacity: 1; } }
+.toestel__acties { margin-top: auto; display: flex; gap: 12px; align-items: center; }
+.toestel__actie { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.16); }
+.toestel__actie--rood { display: grid; place-items: center; width: 34px; height: 34px; background: #E5484D; box-shadow: 0 4px 10px rgba(229,72,77,.45); }
+.toestel__actie--rood .ic { width: 17px; height: 17px; color: #fff; stroke-width: 2.2; rotate: 135deg; }
+@media (prefers-reduced-motion: reduce) { .spoed__ring, .toestel, .toestel__bellen span { animation: none; } }
+
+@media (max-width: 1023px) {
+  .verwachten { grid-template-columns: 1fr; gap: 40px; } .spoed { position: relative; top: 0; }
+  .spoed__bel { min-height: 300px; margin: 0 0 20px; }
+  .sectie--verwachten::after { width: 100%; height: 45%; right: 0; }
+}
 @media (max-width: 640px) { .beloftes { grid-template-columns: 1fr; } }
 
 /* ---------- 7 · cijfers ---------- */

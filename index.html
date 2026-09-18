@@ -22,7 +22,16 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/3d.css">
   <link rel="stylesheet" href="css/hero.css">
-  <link rel="stylesheet" href="css/werkwijze.css">
+  <link rel="stylesheet" href="css/contact.css">
+  <link rel="stylesheet" href="css/over.css">
+  <link rel="stylesheet" href="css/contact-plus.css">
+  <link rel="stylesheet" href="css/contact-gegevens.css">
+  <link rel="stylesheet" href="css/trap.css">
+  <link rel="stylesheet" href="css/reviews.css">
+  <link rel="stylesheet" href="css/verwachten.css">
+  <link rel="stylesheet" href="css/offerte.css">
+  <link rel="stylesheet" href="css/wereld.css">
+  <link rel="stylesheet" href="css/diepte.css">
 
   <script type="application/ld+json">{"@context":"https://schema.org/","@type":"MovingCompany","name":"Verhuisbedrijf De Reus","url":"https://www.verhuisbedrijfdereus.nl","telephone":"+31850005647","email":"info@verhuisbedrijfdereus.nl","address":{"@type":"PostalAddress","addressCountry":"NL","addressLocality":"Den Haag","addressRegion":"ZH","postalCode":"2525 ZJ","streetAddress":"Lau Mazirellaan 336"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"08:00","closes":"20:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"09:00","closes":"17:00"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org/","@type":"WebSite","name":"Verhuisbedrijf De Reus","url":"https://www.verhuisbedrijfdereus.nl"}</script>
@@ -176,16 +185,28 @@
   </section>
 
   <!-- Over ons -->
-  <section class="sectie sectie--compact" id="over-ons">
+  <section class="sectie sectie--compact sectie--diep over-sectie" id="over-ons">
+    <svg class="over-dak over-dak--groot" viewBox="0 0 1000 450" preserveAspectRatio="none" aria-hidden="true"><path d="M-40 486 L500 0 L1040 486"/></svg>
+    <svg class="over-dak over-dak--klein" viewBox="0 0 1000 450" preserveAspectRatio="none" aria-hidden="true"><path d="M-40 486 L500 0 L1040 486"/></svg>
     <div class="wrap over">
       <div>
         <p class="label">Over ons</p>
         <h2 class="h2">Eén vaste <mark>verhuisadviseur</mark>, van begin tot eind</h2>
-        <div class="illu tilt"><img src="img/verhuisdozen.webp" alt="Verhuisdozen, klaar voor de verhuizing." width="700" height="700" loading="lazy"></div>
+        <figure class="uitfoto">
+          <span class="uitfoto__vlak" aria-hidden="true"></span>
+          <span class="uitfoto__schaduw" aria-hidden="true"></span>
+          <img class="uitfoto__achter" src="img/over-foto-achter.webp" alt="" width="640" height="954" loading="lazy">
+          <img class="uitfoto__uit" src="img/over-foto-uit.webp" alt="Een lachende verhuizer van De Reus stapt uit de foto." width="640" height="954" loading="lazy">
+        </figure>
       </div>
       <div class="over__tekst">
         <p class="intro-klein">Bij Verhuisbedrijf De Reus krijgt u één vaste verhuisadviseur die met u meekijkt, meedenkt en uw verhuizing van begin tot eind organiseert.</p>
         <p>Onze ervaren vakmensen werken zorgvuldig, transparant en leveren de kwaliteit die u mag verwachten, zonder verrassingen.</p>
+        <ul class="vinklijst vinklijst--licht">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>7 dagen per week beschikbaar</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Echte vakmensen, geen studenten</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Inboedel standaard verzekerd</li>
+        </ul>
         <div class="belkaart">
           <span class="tegel tegel--geel"><svg class="ic" aria-hidden="true"><use href="#i-telefoon"/></svg></span>
           <p>Wilt u direct contact of heeft u een spoedklus? Bel ons dan op!<br>
@@ -196,31 +217,45 @@
   </section>
 
   <!-- 4 · Snelle offerte -->
-  <section class="sectie sectie--mist" id="offerte">
-    <div class="wrap offerte">
+  <section class="sectie sectie--offerte" id="offerte">
+    <div class="wrap offerte offerte--pro">
       <div class="offerte__tekst">
         <p class="label">Gratis offerte</p>
         <h2 class="h2">Ontvang een gratis en vrijblijvende <mark>offerte</mark> op maat</h2>
         <p class="intro-klein">Laat uw gegevens achter en word binnen <strong>24 uur</strong> gebeld door een van onze ervaren verhuisexperts. Wij denken met u mee, beantwoorden al uw vragen en stellen <strong>dezelfde dag</strong> een vrijblijvende offerte op maat voor u op.</p>
-        <ul class="vinklijst">
-          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>7 dagen per week beschikbaar</li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Echte vakmensen, geen studenten</li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Vrijblijvende offerte en verhuisadvies</li>
-          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Inboedel standaard verzekerd</li>
+        <ul class="offerte__usp">
+          <li><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-kalender"/></svg></span>7 dagen per week beschikbaar</li>
+          <li><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-persoon"/></svg></span>Echte vakmensen, geen studenten</li>
+          <li><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></span>Vrijblijvende offerte en verhuisadvies</li>
+          <li><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-schild"/></svg></span>Inboedel standaard verzekerd</li>
         </ul>
+        <a class="offerte__bel" href="tel:+31850005647"><span class="tegel tegel--geel"><svg class="ic" aria-hidden="true"><use href="#i-telefoon"/></svg></span><span><small>Liever direct contact?</small><b>085 000 5647</b></span></a>
       </div>
-      <form class="kaart formulier" action="mailto:info@verhuisbedrijfdereus.nl?subject=Offerteaanvraag%20via%20de%20website" method="post" enctype="text/plain" novalidate>
-        <h3 class="h3">Ontvang gratis verhuisadvies en een vrijblijvende offerte op maat</h3>
-        <p class="formulier__sub">Ontvang binnen 24 uur na aanvraag uw persoonlijke verhuisofferte:</p>
-        <div class="velden">
-          <div class="veld"><label for="o-naam">Naam</label><input id="o-naam" name="Naam" autocomplete="name"></div>
-          <div class="veld"><label for="o-woonplaats">Woonplaats</label><input id="o-woonplaats" name="Woonplaats" autocomplete="address-level2"></div>
-          <div class="veld"><label for="o-toekomst">Toekomstige woonplaats</label><input id="o-toekomst" name="Toekomstige woonplaats"></div>
-          <div class="veld"><label for="o-datum">Gewenste verhuisdatum</label><input id="o-datum" name="Gewenste verhuisdatum" type="date"></div>
-          <div class="veld"><label for="o-tel">Telefoon</label><input id="o-tel" name="Telefoon" type="tel" autocomplete="tel" inputmode="tel"></div>
-          <div class="veld"><label for="o-mail">E-mail <span class="verplicht" aria-hidden="true">*</span></label><input id="o-mail" name="E-mail" type="email" autocomplete="email" required aria-describedby="o-mail-fout"><p class="fout" id="o-mail-fout" hidden>✕ Vul een geldig e-mailadres in.</p></div>
+      <form class="kaart formulier offerte__form" action="mailto:info@verhuisbedrijfdereus.nl?subject=Offerteaanvraag%20via%20de%20website" method="post" enctype="text/plain" novalidate>
+        <div class="offerte__kop">
+          <h3 class="h3">Ontvang gratis verhuisadvies en een vrijblijvende offerte op maat</h3>
+          <p class="formulier__sub"><svg class="ic" aria-hidden="true"><use href="#i-klok"/></svg>Ontvang binnen 24 uur na aanvraag uw persoonlijke verhuisofferte:</p>
         </div>
-        <button class="knop knop--geel knop--breed" type="submit">Aanvraag verzenden <svg class="ic" aria-hidden="true"><use href="#i-pijl"/></svg></button>
+        <fieldset class="offerte__groep">
+          <legend><span>1</span>Uw verhuizing</legend>
+          <div class="velden">
+            <div class="veld veld--ic"><label for="o-woonplaats">Woonplaats</label><span class="veld__in"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><input id="o-woonplaats" name="Woonplaats" autocomplete="address-level2" placeholder="Van"></span></div>
+            <div class="veld veld--ic"><label for="o-toekomst">Toekomstige woonplaats</label><span class="veld__in"><svg class="ic" aria-hidden="true"><use href="#i-huis"/></svg><input id="o-toekomst" name="Toekomstige woonplaats" placeholder="Naar"></span></div>
+            <div class="veld veld--ic veld--vol"><label for="o-datum">Gewenste verhuisdatum</label><span class="veld__in"><svg class="ic" aria-hidden="true"><use href="#i-kalender"/></svg><input id="o-datum" name="Gewenste verhuisdatum" type="date"></span></div>
+          </div>
+        </fieldset>
+        <fieldset class="offerte__groep">
+          <legend><span>2</span>Uw gegevens</legend>
+          <div class="velden">
+            <div class="veld veld--ic veld--vol"><label for="o-naam">Naam</label><span class="veld__in"><svg class="ic" aria-hidden="true"><use href="#i-persoon"/></svg><input id="o-naam" name="Naam" autocomplete="name"></span></div>
+            <div class="veld veld--ic"><label for="o-tel">Telefoon</label><span class="veld__in"><svg class="ic" aria-hidden="true"><use href="#i-telefoon"/></svg><input id="o-tel" name="Telefoon" type="tel" autocomplete="tel" inputmode="tel"></span></div>
+            <div class="veld veld--ic"><label for="o-mail">E-mail <span class="verplicht" aria-hidden="true">*</span></label><span class="veld__in"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><input id="o-mail" name="E-mail" type="email" autocomplete="email" required aria-describedby="o-mail-fout"></span><p class="fout" id="o-mail-fout" hidden>✕ Vul een geldig e-mailadres in.</p></div>
+          </div>
+        </fieldset>
+        <div class="offerte__voet">
+          <button class="knop knop--geel knop--breed" type="submit">Aanvraag verzenden <svg class="ic" aria-hidden="true"><use href="#i-pijl"/></svg></button>
+          <p class="offerte__noot"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Vrijblijvend <span aria-hidden="true">·</span> <svg class="ic" aria-hidden="true"><use href="#i-klok"/></svg>Reactie binnen 24 uur</p>
+        </div>
       </form>
     </div>
   </section>
@@ -236,28 +271,28 @@
 
       <h3 class="groepkop">Verhuizen</h3>
       <ul class="diensten">
-        <li class="dienst tilt"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-huis"/></svg></span><h4>Particuliere verhuizingen</h4></li>
-        <li class="dienst tilt"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-kantoor"/></svg></span><h4>Zakelijke verhuizingen</h4></li>
-        <li class="dienst tilt"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span><h4>Nationale verhuizingen</h4></li>
-        <li class="dienst tilt"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-wereld"/></svg></span><h4>Internationale verhuizingen</h4></li>
+        <li class="dienst dienst--foto"><figure class="dienst__foto"><img src="img/dienst-particulier.webp" alt="Twee verhuizers dragen een groene bank een bakstenen woning binnen." width="720" height="540" loading="lazy"></figure><div class="dienst__tekst"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-huis"/></svg></span><h4>Particuliere verhuizingen</h4></div></li>
+        <li class="dienst dienst--foto"><figure class="dienst__foto"><img src="img/dienst-zakelijk.webp" alt="Een verhuizer draagt een doos met het opschrift office." width="720" height="540" loading="lazy"></figure><div class="dienst__tekst"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-kantoor"/></svg></span><h4>Zakelijke verhuizingen</h4></div></li>
+        <li class="dienst dienst--foto"><figure class="dienst__foto"><img src="img/dienst-nationaal.webp" alt="Een verhuizer draagt dozen naar een witte verhuisbus in een woonstraat." width="720" height="540" loading="lazy"></figure><div class="dienst__tekst"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span><h4>Nationale verhuizingen</h4></div></li>
+        <li class="dienst dienst--foto"><figure class="dienst__foto"><img src="img/dienst-internationaal.webp" alt="Twee verhuizers laden meubels in een vrachtwagen." width="720" height="540" loading="lazy"></figure><div class="dienst__tekst"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-wereld"/></svg></span><h4>Internationale verhuizingen</h4></div></li>
       </ul>
 
       <h3 class="groepkop">Extra diensten</h3>
       <ul class="diensten">
-        <li class="dienst tilt"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-bezem"/></svg></span><h4>Woningontruiming</h4></li>
-        <li class="dienst tilt"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-opslag"/></svg></span><h4>Tijdelijke opslag</h4></li>
-        <li class="dienst tilt"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-gereedschap"/></svg></span><h4>Handymanservice</h4></li>
-        <li class="dienst tilt"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-lift"/></svg></span><h4>Verhuisliftservice</h4></li>
+        <li class="dienst dienst--foto"><figure class="dienst__foto"><img src="img/dienst-woningontruiming.webp" alt="Twee verhuizers dragen dozen uit een lege, lichte kamer." width="720" height="540" loading="lazy"></figure><div class="dienst__tekst"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-bezem"/></svg></span><h4>Woningontruiming</h4></div></li>
+        <li class="dienst dienst--foto"><figure class="dienst__foto"><img src="img/dienst-opslag.webp" alt="Twee medewerkers dragen dozen door een magazijn met stellingen." width="720" height="540" loading="lazy"></figure><div class="dienst__tekst"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-opslag"/></svg></span><h4>Tijdelijke opslag</h4></div></li>
+        <li class="dienst dienst--foto"><figure class="dienst__foto"><img src="img/dienst-handyman.webp" alt="Een vakman zet met een accuboormachine een meubel in elkaar." width="720" height="540" loading="lazy"></figure><div class="dienst__tekst"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-gereedschap"/></svg></span><h4>Handymanservice</h4></div></li>
+        <li class="dienst dienst--foto"><figure class="dienst__foto"><img src="img/dienst-verhuislift.webp" alt="Een verhuislift op een vrachtwagen staat tegen de gevel van een flatgebouw." width="720" height="540" loading="lazy"><figcaption class="dienst__bron"><a href="https://commons.wikimedia.org/wiki/File:Moving_lift_in_Kiryat_Ono_Israel.jpg" target="_blank" rel="noopener">Foto: Tomer T, CC BY-SA 4.0</a></figcaption></figure><div class="dienst__tekst"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-lift"/></svg></span><h4>Verhuisliftservice</h4></div></li>
       </ul>
 
       <p class="midden"><a class="knop knop--geel" href="#offerte">Offerte aanvragen <svg class="ic" aria-hidden="true"><use href="#i-pijl"/></svg></a></p>
     </div>
   </section>
 
-  <!-- 6 · Dit mag u verwachten -->
-  <section class="sectie">
+  <!-- 6 · Dit mag u verwachten: beloftes in een net raster, rechts een 3D-podium dat uit het scherm komt -->
+  <section class="sectie sectie--verwachten">
     <div class="wrap verwachten">
-      <div>
+      <div class="verwachten__tekst">
         <p class="label">Onze belofte</p>
         <h2 class="h2">Dit mag u van ons <mark>verwachten</mark></h2>
         <p class="intro-klein">Alles voor een zorgeloze, goed geregelde verhuizing:</p>
@@ -267,20 +302,36 @@
           <li><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-schild"/></svg></span><div><h3>Standaard verzekerd</h3><p>Uw inboedel is automatisch gedekt tijdens de verhuizing.</p></div></li>
           <li><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-persoon"/></svg></span><div><h3>Ervaren professionals</h3><p>Geen studenten, maar vakmensen met jaren ervaring.</p></div></li>
           <li><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-kalender"/></svg></span><div><h3>Snelle en flexibele planning</h3><p>Van spoedklussen tot kosteloos wijzigen van uw verhuisdatum.</p></div></li>
-          <li class="beloftes__doos" aria-hidden="true"><img src="img/doos-hand.webp" alt="" width="500" height="500" loading="lazy"></li>
+          <li class="beloftes__cta"><a href="#offerte"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true"><use href="#i-pijl"/></svg></a></li>
         </ul>
-        <a class="knop knop--geel" href="#offerte">Offerte aanvragen <svg class="ic" aria-hidden="true"><use href="#i-pijl"/></svg></a>
       </div>
-      <aside class="spoed tilt">
-        <svg class="spoed__dak" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13l9-8 9 8"/></svg>
-        <p class="label label--geel">Spoedklus?</p>
-        <p class="spoed__kop">Wilt u direct contact of heeft u een spoedklus? Bel ons dan op!</p>
-        <a class="knop knop--geel knop--breed" href="tel:+31850005647"><svg class="ic" aria-hidden="true"><use href="#i-telefoon"/></svg>085 000 5647</a>
-        <dl class="tijden">
-          <dt>Maandag t/m zaterdag</dt><dd>08.00 tot 20.00 uur</dd>
-          <dt>Zondag</dt><dd>09.00 tot 17.00 uur</dd>
-        </dl>
-      </aside>
+
+      <div class="podium">
+        <figure class="podium__foto"><img src="img/verwachten-inpakken.webp" alt="Twee verhuizers pakken samen verhuisdozen in." width="720" height="540" loading="lazy"></figure>
+        <img class="podium__doos" src="img/doos-hand.webp" alt="" width="500" height="500" loading="lazy">
+        <aside class="spoed podium__spoed">
+          <svg class="spoed__dak" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13l9-8 9 8"/></svg>
+          <div class="toestel" aria-hidden="true">
+            <span class="toestel__knop toestel__knop--aan"></span><span class="toestel__knop toestel__knop--vol1"></span><span class="toestel__knop toestel__knop--vol2"></span>
+            <div class="toestel__scherm">
+              <span class="toestel__eiland"></span>
+              <span class="toestel__status"><b>9:41</b><i></i></span>
+              <span class="toestel__foto"><img src="img/de-reus-logo-02.svg" alt="" width="82" height="80"></span>
+              <span class="toestel__naam">Verhuisbedrijf De&nbsp;Reus</span>
+              <span class="toestel__nr">085 000 5647</span>
+              <span class="toestel__bellen">Bellen<span>.</span><span>.</span><span>.</span></span>
+              <span class="toestel__acties"><span class="toestel__actie"></span><span class="toestel__actie toestel__actie--rood"><svg class="ic"><use href="#i-telefoon"/></svg></span><span class="toestel__actie"></span></span>
+            </div>
+          </div>
+          <p class="label label--geel">Spoedklus?</p>
+          <p class="spoed__kop">Wilt u direct contact of heeft u een spoedklus? Bel ons dan op!</p>
+          <a class="knop knop--geel knop--breed" href="tel:+31850005647"><svg class="ic" aria-hidden="true"><use href="#i-telefoon"/></svg>085 000 5647</a>
+          <dl class="tijden">
+            <dt>Maandag t/m zaterdag</dt><dd>08.00 tot 20.00 uur</dd>
+            <dt>Zondag</dt><dd>09.00 tot 17.00 uur</dd>
+          </dl>
+        </aside>
+      </div>
     </div>
   </section>
 
@@ -294,72 +345,92 @@
     </ul>
   </section>
 
-  <!-- 8 · Reviews -->
-  <section class="sectie sectie--ijs" id="reviews">
+  <!-- 8 · Reviews (Google-widgetstijl) -->
+  <section class="sectie sectie--ijs gr" id="reviews">
     <div class="wrap">
-      <header class="kop-midden">
-        <p class="label"><svg class="ic ic--g" aria-hidden="true"><use href="#i-google"/></svg> Google-reviews</p>
-        <h2 class="h2">Klanten beoordelen ons met een <mark>4,9/5</mark></h2>
-        <p class="intro-klein">Onze klanten zijn tevreden en daar zijn wij trots op. Dat is geen toeval, maar het resultaat van hard en zorgvuldig werken.</p>
-      </header>
-      <ul class="reviews">
-        <li class="review tilt">
-          <p class="sterren" aria-label="5 van 5 sterren">★★★★★</p>
-          <blockquote>"Dennis jack en Vincent. Bedankt voor de goede verhuizing. Zeer netjes gewerkt. Alles netjes neergezet. De montage liep vlekkeloos. Zeker een aanrader. Bedankt jongens."</blockquote>
-          <p class="review__naam"><img class="avatar" src="img/avatar-danielle.webp" alt="" width="48" height="48" loading="lazy"><strong>Daniëlle Van haaften</strong><span><svg class="ic ic--g" aria-hidden="true"><use href="#i-google"/></svg>Geverifieerde Google-review</span></p>
+      <div class="gr-kop">
+        <div class="gr-kop__tekst">
+          <p class="label">Google-reviews</p>
+          <h2 class="h2">Klanten beoordelen ons met een <mark>4,9/5</mark></h2>
+          <p class="intro-klein">Onze klanten zijn tevreden en daar zijn wij trots op. Dat is geen toeval, maar het resultaat van hard en zorgvuldig werken.</p>
+        </div>
+        <div class="gr-score">
+          <svg class="gr-score__g" aria-hidden="true"><use href="#i-google"/></svg>
+          <div>
+            <p class="gr-score__merk">Google-beoordeling</p>
+            <p class="gr-score__rij"><b>4,9</b><span class="gr-sterren" role="img" aria-label="5 van 5 sterren"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></span></p>
+          </div>
+          <a class="gr-score__knop" href="https://www.google.com/search?q=Verhuisbedrijf+De+Reus+Den+Haag+reviews" target="_blank" rel="noopener">Bekijk op Google</a>
+        </div>
+      </div>
+      <ul class="gr-lijst">
+        <li class="gr-kaart">
+          <div class="gr-kaart__kop">
+            <img class="gr-kaart__foto" src="img/avatar-danielle.webp" alt="" width="40" height="40" loading="lazy">
+            <div class="gr-kaart__wie"><strong>Daniëlle Van haaften</strong><span>Geverifieerde Google-review</span></div>
+            <svg class="gr-kaart__g" aria-hidden="true"><use href="#i-google"/></svg>
+          </div>
+          <span class="gr-sterren" role="img" aria-label="5 van 5 sterren"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></span>
+          <blockquote class="gr-kaart__tekst"><p>Dennis jack en Vincent. Bedankt voor de goede verhuizing. Zeer netjes gewerkt. Alles netjes neergezet. De montage liep vlekkeloos. Zeker een aanrader. Bedankt jongens.</p></blockquote>
         </li>
-        <li class="review tilt">
-          <p class="sterren" aria-label="5 van 5 sterren">★★★★★</p>
-          <blockquote>"Deze jongens zijn de hardstwerkende, eerlijkste en liefste mensen die ik ooit had kunnen vinden. Mijn verhuizing was echt zwaar en moeilijk, maar Omar bleef altijd positief, vrolijk en professioneel."</blockquote>
-          <p class="review__naam"><img class="avatar" src="img/avatar-charlie.webp" alt="" width="48" height="48" loading="lazy"><strong>Charlie K</strong><span><svg class="ic ic--g" aria-hidden="true"><use href="#i-google"/></svg>Geverifieerde Google-review</span></p>
+        <li class="gr-kaart">
+          <div class="gr-kaart__kop">
+            <img class="gr-kaart__foto" src="img/avatar-charlie.webp" alt="" width="40" height="40" loading="lazy">
+            <div class="gr-kaart__wie"><strong>Charlie K</strong><span>Geverifieerde Google-review</span></div>
+            <svg class="gr-kaart__g" aria-hidden="true"><use href="#i-google"/></svg>
+          </div>
+          <span class="gr-sterren" role="img" aria-label="5 van 5 sterren"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></span>
+          <blockquote class="gr-kaart__tekst"><p>Deze jongens zijn de hardstwerkende, eerlijkste en liefste mensen die ik ooit had kunnen vinden. Mijn verhuizing was echt zwaar en moeilijk, maar Omar bleef altijd positief, vrolijk en professioneel.</p></blockquote>
         </li>
-        <li class="review tilt">
-          <p class="sterren" aria-label="5 van 5 sterren">★★★★★</p>
-          <blockquote>"Verhuisbedrijf de Reus, absoluut top!! Netjes, voorzichtig en respectvol met m'n spullen! Een aanrader!"</blockquote>
-          <p class="review__naam"><img class="avatar" src="img/avatar-mick.webp" alt="" width="48" height="48" loading="lazy"><strong>Mick Versnel</strong><span><svg class="ic ic--g" aria-hidden="true"><use href="#i-google"/></svg>Geverifieerde Google-review</span></p>
+        <li class="gr-kaart">
+          <div class="gr-kaart__kop">
+            <img class="gr-kaart__foto" src="img/avatar-mick.webp" alt="" width="40" height="40" loading="lazy">
+            <div class="gr-kaart__wie"><strong>Mick Versnel</strong><span>Geverifieerde Google-review</span></div>
+            <svg class="gr-kaart__g" aria-hidden="true"><use href="#i-google"/></svg>
+          </div>
+          <span class="gr-sterren" role="img" aria-label="5 van 5 sterren"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></span>
+          <blockquote class="gr-kaart__tekst"><p>Verhuisbedrijf de Reus, absoluut top!! Netjes, voorzichtig en respectvol met m'n spullen! Een aanrader!</p></blockquote>
         </li>
-        <li class="review tilt">
-          <p class="sterren" aria-label="5 van 5 sterren">★★★★★</p>
-          <blockquote>"Goede en duidelijke communicatie, hele fijne samenwerking. Gaat zorgvuldig met de items om en is zeer behulpzaam. Top professional en zou dit bedrijf zeker weer inhuren voor een volgende verhuizing!"</blockquote>
-          <p class="review__naam"><img class="avatar" src="img/avatar-dennis.webp" alt="" width="48" height="48" loading="lazy"><strong>Dennis Strijk</strong><span><svg class="ic ic--g" aria-hidden="true"><use href="#i-google"/></svg>Geverifieerde Google-review</span></p>
+        <li class="gr-kaart">
+          <div class="gr-kaart__kop">
+            <img class="gr-kaart__foto" src="img/avatar-dennis.webp" alt="" width="40" height="40" loading="lazy">
+            <div class="gr-kaart__wie"><strong>Dennis Strijk</strong><span>Geverifieerde Google-review</span></div>
+            <svg class="gr-kaart__g" aria-hidden="true"><use href="#i-google"/></svg>
+          </div>
+          <span class="gr-sterren" role="img" aria-label="5 van 5 sterren"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></span>
+          <blockquote class="gr-kaart__tekst"><p>Goede en duidelijke communicatie, hele fijne samenwerking. Gaat zorgvuldig met de items om en is zeer behulpzaam. Top professional en zou dit bedrijf zeker weer inhuren voor een volgende verhuizing!</p></blockquote>
         </li>
       </ul>
     </div>
   </section>
 
-  <!-- 9 · Werkwijze: vijf stappen met echte foto's -->
-  <section class="sectie rit-sectie" id="werkwijze">
+  <!-- 9 · Werkwijze: de trap naar uw nieuwe huis -->
+  <section class="sectie trap-sectie" id="werkwijze">
     <div class="wrap">
       <header class="kop-midden">
         <p class="label label--geel">Werkwijze</p>
         <h2 class="h2">Zo werkt het boeken van uw <mark>verhuizing</mark></h2>
       </header>
 
-      <ol class="stappen-foto">
-        <li class="sfoto tilt" data-tilt>
-          <figure class="sfoto__beeld"><img src="img/stap-1-formulier.webp" alt="Iemand vult thuis op de laptop het offerteformulier in." width="560" height="380" loading="lazy"></figure>
-          <div class="sfoto__tekst"><span class="sfoto__nr" aria-hidden="true">1</span><h3>Offerte aanvragen</h3><p>Via het formulier laat u uw gegevens en verhuisdatum achter.</p></div>
-        </li>
-        <li class="sfoto tilt" data-tilt>
-          <figure class="sfoto__beeld"><img src="img/stap-2-bellen.webp" alt="Een verhuisexpert belt met een klant." width="560" height="380" loading="lazy"></figure>
-          <div class="sfoto__tekst"><span class="sfoto__nr" aria-hidden="true">2</span><h3>Persoonlijk contact</h3><p>Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p></div>
-        </li>
-        <li class="sfoto tilt" data-tilt>
-          <figure class="sfoto__beeld"><img src="img/stap-3-offerte.webp" alt="Een offerte op papier wordt doorgenomen." width="560" height="380" loading="lazy"></figure>
-          <div class="sfoto__tekst"><span class="sfoto__nr" aria-hidden="true">3</span><h3>Offerte ontvangen</h3><p>U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p></div>
-        </li>
-        <li class="sfoto tilt" data-tilt>
-          <figure class="sfoto__beeld"><img src="img/stap-4-planning.webp" alt="Een agenda waarin de verhuisdatum wordt gemarkeerd." width="560" height="380" loading="lazy"></figure>
-          <div class="sfoto__tekst"><span class="sfoto__nr" aria-hidden="true">4</span><h3>Planning bevestigen</h3><p>Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p></div>
-        </li>
-        <li class="sfoto tilt" data-tilt>
-          <figure class="sfoto__beeld"><img src="img/stap-5-verhuisdag.webp" alt="Twee verhuizers laden verhuisdozen in de bus." width="560" height="380" loading="lazy"></figure>
-          <div class="sfoto__tekst"><span class="sfoto__nr" aria-hidden="true">5</span><h3>Verhuisdag</h3><p>U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p></div>
+      <ol class="trap">
+        <li class="trap__trede"><div class="trap__kaart"><figure class="trap__stapfoto"><img src="img/stap-1-formulier.webp" alt="Iemand vult op een laptop het offerteformulier in." width="560" height="380" loading="lazy"></figure><span class="trap__nr" aria-hidden="true">1</span><h3>Offerte aanvragen</h3><p>Via het formulier laat u uw gegevens en verhuisdatum achter.</p></div></li>
+        <li class="trap__trede"><div class="trap__kaart"><figure class="trap__stapfoto"><img src="img/stap-2-bellen.webp" alt="Een klant belt lachend met de verhuisadviseur." width="560" height="380" loading="lazy"></figure><span class="trap__nr" aria-hidden="true">2</span><h3>Persoonlijk contact</h3><p>Een van onze verhuisexperts neemt persoonlijk contact met u op om uw wensen en inboedel te bespreken.</p></div></li>
+        <li class="trap__trede"><div class="trap__kaart"><figure class="trap__stapfoto"><img src="img/stap-3-offerte.webp" alt="Iemand tekent de offerte." width="560" height="380" loading="lazy"></figure><span class="trap__nr" aria-hidden="true">3</span><h3>Offerte ontvangen</h3><p>U ontvangt een duidelijke en vrijblijvende offerte, zonder verrassingen achteraf.</p></div></li>
+        <li class="trap__trede"><div class="trap__kaart"><figure class="trap__stapfoto"><img src="img/stap-4-planning.webp" alt="Een agenda met de verhuisdatum omcirkeld." width="560" height="380" loading="lazy"></figure><span class="trap__nr" aria-hidden="true">4</span><h3>Planning bevestigen</h3><p>Na uw akkoord bevestigen wij de planning en regelen wij de rest.</p></div></li>
+        <li class="trap__trede"><div class="trap__kaart"><figure class="trap__stapfoto"><img src="img/stap-5-verhuisdag.webp" alt="Verhuizers laden dozen in de bus op de verhuisdag." width="560" height="380" loading="lazy"></figure><span class="trap__nr" aria-hidden="true">5</span><h3>Verhuisdag</h3><p>U kunt onze verhuizers verwachten op het afgesproken tijdstip. Wij verzorgen een professionele en zorgeloze verhuizing.</p></div></li>
+        <li class="trap__huis" aria-hidden="true">
+          <div class="trap__huisvorm">
+            <div class="trap__foto"><img src="img/nieuw-huis.webp" alt="" width="400" height="450" loading="lazy"></div>
+            <svg class="trap__dak" viewBox="0 0 190 214">
+              <path d="M5 97 95 15l90 82" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <g class="trap__sleutel"><circle cx="95" cy="-12" r="8" fill="none" stroke="#FFCC33" stroke-width="4"/><path d="M95 -4v16M95 6h6M95 11h5" fill="none" stroke="#FFCC33" stroke-width="4" stroke-linecap="round"/></g>
+            </svg>
+          </div>
+          <small>Uw nieuwe huis</small>
         </li>
       </ol>
 
       <div class="cta-balk">
-        <img class="cta-balk__kaart" src="img/route-kaart.webp" alt="" width="500" height="504" loading="lazy">
         <div class="cta-balk__tekst">
           <p class="cta-balk__kop">Klaar om uw verhuizing zorgeloos te regelen?</p>
           <p>Vraag vrijblijvend een offerte aan.</p>
@@ -384,6 +455,7 @@
           <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Persoonlijk verhuisadvies van verhuisexperts</li>
           <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Reactie binnen 24 uur</li>
         </ul>
+        <figure class="fotokader fotokader--aanvraag"><img src="img/aanvraag-verhuizer.webp" alt="Een lachende verhuizer draagt twee verhuisdozen." width="720" height="540" loading="lazy"></figure>
       </div>
       <form class="kaart formulier" action="mailto:info@verhuisbedrijfdereus.nl?subject=Verhuisofferte%20via%20de%20website" method="post" enctype="text/plain" novalidate>
         <div class="velden">
@@ -406,21 +478,41 @@
         <p class="label">Contact</p>
         <h2 class="h2">Wilt u iets bespreken of heeft u vragen over uw <mark>verhuizing</mark>?</h2>
         <p class="intro-klein">Ons team staat 7 dagen per week voor u klaar. Vul het contactformulier in en ontvang binnen 24 uur een reactie.</p>
-        <p class="bereikbaar" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></p>
-        <ul class="gegevens">
-          <li class="gegeven gegeven--bel gegeven--vol"><span class="tegel tegel--geel"><svg class="ic" aria-hidden="true"><use href="#i-telefoon"/></svg></span><div><span class="gegevens__lbl">Telefoon</span><a class="gegeven__groot" href="tel:+31850005647">085 000 5647</a></div><svg class="ic gegeven__pijl" aria-hidden="true"><use href="#i-pijl"/></svg></li>
-          <li class="gegeven"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg></span><div><span class="gegevens__lbl">E-mail</span><a href="mailto:info@verhuisbedrijfdereus.nl">info@<wbr>verhuisbedrijfdereus.nl</a></div></li>
-          <li class="gegeven"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span><div><span class="gegevens__lbl">Adres (hoofdkantoor)</span>Lau Mazirellaan 336, 2525 ZJ Den Haag</div></li>
-          <li class="gegeven gegeven--vol"><span class="tegel"><svg class="ic" aria-hidden="true"><use href="#i-klok"/></svg></span><div><span class="gegevens__lbl">Bereikbaarheid</span>
-            <dl class="openingstijden">
-              <div data-dagen="1-6"><dt>Maandag t/m zaterdag</dt><dd>van 08.00 tot 20.00 uur</dd></div>
-              <div data-dagen="0"><dt>Zondag</dt><dd>van 09.00 tot 17.00 uur</dd></div>
-            </dl>
-          </div></li>
-        </ul>
+        <div class="cblok">
+          <a class="cblok__bel" href="tel:+31850005647">
+            <span class="cblok__belic"><svg class="ic" aria-hidden="true"><use href="#i-telefoon"/></svg></span>
+            <span class="cblok__beltekst"><span class="cblok__lbl">Telefoon</span><span class="cblok__nummer">085 000 5647</span></span>
+            <svg class="ic cblok__pijl" aria-hidden="true"><use href="#i-pijl"/></svg>
+          </a>
+          <p class="bereikbaar" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></p>
+          <!-- adres op een wereldbol: draait, vliegt naar Den Haag en zoomt in tot de pin (js/wereld.js) -->
+          <div class="wereld" data-wereld data-lat="52.0596296" data-lng="4.2991377">
+            <div class="wereld__bol" aria-hidden="true"><span class="wereld__pin wereld__pin--plat"><svg class="ic"><use href="#i-huis"/></svg></span></div>
+            <div class="wereld__info">
+              <span class="wereld__ic"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span>
+              <div><span class="cblok__lbl">Adres (hoofdkantoor)</span><span class="wereld__adres">Lau Mazirellaan 336, 2525 ZJ Den Haag</span>
+                <a class="wereld__route" href="https://www.google.com/maps/dir/?api=1&amp;destination=Lau+Mazirellaan+336%2C+2525+ZJ+Den+Haag" target="_blank" rel="noopener">Route plannen <svg class="ic" aria-hidden="true"><use href="#i-pijl"/></svg></a></div>
+            </div>
+          </div>
+          <div class="cblok__lijst">
+            <div class="cblok__rij">
+              <span class="cblok__ic"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg></span>
+              <div><span class="cblok__lbl">E-mail</span><a class="cblok__waarde" href="mailto:info@verhuisbedrijfdereus.nl">info@verhuisbedrijfdereus.nl</a></div>
+            </div>
+            <div class="cblok__rij">
+              <span class="cblok__ic"><svg class="ic" aria-hidden="true"><use href="#i-klok"/></svg></span>
+              <div class="cblok__vol"><span class="cblok__lbl">Bereikbaarheid</span>
+                <dl class="openingstijden cblok__tijden">
+                  <div data-dagen="1-6"><dt>Maandag t/m zaterdag</dt><dd>08.00 tot 20.00 uur</dd></div>
+                  <div data-dagen="0"><dt>Zondag</dt><dd>09.00 tot 17.00 uur</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="gluur">
-      <img class="gluur__reus" src="img/reus-verhuizer.webp" alt="" width="760" height="1140" loading="lazy">
+      <figure class="gluur__foto uitscherm" data-uitscherm><span class="uitscherm__raam"><img class="uitscherm__achter" src="img/contact-klantenservice.webp" alt="" width="1200" height="800" loading="lazy"></span><img class="uitscherm__uit" src="img/contact-uit.webp" alt="Een medewerker van De Reus met headset staat klaar om u te helpen." width="1200" height="800" loading="lazy"><figcaption class="gluur__online"><span class="gluur__stip" aria-hidden="true"></span>Ons team staat voor u klaar</figcaption></figure>
       <form class="kaart formulier" action="mailto:info@verhuisbedrijfdereus.nl?subject=Contactformulier%20website" method="post" enctype="text/plain" novalidate>
         <div class="formulier__kop"><h3 class="h3">Contactformulier</h3><span class="formulier__chip"><svg class="ic" aria-hidden="true"><use href="#i-klok"/></svg>Reactie binnen 24 uur</span></div>
         <div class="velden">
@@ -500,5 +592,8 @@
 <script src="js/main.js"></script>
 <script src="js/3d.js"></script>
 <script src="js/hero.js"></script>
+<script src="js/trap-weg.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/wereld.js"></script>
 </body>
 </html>

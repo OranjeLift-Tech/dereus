@@ -1,0 +1,73 @@
+==================== hero-reus-echt  (beeldverhouding 2:3) ====================
+Upload eerst: refs/ref-logo.png
+Sla het resultaat op als: foto/hero-reus-echt.png (of .jpg)
+
+BRAND RULES (Verhuisbedrijf De Reus, a moving company in The Hague, the Netherlands):
+- The attached image is the real De Reus logo: a yellow house (#FFCC33) between two flexing royal-blue arms (#1746A2),
+  with the words "VERHUISBEDRIJF DE REUS". Reproduce it faithfully wherever the logo appears.
+- VANS / TRUCKS: white box truck or white Mercedes Sprinter-type van. On the side: the full logo LARGE (house + arms +
+  "DE REUS" in big yellow letters on a royal-blue band). No phone numbers, no other text, no other brands.
+- CLOTHING: movers wear a royal-blue (#1746A2) polo shirt with a small yellow house symbol on the left chest (symbol only,
+  NO text on shirts), navy work trousers, black safety shoes. Neat, clean, well-fitting.
+- BOXES: plain brown kraft moving boxes with only the small yellow house symbol printed on the side. NO words on boxes,
+  nothing handwritten.
+- PEOPLE: an honest, diverse mix of Dutch people (different ages, builds, backgrounds). Natural, friendly, confident,
+  not posed stock smiles. Never recreate a real, recognisable person. Hands must be anatomically correct (five fingers).
+- SETTING: recognisably The Hague / the Netherlands: brick row houses, white window frames, bicycles, trees, brick
+  streets. Realistic Dutch weather: bright, soft daylight, light clouds; not overly sunny.
+- STYLE: photorealistic editorial photography, full-frame camera, 35 mm or 50 mm lens, natural colours, realistic skin
+  texture, shallow depth of field where it fits. NOT illustration, NOT 3D render, NOT HDR, no text overlays, no watermark.
+
+ASPECT RATIO: 2:3. Highest resolution available.
+
+SCENE: FULL-BODY studio photograph of a very strong, muscular Dutch mover, about 35 years old, friendly confident half-smile, short dark hair, royal-blue baseball cap and royal-blue De Reus polo with the small yellow house symbol on the left chest, navy work trousers, black safety shoes. Broad shoulders and big biceps, athletic but believable, a real working man, not a bodybuilder caricature. He stands upright facing the camera, his LEFT fist resting on his hip, his RIGHT hand resting on top of a plain brown moving box that stands on the floor next to him at hip height on a second box. Whole figure from cap to shoes fits in frame with margin. Soft, even studio light from the front-left, realistic skin texture, sharp focus. BACKGROUND: completely flat, even chroma-key green (#00FF00), no shadow, no floor line, nothing else in the image. An original person, not a real recognisable individual.
+
+
+==================== rit-straat  (beeldverhouding 21:9) ====================
+Upload eerst: refs/ref-logo.png
+Sla het resultaat op als: foto/rit-straat.png (of .jpg)
+
+BRAND RULES (Verhuisbedrijf De Reus, a moving company in The Hague, the Netherlands):
+- The attached image is the real De Reus logo: a yellow house (#FFCC33) between two flexing royal-blue arms (#1746A2),
+  with the words "VERHUISBEDRIJF DE REUS". Reproduce it faithfully wherever the logo appears.
+- VANS / TRUCKS: white box truck or white Mercedes Sprinter-type van. On the side: the full logo LARGE (house + arms +
+  "DE REUS" in big yellow letters on a royal-blue band). No phone numbers, no other text, no other brands.
+- CLOTHING: movers wear a royal-blue (#1746A2) polo shirt with a small yellow house symbol on the left chest (symbol only,
+  NO text on shirts), navy work trousers, black safety shoes. Neat, clean, well-fitting.
+- BOXES: plain brown kraft moving boxes with only the small yellow house symbol printed on the side. NO words on boxes,
+  nothing handwritten.
+- PEOPLE: an honest, diverse mix of Dutch people (different ages, builds, backgrounds). Natural, friendly, confident,
+  not posed stock smiles. Never recreate a real, recognisable person. Hands must be anatomically correct (five fingers).
+- SETTING: recognisably The Hague / the Netherlands: brick row houses, white window frames, bicycles, trees, brick
+  streets. Realistic Dutch weather: bright, soft daylight, light clouds; not overly sunny.
+- STYLE: photorealistic editorial photography, full-frame camera, 35 mm or 50 mm lens, natural colours, realistic skin
+  texture, shallow depth of field where it fits. NOT illustration, NOT 3D render, NOT HDR, no text overlays, no watermark.
+
+ASPECT RATIO: 21:9. Highest resolution available.
+
+SCENE: A wide, eye-level panoramic street photo in The Hague. LEFT third: an older brick row house with white window frames and a few stacked moving boxes by the door (the old home). RIGHT third: a brighter, newer brick house with a small front garden and an open front door (the new home). Between and in front of them: an EMPTY asphalt road running horizontally across the ENTIRE width of the frame, filling the bottom 30% of the image, with a brick sidewalk behind it. NO vehicles, NO people, NO bicycles on the road. Camera perfectly level and perpendicular to the road, like a side-scrolling game background. Soft Dutch daylight.
+
+
+==================== rit-wagen  (beeldverhouding 16:9) ====================
+Upload eerst: refs/ref-logo.png
+Sla het resultaat op als: foto/rit-wagen.png (of .jpg)
+
+BRAND RULES (Verhuisbedrijf De Reus, a moving company in The Hague, the Netherlands):
+- The attached image is the real De Reus logo: a yellow house (#FFCC33) between two flexing royal-blue arms (#1746A2),
+  with the words "VERHUISBEDRIJF DE REUS". Reproduce it faithfully wherever the logo appears.
+- VANS / TRUCKS: white box truck or white Mercedes Sprinter-type van. On the side: the full logo LARGE (house + arms +
+  "DE REUS" in big yellow letters on a royal-blue band). No phone numbers, no other text, no other brands.
+- CLOTHING: movers wear a royal-blue (#1746A2) polo shirt with a small yellow house symbol on the left chest (symbol only,
+  NO text on shirts), navy work trousers, black safety shoes. Neat, clean, well-fitting.
+- BOXES: plain brown kraft moving boxes with only the small yellow house symbol printed on the side. NO words on boxes,
+  nothing handwritten.
+- PEOPLE: an honest, diverse mix of Dutch people (different ages, builds, backgrounds). Natural, friendly, confident,
+  not posed stock smiles. Never recreate a real, recognisable person. Hands must be anatomically correct (five fingers).
+- SETTING: recognisably The Hague / the Netherlands: brick row houses, white window frames, bicycles, trees, brick
+  streets. Realistic Dutch weather: bright, soft daylight, light clouds; not overly sunny.
+- STYLE: photorealistic editorial photography, full-frame camera, 35 mm or 50 mm lens, natural colours, realistic skin
+  texture, shallow depth of field where it fits. NOT illustration, NOT 3D render, NOT HDR, no text overlays, no watermark.
+
+ASPECT RATIO: 16:9. Highest resolution available.
+
+SCENE: A PERFECT SIDE VIEW (exactly 90 degrees, facing RIGHT) of a white De Reus moving box truck (7.5-ton, cab on the right). The box body carries the full De Reus logo LARGE and sharp: yellow house between two flexing royal-blue arms, and "DE REUS" in big yellow letters on a royal-blue band along the bottom of the box. Realistic reflections, black tyres, chrome details. The truck is isolated on a PURE FLAT CHROMA-KEY GREEN background (#00FF00), completely even, no shadow, no floor, no road, nothing else in the image. The whole truck fits in frame with margin around it.

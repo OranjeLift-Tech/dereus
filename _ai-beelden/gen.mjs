@@ -4,6 +4,7 @@
 // Key nooit in een bestand in de repo. Uit de omgeving, of uit ~/.gemini_api_key:
 //   node gen.mjs              alles
 //   node gen.mjs hero dienst  alleen scenes waarvan de naam zo begint
+//   node gen.mjs --prompts [naam ...]   zonder key: prompts voor de Gemini-app in PROMPTS-gemini-app.txt
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
@@ -12,7 +13,8 @@ import { fileURLToPath } from 'node:url';
 const HIER = path.dirname(fileURLToPath(import.meta.url));
 const KEY = process.env.GEMINI_API_KEY ||
   (fs.existsSync(path.join(os.homedir(), '.gemini_api_key')) ? fs.readFileSync(path.join(os.homedir(), '.gemini_api_key'), 'utf8').trim() : '');
-if (!KEY) { console.error('Geen GEMINI_API_KEY gevonden (omgeving of ~/.gemini_api_key).'); process.exit(1); }
+const PROMPTS = process.argv.includes('--prompts');   // geen key nodig: schrijft de prompts voor de Gemini-app
+if (!KEY && !PROMPTS) { console.error('Geen GEMINI_API_KEY gevonden (omgeving of ~/.gemini_api_key).'); process.exit(1); }
 
 const MODEL = 'gemini-3-pro-image-preview';
 const URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
@@ -53,6 +55,8 @@ const SCENES = [
   ['reviews-blij-nieuw-huis', '3:2', 'A happy couple in their new bright living room in The Hague, unpacking a De Reus box, laughing together. In the soft-focus background a mover places the last chair. Genuine, relaxed moment.'],
   ['werkwijze-planning', '4:5', 'A friendly De Reus planner at a desk in a small office, on the phone with a headset, laptop with a calendar open, a small De Reus logo sign on the wall behind. Bright, organised.'],
   ['aanvraag-verhuizer-doos', '4:5', 'Portrait of a strong, friendly mover (about 35) holding a De Reus box, looking into the camera, the De Reus van softly blurred behind him on a Hague street. Confident, approachable.'],
+  // Hero: echte foto in plaats van de getekende Reus (uitsnede op groen, zelfde plek en houding)
+  ['hero-reus-echt', '2:3', 'FULL-BODY studio photograph of a very strong, muscular Dutch mover, about 35 years old, friendly confident half-smile, short dark hair, royal-blue baseball cap and royal-blue De Reus polo with the small yellow house symbol on the left chest, navy work trousers, black safety shoes. Broad shoulders and big biceps, athletic but believable, a real working man, not a bodybuilder caricature. He stands upright facing the camera, his LEFT fist resting on his hip, his RIGHT hand resting on top of a plain brown moving box that stands on the floor next to him at hip height on a second box. Whole figure from cap to shoes fits in frame with margin. Soft, even studio light from the front-left, realistic skin texture, sharp focus. BACKGROUND: completely flat, even chroma-key green (#00FF00), no shadow, no floor line, nothing else in the image. An original person, not a real recognisable individual.'],
   // Werkwijze-rit: straatfoto + losse vrachtwagen die over de weg rijdt
   ['rit-straat', '21:9', 'A wide, eye-level panoramic street photo in The Hague. LEFT third: an older brick row house with white window frames and a few stacked moving boxes by the door (the old home). RIGHT third: a brighter, newer brick house with a small front garden and an open front door (the new home). Between and in front of them: an EMPTY asphalt road running horizontally across the ENTIRE width of the frame, filling the bottom 30% of the image, with a brick sidewalk behind it. NO vehicles, NO people, NO bicycles on the road. Camera perfectly level and perpendicular to the road, like a side-scrolling game background. Soft Dutch daylight.'],
   ['rit-wagen', '16:9', 'A PERFECT SIDE VIEW (exactly 90 degrees, facing RIGHT) of a white De Reus moving box truck (7.5-ton, cab on the right). The box body carries the full De Reus logo LARGE and sharp: yellow house between two flexing royal-blue arms, and "DE REUS" in big yellow letters on a royal-blue band along the bottom of the box. Realistic reflections, black tyres, chrome details. The truck is isolated on a PURE FLAT CHROMA-KEY GREEN background (#00FF00), completely even, no shadow, no floor, no road, nothing else in the image. The whole truck fits in frame with margin around it.'],
@@ -90,8 +94,24 @@ async function maak([naam, ratio, beschrijving]) {
   }
 }
 
-const filter = process.argv.slice(2);
+const filter = process.argv.slice(2).filter(a => !a.startsWith('--'));
 const lijst = filter.length ? SCENES.filter(s => filter.some(f => s[0].startsWith(f))) : SCENES;
+if (PROMPTS) {
+  const tekst = lijst.map(([naam, ratio, beschrijving]) =>
+    `==================== ${naam}  (beeldverhouding ${ratio}) ====================
+Upload eerst: refs/ref-logo.png
+Sla het resultaat op als: foto/${naam}.png (of .jpg)
+
+${MERK.trim()}
+
+ASPECT RATIO: ${ratio}. Highest resolution available.
+
+SCENE: ${beschrijving}
+`).join('\n\n');
+  fs.writeFileSync(path.join(HIER, 'PROMPTS-gemini-app.txt'), tekst);
+  console.log('Geschreven: PROMPTS-gemini-app.txt (' + lijst.length + ' prompts)');
+  process.exit(0);
+}
 const TEGELIJK = 5;
 for (let i = 0; i < lijst.length; i += TEGELIJK) await Promise.all(lijst.slice(i, i + TEGELIJK).map(maak));
 console.log('Klaar:', UIT);

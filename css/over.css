@@ -1,0 +1,57 @@
+/* Verhuisbedrijf De Reus · over ons (merkboek 7.1 blok 10 "Uw verhuisadviseur": Diepblauw)
+ * Achtergrond: het dak uit het logo als lijn, groot en afgesneden, hoek 42° (merkboek 5.1). */
+
+.over-sectie {
+  position: relative; overflow: hidden; isolation: isolate;
+  padding-top: var(--dr-sectie); padding-bottom: var(--dr-sectie);
+  background:
+    radial-gradient(ellipse 60% 70% at 85% 40%, rgba(23,70,162,.55), rgba(23,70,162,0) 70%),
+    var(--dr-diepblauw);
+}
+
+/* dak-lijnen: 1000 × 450 = 42° zoals in het logo */
+.over-dak {
+  position: absolute; z-index: -1; pointer-events: none;
+  fill: none; stroke-linejoin: miter;
+  aspect-ratio: 1000 / 450; height: auto;
+}
+.over-dak--groot { width: 1300px; right: -380px; bottom: -120px; stroke: rgba(255,255,255,.06); stroke-width: 70; }
+.over-dak--klein { width: 620px; right: -40px; bottom: -40px; stroke: var(--dr-goudgeel); stroke-width: 16; opacity: .9; }
+/* fijn raster van stippen linksboven, zoals in de contactsectie */
+.over-sectie::before {
+  content: ""; position: absolute; z-index: -1; left: 0; top: 0; width: 42%; height: 60%;
+  background-image: radial-gradient(rgba(255,255,255,.16) 1.2px, transparent 1.4px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(135deg, #000 20%, transparent 75%); mask-image: linear-gradient(135deg, #000 20%, transparent 75%);
+}
+
+/* tekst op donker */
+.over-sectie .label { color: var(--dr-goudgeel); }
+.over-sectie .intro-klein { color: var(--dr-wit); }
+.over-sectie .over__tekst > p:not(.intro-klein) { color: rgba(255,255,255,.82); }
+.over-sectie .vinklijst { margin: var(--dr-space-2) 0; }
+.over-sectie .vinklijst li { color: var(--dr-wit); }
+
+/* belkaart als lichte kaart op het donkere vlak */
+.over-sectie .belkaart {
+  background: var(--dr-wit); border-left-color: var(--dr-goudgeel);
+  box-shadow: 0 18px 40px -12px rgba(0,0,0,.45);
+}
+.over-sectie .belkaart p { color: var(--dr-inkt); }
+
+/* foto: gele plaat erachter blijft, schaduw dieper op donker */
+.over-sectie .uitfoto__schaduw { box-shadow: 0 30px 60px -18px rgba(0,0,0,.6); }
+
+@media (max-width: 900px) {
+  .over-dak--groot { width: 900px; right: -420px; bottom: -80px; stroke-width: 56; }
+  .over-dak--klein { width: 380px; right: -90px; bottom: -30px; stroke-width: 12; }
+}
+
+/* direct na de hero: het donkere vlak loopt door onder de offertekaart, geen witte strook */
+.hero--foto + .over-sectie {
+  margin-top: calc(var(--kaart-over, 150px) * -1);
+  padding-top: calc(var(--kaart-over, 150px) + var(--dr-sectie));
+}
+@media (max-width: 760px) {
+  .hero--foto + .over-sectie { margin-top: -110px; padding-top: calc(110px + var(--dr-sectie)); }
+}
