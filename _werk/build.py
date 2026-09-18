@@ -282,6 +282,8 @@ def bouw_pagina(pagina, register, bestanden, streng):
     ld = navigatie.lade(ctx)
     ft = navigatie.footer(ctx)
     bb = navigatie.belbalk(ctx)
+    hdr, ld, ft, bb = (ctx.contactlinks(fragment) for fragment in (hdr, ld, ft, bb))
+    delen = [ctx.contactlinks(fragment) for fragment in delen]
 
     css = [bestanden.kern_css] + [u for u in (bestanden.blok_css(n) for n in gebruikt) if u]
     js = [bestanden.kern_js] + [u for u in (bestanden.blok_js(n) for n in gebruikt) if u]

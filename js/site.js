@@ -165,7 +165,7 @@
     [].forEach.call(groepen, function (g) { ioG.observe(g); });
   }
 
-  /* De zwevende placeholder maakt plaats voor formulieren en de interactieve kaart. */
+  /* De zwevende contactlink maakt plaats voor formulieren en de interactieve kaart. */
   var whatsapp = doc.querySelector('.whatsapp');
   if (whatsapp) {
     var whatsappFrame = null;

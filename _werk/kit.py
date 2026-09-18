@@ -4,6 +4,7 @@ Een pagina declareert zich met Pagina(...); een blok krijgt een Ctx mee met alle
 """
 import html as _html
 import re
+from html.parser import HTMLParser
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -185,6 +186,41 @@ def zonder_opmaak(tekst):
     return _MARK.sub(r"\1", t)
 
 
+class _ContactTekst(HTMLParser):
+    """Koppel alleen zichtbare bedrijfsnummers, nooit invoervelden of attributen."""
+    def __init__(self):
+        super().__init__(convert_charrefs=False)
+        self.delen = []
+        self.beschermd = []
+
+    def handle_starttag(self, tag, attrs):
+        self.delen.append(self.get_starttag_text())
+        if tag in {"a", "script", "style", "textarea", "select", "svg"}:
+            self.beschermd.append(tag)
+
+    def handle_startendtag(self, tag, attrs):
+        self.delen.append(self.get_starttag_text())
+
+    def handle_endtag(self, tag):
+        self.delen.append(f"</{tag}>")
+        if self.beschermd and self.beschermd[-1] == tag:
+            self.beschermd.pop()
+
+    def handle_data(self, data):
+        if not self.beschermd:
+            data = data.replace(cfg.TEL, f'<a href="{cfg.TELHREF}">{cfg.TEL}</a>')
+        self.delen.append(data)
+
+    def handle_entityref(self, name):
+        self.delen.append(f"&{name};")
+
+    def handle_charref(self, name):
+        self.delen.append(f"&#{name};")
+
+    def handle_comment(self, data):
+        self.delen.append(f"<!--{data}-->")
+
+
 # ---------------------------------------------------------------------------
 # Ctx: wat een blok meekrijgt
 # ---------------------------------------------------------------------------
@@ -336,6 +372,21 @@ class Ctx:
     def belknop(self, soort="blauw", tekst=None, klasse=""):
         t = tekst or f"Bel {cfg.TEL}"
         return self.knop(t, cfg.TELHREF, soort=soort, icoon="telefoon", klasse=f"knop--icoon-voor {klasse}".strip())
+
+    def whatsapp(self, klasse="wa-link", tekst="WhatsApp"):
+        return (f'<a class="{esc(klasse)}" href="{cfg.WHATSAPP}" data-whatsapp-business '
+                f'aria-label="Contact met {esc(cfg.NAAM)} via WhatsApp" title="Contact via WhatsApp">'
+                f'{self.icoon("whatsapp")}<span class="wa-link__tekst">{esc(tekst)}</span></a>')
+
+    def contactlinks(self, fragment):
+        """Eén gedeelde regel voor alle blokken: naast bellen ook WhatsApp."""
+        parser = _ContactTekst()
+        parser.feed(fragment)
+        parser.close()
+        fragment = "".join(parser.delen)
+        patroon = re.compile(r'<a\b(?=[^>]*\bhref=[\"\']' + re.escape(cfg.TELHREF)
+                             + r'[\"\'])[^>]*>(?:(?!</a>).)*</a>(?!\s*<a\b[^>]*data-whatsapp-business)', re.S)
+        return patroon.sub(lambda m: m.group(0) + self.whatsapp(), fragment)
 
     def icoon(self, naam, klasse="ic", label=None):
         if naam not in LIJN and naam not in VOL:

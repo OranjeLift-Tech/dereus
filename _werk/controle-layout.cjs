@@ -48,11 +48,22 @@ const path = require('node:path');
         assert.deepEqual(layout.brokenLabels, [], `${width} ${route}: broken form labels`);
         assert.deepEqual(layout.brokenAria, [], `${width} ${route}: broken ARIA references`);
         const whatsapp = page.locator('.whatsapp');
-        assert.equal(await whatsapp.count(), 1, `${width} ${route}: WhatsApp placeholder`);
-        assert.equal(await whatsapp.isDisabled(), true);
-        assert.equal(await whatsapp.getAttribute('type'), 'button');
-        assert.equal(await whatsapp.getAttribute('aria-label'), 'WhatsApp binnenkort beschikbaar');
-        assert.equal(await whatsapp.getAttribute('href'), null);
+        assert.equal(await whatsapp.count(), 1, `${width} ${route}: WhatsApp contact`);
+        assert.equal(await whatsapp.getAttribute('aria-label'), 'Contact met Verhuisbedrijf De Reus via WhatsApp');
+        assert.equal(await whatsapp.getAttribute('href'), 'https://wa.me/31850005647');
+        assert.equal(await whatsapp.getAttribute('disabled'), null);
+        assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('a[href="tel:+31850005647"]')].flatMap(tel => {
+          const wa = tel.nextElementSibling;
+          if (!wa || wa.href !== 'https://wa.me/31850005647' || !wa.hasAttribute('data-whatsapp-business')) return [tel.outerHTML];
+          if (wa.nextElementSibling?.hasAttribute('data-whatsapp-business')) return ['Duplicate WhatsApp alternative'];
+          if (wa.target === '_blank' && !wa.rel.includes('noopener')) return ['Unsafe new tab'];
+          const visible = el => !!el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
+          return visible(tel) && !visible(wa) ? ['Visible phone without visible WhatsApp'] : [];
+        })), [], `${width} ${route}: paired business phone contacts`);
+        assert.deepEqual(await page.locator('.knop--cta').evaluateAll(items => items.filter(el => el.getClientRects().length).flatMap(el => {
+          const style = getComputedStyle(el), box = el.getBoundingClientRect();
+          return box.height < 44 || style.boxShadow.includes('inset') || parseFloat(style.borderTopWidth) > 1 ? [el.className] : [];
+        })), [], `${width} ${route}: clean CTA styling and touch size`);
         assert.ok(await whatsapp.evaluate(el => {
           const box = el.getBoundingClientRect(), bar = document.querySelector('.mcta').getBoundingClientRect();
           return box.left >= 0 && box.right <= innerWidth && box.bottom <= innerHeight && (!bar.height || box.bottom <= bar.top - 10);
@@ -69,6 +80,10 @@ const path = require('node:path');
           assert.ok(await page.locator('.b-dienstenpanelen__panelen').evaluate(el => {
             const box = el.getBoundingClientRect(); return Math.abs((box.left + box.right) / 2 - innerWidth / 2) < 2;
           }), `${width}: service panels centered without an empty sidebar`);
+        }
+        if (route === '/contact/' && width > 960) {
+          assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.b-kaart__beeld').getBoundingClientRect().top
+            - document.querySelector('#kaart-kop').getBoundingClientRect().top) < 2), `${width}: map top aligns address heading`);
         }
         const heading = route === '/' ? '.hero__tekst' : '.pk__tekst';
         if (await page.locator(heading).count()) {
@@ -91,6 +106,10 @@ const path = require('node:path');
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(base, { waitUntil: 'networkidle' });
     await page.screenshot({ path: path.join(out, 'home-desktop.png') });
+    await page.locator('.header__cta').focus();
+    assert.ok(await page.locator('.header__cta').evaluate(el => {
+      const style = getComputedStyle(el); return style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2;
+    }), 'Keyboard focus remains visible on green buttons');
     const toggle = page.locator('.nav__open');
     await toggle.focus();
     await page.keyboard.press('Enter');

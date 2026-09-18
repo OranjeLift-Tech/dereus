@@ -20,7 +20,7 @@
 .werkwijze__beeld { position: sticky; top: calc(var(--header-h) + 1.5rem); display: grid; overflow: hidden; isolation: isolate; border-radius: var(--radius-media); background: var(--brand-secondary); box-shadow: var(--schaduw-kaart); }
 .werkwijze__beeldlaag { grid-area: 1 / 1; min-width: 0; opacity: 0; transition: opacity .32s var(--ease); }
 .werkwijze__beeldlaag.is-actief { opacity: 1; z-index: 1; }
-.werkwijze__accent { top: 1rem; right: 1rem; color: var(--white); opacity: .55; }
+.werkwijze__accent { top: 0; right: 0; }
 .werkwijze__beeldlaag img { display: block; width: 100%; height: auto; aspect-ratio: 1.2; object-fit: cover; }
 .werkwijze__bijschrift { min-height: 4.25rem; margin: 0; padding: 1.25rem 1.5rem; color: var(--white); font-weight: var(--weight-bold); line-height: 1.4; background: var(--brand-secondary); }
 .knoppen--midden { justify-content: center; margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem); }

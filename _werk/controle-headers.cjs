@@ -104,6 +104,8 @@ const out = path.resolve(__dirname, '../website/review/cleanup/headers-final');
       await page.keyboard.press('Enter');
       assert.notEqual(await select.inputValue(), '', 'Native select changes with keyboard');
       assert.ok(await select.evaluate(el => getComputedStyle(el.closest('label')).boxShadow !== 'none'), 'Visible field focus treatment');
+      // Edge can leave its native popup open after Enter; dismiss before testing tab order.
+      await page.keyboard.press('Escape');
       await page.keyboard.press('Tab');
       assert.equal(await form.locator('button[type=submit]').evaluate(el => el === document.activeElement), true, 'Tab reaches submit');
       await form.locator('[name=van]').fill('Den Haag');
