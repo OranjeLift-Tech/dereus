@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-labelledby="icoon-nationaal-t">
+  <title id="icoon-nationaal-t">Nationale verhuizingen</title>
+  <!-- De Reus iconenset v1 · raster 48 · koningsblauw hoofdvorm, goudgeel accent (de spullen) · 2 px tussenruimte -->
+  <defs>
+    <mask id="icoon-nationaal-m" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
+      <rect width="48" height="48" fill="#fff"/>
+      <rect x="16" y="11" width="16" height="16" rx="2.5" fill="#000"/>
+    </mask>
+  </defs>
+  <path d="M24 46S8 30.5 8 19a16 16 0 0 1 32 0c0 11.5-16 27-16 27z" mask="url(#icoon-nationaal-m)" style="fill:var(--icoon-hoofd,#1746A2)"/>
+  <rect x="18" y="13" width="12" height="12" rx="1.5" style="fill:var(--icoon-accent,#FFCC33)"/>
+  <path d="M22.5 13h3v4.5h-3z" style="fill:var(--icoon-hoofd,#1746A2)"/>
+</svg>

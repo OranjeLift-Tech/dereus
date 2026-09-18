@@ -1,0 +1,17 @@
+# Alleen de compacte webeditie van het merkboek hoort in de repo.
+# Alles hieronder is intern werkmateriaal en blijft lokaal.
+research/
+content/
+OPEN-VRAGEN.md
+index-uitgebreid.html
+Merkboek-De-Reus-v1.0-uitgebreid.pdf
+assets/logo-v1-archief/
+assets/logo-v2/
+assets/mockups-v1-archief/
+assets/boek/
+assets/mockups/*
+!assets/mockups/verhuiswagen.svg
+!assets/mockups/website-header.svg
+assets/imagery/*
+!assets/imagery/icoon-*.svg
+assets/logo/vergelijking.png
