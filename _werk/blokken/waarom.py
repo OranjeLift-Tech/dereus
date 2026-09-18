@@ -1,22 +1,10 @@
-"""Waarom De Reus (#waarom): links de kop, de knop en de bevestigde cijfers (uit #cijfers, die geen eigen
-band meer krijgt: besluit dereus-28), rechts vier kaarten met een goudgeel huisje als badge.
-"""
+"""Waarom De Reus: vier afspraken naast de inpakillustratie uit de visuele homepage."""
 NAAM = "waarom"
 CSS = True
 JS = False
 
 # Icoon per kaart, op volgorde van de kopij
 ICONEN = ["persoon", "doos", "euro", "schild"]
-
-
-def feiten(ctx):
-    """Hoogstens drie cijfers uit ## ... {#cijfers}. Geen voorrijkosten staat al als kaart, dus die valt weg."""
-    blok = ctx.kopij.blok_of_leeg("cijfers")
-    items = [it for it in blok.items if "voorrijkosten" not in it.veld("tekst")][:3]
-    if not items:
-        return ""
-    li = "".join(f'<li><b>{ctx.inline(it.titel)}</b><span>{ctx.inline(it.veld("tekst"))}</span></li>' for it in items)
-    return f'<ul class="wfeiten" role="list">{li}</ul>'
 
 
 def html(ctx, kopij, **opties):
@@ -36,11 +24,13 @@ def html(ctx, kopij, **opties):
   <div class="wrap waarom">
     <div class="waarom__kop" data-reveal>
       {ctx.kopgroep(k)}
-      {f'<div class="knoppen">{knop}</div>' if knop else ""}
-      {feiten(ctx)}
     </div>
-    <ul class="wkaarten" role="list" data-reveal-groep>
-      {"".join(kaarten)}
-    </ul>
+    <div class="waarom__inhoud">
+      <figure class="waarom__beeld" data-reveal>
+        {ctx.beeld("/img/verwachten-inpakken.webp", "Illustratie van het zorgvuldig inpakken van een verhuizing", 720, 540)}
+      </figure>
+      <ul class="wkaarten" role="list" data-reveal-groep>{"".join(kaarten)}</ul>
+    </div>
+    {f'<div class="knoppen waarom__knoppen">{knop}</div>' if knop else ""}
   </div>
 </section>'''

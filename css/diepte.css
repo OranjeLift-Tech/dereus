@@ -1,0 +1,120 @@
+/* Verhuisbedrijf De Reus · één 3D-systeem voor de hele pagina (komt als laatste)
+ *
+ * Idee: alles is een verhuisdoos. Elk vlak heeft een echte dikte (een zijkant die naar rechtsonder
+ * wegloopt, licht van linksboven) en een zachte slagschaduw eronder. Zo lijkt de pagina uit het
+ * scherm te komen, zonder dat er iets beweegt.
+ *   dun   (4 px)  tegels, chips, kleine knoppen
+ *   kaart (8 px)  diensten, reviews, beloftes, gegevens, stappen
+ *   blok  (14 px) formulieren, offertekaart, telefoonkaart, grote foto's
+ * Kleuren blijven merkboek: Koningsblauw, Diepblauw, Goudgeel, IJsblauw, Mist, radius 8/12/20.
+ * Geen animatie, geen beweging bij hover, geen scroll-effecten. */
+
+:root {
+  /* zijkant van een wit vlak (koel blauwgrijs, loopt donkerder weg) */
+  --zij-wit-4: 1px 1px 0 #D9E0EE, 2px 2px 0 #CFD8EA, 3px 3px 0 #C5D0E5, 4px 4px 0 #BBC8E0;
+  --zij-wit-8: 1px 1px 0 #DCE3F0, 2px 2px 0 #D5DDEC, 3px 3px 0 #CED7E9, 4px 4px 0 #C7D1E5,
+               5px 5px 0 #C0CBE2, 6px 6px 0 #B9C5DE, 7px 7px 0 #B2BFDB, 8px 8px 0 #ABB9D7;
+  --zij-wit-14: 1px 1px 0 #DCE3F0, 2px 2px 0 #D7DFED, 3px 3px 0 #D2DAEB, 4px 4px 0 #CDD6E8,
+                5px 5px 0 #C8D2E6, 6px 6px 0 #C3CEE3, 7px 7px 0 #BECAE1, 8px 8px 0 #B9C5DE,
+                9px 9px 0 #B4C1DC, 10px 10px 0 #AFBDD9, 11px 11px 0 #AAB9D7, 12px 12px 0 #A5B5D4,
+                13px 13px 0 #A0B1D2, 14px 14px 0 #9BADCF;
+  /* zijkant van een blauw vlak */
+  --zij-blauw-8: 1px 1px 0 #133A86, 2px 2px 0 #12357C, 3px 3px 0 #113173, 4px 4px 0 #102D6A,
+                 5px 5px 0 #0F2A62, 6px 6px 0 #0E2659, 7px 7px 0 #0D2351, 8px 8px 0 #0C2049;
+  --zij-blauw-14: 1px 1px 0 #133A86, 2px 2px 0 #12367E, 3px 3px 0 #123377, 4px 4px 0 #113070,
+                  5px 5px 0 #102D69, 6px 6px 0 #0F2A62, 7px 7px 0 #0F275C, 8px 8px 0 #0E2455,
+                  9px 9px 0 #0D224F, 10px 10px 0 #0C1F49, 11px 11px 0 #0C1D44, 12px 12px 0 #0B1A3E,
+                  13px 13px 0 #0A1839, 14px 14px 0 #091634;
+  /* zijkant van een geel vlak (tape en knoppen) */
+  --zij-geel-8: 1px 1px 0 #F4BE1A, 2px 2px 0 #EDB714, 3px 3px 0 #E6B00F, 4px 4px 0 #DFAA0A,
+                5px 5px 0 #D9A400, 6px 6px 0 #CF9C00, 7px 7px 0 #C59400, 8px 8px 0 #BB8D00;
+  --zij-geel-14: 1px 1px 0 #F4BE1A, 2px 2px 0 #F0BA16, 3px 3px 0 #ECB612, 4px 4px 0 #E8B20E,
+                 5px 5px 0 #E4AE0A, 6px 6px 0 #E0AA06, 7px 7px 0 #DCA602, 8px 8px 0 #D9A400,
+                 9px 9px 0 #D3A000, 10px 10px 0 #CD9B00, 11px 11px 0 #C79600, 12px 12px 0 #C19100,
+                 13px 13px 0 #BB8D00, 14px 14px 0 #B58800;
+  /* slagschaduw op de ondergrond */
+  --val-licht: 18px 22px 34px -10px rgba(15,45,107,.30);
+  --val-diep: 26px 34px 50px -12px rgba(6,20,55,.55);
+}
+
+/* ---------- 0. niets beweegt ---------- */
+*, *::before, *::after { animation: none !important; transition: none !important; }
+html { scroll-behavior: auto; }
+.trap[data-zien] .trap__trede, .trap[data-zien] .trap__huis { opacity: 1 !important; translate: none !important; }
+.trap[data-zien] .trap__weg { clip-path: none !important; }
+/* hover: alleen kleur, nooit verschuiven, kantelen of zoomen */
+.knop:hover, .knop:active, .knop--geel:hover, .knop--geel:active,
+.cblok__bel:hover, .offerte__bel:hover, .beloftes__cta a:hover,
+.dienst:hover, .review:hover, .trap__trede:hover .trap__kaart { transform: none; translate: none; }
+.cblok__bel:hover .cblok__pijl, .beloftes__cta a:hover .ic { translate: none; transform: none; }
+.trap__huis:hover .trap__foto img, .sfoto:hover .sfoto__beeld img, .gegeven--beeld:hover .gbeeld--kaart img { scale: none; }
+
+/* ---------- 1. knoppen: een blok met een echte onderkant ---------- */
+.knop--geel, .knop--geel:hover { box-shadow: var(--zij-geel-8), var(--val-licht); background-image: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%); }
+.knop--geel:active { box-shadow: var(--zij-geel-8), var(--val-licht); }
+.knop--omlijnd, .knop--omlijnd:active { box-shadow: var(--zij-wit-4); }
+.knop--omlijnd-licht, .knop--omlijnd-licht:active { box-shadow: 1px 1px 0 rgba(255,255,255,.25), 2px 2px 0 rgba(255,255,255,.2), 3px 3px 0 rgba(255,255,255,.15), 4px 4px 0 rgba(255,255,255,.1); }
+.header .knop--geel { box-shadow: var(--zij-geel-8) !important; }
+.header.is-vast .knop--geel { box-shadow: 1px 1px 0 #E6B00F, 2px 2px 0 #D9A400, 3px 3px 0 #C59400 !important; }
+
+/* ---------- 2. kleine vlakken: tegels en chips ---------- */
+.tegel, .cblok__ic, .cblok__belic, .zwevend__ic { box-shadow: var(--zij-wit-4); }
+.tegel--geel, .cblok__belic, .zwevend__ic { box-shadow: 1px 1px 0 #EDB714, 2px 2px 0 #E0AA06, 3px 3px 0 #D3A000, 4px 4px 0 #C59400; }
+.vinklijst .ic { box-shadow: 1px 1px 0 #102D6A, 2px 2px 0 #0C2049, 3px 3px 0 #091634; }
+.vinklijst--licht .ic { box-shadow: 1px 1px 0 #E6B00F, 2px 2px 0 #D3A000, 3px 3px 0 #BB8D00; }
+
+/* ---------- 3. kaarten (8 px dik) ---------- */
+.dienst, .gr-kaart, .gr-score, .beloftes li:not(.beloftes__cta), .cblok__lijst, .trap__kaart, .belkaart, .hero__keurmerken {
+  box-shadow: var(--zij-wit-8), var(--val-licht) !important;
+}
+.dienst, .gr-kaart, .gr-score, .beloftes li:not(.beloftes__cta), .cblok__lijst, .trap__kaart { border: 1px solid #D5DBE6; }
+.hero__keurmerken { box-shadow: var(--zij-blauw-8) !important; background: var(--dr-diepblauw); }
+.over-sectie .belkaart { box-shadow: var(--zij-wit-8), var(--val-diep) !important; }
+.beloftes__cta a { box-shadow: var(--zij-geel-8), var(--val-licht) !important; }
+.zwevend { box-shadow: var(--zij-wit-8), var(--val-diep) !important; }
+
+/* ---------- 4. blokken (14 px dik): hier komt de pagina echt uit het scherm ---------- */
+.formulier, .offerte__form, .gluur .formulier { box-shadow: var(--zij-wit-14), var(--val-diep) !important; }
+.sectie--diep .formulier { box-shadow: var(--zij-wit-14), 30px 40px 60px -12px rgba(0,0,0,.55) !important; }
+.hero__kaart { box-shadow: var(--zij-blauw-14), var(--val-diep) !important; }
+.cblok__bel, .spoed, .cta-balk { box-shadow: var(--zij-blauw-14), var(--val-diep) !important; }
+.sectie--diep .cta-balk, .trap-sectie .cta-balk { box-shadow: 1px 1px 0 rgba(255,255,255,.14), 2px 2px 0 rgba(255,255,255,.11), 3px 3px 0 rgba(255,255,255,.08), 4px 4px 0 rgba(255,255,255,.06), 5px 5px 0 rgba(255,255,255,.04), 24px 30px 50px -12px rgba(0,0,0,.5) !important; }
+
+/* grote foto's: gele verhuistape als zijkant, zoals een doos met De Reus-tape */
+.gluur__foto, .fotokader, .podium__foto, .trap__foto { box-shadow: var(--zij-geel-14), var(--val-diep) !important; }
+.uitfoto__vlak { transform: none !important; box-shadow: var(--zij-geel-14); background: var(--dr-goudgeel); }
+.uitfoto__schaduw { box-shadow: 30px 40px 60px -14px rgba(0,0,0,.6) !important; }
+.dienst__foto { box-shadow: inset 0 -4px 0 var(--dr-goudgeel); }
+
+/* ---------- 5. koppen met diepte ---------- */
+/* hero: letters als massieve blokken */
+.hero--foto .display {
+  text-shadow: 1px 1px 0 #0C2049, 2px 2px 0 #0B1D44, 3px 3px 0 #0A1B3F, 4px 4px 0 #09183A,
+               5px 5px 0 #081635, 6px 6px 0 #071430, 10px 16px 28px rgba(0,0,0,.45);
+}
+.hero--foto .display mark { text-shadow: 1px 1px 0 #D9A400, 2px 2px 0 #CF9C00, 3px 3px 0 #C59400, 4px 4px 0 #BB8D00, 5px 5px 0 #8A6800, 6px 6px 0 #5E4700, 10px 16px 28px rgba(0,0,0,.45); }
+/* sectiekoppen: dun reliëf, rustig en zakelijk */
+.h2 { text-shadow: 1px 1px 0 #D5DDEC, 2px 2px 0 #C7D1E5, 3px 3px 0 #B9C5DE; }
+.sectie--diep .h2, .over-sectie .h2, .trap-sectie .h2 { text-shadow: 1px 1px 0 #0A1F4D, 2px 2px 0 #081A42, 3px 3px 0 #061437, 8px 12px 20px rgba(0,0,0,.35); }
+.h2 mark { text-shadow: none; }
+.sectie--diep .h2 mark, .over-sectie .h2 mark, .trap-sectie .h2 mark { text-shadow: 1px 1px 0 #C59400, 2px 2px 0 #8A6800, 3px 3px 0 #5E4700; }
+/* cijfers: blokletters op de gele band */
+.cijfers strong {
+  text-shadow: 1px 1px 0 #F4BE1A, 2px 2px 0 #E6B00F, 3px 3px 0 #D9A400, 4px 4px 0 #C59400,
+               5px 5px 0 #B58800, 6px 6px 0 #A07800, 10px 14px 18px rgba(15,45,107,.35);
+}
+
+/* ---------- 6. ruimte voor de dikte ---------- */
+/* de zijkant steekt 8 à 14 px uit; geef rasters iets meer lucht zodat niets tegen elkaar botst */
+.diensten, .gr-lijst, .beloftes { gap: 22px 22px; }
+.cblok { gap: 22px; }
+
+/* ---------- 7. aanvullingen ---------- */
+.offerte__bel { box-shadow: var(--zij-wit-8), var(--val-licht) !important; }
+.logovlak { box-shadow: var(--zij-wit-8), 18px 24px 36px -10px rgba(0,0,0,.45); }
+.sectie--offerte .offerte--pro::before { box-shadow: var(--zij-wit-14), var(--val-licht); }
+/* invulvelden liggen ín de kaart: licht verdiept, zodat de kaart zelf naar voren komt */
+.formulier input, .formulier textarea, .formulier select, .hero__velden {
+  box-shadow: inset 2px 2px 0 rgba(15,45,107,.08), inset 0 1px 3px rgba(15,45,107,.06);
+}
+.hero__velden { box-shadow: inset 2px 2px 0 rgba(15,45,107,.10), 0 0 0 4px rgba(255,204,51,.35); }

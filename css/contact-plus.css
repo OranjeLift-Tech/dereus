@@ -1,0 +1,133 @@
+/* Verhuisbedrijf De Reus · contact, extra laag (komt na contact.css en 3d.css)
+ * 1. kaarten met beeld bovenin (e-mail: envelop, adres: kaart)
+ * 2. bereikbaarheid met lopende klok en dagbalk
+ * 3. medewerker komt uit het scherm (uitsnede boven de foto, beweegt mee met de muis) */
+
+/* ---------- 1. kaarten met beeld ---------- */
+.gegeven--beeld { flex-direction: column; align-items: stretch; gap: 0; padding: 0; overflow: hidden; }
+.gegeven__rij { display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px 18px; }
+.gegeven__rij > div { min-width: 0; }
+.gbeeld {
+  position: relative; display: block; height: 132px; overflow: hidden;
+  background: linear-gradient(160deg, var(--dr-ijsblauw), #D3DEF2);
+  border-bottom: 1px solid var(--dr-lijn);
+}
+.gbeeld:focus-visible { outline: 3px solid var(--dr-koningsblauw); outline-offset: -3px; box-shadow: none; }
+
+/* e-mail: envelop die opengaat, brief schuift eruit */
+.gbeeld--mail { display: grid; place-items: center; perspective: 600px; }
+.gbeeld--mail::before, .gbeeld--mail::after {           /* zwevende stipjes: "verzonden" */
+  content: ""; position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--dr-goudgeel);
+  left: 18%; top: 28%; box-shadow: 170px 46px 0 -1px var(--dr-koningsblauw), 150px -6px 0 -2px var(--dr-goudgeel);
+  animation: mail-zweef 5s ease-in-out infinite;
+}
+.gbeeld--mail::after { left: 12%; top: 66%; width: 5px; height: 5px; background: var(--dr-koningsblauw); box-shadow: none; animation-delay: -2s; }
+@keyframes mail-zweef { 50% { transform: translateY(-6px); } }
+.envelop { position: relative; width: 112px; height: 74px; margin-top: 18px; transform: rotateX(8deg) rotateZ(-4deg); transform-style: preserve-3d; transition: transform 500ms var(--dr-ease); filter: drop-shadow(0 16px 12px rgba(15,45,107,.28)); }
+.envelop__achter, .envelop__voor, .envelop__klep, .envelop__brief { position: absolute; left: 0; right: 0; }
+.envelop__achter { inset: 0; border-radius: 8px; background: #C9D5EA; }
+.envelop__brief {
+  left: 9px; right: 9px; top: 6px; height: 62px; border-radius: 5px; background: var(--dr-wit);
+  display: grid; place-items: start center; padding-top: 7px;
+  font: 900 1.5rem/1 var(--dr-font-kop); color: var(--dr-koningsblauw);
+  box-shadow: 0 1px 0 var(--dr-lijn);
+  background-image: linear-gradient(var(--dr-ijsblauw), var(--dr-ijsblauw)), linear-gradient(var(--dr-ijsblauw), var(--dr-ijsblauw));
+  background-size: 56% 4px, 40% 4px; background-position: 50% 40px, 50% 50px; background-repeat: no-repeat;
+  transition: transform 500ms var(--dr-ease);
+}
+.envelop__voor { inset: 0; border-radius: 8px; background: var(--dr-wit); clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%); box-shadow: inset 0 -3px 0 rgba(23,70,162,.10); }
+.envelop__voor::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 48%, rgba(23,70,162,.08)); clip-path: polygon(0 100%, 50% 46%, 100% 100%); }
+.envelop__klep { top: 0; height: 40px; border-radius: 8px 8px 0 0; background: var(--dr-goudgeel); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top; transition: transform 500ms var(--dr-ease); backface-visibility: hidden; }
+.gegeven--beeld:hover .envelop, .gegeven--beeld:focus-within .envelop { transform: rotateX(4deg) rotateZ(0deg) translateY(4px); }
+.gegeven--beeld:hover .envelop__klep, .gegeven--beeld:focus-within .envelop__klep { transform: rotateX(178deg); }
+.gegeven--beeld:hover .envelop__brief, .gegeven--beeld:focus-within .envelop__brief { transform: translateY(-30px); }
+
+/* adres: echte kaart met prikker */
+.gbeeld--kaart img { width: 100%; height: 100%; object-fit: cover; transition: scale 700ms var(--dr-ease); }
+.gegeven--beeld:hover .gbeeld--kaart img { scale: 1.08; }
+.gbeeld__pin {
+  position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -30px 0 0 -15px;
+  border-radius: 50% 50% 50% 0; rotate: -45deg; background: var(--dr-goudgeel);
+  border: 3px solid var(--dr-diepblauw); box-shadow: 0 8px 10px -2px rgba(4,16,44,.5);
+  animation: pin-spring 2.6s var(--dr-ease) infinite;
+}
+.gbeeld__pin::after { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: var(--dr-diepblauw); }
+.gbeeld__puls { position: absolute; left: 50%; top: 50%; width: 14px; height: 6px; margin: -2px 0 0 -7px; border-radius: 50%; background: rgba(15,45,107,.35); animation: pin-puls 2.6s ease-out infinite; }
+@keyframes pin-spring { 0%, 60%, 100% { translate: 0 0; } 30% { translate: 0 -9px; } }
+@keyframes pin-puls { 0%, 25% { scale: 1; opacity: .7; } 60%, 100% { scale: 3.4; opacity: 0; } }
+.gbeeld__route {
+  position: absolute; right: 10px; top: 10px; display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px; border-radius: 99px; background: var(--dr-diepblauw); color: var(--dr-wit);
+  font: 700 .75rem/1 var(--dr-font-kop); letter-spacing: .06em; text-transform: uppercase;
+  box-shadow: 0 6px 12px -4px rgba(4,16,44,.5);
+}
+.gbeeld__route .ic { width: 13px; height: 13px; stroke-width: 2.4; }
+.gbeeld__bron { position: absolute; right: 6px; bottom: 4px; padding: 1px 5px; border-radius: 4px; background: rgba(255,255,255,.8); font-size: .625rem; line-height: 1.4; color: var(--dr-inkt); }
+
+/* ---------- 2. bereikbaarheid: klok + dagbalk ---------- */
+.gegeven--klok { align-items: center; gap: 20px; }
+.klok { flex: none; width: 96px; height: 96px; filter: drop-shadow(0 10px 12px rgba(15,45,107,.22)); }
+.klok__rand { fill: var(--dr-wit); stroke: var(--dr-koningsblauw); stroke-width: 5; }
+.klok__open { fill: none; stroke: var(--dr-goudgeel); stroke-width: 5; stroke-linecap: round; }
+.klok__streep { stroke: var(--dr-diepblauw); stroke-width: 2.5; stroke-linecap: round; }
+.klok__streep--klein { stroke: var(--dr-lijn); stroke-width: 1.5; }
+.klok__uur, .klok__min { stroke: var(--dr-diepblauw); stroke-linecap: round; }
+.klok__uur { stroke-width: 5; } .klok__min { stroke-width: 3.5; }
+.klok__sec { stroke: var(--dr-goud-actief); stroke-width: 1.6; stroke-linecap: round; }
+.klok__as { fill: var(--dr-goudgeel); stroke: var(--dr-diepblauw); stroke-width: 2; }
+.klok__wijzer { transform-box: view-box; transform-origin: 50% 50%; transition: transform 300ms cubic-bezier(.4, 2.2, .6, 1); }
+.gegeven--klok > div { flex: 1; }
+.kloktijd { float: right; margin-top: -2px; font: 800 1.125rem/1 var(--dr-font-kop); color: var(--dr-koningsblauw); font-variant-numeric: tabular-nums; }
+.kloktijd small { font: 500 .6875rem/1 var(--dr-font); color: var(--dr-steengrijs); margin-left: 4px; }
+
+.dagbalk { --van: 8; --tot: 20; --nu: 12; position: relative; margin: 14px 0 18px; height: 10px; border-radius: 5px; background: var(--dr-ijsblauw); }
+.dagbalk__open { position: absolute; top: 0; bottom: 0; left: calc(var(--van) / 24 * 100%); width: calc((var(--tot) - var(--van)) / 24 * 100%); border-radius: 5px; background: linear-gradient(90deg, var(--dr-goudgeel), var(--dr-goud-hover)); }
+.dagbalk__nu { position: absolute; top: -5px; left: calc(var(--nu) / 24 * 100%); width: 4px; height: 20px; margin-left: -2px; border-radius: 2px; background: var(--dr-diepblauw); box-shadow: 0 0 0 3px rgba(255,255,255,.9); transition: left 1s linear; }
+.dagbalk__nu::after { content: "nu"; position: absolute; left: 50%; top: -16px; translate: -50% 0; font: 700 .625rem/1 var(--dr-font-kop); letter-spacing: .08em; text-transform: uppercase; color: var(--dr-diepblauw); }
+.dagbalk__uren { position: absolute; left: 0; right: 0; top: 14px; display: flex; justify-content: space-between; font-size: .625rem; color: var(--dr-steengrijs); font-variant-numeric: tabular-nums; }
+.dagbalk__uren i { font-style: normal; }
+
+/* ---------- 3. medewerker komt uit het scherm ---------- */
+@media (min-width: 901px) { .gluur { padding-top: 44px; } }
+.gluur__foto.uitscherm { --mx: 0; --my: 0; overflow: visible; box-shadow: none; perspective: 900px; }
+.gluur__foto.uitscherm::after { display: none; }
+.uitscherm__raam {
+  position: absolute; inset: 0; overflow: hidden;
+  border-radius: var(--dr-radius-l) var(--dr-radius-l) 0 0;
+  box-shadow: var(--diepte-schaduw, 0 24px 48px -18px rgba(15,45,107,.5)), inset 0 0 0 4px rgba(255,255,255,.9);
+  transform: rotateY(calc(var(--mx) * 4deg)) rotateX(calc(var(--my) * -3deg));
+  transition: transform 400ms var(--dr-ease);
+}
+.uitscherm__raam::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(15,45,107,.18), rgba(15,45,107,.5)); pointer-events: none; }
+.gluur__foto .uitscherm__achter {
+  width: 100%; height: 100%; object-fit: cover; object-position: 60% 30%;
+  filter: blur(3px) saturate(.9); scale: 1.1;
+  translate: calc(var(--mx) * -8px) calc(var(--my) * -5px);
+  transition: translate 400ms var(--dr-ease);
+}
+.gluur__foto .uitscherm__uit {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 60% 30%;
+  transform-origin: 50% 100%;
+  transform: translate(calc(var(--mx) * 12px), calc(var(--my) * 6px)) scale(1.16);
+  filter: drop-shadow(0 18px 16px rgba(4,16,44,.5));
+  transition: transform 400ms var(--dr-ease);
+  pointer-events: none;
+}
+/* label rechts in de foto, zodat het niet over het gezicht valt */
+.gluur__foto.uitscherm .gluur__online { z-index: 2; left: auto; right: 12px; top: 14px; padding: 5px 10px; gap: 6px; font-size: .75rem; }
+/* smal scherm: de foto is te smal voor een label naast het hoofd, dus rechtsonder op de schouder */
+@media (max-width: 900px) { .gluur__foto.uitscherm .gluur__online { top: auto; bottom: 40px; right: 10px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .gluur__foto .uitscherm__uit { animation: uit-adem 6s ease-in-out infinite; }
+  @keyframes uit-adem { 50% { translate: 0 -4px; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gbeeld__pin, .gbeeld__puls, .gbeeld--mail::before, .gbeeld--mail::after { animation: none; }
+  .klok__wijzer { transition: none; }
+}
+@media (max-width: 760px) {
+  .gegeven--klok { flex-direction: column; align-items: flex-start; }
+  .gegeven--klok > div { width: 100%; }
+  .gluur { padding-top: 36px; }
+}

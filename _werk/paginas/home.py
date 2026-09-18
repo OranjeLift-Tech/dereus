@@ -2,7 +2,7 @@
 
 Banden (review dereus-70, D3): Mist, Wit, Koningsblauw met dakrand (werkwijze), Mist, Wit,
 Diepblauw met dakrand (werkgebied), Mist. Nooit twee donkere banden naast elkaar, en licht voor de footer.
-Geen cijferband: de cijfers staan in #waarom en in de offertepil (besluit dereus-28).
+De beeldblokken, cijfers, aanvraag en contact uit main zijn opgenomen in de gedeelde bouwstraat.
 """
 import config as cfg
 import kit
@@ -26,10 +26,13 @@ PAGINA = Pagina(
         ("hero", {"kopij_id": "offerte"}),
         ("diensten", {}),
         ("waarom", {}),
+        ("cijfers", {}),
         ("werkwijze", {}),
         ("reviews", {}),
         ("over-ons", {}),
         ("werkgebied", {}),
         ("vragen", {}),
+        ("aanvraag", {"kopij": None}),
+        ("homecontact", {"kopij_id": "contact"}),
     ],
 )

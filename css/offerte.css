@@ -1,0 +1,111 @@
+/* ---------- 4 · Snelle offerte (merkboek v2: 7.1 "wit, kaart", 7.3 formulier, 7.4 grid en tokens) ----------
+ * Wit vlak met één IJsblauw blok (radius 20). Links tekst, rechts de formulierkaart (radius 12)
+ * die iets over het blok uitsteekt. Velden: label boven het veld, radius 8, icoon links.
+ * Komt na style.css en 3d.css. */
+
+.sectie--offerte { background: var(--dr-wit); }
+
+.offerte--pro {
+  position: relative; isolation: isolate;
+  grid-template-columns: 1fr minmax(0, 520px); gap: var(--dr-space-8); align-items: center;
+}
+/* het IJsblauwe blok achter de tekst, loopt door tot onder de kaart */
+.offerte--pro::before {
+  content: ""; position: absolute; z-index: -1; inset: calc(var(--dr-space-7) * -1) 0 calc(var(--dr-space-7) * -1) 0;
+  left: 48px; right: 220px;   /* de kaart steekt rechts over het blok uit */
+  background: var(--dr-ijsblauw); border-radius: var(--dr-radius-l);
+}
+.offerte--pro .offerte__tekst { padding: var(--dr-space-6) 0 var(--dr-space-6) var(--dr-space-7); }
+.offerte--pro .intro-klein { margin: var(--dr-space-4) 0 var(--dr-space-6); color: var(--dr-inkt); }
+
+/* USP's als nette rij van 2 x 2 met icoontegels */
+.offerte__usp { display: grid; grid-template-columns: 1fr 1fr; gap: var(--dr-space-3) var(--dr-space-5); }
+.offerte__usp li { display: flex; align-items: center; gap: var(--dr-space-3); font-weight: 500; line-height: 1.35; }
+.offerte__usp .tegel { width: 40px; height: 40px; background: var(--dr-wit); }
+.offerte__usp .tegel .ic { width: 20px; height: 20px; }
+
+/* belknop altijd zichtbaar (merkboek 6: "belknop altijd zichtbaar") */
+.offerte__bel {
+  display: inline-flex; align-items: center; gap: var(--dr-space-3); margin-top: var(--dr-space-6);
+  padding: var(--dr-space-3) var(--dr-space-5) var(--dr-space-3) var(--dr-space-3);
+  background: var(--dr-wit); border: 1px solid var(--dr-lijn); border-radius: var(--dr-radius-m);
+  text-decoration: none; color: var(--dr-inkt); box-shadow: var(--dr-schaduw);
+  transition: transform var(--dr-duur) var(--dr-ease), box-shadow var(--dr-duur) var(--dr-ease);
+}
+.offerte__bel:hover { transform: translateY(-2px); box-shadow: var(--dr-schaduw-hoog); }
+.offerte__bel small { display: block; font-size: .8125rem; color: var(--dr-steengrijs); }
+.offerte__bel b { font: 800 1.375rem/1.1 var(--dr-font-kop); color: var(--dr-koningsblauw); letter-spacing: .01em; }
+
+/* ---------- formulierkaart ---------- */
+.offerte__form.kaart {
+  position: relative; padding: 0; overflow: hidden;
+  border: 1px solid var(--dr-lijn); border-top: 0; border-radius: var(--dr-radius-m);
+  box-shadow: 0 2px 4px rgba(15,45,107,.06), 0 24px 56px -18px rgba(15,45,107,.35);
+}
+.offerte__kop {
+  padding: var(--dr-space-6) var(--dr-space-6) var(--dr-space-5);
+  background: var(--dr-koningsblauw); color: var(--dr-wit);
+  border-bottom: 4px solid var(--dr-goudgeel);
+}
+.offerte .offerte__kop .h3 { color: var(--dr-wit); font-size: 1.375rem; line-height: 1.2; margin: 0 0 var(--dr-space-2); }
+.offerte .offerte__kop .formulier__sub {
+  display: flex; align-items: flex-start; gap: var(--dr-space-2); margin: 0;
+  font-size: .9375rem; line-height: 1.45; color: rgba(255,255,255,.88);
+}
+.offerte__kop .formulier__sub .ic { width: 18px; height: 18px; margin-top: 1px; color: var(--dr-goudgeel); }
+
+/* twee stappen */
+.offerte__groep { margin: 0; padding: var(--dr-space-5) var(--dr-space-6) 0; border: 0; min-width: 0; }
+.offerte__groep + .offerte__groep { padding-top: var(--dr-space-4); }
+.offerte__groep legend {
+  display: flex; align-items: center; gap: var(--dr-space-2); float: left; width: 100%; margin-bottom: var(--dr-space-3);
+  font: 700 .8125rem/1 var(--dr-font-kop); letter-spacing: .12em; text-transform: uppercase; color: var(--dr-diepblauw);
+}
+.offerte__groep legend span {
+  display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--dr-goudgeel); color: var(--dr-diepblauw); font-size: .75rem; letter-spacing: 0;
+}
+.offerte__groep .velden { clear: both; gap: var(--dr-space-3) var(--dr-space-4); margin: 0; }
+
+/* velden: label boven het veld, icoon links in het veld */
+.offerte__form .veld label { font-size: .875rem; font-weight: 500; color: var(--dr-inkt); margin-bottom: var(--dr-space-1); }
+.veld__in { position: relative; display: block; }
+.veld__in > .ic {
+  position: absolute; left: 14px; top: 50%; translate: 0 -50%; width: 18px; height: 18px;
+  color: var(--dr-steengrijs); pointer-events: none; transition: color var(--dr-duur) var(--dr-ease);
+}
+.offerte__form .veld input {
+  padding-left: 42px; background: var(--dr-mist); border: 1px solid var(--dr-lijn); border-radius: var(--dr-radius-s);
+  transition: border-color var(--dr-duur) var(--dr-ease), background var(--dr-duur) var(--dr-ease), box-shadow var(--dr-duur) var(--dr-ease);
+}
+.offerte__form .veld input::placeholder { color: #8A93A5; }
+.offerte__form .veld input:hover { border-color: #AEB8CB; }
+.offerte__form .veld input:focus { background: var(--dr-wit); border-color: var(--dr-koningsblauw); box-shadow: var(--dr-focus); }
+.veld__in:focus-within > .ic { color: var(--dr-koningsblauw); }
+.offerte__form .veld [aria-invalid="true"] { border-color: var(--dr-fout); background: var(--dr-wit); }
+
+/* knop en geruststelling */
+.offerte__voet { padding: var(--dr-space-5) var(--dr-space-6) var(--dr-space-5); }
+.offerte__voet .knop { min-height: 52px; }
+.offerte__noot {
+  display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: var(--dr-space-3);
+  font-size: .8125rem; color: var(--dr-steengrijs);
+}
+.offerte__noot .ic { width: 15px; height: 15px; color: var(--dr-goed); stroke-width: 2.4; }
+.offerte__noot .ic + .ic, .offerte__noot span + .ic { color: var(--dr-koningsblauw); }
+.offerte__form .melding { margin: 0 var(--dr-space-6) var(--dr-space-5); }
+
+@media (max-width: 1023px) {
+  .offerte--pro { grid-template-columns: 1fr; gap: var(--dr-space-6); }
+  .offerte--pro::before { left: 16px; right: 16px; }
+  .offerte--pro .offerte__tekst { padding: var(--dr-space-6) var(--dr-space-6) 0; }
+  .offerte__form.kaart { margin: 0 var(--dr-space-4); }
+}
+@media (max-width: 640px) {
+  .offerte--pro::before { left: 0; right: 0; border-radius: var(--dr-radius-m); }
+  .offerte--pro .offerte__tekst { padding: var(--dr-space-5) var(--dr-space-4) 0; }
+  .offerte__usp { grid-template-columns: 1fr; }
+  .offerte__form.kaart { margin: 0; }
+  .offerte__kop, .offerte__groep, .offerte__voet { padding-left: var(--dr-space-5); padding-right: var(--dr-space-5); }
+  .offerte__groep .velden { grid-template-columns: 1fr; }
+}

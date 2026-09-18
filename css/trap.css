@@ -1,0 +1,94 @@
+/* ---------- werkwijze: de trap naar uw nieuwe huis (variant 7, met een echt huis bovenaan) ---------- */
+.trap-sectie { position: relative; overflow: hidden; background: var(--dr-diepblauw); color: var(--dr-wit); }
+.trap-sectie::before {
+  content: ""; position: absolute; right: -10%; top: -30%; width: 70%; height: 160%; pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,.06), transparent 60%);
+  clip-path: polygon(50% 0, 100% 30%, 100% 100%, 0 100%, 0 30%);
+}
+.trap-sectie .wrap { position: relative; }
+.trap-sectie .h2 { color: var(--dr-wit); }
+.trap-sectie mark { background: none; color: var(--dr-goudgeel); padding: 0; }
+
+.trap { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(5, 1fr) 230px; gap: 14px; align-items: end; perspective: 1400px; }
+.trap__trede { position: relative; transform-style: preserve-3d; }
+.trap__trede:nth-child(2) { margin-bottom: 45px; }
+.trap__trede:nth-child(3) { margin-bottom: 90px; }
+.trap__trede:nth-child(4) { margin-bottom: 135px; }
+.trap__trede:nth-child(5) { margin-bottom: 180px; }
+.trap__kaart {
+  position: relative; padding: 22px 18px 20px; min-height: 230px; border-radius: 14px 14px 4px 4px;
+  background: linear-gradient(180deg, #FFFFFF, #EEF2FA); color: var(--dr-inkt);
+  transform: rotateX(8deg); transform-origin: bottom;
+  box-shadow: 0 14px 0 #0A1F4D, 0 30px 40px rgba(0,0,0,.4);
+  transition: transform .4s var(--dr-ease);
+}
+.trap__trede:hover .trap__kaart { transform: rotateX(0) translateY(-8px); }
+.trap__nr {
+  position: absolute; top: -26px; left: 18px; display: grid; place-items: center; width: 52px; height: 52px; padding-top: 8px;
+  background: var(--dr-goudgeel); clip-path: polygon(50% 0, 100% 38%, 100% 100%, 0 100%, 0 38%);
+  font: 900 1.4rem/1 var(--dr-font-kop); color: var(--dr-diepblauw);
+}
+.trap__kaart h3 { margin: 18px 0 8px; font-size: 1.15rem; color: var(--dr-koningsblauw); }
+.trap__kaart p { font-size: .9375rem; line-height: 1.6; color: var(--dr-steengrijs); }
+
+/* het nieuwe huis: echte foto in de huisvorm van het logo, wit dak erboven, sleutel aan de nok */
+/* huis 20% groter en 20% van zijn hoogte hoger; via transform, zodat de treden even breed blijven */
+.trap__huis { align-self: end; margin-bottom: 264px; text-align: center; transform: translateY(-56px) scale(1.2); transform-origin: 15% 100%; }
+.trap__huisvorm { position: relative; width: 100%; aspect-ratio: 190 / 214; filter: drop-shadow(0 22px 22px rgba(0,0,0,.5)); }
+.trap__foto { position: absolute; inset: 9% 7% 0; clip-path: polygon(50% 0, 100% 36%, 100% 100%, 0 100%, 0 36%); background: var(--dr-koningsblauw); }
+.trap__foto img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 78%; transition: scale .6s var(--dr-ease); }
+.trap__huis:hover .trap__foto img { scale: 1.06; }
+.trap__dak { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.trap__sleutel { transform-box: fill-box; transform-origin: 50% 0; animation: trap-sleutel 3s ease-in-out infinite; }
+@keyframes trap-sleutel { 50% { transform: rotate(-12deg); } }
+.trap__huis small { display: block; margin-top: 14px; font: 800 .8125rem/1 var(--dr-font-kop); letter-spacing: .12em; text-transform: uppercase; color: var(--dr-goudgeel); }
+
+/* opkomst: treden komen één voor één omhoog zodra de sectie in beeld is */
+.trap[data-zien] .trap__trede, .trap[data-zien] .trap__huis { opacity: 0; translate: 0 24px; transition: opacity .7s var(--dr-ease), translate .7s var(--dr-ease); }
+.trap.is-zichtbaar .trap__trede, .trap.is-zichtbaar .trap__huis { opacity: 1; translate: 0 0; }
+.trap.is-zichtbaar > :nth-child(2) { transition-delay: .1s; }
+.trap.is-zichtbaar > :nth-child(3) { transition-delay: .2s; }
+.trap.is-zichtbaar > :nth-child(4) { transition-delay: .3s; }
+.trap.is-zichtbaar > :nth-child(5) { transition-delay: .4s; }
+.trap.is-zichtbaar > :nth-child(6) { transition-delay: .55s; }
+
+.trap-sectie .cta-balk { margin-top: 56px; padding: 24px 32px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.8); }
+.trap-sectie .cta-balk__kop { font-size: 1.5rem; color: var(--dr-wit); }
+
+@media (max-width: 1100px) {
+  .trap { grid-template-columns: repeat(3, 1fr); row-gap: 48px; align-items: stretch; }
+  .trap__trede:nth-child(n) { margin-bottom: 0; }
+  .trap__kaart { height: 100%; }
+  .trap__huis { margin-bottom: 0; align-self: center; justify-self: center; width: 247px; transform: none; }
+}
+@media (max-width: 640px) {
+  .trap { grid-template-columns: 1fr; row-gap: 40px; }
+  .trap__kaart { min-height: 0; transform: none; box-shadow: 0 8px 0 #0A1F4D, 0 20px 30px rgba(0,0,0,.35); }
+  .trap-sectie .cta-balk { padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trap[data-zien] .trap__trede, .trap[data-zien] .trap__huis { opacity: 1; translate: none; transition: none; }
+  .trap__kaart { transition: none; }
+  .trap__sleutel { animation: none; }
+  .trap__foto img { transition: none; }
+}
+
+/* ---------- de weg naar het nieuwe huis (js/trap-weg.js tekent hem achter de treden) ---------- */
+.trap__weg { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 0; }
+.trap__trede, .trap__huis { z-index: 1; }
+.weg { fill: none; stroke-linecap: butt; stroke-linejoin: round; }
+.weg--schaduw { stroke: rgba(2,8,26,.5); stroke-width: 62; translate: 0 10px; }
+.weg--berm { stroke: #3A3A3B; stroke-width: 56; }                       /* afgebrokkelde asfaltrand */
+.weg--asfalt { stroke-width: 52; }
+.weg--spoor { stroke: rgba(0,0,0,.11); stroke-width: 38; }                /* rijsporen: donkerder waar de banden lopen */
+.weg--midden { stroke: rgba(150,148,142,.22); stroke-width: 12; }        /* lichter tussen de banen, waar niemand rijdt */
+.weg--kant { stroke: #E2DFD5; stroke-opacity: .85; stroke-width: 44.6; }   /* kantstrepen, een stukje uit de rand */
+.weg--kantvul { stroke-width: 41; }
+.weg--streep { stroke: #DAD7CC; stroke-opacity: .92; stroke-width: 2.6; stroke-dasharray: 14 24; }
+/* het bordje onder het huis staat op de weg: eigen vlak zodat het leesbaar blijft */
+.trap--weg .trap__huis small { display: inline-block; padding: 7px 12px; border-radius: 6px; background: var(--dr-diepblauw); box-shadow: 0 6px 14px rgba(0,0,0,.35); }
+/* de weg rolt van links naar rechts uit zodra de trap in beeld komt */
+.trap[data-zien] .trap__weg { clip-path: inset(-200px 100% -200px -6000px); transition: clip-path 1.8s var(--dr-ease) .15s; }
+.trap.is-zichtbaar .trap__weg { clip-path: inset(-200px -200px -200px -6000px); }
+@media (max-width: 1100px) { .trap__weg { display: none; } }
+@media (prefers-reduced-motion: reduce) { .trap[data-zien] .trap__weg { clip-path: none; transition: none; } }

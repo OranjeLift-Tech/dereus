@@ -5,8 +5,8 @@ Twee plekken:
   home #over-ons     korte teaser met knop en de link "Meer over De Reus" (velden knop, linktekst, link)
   /over-ons/ #verhaal  het verhaal; met optie feiten=True komen de bevestigde feiten eronder
                        (OPRICHTINGSJAAR, EIGENAAR, TEAM, RECHTSVORM, KVK uit config.FEITEN; onbekend = geen rij)
-Teamfoto: staat FEITEN["TEAM_BEELD"] op een pad, dan toont het huisvenster die foto in plaats van het beeldmerk.
-Tot die tijd geen foto: geen teamfoto's verzinnen (open vraag 1.7).
+Teamfoto: staat FEITEN["TEAM_BEELD"] op een pad, dan toont het huisvenster die foto.
+De home gebruikt anders de bestaande illustratieve uitsnede, zonder een teamidentiteit te claimen.
 Opties: feiten (False), motto (True), sectie ("wit").
 """
 NAAM = "over-ons"
@@ -45,6 +45,12 @@ def html(ctx, kopij, feiten=False, motto=True, sectie="wit", **opties):
     foto = ctx.feit("TEAM_BEELD")
     if foto:
         venster = (f'<div class="huisvenster over__foto">{ctx.beeld(foto, "Het team van " + cfg.NAAM, 1200, 1140)}</div>')
+    elif k.id == "over-ons":
+        venster = f'''<div class="over__compositie">
+        <span class="over__fotoplaat" aria-hidden="true"></span>
+        {ctx.beeld("/img/over-foto-achter.webp", "", 640, 954, klasse="over__achtergrond")}
+        {ctx.beeld("/img/over-foto-uit.webp", "Illustratief beeld van een man bij verhuisdozen", 640, 954, klasse="over__uitsnede")}
+      </div>'''
     else:
         venster = f'''<div class="over__huis">
         <img class="over__merk" src="{ctx.logo("beeldmerk-negatief")}" alt="Het beeldmerk van De Reus: een huis met twee sterke armen" width="{b}" height="{h}" loading="lazy" decoding="async">

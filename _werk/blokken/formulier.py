@@ -117,11 +117,12 @@ def _velden(ctx, k, variant):
     return label + wanneer + persoon + _veld(ctx, k.item("opmerkingen"), "textarea", False, breed=True)
 
 
-def _zijkolom(ctx, k):
+def _zijkolom(ctx, k, beeld=None):
     if not k.veld("zij-kop"):
         return ""
     vinkjes = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
     return f'''<aside class="b-{NAAM}__zij"><div class="b-{NAAM}__zijin">
+      {ctx.beeld(beeld, "", 640, 954, klasse="b-formulier__beeld") if beeld else ""}
       <p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
       <ul class="b-{NAAM}__vinkjes">{vinkjes}</ul>
       <a class="b-{NAAM}__tel" href="{ctx.telhref}">{TELEFOON_SVG}<span>{ctx.esc(ctx.tel)}</span></a>
@@ -135,16 +136,17 @@ def html(ctx, kopij, **opties) -> str:
     sid = opties.get("id", k.id)
     sleutel = getattr(ctx.cfg, "WEB3FORMS_KEY", "")
     zonder_sleutel = _is_placeholder(sleutel)
-    zij = _zijkolom(ctx, k)
+    zij = _zijkolom(ctx, k, opties.get("beeld")) if opties.get("zijkolom", True) else ""
+    prefix = ctx.esc(opties.get("prefix", "f"))
     bereik = (f'<a href="{ctx.telhref}">{ctx.esc(ctx.tel)}</a> <span aria-hidden="true">·</span> '
               f'<a href="mailto:{ctx.esc(ctx.mail)}">{ctx.esc(ctx.mail)}</a>')
-    return f'''<section class="b-{NAAM} b-{NAAM}--{variant} sectie sectie--mist" id="{sid}" aria-labelledby="{sid}-kop" data-b="{NAAM}">
+    html = f'''<section class="b-{NAAM} b-{NAAM}--{variant} sectie sectie--mist" id="{sid}" aria-labelledby="{sid}-kop" data-b="{NAAM}">
       <div class="wrap">
         <div class="b-{NAAM}__kaart{"" if zij else " b-" + NAAM + "__kaart--smal"}">
           {zij}
           <div class="b-{NAAM}__hoofd">
             <h2 class="b-{NAAM}__kop" id="{sid}-kop">{ctx.inline(k.kop)}</h2>
-            <form class="b-{NAAM}__form" action="{EINDPUNT}" method="POST" data-formulier="{variant}" data-bedankt="{v["bedankt"]}"
+            <form class="b-{NAAM}__form" action="{EINDPUNT}" method="POST" data-formulier="{variant}" data-prefix="{prefix}" data-bedankt="{v["bedankt"]}"
               data-bezig="{ctx.esc(k.veld("bezig", ""))}"{' data-zonder-sleutel' if zonder_sleutel else ''}>
               <input type="hidden" name="access_key" value="{"" if zonder_sleutel else ctx.esc(sleutel)}">
               <input type="hidden" name="subject" value="{v["onderwerp"]}">
@@ -166,3 +168,5 @@ def html(ctx, kopij, **opties) -> str:
         </div>
       </div>
     </section>'''
+    # Beide formulieren kunnen op de home staan. Elk krijgt eigen id's en labelverwijzingen.
+    return html.replace('="f-', f'="{prefix}-')

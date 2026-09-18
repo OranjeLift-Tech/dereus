@@ -163,6 +163,13 @@ tekst: Gaat u over de grens verhuizen, of komt u naar Nederland? Wij verhuizen v
 link: /diensten/#internationaal
 linktekst: Internationale verhuizingen
 
+## Wilt u iets bespreken over uw verhuizing? {#contact}
+label: Contact
+intro: Een vraag over de planning, een spoedklus of hulp bij uw aanvraag? Bel ons, mail ons of stuur een bericht. Wij denken met u mee.
+kaart-knop: Bekijk interactieve kaart
+route: Route plannen
+tijden-kop: Wanneer kunt u ons bereiken?
+
 ## Veelgestelde vragen {#vragen}
 label: Vragen
 belregel: Staat uw vraag er niet bij? Bel 085 000 5647.

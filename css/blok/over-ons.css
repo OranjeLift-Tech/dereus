@@ -4,6 +4,11 @@
 .over__alineas p { max-width: 62ch; color: var(--graphite); }
 .over__alineas p:first-child { font-size: var(--text-lead); line-height: var(--leading-text); color: var(--ink); }
 .over__beeld { margin: 0; }
+.over__compositie { position: relative; width: min(100%, 25rem); margin-inline: auto; aspect-ratio: 640 / 954; }
+.over__compositie > * { position: absolute; inset: 0; width: 100%; height: 100%; }
+.over__compositie .over__fotoplaat { inset: 27% 0 0 0; width: auto; height: auto; border-radius: var(--radius-card); background: var(--brand-accent); }
+.over__achtergrond { object-fit: cover; clip-path: inset(27% 5% 0 0 round var(--radius-card)); }
+.over__uitsnede { object-fit: contain; }
 .over__huis {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 1rem;
   aspect-ratio: 535.3/509.8; padding: 34% 14% 11%;

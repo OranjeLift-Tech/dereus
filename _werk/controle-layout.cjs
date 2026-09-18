@@ -33,6 +33,8 @@ const path = require('node:path');
             viewport: innerWidth,
             headerOverflow: visible.some(el => el.getBoundingClientRect().right > innerWidth + 1),
             broken: [...document.images].filter(img => img.complete && !img.naturalWidth).map(img => img.src),
+            duplicateIds: [...document.querySelectorAll('[id]')].map(el => el.id).filter((id, i, ids) => ids.indexOf(id) !== i),
+            brokenLabels: [...document.querySelectorAll('label[for]')].filter(el => !document.getElementById(el.htmlFor)).map(el => el.htmlFor),
             h1: document.querySelectorAll('h1').length
           };
         });
@@ -40,6 +42,22 @@ const path = require('node:path');
         assert.ok(!layout.headerOverflow, `${width} ${route}: header overflow`);
         assert.equal(layout.h1, 1, route);
         assert.deepEqual(layout.broken, [], `${width} ${route}: broken images`);
+        assert.deepEqual(layout.duplicateIds, [], `${width} ${route}: duplicate ids`);
+        assert.deepEqual(layout.brokenLabels, [], `${width} ${route}: broken form labels`);
+        const heading = route === '/' ? '.hero__tekst' : '.pk__tekst';
+        if (await page.locator(heading).count()) {
+          assert.ok(await page.locator(heading).evaluate(el => {
+            const r = el.getBoundingClientRect();
+            return Math.abs((r.left + r.right) / 2 - innerWidth / 2) < 2;
+          }), `${width} ${route}: header not centered`);
+        }
+        if (route === '/') {
+          assert.ok(await page.locator('.hero__team').evaluate(el => {
+            const r = el.getBoundingClientRect();
+            const text = document.querySelector('.hero__tekst').getBoundingClientRect();
+            return Math.abs((r.left + r.right) / 2 - innerWidth / 2) < 2 && r.top >= text.bottom;
+          }), `${width}: workers not centered below heading`);
+        }
       }
       console.log(`${width}px: ${routes.length} pagina's gecontroleerd`);
     }
@@ -89,8 +107,7 @@ const path = require('node:path');
 
     await page.setViewportSize({ width: 1366, height: 650 });
     await page.goto(base, { waitUntil: 'networkidle' });
-    assert.ok(await page.locator('.of-box--hero').evaluate(el => el.getBoundingClientRect().bottom <= innerHeight), 'Offertekaart buiten laptopvenster');
-    await page.screenshot({ path: path.join(out, 'home-laptop.png') });
+    await page.locator('.hero').screenshot({ path: path.join(out, 'home-laptop.png') });
     await page.locator('#of-van').fill('Den Haag');
     await page.locator('#of-naar').fill('Delft');
     await page.locator('#of-dienst').selectOption('particulier');
@@ -99,6 +116,26 @@ const path = require('node:path');
     assert.equal(await page.locator('#f-van').inputValue(), 'Den Haag');
     assert.equal(await page.locator('#f-naar').inputValue(), 'Delft');
     assert.equal(await page.locator('#f-dienst').inputValue(), 'particulier');
+
+    await page.goto(base, { waitUntil: 'networkidle' });
+    for (const [id, field] of [['aanvraag', 'aanvraag-van'], ['contact-formulier', 'bericht-naam']]) {
+      const form = page.locator(`#${id} form`);
+      await form.locator('button[type=submit]').click();
+      assert.equal(await page.locator(`#${field}`).getAttribute('aria-invalid'), 'true');
+      assert.equal(await page.locator(`#${id} .b-formulier__foutlijst`).isVisible(), true);
+    }
+    for (const id of ['diensten', 'waarom', 'cijfers', 'werkwijze', 'over-ons', 'aanvraag', 'contact']) {
+      const section = page.locator(`#${id}`);
+      assert.equal(await section.count(), 1, `Missing restored section: ${id}`);
+      await section.scrollIntoViewIfNeeded();
+      await section.screenshot({ path: path.join(out, `${id}-desktop.png`), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
+    }
+    await page.route('https://cdn.jsdelivr.net/**', route => route.abort());
+    await page.route('https://cdnjs.cloudflare.com/**', route => route.abort());
+    await page.locator('[data-wereld-start]').click();
+    await page.waitForFunction(() => !document.querySelector('[data-wereld-melding]').classList.contains('vh'));
+    assert.equal(await page.locator('.wereld__terugval').isVisible(), true);
+    assert.equal(await page.locator('[data-wereld-start]').isEnabled(), true);
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(base + '/diensten/', { waitUntil: 'networkidle' });

@@ -17,7 +17,8 @@
         knop=f.querySelector('button[type=submit]');
     f.noValidate=true;   /* pas hier: zonder script controleert de browser zelf */
 
-    function veld(id){return f.querySelector('#f-'+id)}
+    var prefix=f.getAttribute('data-prefix')||'f';
+    function veld(id){return f.querySelector('#'+prefix+'-'+id)}
 
     /* ---- 1. invullen vanuit het adres ---- */
     (function(){

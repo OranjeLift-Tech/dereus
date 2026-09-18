@@ -1,10 +1,10 @@
-"""Hero van de home (#offerte). Tekst links: de H1 "Verhuisbedrijf in Den Haag" als kleine kop, daaronder de
-grote regel uit het veld visueel. Rechts de mascotte voor een licht huisvlak, met twee 3D-dozen.
+"""Hero van de home (#offerte). De H1 "Verhuisbedrijf in Den Haag" als kleine kop, daaronder de
+grote regel uit het veld visueel. Tekst en teambeeld staan gecentreerd boven elkaar.
 De offertekaart (blok offertepil, variant hero) valt over de onderrand.
 
 Grafisch, zonder foto (besluit dereus-28): de oude achtergrond was stock van de Wix-site en mag niet mee.
 Een eigen foto valt later in via config.HERO_BEELD; de waas en de korrel liggen er al klaar voor.
-Rechts staat, in deze volgorde van voorrang:
+Onder de tekst staat, in deze volgorde van voorrang:
   config.HERO_TEAM         de vrijstaande teamfoto (besluit gebruiker), de onderrand valt achter de offertekaart;
   config.MASCOTTE_IN_HERO  de blauwe mascotte;
   anders                   het negatieve beeldmerk.

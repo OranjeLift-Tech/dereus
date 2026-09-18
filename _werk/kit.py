@@ -185,7 +185,7 @@ def zonder_opmaak(tekst):
 # ---------------------------------------------------------------------------
 # Weergavebreedte van het teambeeld in de hero: voor srcset in het blok en de preload van de home.
 # Houd gelijk met css/blok/hero.css (.hero__team).
-HERO_SIZES = "(max-width: 899.98px) min(82vw, 480px), min(44vw, 600px)"
+HERO_SIZES = "(min-width: 900px) and (max-height: 700px) 440px, min(82vw, 520px)"
 
 
 def responsief(basis):
