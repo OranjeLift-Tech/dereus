@@ -45,7 +45,7 @@ const base = process.argv[3] || 'http://127.0.0.1:8765';
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
       if ((width === 1440 && reducedMotion === 'no-preference') || (width === 390 && reducedMotion === 'reduce')) {
         await page.locator('#werkwijze').screenshot({ path: path.join(__dirname, `../website/review/cleanup/werkwijze-selected5-${width}.png`),
-          style: '.header, .mcta, .whatsapp { visibility: hidden !important; }' });
+          style: '.header, .mcta, .whatsapp, .skiplink { visibility: hidden !important; }' });
       }
       await page.evaluate(() => { location.hash = 'stap-3'; });
       await page.waitForFunction(() => document.querySelector('#stap-3 details').open);

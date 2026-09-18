@@ -44,7 +44,7 @@ def html(ctx, kopij, **opties):
             <div class="homecontact__beeld" aria-hidden="true">
               {ctx.beeld('/img/contact-klantenservice.webp', '', 1200, 800, klasse='homecontact__achter')}
               {ctx.beeld('/img/contact-uit.webp', '', 1200, 800, klasse='homecontact__uit')}
-              {ctx.icoon('huisje', 'beeldaccent homecontact__accent')}
+              <span class="beeldaccent homecontact__accent" aria-hidden="true"></span>
             </div>
             {formulier}
           </div>

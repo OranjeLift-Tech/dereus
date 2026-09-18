@@ -16,6 +16,7 @@
   --schaduw-lg: 0 40px 90px -40px rgba(14, 26, 51, .55);
   --blauw-900: #091938;                    /* blauw 900 uit color-type-system.md, alleen de onderste footerbalk */
   --header-h: 88px;                        /* vaste ruimte, onafhankelijk van de scrollstand */
+  --beeldboog: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 240'%3E%3Ccircle cx='225' cy='120' r='200' fill='none' stroke='%23fff' stroke-opacity='.24' stroke-width='1.5'/%3E%3C/svg%3E");
   /* Het huis uit het logo: met deur (glyph) en zonder deur (kader, badge) */
   --huisje: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 535.3 509.8'%3E%3Cpath d='M267.6 7.8L320.9 53.2V0H356.8V83.9L535.3 236.2H457.6V509.8H326.2V384.1H209.1V509.8H77.7V236.2H0Z'/%3E%3C/svg%3E");
   --huisvlak: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 535.3 509.8'%3E%3Cpath d='M267.6 7.8L320.9 53.2V0H356.8V83.9L535.3 236.2H457.6V509.8H77.7V236.2H0Z'/%3E%3C/svg%3E");
@@ -52,9 +53,9 @@ button { font: inherit; color: inherit; }
 .wrap { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--pad); }
 .vh { position: absolute !important; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
-/* Zoals de fotocorner-accenten bij De Kievit en Brocken: uitsluitend binnen beeldvakken. */
-.beeldaccent { position: absolute; z-index: 2; width: 4rem; height: 4rem; pointer-events: none; }
-@media (max-width: 800px) { .beeldaccent { display: none; } }
+/* Brocken: een grote, afgesneden lijn in de beeldrand; geen losse pictogrammen. */
+.beeldaccent { display: none; position: absolute; z-index: 2; width: 7rem; height: 15rem; background: var(--beeldboog) right center / 100% 100% no-repeat; pointer-events: none; }
+@media (min-width: 1280px) { .beeldaccent { display: block; } }
 .ic { width: 1.15em; height: 1.15em; flex: none; }
 .skiplink {
   position: fixed; top: 0; left: max(12px, env(safe-area-inset-left)); z-index: 90; transform: translateY(-140%);
@@ -122,11 +123,10 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 }
 .knop .ic { width: 16px; height: 16px; transition: transform .35s var(--ease); }
 .knop--icoon-voor .ic { order: -1; }
-.knop--cta { background: var(--color-cta); color: var(--color-cta-text); box-shadow: inset 0 0 0 1px rgba(11, 35, 82, .18); }
-.knop--cta:hover { background: var(--color-cta-hover); color: var(--color-cta-text); }
-.knop--cta:active { background: var(--color-cta-active, var(--color-cta-hover)); }
-/* op Koningsblauw en Diepblauw een lichte ring, zodat de groene knop loskomt van de grond */
-:is(.hero, .pk, .footer, .sectie--diep, .sectie--blauw, .header--transparant:not(.is-vast)) .knop--cta { box-shadow: 0 0 0 2px var(--color-cta-rand); }
+.knop--cta { background: var(--color-cta); color: var(--color-cta-text); border-color: transparent; border-radius: 12px; box-shadow: 0 3px 9px rgba(11, 35, 82, .12); }
+.knop--cta:hover { background: var(--color-cta-hover); color: var(--color-cta-text); box-shadow: 0 5px 12px rgba(11, 35, 82, .17); }
+.knop--cta:active { background: var(--color-cta-active, var(--color-cta-hover)); box-shadow: 0 1px 3px rgba(11, 35, 82, .12); }
+.knop--cta:focus-visible { outline: 3px solid var(--brand-accent); outline-offset: 4px; }
 .knop--blauw { background: var(--color-button); color: var(--white); }
 .knop--blauw:hover { background: var(--color-button-hover); color: var(--white); }
 .knop--licht { background: var(--white); border-color: var(--grey-300); color: var(--brand-primary); }
@@ -243,6 +243,7 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
   .header__menu { display: grid; }
 }
 @media (min-width: 1100px) and (max-width: 1239.98px) { .header__reviews { display: none; } }
+@media (min-width: 768px) and (max-width: 999.98px) { .header__reviews { display: none; } }
 @media (max-width: 767.98px) {
   :root { --header-h: 76px; }
   .header__reviews, .header__tel { display: none; }
@@ -300,7 +301,7 @@ body.lade-open { overflow: hidden; }
 .footer__uitnodiging > p:not(.label) { max-width: 48ch; line-height: 1.65; }
 .footer__uitnodiging .knoppen { margin-top: 1.4rem; }
 .footer__beeldmerk { width: 100%; max-width: 430px; opacity: .13; justify-self: end; }
-.footer__top { position: relative; display: grid; grid-template-columns: 1.15fr 1fr .8fr 1.2fr; gap: clamp(1.5rem, 2.5vw, 2.5rem); padding-block: 2.5rem 3rem; }
+.footer__top { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start; gap: clamp(1.5rem, 2.5vw, 2.5rem); padding-block: 2.5rem 3rem; }
 .footer__top::before { content: ""; position: absolute; top: 0; left: var(--pad); right: var(--pad); height: 1px; background: rgba(255, 255, 255, .18); }
 .footer__top > * { min-width: 0; }
 .footer__logo { width: 200px; height: auto; margin-bottom: 1.25rem; }
@@ -311,6 +312,9 @@ body.lade-open { overflow: hidden; }
 .footer__kop { margin: .25rem 0 1rem; color: var(--brand-accent); font: var(--weight-bold) .8125rem/1.3 var(--font-sans); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; }
 .footer__kolom ul { margin: 0 0 1rem; padding: 0; list-style: none; display: grid; gap: .35rem; }
 .footer__kolom a { display: inline-block; padding-block: .2rem; overflow-wrap: anywhere; }
+.footer__kolom > ul > li { min-width: 0; }
+.footer__kolom > ul > li > a:not(.wa-link) { max-width: 21ch; text-wrap: pretty; line-height: 1.45; }
+.footer__kolom > ul > li > a[href^="mailto:"] { max-width: 100%; }
 .footer__kolom .ic { width: .85em; height: .85em; margin-left: .4rem; }
 .footer__kolom address { margin-bottom: 1rem; line-height: 1.6; }
 .footer__tijden { color: rgba(255, 255, 255, .78); }
@@ -332,6 +336,8 @@ body.lade-open { overflow: hidden; }
   .footer__onder .wrap { gap: .8rem; }
 }
 
+@media (max-width: 359.98px) { .footer__top { grid-template-columns: minmax(0, 1fr); } }
+
 /* ---- Mobiele belbalk ---- */
 .mcta {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: none; grid-template-columns: 1fr 1.4fr; gap: .5rem;
@@ -339,19 +345,35 @@ body.lade-open { overflow: hidden; }
   background: rgba(246, 247, 249, .96); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-top: 1px solid var(--grey-300);
 }
 .mcta .knop { width: 100%; padding: .7rem .5rem; }
+.mcta { grid-template-columns: 1fr 44px 1.4fr; }
 body.lade-open .mcta { display: none; }
-/* Lokale WhatsApp-placeholder; de koppeling wordt later aangeleverd. */
+/* Bij elk bedrijfsnummer een contactkeuze, ook zonder JavaScript. */
+.wa-link { display: inline-flex; vertical-align: middle; align-items: center; justify-content: center; gap: .4rem; min-width: 44px; min-height: 44px; margin-inline-start: .4rem; padding: .3rem .55rem; border-radius: 10px; color: inherit; font: var(--weight-semibold) .875rem/1.2 var(--font-sans); text-decoration: none; white-space: nowrap; }
+.wa-link:hover { color: inherit; background: color-mix(in srgb, currentColor 9%, transparent); }
+.wa-link .ic { flex: none; width: 20px; height: 20px; margin: 0; color: inherit; }
+.header__acties > .wa-link { margin-inline-start: -.7rem; }
+.header__acties > .wa-link .wa-link__tekst, .mcta > .wa-link .wa-link__tekst { display: none; }
+.mcta > .wa-link { margin: 0; padding: .3rem; align-self: stretch; color: var(--success); background: var(--white); }
+.homecontact__kanalen > .wa-link { justify-content: flex-start; margin: -.65rem 0 0; }
+.footer__kolom .wa-link { display: inline-flex; padding: .3rem .35rem; }
+.footer__kolom .wa-link .ic { width: 20px; height: 20px; margin: 0; }
+.footer__kolom .wa-link .wa-link__tekst { font-size: .8125rem; }
+.footer__tel + .wa-link { margin-inline-start: .8rem; }
+.lade__tel + .wa-link { align-self: flex-start; margin: 0; }
+.whatsapp:focus-visible, .wa-link:focus-visible { outline: 3px solid var(--brand-accent); outline-offset: 3px; }
 .whatsapp {
   position: fixed; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 45;
   display: grid; justify-items: center; gap: .1rem; width: 4.5rem; min-height: 4.5rem; padding: .55rem .2rem;
-  border: 1px solid var(--white); border-radius: var(--radius-card); background: var(--success); color: var(--white);
-  box-shadow: var(--schaduw-kaart); cursor: default; opacity: .9;
+  border: 0; border-radius: 14px; background: var(--success); color: var(--white); text-decoration: none;
+  box-shadow: 0 4px 12px rgba(11, 35, 82, .18); cursor: pointer;
 }
+.whatsapp:hover { background: color-mix(in srgb, var(--success) 88%, black); color: var(--white); }
 .whatsapp .ic { width: 1.8rem; height: 1.8rem; }
-.whatsapp__label { font-size: .6rem; font-weight: var(--weight-semibold); line-height: 1.2; }
+.whatsapp .wa-link__tekst { font-size: .65rem; font-weight: var(--weight-semibold); line-height: 1.2; }
 .whatsapp.is-bedekt, body.lade-open .whatsapp { visibility: hidden; pointer-events: none; }
 @media (max-width: 767.98px) {
   .mcta { display: grid; }
+  .header__acties > .wa-link { display: none; }
   .whatsapp { bottom: calc(6.25rem + env(safe-area-inset-bottom)); right: max(.75rem, env(safe-area-inset-right)); }
   html { scroll-padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
   .footer { padding-bottom: 4.75rem; }

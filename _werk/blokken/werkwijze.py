@@ -45,7 +45,7 @@ def html(ctx, kopij, **opties):
     {ctx.kopgroep(k, "kopgroep--midden")}
     <div class="werkwijze" data-werkwijze>
       <ol class="werkwijze__stappen" role="list">{"".join(stappen)}</ol>
-      <div class="werkwijze__beeld" aria-hidden="true">{"".join(beelden)}{ctx.icoon("doos", "beeldaccent werkwijze__accent")}</div>
+      <div class="werkwijze__beeld" aria-hidden="true">{"".join(beelden)}<span class="beeldaccent werkwijze__accent" aria-hidden="true"></span></div>
     </div>
     {f'<div class="knoppen knoppen--midden">{"".join(knoppen)}</div>' if knoppen else ""}
   </div>

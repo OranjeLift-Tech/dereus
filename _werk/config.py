@@ -11,6 +11,8 @@ KORTE_NAAM = "De Reus"
 
 TEL = "085 000 5647"
 TELHREF = "tel:+31850005647"
+# Hetzelfde bedrijfsnummer; de link bevestigt niet dat het account actief is.
+WHATSAPP = "https://wa.me/" + "".join(c for c in TELHREF if c.isdigit())
 MAIL = "info@verhuisbedrijfdereus.nl"
 
 STRAAT = "Lau Mazirellaan 336"
