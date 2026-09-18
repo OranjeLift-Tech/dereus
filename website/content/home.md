@@ -7,8 +7,7 @@ og-titel: Verhuisbedrijf De Reus: sterk in verhuizen, vanuit Den Haag
 
 # Verhuisbedrijf in Den Haag {#offerte}
 label: Verhuisbedrijf De Reus
-visueel: De betrouwbare keuze voor een ==zorgeloze== verhuizing
-intro: Eén vaste verhuisadviseur, ervaren verhuizers en een heldere offerte vooraf.
+intro: Ervaren verhuizers, één vaste verhuisadviseur en een heldere offerte vooraf.
 score: 4,9 uit 5 op Google
 pil-titel: Binnen 24 uur uw offerte
 pil-knop: Offerte aanvragen

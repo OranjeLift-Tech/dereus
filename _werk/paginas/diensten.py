@@ -1,4 +1,4 @@
-"""/diensten/: kop met ankerchips, de acht diensten met ankernavigatie, reviews (compact) en de offertepil."""
+"""/diensten/: kop met ankerchips, acht diensten, reviews (compact) en de offertepil."""
 import kopij as _kopij
 from kit import Pagina
 

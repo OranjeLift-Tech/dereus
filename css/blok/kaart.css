@@ -32,6 +32,13 @@ a.b-kaart__waarde:hover{text-decoration-color:currentColor}
 .b-kaart__tijd.is-vandaag dd{color:var(--ink)}
 .b-kaart__tekst .knoppen{align-items:center}
 
+/* De bovenrand volgt de adreskop, niet het kleinere label erboven. */
+@media(min-width:961px){
+  .b-kaart__tekst{justify-content:flex-start}
+  .b-kaart__kop .label{display:flex}
+  .b-kaart__beeld{margin-top:calc(var(--text-h6) + 1rem)}
+}
+
 @media(max-width:960px){
   .b-kaart__in{grid-template-columns:1fr}
   .b-kaart__beeld{min-height:0}

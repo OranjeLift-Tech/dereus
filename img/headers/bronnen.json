@@ -1,0 +1,164 @@
+[
+  {
+    "route": "/",
+    "name": "home",
+    "source": "_ai-beelden/foto/header-achtergronden/home.png",
+    "kind": "generated"
+  },
+  {
+    "route": "/diensten/",
+    "name": "diensten",
+    "source": "_ai-beelden/foto/logo-correcties/dienst-verhuislift-imagegen.png",
+    "kind": "corrected-existing"
+  },
+  {
+    "route": "/kosten/",
+    "name": "kosten",
+    "source": "_ai-beelden/foto/header-achtergronden/kosten.png",
+    "kind": "generated"
+  },
+  {
+    "route": "/offerte/",
+    "name": "offerte",
+    "source": "img/stap-1-formulier.webp",
+    "kind": "existing-soft"
+  },
+  {
+    "route": "/over-ons/",
+    "name": "over-ons",
+    "source": "_ai-beelden/foto/header-achtergronden/over-ons-selected.png",
+    "kind": "user-selected"
+  },
+  {
+    "route": "/werkwijze/",
+    "name": "werkwijze",
+    "source": "_ai-beelden/foto/logo-correcties/verwachten-inpakken-imagegen.png",
+    "kind": "corrected-existing"
+  },
+  {
+    "route": "/contact/",
+    "name": "contact",
+    "source": "img/contact-klantenservice.webp",
+    "kind": "existing"
+  },
+  {
+    "route": "/privacyverklaring/",
+    "name": "privacy",
+    "source": "_ai-beelden/foto/header-achtergronden/privacy.png",
+    "kind": "generated"
+  },
+  {
+    "route": "/algemene-voorwaarden/",
+    "name": "voorwaarden",
+    "source": "img/stap-3-offerte.webp",
+    "kind": "existing-soft"
+  },
+  {
+    "route": "/contact/bedankt/",
+    "name": "contact-bedankt",
+    "source": "img/stap-2-bellen.webp",
+    "kind": "existing-soft"
+  },
+  {
+    "route": "/offerte/bedankt/",
+    "name": "offerte-bedankt",
+    "source": "_ai-beelden/foto/header-achtergronden/offerte-bedankt.png",
+    "kind": "generated"
+  },
+  {
+    "route": "/404.html",
+    "name": "niet-gevonden",
+    "source": "_ai-beelden/foto/header-achtergronden/niet-gevonden.png",
+    "kind": "generated"
+  },
+  {
+    "route": "/diensten/particuliere-verhuizingen/",
+    "name": "particulier",
+    "source": "_ai-beelden/foto/logo-correcties/dienst-particulier-imagegen.png",
+    "kind": "corrected-existing"
+  },
+  {
+    "route": "/diensten/zakelijke-verhuizingen/",
+    "name": "zakelijk",
+    "source": "_ai-beelden/foto/logo-correcties/dienst-zakelijk-generatie.png",
+    "kind": "corrected-existing"
+  },
+  {
+    "route": "/diensten/tijdelijke-opslag/",
+    "name": "opslag",
+    "source": "_ai-beelden/foto/logo-correcties/dienst-opslag-generatie.png",
+    "kind": "corrected-existing"
+  },
+  {
+    "route": "/diensten/internationale-verhuizingen/",
+    "name": "internationaal",
+    "source": "_ai-beelden/foto/logo-correcties/dienst-internationaal-imagegen.png",
+    "kind": "corrected-existing"
+  },
+  {
+    "route": "/diensten/studentenverhuizing/",
+    "name": "studenten",
+    "source": "img/dienst-woningontruiming.webp",
+    "kind": "existing-soft"
+  },
+  {
+    "route": "/diensten/seniorenverhuizing/",
+    "name": "senioren",
+    "source": "img/dienst-handyman.webp",
+    "kind": "existing-soft"
+  },
+  {
+    "route": "/diensten/spoedverhuizing/",
+    "name": "spoed",
+    "source": "img/dienst-nationaal.webp",
+    "kind": "existing-soft"
+  },
+  {
+    "route": "/werkgebied/",
+    "name": "werkgebied",
+    "source": "img/kaart-den-haag.svg",
+    "kind": "map"
+  },
+  {
+    "route": "/werkgebied/delft/",
+    "name": "delft",
+    "source": "img/kaart-delft.svg",
+    "kind": "map"
+  },
+  {
+    "route": "/werkgebied/leiden/",
+    "name": "leiden",
+    "source": "img/kaart-leiden.svg",
+    "kind": "map"
+  },
+  {
+    "route": "/werkgebied/leidschendam-voorburg/",
+    "name": "leidschendam-voorburg",
+    "source": "img/kaart-leidschendam-voorburg.svg",
+    "kind": "map"
+  },
+  {
+    "route": "/werkgebied/rijswijk/",
+    "name": "rijswijk",
+    "source": "img/kaart-rijswijk.svg",
+    "kind": "map"
+  },
+  {
+    "route": "/werkgebied/voorschoten/",
+    "name": "voorschoten",
+    "source": "img/kaart-voorschoten.svg",
+    "kind": "map"
+  },
+  {
+    "route": "/werkgebied/wassenaar/",
+    "name": "wassenaar",
+    "source": "img/kaart-wassenaar.svg",
+    "kind": "map"
+  },
+  {
+    "route": "/werkgebied/zoetermeer/",
+    "name": "zoetermeer",
+    "source": "img/kaart-zoetermeer.svg",
+    "kind": "map"
+  }
+]

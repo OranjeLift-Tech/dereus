@@ -1,0 +1,164 @@
+{
+  "/": {
+    "src": "/img/headers/home.webp",
+    "width": 1600,
+    "height": 900,
+    "position": "50% 50%"
+  },
+  "/diensten/": {
+    "src": "/img/headers/diensten.webp",
+    "width": 1448,
+    "height": 815,
+    "position": "50% 50%"
+  },
+  "/kosten/": {
+    "src": "/img/headers/kosten.webp",
+    "width": 1600,
+    "height": 900,
+    "position": "50% 50%"
+  },
+  "/offerte/": {
+    "src": "/img/headers/offerte.webp",
+    "width": 560,
+    "height": 315,
+    "position": "50% 50%"
+  },
+  "/over-ons/": {
+    "src": "/img/headers/over-ons.webp",
+    "width": 1448,
+    "height": 815,
+    "position": "50% 50%"
+  },
+  "/werkwijze/": {
+    "src": "/img/headers/werkwijze.webp",
+    "width": 1448,
+    "height": 815,
+    "position": "50% 50%"
+  },
+  "/contact/": {
+    "src": "/img/headers/contact.webp",
+    "width": 1200,
+    "height": 675,
+    "position": "50% 50%"
+  },
+  "/privacyverklaring/": {
+    "src": "/img/headers/privacy.webp",
+    "width": 1600,
+    "height": 900,
+    "position": "50% 50%"
+  },
+  "/algemene-voorwaarden/": {
+    "src": "/img/headers/voorwaarden.webp",
+    "width": 560,
+    "height": 315,
+    "position": "50% 50%"
+  },
+  "/contact/bedankt/": {
+    "src": "/img/headers/contact-bedankt.webp",
+    "width": 560,
+    "height": 315,
+    "position": "50% 50%"
+  },
+  "/offerte/bedankt/": {
+    "src": "/img/headers/offerte-bedankt.webp",
+    "width": 1600,
+    "height": 900,
+    "position": "50% 50%"
+  },
+  "/404.html": {
+    "src": "/img/headers/niet-gevonden.webp",
+    "width": 1600,
+    "height": 900,
+    "position": "50% 50%"
+  },
+  "/diensten/particuliere-verhuizingen/": {
+    "src": "/img/headers/particulier.webp",
+    "width": 1448,
+    "height": 815,
+    "position": "50% 50%"
+  },
+  "/diensten/zakelijke-verhuizingen/": {
+    "src": "/img/headers/zakelijk.webp",
+    "width": 1448,
+    "height": 815,
+    "position": "50% 50%"
+  },
+  "/diensten/tijdelijke-opslag/": {
+    "src": "/img/headers/opslag.webp",
+    "width": 1448,
+    "height": 815,
+    "position": "50% 50%"
+  },
+  "/diensten/internationale-verhuizingen/": {
+    "src": "/img/headers/internationaal.webp",
+    "width": 1448,
+    "height": 815,
+    "position": "50% 50%"
+  },
+  "/diensten/studentenverhuizing/": {
+    "src": "/img/headers/studenten.webp",
+    "width": 720,
+    "height": 405,
+    "position": "50% 50%"
+  },
+  "/diensten/seniorenverhuizing/": {
+    "src": "/img/headers/senioren.webp",
+    "width": 720,
+    "height": 405,
+    "position": "50% 50%"
+  },
+  "/diensten/spoedverhuizing/": {
+    "src": "/img/headers/spoed.webp",
+    "width": 720,
+    "height": 405,
+    "position": "50% 50%"
+  },
+  "/werkgebied/": {
+    "src": "/img/headers/werkgebied.svg",
+    "width": 1400,
+    "height": 933,
+    "position": "50% 50%"
+  },
+  "/werkgebied/delft/": {
+    "src": "/img/headers/delft.svg",
+    "width": 1400,
+    "height": 933,
+    "position": "50% 50%"
+  },
+  "/werkgebied/leiden/": {
+    "src": "/img/headers/leiden.svg",
+    "width": 1400,
+    "height": 933,
+    "position": "50% 50%"
+  },
+  "/werkgebied/leidschendam-voorburg/": {
+    "src": "/img/headers/leidschendam-voorburg.svg",
+    "width": 1400,
+    "height": 933,
+    "position": "50% 50%"
+  },
+  "/werkgebied/rijswijk/": {
+    "src": "/img/headers/rijswijk.svg",
+    "width": 1400,
+    "height": 933,
+    "position": "50% 50%"
+  },
+  "/werkgebied/voorschoten/": {
+    "src": "/img/headers/voorschoten.svg",
+    "width": 1400,
+    "height": 933,
+    "position": "50% 50%"
+  },
+  "/werkgebied/wassenaar/": {
+    "src": "/img/headers/wassenaar.svg",
+    "width": 1400,
+    "height": 933,
+    "position": "50% 50%"
+  },
+  "/werkgebied/zoetermeer/": {
+    "src": "/img/headers/zoetermeer.svg",
+    "width": 1400,
+    "height": 933,
+    "position": "50% 50%"
+  }
+}

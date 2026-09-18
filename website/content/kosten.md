@@ -10,6 +10,7 @@ Geen "zonder verrassingen", geen "volledig verzekerd", geen vaste eindprijs belo
 -->
 
 # Wat kost een verhuisbedrijf? {#kop}
+intro-kort: Uw prijs hangt af van de spullen, afstand en bereikbaarheid. Vraag een offerte op maat aan.
 label: Kosten
 
 ## Het korte antwoord {#antwoord}

@@ -63,6 +63,23 @@
 /* Los blok als afsluiter */
 .b-offertepil .of-box--los { max-width: 72rem; margin-inline: auto; }
 
+/* Rustige, compacte headerkaart met duidelijke velden en korte selectietekst. */
+.of-box--header { padding:1rem 1.25rem; border:1px solid var(--grey-300); border-radius:18px; box-shadow:0 12px 35px -24px rgba(11,35,82,.3); }
+.of-box--header::before { width:3.25rem; height:3px; left:1.25rem; }
+.of-box--header .of-kop { gap:.75rem 1.5rem; margin-bottom:.85rem; align-items:center; }
+.of-box--header .of-titel { font-size:1.5rem; }
+.of-box--header .of-google { padding:.3rem .7rem .3rem .4rem; background:transparent; box-shadow:none; }
+.of-box--header .of-google b { font-size:1.5rem; }
+.of-box--header .of-google .ic--google { width:1.8rem; height:1.8rem; }
+.of-box--header .of-pil { border-radius:14px; padding:.3rem; box-shadow:inset 0 0 0 1px var(--grey-300); }
+.of-box--header .of-veld { padding:.4rem 1rem; border-radius:10px; gap:.15rem; }
+.of-box--header .of-veld:first-child { padding-left:1rem; }
+.of-box--header .of-veld > span { line-height:1.25; font-size:.75rem; letter-spacing:0; }
+.of-box--header .of-veld select { padding-right:1.4rem; }
+.of-box--header .of-knop { min-height:52px; padding-inline:1.3rem; border-radius:11px; }
+.of-box--header .of-voet { margin-top:.65rem; gap:.4rem 1rem; }
+.of-box--header .of-onder { font-size:.72rem; }
+
 /* Over de onderrand van de paginakop (optie over_kop). De overlap is nooit groter dan de gewone
    onderruimte van .pk, dus ook zonder :has() valt er geen tekst onder de kaart. */
 .b-offertepil--over { --over: clamp(3rem, 2rem + 3vw, 4.5rem); z-index: 2; margin-top: calc(-1 * var(--over)); padding-top: 0; padding-bottom: calc(var(--ruimte) * .55); background: transparent; }
@@ -86,4 +103,23 @@
   .of-veld :is(input, select) { font-size: 1rem; min-height: 32px; }
   .of-kop { gap: .75rem; margin-bottom: 1rem; }
   .of-vinken { gap: .35rem; font-size: .95rem; }
+}
+
+@media (max-width:999.98px) {
+  .of-box--header .of-pil { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.65rem; padding:0; background:transparent; box-shadow:none; }
+  .of-box--header .of-streep { display:none; }
+  .of-box--header .of-veld, .of-box--header .of-veld:first-child { min-width:0; padding:.55rem .85rem; background:var(--off-white); box-shadow:inset 0 0 0 1px var(--grey-300); }
+  .of-box--header .of-knop { grid-column:1/-1; width:100%; margin:0; }
+}
+@media (max-width:559.98px) {
+  .of-box--header { padding:1rem; border-radius:16px; }
+  .of-box--header .of-kop { flex-wrap:nowrap; gap:.6rem; }
+  .of-box--header .of-titel { font-size:1.3rem; }
+  .of-box--header .of-google { gap:.35rem; padding:.2rem 0; }
+  .of-box--header .of-google b { font-size:1.25rem; }
+  .of-box--header .of-google small { display:none; }
+  .of-box--header .of-veld--datum, .of-box--header .of-veld--dienst { grid-column:1/-1; }
+  .of-box--header .of-veld :is(input,select) { min-height:32px; font-size:1rem; }
+  .of-box--header .of-voet .of-vinken { display:none; }
+  .of-box--header .of-onder { font-size:.75rem; }
 }

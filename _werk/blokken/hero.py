@@ -1,9 +1,6 @@
-"""Hero van de home (#offerte). De H1 "Verhuisbedrijf in Den Haag" als kleine kop, daaronder de
-grote regel uit het veld visueel. Tekst en teambeeld staan gecentreerd boven elkaar.
-De offertekaart (blok offertepil, variant hero) valt over de onderrand.
-
-Grafisch, zonder foto (besluit dereus-28): de oude achtergrond was stock van de Wix-site en mag niet mee.
-Een eigen foto valt later in via config.HERO_BEELD; de waas en de korrel liggen er al klaar voor.
+"""Hero van de home (#offerte). De H1 en het teambeeld staan gecentreerd boven elkaar.
+De compacte offertekaart valt over de onderrand; de fotoachtergrond komt uit de routegebonden
+headerbeeldenlijst. De oude stockachtergrond uit Wix wordt niet gebruikt.
 Onder de tekst staat, in deze volgorde van voorrang:
   config.HERO_TEAM         de vrijstaande teamfoto (besluit gebruiker), de onderrand valt achter de offertekaart;
   config.MASCOTTE_IN_HERO  de blauwe mascotte;
@@ -57,13 +54,13 @@ def figuur(ctx):
 def html(ctx, kopij, **opties):
     k = kopij
     cfg = ctx.cfg
-    foto = getattr(cfg, "HERO_BEELD", None)
-    achter = ""
-    if foto:
-        achter = f'<div class="hero__foto">{ctx.beeld(foto, "", 1920, 1120, lui=False, prioriteit=True)}</div>'
+    foto = kit.headerbeeld(ctx.pagina.pad)
+    achter = (f'<div class="hero__foto"><img src="{ctx.esc(foto["src"])}" alt="" '
+              f'width="{foto["width"]}" height="{foto["height"]}" '
+              f'style="object-position:{ctx.esc(foto.get("position", "50% 50%"))}" '
+              'decoding="async" fetchpriority="low"></div>')
     b, h = cfg.LOGO_MATEN["beeldmerk"]
     textuur = f'<img class="hero__textuur" src="{ctx.logo("beeldmerk-negatief")}" alt="" width="{b}" height="{h}" decoding="async">'
-    visueel = k.veld("visueel")
     intro = k.veld("intro")
     bel = (f'<p class="hero__bel">{ctx.bereikbaar("bereikbaar hero__status")}'
            f'<a href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>Bel {ctx.tel}</span></a></p>')
@@ -71,8 +68,8 @@ def html(ctx, kopij, **opties):
   <div class="hero__grond" aria-hidden="true">{achter}<span class="hero__waas"></span>{textuur}<span class="hero__korrel"></span></div>
   <div class="wrap hero__grid">
     <div class="hero__tekst">
+      {ctx.label(k.veld("label"), "hero__label")}
       <h1 class="hero__h1" id="hero-h1">{ctx.inline(k.kop)}</h1>
-      {f'<p class="hero__visueel">{ctx.inline(visueel)}</p>' if visueel else ""}
       {f'<p class="hero__intro">{ctx.inline(intro)}</p>' if intro else ""}
       {bel}
     </div>
@@ -80,5 +77,5 @@ def html(ctx, kopij, **opties):
   </div>
 </section>
 <div class="hero-pil">
-  <div class="wrap">{ctx.blok("offertepil", kopij_id=k.id or "offerte", variant="hero")}</div>
+  <div class="wrap">{ctx.blok("offertepil", kopij_id=k.id or "offerte", variant="header")}</div>
 </div>'''

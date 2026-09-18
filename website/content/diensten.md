@@ -10,6 +10,7 @@ bij verhuislift, opslag, montage en ontruiming geen beloftes over verzekering of
 -->
 
 # Onze diensten {#kop}
+intro-kort: Verhuizen, inpakken, opslag en montage. Alles geregeld met één vaste verhuisadviseur.
 label: Diensten
 intro: Van een verhuizing binnen Den Haag tot een verhuizing over de grens: Verhuisbedrijf De Reus regelt het met één vaste verhuisadviseur. Hieronder leest u per dienst wat wij doen en wat erbij hoort. Twijfelt u wat u nodig heeft? Vraag een offerte aan, dan denken wij met u mee.
 

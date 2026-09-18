@@ -11,6 +11,7 @@ Voorwaarden: artikel 3.5, 4, 6, 7 en 12.
 -->
 
 # Zo werkt een verhuizing met De Reus {#kop}
+intro-kort: Van aanvraag tot verhuisdag in vijf stappen, met één vaste verhuisadviseur.
 label: Werkwijze
 intro: Wat doet een verhuisbedrijf eigenlijk, van de eerste vraag tot de laatste doos? Bij De Reus gaat het in vijf stappen, met één vaste verhuisadviseur als aanspreekpunt. Hieronder leest u per stap wat er gebeurt, wat u zelf doet en wat wij voor u regelen.
 

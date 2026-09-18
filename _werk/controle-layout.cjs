@@ -35,6 +35,8 @@ const path = require('node:path');
             broken: [...document.images].filter(img => img.complete && !img.naturalWidth).map(img => img.src),
             duplicateIds: [...document.querySelectorAll('[id]')].map(el => el.id).filter((id, i, ids) => ids.indexOf(id) !== i),
             brokenLabels: [...document.querySelectorAll('label[for]')].filter(el => !document.getElementById(el.htmlFor)).map(el => el.htmlFor),
+            brokenAria: [...document.querySelectorAll('[aria-controls],[aria-labelledby],[aria-describedby]')].flatMap(el =>
+              ['aria-controls', 'aria-labelledby', 'aria-describedby'].flatMap(attr => (el.getAttribute(attr) || '').split(/\s+/).filter(id => id && !document.getElementById(id)))),
             h1: document.querySelectorAll('h1').length
           };
         });
@@ -44,6 +46,30 @@ const path = require('node:path');
         assert.deepEqual(layout.broken, [], `${width} ${route}: broken images`);
         assert.deepEqual(layout.duplicateIds, [], `${width} ${route}: duplicate ids`);
         assert.deepEqual(layout.brokenLabels, [], `${width} ${route}: broken form labels`);
+        assert.deepEqual(layout.brokenAria, [], `${width} ${route}: broken ARIA references`);
+        const whatsapp = page.locator('.whatsapp');
+        assert.equal(await whatsapp.count(), 1, `${width} ${route}: WhatsApp placeholder`);
+        assert.equal(await whatsapp.isDisabled(), true);
+        assert.equal(await whatsapp.getAttribute('type'), 'button');
+        assert.equal(await whatsapp.getAttribute('aria-label'), 'WhatsApp binnenkort beschikbaar');
+        assert.equal(await whatsapp.getAttribute('href'), null);
+        assert.ok(await whatsapp.evaluate(el => {
+          const box = el.getBoundingClientRect(), bar = document.querySelector('.mcta').getBoundingClientRect();
+          return box.left >= 0 && box.right <= innerWidth && box.bottom <= innerHeight && (!bar.height || box.bottom <= bar.top - 10);
+        }), `${width} ${route}: WhatsApp safe position`);
+        assert.equal(await page.locator('#i-google > g').getAttribute('transform'), 'translate(2.64 2.64) scale(.78)');
+        assert.ok(await page.evaluate(() => [...document.querySelectorAll('script[type="application/ld+json"]')].every(script => {
+          const data = JSON.parse(script.textContent), graph = data['@graph'] || [data];
+          return graph.filter(item => item['@type'] === 'MovingCompany').every(item =>
+            item.logo.url.endsWith('/img/logo/dereus-logo.svg') && item.logo.width === 1000 && item.logo.height === 828);
+        })), `${route}: approved JSON-LD logo`);
+        if (route === '/diensten/') {
+          assert.equal(await page.locator('.b-dienstenpanelen__index').count(), 0);
+          assert.equal(await page.locator('.b-dienstenpanelen__paneel').count(), 8);
+          assert.ok(await page.locator('.b-dienstenpanelen__panelen').evaluate(el => {
+            const box = el.getBoundingClientRect(); return Math.abs((box.left + box.right) / 2 - innerWidth / 2) < 2;
+          }), `${width}: service panels centered without an empty sidebar`);
+        }
         const heading = route === '/' ? '.hero__tekst' : '.pk__tekst';
         if (await page.locator(heading).count()) {
           assert.ok(await page.locator(heading).evaluate(el => {
@@ -108,10 +134,10 @@ const path = require('node:path');
     await page.setViewportSize({ width: 1366, height: 650 });
     await page.goto(base, { waitUntil: 'networkidle' });
     await page.locator('.hero').screenshot({ path: path.join(out, 'home-laptop.png') });
-    await page.locator('#of-van').fill('Den Haag');
-    await page.locator('#of-naar').fill('Delft');
-    await page.locator('#of-dienst').selectOption('particulier');
-    await page.locator('.of-knop').click();
+    await page.locator('#header-of-van').fill('Den Haag');
+    await page.locator('#header-of-naar').fill('Delft');
+    await page.locator('#header-of-dienst').selectOption('particulier');
+    await page.locator('.of-box--header .of-knop').click();
     await page.waitForURL('**/offerte/?**');
     assert.equal(await page.locator('#f-van').inputValue(), 'Den Haag');
     assert.equal(await page.locator('#f-naar').inputValue(), 'Delft');
@@ -130,6 +156,21 @@ const path = require('node:path');
       await section.scrollIntoViewIfNeeded();
       await section.screenshot({ path: path.join(out, `${id}-desktop.png`), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
     }
+    assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('.beeldaccent')].flatMap(art => {
+      if (getComputedStyle(art).display === 'none') return [];
+      const box = art.getBoundingClientRect(), parent = art.parentElement.getBoundingClientRect();
+      const failures = [];
+      if (box.left < parent.left || box.right > parent.right || box.top < parent.top || box.bottom > parent.bottom) failures.push('accent outside photo');
+      if (getComputedStyle(art).pointerEvents !== 'none' || art.getAttribute('aria-hidden') !== 'true') failures.push('interactive accent');
+      const walker = document.createTreeWalker(art.closest('section'), NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (!node.textContent.trim() || node.parentElement.closest('script,style,svg,.vh')) continue;
+        const range = document.createRange(); range.selectNodeContents(node);
+        if ([...range.getClientRects()].some(r => r.width && r.height && r.left < box.right && r.right > box.left && r.top < box.bottom && r.bottom > box.top)) failures.push('accent crosses text');
+      }
+      return failures;
+    })), [], 'Photo accents remain inside images and clear of text');
     await page.route('https://cdn.jsdelivr.net/**', route => route.abort());
     await page.route('https://cdnjs.cloudflare.com/**', route => route.abort());
     await page.locator('[data-wereld-start]').click();
@@ -137,8 +178,13 @@ const path = require('node:path');
     assert.equal(await page.locator('.wereld__terugval').isVisible(), true);
     assert.equal(await page.locator('[data-wereld-start]').isEnabled(), true);
 
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(base + '/diensten/', { waitUntil: 'networkidle' });
+    await page.locator('.b-dienstenpanelen').scrollIntoViewIfNeeded();
+    await page.screenshot({ path: path.join(out, 'diensten-desktop.png') });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(base + '/diensten/', { waitUntil: 'networkidle' });
+    await page.locator('.b-dienstenpanelen').scrollIntoViewIfNeeded();
     await page.screenshot({ path: path.join(out, 'diensten-mobile.png') });
     assert.deepEqual(errors, [], 'Browser errors');
     console.log('Navigatie, focus, afbeeldingen en browserconsole: akkoord.');

@@ -32,7 +32,7 @@ def pil(ctx, knoptekst, id_, dienst=None, van="", naar=""):
     dienst_l = (it.titel if it else "") or "Soort verhuizing"
     if not opties:
         opties = [(sl, naam) for sl, naam, _ in navigatie.DIENSTEN]
-    kies = "Kies wat u nodig heeft"
+    kies = "Kies een type"
     opt = "".join(f'<option value="{ctx.esc(w)}"{" selected" if w == dienst else ""}>{ctx.esc(t)}</option>' for w, t in opties)
     van_w = f' value="{ctx.esc(van)}"' if van else ""
     naar_w = f' value="{ctx.esc(naar)}"' if naar else ""
@@ -56,20 +56,25 @@ def google(ctx, klasse="of-google"):
 
 
 def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="", **opties):
+    if over_kop:
+        # Alle paginakoppen bevatten nu zelf dezelfde compacte offertekaart.
+        return ""
     vooraf = {"dienst": dienst, "van": van, "naar": naar}   # optioneel: dienst selecteren, van of naar invullen
     k = kopij
-    if variant == "hero":
-        titel = k.veld("pil-titel", "Binnen 24 uur uw offerte")
+    if variant in ("hero", "header"):
+        k = k or ctx.kopij_van("home").blok_of_leeg("offerte")
+        titel = "Vraag uw offerte aan" if variant == "header" else k.veld("pil-titel", "Binnen 24 uur uw offerte")
         onder = k.veld("pil-onder", "")
         knop = k.veld("pil-knop", "Offerte aanvragen")
         vinken = ctx.lijst(k.lijst, "of-vinken vinklijst")
-        return f'''<div class="of-wrap" id="offerte-pil">
-    <div class="of-box of-box--hero">
+        prefix = "header-of" if variant == "header" else "of"
+        return f'''<div class="of-wrap" id="{prefix}-kaart">
+    <div class="of-box of-box--hero{" of-box--header" if variant == "header" else ""}">
       <div class="of-kop">
         <h2 class="of-titel">{ctx.inline(titel)}</h2>
         {google(ctx)}
       </div>
-      {pil(ctx, knop, "of", **vooraf)}
+      {pil(ctx, knop, prefix, **vooraf)}
       <div class="of-voet">
         {vinken}
         {f'<p class="of-onder">{ctx.inline(onder)}</p>' if onder else ""}

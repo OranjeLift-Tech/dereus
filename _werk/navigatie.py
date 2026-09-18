@@ -247,4 +247,7 @@ def belbalk(ctx):
     return f'''<nav class="mcta" aria-label="Snel contact">
   <a class="knop knop--licht" href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{esc(b.veld("bellen", "Bellen"))}</span></a>
   <a class="knop knop--cta" href="/offerte/"><span>{esc(b.veld("offerte", "Offerte aanvragen"))}</span></a>
-</nav>'''
+</nav>
+<button class="whatsapp" type="button" disabled aria-label="WhatsApp binnenkort beschikbaar" title="WhatsApp binnenkort beschikbaar">
+  {ctx.icoon("whatsapp")}<span class="whatsapp__label">Binnenkort</span>
+</button>'''

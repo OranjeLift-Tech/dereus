@@ -11,6 +11,7 @@ Kernwaarden uit het merkboek (Sterk, Zorgvuldig, Betrouwbaar, Eerlijk, Betrokken
 -->
 
 # Over De Reus {#kop}
+intro-kort: Vanuit Den Haag verhuizen wij particulieren en kleine bedrijven, in Nederland en daarbuiten.
 label: Over ons
 intro: Verhuisbedrijf De Reus doet het zware werk van een verhuizing, zodat u dat niet hoeft te doen. Vanuit Den Haag verhuizen wij particulieren en kleine bedrijven, door heel Nederland en van en naar het buitenland.
 

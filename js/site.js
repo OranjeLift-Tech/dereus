@@ -165,6 +165,37 @@
     [].forEach.call(groepen, function (g) { ioG.observe(g); });
   }
 
+  /* De zwevende placeholder maakt plaats voor formulieren en de interactieve kaart. */
+  var whatsapp = doc.querySelector('.whatsapp');
+  if (whatsapp) {
+    var whatsappFrame = null;
+    var mobieleBalk = doc.querySelector('.mcta');
+    var vrijeVlaken = [].slice.call(doc.querySelectorAll('form, [data-wereld]'));
+    function ruimteVoorContact() {
+      whatsappFrame = null;
+      var balkHoogte = mobieleBalk ? mobieleBalk.getBoundingClientRect().height : 0;
+      if (balkHoogte) whatsapp.style.bottom = (balkHoogte + 12) + 'px';
+      else whatsapp.style.removeProperty('bottom');
+      var knop = whatsapp.getBoundingClientRect();
+      var bedekt = vrijeVlaken.some(function (el) {
+        var vak = el.getBoundingClientRect();
+        return vak.width > 0 && vak.height > 0 && vak.left < knop.right && vak.right > knop.left && vak.top < knop.bottom && vak.bottom > knop.top;
+      });
+      whatsapp.classList.toggle('is-bedekt', bedekt);
+    }
+    function planContactRuimte() { if (whatsappFrame === null) whatsappFrame = requestAnimationFrame(ruimteVoorContact); }
+    window.addEventListener('scroll', planContactRuimte, { passive: true });
+    window.addEventListener('resize', planContactRuimte);
+    window.addEventListener('load', planContactRuimte);
+    doc.addEventListener('focusin', planContactRuimte);
+    if ('ResizeObserver' in window) {
+      var contactMaten = new ResizeObserver(planContactRuimte);
+      vrijeVlaken.forEach(function (el) { contactMaten.observe(el); });
+      if (mobieleBalk) contactMaten.observe(mobieleBalk);
+    }
+    planContactRuimte();
+  }
+
   /* 6. Binnenkomst via een anker (/diensten/#opslag): het doel direct tonen, ook als het nog verborgen is */
   if (location.hash) {
     try {

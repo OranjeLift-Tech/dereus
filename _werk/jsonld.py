@@ -137,7 +137,7 @@ def bedrijf(ctx):
             {"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "09:00", "closes": "17:00"},
         ],
         "areaServed": gebied(ctx),
-        "logo": {"@type": "ImageObject", "url": f"{d}/img/logo/dereus-logo.png", "width": 2048, "height": 2027},
+        "logo": {"@type": "ImageObject", "url": f"{d}/img/logo/dereus-logo.svg", "width": 1000, "height": 828},
         "image": f"{d}/img/og.jpg",
         "knowsLanguage": "nl",
     }

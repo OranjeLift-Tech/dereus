@@ -11,6 +11,7 @@ Formulier volgens het veldcontract met dereus-b4. De bedanktpagina staat in syst
 -->
 
 # Contact {#kop}
+intro-kort: Bel, mail of stuur een bericht. Wij zijn 7 dagen per week bereikbaar.
 label: Contact
 intro: Heeft u een vraag over uw verhuizing, of wilt u iets met ons bespreken? Bel, mail of stuur een bericht. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.
 

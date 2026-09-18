@@ -10,6 +10,7 @@ De bedanktpagina staat in systeem.md.
 -->
 
 # Offerte aanvragen {#kop}
+intro-kort: Vertel ons uw verhuisplannen. Binnen 24 uur belt uw verhuisadviseur u.
 label: Offerte
 intro: Vertel ons waar u vandaan komt, waar u naartoe gaat en wanneer u wilt verhuizen. Binnen 24 uur belt uw verhuisadviseur u. Samen bespreekt u uw wensen en uw inboedel, en daarna ontvangt u een offerte op maat van ons verhuisbedrijf. Gratis en vrijblijvend.
 belregel: Liever meteen overleggen? Bel 085 000 5647.

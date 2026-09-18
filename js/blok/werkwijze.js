@@ -1,63 +1,84 @@
-/* De weg volgt de fototreden. De inhoud en trap blijven zonder JavaScript zichtbaar. */
+/* Eén stap tegelijk. Lopende hoogteanimaties worden vanaf hun actuele maat voortgezet. */
 (function () {
   'use strict';
-  var traps = document.querySelectorAll('.verhuistrap');
-  if (!traps.length || !document.createElementNS) return;
-  var ns = 'http://www.w3.org/2000/svg';
+  var rustig = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll('[data-werkwijze]').forEach(function (blok) {
+    var lagen = [].slice.call(blok.querySelectorAll('[data-stap-beeld]'));
+    var gekozen = 0;
+    var stappen = [].map.call(blok.querySelectorAll('.werkwijze__stap'), function (details) {
+      return { details: details, knop: details.querySelector('summary'), inhoud: details.querySelector('.werkwijze__antwoord'),
+        binnen: details.querySelector('.werkwijze__antwoord-in'), open: details.open, animatie: null };
+    });
+    if (!stappen.length) return;
+    blok.classList.add('is-verrijkt');
 
-  [].forEach.call(traps, function (trap, index) {
-    var svg = document.createElementNS(ns, 'svg');
-    var patternId = 'verhuistrap-asfalt-' + index;
-    svg.setAttribute('class', 'verhuistrap__weg');
-    svg.setAttribute('aria-hidden', 'true');
-    svg.setAttribute('focusable', 'false');
-    svg.innerHTML = '<defs><pattern id="' + patternId + '" patternUnits="userSpaceOnUse" width="96" height="96"><image href="/img/asfalt.webp" width="96" height="96"/></pattern></defs>' +
-      '<path class="verhuistrap__wegrand"/>' +
-      '<path class="verhuistrap__asfalt" stroke="url(#' + patternId + ')"/>' +
-      '<path class="verhuistrap__wegstreep"/>';
-    trap.appendChild(svg);
-
-    function draw() {
-      if (window.innerWidth <= 1100) return;
-      var steps = trap.querySelectorAll('.verhuistrap__trede');
-      var house = trap.querySelector('.verhuistrap__huisvorm');
-      if (steps.length !== 5 || !house) return;
-      var rect = trap.getBoundingClientRect();
-      var cards = [].map.call(steps, function (step) {
-        var r = step.getBoundingClientRect();
-        return { x: r.left - rect.left + r.width / 2, top: r.top - rect.top, bottom: r.bottom - rect.top };
-      });
-      var door = house.getBoundingClientRect();
-      var doorX = door.left - rect.left + door.width / 2;
-      var doorY = door.bottom - rect.top;
-      var points = [
-        [-rect.left - 30, cards[0].top + 70],
-        [cards[0].x, cards[0].top - 34],
-        [cards[1].x, cards[1].bottom + 30],
-        [cards[2].x, cards[2].top - 34],
-        [cards[3].x, cards[3].bottom + 35],
-        [cards[4].x, cards[4].bottom + 36],
-        [doorX - 10, doorY + 42],
-        [doorX, doorY - 8]
-      ];
-      var d = 'M' + points[0].join(' ');
-      for (var i = 0; i < points.length - 1; i++) {
-        var a = points[i - 1] || points[i], b = points[i], c = points[i + 1], e = points[i + 2] || c;
-        d += ' C' + (b[0] + (c[0] - a[0]) * .19) + ' ' + (b[1] + (c[1] - a[1]) * .19) +
-          ' ' + (c[0] - (e[0] - b[0]) * .19) + ' ' + (c[1] - (e[1] - b[1]) * .19) + ' ' + c.join(' ');
+    function beeld(index) {
+      gekozen = index;
+      var laag = lagen[index], foto = laag && laag.querySelector('img');
+      if (!foto) return;
+      // Het desktopbeeld is op mobiel verborgen; laad de gekozen foto ook dan voor een latere resize.
+      foto.loading = 'eager';
+      function wissel() {
+        if (gekozen !== index) return;
+        lagen.forEach(function (el, i) { el.classList.toggle('is-actief', i === index); });
       }
-      svg.setAttribute('viewBox', '0 0 ' + rect.width + ' ' + rect.height);
-      [].forEach.call(svg.querySelectorAll('path'), function (path) { path.setAttribute('d', d); });
+      if (foto.complete && foto.naturalWidth) wissel();
+      else if (foto.decode) foto.decode().then(wissel).catch(function () {});
+      else foto.addEventListener('load', wissel, { once: true });
     }
 
-    var frame;
-    function schedule() {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(draw);
+    function zet(stap, open, direct) {
+      var hoogte = stap.details.open ? stap.inhoud.getBoundingClientRect().height : 0;
+      if (stap.animatie) { stap.animatie.cancel(); stap.animatie = null; }
+      stap.open = open;
+      stap.knop.setAttribute('aria-expanded', String(open));
+      stap.details.classList.toggle('is-sluitend', !open);
+      function klaar() {
+        stap.details.open = open;
+        stap.inhoud.style.height = '';
+        stap.details.classList.remove('is-sluitend');
+        stap.animatie = null;
+      }
+      if (direct || rustig.matches || !stap.inhoud.animate) { klaar(); return; }
+      stap.details.open = true;
+      var doel = open ? stap.binnen.getBoundingClientRect().height : 0;
+      stap.inhoud.style.height = doel + 'px';
+      var animatie = stap.inhoud.animate([{ height: hoogte + 'px' }, { height: doel + 'px' }],
+        { duration: 280, easing: 'cubic-bezier(.22,.61,.36,1)' });
+      stap.animatie = animatie;
+      animatie.onfinish = function () { if (stap.animatie === animatie) klaar(); };
     }
-    window.addEventListener('resize', schedule, { passive: true });
-    if ('ResizeObserver' in window) new ResizeObserver(schedule).observe(trap);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
-    schedule();
+
+    function kies(index, open, direct) {
+      stappen.forEach(function (stap, i) {
+        var gewenst = i === index && open;
+        if (stap.open !== gewenst || direct) zet(stap, gewenst, direct);
+      });
+      if (open) beeld(index);
+    }
+    stappen.forEach(function (stap, index) {
+      stap.knop.setAttribute('aria-expanded', String(stap.open));
+      stap.knop.addEventListener('click', function (event) {
+        event.preventDefault();
+        kies(index, !stap.open, false);
+      });
+      stap.knop.addEventListener('keydown', function (event) {
+        var doel = event.key === 'ArrowDown' ? (index + 1) % stappen.length :
+          event.key === 'ArrowUp' ? (index - 1 + stappen.length) % stappen.length :
+          event.key === 'Home' ? 0 : event.key === 'End' ? stappen.length - 1 : -1;
+        if (doel > -1) { event.preventDefault(); stappen[doel].knop.focus(); }
+      });
+    });
+    function anker() {
+      var index = stappen.findIndex(function (stap) { return '#' + stap.details.parentElement.id === location.hash; });
+      if (index > -1) kies(index, true, true);
+    }
+    window.addEventListener('hashchange', anker);
+    anker();
+    function stopAnimaties() {
+      stappen.forEach(function (stap) { if (stap.animatie) zet(stap, stap.open, true); });
+    }
+    window.addEventListener('resize', stopAnimaties);
+    if (rustig.addEventListener) rustig.addEventListener('change', stopAnimaties);
   });
 })();

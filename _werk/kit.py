@@ -79,6 +79,10 @@ LIJN = {
     "wereld": '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
     "quote": '<path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>',
 }
+# WhatsApp: gespreksballon met de bestaande telefoonlijn, als lokale SVG.
+LIJN["whatsapp"] = ('<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.45L3 21l1.8-5.55A8.5 8.5 0 1 1 21 11.5Z"/>'
+                    + '<g transform="translate(6 5) scale(.5)">' + LIJN["telefoon"] + '</g>')
+
 # Gevulde symbolen (geen streep)
 VOL = {
     "ster": '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
@@ -103,7 +107,8 @@ def sprite(namen):
             delen.append(f'<symbol id="i-{n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{LIJN[n]}</symbol>')
         elif n in VOL:
             vb = "0 0 24 23" if n == "huisje" else "0 0 24 24"
-            delen.append(f'<symbol id="i-{n}" viewBox="{vb}" fill="currentColor">{VOL[n]}</symbol>')
+            inhoud = f'<g transform="translate(2.64 2.64) scale(.78)">{VOL[n]}</g>' if n == "google" else VOL[n]
+            delen.append(f'<symbol id="i-{n}" viewBox="{vb}" fill="currentColor">{inhoud}</symbol>')
     if not delen:
         return ""
     return '<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">' + "".join(delen) + "</svg>"
@@ -185,7 +190,19 @@ def zonder_opmaak(tekst):
 # ---------------------------------------------------------------------------
 # Weergavebreedte van het teambeeld in de hero: voor srcset in het blok en de preload van de home.
 # Houd gelijk met css/blok/hero.css (.hero__team).
-HERO_SIZES = "(min-width: 900px) and (max-height: 700px) 440px, min(82vw, 520px)"
+HERO_SIZES = "(min-width: 768px) and (min-height: 850px) 440px, (min-width: 768px) 400px, min(88vw, 390px)"
+
+
+def headerbeeld(pad):
+    """Elke route heeft een eigen achtergrond in de gedeelde headerbeeldenlijst."""
+    import json
+    bron = WORTEL / "img" / "headers" / "manifest.json"
+    if not bron.exists():
+        raise BouwFout("De headerbeeldenlijst img/headers/manifest.json ontbreekt")
+    beelden = json.loads(bron.read_text(encoding="utf-8"))
+    if pad not in beelden:
+        raise BouwFout(f"Geen eigen headerachtergrond voor {pad}")
+    return beelden[pad]
 
 
 def responsief(basis):
