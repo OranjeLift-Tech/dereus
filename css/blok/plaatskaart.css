@@ -1,0 +1,13 @@
+/* Verhuisbedrijf De Reus · blok plaatskaart (sjabloon plaats, #kaart)
+   Tekst links, rechts de vooraf gemaakte kaart in een afgerond kader. Zonder kaartbeeld blijft de tekst over één kolom. */
+.b-plaatskaart__in{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(1.75rem,4vw,4.5rem);align-items:center}
+.b-plaatskaart__in--zonder{grid-template-columns:minmax(0,1fr);max-width:50rem}
+.b-plaatskaart__tekst .kopgroep{margin-bottom:var(--space-4)}
+.b-plaatskaart__tekst>p{margin:0 0 var(--space-4);max-width:var(--measure)}
+.b-plaatskaart__kaart{position:relative;margin:0;border-radius:var(--radius-media);overflow:hidden;background:var(--primary-50);
+  box-shadow:0 1px 2px rgba(14,26,51,.05),0 30px 60px -40px rgba(14,26,51,.45)}
+.b-plaatskaart__kaart img{display:block;width:100%;height:auto}
+.b-plaatskaart__bron{position:absolute;right:.6rem;bottom:.5rem;margin:0;padding:.15rem .5rem;border-radius:var(--radius-control);background:var(--white);
+  color:var(--color-text-muted);font-size:.75rem;line-height:1.4}
+.b-plaatskaart__bron a{color:inherit}
+@media (max-width:899px){.b-plaatskaart__in{grid-template-columns:minmax(0,1fr)}}

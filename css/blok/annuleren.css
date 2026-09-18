@@ -1,0 +1,13 @@
+/* Verhuisbedrijf De Reus · blok annuleren (/kosten/#annuleren)
+   Een tipvak op goud 50 met een Koningsblauwe rand links: de regels uit de algemene voorwaarden, rustig en feitelijk. */
+.b-annuleren__vak{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(1.5rem,4vw,4rem);padding:clamp(1.6rem,3.2vw,3rem);
+  border-radius:var(--radius-media);background:var(--accent-50);box-shadow:inset 6px 0 0 var(--brand-primary);scroll-margin-top:6.5rem}
+.b-annuleren__kopdeel>.h2{margin:0}
+.b-annuleren__tekst>p{margin:0 0 var(--space-4);max-width:var(--measure)}
+.b-annuleren__regels{display:grid;gap:.65rem;margin:0 0 var(--space-5);padding:0;list-style:none}
+.b-annuleren__regels li{position:relative;padding-left:1.6rem;line-height:var(--leading-text)}
+.b-annuleren__regels li::before{content:"";position:absolute;left:0;top:.55em;width:.6rem;height:.6rem;border-radius:2px;background:var(--brand-primary)}
+.b-annuleren__slot{color:var(--color-text-muted)}
+.b-annuleren__tekst>.b-annuleren__acties{margin:var(--space-5) 0 0}
+
+@media (max-width:799px){.b-annuleren__vak{grid-template-columns:minmax(0,1fr)}}

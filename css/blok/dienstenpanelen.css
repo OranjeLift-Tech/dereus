@@ -1,0 +1,83 @@
+/* Verhuisbedrijf De Reus · blok dienstenpanelen (/diensten/)
+   Plakkende index met een Koningsblauwe wijzer, acht panelen met een huisvormig kader.
+   Bron: Brocken b-plaatsdiensten. Anders: recht, huisvorm in plaats van een schuine rand, en geen zigzag:
+   naast de vaste index begint de tekst in elk paneel op dezelfde plek (review DI1). */
+.b-dienstenpanelen{--regel:3.5rem;--ease:cubic-bezier(.22,.61,.36,1);
+  --huisvorm:polygon(50% 1.5%,59.9% 10.4%,59.9% 0,66.7% 0,66.7% 16.5%,100% 46.3%,85.5% 46.3%,85.5% 100%,14.5% 100%,14.5% 46.3%,0 46.3%)}
+.b-dienstenpanelen__in{display:grid;grid-template-columns:15.5rem minmax(0,1fr);gap:clamp(2rem,4vw,4rem);align-items:start}
+
+/* ---- index ---- */
+.b-dienstenpanelen__index{position:sticky;top:6.5rem}
+.b-dienstenpanelen__index ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--color-border)}
+.b-dienstenpanelen__index li{margin:0}
+.b-dienstenpanelen__index a{display:flex;align-items:center;gap:.8rem;height:var(--regel);padding:0 .5rem 0 1.1rem;
+  color:var(--color-text-muted);font:var(--weight-semibold) var(--text-small)/1.25 var(--font-sans);text-decoration:none;
+  transition:color .3s var(--ease),transform .3s var(--ease)}
+.b-dienstenpanelen__index a:hover{color:var(--brand-primary)}
+.b-dienstenpanelen__index a.is-actief{color:var(--brand-primary);transform:translateX(4px)}
+.b-dienstenpanelen__index a:focus-visible{outline:var(--focus-ring);outline-offset:-3px;border-radius:var(--radius-control)}
+.b-dienstenpanelen__zegel{display:grid;place-items:center;flex:none;width:2.5rem;height:2.5rem;border-radius:50%;
+  background:var(--white);box-shadow:0 0 0 1px var(--color-border);transition:box-shadow .3s var(--ease)}
+.b-dienstenpanelen__zegel svg,.b-dienstenpanelen__zegel img{width:1.5rem;height:1.5rem}
+.b-dienstenpanelen__index a.is-actief .b-dienstenpanelen__zegel{box-shadow:0 0 0 2px var(--brand-primary)}
+.b-dienstenpanelen__wijzer{position:absolute;left:0;top:0;width:4px;height:var(--regel);margin-left:-1px;border-radius:2px;
+  background:var(--brand-primary);opacity:0;transform:translateY(calc(var(--i,0) * var(--regel)));
+  transition:transform .55s var(--ease),opacity .3s var(--ease)}
+.b-dienstenpanelen__index.is-actief .b-dienstenpanelen__wijzer{opacity:1}
+
+/* ---- panelen ---- */
+.b-dienstenpanelen__panelen{display:grid;gap:clamp(1.5rem,3vw,2.75rem)}
+.b-dienstenpanelen__paneel{position:relative;display:grid;grid-template-columns:minmax(0,.48fr) minmax(0,1.52fr);gap:clamp(1.4rem,3vw,3rem);
+  align-items:start;padding:clamp(1.1rem,2.2vw,1.9rem);border-radius:var(--radius-media);scroll-margin-top:6.5rem;
+  transition:background-color .4s var(--ease),box-shadow .4s var(--ease)}
+.b-dienstenpanelen__paneel:target{background:var(--white);box-shadow:var(--shadow-raised),inset 4px 0 0 var(--brand-primary)}
+
+/* het huis uit het logo, zonder deur, als kader. Tot er foto's zijn: een blauw-100 vlak met het merkicoon */
+.b-dienstenpanelen__beeld{position:relative;padding-top:.4rem}
+.b-dienstenpanelen__huis{display:grid;place-items:center;aspect-ratio:536/510;padding-top:34%;background:var(--primary-100);
+  clip-path:var(--huisvorm);transition:background-color .4s var(--ease)}
+.b-dienstenpanelen__huis svg,.b-dienstenpanelen__huis img{width:44%;height:auto;transition:transform .5s var(--ease)}
+.b-dienstenpanelen__paneel:target .b-dienstenpanelen__huis{background:var(--primary-200)}
+.b-dienstenpanelen__nr{position:absolute;left:14.5%;top:.4rem;color:var(--brand-primary);
+  font:var(--weight-display) clamp(1.5rem,1.2rem + 1vw,2.1rem)/1 var(--font-display);font-stretch:var(--font-display-stretch);
+  font-variant-numeric:tabular-nums}
+
+.b-dienstenpanelen__tekst>.h2{margin:0 0 var(--space-4);font-size:var(--text-h3);line-height:var(--leading-heading);text-wrap:balance}
+.b-dienstenpanelen__tekst>.h2 a{color:inherit;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.18em;text-decoration-color:var(--primary-300)}
+.b-dienstenpanelen__tekst>.h2 a:hover{text-decoration-color:currentColor}
+.b-dienstenpanelen__tekst>p{margin:0 0 var(--space-4);max-width:var(--measure)}
+.b-dienstenpanelen__lijstkop{margin:var(--space-6) 0 var(--space-3);color:var(--color-text);
+  font:var(--weight-bold) var(--text-xs)/1.3 var(--font-sans);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.b-dienstenpanelen__lijst{list-style:none;margin:0 0 var(--space-5);padding:0;display:grid;gap:.55rem}
+.b-dienstenpanelen__lijst li{position:relative;padding-left:1.9rem;line-height:var(--leading-text)}
+/* vinkje in een Koningsblauwe schijf: geel komt op licht alleen als vlak voor, niet als lijn */
+.b-dienstenpanelen__lijst li::before,.b-dienstenpanelen__lijst li::after{content:"";position:absolute;left:0;top:.2em;width:1.25rem;height:1.25rem;border-radius:50%}
+.b-dienstenpanelen__lijst li::before{background:var(--brand-primary)}
+.b-dienstenpanelen__lijst li::after{background:var(--white);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/.8rem no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/.8rem no-repeat}
+.b-dienstenpanelen__slot{color:var(--color-text-muted)}
+.b-dienstenpanelen__slot a{color:var(--color-link);font-weight:var(--weight-semibold);white-space:nowrap}
+.b-dienstenpanelen__doelgroepen{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 var(--space-5);padding:0;list-style:none}
+.b-dienstenpanelen__doelgroepen a{display:inline-flex;align-items:center;min-height:40px;padding:.3rem .95rem;border-radius:var(--radius-button);background:var(--white);
+  box-shadow:0 0 0 1px var(--color-border-strong);color:var(--brand-primary);font:var(--weight-semibold) var(--text-small)/1.25 var(--font-sans);text-decoration:none}
+.b-dienstenpanelen__doelgroepen a:hover{background:var(--primary-100)}
+.b-dienstenpanelen__doelgroepen a:focus-visible{outline:var(--focus-ring);outline-offset:var(--focus-offset)}
+.b-dienstenpanelen__acties{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-4) var(--space-6);margin:var(--space-6) 0 0}
+
+@media (hover:hover){
+  .b-dienstenpanelen__paneel:hover .b-dienstenpanelen__huis svg,.b-dienstenpanelen__paneel:hover .b-dienstenpanelen__huis img{transform:translateY(-4px) scale(1.04)}
+}
+
+/* ---- smaller: de index vervalt (de chips in de kop doen dat werk), panelen onder elkaar ---- */
+@media (max-width:999px){
+  .b-dienstenpanelen__in{grid-template-columns:minmax(0,1fr)}
+  .b-dienstenpanelen__index{display:none}
+}
+@media (max-width:699px){
+  .b-dienstenpanelen__paneel{grid-template-columns:minmax(0,1fr);gap:var(--space-4);padding:var(--space-5) var(--space-4)}
+  .b-dienstenpanelen__beeld{width:7.5rem}
+  .b-dienstenpanelen__acties .knop--cta{width:100%;justify-content:center}
+  .b-dienstenpanelen__acties .knop--link{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){
+  .b-dienstenpanelen__wijzer,.b-dienstenpanelen__index a,.b-dienstenpanelen__huis svg,.b-dienstenpanelen__huis img,.b-dienstenpanelen__paneel{transition:none}
+}

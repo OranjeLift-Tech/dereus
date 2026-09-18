@@ -1,0 +1,15 @@
+# Lokale instellingen, sleutels en hulpprogramma's
+.env
+.env.*
+!.env.example
+.codex/
+.claude/
+node_modules/
+__pycache__/
+*.py[cod]
+
+# Gegenereerde concepten en browserprofielen blijven lokaal
+_voorbeeld/
+website/review/
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-labelledby="icoon-opslag-t">
+  <title id="icoon-opslag-t">Tijdelijke opslag</title>
+  <!-- De Reus iconenset v1 · raster 48 · koningsblauw hoofdvorm, goudgeel accent (de spullen) · 2 px tussenruimte -->
+  <defs>
+    <mask id="icoon-opslag-m" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
+      <rect width="48" height="48" fill="#fff"/>
+      <rect x="19" y="12" width="10" height="3" rx="1" fill="#000"/>
+    </mask>
+  </defs>
+  <path d="M24 5 44 17v27h-5V21H9v23H4V17z" mask="url(#icoon-opslag-m)" style="fill:var(--icoon-hoofd,#1746A2)"/>
+  <g style="fill:var(--icoon-accent,#FFCC33)">
+    <rect x="11" y="32" width="12" height="12" rx="1.5"/>
+    <rect x="25" y="32" width="12" height="12" rx="1.5"/>
+    <rect x="17" y="23" width="14" height="7" rx="1.5"/>
+  </g>
+</svg>

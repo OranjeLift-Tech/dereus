@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-labelledby="icoon-woningontruiming-t">
+  <title id="icoon-woningontruiming-t">Woningontruiming</title>
+  <!-- De Reus iconenset v1 · raster 48 · koningsblauw hoofdvorm, goudgeel accent · 2 px tussenruimte · bezem: een leeggemaakte woning -->
+  <defs>
+    <mask id="icoon-woningontruiming-m" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
+      <rect width="48" height="48" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-width="2" stroke-linecap="round">
+        <path d="M19 35 17.5 46M24 35v11M29 35l1.5 11"/>
+      </g>
+    </mask>
+  </defs>
+  <g style="fill:var(--icoon-hoofd,#1746A2)">
+    <rect x="22" y="2" width="4" height="22" rx="2"/>
+    <rect x="15" y="22" width="18" height="7" rx="1.5"/>
+  </g>
+  <path d="M15 31h18l5 13H10z" mask="url(#icoon-woningontruiming-m)" style="fill:var(--icoon-accent,#FFCC33)"/>
+</svg>

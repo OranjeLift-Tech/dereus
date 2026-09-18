@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-labelledby="icoon-particulier-t">
+  <title id="icoon-particulier-t">Particuliere verhuizingen</title>
+  <!-- De Reus iconenset v1 · raster 48 · koningsblauw hoofdvorm, goudgeel accent (de spullen) · 2 px tussenruimte -->
+  <defs>
+    <mask id="icoon-particulier-m" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
+      <rect width="48" height="48" fill="#fff"/>
+      <rect x="11" y="29" width="7" height="15" rx="1" fill="#000"/>
+      <rect x="24" y="24" width="22" height="22" rx="3.5" fill="#000"/>
+    </mask>
+  </defs>
+  <g mask="url(#icoon-particulier-m)" style="fill:var(--icoon-hoofd,#1746A2)">
+    <path d="M20 4 38 20h-5v24H7V20H2z"/>
+    <path d="M27 8h5v10h-5z"/>
+  </g>
+  <rect x="26" y="26" width="18" height="18" rx="1.5" style="fill:var(--icoon-accent,#FFCC33)"/>
+  <path d="M33 26h4v6h-4z" style="fill:var(--icoon-hoofd,#1746A2)"/>
+</svg>

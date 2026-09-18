@@ -1,0 +1,42 @@
+/* Werkwijze: vijf stappen op de blauwe band, goudgele schijven aan een gestippelde route */
+.b-werkwijze .kopgroep { margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem); }
+.stappen { position: relative; --schijf: 76px; }
+.stappen__route { position: absolute; left: 10%; right: 10%; top: calc(var(--schijf) / 2 - 20px); height: 40px; pointer-events: none; }
+.route { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.route__lijn { fill: none; stroke: rgba(255, 255, 255, .55); stroke-width: 2.5; stroke-dasharray: 2 10; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.route__bus {
+  position: absolute; left: 0; top: 50%; display: grid; place-items: center; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%;
+  background: var(--white); color: var(--brand-primary); box-shadow: 0 6px 16px rgba(9, 25, 56, .35); opacity: 0;
+}
+.route__bus .ic { width: 20px; height: 20px; }
+.stappen.in .route__bus { animation: rit 3.2s var(--ease) .3s forwards; }
+@keyframes rit { 0% { left: 0; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+
+.stappen__lijst { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
+.stap { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.stap__schijf {
+  position: relative; display: grid; place-items: center; width: var(--schijf); height: var(--schijf); margin-bottom: 1.25rem; border-radius: 50%;
+  background: var(--brand-accent); color: var(--brand-secondary); box-shadow: 0 0 0 8px var(--brand-primary), 0 0 0 9px rgba(255, 255, 255, .25);
+}
+.stap__schijf b { font: var(--weight-display) 2.25rem/1 var(--font-display); font-stretch: var(--font-display-stretch); }
+.stap__icoon { display: inline-grid; place-items: center; width: 40px; height: 40px; margin-bottom: .75rem; border-radius: 12px; background: rgba(255, 255, 255, .12); color: var(--white); }
+.stap__icoon .ic { width: 20px; height: 20px; }
+.stap__titel { margin: 0 0 .45rem; font-size: 1.35rem; line-height: 1.15; }
+.stap p { margin: 0; font-size: var(--text-small); line-height: 1.5; color: rgba(255, 255, 255, .86); }
+.knoppen--midden { justify-content: center; margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem); }
+
+@media (max-width: 899.98px) {
+  .stappen { --schijf: 56px; }
+  .stappen__route { display: none; }
+  .stappen__lijst { grid-template-columns: minmax(0, 1fr); gap: 0; max-width: 34rem; margin-inline: auto; }
+  .stap { display: grid; grid-template-columns: var(--schijf) minmax(0, 1fr); column-gap: 1.25rem; align-items: start; text-align: left; padding-bottom: 1.75rem; position: relative; }
+  .stap:not(:last-child)::before {   /* de route loopt verticaal van schijf naar schijf */
+    content: ""; position: absolute; left: calc(var(--schijf) / 2 - 1px); top: calc(var(--schijf) + 6px); bottom: 6px; width: 0;
+    border-left: 2.5px dotted rgba(255, 255, 255, .55);
+  }
+  .stap__schijf { margin: 0; box-shadow: 0 0 0 6px var(--brand-primary); }
+  .stap__schijf b { font-size: 1.7rem; }
+  .stap__icoon { display: none; }
+  .stap__tekst { padding-top: .6rem; }
+}
+@media (prefers-reduced-motion: reduce) { .route__bus { display: none; } }

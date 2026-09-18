@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /_werk/
+Disallow: /website/
+Disallow: /brandbook/
+Disallow: /sitemap/
+Disallow: /logo-opties/
+Disallow: /_bron/
+Disallow: /_ai-beelden/
+Disallow: /_ontwerpen/
+Disallow: /_voorbeeld/
+Disallow: /_concept/
+
+Sitemap: https://www.verhuisbedrijfdereus.nl/sitemap.xml

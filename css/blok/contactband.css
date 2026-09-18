@@ -1,0 +1,29 @@
+/* Contactband: witte kaart met een Diepblauw paneel met de gegevens */
+.cband {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); overflow: hidden;
+  background: var(--white); border: 1px solid var(--grey-300); border-radius: var(--r-paneel); box-shadow: var(--schaduw);
+}
+.cband__tekst { padding: clamp(1.75rem, 1.2rem + 2.5vw, 3.5rem); }
+.cband__tekst .kopgroep { margin-bottom: 1.25rem; }
+.cband__tekst p { max-width: 58ch; color: var(--graphite); }
+.cband__tekst .belregel { margin-top: 1.5rem; }
+.cband__paneel {
+  position: relative; isolation: isolate; display: grid; align-content: center; gap: 1rem; padding: clamp(1.75rem, 1.2rem + 2vw, 3rem);
+  background: var(--brand-secondary); color: rgba(255, 255, 255, .88); font-size: var(--text-small);
+}
+.cband__paneel::after {
+  content: ""; position: absolute; right: -10%; bottom: -12%; width: 75%; aspect-ratio: 535.3/509.8; z-index: -1; background: var(--brand-primary); opacity: .5;
+  -webkit-mask: var(--huisvlak) center/contain no-repeat; mask: var(--huisvlak) center/contain no-repeat;
+}
+.cband__paneel :focus-visible { outline-color: var(--color-focus-on-brand); }
+.cband__paneel .ic { flex: none; width: 1.1rem; height: 1.1rem; color: var(--brand-accent); }
+.cband__status { color: var(--white); }
+.cband__tel { display: inline-flex; align-items: center; gap: .6rem; color: var(--brand-accent); text-decoration: none; font: var(--weight-display) clamp(1.7rem, 1.4rem + 1vw, 2.2rem)/1 var(--font-display); font-stretch: var(--font-display-stretch); }
+.cband__tel .ic { width: .8em; height: .8em; }
+.cband__tel:hover { color: var(--brand-accent); text-decoration: underline; }
+.cband__mail, .cband__adres, .cband__tijden { display: flex; align-items: flex-start; gap: .6rem; color: var(--white); font-style: normal; text-decoration: none; overflow-wrap: anywhere; }
+.cband__mail:hover { color: var(--white); text-decoration: underline; }
+.cband__mail .ic, .cband__adres .ic, .cband__tijden .ic { margin-top: .2em; }
+.cband__tijden ul { margin: 0; padding: 0; list-style: none; color: rgba(255, 255, 255, .8); }
+
+@media (max-width: 899.98px) { .cband { grid-template-columns: minmax(0, 1fr); } }

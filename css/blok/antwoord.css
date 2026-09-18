@@ -1,0 +1,33 @@
+/* Verhuisbedrijf De Reus · blok antwoord (/kosten/)
+   Het directe antwoord in een witte kaart met een Koningsblauwe rand van 6 px links, daaronder de ankerchips. */
+.b-antwoord{padding-bottom:clamp(2rem,1.5rem + 2vw,3.5rem)}
+.b-antwoord__in{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-7)}
+.b-antwoord__kaart{max-width:58rem;padding:clamp(1.5rem,3vw,2.75rem) clamp(1.35rem,3vw,2.75rem) clamp(1.5rem,3vw,2.5rem) clamp(1.6rem,3.4vw,3.1rem);
+  border-radius:var(--radius-media);background:var(--white);
+  box-shadow:inset 6px 0 0 var(--brand-primary),0 0 0 1px var(--color-border),0 30px 60px -44px rgba(14,26,51,.4)}
+.b-antwoord__kop{margin:0 0 var(--space-4);color:var(--brand-primary);font:var(--weight-bold) var(--text-xs)/1.3 var(--font-sans);
+  letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.b-antwoord__kaart>p{margin:0 0 var(--space-4);max-width:var(--measure);font-size:var(--text-lead);line-height:var(--leading-body)}
+.b-antwoord__indicatie{padding:var(--space-4) var(--space-5);border-radius:var(--radius-card);background:var(--primary-50);color:var(--brand-secondary);font-weight:var(--weight-semibold)}
+.b-antwoord__kaart>.b-antwoord__acties{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-4) var(--space-6);margin:var(--space-6) 0 0;font-size:var(--text-body)}
+.b-antwoord__bel{color:var(--color-text-muted)}
+.b-antwoord__bel a{color:var(--color-link);font-weight:var(--weight-semibold);white-space:nowrap}
+
+/* ankerchips */
+.b-antwoord__chips ul{display:flex;flex-wrap:wrap;gap:.6rem;margin:0;padding:0;list-style:none}
+.b-antwoord__chips a{display:inline-flex;align-items:center;min-height:44px;padding:.4rem 1.1rem;border-radius:var(--radius-button);background:var(--white);
+  box-shadow:0 0 0 1px var(--color-border-strong);color:var(--brand-primary);font:var(--weight-semibold) var(--text-small)/1.25 var(--font-sans);text-decoration:none;
+  transition:background-color .25s var(--ease-out),color .25s var(--ease-out),box-shadow .25s var(--ease-out)}
+.b-antwoord__chips a:hover{background:var(--brand-primary);box-shadow:0 0 0 1px var(--brand-primary);color:var(--white)}
+.b-antwoord__chips a:focus-visible{outline:var(--focus-ring);outline-offset:var(--focus-offset)}
+
+@media (max-width:699px){
+  /* één rij die opzij schuift, met de rand van de pagina als uitloop */
+  .b-antwoord__chips{margin-inline:calc(var(--gutter) * -1)}
+  .b-antwoord__chips ul{flex-wrap:nowrap;overflow-x:auto;padding:.25rem var(--gutter) .6rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .b-antwoord__chips ul::-webkit-scrollbar{display:none}
+  .b-antwoord__chips li{flex:none}
+  .b-antwoord__kaart>p{font-size:var(--text-body)}
+  .b-antwoord__acties .knop{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){.b-antwoord__chips a{transition:none}}

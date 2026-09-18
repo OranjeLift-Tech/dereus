@@ -1,0 +1,41 @@
+# Alles wat niet naar productie mag. De root van de repo is de deploy-root (BOUWPLAN 1).
+# Na de eerste deploy controleren: /brandbook/, /website/, /_werk/build.py en /README.md moeten 404 geven.
+
+# bouwstraat en werkmappen
+_werk/
+website/
+brandbook/
+sitemap/
+logo-opties/
+_bron/
+_ai-beelden/
+_ontwerpen/
+.claude/
+.codex/
+.agents/
+beeld-opties/
+node_modules/
+__pycache__/
+
+# voorvertoning van de conceptpagina's (build.py --concept schrijft hierheen; nooit deployen)
+_voorbeeld/
+
+# losse werkbestanden
+logo_try.jpeg
+*.md
+*.py
+*.mjs
+*.cjs
+.env
+.env.*
+
+# oude bestanden van de basis-site die de nieuwe build niet meer laadt (BOUWPLAN 2; verwijderen beslist de gebruiker)
+css/hero.css
+css/3d.css
+css/rit.css
+css/werkwijze.css
+js/3d.js
+js/hero.js
+js/rit.js
+js/main.js
+img/avatar-*.webp
