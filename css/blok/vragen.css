@@ -1,20 +1,29 @@
-/* Veelgestelde vragen: kop links (plakt mee), genummerde details rechts */
+/* Veelgestelde vragen: kop links, genummerde details rechts */
 .vragen { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: start; }
-.vragen__kop { position: sticky; top: calc(var(--header-h) + 1.5rem); }
 .vragen__kop .kopgroep { margin-bottom: 1.75rem; }
 /* De kop staat naast de vragen, dus links uitgelijnd; op mobiel (kop boven de lijst) blijft hij gecentreerd. */
 @media (min-width: 900px) {
   .vragen__kop .kopgroep { max-width: none; margin-inline: 0; text-align: left; }
   .vragen__kop .kopgroep .label { justify-content: flex-start; }
   .vragen__kop .intro { margin-inline: 0; }
+  /* Links even hoog als de vragen ernaast, en niet met een waarde maar met de bouw. Het raster rekt
+     beide kolommen tot de hoogste, de kopkolom wordt een flexkolom en de belkaart krijgt margin-top
+     auto. De kop blijft dus boven staan, de kaart zakt naar de onderrand en sluit gelijk af met de
+     laatste vraag. Dat klopt bij vier vragen net zo goed als bij tien, en het werkt beide kanten op:
+     staat links al lager dan rechts, zoals op /contact/, dan verschuift er niets.
+     De kaart zelf groeit niet mee. Een kaart van 224 px die tot 400 wordt opgerekt is een kaart met
+     een gat erin; een kaart die op de onderrand staat is een kaart. */
+  .vragen { align-items: stretch; }
+  .vragen__kop { display: flex; flex-direction: column; }
+  .vragen__bel { margin-top: auto; }
 }
-.vragen__bel { display: grid; justify-items: start; gap: .75rem; padding: 1.4rem 1.5rem; border-radius: var(--radius-card); background: var(--white); border: 1px solid var(--grey-300); box-shadow: var(--schaduw-kaart); }
+.vragen__bel {display: grid; justify-items: start; gap: .75rem; padding: 1.4rem 1.5rem; border-radius: var(--radius-card); background: var(--white); box-shadow: var(--schaduw-kaart)}
 .sectie--wit .vragen__bel { background: var(--off-white); box-shadow: none; }
 .vragen__bel p { margin: 0; font-weight: var(--weight-semibold); color: var(--graphite); }
 .vragen__status { font-size: var(--text-xs); color: var(--graphite); }
 
-.vragen__lijst { border-top: 1px solid var(--grey-300); }
-.vraag { border-bottom: 1px solid var(--grey-300); }
+.vragen__lijst { border-top: 1px solid var(--color-border); }
+.vraag { border-bottom: 1px solid var(--color-border); }
 .vraag summary {
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 1.1rem; min-height: 64px; padding: 1.15rem 0;
   cursor: pointer; list-style: none; color: var(--ink);
@@ -29,9 +38,26 @@
 .vraag__antwoord { padding: 0 3.5rem 1.4rem 2.7rem; }
 .vraag__antwoord p { max-width: 62ch; color: var(--graphite); }
 .vraag__antwoord > :last-child { margin-bottom: 0; }
+/* Openklappen: het antwoord groeit, het springt niet.
+   Zonder dit stond het antwoord er in een frame en schoof alles eronder in een keer de volle
+   antwoordhoogte omlaag: gemeten 75 px op desktop en 102 px op mobiel, en dat telt op zodra er
+   meerdere vragen openstaan. De geklikte vraag blijft nu staan waar hij staat en het antwoord
+   groeit eronder open, zodat de beweging te volgen is in plaats van te gebeuren.
+   Alles zit in de mediaquery: heeft de bezoeker om minder beweging gevraagd, dan grijpt geen
+   van deze regels aan en klapt <details> gewoon open zoals altijd. Dat is belangrijk, want
+   block-size: 0 buiten die query zou het antwoord dan dichtgevouwen laten.
+   Geen JavaScript: dit is native <details> met ::details-content. */
 @media (prefers-reduced-motion: no-preference) {
+  @supports (interpolate-size: allow-keywords) {
+    .b-vragen { interpolate-size: allow-keywords; }
+    .vraag::details-content { block-size: 0; overflow: clip;
+      transition: block-size .32s var(--ease), content-visibility .32s allow-discrete; }
+    .vraag[open]::details-content { block-size: auto; }
+  }
+  /* De vervaging blijft, de verschuiving van 6 px eronderuit: die las als trilling en niet als
+     opengaan, en met de groei erbij deed hij helemaal niets meer. */
   .vraag[open] .vraag__antwoord { animation: vraagOpen .35s var(--ease); }
-  @keyframes vraagOpen { from { opacity: 0; transform: translateY(-6px); } }
+  @keyframes vraagOpen { from { opacity: 0; } }
 }
 
 @media (max-width: 899.98px) {

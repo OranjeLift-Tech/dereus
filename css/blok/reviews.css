@@ -1,10 +1,8 @@
 /* Reviews: scorepaneel in Diepblauw, uitgelichte review groot, kaarten met initialen */
 .rraster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.75rem, .5rem + .8vw, 1.25rem); margin: 0; padding: 0; list-style: none; }
 .rkaart { display: flex; }
-.rkaart figure {
-  display: flex; flex-direction: column; width: 100%; margin: 0; padding: clamp(1.4rem, 1.1rem + 1vw, 2rem);
-  background: var(--white); border: 1px solid var(--grey-300); border-radius: var(--radius-card); box-shadow: var(--schaduw-kaart);
-}
+.rkaart figure {display: flex; flex-direction: column; width: 100%; margin: 0; padding: clamp(1.4rem, 1.1rem + 1vw, 2rem);
+  background: var(--white); border-radius: var(--radius-card); box-shadow: var(--schaduw-kaart)}
 .rkaart__kop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
 .rkaart__kop .sterren .ic { width: 1.1rem; height: 1.1rem; }
 .rkaart__quote { width: 2rem; height: 2rem; color: var(--primary-200); fill: var(--primary-100); }
@@ -12,7 +10,7 @@
 .rkaart blockquote p { margin: 0; font-size: var(--text-small); line-height: 1.6; color: var(--graphite); }
 .rkaart blockquote p::before { content: "\201C"; }
 .rkaart blockquote p::after { content: "\201D"; }
-.rkaart__wie { display: flex; align-items: center; gap: .8rem; margin-top: auto; padding-top: 1.1rem; border-top: 1px solid var(--grey-300); }
+.rkaart__wie { display: flex; align-items: center; gap: .8rem; margin-top: auto; padding-top: 1.1rem; border-top: 1px solid var(--color-border); }
 .rkaart__wie b { display: block; font-weight: var(--weight-bold); color: var(--ink); line-height: 1.25; }
 .rkaart__wie small { display: inline-flex; align-items: center; gap: .35rem; font-size: .8rem; color: var(--grey-600); }
 .rkaart__wie .ic--google { width: .9rem; height: .9rem; }
@@ -63,7 +61,7 @@
 .rpaneel :focus-visible { outline-color: var(--color-focus-on-brand); }
 
 /* Compact (/diensten/) */
-.rscore { display: inline-flex; align-items: center; gap: .6rem; padding: .6rem 1.1rem .6rem .7rem; border-radius: 999px; background: var(--off-white); box-shadow: inset 0 0 0 1px var(--grey-300); color: var(--brand-primary); font-weight: var(--weight-bold); text-decoration: none; }
+.rscore { display: inline-flex; align-items: center; gap: .6rem; padding: .6rem 1.1rem .6rem .7rem; border-radius: 999px; background: var(--off-white); box-shadow: inset 0 0 0 1px var(--color-border); color: var(--brand-primary); font-weight: var(--weight-bold); text-decoration: none; }
 .rscore:hover { background: var(--primary-50); color: var(--brand-primary); }
 .rscore .ic--google { width: 1.4rem; height: 1.4rem; }
 .rscore b { font: var(--weight-display) 1.6rem/1 var(--font-display); font-stretch: var(--font-display-stretch); color: var(--brand-secondary); }

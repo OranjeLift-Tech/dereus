@@ -1,38 +1,38 @@
 {
   "/": {
     "datum": "2026-09-21",
-    "hash": "33e543aef901c815"
+    "hash": "22585c2ee9b27777"
   },
   "/algemene-voorwaarden/": {
-    "datum": "2026-09-18",
-    "hash": "d4e1e01109665913"
+    "datum": "2026-09-21",
+    "hash": "5f43fcfbb8210ced"
   },
   "/contact/": {
     "datum": "2026-09-21",
-    "hash": "c80cfff510b5f807"
+    "hash": "87ddf71bb86441ef"
   },
   "/diensten/": {
     "datum": "2026-09-21",
-    "hash": "842d5c3957eedd06"
+    "hash": "5020287f647bc0c7"
   },
   "/kosten/": {
-    "datum": "2026-09-18",
-    "hash": "958c3d2648240d5a"
+    "datum": "2026-09-21",
+    "hash": "f627437799770a52"
   },
   "/offerte/": {
-    "datum": "2026-09-18",
-    "hash": "59dae8621ae2ffbf"
+    "datum": "2026-09-21",
+    "hash": "c5dfbcc2a0788b78"
   },
   "/over-ons/": {
-    "datum": "2026-09-18",
-    "hash": "54c2c1dc6a234e03"
+    "datum": "2026-09-21",
+    "hash": "9497ef50c00e7546"
   },
   "/privacyverklaring/": {
-    "datum": "2026-09-18",
-    "hash": "0b3e7de55d3ebffd"
+    "datum": "2026-09-21",
+    "hash": "0cfc9ee65ffbf297"
   },
   "/werkwijze/": {
     "datum": "2026-09-21",
-    "hash": "90d7cfc7bc1ffa7c"
+    "hash": "296fac66e22a3cf4"
   }
 }

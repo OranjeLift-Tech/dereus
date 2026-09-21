@@ -84,7 +84,12 @@ FEITEN = {
     "OPRICHTINGSJAAR": None,        # jaartal; maakt "sinds 2015" toegestaan
     "EIGENAAR": None,               # naam van de eigenaar (/over-ons/)
     "TEAM": None,                   # korte omschrijving van het team (/over-ons/)
-    "TEAM_BEELD": None,             # pad naar een echte teamfoto, bijvoorbeeld "/img/team-de-reus.webp"
+    # Het beeld in het huisvenster op /over-ons/. Let op: dit is nu GEEN foto van de echte ploeg, maar een
+    # gegenereerd beeld van fictieve verhuizers (beeld-opties/over-ons-20260921, kandidaat 02-wagen-laden).
+    # Daarom beschrijft de alt-tekst hieronder wat er te zien is en zegt hij niet wie het zijn.
+    # Komt er een echte foto, vervang dan allebei de regels, niet alleen het pad.
+    "TEAM_BEELD": "/img/team-de-reus.webp",
+    "TEAM_BEELD_ALT": "Illustratief beeld van drie verhuizers die dozen en verhuisdekens in een gesloten verhuiswagen laden",
     # reviews en werkgebied (1.4, 1.3)
     "AANTAL_REVIEWS": None,         # aantal Google-reviews
     "WERKGEBIED_PLAATSEN": None,    # bevestigde plaatsen, lijst

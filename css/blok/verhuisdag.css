@@ -39,3 +39,92 @@
   .b-verhuisdag__afsluiter{grid-template-columns:minmax(0,1fr);row-gap:var(--space-6);max-width:34rem}
   .b-verhuisdag__foto{width:min(100%,28.8rem);margin:0 auto}   /* gestapeld staat de tekst eronder, dus niet door de rand */
 }
+
+/* ---- indeling met kaders (ronde 4, website/review/verhuisdag-ronde-4/) ----
+   Elk moment krijgt een groot rechthoekig beeld en de bovenranden van die kaders volgen de
+   helling van de dakrand: --zak komt uit verhuisdag.py en is |midden - 50| / 50, dus 0 op de
+   nok en 1 aan de rand. De zakking staat in margin-top en niet in transform: transform
+   verplaatst alleen de tekening en dan schuift een kader over zijn eigen kop heen.
+   De rij loopt breder dan de tekstkolom, zodat de beelden groter zijn zonder dat de band
+   hoger wordt. De sectie geeft daarom --detail-inhoud mee (in verhuisdag.py), zodat de
+   achtergrondlaag zijn vrije midden op die breedte berekent en niet op de tekstkolom.
+   De stip vervalt hier: het beeld doet wat de stip deed. */
+.b-verhuisdag--kaders{padding-block:calc(var(--ruimte) * .72 + var(--dak)) calc(var(--ruimte) * .82)}
+.b-verhuisdag--kaders .kopgroep{max-width:44rem;margin-bottom:var(--space-5)}
+.b-verhuisdag--kaders .b-verhuisdag__dag{--gat:clamp(1rem,1.8vw,1.6rem);--kaderrij:min(100vw - 2 * var(--pad),1440px);
+  margin-inline:min(0px,calc((100% - var(--kaderrij)) / 2));align-items:start}
+.b-verhuisdag--kaders .b-verhuisdag__dag::before{display:none}
+.b-verhuisdag__kader{display:block;width:100%;min-width:0;aspect-ratio:4/3;
+  margin-top:calc(var(--zak) * var(--dak) * 1.9);margin-bottom:var(--space-4);
+  border-radius:var(--radius-card);overflow:clip;background:rgba(255,255,255,.1);
+  box-shadow:0 22px 44px -28px rgba(5,14,35,.75)}
+.b-verhuisdag__kader img{width:100%;height:100%;object-fit:cover}
+.b-verhuisdag--kaders .b-verhuisdag__titel{margin-bottom:var(--space-2);font-size:clamp(1.05rem,.95rem + .35vw,1.25rem)}
+.b-verhuisdag--kaders .b-verhuisdag__moment p{max-width:26rem}
+.b-verhuisdag--kaders .b-verhuisdag__slot{margin-top:var(--space-6);padding:var(--space-4) var(--space-6)}
+
+/* Eén beweging: de kaders zakken op hun plek op de daklijn, van links naar rechts. De trap komt
+   uit --i, dus uit dezelfde geometrie als de zakking zelf. De standaardstand is de eindstand,
+   dus zonder scrollgestuurde tijdlijn of met minder beweging staat alles gewoon goed. */
+@media (prefers-reduced-motion: no-preference){
+  @supports (animation-timeline: view()){
+    .b-verhuisdag__kader,
+    .b-verhuisdag--kaders .b-verhuisdag__moment::after{animation:verhuisdagKaderOp cubic-bezier(.22,.74,.3,1) both;animation-timeline:view();
+      animation-range:cover calc(6% + var(--i) * 7%) cover calc(56% + var(--i) * 7%)}
+  }
+}
+@keyframes verhuisdagKaderOp{from{transform:translateY(2.75rem);opacity:.35}to{transform:none;opacity:1}}
+
+/* ---- kleine details binnen de goedgekeurde opbouw ----
+   De opbouw blijft staan: drie kaders op de daklijn, de rij breder dan de tekst, de zakking uit
+   --zak. Wat erbij komt is een volgnummer en een haarlijn, en allebei komen uit iets dat er al was.
+
+   Het nummer. In de routevariant zat een goudgele stip op de lijn en die verviel hier, omdat het
+   beeld zijn werk overnam. Daarmee verdween ook dat de drie momenten een volgorde zijn en geen
+   drie losse foto's. Het nummer brengt dat terug zonder een element in de HTML: het komt uit een
+   teller op de <ol> die er al stond, en die <ol> nummert ze toch al. Het staat op de bovenrand
+   van zijn eigen kader, en die rand volgt de dakrand, dus de drie nummers tekenen samen de
+   helling waar eerst niets stond. Daarom dezelfde --zak in top als in de margin-top van het
+   kader: één geometrie en geen tweede die ernaast kan gaan lopen.
+   Koningsblauw op Goudgeel is 5,8:1, en op blauw mag goud een signaal zijn. */
+.b-verhuisdag--kaders .b-verhuisdag__dag{counter-reset:moment}
+.b-verhuisdag--kaders .b-verhuisdag__moment::after{
+  counter-increment:moment;content:counter(moment,decimal-leading-zero);
+  position:absolute;z-index:1;top:calc(var(--zak) * var(--dak) * 1.9 - 1.25rem);left:-.4rem;
+  display:grid;place-items:center;min-width:2.5rem;height:2.5rem;padding-inline:.55rem;
+  border-radius:999px;background:var(--brand-accent);color:var(--brand-primary);
+  font:var(--weight-bold) var(--text-small)/1 var(--font-sans);font-variant-numeric:tabular-nums;
+  box-shadow:0 8px 16px -8px rgba(5,14,35,.65)}
+
+/* De haarlijn. De kaders staan nu als kale vlakken op de band; een randje van een pixel zet ze
+   erop als opgeplakte foto's. Een border en geen inset-schaduw, want de foto ligt over een
+   inset-schaduw heen en dan zie je er niets van. */
+.b-verhuisdag--kaders .b-verhuisdag__kader{border:1px solid rgba(255,255,255,.22)}
+
+/* ---- de afspraken onderaan ----
+   Wat hier staat is geen sier: wanneer u betaalt, en dat schade op de dag zelf gemeld moet worden
+   zodat we het samen vastleggen. Precies daarom mag het niet als grijze strook onder de sectie
+   hangen, en mag de tekst ook niet gedempt worden om hem rustiger te maken. Het vlak verdwijnt,
+   de woorden blijven voluit wit, en een goudgele streep erboven zegt dat dit bij de dag hoort in
+   plaats van dat het eronder is geplakt. Geen woord gewijzigd. */
+.b-verhuisdag--kaders .b-verhuisdag__slot{
+  position:relative;max-width:52rem;margin-top:var(--space-7);padding:var(--space-5) 0 0;
+  border-radius:0;background:none}
+.b-verhuisdag--kaders .b-verhuisdag__slot::before{
+  content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:3.5rem;height:3px;border-radius:999px;background:var(--brand-accent)}
+
+@media (max-width:799px){
+  /* Op smal is er geen daklijn om te volgen: de zakking vervalt, de uitsnede wordt breder en de
+     ruimtes eromheen zo krap als het leesbaar blijft. Daar zijn de kaders de hoogte. */
+  .b-verhuisdag--kaders .b-verhuisdag__dag{margin-inline:auto;gap:var(--space-6)}
+  .b-verhuisdag--kaders .b-verhuisdag__moment{display:flex;flex-direction:column;align-items:stretch;text-align:left;padding-bottom:0}
+  .b-verhuisdag--kaders .b-verhuisdag__moment:not(:last-child)::before{display:none}
+  .b-verhuisdag__kader{min-height:0;margin-top:0;margin-bottom:var(--space-3);aspect-ratio:16/9}
+  .b-verhuisdag--kaders .b-verhuisdag__moment p{max-width:none}
+  /* Op smal is er geen daklijn, dus het nummer zakt niet mee en staat gewoon op de bovenrand. */
+  .b-verhuisdag--kaders .b-verhuisdag__moment::after{top:-1.1rem;min-width:2.2rem;height:2.2rem}
+  /* De tekst staat hier links, dus de streep ook. */
+  .b-verhuisdag--kaders .b-verhuisdag__slot{margin-top:var(--space-6);padding-top:var(--space-4)}
+  .b-verhuisdag--kaders .b-verhuisdag__slot::before{left:0;transform:none}
+}

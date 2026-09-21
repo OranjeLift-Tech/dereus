@@ -46,7 +46,7 @@ def paneel(ctx, home_blok, eigen):
     return f'''<li class="rpaneel">
         <span class="rpaneel__g">{ctx.icoon("google", "ic ic--google")}</span>
         <p class="rpaneel__score"><b>{ctx.cfg.GOOGLE_SCORE}</b><span>uit 5<small>op Google</small></span></p>
-        {ctx.sterren(5, "sterren rpaneel__sterren")}
+        {ctx.sterren(klasse="sterren rpaneel__sterren")}
         {"" if ctx.cfg.GOOGLE_SCORE in score_tekst else f'<p class="rpaneel__tekst">{ctx.inline(score_tekst)}</p>'}
         <a class="knop knop--licht rpaneel__link" href="{ctx.esc(ctx.cfg.GOOGLE_PROFIEL)}" rel="noopener" target="_blank"><span>{ctx.inline(link)}</span>{ctx.icoon("extern")}<span class="vh"> (opent Google in een nieuw tabblad)</span></a>
       </li>'''
@@ -68,7 +68,7 @@ def html(ctx, kopij, variant="volledig", sectie=None, **opties):
         return f'''<section class="sectie sectie--{grond} b-reviews b-reviews--compact" id="{kid}" aria-labelledby="{kid}-kop">
   <div class="wrap">
     <div class="kopbalk">{ctx.kopgroep(k)}
-      <div class="kopbalk__eind"><a class="rscore" href="{ctx.esc(ctx.cfg.GOOGLE_PROFIEL)}" rel="noopener" target="_blank">{ctx.icoon("google", "ic ic--google")}<b>{ctx.cfg.GOOGLE_SCORE}</b>{ctx.sterren(5)}<span>{ctx.inline(link)}</span><span class="vh"> (opent Google in een nieuw tabblad)</span></a></div>
+      <div class="kopbalk__eind"><a class="rscore" href="{ctx.esc(ctx.cfg.GOOGLE_PROFIEL)}" rel="noopener" target="_blank">{ctx.icoon("google", "ic ic--google")}<b>{ctx.cfg.GOOGLE_SCORE}</b>{ctx.sterren()}<span>{ctx.inline(link)}</span><span class="vh"> (opent Google in een nieuw tabblad)</span></a></div>
     </div>
     <ul class="rraster rraster--compact" role="list" data-reveal-groep>{kaarten}</ul>
   </div>

@@ -37,7 +37,7 @@ def hulp(ctx, tekst):
     return f'''<div class="dhulp">{vraagregel}<a class="dhulp__blok dhulp__bel" href="{cfg.TELHREF}">\
 {ctx.icoon("telefoon")}<span>Bel {cfg.TEL}</span></a><a class="dhulp__blok dhulp__wa" href="{cfg.WHATSAPP}" \
 data-whatsapp-business aria-label="Contact met {ctx.esc(cfg.NAAM)} via WhatsApp" title="Contact via WhatsApp">\
-{ctx.icoon("whatsapp")}<span>WhatsApp</span></a></div>'''
+{ctx.icoon("whatsapp-wit")}<span>WhatsApp</span></a></div>'''
 
 
 def html(ctx, kopij, **opties):
@@ -56,7 +56,7 @@ def html(ctx, kopij, **opties):
                 stijl = f' style="--pop:{pop};--knip:{knip}"'
                 uit = f'<span class="dtegel__uit">{ctx.beeld(f"/img/dienst-{foto}-uit.webp", "", 1080, 810)}</span>'
         tegels.append(f'''<li class="dtegel"{stijl}>
-        <div class="dtegel__beeld"><span class="dtegel__laag">{beeld}{uit}</span><span class="dtegel__icoon">{ctx.dienst_icoon(sleutel)}</span></div>
+        <div class="dtegel__beeld"><span class="dtegel__laag">{beeld}{uit}</span><span class="dtegel__icoon">{ctx.dienst_icoon(sleutel, inline=True)}</span></div>
         <div class="dtegel__inhoud">
         <h3 class="dtegel__titel"><a href="{ctx.esc(link)}">{titel}</a></h3>
         <p class="dtegel__tekst">{ctx.inline(it.veld("tekst"))}</p>

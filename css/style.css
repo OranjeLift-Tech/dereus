@@ -75,7 +75,7 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .sectie--diep, .sectie--blauw { isolation: isolate; color: var(--white); padding-block: calc(var(--ruimte) + var(--dak)) var(--ruimte); }
 .sectie--diep { --grond: var(--brand-secondary); }
 .sectie--blauw { --grond: var(--brand-primary); }
-.sectie--diep::before, .sectie--blauw::before {
+.sectie--diep:not(.sectie *)::before, .sectie--blauw:not(.sectie *)::before {
   content: ""; position: absolute; inset: 0; z-index: -1; background: var(--grond);
   clip-path: polygon(0 var(--dak), 50% 0, 100% var(--dak), 100% 100%, 0 100%);   /* de nok van het dak */
 }
@@ -85,6 +85,184 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 :is(.sectie--diep, .sectie--blauw) p { color: rgba(255, 255, 255, .88); }
 .sectie--diep a:not(.knop) { color: var(--primary-300); }
 .sectie--blauw a:not(.knop) { color: var(--white); }
+
+/* ---- Achtergronddetail, laag 1: textuur ----
+   Alles rekent door op --detail-sterkte, zodat de hele laag met een waarde te regelen is.
+   Regels: hoogstens een textuur per sectie, nooit op een foto, nooit op wit, en het masker
+   houdt het midden vrij zodat er nooit iets achter lopende tekst komt te staan. */
+.sectie--wit, .sectie--mist, .sectie--blauw, .sectie--diep { isolation: isolate; }
+
+/* Het vrije midden volgt de breedste inhoud van de sectie, niet de tekstkolom. Een sectie met
+   bredere inhoud dan de tekst, zoals een rij lijsten tot 1440px, zet --detail-inhoud zelf hoger
+   en het detail wijkt mee. De horizontale straal is een echte lengte, dus de vrije zone ligt op
+   de inhoudsrand en niet op een percentage dat met de vensterbreedte meeschuift. */
+.sectie { --detail-inhoud: var(--maxw); }
+
+/* Vrij midden, dicht naar de randen. Werkt op elke breedte, ook op een telefoon. */
+.sectie--mist:not(.sectie *)::before, .sectie--diep:not(.sectie *)::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse calc(var(--detail-inhoud) / 2 + 7rem) 58% at 50% 50%, transparent calc(var(--detail-inhoud) / 2), #000 100%);
+  mask-image: radial-gradient(ellipse calc(var(--detail-inhoud) / 2 + 7rem) 58% at 50% 50%, transparent calc(var(--detail-inhoud) / 2), #000 100%);
+}
+
+/* Huisraster: de stippen van de oude hero-korrel, nu op de Mist-banden waar ze voor bedoeld waren. */
+.sectie--mist { background: var(--off-white); }
+.sectie--mist:not(.sectie *)::before {
+  background-image: radial-gradient(rgb(122 158 226 / calc(var(--detail-sterkte) * .34)) 1px, transparent 1.6px);
+  background-size: 22px 22px;
+}
+
+/* Dakrand: lijnen in de helling van het dak op de Koningsblauwe band. Ze zitten in dezelfde
+   stapel als de dakkleur, met een dekkende ovaal van diezelfde kleur erover, zodat het midden
+   vrij blijft zonder masker. Dat houdt ::after vrij voor het motief. */
+.sectie--blauw:not(.sectie *)::before {
+  background:
+    radial-gradient(ellipse calc(var(--detail-inhoud) / 2 + 7rem) 58% at 50% 50%, var(--grond) calc(var(--detail-inhoud) / 2), transparent 100%),
+    repeating-linear-gradient(22deg,
+      rgb(255 255 255 / calc(var(--detail-sterkte) * .07)) 0 1px, transparent 1px 13px),
+    var(--grond);
+}
+
+/* Beeldboog: dezelfde boog als in de kop, in de vrije buitenmarge van de diepblauwe band. */
+.sectie--diep:not(.sectie *)::after {
+  background: var(--beeldboog) right calc(-1 * var(--dak)) / auto 70% no-repeat;
+  opacity: calc(var(--detail-sterkte) * .55);
+  clip-path: polygon(0 var(--dak), 50% 0, 100% var(--dak), 100% 100%, 0 100%);
+}
+
+/* ---- Achtergronddetail, laag 2: randmotieven ----
+   Herkenbare vormen die de site zelf al voluit gebruikt, het huis uit het logo en de doos
+   en de bus uit de pictogrammen, rustig in de zijmarge.
+
+   Plaatsing komt uit de breedte van de marge, niet uit een waarde per pagina:
+   --vrij is de ruimte tussen de schermrand en de tekstkolom, het motief is daar een deel van
+   en staat er precies in het midden van. Zo staat elk motief op dezelfde lijn ten opzichte
+   van de sectierand, op elke breedte.
+
+   Het motief hangt aan de tekstkolom en groeit naar buiten: de binnenrand staat altijd op
+   dezelfde afstand van de tekst, de buitenkant loopt de marge in en bij een smalle marge
+   gewoon van het scherm af. Die aanloop is de bedoeling, een vorm die half buiten beeld
+   valt leest als achtergrond en niet als een plaatje dat in de marge is neergezet.
+   De laag zit bovendien onder de textuur, zodat de stippen en de daklijnen er overheen
+   lopen en het motief in het oppervlak zit in plaats van erop.
+
+   Variatie volgt drie tellers die niet samenvallen: de vorm draait in vijven, de kant in
+   tweeen, en maat en hoogte in drieen. Samen herhaalt dat pas na dertig secties, en geen
+   pagina heeft er zoveel. Twee buren verschillen altijd van vorm en van kant, want bij
+   opeenvolgende posities verspringen een teller van vijf en een van twee allebei.
+
+   Onder 1360px is er geen marge om iets in te zetten, dan vervalt de laag. Dat is dezelfde
+   grens die .beeldaccent al hanteert. De diepblauwe band doet niet mee, die heeft de
+   beeldboog al als randmiddel. */
+@media (min-width: 1360px) {
+  .sectie {
+    --vrij: calc((100vw - var(--maxw)) / 2 + var(--pad));
+    --motief-vrijloop: .75rem;                                        /* vaste afstand tot de tekst */
+    --motief-schaal: 1;
+    /* Het motief is geen pictogram in de marge meer maar een brok van het oppervlak.
+       Het is breder dan de vrije marge, dus het loopt altijd van de schermrand af en je ziet
+       een stuk van de vorm in plaats van het hele plaatje. De binnenrand blijft waar hij was,
+       dus er schuift niets richting de tekst. */
+    --motief-bloed: 1.5;
+    --motief-basis: calc((var(--vrij) - var(--motief-vrijloop)) * var(--motief-bloed));
+    /* De vorm is gevuld met hetzelfde materiaal als de band zelf, alleen dichter op elkaar.
+       Daardoor is het motief een verdichting van de achtergrond en niet iets wat erop ligt. */
+    --motief-vulling: radial-gradient(rgb(var(--motief-kleur) / var(--motief-alfa)) 1.35px, transparent 1.9px);
+    --motief-raster: 7px 7px;
+    --motief-maat: calc(var(--motief-basis) * var(--motief-schaal));
+    --motief-uit: calc(var(--vrij) - var(--motief-vrijloop) - var(--motief-maat));
+    --motief-hoog: 34%;
+    --motief-kleur: 14 26 51;
+    --motief-alfa: calc(var(--detail-sterkte) * .62);
+  }
+  :is(.sectie--blauw, .sectie--diep) {
+    --motief-kleur: 255 255 255;
+    --motief-alfa: calc(var(--detail-sterkte) * .30);
+    /* De blauwe band is van daklijnen gemaakt, dus daar is het motief dat ook. */
+    --motief-vulling: repeating-linear-gradient(22deg,
+      rgb(var(--motief-kleur) / var(--motief-alfa)) 0 1px, transparent 1px 6px);
+    --motief-raster: auto;
+  }
+  .sectie:not(.sectie--diep):not(.sectie *)::after {
+    content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+    background-image: var(--motief-vulling);
+    background-size: var(--motief-raster);
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-size: var(--motief-maat); mask-size: var(--motief-maat);
+  }
+  /* Op de blauwe band is ::before de dekkende kleur zelf, daar kan het motief niet onder.
+     Daar ligt het er net boven, nog steeds onder de inhoud. */
+  .sectie--blauw:not(.sectie *)::after { z-index: -1; }
+  /* Teller 1, de vorm, draait in vijven. */
+  .sectie:nth-child(5n + 1 of .sectie:not(.sectie--diep):not(.sectie *))::after { -webkit-mask-image: var(--motief-huis);   mask-image: var(--motief-huis); }
+  .sectie:nth-child(5n + 2 of .sectie:not(.sectie--diep):not(.sectie *))::after { -webkit-mask-image: var(--motief-doos);   mask-image: var(--motief-doos); }
+  .sectie:nth-child(5n + 3 of .sectie:not(.sectie--diep):not(.sectie *))::after { -webkit-mask-image: var(--motief-bus);    mask-image: var(--motief-bus); }
+  .sectie:nth-child(5n + 4 of .sectie:not(.sectie--diep):not(.sectie *))::after { -webkit-mask-image: var(--motief-pin);    mask-image: var(--motief-pin); }
+  .sectie:nth-child(5n + 5 of .sectie:not(.sectie--diep):not(.sectie *))::after { -webkit-mask-image: var(--motief-wereld); mask-image: var(--motief-wereld); }
+
+  /* Teller 2, maat en hoogte, draait in drieen. */
+  .sectie:nth-child(3n + 1 of .sectie:not(.sectie--diep):not(.sectie *)) { --motief-schaal: .78; --motief-hoog: 26%; }
+  .sectie:nth-child(3n + 2 of .sectie:not(.sectie--diep):not(.sectie *)) { --motief-schaal: 1.22; --motief-hoog: 55%; }
+  .sectie:nth-child(3n + 3 of .sectie:not(.sectie--diep):not(.sectie *)) { --motief-schaal: 1;    --motief-hoog: 38%; }
+
+  /* Teller 3, de kant, wisselt per sectie. */
+  .sectie:nth-child(odd of .sectie:not(.sectie--diep):not(.sectie *))::after {
+    -webkit-mask-position: left var(--motief-uit) top var(--motief-hoog);
+    mask-position: left var(--motief-uit) top var(--motief-hoog);
+  }
+  .sectie:nth-child(even of .sectie:not(.sectie--diep):not(.sectie *))::after {
+    -webkit-mask-position: right var(--motief-uit) top var(--motief-hoog);
+    mask-position: right var(--motief-uit) top var(--motief-hoog);
+  }
+}
+
+/* ---- Overgangen tussen secties ----
+   De Reus heeft een hoek, de dakhelling, en die stond tot nu toe alleen op de gekleurde
+   banden. Hier doet dezelfde helling ook de vlakke grenzen tussen de lichte banden. Geen
+   tweede diagonaal erbij, wel meer plekken waar de ene die we hebben te zien is.
+
+   De rekenregel, en dit is de val waar de paneelversie eerder in liep: --dak is de STIJGING
+   over een HALVE vensterbreedte, want de dakrand loopt van de rand naar het midden. Over een
+   hele breedte is de stijging dus twee keer --dak. Een element dat smaller is dan het venster
+   moet die stijging met zijn eigen aandeel vermenigvuldigen, anders wordt het een tent in
+   plaats van een dak. Dat aandeel is --overgang-deel, standaard 1 omdat een sectie de volle
+   breedte heeft. --overgang-hoek is de knop voor de tweede optie, zie verderop. */
+.sectie {
+  --overgang-deel: 1;
+  --overgang-hoek: 1;
+  --overgang-hoogte: calc(var(--dak) * 2 * var(--overgang-deel) * var(--overgang-hoek));
+}
+
+/* Alleen waar twee lichte banden van kleur wisselen. Twee banden van dezelfde kleur geven
+   geen zichtbare overgang, en de gekleurde banden houden hun eigen dakrand.
+   De hoogte komt bovenop de bestaande ruimte alleen voor zover die niet al genoeg was, dus
+   de inhoud schuift alleen waar de schuinte echt meer plek vraagt. */
+:is(.sectie--wit + .sectie--mist, .sectie--mist + .sectie--wit) {
+  padding-top: max(var(--ruimte), calc(var(--overgang-hoogte) + 1rem));
+  background-repeat: no-repeat;
+  background-size: 100% var(--overgang-hoogte);
+  background-position: top center;
+}
+/* De richting volgt de kleurwissel zelf, dus hij wisselt vanzelf mee en hoeft niet geteld. */
+.sectie--wit + .sectie--mist { background-image: linear-gradient(to bottom right, var(--white) 50%, transparent 50%); }
+.sectie--mist + .sectie--wit { background-image: linear-gradient(to bottom left, var(--off-white) 50%, transparent 50%); }
+
+/* Optie B, en dit breekt bewust de huisregel. --overgang-hoek onder de 1 maakt de schuinte
+   flauwer dan de dakhelling, en daarmee staat er een tweede diagonaal op de site naast de
+   dakrand van de gekleurde banden. Op /kosten/ en /diensten/ staan beide op een pagina, dus
+   daar is het verschil direct te zien. Zet de waarde op :root om hem aan te doen:
+     :root { --overgang-hoek: .45 }
+   Let op: bij dit middel is diepte hetzelfde als hoek. Een schuine rand over de volle breedte
+   heeft maar een maat, de stijging, en die bepaalt de hoek. Er is dus geen sterkteknop die
+   niet ook aan de hoek zit, anders dan bij de detaillaag. */
+
+/* In hoog contrast valt de omgeving terug op systeemkleuren, decoratie hoort dan weg. */
+@media (forced-colors: active) {
+  .sectie--mist::before, .sectie--blauw::before, .sectie--diep::after { background-image: none; }
+  .sectie::after { -webkit-mask-image: none; mask-image: none; background-color: transparent; }
+  :is(.sectie--wit + .sectie--mist, .sectie--mist + .sectie--wit) { background-image: none; }
+  .hero__grond::after, .pk__grond::after, .beeldaccent { background-image: none; }
+}
 
 /* ---- Kopgroep: label met huisje, kop, intro ---- */
 .kopgroep { width: 100%; max-width: 46rem; margin-inline: auto; margin-bottom: clamp(2rem, 1.4rem + 2vw, 3.25rem); text-align: center; }
@@ -131,7 +309,7 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .knop--cta:focus-visible { outline: 3px solid var(--brand-accent); outline-offset: 4px; }
 .knop--blauw { background: var(--color-button); color: var(--white); }
 .knop--blauw:hover { background: var(--color-button-hover); color: var(--white); }
-.knop--licht { background: var(--white); border-color: var(--grey-300); color: var(--brand-primary); }
+.knop--licht { background: var(--white); border-color: var(--color-border); color: var(--brand-primary); }
 .knop--licht:hover { background: var(--primary-50); border-color: var(--primary-200); color: var(--brand-primary); }
 :is(.hero, .pk, .footer, .sectie--diep, .sectie--blauw) .knop--licht { background: transparent; border-color: rgba(255, 255, 255, .6); color: var(--white); }
 :is(.hero, .pk, .footer, .sectie--diep, .sectie--blauw) .knop--licht:hover { background: rgba(255, 255, 255, .12); color: var(--white); }
@@ -143,7 +321,7 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 @media (max-width: 620px) { .knoppen > .knop:not(.knop--link) { flex: 1 1 100%; } }
 
 /* ---- Kaarten, lijsten, huisvormen ---- */
-.kaart { position: relative; background: var(--white); border: 1px solid var(--grey-300); border-radius: var(--radius-card); padding: clamp(1.25rem, 1rem + 1vw, 1.75rem); box-shadow: var(--schaduw-kaart); }
+.kaart {position: relative; background: var(--white); border-radius: var(--radius-card); padding: clamp(1.25rem, 1rem + 1vw, 1.75rem); box-shadow: var(--schaduw-kaart)}
 .vinklijst { list-style: none; padding: 0; margin: 0 0 1.1em; display: grid; gap: .6rem; }
 .vinklijst li { display: flex; align-items: flex-start; gap: .65rem; }
 .vinklijst .ic { width: 1.4em; height: 1.4em; padding: .25em; border-radius: 50%; background: var(--brand-primary); color: var(--brand-accent); stroke-width: 3.2; margin-top: .05em; }
@@ -191,19 +369,25 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .header__tel { display: inline-flex; align-items: center; gap: .45rem; color: inherit; font-size: .9rem; font-weight: var(--weight-bold); text-decoration: none; white-space: nowrap; }
 .header__tel:hover { color: inherit; text-decoration: underline; }
 .header__tel .ic { width: 17px; height: 17px; }
-.header__reviews { display: inline-flex; align-items: center; gap: .5rem; color: inherit; text-decoration: none; }
+.header__reviews {
+  display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .6rem; border-radius: var(--radius-button);
+  background: rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .26);
+  color: inherit; text-decoration: none;
+  transition: background-color .35s var(--ease), box-shadow .35s var(--ease);
+}
+/* De pil houdt de drie merken bij elkaar: binnen de pil is de ruimte 4,8 px, ernaast 16 px naar de telefoon. */
+:is(.header.is-vast, .header--vast) .header__reviews { background: var(--white); box-shadow: inset 0 0 0 1px var(--color-border); }
 .header__reviews:hover { color: inherit; }
-.header__reviews > .ic { width: 23px; height: 23px; }
-.header__reviews > span { display: grid; gap: .3rem; }
-.header__reviews .sterren { font-size: .75rem; }
-.header__reviews small { font-size: .65rem; line-height: 1.2; white-space: nowrap; }
+.header__reviews > .ic { width: 20px; height: 20px; }
+.header__reviews__ster { display: inline-flex; color: var(--brand-accent); font-size: .9375rem; }
+.header__reviews b { font: var(--weight-bold) .9375rem/1 var(--font-sans); }
 .header__cta { min-height: 46px; padding: .7rem 1.1rem; font-size: .875rem; white-space: nowrap; }
 .header__menu {
   display: none; place-items: center; width: 46px; height: 46px; margin-left: .25rem; border: 1px solid rgba(255, 255, 255, .45);
   border-radius: 50%; background: transparent; color: inherit; cursor: pointer;
 }
 .header__menu .ic { width: 22px; height: 22px; }
-:is(.header.is-vast, .header--vast) .header__menu { border-color: var(--grey-300); background: var(--white); color: var(--brand-primary); }
+:is(.header.is-vast, .header--vast) .header__menu { border-color: var(--color-border); background: var(--white); color: var(--brand-primary); }
 
 /* Hoofdmenu (desktop) */
 .nav { margin-left: auto; }
@@ -231,7 +415,7 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .mega__lijst { display: grid; gap: .2rem; margin: 0; padding: 0; list-style: none; }
 .mega__lijst a { display: flex; align-items: center; min-height: 44px; padding: .4rem .5rem; margin-left: -.5rem; border-radius: 6px; color: var(--graphite); font-size: .9rem; font-weight: var(--weight-medium); text-decoration: none; }
 .mega__lijst a:hover { background: var(--primary-50); color: var(--brand-primary); }
-.mega__alle { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding: 1rem 0 0; border-top: 1px solid var(--grey-300); color: var(--brand-primary); font-size: .9rem; font-weight: var(--weight-bold); text-decoration: none; }
+.mega__alle { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding: 1rem 0 0; border-top: 1px solid var(--color-border); color: var(--brand-primary); font-size: .9rem; font-weight: var(--weight-bold); text-decoration: none; }
 .mega__alle .ic { width: 16px; height: 16px; }
 .mega__alle:hover { text-decoration: underline; }
 .header .mega :focus-visible { outline-color: var(--brand-primary); }
@@ -267,19 +451,19 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 }
 .lade.is-open .lade__scrim { opacity: 1; }
 .lade.is-open .lade__paneel { transform: none; }
-.lade__kop { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--grey-300); }
+.lade__kop { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--color-border); }
 .lade__logo img { height: 34px; width: auto; }
-.lade__sluit { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--grey-300); border-radius: 50%; background: var(--white); color: var(--brand-primary); cursor: pointer; }
+.lade__sluit { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--color-border); border-radius: 50%; background: var(--white); color: var(--brand-primary); cursor: pointer; }
 .lade__sluit .ic { width: 20px; height: 20px; }
 .lade__nav { display: flex; flex-direction: column; padding: .75rem 1.25rem; }
 .lade__link, .lade__groep > summary {
-  display: flex; align-items: center; justify-content: space-between; min-height: 56px; padding: .5rem 0; border-bottom: 1px solid var(--grey-300);
+  display: flex; align-items: center; justify-content: space-between; min-height: 56px; padding: .5rem 0; border-bottom: 1px solid var(--color-border);
   color: var(--ink); font: var(--weight-bold) 1.3rem/1.2 var(--font-display); font-stretch: var(--font-display-stretch); text-decoration: none; cursor: pointer; list-style: none;
 }
 .lade__groep > summary::-webkit-details-marker { display: none; }
 .lade__groep > summary .ic { width: 20px; height: 20px; color: var(--brand-primary); transition: transform .25s var(--ease); }
 .lade__groep[open] > summary .ic { transform: rotate(180deg); }
-.lade__groep ul { margin: 0; padding: .35rem 0 .75rem; list-style: none; border-bottom: 1px solid var(--grey-300); }
+.lade__groep ul { margin: 0; padding: .35rem 0 .75rem; list-style: none; border-bottom: 1px solid var(--color-border); }
 .lade__groep li a { display: block; padding: .55rem .25rem; color: var(--graphite); font-weight: var(--weight-semibold); text-decoration: none; }
 .lade__groep li a:hover, .lade__link:hover { color: var(--brand-primary); }
 .lade__voet { display: grid; gap: .9rem; margin-top: auto; padding: 1.25rem; background: var(--off-white); }
@@ -347,8 +531,8 @@ body.lade-open { overflow: hidden; }
   .footer__kolom--contact { grid-column: 1 / -1; }
 }
 @media (max-width: 767.98px) {
-  .footer__intro { grid-template-columns: 1fr; }
-  .footer__beeldmerk { position: absolute; width: 65%; right: -15%; bottom: 2rem; opacity: .06; pointer-events: none; }
+  .footer__intro { grid-template-columns: minmax(0, 1fr); }
+  .footer__merk { justify-self: start; max-width: 22rem; }
 }
 @media (max-width: 559.98px) {
   .footer__top { --footer-gat: 1rem; --footer-pad: .4rem; row-gap: 2rem; }
@@ -364,7 +548,7 @@ body.lade-open { overflow: hidden; }
 .mcta {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: none; grid-template-columns: 1fr 1.4fr; gap: .5rem;
   padding: .55rem var(--pad) calc(.55rem + env(safe-area-inset-bottom));
-  background: rgba(246, 247, 249, .96); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-top: 1px solid var(--grey-300);
+  background: rgba(246, 247, 249, .96); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-top: 1px solid var(--color-border);
 }
 .mcta .knop { width: 100%; padding: .7rem .5rem; }
 .mcta { grid-template-columns: 1fr 44px 1.4fr; }

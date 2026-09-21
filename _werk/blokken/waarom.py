@@ -6,13 +6,19 @@ JS = False
 # Icoon per kaart, op volgorde van de kopij
 ICONEN = ["persoon", "doos", "euro", "schild"]
 
+# Kleuraccent van de badge per kaart, op dezelfde volgorde. Twee vlakken maal twee pictogramkleuren
+# geeft vier herkenbare badges zonder dat er een kleur buiten het palet bij komt.
+# Goudgeel draagt hier een pictogram op donker; het staat nergens als tekst op wit.
+ACCENTEN = ["diep-goud", "koning-wit", "diep-wit", "koning-goud"]
+
 
 def html(ctx, kopij, **opties):
     k = kopij
     kaarten = []
     for i, it in enumerate(k.items):
         icoon = ICONEN[i % len(ICONEN)]
-        kaarten.append(f'''<li class="wkaart">
+        accent = ACCENTEN[i % len(ACCENTEN)]
+        kaarten.append(f'''<li class="wkaart wkaart--{accent}">
         <span class="huisbadge">{ctx.icoon(icoon)}</span>
         <h3 class="wkaart__titel">{ctx.inline(it.titel)}</h3>
         <p>{ctx.inline(it.veld("tekst"))}</p>

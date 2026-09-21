@@ -54,6 +54,47 @@ def _ids(html):
     return set(re.findall(r'\sid="([^"]+)"', html))
 
 
+
+def verhuisdagbeelden(wortel):
+    """Half ingevulde beeldvelden in een verhuisdagblok.
+
+    verhuisdag.py gaat pas naar de kaderindeling als elk moment een veld `beeld` heeft en dat
+    bestand ook bestaat. Ontbreekt er een, dan blijft de route staan en gebeurt er verder niets:
+    geen fout, geen verschil, geen melding. Wie net twee van de drie regels heeft toegevoegd,
+    ziet dus niets veranderen en weet niet waarom. Deze bewaker sluit dat gat.
+
+    Het blijft een waarschuwing: alles of niets is het juiste gedrag en een halve invulling is
+    geen reden om een build te stoppen, zeker niet terwijl er aan de kopij gewerkt wordt.
+    """
+    uit = []
+    map_ = wortel / "website" / "content"
+    if not map_.exists():
+        return uit
+    for bestand in sorted(map_.glob("*.md")):
+        tekst = bestand.read_text(encoding="utf-8", errors="ignore")
+        blok = re.search(r"^##\s+.*\{#verhuisdag\}\s*$(.*?)(?=^##\s|\Z)", tekst, re.S | re.M)
+        if not blok:
+            continue
+        rel = bestand.relative_to(wortel).as_posix()
+        momenten = re.findall(r"^###\s+(.+?)\s*$(.*?)(?=^###\s|\Z)", blok.group(1), re.S | re.M)
+        met, zonder, kwijt = [], [], []
+        for titel, romp in momenten:
+            m = re.search(r"^beeld:\s*(\S+)\s*$", romp, re.M)
+            if not m:
+                zonder.append(titel)
+            elif not (wortel / "img" / f"{m.group(1)}.webp").exists():
+                kwijt.append(f"{titel} verwijst naar img/{m.group(1)}.webp")
+            else:
+                met.append(titel)
+        if met and zonder:
+            uit.append(f"{rel}: verhuisdag heeft een veld beeld bij {', '.join(met)} maar niet bij "
+                       f"{', '.join(zonder)}. Het blok gaat pas naar de kaderindeling als elk moment "
+                       f"er een heeft; tot die tijd blijft de route staan en verandert er niets.")
+        if kwijt:
+            uit.append(f"{rel}: verhuisdag wijst naar een bestand dat niet in img/ staat: "
+                       f"{'; '.join(kwijt)}. Het blok blijft daardoor op de route staan.")
+    return uit
+
 def controleer(uitvoer, paginas, wortel, volledig=True, verborgen=()):
     """uitvoer: {pad: html}. verborgen: paden van conceptpagina's die in deze build uit staan.
     Geeft (fouten, waarschuwingen)."""
@@ -164,6 +205,8 @@ def controleer(uitvoer, paginas, wortel, volledig=True, verborgen=()):
             hexen = set(re.findall(r"#[0-9a-fA-F]{3,8}\b", tekst))
             if hexen:
                 waarsch.append(f"css/blok/{pad.name}: losse kleurwaarden {', '.join(sorted(hexen))} (gebruik tokens)")
+        # verhuisdag: half ingevulde beeldvelden, want de omslag is stil
+        waarsch += verhuisdagbeelden(wortel)
         # grote beelden
         for pad in (wortel / "img").rglob("*"):
             if pad.is_file() and pad.suffix in (".jpg", ".jpeg", ".png", ".webp") and pad.stat().st_size > 250_000:

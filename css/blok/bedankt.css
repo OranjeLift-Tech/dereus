@@ -1,5 +1,5 @@
 /* Bedankt: een witte kaart met een geel vinkje, de volgende stappen op een route, en de weg terug */
-.b-bedankt__kaart{max-width:46rem;margin-inline:auto;padding:clamp(1.75rem,1.2rem + 2.5vw,3rem);border:1px solid var(--grey-300);border-radius:24px;background:var(--white);box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 5%,transparent),0 18px 40px -24px color-mix(in srgb,var(--ink) 32%,transparent)}
+.b-bedankt__kaart{max-width:46rem;margin-inline:auto;padding:clamp(1.75rem,1.2rem + 2.5vw,3rem);border-radius:24px;background:var(--white);box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 5%,transparent),0 18px 40px -24px color-mix(in srgb,var(--ink) 32%,transparent)}
 .b-bedankt__vink{display:grid;place-items:center;width:4rem;height:4rem;margin:0 0 1.6rem;border-radius:var(--radius-round);background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 0 0 8px var(--accent-50)}
 .b-bedankt__vink .ic{width:2rem;height:2rem;stroke-width:3}
 .b-bedankt__stappen{list-style:none;display:grid;gap:1.1rem;margin:0 0 1.6rem;padding:0}

@@ -1,2 +1,26 @@
 node_modules/
 package-lock.json
+
+# Tussenstappen van 21-09-2026: kandidaten, meetbeelden en exports die al in img/ staan.
+# Nooit gepusht, dus ze hoeven de publieke historie niet in. Bronmateriaal dat al op
+# origin staat (origineel/, header-achtergronden/, Onze diensten/) blijft juist wel gevolgd:
+# dat zit toch al voorgoed in de historie en de teamgenoot werkt ermee.
+foto/footer-truck/
+foto/kand2/
+foto/kandidaten/
+foto/klantenservice-proef/
+foto/over-ons-proef/
+foto/klantenservice-klaar/
+foto/meet/
+foto/nuttig/
+foto/over-ons-klaar/
+foto/verhuisdag/
+foto/logo-correcties/aanvraag-site.png
+foto/logo-correcties/dienst-opslag.png
+foto/logo-correcties/dienst-zakelijk.png
+foto/logo-correcties/inpakken-site.png
+
+# Kandidatenreeksen van 18-09-2026 plus zip-kopieen van diezelfde PNG's (54,5 MB).
+# De json's ernaast blijven wel: die leggen vast wat er gegenereerd is.
+archief/**/*.png
+archief/**/*.zip

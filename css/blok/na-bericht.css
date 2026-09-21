@@ -35,7 +35,14 @@
 /* alleen naar boven vrij: links, rechts en onder houdt de lijst haar vorm */
 /* Het stuk boven de lijst staat op de donkere band, en haar haar is bijna even donker. Een dunne
    lichte rand maakt haar silhouet daar los; de donkere schaduw eronder houdt de diepte. */
-.b-na-bericht__uit{position:absolute;z-index:2;inset:0;pointer-events:none;clip-path:inset(-100% 0 0 0);
+/* overflow-x:clip haalt de overhang uit de scrollbreedte zonder er iets aan te veranderen: de clip-path
+   hierboven snijdt de uitsnede rechts al af op de doos, dus er was nooit iets van te zien. De laag is
+   142,9cqw breed vanaf -8cqw, dus haar doos stak 34,9cqw (145px) rechts uit en dat telde mee in
+   scrollWidth. Waar de wrap de schermbreedte raakt, duwde dat de pagina breder dan het venster.
+   Alleen op de x-as en niet op de figuur zelf: naar boven moet zij vrij blijven, en de figuur tekent met
+   ::before het huis dat juist 12% naar LINKS uitsteekt. Clippen op de figuur zou dat huis afsnijden.
+   overflow-x:clip maakt geen scrollcontainer, dus de opwaartse vrijheid blijft intact. */
+.b-na-bericht__uit{position:absolute;z-index:2;inset:0;pointer-events:none;overflow-x:clip;clip-path:inset(-100% 0 0 0);
   filter:drop-shadow(0 0 1px rgba(255,255,255,.6)) drop-shadow(0 0 7px rgba(190,214,255,.3)) drop-shadow(0 16px 20px rgba(5,14,35,.55))}
 /* zonder containereenheden klopt de uitsnede niet; dan alleen de gewone foto, zoals eerst */
 @supports not (height:1cqw){

@@ -52,7 +52,7 @@ def pil(ctx, knoptekst, id_, dienst=None, van="", naar=""):
 def google(ctx, klasse="of-google"):
     return (f'<a class="{klasse}" href="{ctx.esc(ctx.cfg.GOOGLE_PROFIEL)}" rel="noopener" target="_blank">'
             f'{ctx.icoon("google", "ic ic--google")}<b>{ctx.cfg.GOOGLE_SCORE}</b>'
-            f'<span>{ctx.sterren(5)}<small>uit 5 op Google</small></span></a>')
+            f'<span>{ctx.sterren()}<small>uit 5 op Google</small></span></a>')
 
 
 def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="", **opties):
@@ -91,7 +91,12 @@ def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="
     intro = k.veld("intro") or home.veld("pil-onder")
     knop = home.veld("pil-knop", "Offerte aanvragen")
     bel = k.veld("belregel")
-    belhtml = (f'<p class="of-bel"><a href="{ctx.telhref}">{ctx.icoon("telefoon")}{ctx.inline(bel)}</a></p>' if bel else "")
+    belhtml = ""
+    if bel:
+        # Op 320 px past de belregel niet op één regel; hij mag daar afbreken (css), maar het
+        # telefoonnummer nooit middenin. Vandaar dit omhulsel, na inline() want die escapet.
+        tekst = ctx.inline(bel).replace(ctx.cfg.TEL, f'<span class="of-bel__nr">{ctx.cfg.TEL}</span>', 1)
+        belhtml = f'<p class="of-bel"><a href="{ctx.telhref}">{ctx.icoon("telefoon")}{tekst}</a></p>'
     klasse = "sectie sectie--mist b-offertepil" + (" b-offertepil--over" if over_kop else "")
     onthul = "" if over_kop else " data-reveal"      # boven de vouw niet laten invliegen
     return f'''<section class="{klasse}" id="{ctx.esc(k.id or "offertepil")}" aria-labelledby="of-los-kop">

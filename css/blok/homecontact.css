@@ -9,8 +9,7 @@
 .homecontact__gegevens{display:grid;gap:clamp(1.25rem,1rem + 1vw,1.75rem);align-content:start}
 
 /* ---- links: gegevenskaart ---- */
-.homecontact__kanalen{list-style:none;display:grid;margin:0;padding:0;overflow:clip;
-  border:1px solid var(--color-border);border-radius:var(--radius-card);background:var(--white);box-shadow:var(--schaduw-kaart)}
+.homecontact__kanalen{list-style:none;display:grid;margin:0;padding:0;overflow:clip;border-radius:var(--radius-card);background:var(--white);box-shadow:var(--schaduw-kaart)}
 .homecontact__kanaal{display:flex;gap:1rem;align-items:flex-start;padding:clamp(1.1rem,.9rem + .6vw,1.35rem) clamp(1.1rem,.9rem + .8vw,1.5rem)}
 .homecontact__kanaal + .homecontact__kanaal{border-top:1px solid var(--color-border)}
 .homecontact__ic{display:grid;place-items:center;flex:none;width:2.6rem;height:2.6rem;border-radius:var(--radius-round);
@@ -39,10 +38,17 @@ a.homecontact__waarde:hover{text-decoration-color:currentColor}
    De foto zelf is de kop van de kaart. Daarover ligt dezelfde foto, uitgeknipt en precies op dezelfde plek
    (--pos bepaalt beide bijsnedes), maar niet bijgesneden aan de bovenkant: haar hoofd komt dus uit de lijst.
    De slagschaduw geeft de diepte. Alles staat stil, er zit geen beweging in. */
-.homecontact__kaart{position:relative;border:1px solid var(--color-border);border-radius:var(--r-paneel);background:var(--white);box-shadow:var(--schaduw)}
+.homecontact__kaart{position:relative;border-radius:var(--r-paneel);background:var(--white);box-shadow:var(--schaduw)}
 /* --ph = de hoogte van het venster in procenten van zijn breedte (17/5 = 29,4), --los = de bijsnede
    (object-position). 66,6667 is de hoogte van de foto van 3:2 op die breedte: zo staan beide lagen
-   op precies dezelfde schaal, in elke kolombreedte. */
+   op precies dezelfde schaal, in elke kolombreedte.
+
+   Let op: deze berekening blijft handwerk omdat de uitsnede niet genormaliseerd is, en dat is met opzet.
+   De uitsnede is dezelfde persoon uit dezelfde foto, met dezelfde bijsnede, dus de twee lagen vallen
+   precies samen; daardoor kan het gele accent ertussen zitten en steekt alleen haar hoofd boven de lijst
+   uit. Een uitsnede die door _ai-beelden/uitsnede-normaliseren.cjs is gegaan, is opnieuw bijgesneden en
+   geschaald en valt dus niet meer samen met deze foto. Vervang deze berekening daar niet door, dat haalt
+   het effect weg. */
 .homecontact__beeld{--ph:44.4444;--los:.5;
   position:relative;aspect-ratio:9/4;container-type:inline-size;background:var(--primary-50);
   border-radius:calc(var(--r-paneel) - 1px) calc(var(--r-paneel) - 1px) 0 0}
@@ -61,6 +67,21 @@ a.homecontact__waarde:hover{text-decoration-color:currentColor}
 .homecontact__bericht .b-formulier__kaart{max-width:none;margin:0;border:0;box-shadow:none;
   border-radius:0 0 calc(var(--r-paneel) - 1px) calc(var(--r-paneel) - 1px)}
 
+/* ---- vanaf 1080 px: de kaart vult de ruimte onder de gegevens ----
+   Daar staan de gegevens en het formulier naast elkaar. De linkerkolom hield op waar zijn inhoud ophield,
+   dus onder de kaart van Den Haag bleef 118 tot 124 px leeg en eindigde de kolom hoger dan het formulier.
+   Met stretch groeit de kolom mee en krijgt de kaart de hoogte die overblijft.
+   De bovenkanten blijven gelijk: stretch laat beide kolommen bovenaan beginnen, dus haar hoofd steekt
+   nog steeds over de rand van de fotokaart heen, zoals de aantekening bovenaan dit bestand vraagt.
+   De clamp blijft als ondergrens staan, zodat de kaart nooit kleiner wordt dan hij nu is. */
+@media(min-width:1080px){
+  .homecontact{align-items:stretch}
+  .homecontact__gegevens{align-content:stretch;grid-template-rows:auto 1fr}
+  .homecontact__plek{display:grid;grid-template-rows:1fr auto;min-height:0}
+  .homecontact .wereld{height:auto;min-height:clamp(15rem,22vw,18.5rem)}
+}
+/* Onder 1080 px staat alles in één kolom en staan de gegevens naast elkaar in twee vakken.
+   "De ruimte vullen" bestaat daar niet, dus de kaart houdt daar gewoon zijn eigen hoogte. */
 @media(max-width:1079.98px){
   .homecontact{grid-template-columns:minmax(0,1fr)}
   .homecontact__gegevens{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}

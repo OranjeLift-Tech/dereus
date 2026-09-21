@@ -14,42 +14,57 @@
   scrol();
   window.addEventListener('scroll', scrol, { passive: true });
 
-  /* 2. Submenu's: klik of toets op de knop naast Diensten en Over ons; Escape sluit */
+  /* 2. Submenu's: de rubriekslink draagt zelf de chevron en de ARIA. Klikken gaat naar de
+     pagina, het paneel komt bij hover en bij focus. Escape sluit en houdt dicht zolang de
+     focus op de link staat, anders sprong het paneel meteen weer open. */
   var subs = [].slice.call(doc.querySelectorAll('.nav__item--sub'));
+  function subLink(li) { return li.querySelector('.nav__link[aria-controls]'); }
   function sluitSubs(behalve) {
     subs.forEach(function (li) {
-      if (li === behalve) return;
-      li.classList.remove('is-open');
-      var k = li.querySelector('.nav__open'); if (k) k.setAttribute('aria-expanded', 'false');
+      if (li === behalve || !li.sluitSub) return;
+      li.sluitSub();
     });
   }
   subs.forEach(function (li) {
-    var knop = li.querySelector('.nav__open');
+    var knop = subLink(li);
     if (!knop) return;
-    var hoverTimer;
+    var paneel = doc.getElementById(knop.getAttribute('aria-controls'));
+    var hoverTimer, metEscapeDicht = false;
     function zetSub(open) {
       clearTimeout(hoverTimer);
       if (open) sluitSubs(li);
       li.classList.toggle('is-open', open);
       knop.setAttribute('aria-expanded', String(open));
+      /* Het paneel faadt 200 ms uit en blijft zolang zichtbaar. Zonder inert landt Tab
+         daar nog in en valt de focus daarna naar de body. */
+      if (paneel) paneel.inert = !open;
     }
-    knop.addEventListener('click', function () {
-      zetSub(!li.classList.contains('is-open'));
-    });
+    li.sluitSub = function () { zetSub(false); };
+    if (paneel) paneel.inert = true;
     li.addEventListener('mouseenter', function () {
+      metEscapeDicht = false;
       if (matchMedia('(hover: hover)').matches) zetSub(true);
     });
     li.addEventListener('mouseleave', function () {
       if (!li.contains(doc.activeElement)) hoverTimer = setTimeout(function () { zetSub(false); }, 140);
     });
+    li.addEventListener('focusin', function () {
+      if (!metEscapeDicht) zetSub(true);
+    });
     li.addEventListener('focusout', function (e) {
-      if (!li.contains(e.relatedTarget)) zetSub(false);
+      if (li.contains(e.relatedTarget)) return;
+      metEscapeDicht = false;
+      zetSub(false);
+    });
+    li.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || !li.classList.contains('is-open')) return;
+      metEscapeDicht = true;
+      zetSub(false);
+      knop.focus();
     });
   });
-  doc.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape') return;
-    var open = subs.filter(function (li) { return li.classList.contains('is-open'); })[0];
-    if (open) { sluitSubs(); var k = open.querySelector('.nav__open'); if (k) k.focus(); }
+  doc.addEventListener('keydown', function (e) {      /* paneel dat alleen op hover openstond */
+    if (e.key === 'Escape') sluitSubs();
   });
   doc.addEventListener('click', function (e) { if (!e.target.closest('.nav__item--sub')) sluitSubs(); });
 
@@ -140,6 +155,35 @@
       [].forEach.call(rij, function (r) { r.classList.add('is-vandaag'); });
     } catch (e) { /* zonder status is de pagina ook compleet */ }
   }
+
+  /* 4b. De openingstijden onder de bereikbaarheidschip. Gevraagd was hover, maar hover bestaat niet
+     op een telefoon en een span vangt geen toetsenbord, dus draagt een echte knop het gedrag: tikken
+     en Enter openen hetzelfde paneel dat de muis met hover krijgt. Klikken zet hem vast, zodat de
+     muis weg kan zonder dat de tijden meteen verdwijnen.
+     Het paneel staat op hidden en niet op een klasse. Daardoor werkt dit al zonder een regel CSS en
+     maakt de stijl het alleen mooier, wat prettig is omdat de stijl bij een andere hand ligt. */
+  var tijdknoppen = doc.querySelectorAll('[data-bereikbaar] .bereikbaar__knop');
+  [].forEach.call(tijdknoppen, function (knop) {
+    var chip = knop.closest('[data-bereikbaar]');
+    var paneel = doc.getElementById(knop.getAttribute('aria-controls') || '');
+    if (!chip || !paneel) return;
+    var vast = false;
+    function zet(aan) {
+      paneel.hidden = !aan;
+      knop.setAttribute('aria-expanded', aan ? 'true' : 'false');
+      if (!aan) vast = false;
+    }
+    knop.addEventListener('click', function () { vast = !vast; zet(vast); });
+    knop.addEventListener('focus', function () { zet(true); });
+    chip.addEventListener('mouseenter', function () { zet(true); });
+    chip.addEventListener('mouseleave', function () { if (!vast) zet(false); });
+    chip.addEventListener('focusout', function (e) { if (!chip.contains(e.relatedTarget)) zet(false); });
+    doc.addEventListener('click', function (e) { if (!chip.contains(e.target)) zet(false); });
+    doc.addEventListener('keydown', function (e) {
+      /* Escape sluit en laat de focus staan; hover en focus vuren niet opnieuw, dus hij springt niet terug. */
+      if (e.key === 'Escape' && !paneel.hidden) { zet(false); knop.focus(); }
+    });
+  });
 
   /* 5. Onthullen bij scrollen. Drempel 0 voor losse blokken en groepen (een lange groep op een telefoon
      haalt nooit 12 % zichtbaarheid), terugval zonder IntersectionObserver, alles zichtbaar bij afdrukken. */

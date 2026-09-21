@@ -117,12 +117,41 @@ def _velden(ctx, k, variant):
     return label + wanneer + persoon + _veld(ctx, k.item("opmerkingen"), "textarea", False, breed=True)
 
 
-def _zijkolom(ctx, k, beeld=None):
+def _maat(pad, terugval):
+    """Werkelijke afmetingen van een beeldbestand, met een terugval als het niet te lezen is.
+
+    width en height bestaan om de browser de juiste verhouding te geven voordat de CSS geladen is.
+    Een vaste maat voor elk beeld doet precies het omgekeerde: het blok kreeg 640x954 mee terwijl
+    aanvraag.py er een liggende 720x540 in hangt. De CSS zet beide maten daarna vast, dus je ziet het
+    niet, maar de verhouding die de browser vooraf krijgt klopt dan niet.
+    PIL is geen harde afhankelijkheid van de build, vandaar de import hier en de terugval.
+    """
+    try:
+        from PIL import Image
+        from kit import WORTEL
+        with Image.open(WORTEL / pad.lstrip("/")) as im:
+            return im.size
+    except Exception:
+        return terugval
+
+
+def _bovenaan(ctx, beeld, merk):
+    """Bovenin de zijkolom: een uitsneefoto (beeld) of het beeldmerk (merk), voor pagina's zonder eigen foto."""
+    if beeld:
+        breed, hoog = _maat(beeld, (640, 954))
+        return ctx.beeld(beeld, "", breed, hoog, klasse=f"b-{NAAM}__beeld")
+    if merk:
+        breed, hoog = ctx.cfg.LOGO_MATEN["beeldmerk"]
+        return ctx.beeld(ctx.logo(merk), "", breed, hoog, klasse=f"b-{NAAM}__merk")
+    return ""
+
+
+def _zijkolom(ctx, k, beeld=None, merk=None):
     if not k.veld("zij-kop"):
         return ""
     vinkjes = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
     return f'''<aside class="b-{NAAM}__zij"><div class="b-{NAAM}__zijin">
-      {ctx.beeld(beeld, "", 640, 954, klasse="b-formulier__beeld") if beeld else ""}
+      {_bovenaan(ctx, beeld, merk)}
       <p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
       <ul class="b-{NAAM}__vinkjes">{vinkjes}</ul>
       <a class="b-{NAAM}__tel" href="{ctx.telhref}">{TELEFOON_SVG}<span>{ctx.esc(ctx.tel)}</span></a>
@@ -137,7 +166,7 @@ def html(ctx, kopij, **opties) -> str:
     grond = opties.get("grond", "mist")
     sleutel = getattr(ctx.cfg, "WEB3FORMS_KEY", "")
     zonder_sleutel = _is_placeholder(sleutel)
-    zij = _zijkolom(ctx, k, opties.get("beeld")) if opties.get("zijkolom", True) else ""
+    zij = _zijkolom(ctx, k, opties.get("beeld"), opties.get("merk")) if opties.get("zijkolom", True) else ""
     prefix = ctx.esc(opties.get("prefix", "f"))
     bereik = (f'<a href="{ctx.telhref}">{ctx.esc(ctx.tel)}</a> <span aria-hidden="true">·</span> '
               f'<a href="mailto:{ctx.esc(ctx.mail)}">{ctx.esc(ctx.mail)}</a>')

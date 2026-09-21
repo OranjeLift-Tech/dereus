@@ -8,6 +8,7 @@ pagina-linktekst, en anders via de kop van het paneel. Staat de pagina uit, dan 
 """
 
 import _b4
+from kit import WORTEL
 
 NAAM = "dienstenpanelen"
 CSS = True
@@ -81,7 +82,10 @@ def _paneel(ctx, k, nr):
     foto = uit = ""
     if beeldnaam:
         foto = ctx.beeld(f"/img/dienst-{beeldnaam}.webp", "", 720, 540, klasse=f"b-{NAAM}__foto")
-        if beeldnaam in UITSNEDEN:
+        # UITSNEDEN zegt wélke dienst een uitsnede hóórt te hebben; de tweede test of het bestand er
+        # ook echt is. Zonder die test levert een export die nog niet gedraaid heeft een kapot beeld
+        # op de pagina in plaats van een paneel zonder uitstap.
+        if beeldnaam in UITSNEDEN and (WORTEL / "img" / f"dienst-{beeldnaam}-uit.webp").exists():
             uit = f'<span class="b-{NAAM}__uit">{ctx.beeld(f"/img/dienst-{beeldnaam}-uit.webp", "", 1080, 810)}</span>'
     # elk paneel heeft een eigen stijl (grond, kaderkleur, opsomming); de klasse per dienst stuurt dat in de CSS
     return f'''<article class="b-{NAAM}__paneel b-{NAAM}__paneel--{k.id}" id="{k.id}" aria-labelledby="{k.id}-kop">

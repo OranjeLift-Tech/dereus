@@ -103,6 +103,38 @@
 /* de honeypot: buiten beeld, niet in de tabvolgorde */
 .b-formulier__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;overflow:hidden}
 
+/* /contact/: het bericht is kort, dus daar staat de kaart smaller en liggen de twee kolommen dichter bij
+   elkaar. Zo staat het formulier midden op de pagina in plaats van tegen de rechterrand. Staat bewust in een
+   min-width query, zodat de kaart onder 900px gewoon één kolom blijft. /offerte/ verandert hier niet van. */
+@media (min-width:900px){
+  .b-formulier--contact .b-formulier__kaart:not(.b-formulier__kaart--smal){grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);max-width:62rem;margin-inline:auto}
+  /* de kaart is hier korter dan het scherm, dus meelopen heeft geen zin: de kolom staat gecentreerd */
+  .b-formulier--contact .b-formulier__zij{display:flex}
+  .b-formulier--contact .b-formulier__zijin{position:static;justify-content:center;flex:1 1 auto}
+}
+
+/* ---- de instantie op de homepagina (aanvraag.py, id="aanvraag") ----
+   Twee dingen, en ze hangen samen.
+   De zijkolom liep mee tijdens het scrollen. Dat staat hier stil: de inhoud blijft op zijn plek en de
+   overgebleven ruimte verdeelt zich boven en onder de inhoud in plaats van zich onderaan op te hopen.
+   En de vaste hoogte van 19rem op het beeld is eraf. Die doos was hoger dan de foto zelf, want de
+   uitsnede is liggend en past in 288 bij 216; de rest van die 19rem was pure lege ruimte binnen het
+   beeld. Sizing op de eigen verhouding haalt die eruit zonder iets weg te laten.
+   Alleen deze instantie: /offerte/ deelt de variant maar is niet genoemd. Zie het rapport. */
+@media (min-width:900px){
+  #aanvraag .b-formulier__zij{display:flex}
+  #aanvraag .b-formulier__zijin{position:static;justify-content:center;flex:1 1 auto}
+  /* Het beeld is het enige elastische element in deze kolom, dus dat vult de ruimte. Van min(100%,18rem)
+     naar de volle kolombreedte: 288x216 wordt 354x266, ruim anderhalf keer zoveel beeld. height:auto houdt
+     de eigen verhouding aan, dus er komt geen lege doos omheen en er wordt niets bijgesneden. */
+  #aanvraag .b-formulier__beeld{width:100%;height:auto}
+  /* De kolom is zo hoog als het formulier ernaast, dus de tweede helft van de winst zit in de kaart zelf
+     korter maken. 46px padding naar 36 en 20px tussen de velden naar 17: samen 39px lager zonder dat het
+     formulier krap wordt. Alleen deze instantie; /offerte/ en /contact/ delen het blok maar niet dit. */
+  #aanvraag .b-formulier__hoofd,#aanvraag .b-formulier__zij{padding:clamp(1.5rem,2.4vw,2.25rem)}
+  #aanvraag .b-formulier__form{gap:1.05rem}
+}
+
 @media (hover:hover){.b-formulier__tel:hover svg{transform:rotate(-12deg) scale(1.06)}}
 
 @media (max-width:899px){
