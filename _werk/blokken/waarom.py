@@ -23,8 +23,8 @@ def html(ctx, kopij, **opties):
         <h3 class="wkaart__titel">{ctx.inline(it.titel)}</h3>
         <p>{ctx.inline(it.veld("tekst"))}</p>
       </li>''')
-    # Eén knop, en dus één doorverwijzing die een handeling is. De velden linktekst en link in
-    # home.md worden hier niet meer gerenderd; ze staan er nog maar doen niets. Zie design-notes A5.
+    # Eén knop, en dus één doorverwijzing die een handeling is. De sleutels linktekst en link zijn
+    # hier ook uit home.md gehaald, zodat er geen veld staat dat niets doet. Zie design-notes A5.
     knop = ctx.knop(k.veld("knop", "Offerte aanvragen"), "/offerte/") if k.veld("knop") else ""
     return f'''<section class="sectie sectie--wit b-waarom" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop">
   <div class="wrap waarom">

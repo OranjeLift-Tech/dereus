@@ -209,12 +209,23 @@
     [].forEach.call(groepen, function (g) { ioG.observe(g); });
   }
 
-  /* De zwevende contactlink maakt plaats voor formulieren en de interactieve kaart. */
+  /* De zwevende contactlink maakt plaats voor formulieren, de interactieve kaart en de onderbalk.
+     Die onderbalk stond hier niet in, en daardoor lag de knop op Privacyverklaring: die balk duwt
+     zijn twee links met space-between naar de rechterrand, precies de hoek waar de knop staat.
+     Gemeten van 768 tot en met 1440 gaf elementFromPoint op het midden van die link de knop terug,
+     dus een tik opende WhatsApp in plaats van de privacyverklaring.
+     Alleen de balk en niet de hele voet: gemeten over de volle hoogte van de voet is Privacyverklaring
+     de enige link die ooit onder de knop verdwijnt, want de kolommen erboven staan links en lopen
+     niet tot de rechterrand. De hele voet vrijhouden zou de knop duizenden pixels lang verbergen
+     voor een probleem dat in de laatste regel zit.
+     Verbergen en niet verschuiven: onderaan staan telefoon, mail, WhatsApp en de tijden al in de
+     voet, dus daar mist de snelkoppeling niets. Omhoog schuiven zou hem juist over de contactkolom
+     leggen, en daar is nu niets aan de hand. */
   var whatsapp = doc.querySelector('.whatsapp');
   if (whatsapp) {
     var whatsappFrame = null;
     var mobieleBalk = doc.querySelector('.mcta');
-    var vrijeVlaken = [].slice.call(doc.querySelectorAll('form, [data-wereld]'));
+    var vrijeVlaken = [].slice.call(doc.querySelectorAll('form, [data-wereld], .footer__onder'));
     function ruimteVoorContact() {
       whatsappFrame = null;
       var balkHoogte = mobieleBalk ? mobieleBalk.getBoundingClientRect().height : 0;

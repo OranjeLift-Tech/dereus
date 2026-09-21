@@ -59,8 +59,6 @@ link: /diensten/#woningontruiming
 label: Waarom De Reus
 intro: Een verhuizing geeft u uit handen aan mensen die u niet kent. Daarom zeggen wij liever wat u krijgt dan dat wij de beste zijn.
 knop: Offerte aanvragen
-linktekst: Wat kost een verhuizing?
-link: /kosten/
 
 ### Eén vaste verhuisadviseur
 tekst: Eén persoon die met u meedenkt en uw verhuizing van begin tot eind regelt. U vertelt uw verhaal maar één keer.

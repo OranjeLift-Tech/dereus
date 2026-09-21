@@ -30,12 +30,4 @@ logo_try.jpeg
 .env.*
 
 # oude bestanden van de basis-site die de nieuwe build niet meer laadt (BOUWPLAN 2; verwijderen beslist de gebruiker)
-css/hero.css
-css/3d.css
-css/rit.css
-css/werkwijze.css
-js/3d.js
-js/hero.js
-js/rit.js
-js/main.js
 img/avatar-*.webp

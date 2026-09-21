@@ -37,8 +37,12 @@ def verboden_re():
 RESTEN_RE = re.compile(r"\[\s*(?:\.\.\.|\u2026)\s*\]|\bNone\b|\{[A-Za-z_]+\}")
 
 BRONMAPPEN = ["_werk", "website/content", "css", "js"]
-BRON_UITSLUITEN = ("css/min/", "__pycache__", "css/hero.css", "css/3d.css", "css/rit.css", "css/werkwijze.css",
-                   "js/3d.js", "js/hero.js", "js/rit.js", "js/main.js", "_werk/kaart/")
+# Wat de streepjescontrole overslaat: alleen gegenereerde uitvoer. Alles wat met de hand geschreven
+# is, hoort langs de regel, ook de scripts in _werk/kaart/ die hier eerder buiten vielen.
+# Hier stonden ook css/hero.css, css/3d.css, css/rit.css, css/werkwijze.css, js/3d.js, js/hero.js,
+# js/rit.js en js/main.js. Die bestanden zijn op 21-09-2026 verwijderd, dus de uitsluiting is mee
+# verdwenen; een lijst die namen noemt die niet bestaan, laat de volgende zoeken naar een reden.
+BRON_UITSLUITEN = ("css/min/", "__pycache__")
 
 
 def zichtbare_tekst(html):
