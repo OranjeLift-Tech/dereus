@@ -70,7 +70,8 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 /* ---- Secties: Mist en Wit, plus hoogstens één blauwe en één diepblauwe band met dakrand ---- */
 .sectie { position: relative; padding-block: var(--ruimte); }
 .sectie--wit { background: var(--white); }
-.sectie--mist + .sectie--mist, .sectie--wit + .sectie--wit { padding-top: calc(var(--ruimte) * .5); }
+.sectie--lucht { background: var(--primary-50); }   /* blauw 50: een lichte band met kleur, in plaats van nog een grijze */
+.sectie--mist + .sectie--mist, .sectie--wit + .sectie--wit, .sectie--lucht + .sectie--lucht { padding-top: calc(var(--ruimte) * .5); }
 .sectie--diep, .sectie--blauw { isolation: isolate; color: var(--white); padding-block: calc(var(--ruimte) + var(--dak)) var(--ruimte); }
 .sectie--diep { --grond: var(--brand-secondary); }
 .sectie--blauw { --grond: var(--brand-primary); }
@@ -79,6 +80,7 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
   clip-path: polygon(0 var(--dak), 50% 0, 100% var(--dak), 100% 100%, 0 100%);   /* de nok van het dak */
 }
 .sectie--wit + :is(.sectie--diep, .sectie--blauw) { background: var(--white); }   /* de hoeken naast de nok */
+.sectie--lucht + :is(.sectie--diep, .sectie--blauw) { background: var(--primary-50); }
 :is(.sectie--diep, .sectie--blauw) :is(h2, h3, h4) { color: var(--white); }
 :is(.sectie--diep, .sectie--blauw) p { color: rgba(255, 255, 255, .88); }
 .sectie--diep a:not(.knop) { color: var(--primary-300); }

@@ -134,13 +134,14 @@ def html(ctx, kopij, **opties) -> str:
     v = VARIANTEN[variant]
     k = kopij
     sid = opties.get("id", k.id)
+    grond = opties.get("grond", "mist")
     sleutel = getattr(ctx.cfg, "WEB3FORMS_KEY", "")
     zonder_sleutel = _is_placeholder(sleutel)
     zij = _zijkolom(ctx, k, opties.get("beeld")) if opties.get("zijkolom", True) else ""
     prefix = ctx.esc(opties.get("prefix", "f"))
     bereik = (f'<a href="{ctx.telhref}">{ctx.esc(ctx.tel)}</a> <span aria-hidden="true">·</span> '
               f'<a href="mailto:{ctx.esc(ctx.mail)}">{ctx.esc(ctx.mail)}</a>')
-    html = f'''<section class="b-{NAAM} b-{NAAM}--{variant} sectie sectie--mist" id="{sid}" aria-labelledby="{sid}-kop" data-b="{NAAM}">
+    html = f'''<section class="b-{NAAM} b-{NAAM}--{variant} sectie sectie--{grond}" id="{sid}" aria-labelledby="{sid}-kop" data-b="{NAAM}">
       <div class="wrap">
         <div class="b-{NAAM}__kaart{"" if zij else " b-" + NAAM + "__kaart--smal"}">
           {zij}

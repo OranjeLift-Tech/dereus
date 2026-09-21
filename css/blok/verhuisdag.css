@@ -20,7 +20,11 @@
 /* ---- afsluiter: de verhuizers uitgesneden naast het kader met de afspraken ---- */
 .b-verhuisdag__afsluiter{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:end;column-gap:clamp(1.5rem,4vw,3.5rem);
   max-width:56rem;margin:clamp(1.5rem,1rem + 1.5vw,2.5rem) auto 0}
-.b-verhuisdag__foto{display:block;justify-self:center;max-width:21rem;margin:0}
+/* de verhuizers staan op de onderrand van de blauwe band: de foto zakt door de sectierand heen,
+   zodat hij als losse laag voor de band langs lijkt te staan */
+/* vaste breedte in plaats van meekrimpen met de foto: anders is de kolom 0 breed zolang de luie
+   afbeelding nog niet geladen is, en springt de tekst ernaast bij het scrollen */
+.b-verhuisdag__foto{display:block;justify-self:center;width:min(100%,25.2rem);margin:0 0 calc(var(--ruimte) * -1)}
 .b-verhuisdag__foto img{width:100%;height:auto;filter:drop-shadow(0 18px 16px rgba(5,14,35,.4))}
 .b-verhuisdag__afsluiter .b-verhuisdag__slot{max-width:none;margin:0;text-align:left}
 
@@ -33,5 +37,5 @@
   .b-verhuisdag__titel,.b-verhuisdag__moment p{grid-column:2}
   .b-verhuisdag__slot{text-align:left}
   .b-verhuisdag__afsluiter{grid-template-columns:minmax(0,1fr);row-gap:var(--space-6);max-width:34rem}
-  .b-verhuisdag__foto{max-width:24rem;margin-inline:auto}
+  .b-verhuisdag__foto{width:min(100%,28.8rem);margin:0 auto}   /* gestapeld staat de tekst eronder, dus niet door de rand */
 }

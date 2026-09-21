@@ -16,11 +16,25 @@ JS = False
 DIENSTEN = ["particulier", "zakelijk", "nationaal", "internationaal",
             "verhuislift", "opslag", "montage", "woningontruiming"]
 
+# Welke dienstfoto in het huis komt. Dezelfde kaart als in blok diensten (home); alleen montage
+# wijkt af, want dat beeld heet handyman.
+FOTOS = {"particulier": "particulier", "zakelijk": "zakelijk", "nationaal": "nationaal",
+         "internationaal": "internationaal", "verhuislift": "verhuislift", "opslag": "opslag",
+         "montage": "handyman", "woningontruiming": "woningontruiming"}
+
 
 def _met_tel(ctx, tekst):
-    """Opgemaakte tekst, met het telefoonnummer als tel-link (handig op een telefoon)."""
+    """Opgemaakte tekst, met het telefoonnummer als tel-link (handig op een telefoon).
+
+    Een punt die direct achter het nummer staat laten we weg. ctx.contactlinks hangt de
+    WhatsApp-knop aan de tel-link vast en die moet er onmiddellijk op volgen, anders komt er een
+    tweede bij; de punt zou dan achter de knop belanden en als een typefout lezen.
+    """
     t = ctx.inline(tekst)
-    return t.replace(ctx.tel, f'<a href="{ctx.telhref}">{ctx.tel}</a>', 1) if ctx.tel in t else t
+    if ctx.tel not in t:
+        return t
+    link = f'<a href="{ctx.telhref}">{ctx.tel}</a>'
+    return t.replace(f"{ctx.tel}.", link, 1) if f"{ctx.tel}." in t else t.replace(ctx.tel, link, 1)
 
 
 def _paneel(ctx, k, nr):
@@ -53,10 +67,13 @@ def _paneel(ctx, k, nr):
     # "Offerte aanvragen" heeft overal de CTA-stijl (besluit van de gebruiker, via dereus-28): de kleur komt uit de
     # tokens --color-cta van de kernlaag, dit blok legt zelf geen knopkleur vast
     knop = ctx.knop(k.veld("knop"), f"/offerte/?dienst={k.id}", soort="cta")
+    # De dienstfoto wordt in de huisvorm uit het logo geknipt; het merkicoon blijft als tegel op de hoek.
+    beeldnaam = FOTOS.get(k.id)
+    foto = ctx.beeld(f"/img/dienst-{beeldnaam}.webp", "", 720, 540, klasse=f"b-{NAAM}__foto") if beeldnaam else ""
     return f'''<article class="b-{NAAM}__paneel" id="{k.id}" aria-labelledby="{k.id}-kop">
       <div class="b-{NAAM}__beeld" aria-hidden="true">
-        <span class="b-{NAAM}__huis">{ctx.dienst_icoon(k.id, inline=True)}</span>
         <span class="b-{NAAM}__nr">{nr:02d}</span>
+        <span class="b-{NAAM}__kader"><span class="b-{NAAM}__huis">{foto}</span><span class="b-{NAAM}__merk">{ctx.dienst_icoon(k.id, inline=True)}</span></span>
       </div>
       <div class="b-{NAAM}__tekst">
         <h2 class="h2" id="{k.id}-kop">{kop}</h2>

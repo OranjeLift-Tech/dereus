@@ -14,11 +14,11 @@ PAGINA = Pagina(
     blokken=[
         ("kop", {}),
         ("offertepil", {"variant": "los", "over_kop": True}),
-        ("vertrouwensrij", {"kopij_id": "vertrouwen"}),
-        ("kaart", {}),
+        ("vertrouwensrij", {"kopij_id": "vertrouwen", "grond": "wit"}),   # wit, zodat de dakrand erboven schoon aansluit
+        ("kaart", {"grond": "blauw"}),                                    # de ene Koningsblauwe band van deze pagina
         ("contactkaarten", {}),
-        ("formulier", {"variant": "contact"}),
+        ("formulier", {"variant": "contact", "grond": "lucht"}),
         ("na-bericht", {}),
-        ("vragen", {}),
+        ("vragen", {"sectie": "wit"}),
     ],
 )

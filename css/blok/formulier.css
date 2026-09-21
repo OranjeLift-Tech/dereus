@@ -9,6 +9,8 @@
 
 /* ---- zijkolom ---- */
 .b-formulier__zij{padding:clamp(1.75rem,3.2vw,3rem);background:var(--primary-50)}
+/* op een blauw-50 band zou de zijkolom wegvallen: dan een tint donkerder */
+.sectie--lucht .b-formulier__zij{background:var(--primary-100)}
 /* de inhoud loopt mee tijdens het invullen, zodat de kolom nooit leeg naast het formulier staat (review F3) */
 .b-formulier__zijin{position:sticky;top:7rem;display:flex;flex-direction:column;gap:var(--space-6)}
 .b-formulier__beeld{width:min(100%,18rem);height:19rem;object-fit:contain;object-position:center bottom;align-self:center}

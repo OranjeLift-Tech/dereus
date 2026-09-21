@@ -44,6 +44,7 @@ def _gegeven(ctx, soort, icoon, label, inhoud):
 def html(ctx, kopij, **opties) -> str:
     k = kopij
     sid = opties.get("id", k.id or "kaart")
+    grond = opties.get("grond", "mist")
     c = ctx.cfg
     alt = f"Kaart van Den Haag met de locatie van {c.NAAM} aan de {c.STRAAT}"
     gegevens = "".join([
@@ -55,7 +56,7 @@ def html(ctx, kopij, **opties) -> str:
     route = ctx.knop(k.veld("knop", "Route plannen"), c.ROUTE, soort="blauw", icoon="route",
                      klasse="knop--icoon-voor", attrs='rel="noopener"')
     offerte = ctx.knop(k.veld("offerte-link", "Offerte aanvragen"), "/offerte/", soort="link")
-    return f'''<section class="b-{NAAM} sectie sectie--mist" id="{sid}" aria-labelledby="{sid}-kop">
+    return f'''<section class="b-{NAAM} sectie sectie--{grond}" id="{sid}" aria-labelledby="{sid}-kop">
       <div class="wrap b-{NAAM}__in">
         <figure class="b-{NAAM}__beeld" data-reveal>
           <div class="b-{NAAM}__venster">{ctx.beeld(BEELD, alt, BREEDTE, HOOGTE, klasse=f"b-{NAAM}__img", sizes="(min-width: 1024px) 40vw, 100vw")}</div>

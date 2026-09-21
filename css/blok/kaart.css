@@ -12,7 +12,9 @@
 
 /* Tekstkolom */
 .b-kaart__tekst{display:flex;flex-direction:column;justify-content:center;min-width:0}
-.b-kaart__kop{margin-bottom:clamp(1.5rem,1.1rem + 1.4vw,2.25rem)}
+.b-kaart__kop{max-width:none;margin-inline:0;margin-bottom:clamp(1.5rem,1.1rem + 1.4vw,2.25rem);text-align:left}
+.b-kaart__kop .label{justify-content:flex-start}
+.b-kaart__kop .intro{margin-inline:0}
 /* Twee gegevenskaarten naast elkaar: adres en openingstijden */
 .b-kaart__gegevens{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:0;padding:0}
 .b-kaart__gegeven{display:flex;align-items:flex-start;gap:.8rem;min-width:0;padding:1rem 1.1rem;border:1px solid var(--grey-300);border-radius:var(--radius-card);background:var(--white)}
@@ -31,6 +33,27 @@ a.b-kaart__waarde:hover{text-decoration-color:currentColor}
 .b-kaart__tijd.is-vandaag{border-left-color:var(--brand-primary)}
 .b-kaart__tijd.is-vandaag dd{color:var(--ink)}
 .b-kaart__tekst .knoppen{align-items:center}
+
+/* ---- op de Koningsblauwe band ----
+   De sectie kleurt alle koppen en alinea's wit; in de witte kaarten moet de tekst donker blijven. */
+.b-kaart.sectie--blauw .b-kaart__kop{max-width:none;margin-inline:0;text-align:left}
+.b-kaart.sectie--blauw .b-kaart__kop .label{justify-content:flex-start}
+.b-kaart.sectie--blauw .b-kaart__kop .intro{margin-inline:0}
+.b-kaart.sectie--blauw .b-kaart__beeld{border-color:color-mix(in srgb,var(--white) 30%,transparent);background:var(--white);
+  box-shadow:0 30px 60px -32px rgba(5,14,35,.75)}
+.b-kaart.sectie--blauw .b-kaart__pil{color:var(--ink);border-color:transparent}
+.b-kaart.sectie--blauw .b-kaart__bron{color:var(--grey-600)}
+.b-kaart.sectie--blauw .b-kaart__bron a{color:inherit}   /* de bronvermelding moet leesbaar blijven (ODbL) */
+.b-kaart.sectie--blauw .b-kaart__gegeven{border-color:transparent;box-shadow:0 20px 40px -30px rgba(5,14,35,.7)}
+.b-kaart.sectie--blauw .b-kaart__lbl{color:var(--ink)}
+.b-kaart.sectie--blauw .b-kaart__tijd dt{color:var(--graphite)}
+.b-kaart.sectie--blauw .b-kaart__tijd dd{color:var(--grey-600)}
+.b-kaart.sectie--blauw .b-kaart__status .bereikbaar{color:var(--graphite)}
+/* knoppen: gevuld wit voor de route, wit met goud onderstreept voor de tekstlink */
+.b-kaart.sectie--blauw .knop--blauw{background:var(--white);color:var(--brand-primary)}
+.b-kaart.sectie--blauw .knop--blauw:hover{background:var(--primary-50);color:var(--primary-600)}
+.b-kaart.sectie--blauw .knop--link{color:var(--white)}
+.b-kaart.sectie--blauw .knop--link span{text-decoration-color:var(--brand-accent)}
 
 /* De bovenrand volgt de adreskop, niet het kleinere label erboven. */
 @media(min-width:961px){

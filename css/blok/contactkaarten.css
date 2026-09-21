@@ -1,6 +1,9 @@
 /* Persoonlijk contact (/contact/ #contactkaarten): tekst en knoppen naast de belkaart, daaronder vier kanaalkaarten */
 .b-contactkaarten__boven{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(2rem,1rem + 4vw,5rem);align-items:center}
-.b-contactkaarten__kop{margin-bottom:1rem}
+/* De kop staat naast de belkaart, dus links uitgelijnd. */
+.b-contactkaarten__kop{max-width:none;margin-inline:0;margin-bottom:1rem;text-align:left}
+.b-contactkaarten__kop .label{justify-content:flex-start}
+.b-contactkaarten__kop .intro{margin-inline:0}
 .b-contactkaarten__alinea{max-width:58ch;color:var(--graphite)}
 .b-contactkaarten__tekst .knoppen{margin-top:1.5rem}
 
@@ -22,8 +25,11 @@
 /* Vier kanaalkaarten */
 .b-contactkaarten__kanalen{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.9rem,.6rem + 1vw,1.25rem);margin:clamp(2.5rem,1.8rem + 2.5vw,4rem) 0 0;padding:0}
 .b-contactkaarten__kanaal{display:flex;flex-direction:column;min-width:0;padding:clamp(1.25rem,1rem + 1vw,1.6rem);border:1px solid var(--grey-300);border-radius:var(--radius-card);background:var(--white);box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 5%,transparent),0 14px 34px -22px color-mix(in srgb,var(--ink) 28%,transparent)}
-.b-contactkaarten__ic{display:grid;place-items:center;width:2.6rem;height:2.6rem;margin-bottom:1rem;border-radius:var(--radius-round);background:var(--primary-50);color:var(--brand-primary)}
-.b-contactkaarten__ic .ic{width:1.2rem;height:1.2rem}
+/* Goudgele huisbadge in plaats van een bleke icoontegel (merkboek: geel als vlak, STIJLANALYSE 6.4) */
+.b-contactkaarten__ic{display:grid;place-items:end center;width:3rem;aspect-ratio:535.3/509.8;margin-bottom:1rem;padding-bottom:.4rem;
+  background:var(--brand-accent);color:var(--brand-secondary);
+  -webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.b-contactkaarten__ic .ic{width:1.15rem;height:1.15rem;stroke-width:2.4}
 .b-contactkaarten__titel{margin:0 0 .45rem;color:var(--color-heading);font:var(--weight-bold) clamp(1.25rem,1.1rem + .5vw,1.45rem)/1.2 var(--font-display);font-stretch:var(--font-display-stretch)}
 .b-contactkaarten__kanaal p{margin:0 0 1rem;color:var(--graphite);font-size:var(--text-small);line-height:1.55}
 .b-contactkaarten__link{display:inline-flex;align-items:flex-end;gap:.4rem;margin-top:auto;color:var(--brand-primary);font-size:var(--text-small);font-weight:var(--weight-bold);line-height:1.4;text-decoration:none}

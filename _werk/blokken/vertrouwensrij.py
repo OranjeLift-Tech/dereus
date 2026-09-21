@@ -24,11 +24,12 @@ def _icoon(titel):
 def html(ctx, kopij, **opties) -> str:
     k = kopij
     sid = opties.get("id", k.id or "vertrouwen")
+    grond = opties.get("grond", "mist")
     kaarten = "".join(f'''<li class="b-{NAAM}__kaart">
               <span class="b-{NAAM}__ic{" b-" + NAAM + "__ic--google" if _icoon(it.kop) == "google" else ""}" aria-hidden="true">{ctx.icoon(_icoon(it.kop))}</span>
               <p><b>{ctx.inline(it.kop)}</b>{f"<span>{ctx.inline(it.veld('tekst') or ' '.join(it.tekst))}</span>" if (it.veld('tekst') or it.tekst) else ""}</p>
             </li>''' for it in k.items)
-    return f'''<section class="b-{NAAM} sectie sectie--mist" id="{sid}" aria-labelledby="{sid}-kop">
+    return f'''<section class="b-{NAAM} sectie sectie--{grond}" id="{sid}" aria-labelledby="{sid}-kop">
       <div class="wrap">
         <h2 class="vh" id="{sid}-kop">{ctx.inline(k.kop or "Waarom De Reus")}</h2>
         <ul class="b-{NAAM}__rij" role="list" data-reveal-groep>{kaarten}</ul>
