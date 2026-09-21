@@ -1,5 +1,5 @@
 """/werkwijze/: kop, de vijf stappen als tijdlijn, de voorbereiding, de verhuisdag (de ene blauwe band met dakrand),
-na de verhuizing, vragen over de werkwijze en de offertepil."""
+na de verhuizing, reviews, vragen over de werkwijze en de offertepil."""
 from kit import Pagina
 
 PAGINA = Pagina(
@@ -15,6 +15,7 @@ PAGINA = Pagina(
         ("checklist", {"kopij_id": "voorbereiding", "grond": "wit", "indeling": "breed"}),   # wit, zodat de dakrand erboven schoon aansluit
         ("verhuisdag", {}),
         ("checklist", {"kopij_id": "na-de-verhuizing", "grond": "mist", "indeling": "breed"}),
+        ("reviews", {"variant": "compact"}),                              # wit, tussen twee Mist-secties
         ("vragen", {"kopij_id": "vragen"}),
         ("offertepil", {"variant": "los"}),
     ],

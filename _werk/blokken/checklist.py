@@ -14,6 +14,9 @@ NAAM = "checklist"
 CSS = True
 JS = False
 
+# de verhuisadviseur bij het tipvak: dezelfde uitsnede als op /contact/
+ADVIES = ("/img/contact-uit.webp", 1200, 800)
+
 _VET = re.compile(r"^\*\*(.+?)\*\*\s*(.*)$")
 
 
@@ -30,7 +33,11 @@ def html(ctx, kopij, **opties) -> str:
     breed = opties.get("indeling") == "breed"
     punten = "".join(_punt(ctx, r) for r in k.lijst)
     lijstkop = f'<h3 class="b-{NAAM}__lijstkop">{ctx.inline(k.veld("lijstkop"))}</h3>' if k.veld("lijstkop") else ""
-    slot = f'<p class="b-{NAAM}__slot">{ctx.inline(k.veld("slot"))}</p>' if k.veld("slot") else ""
+    slot = ""
+    if k.veld("slot"):
+        gezicht = ctx.beeld(ADVIES[0], "", ADVIES[1], ADVIES[2])      # sier: de tekst ernaast zegt het al
+        slot = (f'<div class="b-{NAAM}__slot"><span class="b-{NAAM}__advies">{gezicht}</span>'
+                f'<p>{ctx.inline(k.veld("slot"))}</p></div>')
     link = ctx.knop(k.veld("linktekst"), k.veld("link"), soort="link") if k.veld("link") else ""
     link = f'<p class="b-{NAAM}__acties">{link}</p>' if link else ""
     # Breed zet slot en link onder de lijst; anders zouden ze in een halflege kolom naast de punten hangen.

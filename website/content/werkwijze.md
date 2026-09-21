@@ -5,7 +5,8 @@ og-titel: Zo werkt een verhuizing met De Reus
 ---
 <!--
 Kopij /werkwijze/, dereus-4e. Eigen pagina sinds het nieuwe menu (besluit gebruiker via dereus-28). Veldcontract met dereus-b4.
-Blokken: kop, stappen (stap-1 tot stap-5, titels gelijk aan de home), voorbereiding, verhuisdag, na-de-verhuizing, vragen, offertepil.
+Blokken: kop, stappen (stap-1 tot stap-5, titels gelijk aan de home), voorbereiding, verhuisdag, na-de-verhuizing, reviews, vragen, offertepil.
+De reviews zelf staan in home.md; hier alleen label, kop en intro.
 Termijnen alleen waar de huidige site ze noemt: "word binnen 24 uur gebeld" en "stellen dezelfde dag een vrijblijvende offerte op maat voor u op".
 Voorwaarden: artikel 3.5, 4, 6, 7 en 12.
 -->
@@ -20,6 +21,11 @@ label: In vijf stappen
 intro: Elke verhuizing loopt bij ons via dezelfde vijf stappen. Zo weet u steeds waar u aan toe bent.
 u-label: Wat u doet
 wij-label: Wat wij doen
+einde-titel: Uw nieuwe huis
+einde-tekst: Van uw eerste vraag tot de sleutel in uw nieuwe deur. Eén vaste verhuisadviseur loopt de hele route met u mee.
+einde-linktekst: Offerte aanvragen
+einde-link: /offerte/
+einde-alt: Voordeur van een woning in Den Haag
 
 ### Offerte aanvragen {#stap-1}
 u: U vult het formulier in, of u belt ons op 085 000 5647.
@@ -88,6 +94,10 @@ intro: Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog h
 - **Tevreden?** Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.
 
 Notitie: of De Reus dozen komt ophalen of andere nazorg geeft, is niet bekend. Pas noemen na bevestiging.
+
+## Zo gaat het in de praktijk {#reviews}
+label: Reviews
+intro: Klanten vertellen op Google hoe hun verhuizing met De Reus verliep.
 
 ## Veelgestelde vragen {#vragen}
 label: Vragen over de werkwijze
