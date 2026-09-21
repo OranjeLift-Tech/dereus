@@ -91,7 +91,7 @@ def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="
     intro = k.veld("intro") or home.veld("pil-onder")
     knop = home.veld("pil-knop", "Offerte aanvragen")
     bel = k.veld("belregel")
-    belhtml = (f'<p class="of-bel">{ctx.icoon("telefoon")}<a href="{ctx.telhref}">{ctx.inline(bel)}</a></p>' if bel else "")
+    belhtml = (f'<p class="of-bel"><a href="{ctx.telhref}">{ctx.icoon("telefoon")}{ctx.inline(bel)}</a></p>' if bel else "")
     klasse = "sectie sectie--mist b-offertepil" + (" b-offertepil--over" if over_kop else "")
     onthul = "" if over_kop else " data-reveal"      # boven de vouw niet laten invliegen
     return f'''<section class="{klasse}" id="{ctx.esc(k.id or "offertepil")}" aria-labelledby="of-los-kop">

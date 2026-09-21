@@ -45,7 +45,7 @@
 .b-stappenlang__wie dd{margin:0;font-size:var(--text-small);line-height:var(--leading-text)}
 /* in het smalle vakje: het nummer niet afbreken en van WhatsApp alleen het icoon, anders valt de punt los */
 .b-stappenlang__wie a[href^="tel:"]{white-space:nowrap}
-.b-stappenlang__wie .wa-link{min-width:0;margin-inline:.15rem -.15rem;padding:.2rem .25rem}
+.b-stappenlang__wie .wa-link{min-width:36px;min-height:36px;margin-inline:.35rem .1rem;padding:0}
 .b-stappenlang__wie .wa-link__tekst{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .b-stappenlang__kaart>.b-stappenlang__acties{margin:var(--space-5) 0 0}
 

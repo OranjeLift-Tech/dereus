@@ -6,6 +6,7 @@ PAGINA = Pagina(
     kopij="offerte",
     header="transparant",
     body_klasse="p-offerte",
+    extra_css=("offerte-diepte",),            # de pagina in lagen: plaat, paneel ervoor, verzonken velden
     blokken=[
         ("kop", {}),
         ("formulier", {"variant": "offerte"}),

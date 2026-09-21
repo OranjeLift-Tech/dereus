@@ -25,7 +25,8 @@
 a.homecontact__waarde{justify-self:start;max-width:100%;color:var(--brand-primary);font-weight:var(--weight-semibold);overflow-wrap:anywhere;
   text-decoration:underline;text-decoration-color:var(--primary-200);text-underline-offset:4px}
 a.homecontact__waarde:hover{text-decoration-color:currentColor}
-.homecontact__wa{justify-self:start;margin:.2rem 0 0 -.55rem;color:var(--success)}
+/* WhatsApp is overal een groene knop (css/style.css .wa-link); hier alleen de plek onder het nummer */
+.homecontact__wa{justify-self:start;margin:.5rem 0 0}
 .homecontact__tijden{list-style:none;display:grid;gap:.25rem;margin:.2rem 0 0;padding:0;max-width:20rem;font-size:var(--text-small)}
 .homecontact__tijden li{display:flex;justify-content:space-between;gap:1rem;color:var(--graphite);font-variant-numeric:tabular-nums}
 .homecontact__kanaal .bereikbaar{margin-top:.55rem;font-size:var(--text-small)}

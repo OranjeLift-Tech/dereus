@@ -22,6 +22,14 @@ FOTOS = {"particulier": "particulier", "zakelijk": "zakelijk", "nationaal": "nat
          "internationaal": "internationaal", "verhuislift": "verhuislift", "opslag": "opslag",
          "montage": "handyman", "woningontruiming": "woningontruiming"}
 
+# Van welke dienstfoto een uitsnede zonder achtergrond bestaat (/img/dienst-<naam>-uit.webp, uit
+# _ai-beelden/diensten-uitsnede.mjs + diensten-uit-export.cjs). Die laag komt over de foto heen
+# zonder in de huisvorm geknipt te worden, dus de verhuizer stapt uit het huis. Handymanservice
+# staat er bewust niet bij, net als bij de tegels op de home: dat beeld is een close-up van een
+# hand, zonder persoon om uit te laten stappen.
+UITSNEDEN = {"particulier", "zakelijk", "nationaal", "internationaal", "verhuislift", "opslag",
+             "woningontruiming"}
+
 
 def _met_tel(ctx, tekst):
     """Opgemaakte tekst, met het telefoonnummer als tel-link (handig op een telefoon).
@@ -68,12 +76,18 @@ def _paneel(ctx, k, nr):
     # tokens --color-cta van de kernlaag, dit blok legt zelf geen knopkleur vast
     knop = ctx.knop(k.veld("knop"), f"/offerte/?dienst={k.id}", soort="cta")
     # De dienstfoto wordt in de huisvorm uit het logo geknipt; het merkicoon blijft als tegel op de hoek.
+    # De uitsnede gaat er onafgeknipt overheen: wat het dak wegneemt steekt zo uit het huis (zie de CSS).
     beeldnaam = FOTOS.get(k.id)
-    foto = ctx.beeld(f"/img/dienst-{beeldnaam}.webp", "", 720, 540, klasse=f"b-{NAAM}__foto") if beeldnaam else ""
-    return f'''<article class="b-{NAAM}__paneel" id="{k.id}" aria-labelledby="{k.id}-kop">
+    foto = uit = ""
+    if beeldnaam:
+        foto = ctx.beeld(f"/img/dienst-{beeldnaam}.webp", "", 720, 540, klasse=f"b-{NAAM}__foto")
+        if beeldnaam in UITSNEDEN:
+            uit = f'<span class="b-{NAAM}__uit">{ctx.beeld(f"/img/dienst-{beeldnaam}-uit.webp", "", 1080, 810)}</span>'
+    # elk paneel heeft een eigen stijl (grond, kaderkleur, opsomming); de klasse per dienst stuurt dat in de CSS
+    return f'''<article class="b-{NAAM}__paneel b-{NAAM}__paneel--{k.id}" id="{k.id}" aria-labelledby="{k.id}-kop">
       <div class="b-{NAAM}__beeld" aria-hidden="true">
         <span class="b-{NAAM}__nr">{nr:02d}</span>
-        <span class="b-{NAAM}__kader"><span class="b-{NAAM}__huis">{foto}</span><span class="b-{NAAM}__merk">{ctx.dienst_icoon(k.id, inline=True)}</span></span>
+        <span class="b-{NAAM}__kader"><span class="b-{NAAM}__huis">{foto}</span>{uit}<span class="b-{NAAM}__merk">{ctx.dienst_icoon(k.id, inline=True)}</span></span>
       </div>
       <div class="b-{NAAM}__tekst">
         <h2 class="h2" id="{k.id}-kop">{kop}</h2>

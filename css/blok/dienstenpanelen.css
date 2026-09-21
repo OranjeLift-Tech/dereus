@@ -1,7 +1,8 @@
 /* Verhuisbedrijf De Reus · blok dienstenpanelen (/diensten/)
    Acht panelen, elk een witte kaart op Mist. Het beeld is de eigen dienstfoto, geknipt in het huis
    uit het logo, met een goudgeel huis er iets achter -- hetzelfde diepte-idee als de fotokaders
-   elders op de site. De panelen wisselen om en om van kant, zodat acht blokken onder elkaar ritme
+   elders op de site. De uitsnede zonder achtergrond ligt daar onafgeknipt overheen, zodat de
+   verhuizer uit de huisvorm stapt. De panelen wisselen om en om van kant, zodat acht blokken onder elkaar ritme
    houden in plaats van een lange, gelijkvormige kolom. */
 .b-dienstenpanelen{--ease:cubic-bezier(.22,.61,.36,1);
   --huisvorm:polygon(50% 1.5%,59.9% 10.4%,59.9% 0,66.7% 0,66.7% 16.5%,100% 46.3%,85.5% 46.3%,85.5% 100%,14.5% 100%,14.5% 46.3%,0 46.3%);
@@ -23,20 +24,32 @@
 .b-dienstenpanelen__paneel:target{box-shadow:0 0 0 3px var(--brand-accent),var(--shadow-raised)}
 
 /* ---- beeld: het volgnummer, daaronder de dienstfoto in het huis uit het logo ---- */
-.b-dienstenpanelen__beeld{display:grid;justify-items:start;gap:.3rem}
+.b-dienstenpanelen__beeld{display:grid;justify-items:start;gap:.3rem;perspective:1100px}
 .b-dienstenpanelen__paneel:nth-child(even) .b-dienstenpanelen__beeld{justify-items:end}
 /* groot volgnummer in de merkletter: vult de ruimte naast een lang paneel en geeft de reeks ritme */
 .b-dienstenpanelen__nr{color:var(--primary-200);
   font:var(--weight-display) clamp(2.75rem,5.5vw,4.5rem)/1 var(--font-display);font-stretch:var(--font-display-stretch);
   font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.b-dienstenpanelen__kader{position:relative;display:block;width:100%}
-/* goudgeel huis er net iets omheen: de huisvorm uit het logo als rand om de foto */
+.b-dienstenpanelen__kader{position:relative;display:block;width:100%;
+  transition:transform .45s var(--ease)}
+/* goudgeel huis er net iets omheen: de huisvorm uit het logo als rand om de foto. De slagschaduw
+   staat op deze laag en volgt de huisvorm, want drop-shadow werkt na het knippen: het huis staat
+   daardoor op de kaart in plaats van erin geplakt. */
 .b-dienstenpanelen__kader::before{content:"";position:absolute;inset:0;background:var(--brand-accent);
-  clip-path:var(--huisvorm);transform:scale(1.06)}
+  clip-path:var(--huisvorm);transform:scale(1.06);filter:drop-shadow(0 12px 16px rgba(14,26,51,.18))}
 .b-dienstenpanelen__huis{position:relative;display:block;aspect-ratio:536/510;background:var(--primary-100);
   clip-path:var(--huisvorm)}
 .b-dienstenpanelen__foto{display:block;width:100%;height:100%;object-fit:cover;
   transition:transform .5s var(--ease)}
+/* Uitstappen uit het huis. De uitsnede zonder achtergrond vult exact hetzelfde vak als de foto en
+   op dezelfde manier (object-fit: cover), dus beide lagen liggen pixel voor pixel over elkaar en
+   de persoon kan nooit dubbel in beeld komen. Alleen: deze laag wordt niet in de huisvorm
+   geknipt. Wat het dak wegneemt -- het hoofd bij de nok, de schouders langs de schuine kant --
+   staat hier dus weer wel, buiten het huis, met een slagschaduw die er ruimte onder maakt.
+   Uitsneden: _ai-beelden/diensten-uitsnede.mjs + diensten-uit-export.cjs. */
+.b-dienstenpanelen__uit{position:absolute;inset:0;z-index:1;pointer-events:none}
+.b-dienstenpanelen__uit img{display:block;width:100%;height:100%;object-fit:cover;
+  filter:drop-shadow(0 16px 18px rgba(14,26,51,.34));transition:transform .5s var(--ease)}
 /* het merkicoon van de dienst, als tegel op de hoek van het huis */
 .b-dienstenpanelen__merk{position:absolute;right:-.4rem;bottom:-.4rem;z-index:2;display:grid;place-items:center;
   width:3.5rem;height:3.5rem;border-radius:var(--radius-card);background:var(--white);box-shadow:var(--shadow-raised)}
@@ -81,7 +94,13 @@
 }
 @media (hover:hover){
   .b-dienstenpanelen__paneel:hover{box-shadow:0 14px 34px rgba(14,26,51,.14)}
-  .b-dienstenpanelen__paneel:hover .b-dienstenpanelen__foto{transform:scale(1.04)}
+  /* beide beeldlagen even hard, anders schuift de uitsnede van de foto af */
+  .b-dienstenpanelen__paneel:hover .b-dienstenpanelen__foto,
+  .b-dienstenpanelen__paneel:hover .b-dienstenpanelen__uit img{transform:scale(1.04)}
+  /* het huis kantelt als een plaat weg van de lezer, met de opening naar de tekst toe; de persoon
+     die er al uit steekt komt daardoor naar voren. Om en om gespiegeld, net als het paneel. */
+  .b-dienstenpanelen__paneel:hover .b-dienstenpanelen__kader{transform:translateY(-.45rem) rotateX(4deg) rotateY(-7deg)}
+  .b-dienstenpanelen__paneel:nth-child(even):hover .b-dienstenpanelen__kader{transform:translateY(-.45rem) rotateX(4deg) rotateY(7deg)}
 }
 
 /* ---- kleinere schermen: beeld boven de tekst ---- */
@@ -99,6 +118,137 @@
   .b-dienstenpanelen__acties .knop--link{text-align:left}
 }
 @media (prefers-reduced-motion:reduce){
-  .b-dienstenpanelen__foto,.b-dienstenpanelen__paneel{transition:none}
-  .b-dienstenpanelen__paneel:hover .b-dienstenpanelen__foto{transform:none}
+  .b-dienstenpanelen__foto,.b-dienstenpanelen__uit img,.b-dienstenpanelen__kader,.b-dienstenpanelen__paneel{transition:none}
+  .b-dienstenpanelen__paneel:hover .b-dienstenpanelen__foto,
+  .b-dienstenpanelen__paneel:hover .b-dienstenpanelen__uit img,
+  .b-dienstenpanelen__paneel:hover .b-dienstenpanelen__kader,
+  .b-dienstenpanelen__paneel:nth-child(even):hover .b-dienstenpanelen__kader{transform:none}
 }
+
+/* ==== acht panelen, acht stijlen ====
+   Alle acht delen dezelfde opbouw (huis uit het logo, kop, opsomming, knoppen), maar elk paneel
+   heeft een eigen grond, kaderkleur, kopaccent en opsomming, zodat de pagina niet acht keer
+   hetzelfde blok toont. Alleen merkkleuren; de teksten blijven gelijk.
+   Elk paneel is een band over de volle schermbreedte: de grond (--band) loopt van rand tot rand via
+   ::before, de inhoud houdt de breedte van .wrap. De klasse per dienst komt uit het blok. */
+.b-dienstenpanelen{--beeldbreedte:clamp(12rem,26vw,24rem);padding-bottom:0}
+.b-dienstenpanelen__in{max-width:var(--maxw)}
+.b-dienstenpanelen__panelen{gap:0}
+.b-dienstenpanelen__paneel{--band:var(--white);--bandpad:clamp(2.75rem,5.5vw,5rem);--ppad:clamp(1.5rem,3.5vw,3.25rem);
+  isolation:isolate;padding:var(--bandpad) 0;border-radius:0;background:none;box-shadow:none}
+.b-dienstenpanelen__paneel::before{content:"";position:absolute;inset:0 calc(50% - 50vw);z-index:-1;background:var(--band)}
+/* de tekst vult de kolom tot aan het beeld */
+.b-dienstenpanelen__tekst>p{max-width:none}
+/* het aangeklikte anker: een goudgele lijn over de volle breedte in plaats van een ring om een kaart */
+.b-dienstenpanelen__paneel:target{box-shadow:none}
+.b-dienstenpanelen__paneel:target::before{box-shadow:inset 0 6px 0 var(--brand-accent)}
+
+/* 01 particulier: wit, met een goudgele lijn langs de bovenkant */
+.b-dienstenpanelen__paneel--particulier{--band:linear-gradient(var(--brand-accent) 0 7px,var(--white) 7px)}
+
+/* 02 zakelijk en 04 internationaal: donkere band, witte tekst, goudgele vinkjes */
+.b-dienstenpanelen__paneel--zakelijk{--band:var(--brand-primary)}
+.b-dienstenpanelen__paneel--internationaal{--band:var(--brand-secondary)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal){color:var(--white)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) :is(.h2,.b-dienstenpanelen__lijstkop){color:var(--white)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) .b-dienstenpanelen__tekst>p{color:rgba(255,255,255,.9)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) .b-dienstenpanelen__nr{color:rgba(255,255,255,.24)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) .b-dienstenpanelen__lijst li::before{background:var(--brand-accent)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) .b-dienstenpanelen__lijst li::after{background:var(--brand-secondary)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) .b-dienstenpanelen__slot{background:rgba(255,255,255,.1);color:var(--white)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) .b-dienstenpanelen__slot a:not(.wa-link){color:var(--white)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) .knop--link{color:var(--white)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) .knop--link span{text-decoration-color:rgba(255,255,255,.45)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) .knop--link:hover span{text-decoration-color:var(--white)}
+:is(.b-dienstenpanelen__paneel--zakelijk,.b-dienstenpanelen__paneel--internationaal) :focus-visible{outline-color:var(--color-focus-on-brand)}
+/* 04: op Nachtblauw een wit huis en een goudgeel volgnummer, zodat het niet op 02 lijkt */
+.b-dienstenpanelen__paneel--internationaal .b-dienstenpanelen__kader::before{background:var(--white)}
+.b-dienstenpanelen__paneel--internationaal .b-dienstenpanelen__nr{color:var(--brand-accent)}
+
+/* 03 nationaal en 07 montage: het beeld staat in een gekleurde zijkolom die doorloopt tot de linkerrand van het scherm */
+:is(.b-dienstenpanelen__paneel--nationaal,.b-dienstenpanelen__paneel--montage) .b-dienstenpanelen__beeld::before{content:"";position:absolute;
+  inset:0 0 0 -50vw;z-index:-1;background:inherit}
+@media (min-width:900px){
+  :is(.b-dienstenpanelen__paneel--nationaal,.b-dienstenpanelen__paneel--montage){grid-template-columns:calc(var(--beeldbreedte) + var(--ppad)) minmax(0,1fr)}
+  :is(.b-dienstenpanelen__paneel--nationaal,.b-dienstenpanelen__paneel--montage) .b-dienstenpanelen__beeld{position:relative;align-self:stretch;align-content:center;
+    margin-block:calc(-1*var(--bandpad));padding:var(--bandpad) var(--ppad) var(--bandpad) 0}
+}
+.b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__beeld{background:var(--primary-100)}
+.b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__nr{color:var(--brand-primary)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__beeld{background:var(--brand-accent)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__nr{color:var(--brand-secondary)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__kader::before{background:var(--white)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__tekst>.h2::after{background:var(--brand-primary)}
+/* 03: de kop krijgt de goudgele streep links in plaats van eronder */
+.b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__tekst>.h2{padding-left:1rem;border-left:6px solid var(--brand-accent)}
+.b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__tekst>.h2::after{content:none}
+/* 07: opsomming onder elkaar, met een lijn ertussen */
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst{grid-template-columns:minmax(0,1fr);gap:0}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li{padding-block:.7rem;border-bottom:1px solid var(--grey-300)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li:first-child{border-top:1px solid var(--grey-300)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li::before,
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li::after{top:calc(.7rem + .2em)}
+
+/* 05 verhuislift: Creme band met een Koningsblauw huis */
+.b-dienstenpanelen__paneel--verhuislift{--band:var(--accent-50)}
+.b-dienstenpanelen__paneel--verhuislift .b-dienstenpanelen__kader::before{background:var(--brand-primary)}
+.b-dienstenpanelen__paneel--verhuislift .b-dienstenpanelen__nr{color:var(--accent-600)}
+.b-dienstenpanelen__paneel--verhuislift .b-dienstenpanelen__tekst>.h2::after{background:var(--brand-primary)}
+
+/* 06 opslag: lichtblauwe band, opsomming als witte tegels */
+.b-dienstenpanelen__paneel--opslag{--band:var(--primary-50)}
+.b-dienstenpanelen__paneel--opslag .b-dienstenpanelen__nr{color:var(--primary-300)}
+.b-dienstenpanelen__paneel--opslag .b-dienstenpanelen__tekst>.h2::after{width:100%;height:2px;background:var(--primary-200)}
+:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst{gap:.6rem}
+:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst li{padding:.7rem .9rem .7rem 2.7rem;border-radius:var(--radius-control)}
+:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst li::before,
+:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst li::after{left:.85rem;top:calc(.7rem + .2em)}
+.b-dienstenpanelen__paneel--opslag .b-dienstenpanelen__lijst li{background:var(--white);box-shadow:0 0 0 1px var(--primary-200)}
+.b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__lijst li{background:var(--primary-50)}
+/* tegels: een losse laatste regel loopt over de volle breedte, zodat er geen leeg vak overblijft */
+:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst li:last-child:nth-child(odd){grid-column:1/-1}
+
+/* 08 woningontruiming: rustig. Mist, geen geel, een zachtblauw huis */
+.b-dienstenpanelen__paneel--woningontruiming{--band:var(--off-white)}
+.b-dienstenpanelen__paneel--woningontruiming .b-dienstenpanelen__kader::before{background:var(--primary-300)}
+.b-dienstenpanelen__paneel--woningontruiming .b-dienstenpanelen__nr{color:var(--grey-300)}
+.b-dienstenpanelen__paneel--woningontruiming .b-dienstenpanelen__tekst>.h2::after{background:var(--primary-300)}
+
+@media (hover:hover){
+  /* een band heeft geen kaartschaduw; het huis kantelt nog wel */
+  .b-dienstenpanelen__paneel:hover{box-shadow:none}
+}
+@media (max-width:899px){
+  .b-dienstenpanelen__paneel,.b-dienstenpanelen__paneel:nth-child(even){padding:var(--bandpad) 0}
+  /* de zijkolom wordt een band boven de tekst, ook van rand tot rand */
+  :is(.b-dienstenpanelen__paneel--nationaal,.b-dienstenpanelen__paneel--montage) .b-dienstenpanelen__beeld{position:relative;width:auto;
+    margin:calc(-1*var(--bandpad)) 0 0;padding-block:var(--space-6)}
+  :is(.b-dienstenpanelen__paneel--nationaal,.b-dienstenpanelen__paneel--montage) .b-dienstenpanelen__beeld::before{inset:0 calc(50% - 50vw)}
+  :is(.b-dienstenpanelen__paneel--nationaal,.b-dienstenpanelen__paneel--montage) .b-dienstenpanelen__kader{width:min(13rem,58vw)}
+}
+
+/* ---- meer diepte: de verhuizers stappen verder uit het huis ----
+   Foto en uitsnede krijgen hier samen een andere maatvoering dan hierboven: allebei de volle 4:3-foto
+   (niet meer afgesneden op de breedte van het kader), gecentreerd, en even hard vergroot vanaf de
+   onderkant. De lagen blijven zo pixel voor pixel gelijk, maar hoofd, schouders en armen komen verder
+   buiten het dak en de muren, en wie aan de rand staat wordt niet meer recht afgesneden. De losse
+   scale-eigenschap laat de transform van de hover ongemoeid. De foto in het huis is iets onscherp en
+   donkerder, met schaduw onder het dak: het huis wordt een ruimte waar de verhuizer vóór staat.
+   --uit-schaal en --uit-x (in % van de fotobreedte) zijn per foto afgesteld. */
+.b-dienstenpanelen__foto,.b-dienstenpanelen__uit img{position:absolute;top:0;left:50%;width:auto;height:100%;max-width:none;aspect-ratio:4/3;object-fit:fill;
+  translate:calc(-50% + var(--uit-x,0%)) 0;transform-origin:50% 100%;scale:var(--uit-schaal,1.16)}
+.b-dienstenpanelen__foto{filter:blur(1.6px) brightness(.88) saturate(.9)}
+.b-dienstenpanelen__huis::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(11,35,82,.42),rgba(11,35,82,0) 55%)}
+.b-dienstenpanelen__uit{filter:drop-shadow(0 2px 2px rgba(14,26,51,.4)) drop-shadow(0 20px 20px rgba(14,26,51,.42))}
+.b-dienstenpanelen__uit img{filter:none}
+.b-dienstenpanelen__paneel--particulier{--uit-schaal:1.2}
+.b-dienstenpanelen__paneel--nationaal{--uit-schaal:1.12}
+.b-dienstenpanelen__paneel--internationaal{--uit-schaal:1.22}
+.b-dienstenpanelen__paneel--internationaal .b-dienstenpanelen__uit img{clip-path:polygon(30% 0,72% 0,72% 60%,61% 60%,61% 100%,30% 100%)}
+.b-dienstenpanelen__paneel--verhuislift{--uit-schaal:1.1}
+.b-dienstenpanelen__paneel--opslag{--uit-schaal:1.36;--uit-x:-2%}
+.b-dienstenpanelen__paneel--woningontruiming{--uit-schaal:1.08;--uit-x:-14.5%}
+.b-dienstenpanelen__paneel--woningontruiming .b-dienstenpanelen__uit img{-webkit-mask-image:linear-gradient(90deg,#000 95%,transparent);mask-image:linear-gradient(90deg,#000 95%,transparent)}
+.b-dienstenpanelen__paneel--montage{--uit-schaal:1}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__foto{filter:none}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__huis::after{content:none}

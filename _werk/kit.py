@@ -35,6 +35,7 @@ class Pagina:
     concept: bool = False                     # pas live als config.PUBLICEER[pad] True is (BOUWPLAN 12)
     wacht_op: str = ""                        # waar de conceptpagina op wacht, voor het overzicht op /_concept/
     feiten: tuple = ()                        # namen uit config.FEITEN die deze pagina gebruikt
+    extra_css: tuple = ()                     # css/blok/<naam>.css die alleen deze pagina laadt, na de CSS van de blokken
 
     @property
     def live(self):
@@ -264,7 +265,7 @@ class Ctx:
         self.pagina = pagina
         self.kopij = _kopij.document(pagina.kopij) if pagina.kopij else _kopij.Document("", WORTEL / "leeg.md")
         self.iconen = set()
-        self.extra_css = []          # bloknamen waarvan de CSS mee moet (afhankelijkheden)
+        self.extra_css = list(pagina.extra_css)   # bloknamen waarvan de CSS mee moet (afhankelijkheden, of de eigen laag van een pagina)
         self.extra_js = []
         self.waarschuwingen = []
         self._uniek = 0

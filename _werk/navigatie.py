@@ -227,12 +227,18 @@ def footer(ctx):
     </div>
     <nav class="footer__kolom" aria-labelledby="f-diensten"><p class="footer__kop" id="f-diensten">{esc(f.veld("kolom-diensten", "Diensten"))}</p><ul>{diensten}</ul></nav>
     <nav class="footer__kolom" aria-labelledby="f-dereus"><p class="footer__kop" id="f-dereus">{esc(f.veld("kolom-dereus", "De Reus"))}</p><ul>{dereus}</ul></nav>
-    <div class="footer__kolom"><p class="footer__kop">{esc(f.veld("kolom-contact", "Contact"))}</p>
-      <address><span class="footer__sub">{esc(f.veld("adres-label", "Hoofdkantoor"))}</span>{esc(cfg.STRAAT)}<br>{esc(cfg.POSTCODE)} {esc(cfg.PLAATS)}</address>
-      <ul><li><a href="{cfg.TELHREF}">{cfg.TEL}</a></li><li><a href="mailto:{cfg.MAIL}">{cfg.MAIL}</a></li><li><a href="{cfg.ROUTE}" rel="noopener">Route plannen{ctx.icoon("extern")}</a></li></ul>
-      <p class="footer__sub">{esc(f.veld("bereikbaar-kop", "Bereikbaar"))}</p>
-      <ul class="footer__tijden">{tijden}</ul>
-      {bereikbaar_html(ctx, "bereikbaar bereikbaar--footer")}
+    <div class="footer__kolom footer__kolom--contact"><p class="footer__kop">{esc(f.veld("kolom-contact", "Contact"))}</p>
+      <div class="footer__blokken">
+        <div class="footer__blok">
+          <address><span class="footer__sub">{esc(f.veld("adres-label", "Hoofdkantoor"))}</span> <span class="footer__regel">{esc(cfg.STRAAT)}</span> <span class="footer__regel">{esc(cfg.POSTCODE)} {esc(cfg.PLAATS)}</span></address>
+          <ul><li><a href="{cfg.TELHREF}">{cfg.TEL}</a></li><li><a href="mailto:{cfg.MAIL}">{cfg.MAIL}</a></li><li><a href="{cfg.ROUTE}" rel="noopener">Route plannen{ctx.icoon("extern")}</a></li></ul>
+        </div>
+        <div class="footer__blok">
+          <p class="footer__sub">{esc(f.veld("bereikbaar-kop", "Bereikbaar"))}</p>
+          <ul class="footer__tijden">{tijden}</ul>
+          {bereikbaar_html(ctx, "bereikbaar bereikbaar--footer")}
+        </div>
+      </div>
     </div>
   </div>
   <div class="footer__onder"><div class="wrap">

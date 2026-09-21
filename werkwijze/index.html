@@ -26,10 +26,10 @@
 <link rel="apple-touch-icon" href="/img/logo/dereus-favicon-180.png">
 <link rel="preload" href="/fonts/archivo-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/min/site.min.css?v=27a6a096c3">
-<link rel="stylesheet" href="/css/min/offertepil.min.css?v=2e8ed38fbb">
-<link rel="stylesheet" href="/css/min/kop.min.css?v=1b6cc9b1bc">
-<link rel="stylesheet" href="/css/min/stappenlang.min.css?v=58863cf466">
+<link rel="stylesheet" href="/css/min/site.min.css?v=37ccd6e1d1">
+<link rel="stylesheet" href="/css/min/offertepil.min.css?v=a1302ae9aa">
+<link rel="stylesheet" href="/css/min/kop.min.css?v=0e87f2d738">
+<link rel="stylesheet" href="/css/min/stappenlang.min.css?v=ec4bcd8214">
 <link rel="stylesheet" href="/css/min/checklist.min.css?v=7526b9a49c">
 <link rel="stylesheet" href="/css/min/verhuisdag.min.css?v=7007127a48">
 <link rel="stylesheet" href="/css/min/reviews.min.css?v=d00e96089b">
@@ -285,7 +285,7 @@
       <label class="of-veld of-veld--dienst" for="ofl-dienst"><span>Soort verhuizing</span><select id="ofl-dienst" name="dienst"><option value="">Kies een type</option><option value="particulier">Particuliere verhuizing</option><option value="zakelijk">Zakelijke verhuizing</option><option value="nationaal">Verhuizing door Nederland</option><option value="internationaal">Internationale verhuizing</option><option value="verhuislift">Verhuislift</option><option value="opslag">Tijdelijke opslag</option><option value="montage">Handymanservice</option><option value="woningontruiming">Woningontruiming</option><option value="onbekend">Weet ik nog niet</option></select></label>
       <button class="knop knop--cta of-knop" type="submit"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></button>
     </form>
-      <p class="of-bel"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><a href="tel:+31850005647">Liever bellen? 085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p>
+      <p class="of-bel"><a href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>Liever bellen? 085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p>
     </div>
   </div>
 </section>
@@ -312,12 +312,18 @@
     </div>
     <nav class="footer__kolom" aria-labelledby="f-diensten"><p class="footer__kop" id="f-diensten">Diensten</p><ul><li><a href="/diensten/#particulier">Particuliere verhuizingen</a></li><li><a href="/diensten/#zakelijk">Zakelijke verhuizingen</a></li><li><a href="/diensten/#nationaal">Door heel Nederland</a></li><li><a href="/diensten/#internationaal">Internationale verhuizingen</a></li><li><a href="/diensten/#verhuislift">Verhuislift</a></li><li><a href="/diensten/#opslag">Tijdelijke opslag</a></li><li><a href="/diensten/#montage">Handymanservice</a></li><li><a href="/diensten/#woningontruiming">Woningontruiming</a></li></ul></nav>
     <nav class="footer__kolom" aria-labelledby="f-dereus"><p class="footer__kop" id="f-dereus">De Reus</p><ul><li><a href="/over-ons/">Over ons</a></li><li><a href="/werkwijze/">Werkwijze</a></li><li><a href="/kosten/">Kosten</a></li><li><a href="/#reviews">Reviews</a></li><li><a href="/#vragen">Veelgestelde vragen</a></li></ul></nav>
-    <div class="footer__kolom"><p class="footer__kop">Contact</p>
-      <address><span class="footer__sub">Hoofdkantoor</span>Lau Mazirellaan 336<br>2525 ZJ Den Haag</address>
-      <ul><li><a href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg><span class="wa-link__tekst">WhatsApp</span></a></li><li><a href="mailto:info@verhuisbedrijfdereus.nl">info@verhuisbedrijfdereus.nl</a></li><li><a href="https://www.openstreetmap.org/directions?to=52.05963%2C4.29914#map=17/52.05963/4.29914" rel="noopener">Route plannen<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-extern"/></svg></a></li></ul>
-      <p class="footer__sub">Bereikbaar</p>
-      <ul class="footer__tijden"><li>ma t/m za 08.00 tot 20.00 uur</li><li>zo 09.00 tot 17.00 uur</li></ul>
-      <span class="bereikbaar bereikbaar--footer" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span>
+    <div class="footer__kolom footer__kolom--contact"><p class="footer__kop">Contact</p>
+      <div class="footer__blokken">
+        <div class="footer__blok">
+          <address><span class="footer__sub">Hoofdkantoor</span> <span class="footer__regel">Lau Mazirellaan 336</span> <span class="footer__regel">2525 ZJ Den Haag</span></address>
+          <ul><li><a href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg><span class="wa-link__tekst">WhatsApp</span></a></li><li><a href="mailto:info@verhuisbedrijfdereus.nl">info@verhuisbedrijfdereus.nl</a></li><li><a href="https://www.openstreetmap.org/directions?to=52.05963%2C4.29914#map=17/52.05963/4.29914" rel="noopener">Route plannen<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-extern"/></svg></a></li></ul>
+        </div>
+        <div class="footer__blok">
+          <p class="footer__sub">Bereikbaar</p>
+          <ul class="footer__tijden"><li>ma t/m za 08.00 tot 20.00 uur</li><li>zo 09.00 tot 17.00 uur</li></ul>
+          <span class="bereikbaar bereikbaar--footer" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="footer__onder"><div class="wrap">

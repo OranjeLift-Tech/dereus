@@ -19,6 +19,14 @@ KANALEN = [
     ("doos", "/offerte/", "Offerte aanvragen"),
 ]
 
+# Per icoon het 3D-voorwerp in img/contact-3d/: bestandsnaam, breedte en hoogte (bron: _ai-beelden/contact-3d/)
+VOORWERP = {
+    "telefoon": ("telefoon", 208, 400),
+    "mail": ("envelop", 347, 400),
+    "document": ("formulier", 346, 400),
+    "doos": ("doos", 425, 400),
+}
+
 
 def _kanaal(ctx, i, it):
     icoon, doel, std = KANALEN[i] if i < len(KANALEN) else ("pijl", "/contact/", "Meer")
@@ -29,8 +37,14 @@ def _kanaal(ctx, i, it):
     else:
         href = doel
     linktekst = it.veld("linktekst") or std
+    if icoon in VOORWERP:                  # een echt voorwerp dat uit de kaart steekt, in plaats van het lijnicoon
+        naam, b, h = VOORWERP[icoon]
+        beeld = (f'<span class="b-{NAAM}__ic b-{NAAM}__ic--3d" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{naam}" '
+                 f'src="/img/contact-3d/{naam}.webp" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
+    else:
+        beeld = f'<span class="b-{NAAM}__ic" aria-hidden="true">{ctx.icoon(icoon)}</span>'
     return f'''<li class="b-{NAAM}__kanaal">
-              <span class="b-{NAAM}__ic" aria-hidden="true">{ctx.icoon(icoon)}</span>
+              {beeld}
               <h3 class="b-{NAAM}__titel">{ctx.inline(it.kop)}</h3>
               {ctx.alineas(it.tekst)}
               <a class="b-{NAAM}__link" href="{ctx.esc(href)}"><span>{ctx.esc(linktekst).replace("@", "@<wbr>")}</span>{ctx.icoon("pijl")}</a>

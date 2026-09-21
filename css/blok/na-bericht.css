@@ -1,21 +1,47 @@
 /* Na uw bericht (/contact/ #na-bericht): de Diepblauwe band met dakrand; tekst links, foto rechts.
    De foto van de verhuisadviseur staat recht, met het huisvlak uit het logo als vorm erachter:
    vorm achter, foto ervoor (STIJLANALYSE 2.5, diepte in lagen). Een huismasker óver een portret
-   sneed de kop af, dus het huis blijft achtergrond. */
+   sneed de kop af, dus het huis blijft achtergrond. Zij komt met haar hoofd boven de lijst uit;
+   zie het blok "uit de lijst" onderaan. */
 .b-na-bericht__in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(2rem,1rem + 4vw,5rem);align-items:center}
 .b-na-bericht__kop{max-width:none;margin-inline:0;margin-bottom:1.25rem;text-align:left}
 .b-na-bericht__kop .label{justify-content:flex-start}
 .b-na-bericht__kop .intro{margin-inline:0}
 .b-na-bericht__tekst p{max-width:56ch}
 .b-na-bericht__tekst .knoppen{margin-top:1.75rem}
-.b-na-bericht__beeld{position:relative;isolation:isolate;margin:0;justify-self:center;width:min(100%,26rem)}
+.b-na-bericht__beeld{position:relative;isolation:isolate;margin:0;justify-self:center;width:min(100%,26rem);
+  container-type:inline-size}
 /* het huis uit het logo, Koningsblauw, schuin achter de foto vandaan */
 .b-na-bericht__beeld::before{content:"";position:absolute;z-index:-1;left:-12%;top:-17%;width:102%;aspect-ratio:535.3/509.8;
   background:linear-gradient(160deg,var(--brand-primary),var(--primary-600));
   -webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
-.b-na-bericht__kader{overflow:hidden;aspect-ratio:4/3;border-radius:var(--radius-media);background:var(--primary-600);
+.b-na-bericht__kader{position:relative;overflow:hidden;aspect-ratio:4/3;border-radius:var(--radius-media);background:var(--primary-600);
   box-shadow:0 30px 60px -28px rgba(5,14,35,.85)}
-.b-na-bericht__foto{width:100%;height:100%;object-fit:cover;object-position:50% 34%}
+
+/* ---- uit de lijst ----
+   Dezelfde foto ligt er twee keer: in de lijst de gewone foto, daarover dezelfde foto uitgeknipt,
+   op precies dezelfde plek en schaal, maar niet afgesneden aan de bovenkant. Haar hoofd komt zo
+   boven de lijst uit, voor het blauwe huis langs. Zelfde aanpak als homecontact op de home.
+   Alles in cqw (procenten van de kolombreedte), zodat de twee lagen in elke breedte over elkaar
+   blijven liggen. De foto is 1200x800, dus haar hoogte is --breed * 2/3.
+   --top is zo gekozen dat de foto onderaan precies de lijst vult (75cqw = 4/3) en haar kruin er
+   18cqw boven uitkomt: haar hoofd en headset staan dan helemaal vrij, haar ogen net boven de rand.
+   --links zet haar met ruim 2cqw marge in beeld; haar alfa-kader loopt van 7% tot 73% van de
+   beeldbreedte, dus veel verder uitsteken kan niet zonder haar schouder af te snijden.
+   Niet met de hand verzetten zonder opnieuw te meten. */
+.b-na-bericht__beeld{--breed:142.90;--top:-20.27;--links:-8}
+.b-na-bericht__foto,.b-na-bericht__uit img{position:absolute;top:calc(var(--top) * 1cqw);left:calc(var(--links) * 1cqw);
+  width:calc(var(--breed) * 1cqw);height:auto;max-width:none}
+/* alleen naar boven vrij: links, rechts en onder houdt de lijst haar vorm */
+/* Het stuk boven de lijst staat op de donkere band, en haar haar is bijna even donker. Een dunne
+   lichte rand maakt haar silhouet daar los; de donkere schaduw eronder houdt de diepte. */
+.b-na-bericht__uit{position:absolute;z-index:2;inset:0;pointer-events:none;clip-path:inset(-100% 0 0 0);
+  filter:drop-shadow(0 0 1px rgba(255,255,255,.6)) drop-shadow(0 0 7px rgba(190,214,255,.3)) drop-shadow(0 16px 20px rgba(5,14,35,.55))}
+/* zonder containereenheden klopt de uitsnede niet; dan alleen de gewone foto, zoals eerst */
+@supports not (height:1cqw){
+  .b-na-bericht__uit{display:none}
+  .b-na-bericht__foto{position:static;width:100%;height:100%;object-fit:cover;object-position:50% 34%}
+}
 @media(max-width:860px){
   .b-na-bericht__in{grid-template-columns:1fr}
   .b-na-bericht__beeld{width:min(80%,22rem)}
