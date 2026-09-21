@@ -105,3 +105,8 @@
   .b-checklist__foto{transition:none}
   .b-checklist__beeld:hover .b-checklist__foto{transform:none}
 }
+/* Geen sticky in deze sectie. Regel 32 hierboven maakt de kopkolom vanaf 900 plakkend; dat patroon
+   is vier keer afgewezen, en in deze stapeling zou de kop over de foto heen schuiven die eronder in
+   dezelfde kolom staat. De andere instantie van dit blok (#na-de-verhuizing) houdt hem voorlopig:
+   dat is een andere sectie en een aparte beslissing. */
+@media (min-width:900px){.b-checklist--compositie .b-checklist__kop{position:static}}
