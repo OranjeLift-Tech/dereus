@@ -24,11 +24,11 @@ FOTOS = {"particulier": "particulier", "zakelijk": "zakelijk", "nationaal": "nat
 
 # Van welke dienstfoto een uitsnede zonder achtergrond bestaat (/img/dienst-<naam>-uit.webp, uit
 # _ai-beelden/diensten-uitsnede.mjs + diensten-uit-export.cjs). Die laag komt over de foto heen
-# zonder in de huisvorm geknipt te worden, dus de verhuizer stapt uit het huis. Handymanservice
-# staat er bewust niet bij, net als bij de tegels op de home: dat beeld is een close-up van een
-# hand, zonder persoon om uit te laten stappen.
+# zonder in de huisvorm geknipt te worden, dus de verhuizer stapt uit het huis. Bij handymanservice
+# is het geen persoon maar de hand met de boor die naar buiten komt (uitsnede met de hand gemaakt:
+# _ai-beelden/handyman-uitsnede.cjs; de maatvoering staat bij paneel 07 in de CSS).
 UITSNEDEN = {"particulier", "zakelijk", "nationaal", "internationaal", "verhuislift", "opslag",
-             "woningontruiming"}
+             "handyman", "woningontruiming"}
 
 
 def _met_tel(ctx, tekst):

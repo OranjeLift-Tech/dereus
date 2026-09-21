@@ -8,7 +8,8 @@ Draaien: python _werk/kaart/maak_kaart.py
 De OSM-data (Overpass, "out geom", ongeveer 3 MB) wordt opgehaald naar de tijdelijke map van het systeem
 en niet in de repo bewaard. Uitvoer: img/kaart-den-haag.svg.
 Locatie volgens PDOK Locatieserver: 52.0596297, 4.29913794 (buurt Groente- en Fruitmarkt).
-Kleuren alleen uit brandbook/tokens.css (Mist, Zilvergrijs, blauw 50 tot 200, Koningsblauw, Diepblauw, Goudgeel, Leisteen).
+Het kaartbeeld zelf (land, bebouwing, groen, water, wegen, spoor) krijgt kaartkleuren, zodat het als kaart leest.
+Het merk zit in de speld (Koningsblauw met het gouden huis) en de plaatsnamen (Leisteen), uit brandbook/tokens.css.
 """
 import json
 import math
@@ -103,6 +104,9 @@ for e in d["elements"]:
 # Koningsblauw #1746A2, Diepblauw #0B2352, Goudgeel #FFCC33, Leisteen #5E6675, Wit #FFFFFF
 MIST, ZILVER, B50, B100, B200 = "#F6F7F9", "#D3D7DE", "#F3F7FE", "#E6EFFF", "#CDDFFF"
 KONINGSBLAUW, DIEPBLAUW, GOUD, LEISTEEN, WIT = "#1746A2", "#0B2352", "#FFCC33", "#5E6675", "#FFFFFF"
+# Een kaart moet als kaart lezen: land, groen en water krijgen kaartkleuren, geen merkkleuren.
+# Het merk zit in de speld (Koningsblauw met het gouden huis) en in de plaatsnamen (Leisteen).
+LAND, BLOK, GROEN, WATER, WEGRAND, SPOORLIJN = "#F0EEE8", "#E3DED4", "#C9E1B6", "#A6CBE1", "#CFCCC5", "#A9ADB4"
 BREED = {"motorway": (13, 8.5), "trunk": (12, 7.5), "primary": (10, 6.4), "secondary": (8, 5), "tertiary": (5.2, 3.2)}
 VOLG = ["tertiary", "secondary", "primary", "trunk", "motorway"]
 HUIS = ("M267.6 7.8L320.9 53.2V0H356.8V83.9L535.3 236.2H457.6V509.8H326.2V384.1H209.1V509.8H77.7V236.2H0Z")
@@ -112,24 +116,26 @@ s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {BR} {HO}" width="{B
      'in de wijk Groente- en Fruitmarkt">',
      '<defs><filter id="k-schaduw" x="-40%" y="-40%" width="180%" height="180%">'
      f'<feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="{DIEPBLAUW}" flood-opacity=".35"/></filter></defs>',
-     f'<rect width="{BR}" height="{HO}" fill="{MIST}"/>']
+     f'<rect width="{BR}" height="{HO}" fill="{LAND}"/>']
 if bebouwd:
-    s.append(f'<g fill="{ZILVER}" opacity=".42">' + "".join(f'<path d="{p}"/>' for p in bebouwd) + "</g>")
+    s.append(f'<g fill="{BLOK}" opacity=".85">' + "".join(f'<path d="{p}"/>' for p in bebouwd) + "</g>")
 if groen:
-    s.append(f'<g fill="{WIT}">' + "".join(f'<path d="{p}"/>' for p in groen) + "</g>")   # open ruimte: wit, zodat het niet op water lijkt
+    s.append(f'<g fill="{GROEN}">' + "".join(f'<path d="{p}"/>' for p in groen) + "</g>")   # park en gras in het groen, anders leest het als een gat
 if water:
-    s.append(f'<g fill="{B200}">' + "".join(f'<path d="{p}"/>' for p in water) + "</g>")
+    s.append(f'<g fill="{WATER}">' + "".join(f'<path d="{p}"/>' for p in water) + "</g>")
 if kanaal:
-    s.append(f'<g fill="none" stroke="{B200}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">'
+    s.append(f'<g fill="none" stroke="{WATER}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">'
              + "".join(f'<path d="{p}"/>' for p in kanaal) + "</g>")
 if spoor:
-    s.append(f'<g fill="none" stroke="{LEISTEEN}" stroke-width="2" stroke-dasharray="9 7" opacity=".45">'
-             + "".join(f'<path d="{p}"/>' for p in spoor) + "</g>")
+    # een doorgaande band met witte dwarsstreepjes erop: zo tekent een kaart een spoorlijn
+    sp = "".join(f'<path d="{p}"/>' for p in spoor)
+    s.append(f'<g fill="none" stroke="{SPOORLIJN}" stroke-width="4.2" stroke-linecap="round">{sp}</g>')
+    s.append(f'<g fill="none" stroke="{WIT}" stroke-width="2.4" stroke-dasharray="9 9">{sp}</g>')
 for laag in (0, 1):
     for soort in VOLG:
         paden = [p for st, p in wegen if st == soort]
         if paden:
-            s.append(f'<g fill="none" stroke="{ZILVER if laag == 0 else WIT}" stroke-width="{BREED[soort][laag]}" '
+            s.append(f'<g fill="none" stroke="{WEGRAND if laag == 0 else WIT}" stroke-width="{BREED[soort][laag]}" '
                      'stroke-linecap="round" stroke-linejoin="round">' + "".join(f'<path d="{p}"/>' for p in paden) + "</g>")
 
 mx, my = xy(MLAT, MLON)
@@ -148,7 +154,7 @@ for naam, la, lo in namen:
     if not past(x, y, naam, 24) or math.hypot(x - mx, y - my) < 170 or naam == "Groente- en Fruitmarkt":
         continue
     s.append(f'<text x="{x:.0f}" y="{y:.0f}" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" '
-             f'font-weight="600" font-size="24" fill="{LEISTEEN}" stroke="{MIST}" stroke-width="6" paint-order="stroke" '
+             f'font-weight="600" font-size="24" fill="{LEISTEEN}" stroke="{LAND}" stroke-width="6" paint-order="stroke" '
              f'opacity=".85">{naam}</text>')
 
 for naam, x, y in parken:

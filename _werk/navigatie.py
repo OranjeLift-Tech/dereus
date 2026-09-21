@@ -217,7 +217,7 @@ def footer(ctx):
         <a class="knop knop--licht" href="mailto:{cfg.MAIL}">{ctx.icoon("mail")}<span>{esc(f.veld("mail-knop", "Mail ons"))}</span></a>
       </div>
     </div>
-    <img class="footer__beeldmerk" src="{ctx.logo("beeldmerk-negatief")}" alt="" width="{cfg.LOGO_MATEN["beeldmerk"][0]}" height="{cfg.LOGO_MATEN["beeldmerk"][1]}" loading="lazy" decoding="async">
+    <img class="footer__wagen" src="/img/footer-wagen.webp" alt="" width="1380" height="974" loading="lazy" decoding="async">
   </div>
   <div class="wrap footer__top">
     <div class="footer__merk">
@@ -225,12 +225,12 @@ def footer(ctx):
       <p class="footer__claim">{inline(claim)}</p>
       <p class="footer__omschrijving">{inline(f.veld("omschrijving", "Vanuit Den Haag verhuizen wij u door heel Nederland. Met één vast aanspreekpunt, van aanvraag tot verhuisdag."))}</p>
     </div>
-    <nav class="footer__kolom" aria-labelledby="f-diensten"><p class="footer__kop" id="f-diensten">{esc(f.veld("kolom-diensten", "Diensten"))}</p><ul>{diensten}</ul></nav>
+    <nav class="footer__kolom footer__kolom--diensten" aria-labelledby="f-diensten"><p class="footer__kop" id="f-diensten">{esc(f.veld("kolom-diensten", "Diensten"))}</p><ul>{diensten}</ul></nav>
     <nav class="footer__kolom" aria-labelledby="f-dereus"><p class="footer__kop" id="f-dereus">{esc(f.veld("kolom-dereus", "De Reus"))}</p><ul>{dereus}</ul></nav>
-    <div class="footer__kolom footer__kolom--contact"><p class="footer__kop">{esc(f.veld("kolom-contact", "Contact"))}</p>
+    <div class="footer__kolom"><p class="footer__kop">{esc(f.veld("kolom-contact", "Contact"))}</p>
       <div class="footer__blokken">
         <div class="footer__blok">
-          <address><span class="footer__sub">{esc(f.veld("adres-label", "Hoofdkantoor"))}</span> <span class="footer__regel">{esc(cfg.STRAAT)}</span> <span class="footer__regel">{esc(cfg.POSTCODE)} {esc(cfg.PLAATS)}</span></address>
+          <address><span class="footer__sub">{esc(f.veld("adres-label", "Hoofdkantoor"))}</span>{esc(cfg.STRAAT)}<br>{esc(cfg.POSTCODE)} {esc(cfg.PLAATS)}</address>
           <ul><li><a href="{cfg.TELHREF}">{cfg.TEL}</a></li><li><a href="mailto:{cfg.MAIL}">{cfg.MAIL}</a></li><li><a href="{cfg.ROUTE}" rel="noopener">Route plannen{ctx.icoon("extern")}</a></li></ul>
         </div>
         <div class="footer__blok">

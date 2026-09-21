@@ -117,7 +117,13 @@ def _velden(ctx, k, variant):
     return label + wanneer + persoon + _veld(ctx, k.item("opmerkingen"), "textarea", False, breed=True)
 
 
-def _zijkolom(ctx, k, beeld=None):
+# Optie merk: het beeldmerk als laatste onderdeel van de zijkolom (/offerte/). Het staat binnen __zijin, zodat het
+# meeloopt met het blok dat tijdens het invullen in beeld blijft. Vormgeving: css/blok/offerte-diepte.css.
+MERK = ('<img class="b-formulier__merk" src="/img/logo/dereus-beeldmerk-negatief.svg" alt="" width="1000" height="509" '
+        'loading="lazy" decoding="async">')
+
+
+def _zijkolom(ctx, k, beeld=None, merk=False):
     if not k.veld("zij-kop"):
         return ""
     vinkjes = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
@@ -126,6 +132,7 @@ def _zijkolom(ctx, k, beeld=None):
       <p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
       <ul class="b-{NAAM}__vinkjes">{vinkjes}</ul>
       <a class="b-{NAAM}__tel" href="{ctx.telhref}">{TELEFOON_SVG}<span>{ctx.esc(ctx.tel)}</span></a>
+      {MERK if merk else ""}
     </div></aside>'''
 
 
@@ -137,7 +144,7 @@ def html(ctx, kopij, **opties) -> str:
     grond = opties.get("grond", "mist")
     sleutel = getattr(ctx.cfg, "WEB3FORMS_KEY", "")
     zonder_sleutel = _is_placeholder(sleutel)
-    zij = _zijkolom(ctx, k, opties.get("beeld")) if opties.get("zijkolom", True) else ""
+    zij = _zijkolom(ctx, k, opties.get("beeld"), opties.get("merk", False)) if opties.get("zijkolom", True) else ""
     prefix = ctx.esc(opties.get("prefix", "f"))
     bereik = (f'<a href="{ctx.telhref}">{ctx.esc(ctx.tel)}</a> <span aria-hidden="true">·</span> '
               f'<a href="mailto:{ctx.esc(ctx.mail)}">{ctx.esc(ctx.mail)}</a>')

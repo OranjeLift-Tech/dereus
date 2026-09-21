@@ -10,7 +10,9 @@ const sharp = require(path.join(HIER, 'node_modules', 'sharp'));
 
 const UITSNEDE = path.join(HIER, 'foto', 'Onze diensten', 'uitsnede');
 const IMG = path.join(HIER, '..', 'img');
-const NAMEN = ['particulier', 'zakelijk', 'nationaal', 'internationaal', 'verhuislift', 'opslag', 'handyman', 'woningontruiming'];
+// 'handyman' staat hier bewust NIET bij: img/dienst-handyman-uit.webp komt uit handyman-uitsnede.cjs (boor, handschoen én
+// beide onderarmen). De modeluitsnede in uitsnede/handyman.png mist de armen; die hier exporteren zou de goede webp overschrijven.
+const NAMEN = ['particulier', 'zakelijk', 'nationaal', 'internationaal', 'verhuislift', 'opslag', 'woningontruiming'];
 const B = 1080, H = 810;            // 1,5x de basisfoto (720x540): scherp als de uitsnede vergroot wordt
 const DREMPEL = 45;                 // alfa hieronder = helemaal weg
 

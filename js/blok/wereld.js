@@ -50,9 +50,15 @@
     paneel.insertBefore(box, paneel.firstChild);
     return box;
   }
+  /* De pin is een echte link naar de routeplanner: wie op het kantoor klikt, kan er ook heen. */
+  function routeLink() { var a = paneel.querySelector('.wereld__route'); return a ? a.href : ''; }
   function maakPin() {
-    var el = document.createElement('div');
+    var href = routeLink(), el = document.createElement(href ? 'a' : 'div');
     el.className = 'wereld__marker';
+    if (href) {
+      el.href = href; el.target = '_blank'; el.rel = 'noopener';
+      el.setAttribute('aria-label', 'Route plannen naar De Reus, Lau Mazirellaan 336 in Den Haag (opent in een nieuw tabblad)');
+    }
     el.innerHTML = '<span class="wereld__pin">' + ICON.huis + '</span>';
     return el;
   }
@@ -177,7 +183,8 @@
     });
     tegels.addTo(map);
     var icoon = L.divIcon({ className: 'wereld__marker', html: '<span class="wereld__pin">' + ICON.huis + '</span>', iconSize: [40, 40], iconAnchor: [20, 46] });
-    L.marker([LAT, LNG], { icon: icoon, keyboard: false }).addTo(map);
+    L.marker([LAT, LNG], { icon: icoon, keyboard: false }).addTo(map)
+      .on('click', function () { var h = routeLink(); if (h) window.open(h, '_blank', 'noopener'); });
     map.setView([LAT, LNG], 15);
     map.attributionControl.setPosition('topright');
     knoppen([[ICON.pin, 'Den Haag', function () { map.flyTo([LAT, LNG], 15, { duration: rustig.matches ? 0 : 0.9 }); }]]);
@@ -220,12 +227,17 @@
     if (melding) { melding.classList.remove('vh'); melding.textContent = 'De interactieve kaart is nu niet beschikbaar. U kunt wel de routeplanner openen.'; }
     if (toetsenbord && document.activeElement === document.body && startKnop) startKnop.focus();
   }
-  if (startKnop) startKnop.addEventListener('click', function (e) {
-    poging++; geladen = false; toetsenbord = e.detail === 0;
+  function openKaart(metToetsenbord) {
+    if (!startKnop || startKnop.disabled) return;
+    poging++; geladen = false; toetsenbord = metToetsenbord;
     startKnop.disabled = true;
     paneel.setAttribute('aria-busy', 'true');
     if (melding) { melding.classList.add('vh'); melding.textContent = 'Kaart laden'; }
     wachttijd = setTimeout(herstel, 15000);
     start();
-  });
+  }
+  if (startKnop) startKnop.addEventListener('click', function (e) { openKaart(e.detail === 0); });
+  /* ook een klik op de getekende kaart zelf opent de echte kaart */
+  var terugval = paneel.querySelector('.wereld__terugval');
+  if (terugval && startKnop) terugval.addEventListener('click', function () { openKaart(false); });
 })();

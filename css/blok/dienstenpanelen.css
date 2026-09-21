@@ -175,10 +175,16 @@
 }
 .b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__beeld{background:var(--primary-100)}
 .b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__nr{color:var(--brand-primary)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__beeld{background:var(--brand-accent)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__nr{color:var(--brand-secondary)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__kader::before{background:var(--white)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__tekst>.h2::after{background:var(--brand-primary)}
+/* 07: Creme zijkolom. Vol Goudgeel was het grootste gele vlak van de site en brak het paneel in
+   twee stukken; volgens het merkboek is Goudgeel een accent. Het goud zit nu in het volgnummer
+   en in de streep onder de kop. */
+/* de Crème kleur loopt over het hele paneel, ook achter de tekst: zo leest 07 als één blok (vraag van de gebruiker) */
+.b-dienstenpanelen__paneel--montage{--band:var(--accent-50)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li,.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li:first-child{border-color:var(--accent-200)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__beeld{background:var(--accent-50)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__nr{color:var(--accent-600)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__kader::before{background:var(--brand-secondary)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__tekst>.h2::after{background:var(--brand-accent)}
 /* 03: de kop krijgt de goudgele streep links in plaats van eronder */
 .b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__tekst>.h2{padding-left:1rem;border-left:6px solid var(--brand-accent)}
 .b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__tekst>.h2::after{content:none}
@@ -236,7 +242,7 @@
    donkerder, met schaduw onder het dak: het huis wordt een ruimte waar de verhuizer vóór staat.
    --uit-schaal en --uit-x (in % van de fotobreedte) zijn per foto afgesteld. */
 .b-dienstenpanelen__foto,.b-dienstenpanelen__uit img{position:absolute;top:0;left:50%;width:auto;height:100%;max-width:none;aspect-ratio:4/3;object-fit:fill;
-  translate:calc(-50% + var(--uit-x,0%)) 0;transform-origin:50% 100%;scale:var(--uit-schaal,1.16)}
+  translate:calc(-50% + var(--uit-x,0%)) var(--uit-y,0%);transform-origin:50% 100%;scale:var(--uit-schaal,1.16)}
 .b-dienstenpanelen__foto{filter:blur(1.6px) brightness(.88) saturate(.9)}
 .b-dienstenpanelen__huis::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(11,35,82,.42),rgba(11,35,82,0) 55%)}
 .b-dienstenpanelen__uit{filter:drop-shadow(0 2px 2px rgba(14,26,51,.4)) drop-shadow(0 20px 20px rgba(14,26,51,.42))}
@@ -249,6 +255,14 @@
 .b-dienstenpanelen__paneel--opslag{--uit-schaal:1.36;--uit-x:-2%}
 .b-dienstenpanelen__paneel--woningontruiming{--uit-schaal:1.08;--uit-x:-14.5%}
 .b-dienstenpanelen__paneel--woningontruiming .b-dienstenpanelen__uit img{-webkit-mask-image:linear-gradient(90deg,#000 95%,transparent);mask-image:linear-gradient(90deg,#000 95%,transparent)}
-.b-dienstenpanelen__paneel--montage{--uit-schaal:1}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__foto{filter:none}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__huis::after{content:none}
+/* 07 montage: de hand met de boor komt uit het huis. De uitsnede (img/dienst-handyman-uit.webp, bron:
+   _ai-beelden/handyman-uitsnede.cjs) bevat boor, handschoen, beide onderarmen en de rechterhand. De foto staat groter,
+   naar links en omlaag (--uit-y), zodat boor en handschoen door de linkermuur steken. De armen lopen tot de rand van de
+   foto; daarom knipt de img zelf boven de dakrand op de huisvorm: de armen komen van binnen, alleen onder de dakrand
+   mag het beeld naar links en naar onder het huis uit. De veelhoek is de huisvorm omgerekend naar de coördinaten van
+   de img bij precies deze schaal en verschuiving: verandert een van de drie, reken hem dan opnieuw uit. */
+.b-dienstenpanelen__paneel--montage{--uit-schaal:1.36;--uit-x:-14%;--uit-y:27%}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__uit img{clip-path:polygon(-3.5% 40.7%,31.3% 40.7%,60.3% 7.7%,66.0% 14.3%,66.0% 6.6%,70.0% 6.6%,70.0% 18.8%,89.3% 40.7%,80.9% 40.7%,80.9% 80.1%,-3.5% 109.6%)}
+/* de boor steekt links uit het huis: op smallere schermen schuift het huis iets op, zodat hij niet tegen de schermrand wordt afgesneden */
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__kader{--schuif:clamp(0rem,calc((1400px - 100vw) * .2),3rem);margin-left:var(--schuif)}
+@media (min-width:900px){.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__kader{width:calc(100% - var(--schuif))}}
