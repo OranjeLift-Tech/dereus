@@ -313,11 +313,11 @@ body.lade-open { overflow: hidden; }
    het Diepblauw zodat de tekst leesbaar blijft. De foto staat buiten de tekststroom, dus de band wordt er
    niet hoger van. Het verloop ligt erover heen; de uitnodiging staat er met z-index 1 bovenop. */
 .footer__wagen { position: absolute; z-index: 0; top: 0; bottom: 0; right: calc(50% - 50vw); left: auto;
-  width: min(64%, 62rem); max-width: none; height: 100%; object-fit: cover; object-position: 50% 42%;
+  width: min(76%, 72rem); max-width: none; height: 100%; object-fit: cover; object-position: 50% 42%;
   /* de linkerkant van de foto zelf vervaagt, anders tekent de rand van het beeld zich af tegen het Diepblauw */
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); }
 .footer__intro::after { content: ""; position: absolute; z-index: 0; inset: 0 calc(50% - 50vw); pointer-events: none;
-  background: linear-gradient(90deg, var(--brand-secondary) 0 34%, rgba(11, 35, 82, .92) 48%, rgba(11, 35, 82, .55) 68%, rgba(11, 35, 82, .25) 100%),
+  background: linear-gradient(90deg, var(--brand-secondary) 0 30%, rgba(11, 35, 82, .9) 44%, rgba(11, 35, 82, .52) 64%, rgba(11, 35, 82, .22) 100%),
     linear-gradient(0deg, rgba(11, 35, 82, .55), rgba(11, 35, 82, 0) 55%); }
 /* Vier kolommen op één rij: merk, Diensten (zelf twee kolommen breed), De Reus, Contact. Elke kolom is precies
    zo breed als zijn inhoud en de ruimte die overblijft gaat naar de tussenruimtes (space-between), zodat de rij
@@ -350,7 +350,7 @@ body.lade-open { overflow: hidden; }
 @media (min-width: 1100px) {
   .footer__kolom--diensten ul { grid-auto-flow: column; grid-template-rows: repeat(5, auto); grid-template-columns: repeat(2, minmax(0, max-content)); column-gap: clamp(1.5rem, 2.5vw, 2rem); }
 }
-.footer__kolom address { margin-bottom: 1rem; line-height: 1.6; }
+.footer__kolom address { margin-bottom: .35rem; line-height: 1.6; }   /* het nummer sluit direct aan op het adres */
 /* Contact valt in twee blokken naast elkaar: het adres en de bereikbaarheid. Elk blok is precies zo breed als
    zijn langste regel (info@verhuisbedrijfdereus.nl is 204px, "ma t/m za 08.00 tot 20.00 uur" 211px), dus er
    breekt geen regel. Onder 1200px staan ze weer onder elkaar; daar is de kolom te smal. */
@@ -385,7 +385,7 @@ body.lade-open { overflow: hidden; }
   .footer__top { gap: 2rem 1rem; }
   /* hier is de kolom te smal voor twee blokken naast elkaar */
   .footer__blokken { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .footer__kolom a { padding-block: .4rem; }
+  .footer__kolom a, .footer__kolom li > .wa-link { padding-block: .4rem; }
   .footer__omschrijving { max-width: 40ch; }
   .footer__onder .wrap { gap: .8rem; }
 }
@@ -415,10 +415,10 @@ body.lade-open .mcta { display: none; }
 .mcta > .wa-link { margin: 0; padding: .3rem; align-self: stretch; color: var(--success); background: var(--white); }
 .homecontact__kanalen > .wa-link { justify-content: flex-start; margin: -.65rem 0 0; }
 /* in de contactkolom van de footer blijft WhatsApp een gewone regel tussen nummer en e-mail, geen knop (besluit van de gebruiker) */
-.footer__kolom .wa-link { display: inline-flex; padding: .3rem .35rem; border-radius: 10px; background: none; box-shadow: none; color: inherit; font-weight: var(--weight-semibold); }
-.footer__kolom .wa-link:hover { color: inherit; background: color-mix(in srgb, currentColor 9%, transparent); }
-.footer__kolom .wa-link .ic { width: 20px; height: 20px; margin: 0; }
-.footer__kolom .wa-link .wa-link__tekst { font-size: .8125rem; }
+.footer__kolom .wa-link { display: flex; justify-content: flex-start; width: max-content; min-width: 0; min-height: 0; margin: .35rem 0 0; padding: .2rem 0; border-radius: 0; background: none; box-shadow: none; color: inherit; font-size: inherit; font-weight: var(--weight-semibold); }   /* eigen regel onder het nummer, even hoog als de andere regels */
+.footer__kolom .wa-link:hover { color: inherit; background: none; }
+.footer__kolom .wa-link .ic { width: 18px; height: 18px; margin: 0; }
+.footer__kolom .wa-link .wa-link__tekst { font-size: inherit; }
 .footer__tel + .wa-link { min-height: 54px; margin: .35rem 0; padding: .6rem 1.4rem; gap: .55rem; border-radius: var(--radius-button); background: var(--success); box-shadow: 0 3px 9px rgba(0, 0, 0, .22); color: var(--white); font-size: var(--text-button); font-weight: var(--weight-bold); transition: background-color .2s var(--ease), box-shadow .2s var(--ease); }
 .footer .footer__tel + .wa-link:hover { background: color-mix(in srgb, var(--success) 85%, black); box-shadow: 0 5px 12px rgba(0, 0, 0, .28); color: var(--white); text-decoration: none; }
 .footer__tel + .wa-link .ic { width: 22px; height: 22px; }

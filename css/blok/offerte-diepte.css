@@ -127,3 +127,16 @@
 }
 @media (min-width:900px) and (max-height:860px){.p-offerte .b-formulier__merk{width:min(72%,13.5rem);margin-top:0}}
 @media (min-width:900px) and (max-height:720px){.p-offerte .b-formulier__merk{width:min(55%,10rem)}}
+
+/* ---- eindpunt van de drie stappen: het beeldmerk ----
+   Na stap 3 nemen de sterke armen het over: het beeldmerk staat als vierde, smallere cel rechts van de kaarten.
+   De stippellijn loopt door tot boven het beeldmerk en zakt daar naar het dak. Onder 1100 px staat het onder de rij. */
+.p-offerte .b-stappen-na-aanvraag__eind{position:relative;display:grid;place-items:center}
+.p-offerte .b-stappen-na-aanvraag__eind img{display:block;width:8.5rem;height:auto;filter:drop-shadow(0 14px 16px rgba(11,35,82,.22))}
+@media (min-width:1100px){
+  .p-offerte .b-stappen-na-aanvraag__rij{--eind:clamp(9rem,13vw,12.5rem);--eind-h:calc((var(--eind) - 1rem) * .5094);grid-template-columns:repeat(3,minmax(0,1fr)) var(--eind)}
+  .p-offerte .b-stappen-na-aanvraag__rij::before{right:calc(var(--eind) * .5)}
+  .p-offerte .b-stappen-na-aanvraag__eind img{width:calc(var(--eind) - 1rem)}
+  .p-offerte .b-stappen-na-aanvraag__eind::before{content:"";position:absolute;left:50%;top:0;height:calc(50% - var(--eind-h) / 2 - .55rem);border-left:2px dashed var(--primary-300)}
+}
+@media (max-width:1099px){.p-offerte .b-stappen-na-aanvraag__eind{grid-column:1/-1;margin-top:.25rem}}

@@ -1,6 +1,18 @@
 /* Reviews: scorepaneel in Diepblauw, uitgelichte review groot, kaarten met initialen */
 .rraster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.75rem, .5rem + .8vw, 1.25rem); margin: 0; padding: 0; list-style: none; }
 .rkaart { display: flex; }
+/* ---- de klant achter de kaart (alleen de compacte rij) ----
+   De onderkant van het portret valt weg achter de bovenrand van de kaart, dus je ziet de klant vanaf de
+   schouders. Schalen gebeurt op hoogte en niet op breedte: reviews-export.cjs maakt alle drie even hoog
+   met de kruin op dezelfde plek, terwijl de breedte per persoon verschilt. De rij houdt er bovenaan
+   ruimte voor vrij, maar alleen als er echt een portret staat -- vandaar :has. Er beweegt niets. */
+.rraster--compact { --klant-hoogte: clamp(4.5rem, 8vw, 7rem); --klant-achter: 1.75rem; }
+.rraster--compact:has(.rkaart__klant) { margin-top: calc(var(--klant-hoogte) - var(--klant-achter)); }
+.rraster--compact .rkaart { position: relative; }
+.rraster--compact .rkaart figure { position: relative; z-index: 1; }
+.rkaart__klant { position: absolute; z-index: 0; left: 50%; bottom: calc(100% - var(--klant-achter));
+  height: var(--klant-hoogte); width: auto; transform: translateX(-50%); pointer-events: none;
+  filter: drop-shadow(0 8px 10px rgba(14, 26, 51, .22)); }
 .rkaart figure {
   display: flex; flex-direction: column; width: 100%; margin: 0; padding: clamp(1.4rem, 1.1rem + 1vw, 2rem);
   background: var(--white); border: 1px solid var(--grey-300); border-radius: var(--radius-card); box-shadow: var(--schaduw-kaart);

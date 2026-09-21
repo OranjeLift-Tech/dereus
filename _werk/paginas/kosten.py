@@ -10,6 +10,7 @@ PAGINA = Pagina(
     kopij="kosten",
     header="transparant",
     body_klasse="p-kosten",
+    extra_css=("kosten-diepte",),             # de pagina in lagen: platen met dikte, de trap op de Diepblauwe band
     blokken=[
         ("kop", {}),
         ("antwoord", {"chips": CHIPS}),

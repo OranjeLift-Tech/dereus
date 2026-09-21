@@ -37,6 +37,9 @@
   transition:transform .4s var(--ease)}
 .b-formulier__tel:hover{background:var(--primary-100)}
 .b-formulier__tel:focus-visible{outline:var(--focus-ring);outline-offset:var(--focus-offset)}
+/* WhatsApp als kleine groene knop onder het nummer. Zonder align-self rekt hij als flexkind uit tot de
+   volle kolombreedte en wordt het een balk; de maat zelf komt van .wa-link in style.css. */
+.b-formulier__zij .wa-link{align-self:flex-start;margin-inline-start:0}
 
 /* ---- formulier ---- */
 .b-formulier__hoofd{padding:clamp(1.5rem,3.2vw,3rem)}

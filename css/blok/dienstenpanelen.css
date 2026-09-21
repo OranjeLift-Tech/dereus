@@ -131,7 +131,9 @@
    hetzelfde blok toont. Alleen merkkleuren; de teksten blijven gelijk.
    Elk paneel is een band over de volle schermbreedte: de grond (--band) loopt van rand tot rand via
    ::before, de inhoud houdt de breedte van .wrap. De klasse per dienst komt uit het blok. */
-.b-dienstenpanelen{--beeldbreedte:clamp(12rem,26vw,24rem);padding-bottom:0}
+/* overflow-x:clip: de vergrote foto en de uitstappende uitsneden steken buiten de wrap; zonder dit tellen ze mee voor de
+   scrollbreedte en schuift de pagina een paar pixels opzij (clip-path knipt alleen het schilderen, niet de layout) */
+.b-dienstenpanelen{--beeldbreedte:clamp(12rem,26vw,24rem);padding-bottom:0;overflow-x:clip}
 .b-dienstenpanelen__in{max-width:var(--maxw)}
 .b-dienstenpanelen__panelen{gap:0}
 .b-dienstenpanelen__paneel{--band:var(--white);--bandpad:clamp(2.75rem,5.5vw,5rem);--ppad:clamp(1.5rem,3.5vw,3.25rem);

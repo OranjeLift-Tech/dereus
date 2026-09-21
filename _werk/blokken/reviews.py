@@ -8,11 +8,28 @@ Optie sectie: "mist" of "wit" (standaard mist bij volledig, wit bij compact).
 """
 import re
 
+import kit
+
 NAAM = "reviews"
 CSS = True
 JS = False
 
 AVATAR = ["a", "b", "c", "d"]
+
+
+def klantbeeld(i):
+    """Het portret van de klant boven de kaart, of "" zolang dat beeld nog niet bestaat.
+
+    De drie uitsneden komen uit _ai-beelden/reviews-uitsnede.mjs + reviews-export.cjs. Zolang die er
+    niet zijn blijft de kaart precies zoals hij was: geen gebroken beeld en geen gat erboven (de CSS
+    reserveert de ruimte met :has). Bewust zonder width en height: de export maakt alle drie even hoog
+    met de kruin op dezelfde plek, maar de breedte verschilt per persoon, en de foto staat buiten de
+    tekststroom, dus er valt niets te verspringen.
+    """
+    pad = f"/img/review-klant-{i + 1}.webp"
+    if not (kit.WORTEL / pad.lstrip("/")).exists():
+        return ""
+    return f'<img class="rkaart__klant" src="{pad}" alt="" loading="lazy" decoding="async">'
 
 
 def initialen(naam):
@@ -24,11 +41,11 @@ def initialen(naam):
     return (delen[0][0] + delen[-1][0]).upper()
 
 
-def kaart(ctx, it, i, groot=False):
+def kaart(ctx, it, i, groot=False, klant=""):
     naam = it.titel
     tekst = it.veld("tekst")
     klasse = "rkaart rkaart--groot" if groot else "rkaart"
-    return f'''<li class="{klasse}">
+    return f'''<li class="{klasse}">{klant}
         <figure>
           <div class="rkaart__kop">{ctx.sterren(5)}<span class="vh">5 van 5 sterren</span>{ctx.icoon("quote", "ic rkaart__quote")}</div>
           <blockquote><p>{ctx.esc(tekst)}</p></blockquote>
@@ -63,7 +80,7 @@ def html(ctx, kopij, variant="volledig", sectie=None, **opties):
     if variant == "compact":
         grond = sectie or "wit"
         rij = (uit + rest)[:3]
-        kaarten = "".join(kaart(ctx, it, i) for i, it in enumerate(rij))
+        kaarten = "".join(kaart(ctx, it, i, klant=klantbeeld(i)) for i, it in enumerate(rij))
         link = home.veld("profiel-linktekst", "Bekijk alle reviews op Google")
         return f'''<section class="sectie sectie--{grond} b-reviews b-reviews--compact" id="{kid}" aria-labelledby="{kid}-kop">
   <div class="wrap">

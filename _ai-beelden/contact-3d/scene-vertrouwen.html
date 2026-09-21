@@ -1,0 +1,119 @@
+<!doctype html>
+<meta charset="utf-8">
+<!-- Vier voorwerpen voor de vertrouwensrij op /contact/: reviewkaart met sterren, schild, headset, klok.
+     Zelfde opzet als scene.html: één lichtbron linksboven, fysieke materialen, transparante achtergrond. -->
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<body style="margin:0;background:#888">
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const MAAT = 1000;
+const KONINGSBLAUW = '#1746A2', DIEPBLAUW = '#0B2352', GOUDGEEL = '#FFC72C';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setSize(MAAT, MAAT); renderer.setPixelRatio(1);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;
+document.body.appendChild(renderer.domElement);
+const omgeving = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.03).texture;
+
+function basis() {
+  const scene = new THREE.Scene(); scene.environment = omgeving; scene.environmentIntensity = 0.75;
+  const zon = new THREE.DirectionalLight(0xfff4e2, 3.1); zon.position.set(-3.2, 4.6, 4.2); zon.castShadow = true;
+  zon.shadow.mapSize.set(2048, 2048); zon.shadow.radius = 5; zon.shadow.bias = -0.0004;
+  Object.assign(zon.shadow.camera, { left: -2.5, right: 2.5, top: 2.5, bottom: -2.5, near: .5, far: 14 });
+  scene.add(zon);
+  const tegen = new THREE.DirectionalLight(0xbfd4ff, .7); tegen.position.set(3.5, 1.2, 2); scene.add(tegen);
+  const camera = new THREE.PerspectiveCamera(38, 1, .1, 50); camera.position.set(0, .2, 4.35); camera.lookAt(0, 0, 0);
+  return { scene, camera };
+}
+const schaduw = m => { m.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } }); return m; };
+function doek(w, h, teken) { const c = document.createElement('canvas'); c.width = w; c.height = h; teken(c.getContext('2d'), w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; }
+const laadBeeld = src => new Promise((ok, fout) => { const i = new Image(); i.onload = () => ok(i); i.onerror = fout; i.src = src; });
+const lak = (kleur, ruw = .24) => new THREE.MeshPhysicalMaterial({ color: kleur, roughness: ruw, clearcoat: 1, clearcoatRoughness: .12 });
+const mat = (kleur, ruw = .6) => new THREE.MeshPhysicalMaterial({ color: kleur, roughness: ruw, sheen: .3 });
+const schuin = (diepte, rand) => ({ depth: diepte, bevelEnabled: true, bevelThickness: rand, bevelSize: rand, bevelSegments: 6, curveSegments: 24 });
+
+function sterVorm(R, r) { const s = new THREE.Shape(); for (let i = 0; i < 10; i++) { const a = Math.PI / 2 + i * Math.PI / 5, q = i % 2 ? r : R; i ? s.lineTo(Math.cos(a) * q, Math.sin(a) * q) : s.moveTo(Math.cos(a) * q, Math.sin(a) * q); } s.closePath(); return s; }
+
+/* ---- 1. reviewkaart: de Google-G en vijf gouden sterren ---- */
+async function score() {
+  const g = new THREE.Group(), W = 2.35, H = 1.5;
+  // de G komt uit de sprite van de site zelf, dus in de echte kleuren
+  const html = await (await fetch('/site/contact/index.html')).text();
+  const sym = html.match(/<symbol id="i-google"([^>]*)>([^]*?)<\/symbol>/);
+  const vb = (sym[1].match(/viewBox="([^"]+)"/) || [0, '0 0 24 24'])[1];
+  const G = await laadBeeld('data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}" width="256" height="256">${sym[2]}</svg>`));
+  const voor = doek(1175, 750, (c, w, h) => { c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#F1F4FA'; c.beginPath(); c.arc(205, 215, 140, 0, 7); c.fill(); c.drawImage(G, 205 - 98, 215 - 98, 196, 196);
+    c.fillStyle = '#25324D'; c.beginPath(); c.roundRect(400, 150, 520, 44, 22); c.fill(); c.fillStyle = '#AEB7C8'; c.beginPath(); c.roundRect(400, 232, 360, 30, 15); c.fill();
+    c.fillStyle = '#D5DBE7'; [0, 1].forEach(i => { c.beginPath(); c.roundRect(90, 630 + i * 50, w - 180 - i * 260, 20, 10); c.fill(); }); });
+  const wit = mat('#FFFFFF', .5);
+  const kaart = new THREE.Mesh(new RoundedBoxGeometry(W, H, .09, 6, .045), [wit, wit, wit, wit, new THREE.MeshPhysicalMaterial({ map: voor, roughness: .42, clearcoat: .5, clearcoatRoughness: .3 }), wit]); g.add(kaart);
+  const rand = new THREE.Mesh(new RoundedBoxGeometry(W + .07, H + .07, .06, 6, .03), lak(KONINGSBLAUW)); rand.position.z = -.035; g.add(rand);
+  const goud = new THREE.MeshPhysicalMaterial({ color: GOUDGEEL, roughness: .22, metalness: .25, clearcoat: 1, clearcoatRoughness: .1 });
+  const ster = new THREE.ExtrudeGeometry(sterVorm(.165, .076), schuin(.05, .024));
+  for (let i = 0; i < 5; i++) { const s = new THREE.Mesh(ster, goud); s.position.set(-.84 + i * .42, -.2, .05); s.rotation.z = (i - 2) * -.03; g.add(s); }
+  g.rotation.set(.2, -.5, .09); g.scale.setScalar(1.0); g.position.y = -.02;
+  return schaduw(g);
+}
+
+/* ---- 2. schild met vink ---- */
+function schild() {
+  const g = new THREE.Group();
+  const vorm = k => { const s = new THREE.Shape(); s.moveTo(-.84 * k, .72 * k); s.quadraticCurveTo(-.4 * k, .76 * k, 0, 1.02 * k); s.quadraticCurveTo(.4 * k, .76 * k, .84 * k, .72 * k); s.lineTo(.84 * k, .02 * k);
+    s.bezierCurveTo(.84 * k, -.52 * k, .36 * k, -.86 * k, 0, -1.04 * k); s.bezierCurveTo(-.36 * k, -.86 * k, -.84 * k, -.52 * k, -.84 * k, .02 * k); s.closePath(); return s; };
+  const buiten = new THREE.Mesh(new THREE.ExtrudeGeometry(vorm(1), schuin(.16, .07)), lak(DIEPBLAUW)); buiten.position.z = -.12; g.add(buiten);
+  const binnen = new THREE.Mesh(new THREE.ExtrudeGeometry(vorm(.84), schuin(.07, .05)), lak(KONINGSBLAUW, .2)); binnen.position.z = .1; g.add(binnen);
+  // de vink: twee afgeronde balken in Goudgeel
+  const goud = new THREE.MeshPhysicalMaterial({ color: GOUDGEEL, roughness: .22, metalness: .2, clearcoat: 1, clearcoatRoughness: .1 });
+  const balk = (ax, ay, bx, by) => { const l = Math.hypot(bx - ax, by - ay) + .2, m = new THREE.Mesh(new RoundedBoxGeometry(l, .2, .13, 5, .065), goud); m.position.set((ax + bx) / 2, (ay + by) / 2, .27); m.rotation.z = Math.atan2(by - ay, bx - ax); g.add(m); };
+  balk(-.4, -.02, -.12, -.32); balk(-.12, -.32, .44, .3);
+  g.rotation.set(.12, -.52, .07); g.scale.setScalar(1.12); g.position.y = -.02;
+  return schaduw(g);
+}
+
+/* ---- 3. headset van de verhuisadviseur ---- */
+function headset() {
+  const g = new THREE.Group(), R = .82;
+  const blauw = lak(KONINGSBLAUW), donker = mat(DIEPBLAUW, .75), goud = lak(GOUDGEEL, .25), staal = new THREE.MeshPhysicalMaterial({ color: '#D5DAE3', metalness: 1, roughness: .25 });
+  const beugel = new THREE.Mesh(new THREE.TorusGeometry(R, .06, 20, 90, Math.PI), blauw); g.add(beugel);
+  const kussen = new THREE.Mesh(new THREE.TorusGeometry(R - .005, .1, 20, 50, 1.0), donker); kussen.rotation.z = Math.PI / 2 - .5; g.add(kussen);
+  [-1, 1].forEach(s => {
+    const arm = new THREE.Mesh(new RoundedBoxGeometry(.09, .42, .05, 4, .02), staal); arm.position.set(s * R, -.16, 0); g.add(arm);
+    const schelp = new THREE.Mesh(new THREE.CylinderGeometry(.4, .36, .2, 48), blauw); schelp.rotation.z = Math.PI / 2; schelp.position.set(s * (R + .02), -.42, 0); g.add(schelp);
+    const schijf = new THREE.Mesh(new THREE.CylinderGeometry(.2, .2, .04, 40), goud); schijf.rotation.z = Math.PI / 2; schijf.position.set(s * (R + .135), -.42, 0); g.add(schijf);
+    const oor = new THREE.Mesh(new THREE.TorusGeometry(.27, .12, 20, 48), donker); oor.rotation.y = Math.PI / 2; oor.position.set(s * (R - .13), -.42, 0); g.add(oor);
+  });
+  // de microfoon aan de linkerschelp
+  const baan = new THREE.CatmullRomCurve3([new THREE.Vector3(-R, -.62, .12), new THREE.Vector3(-R + .02, -.98, .42), new THREE.Vector3(-R + .22, -1.12, .78), new THREE.Vector3(-R + .5, -1.08, 1.0)]);
+  g.add(new THREE.Mesh(new THREE.TubeGeometry(baan, 40, .032, 12), donker));
+  const kap = new THREE.Mesh(new THREE.SphereGeometry(.105, 28, 20), donker); kap.scale.set(1.5, 1, 1); kap.position.set(-R + .56, -1.07, 1.04); kap.rotation.y = -.7; g.add(kap);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(.085, .022, 12, 32), goud); ring.position.set(-R + .43, -1.09, .95); ring.rotation.y = Math.PI / 2 - .75; g.add(ring);
+  g.rotation.set(.1, -.72, .04); g.position.set(.14, .34, 0); g.scale.setScalar(1.0);
+  return schaduw(g);
+}
+
+/* ---- 4. klok ---- */
+function klok() {
+  const g = new THREE.Group(), R = .98;
+  const kast = new THREE.Mesh(new THREE.CylinderGeometry(R, R * .96, .2, 72), lak(DIEPBLAUW)); kast.rotation.x = Math.PI / 2; kast.position.z = -.1; g.add(kast);
+  const rand = new THREE.Mesh(new THREE.TorusGeometry(R - .04, .1, 24, 96), lak(KONINGSBLAUW, .2)); rand.position.z = .0; g.add(rand);
+  const plaat = doek(1024, 1024, (c, w) => { const m = w / 2; c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, w);
+    const v = c.createRadialGradient(m, m, 80, m, m, m); v.addColorStop(0, '#FFFFFF'); v.addColorStop(1, '#EEF2F9'); c.fillStyle = v; c.fillRect(0, 0, w, w);
+    for (let i = 0; i < 60; i++) { const groot = i % 5 === 0, kwart = i % 15 === 0; c.save(); c.translate(m, m); c.rotate(i * Math.PI / 30); c.fillStyle = kwart ? '#0B2352' : groot ? '#1746A2' : '#B5BFD2';
+      c.beginPath(); c.roundRect(-(kwart ? 13 : groot ? 8 : 3), -m + 46, kwart ? 26 : groot ? 16 : 6, kwart ? 92 : groot ? 62 : 26, 4); c.fill(); c.restore(); } });
+  const wijzerplaat = new THREE.Mesh(new THREE.CircleGeometry(R - .1, 96), new THREE.MeshPhysicalMaterial({ map: plaat, roughness: .5 })); wijzerplaat.position.z = .005; g.add(wijzerplaat);
+  const wijzer = (l, b, d, kleur, graden, z) => { const geo = new RoundedBoxGeometry(b, l, d, 4, Math.min(b, d) / 2.2); geo.translate(0, l / 2 - .09, 0); const m = new THREE.Mesh(geo, lak(kleur, .3)); m.position.z = z; m.rotation.z = -graden * Math.PI / 180; g.add(m); };
+  wijzer(.52, .085, .035, DIEPBLAUW, 305, .05); wijzer(.76, .06, .035, DIEPBLAUW, 60, .085); wijzer(.84, .022, .02, '#E0A100', 200, .115);
+  const dop = new THREE.Mesh(new THREE.CylinderGeometry(.075, .075, .06, 32), lak(GOUDGEEL, .25)); dop.rotation.x = Math.PI / 2; dop.position.z = .13; g.add(dop);
+  g.rotation.set(.16, -.58, .06); g.scale.setScalar(1.08);
+  return schaduw(g);
+}
+
+window.maak = async naam => { const { scene, camera } = basis(); scene.add(await ({ score, schild, headset, klok })[naam]()); renderer.render(scene, camera); return renderer.domElement.toDataURL('image/png'); };
+window.klaar = true;
+</script>

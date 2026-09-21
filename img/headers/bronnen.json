@@ -8,7 +8,7 @@
   {
     "route": "/diensten/",
     "name": "diensten",
-    "source": "_ai-beelden/foto/logo-correcties/dienst-verhuislift-imagegen.png",
+    "source": "_ai-beelden/foto/logo-correcties/dienst-particulier-imagegen.png",
     "kind": "corrected-existing"
   },
   {
