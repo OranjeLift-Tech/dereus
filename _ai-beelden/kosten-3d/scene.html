@@ -1,0 +1,246 @@
+<!doctype html>
+<meta charset="utf-8">
+<!-- Vijf voorwerpen voor /kosten/ #opbouw ("Wat de prijs bepaalt"): dozenstapel, verhuiswagen, trap, tape + schroevendraaier, opslagbox.
+     Zelfde opzet als contact-3d/scene.html: één lichtbron linksboven, fysieke materialen, transparante achtergrond, het echte logo. -->
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<body style="margin:0;background:#888">
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const MAAT = 1000;
+const KONINGSBLAUW = '#1746A2', DIEPBLAUW = '#0B2352', GOUDGEEL = '#FFC72C';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setSize(MAAT, MAAT); renderer.setPixelRatio(1);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;
+document.body.appendChild(renderer.domElement);
+const omgeving = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.03).texture;
+
+function basis() {
+  const scene = new THREE.Scene(); scene.environment = omgeving; scene.environmentIntensity = 0.75;
+  const zon = new THREE.DirectionalLight(0xfff4e2, 3.1); zon.position.set(-3.2, 4.6, 4.2); zon.castShadow = true;
+  zon.shadow.mapSize.set(2048, 2048); zon.shadow.radius = 5; zon.shadow.bias = -0.0004;
+  Object.assign(zon.shadow.camera, { left: -3, right: 3, top: 3, bottom: -3, near: .5, far: 16 });
+  scene.add(zon);
+  const tegen = new THREE.DirectionalLight(0xbfd4ff, .7); tegen.position.set(3.5, 1.2, 2); scene.add(tegen);
+  const camera = new THREE.PerspectiveCamera(38, 1, .1, 50); camera.position.set(0, .2, 4.35); camera.lookAt(0, 0, 0);
+  return { scene, camera };
+}
+const schaduw = m => { m.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } }); return m; };
+function doek(w, h, teken) { const c = document.createElement('canvas'); c.width = w; c.height = h; teken(c.getContext('2d'), w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; }
+function ruis(g, w, h, n, alfa, licht = 255, donker = 0) { for (let i = 0; i < n; i++) { const v = Math.random() < .5 ? licht : donker; g.fillStyle = `rgba(${v},${v},${v},${Math.random() * alfa})`; g.fillRect(Math.random() * w, Math.random() * h, 1 + Math.random() * 2, 1 + Math.random() * 2); } }
+const laadBeeld = src => new Promise((ok, fout) => { const i = new Image(); i.onload = () => ok(i); i.onerror = fout; i.src = src; });
+const lak = (kleur, ruw = .24) => new THREE.MeshPhysicalMaterial({ color: kleur, roughness: ruw, clearcoat: 1, clearcoatRoughness: .12 });
+const mat = (kleur, ruw = .6) => new THREE.MeshPhysicalMaterial({ color: kleur, roughness: ruw, sheen: .3 });
+const staal = (kleur = '#C9CFDA', ruw = .26) => new THREE.MeshPhysicalMaterial({ color: kleur, metalness: 1, roughness: ruw });
+const blok = (w, h, d, m, r = .02) => new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 4, r), m);
+const op = (mesh, x, y, z) => { mesh.position.set(x, y, z); return mesh; };
+
+let LOGO;
+/* Eén kartonnen verhuisdoos met het logo in kleur op de voorkant (zoals contact-3d/doos). */
+function maakDoos(W, H, D, metLogo = true) {
+  const g = new THREE.Group();
+  const karton = (logo, greep) => doek(1024, 760, (c, w, h) => { c.fillStyle = '#C79A63'; c.fillRect(0, 0, w, h);
+    const v = c.createLinearGradient(0, 0, 0, h); v.addColorStop(0, 'rgba(255,230,190,.2)'); v.addColorStop(1, 'rgba(90,55,20,.2)'); c.fillStyle = v; c.fillRect(0, 0, w, h);
+    c.globalAlpha = .06; c.fillStyle = '#5A3A18'; for (let x = 0; x < w; x += 7) c.fillRect(x, 0, 2, h); c.globalAlpha = 1; ruis(c, w, h, 22000, .08, 255, 70);
+    if (logo) { const lw = 640, lh = lw * 828 / 1000; c.globalAlpha = .97; c.shadowColor = 'rgba(70,40,10,.6)'; c.shadowBlur = 7; c.shadowOffsetY = 2; c.drawImage(LOGO, (w - lw) / 2, (h - lh) / 2 + 30, lw, lh); c.shadowColor = 'transparent'; c.globalAlpha = 1; }
+    if (greep) { c.fillStyle = '#3A2611'; c.beginPath(); c.roundRect(w / 2 - 120, 150, 240, 74, 37); c.fill(); } });
+  const kant = t => new THREE.MeshPhysicalMaterial({ map: t, roughness: .88, sheen: .25 });
+  const boven = doek(1024, 760, (c, w, h) => { c.fillStyle = '#CFA36C'; c.fillRect(0, 0, w, h); ruis(c, w, h, 22000, .08, 255, 70); c.fillStyle = 'rgba(60,35,10,.55)'; c.fillRect(0, h / 2 - 3, w, 6); });
+  g.add(new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 4, .025), [kant(karton(false, true)), kant(karton(false, true)), kant(boven), kant(karton(false, false)), kant(karton(metLogo, false)), kant(karton(false, false))]));
+  const band = new THREE.MeshPhysicalMaterial({ color: '#E2C089', roughness: .18, clearcoat: 1, clearcoatRoughness: .08, transparent: true, opacity: .9 });
+  g.add(op(new THREE.Mesh(new THREE.BoxGeometry(W + .012, .006, D * .23), band), 0, H / 2 + .004, 0));
+  [1, -1].forEach(s => g.add(op(new THREE.Mesh(new THREE.BoxGeometry(.006, H * .27, D * .23), band), s * (W / 2 + .004), H / 2 - H * .135, 0)));
+  return g;
+}
+
+/* ---- 1. hoeveel er mee moet: een stapel verhuisdozen ---- */
+function dozen() {
+  const g = new THREE.Group();
+  const a = maakDoos(1.55, 1.1, 1.25); a.position.set(-.72, .55, 0); a.rotation.y = .06; g.add(a);
+  const b = maakDoos(1.3, .95, 1.1); b.position.set(.78, .475, .12); b.rotation.y = -.16; g.add(b);
+  const c = maakDoos(1.2, .9, 1.0); c.position.set(-.5, 1.1 + .45, .02); c.rotation.y = .3; g.add(c);
+  const d = maakDoos(.8, .6, .7); d.position.set(.72, .95 + .3, .1); d.rotation.y = -.42; g.add(d);
+  g.position.y = -1.0; const uit = new THREE.Group(); uit.add(g); uit.rotation.set(.4, -.6, 0); uit.scale.setScalar(.74); uit.position.y = -.05;
+  return schaduw(uit);
+}
+
+/* ---- 2. de afstand: de verhuiswagen met het logo op de bak ---- */
+function wagen() {
+  const g = new THREE.Group(), wit = lak('#FFFFFF', .3);
+  const zij = spiegel => doek(1280, 720, (c, w, h) => { c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, h);
+    const lh = 470, lw = lh * 1000 / 828; c.save(); if (spiegel) { c.translate(w, 0); c.scale(-1, 1); } c.drawImage(LOGO, (w - lw) / 2, 60, lw, lh); c.restore();
+    c.fillStyle = KONINGSBLAUW; c.fillRect(0, h - 120, w, 120); c.fillStyle = GOUDGEEL; c.fillRect(0, h - 138, w, 18); });
+  const zijM = t => new THREE.MeshPhysicalMaterial({ map: t, roughness: .3, clearcoat: 1, clearcoatRoughness: .15 });
+  const L = 2.3, H = 1.3, D = 1.12;
+  const bak = new THREE.Mesh(new RoundedBoxGeometry(L, H, D, 5, .04), [wit, wit, wit, wit, zijM(zij(false)), zijM(zij(false))]); bak.position.set(-.35, .98, 0); g.add(bak);
+  // cabine
+  const cab = blok(.86, .98, 1.06, wit, .1); cab.position.set(1.27, .78, 0); g.add(cab);
+  const glas = new THREE.MeshPhysicalMaterial({ color: '#0C1830', roughness: .08, metalness: .4, clearcoat: 1 });
+  g.add(op(blok(.04, .46, .9, glas, .015), 1.705, .98, 0));                                   // voorruit
+  [1, -1].forEach(s => g.add(op(blok(.5, .4, .03, glas, .012), 1.36, 1.0, s * .535)));       // zijruiten
+  g.add(op(blok(.06, .16, 1.08, lak(DIEPBLAUW), .02), 1.72, .36, 0));                          // bumper
+  [1, -1].forEach(s => g.add(op(blok(.03, .1, .2, new THREE.MeshPhysicalMaterial({ color: '#FFF6D0', emissive: '#FFE9A0', emissiveIntensity: .5, roughness: .2 }), .01), 1.715, .56, s * .36)));   // koplampen
+  g.add(op(blok(.035, .16, .5, lak(KONINGSBLAUW), .01), 1.712, .56, 0));                        // grille
+  [1, -1].forEach(s => g.add(op(blok(.05, .22, .12, lak(DIEPBLAUW), .02), 1.66, 1.02, s * .63)));  // spiegels
+  // onderstel en wielen
+  g.add(op(blok(3.0, .16, 1.0, mat('#1A2233', .7), .03), .05, .3, 0));
+  const band = new THREE.MeshPhysicalMaterial({ color: '#14171C', roughness: .85 }), velg = staal('#D5DAE3', .3);
+  [[1.2, 1], [1.2, -1], [-.85, 1], [-.85, -1]].forEach(([x, s]) => { const w = new THREE.Group();
+    const b = new THREE.Mesh(new THREE.CylinderGeometry(.3, .3, .24, 40), band); b.rotation.x = Math.PI / 2; w.add(b);
+    const v = new THREE.Mesh(new THREE.CylinderGeometry(.17, .17, .26, 32), velg); v.rotation.x = Math.PI / 2; w.add(v);
+    const n = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, .28, 20), lak(KONINGSBLAUW)); n.rotation.x = Math.PI / 2; w.add(n);
+    w.position.set(x, .3, s * .47); g.add(w); });
+  g.position.set(-.05, -.85, 0); const uit = new THREE.Group(); uit.add(g); uit.rotation.set(.3, -.62, 0); uit.scale.setScalar(.72); uit.position.y = .02;
+  return schaduw(uit);
+}
+
+/* ---- 3. de bereikbaarheid: een trap met een doos halverwege ---- */
+function trap() {
+  const g = new THREE.Group(), N = 5, tree = .46, stoot = .3, B = 1.25;
+  for (let i = 0; i < N; i++) {
+    g.add(op(blok(tree, stoot * (i + 1), B, lak(KONINGSBLAUW, .3), .015), i * tree, stoot * (i + 1) / 2, 0));
+    g.add(op(blok(tree + .05, .05, B + .06, lak('#FFFFFF', .35), .012), i * tree - .01, stoot * (i + 1) + .025, 0));
+  }
+  // leuning aan de achterkant
+  const geel = lak(GOUDGEEL, .22);
+  [0, N - 1].forEach(i => g.add(op(new THREE.Mesh(new THREE.CylinderGeometry(.035, .035, .8, 20), geel), i * tree, stoot * (i + 1) + .45, -B / 2 + .07)));
+  const lengte = Math.hypot((N - 1) * tree, (N - 1) * stoot) + .3, hoek = Math.atan2(stoot, tree);
+  const rail = new THREE.Mesh(new THREE.CapsuleGeometry(.045, lengte, 8, 20), geel); rail.rotation.z = hoek - Math.PI / 2; rail.position.set((N - 1) * tree / 2, stoot * (N + 1) / 2 + .85, -B / 2 + .07); g.add(rail);
+  const doos = maakDoos(.62, .46, .56); doos.position.set(2 * tree, stoot * 3 + .05 + .23, .12); doos.rotation.y = .18; g.add(doos);
+  g.position.set(-(N - 1) * tree / 2, -1.2, 0); const uit = new THREE.Group(); uit.add(g); uit.rotation.set(.36, -.58, 0); uit.scale.setScalar(.7); uit.position.set(-.1, .05, 0);
+  return schaduw(uit);
+}
+
+/* ---- 4. wat u zelf doet: een rol verhuistape en een schroevendraaier ---- */
+function gereedschap() {
+  const g = new THREE.Group();
+  const ring = (R, r, d, m, rand = .02) => { const s = new THREE.Shape(); s.absarc(0, 0, R, 0, Math.PI * 2, false); const gat = new THREE.Path(); gat.absarc(0, 0, r, 0, Math.PI * 2, true); s.holes.push(gat);
+    const geo = new THREE.ExtrudeGeometry(s, { depth: d, bevelEnabled: true, bevelThickness: rand, bevelSize: rand, bevelSegments: 5, curveSegments: 64 }); geo.translate(0, 0, -d / 2); return new THREE.Mesh(geo, m); };
+  const tapeM = new THREE.MeshPhysicalMaterial({ color: '#C9995E', roughness: .2, clearcoat: 1, clearcoatRoughness: .1 });
+  const rol = new THREE.Group(); rol.add(ring(.92, .5, .56, tapeM)); rol.add(ring(.5, .43, .6, lak(KONINGSBLAUW, .35), .01));
+  const flap = blok(.5, .012, .56, tapeM, .005); flap.position.set(.25, .93, 0); flap.rotation.z = -.12; rol.add(flap);
+  rol.position.set(-.35, 0, -.2); rol.rotation.set(0, .5, 0); g.add(rol);
+  // schroevendraaier, schuin ervoor
+  const sd = new THREE.Group();
+  sd.add(op(new THREE.Mesh(new THREE.CapsuleGeometry(.17, .62, 10, 28), lak(GOUDGEEL, .25)), 0, .5, 0));
+  [-.08, .1, .28].forEach(y => { const r = op(new THREE.Mesh(new THREE.TorusGeometry(.172, .018, 10, 40), lak(DIEPBLAUW)), 0, .5 + y, 0); r.rotation.x = Math.PI / 2; sd.add(r); });
+  sd.add(op(new THREE.Mesh(new THREE.CylinderGeometry(.1, .14, .16, 28), lak(DIEPBLAUW)), 0, -.02, 0));
+  sd.add(op(new THREE.Mesh(new THREE.CylinderGeometry(.045, .045, 1.15, 24), staal()), 0, -.65, 0));
+  sd.add(op(blok(.13, .2, .03, staal('#AEB5C2', .3), .008), 0, -1.3, 0));
+  sd.position.set(.55, -.05, .75); sd.rotation.set(.15, .3, -.95); g.add(sd);
+  g.rotation.set(.22, -.35, 0); g.scale.setScalar(.95); g.position.set(-.05, -.05, 0);
+  return schaduw(g);
+}
+
+/* ---- 5. extra diensten: een opslagbox met roldeur ---- */
+function opslag() {
+  const g = new THREE.Group(), W = 2.1, H = 1.55, D = 1.5;
+  g.add(op(blok(W, H, D, lak(KONINGSBLAUW, .3), .04), 0, H / 2, 0));
+  g.add(op(blok(W + .16, .14, D + .16, lak(DIEPBLAUW), .04), 0, H + .05, 0));                 // dakrand
+  g.add(op(blok(1.5, 1.22, .05, lak('#FFFFFF', .35), .02), 0, .63, D / 2 + .01));              // kozijn
+  const geel = lak(GOUDGEEL, .28);
+  for (let i = 0; i < 9; i++) g.add(op(blok(1.34, .105, .07, geel, .03), 0, .1 + i * .124, D / 2 + .04));   // lamellen van de roldeur
+  g.add(op(blok(.5, .07, .06, staal('#B9C0CC', .3), .02), 0, .07, D / 2 + .09));                // greep
+  // hangslot
+  const slot = new THREE.Group(); slot.add(blok(.2, .17, .07, staal('#D9DEE7', .22), .03));
+  const beugel = new THREE.Mesh(new THREE.TorusGeometry(.065, .018, 12, 32, Math.PI), staal('#C2C8D3', .2)); beugel.position.y = .085; slot.add(beugel);
+  slot.position.set(.78, .42, D / 2 + .1); g.add(slot);
+  const doos = maakDoos(.6, .45, .55); doos.position.set(-1.0, .225, D / 2 + .55); doos.rotation.y = .5; g.add(doos);
+  g.position.set(.1, -.95, -.2); const uit = new THREE.Group(); uit.add(g); uit.rotation.set(.34, -.6, 0); uit.scale.setScalar(.8);
+  return schaduw(uit);
+}
+
+/* ======== extradiensten (/kosten/): vier voorwerpen bij de vier vragen ======== */
+/* ---- opslag: de box met de roldeur half open, dozen op de drempel ---- */
+function opslagopen() {
+  const g = new THREE.Group(), W = 2.1, H = 1.55, D = 1.5;
+  g.add(op(blok(W, H, D, lak(KONINGSBLAUW, .3), .04), 0, H / 2, 0));
+  g.add(op(blok(W + .16, .14, D + .16, lak(DIEPBLAUW), .04), 0, H + .05, 0));
+  g.add(op(blok(1.5, 1.22, .05, lak('#FFFFFF', .35), .02), 0, .63, D / 2 + .01));
+  g.add(op(blok(1.34, 1.12, .02, new THREE.MeshPhysicalMaterial({ color: '#050B1A', roughness: .9 }), .005), 0, .6, D / 2 + .035));   // het donkere gat
+  const geel = lak(GOUDGEEL, .28);
+  for (let i = 0; i < 4; i++) g.add(op(blok(1.34, .105, .07, geel, .03), 0, 1.09 - i * .124, D / 2 + .05));   // de opgerolde deur
+  g.add(op(blok(.5, .06, .06, staal('#B9C0CC', .3), .02), 0, .66, D / 2 + .1));
+  const a = maakDoos(.62, .5, .5); a.position.set(-.22, .25, D / 2 + .2); a.rotation.y = .1; g.add(a);
+  const b = maakDoos(.5, .4, .45); b.position.set(.38, .2, D / 2 + .34); b.rotation.y = -.35; g.add(b);
+  const c = maakDoos(.46, .36, .42); c.position.set(-.2, .5 + .18, D / 2 + .18); c.rotation.y = -.2; g.add(c);
+  const d = maakDoos(.6, .45, .55); d.position.set(-1.05, .225, D / 2 + .7); d.rotation.y = .55; g.add(d);
+  g.position.set(.3, -.95, -.25); const uit = new THREE.Group(); uit.add(g); uit.rotation.set(.34, -.6, 0); uit.scale.setScalar(.72);
+  return schaduw(uit);
+}
+
+/* ---- verhuislift: ladder schuin omhoog, plateau met een ingepakte doos ---- */
+function lift() {
+  const g = new THREE.Group();
+  g.add(op(blok(1.5, .26, .8, lak(KONINGSBLAUW, .3), .05), 0, .42, 0));                        // onderwagen
+  g.add(op(blok(.7, .34, .6, lak(DIEPBLAUW), .05), -.3, .7, 0));                                // motorkast
+  const band = new THREE.MeshPhysicalMaterial({ color: '#14171C', roughness: .85 });
+  [1, -1].forEach(z => { const w = new THREE.Mesh(new THREE.CylinderGeometry(.24, .24, .16, 36), band); w.rotation.x = Math.PI / 2; w.position.set(-.1, .24, z * .46); g.add(w);
+    const v = new THREE.Mesh(new THREE.CylinderGeometry(.12, .12, .18, 28), staal('#D5DAE3', .3)); v.rotation.x = Math.PI / 2; v.position.set(-.1, .24, z * .46); g.add(v); });
+  [[.85, .5], [.85, -.5], [-.8, .5], [-.8, -.5]].forEach(([x, z]) => { g.add(op(new THREE.Mesh(new THREE.CylinderGeometry(.035, .035, .42, 16), staal()), x, .21, z)); g.add(op(blok(.2, .04, .2, staal('#AEB5C2', .35), .01), x, .02, z)); });   // stempels
+  g.add(op(blok(1.9, .06, .06, staal(), .02), 0, .34, .5)); g.add(op(blok(1.9, .06, .06, staal(), .02), 0, .34, -.5));
+  // de ladder
+  const ladder = new THREE.Group(), L = 3.5, hoek = 1.13;
+  [1, -1].forEach(z => ladder.add(op(blok(L, .09, .07, staal('#D0D5DE', .28), .02), L / 2, 0, z * .26)));
+  for (let i = 0; i < 15; i++) { const r = new THREE.Mesh(new THREE.CylinderGeometry(.022, .022, .52, 12), staal('#B9C0CC', .3)); r.rotation.x = Math.PI / 2; r.position.set(.15 + i * .23, 0, 0); ladder.add(r); }
+  // de slede met het plateau, dat waterpas blijft
+  const slede = new THREE.Group(); slede.add(op(blok(.5, .12, .66, lak(DIEPBLAUW), .03), 0, .08, 0));
+  const plat = new THREE.Group(); plat.add(blok(.95, .07, .8, lak(GOUDGEEL, .28), .02));
+  plat.add(op(blok(.05, .34, .8, lak(GOUDGEEL, .28), .02), -.45, .17, 0)); plat.add(op(blok(.95, .3, .04, lak(GOUDGEEL, .28), .015), 0, .15, -.38));
+  const last = maakDoos(.62, .5, .56); last.position.set(.05, .29, .02); last.rotation.y = .12; plat.add(last);
+  plat.rotation.z = -hoek; plat.position.set(.1, .42, 0); slede.add(plat);
+  slede.position.set(L * .66, .05, 0); ladder.add(slede);
+  ladder.rotation.z = hoek; ladder.position.set(-.55, .62, 0); g.add(ladder);
+  g.position.set(-.35, -1.9, 0); const uit = new THREE.Group(); uit.add(g); uit.rotation.set(.22, -.62, 0); uit.scale.setScalar(.5); uit.position.set(-.05, .1, 0);
+  return schaduw(uit);
+}
+
+/* ---- montage: accuboormachine op een plank, schroeven erbij ---- */
+function boor() {
+  const g = new THREE.Group();
+  const hout = doek(1024, 512, (c, w, h) => { c.fillStyle = '#DDB985'; c.fillRect(0, 0, w, h); for (let i = 0; i < 70; i++) { c.strokeStyle = 'rgba(120,80,35,' + (.05 + Math.random() * .12) + ')'; c.lineWidth = 1 + Math.random() * 3; const y = Math.random() * h; c.beginPath(); c.moveTo(0, y); c.bezierCurveTo(w * .3, y + 14 * (Math.random() - .5), w * .7, y + 14 * (Math.random() - .5), w, y + 8 * (Math.random() - .5)); c.stroke(); } ruis(c, w, h, 9000, .05, 255, 60); });
+  const houtM = new THREE.MeshPhysicalMaterial({ map: hout, roughness: .55, clearcoat: .35, clearcoatRoughness: .4 });
+  g.add(op(blok(2.5, .14, 1.35, houtM, .03), 0, .07, 0));
+  const geel = lak(GOUDGEEL, .26), blauw = lak(DIEPBLAUW, .4), kb = lak(KONINGSBLAUW, .3);
+  const m = new THREE.Group();
+  const lijf = new THREE.Mesh(new THREE.CapsuleGeometry(.23, .62, 10, 32), geel); lijf.rotation.z = Math.PI / 2; lijf.position.set(0, 1.28, 0); m.add(lijf);
+  const kraag = new THREE.Mesh(new THREE.CylinderGeometry(.2, .23, .16, 32), blauw); kraag.rotation.z = Math.PI / 2; kraag.position.set(.56, 1.28, 0); m.add(kraag);
+  const kop = new THREE.Mesh(new THREE.CylinderGeometry(.1, .19, .3, 32), new THREE.MeshPhysicalMaterial({ color: '#20242C', metalness: .6, roughness: .35 })); kop.rotation.z = -Math.PI / 2; kop.position.set(.78, 1.28, 0); m.add(kop);
+  const bit = new THREE.Mesh(new THREE.CylinderGeometry(.028, .028, .5, 16), staal()); bit.rotation.z = Math.PI / 2; bit.position.set(1.15, 1.28, 0); m.add(bit);
+  const greep = blok(.3, .82, .32, blauw, .12); greep.position.set(-.12, .78, 0); greep.rotation.z = .16; m.add(greep);
+  m.add(op(blok(.1, .2, .12, kb, .04), .1, 1.0, 0));                                             // trekker
+  m.add(op(blok(.74, .3, .5, kb, .07), -.1, .29, 0));                                            // accu
+  m.add(op(blok(.5, .04, .34, geel, .015), -.1, .46, 0));
+  m.position.set(-.3, 0, .05); m.rotation.y = .1; g.add(m);
+  [[.75, .35], [.95, .12], [.62, -.1]].forEach(([x, z], i) => { const sch = new THREE.Group(); sch.add(op(new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .02, 20), staal('#D9DEE7', .2)), 0, .17, 0)); sch.add(op(new THREE.Mesh(new THREE.CylinderGeometry(.018, .006, .17, 12), staal('#B9C0CC', .3)), 0, .085, 0));
+    sch.position.set(x, .14, z); sch.rotation.z = i === 1 ? 1.45 : 0; if (i === 1) sch.position.y = .16; g.add(sch); });
+  g.position.set(0, -.85, 0); const uit = new THREE.Group(); uit.add(g); uit.rotation.set(.34, -.55, 0); uit.scale.setScalar(.9);
+  return schaduw(uit);
+}
+
+/* ---- woningontruiming: het huis uit het logo als gebouw, de dozen staan ervoor ---- */
+function huis() {
+  const g = new THREE.Group(), k = 1 / 260;
+  const pts = [[267.6, 7.8], [320.9, 53.2], [320.9, 0], [356.8, 0], [356.8, 83.9], [535.3, 236.2], [457.6, 236.2], [457.6, 509.8], [77.7, 509.8], [77.7, 236.2], [0, 236.2]];
+  const vorm = new THREE.Shape(); pts.forEach(([x, y], i) => { const X = (x - 267.6) * k, Y = (509.8 - y) * k; i ? vorm.lineTo(X, Y) : vorm.moveTo(X, Y); }); vorm.closePath();
+  const geo = new THREE.ExtrudeGeometry(vorm, { depth: 1.0, bevelEnabled: true, bevelThickness: .03, bevelSize: .03, bevelSegments: 4 }); geo.translate(0, 0, -.5);
+  g.add(new THREE.Mesh(geo, lak(GOUDGEEL, .3)));
+  g.add(op(blok(.5, .82, .06, lak(KONINGSBLAUW, .3), .03), 0, .41, .54));                        // deur
+  g.add(op(new THREE.Mesh(new THREE.SphereGeometry(.035, 16, 12), staal('#F2F4F8', .2)), .16, .42, .58));
+  [-.47, .47].forEach(x => { g.add(op(blok(.3, .3, .05, lak('#FFFFFF', .3), .02), x, .62, .54)); g.add(op(blok(.22, .22, .03, new THREE.MeshPhysicalMaterial({ color: '#0C1830', roughness: .08, metalness: .4, clearcoat: 1 }), .01), x, .62, .57)); });
+  const a = maakDoos(.6, .46, .52); a.position.set(-.95, .23, 1.0); a.rotation.y = .45; g.add(a);
+  const b = maakDoos(.52, .4, .46); b.position.set(-.35, .2, 1.25); b.rotation.y = -.2; g.add(b);
+  const c = maakDoos(.46, .36, .42); c.position.set(-.85, .46 + .18, .98); c.rotation.y = .1; g.add(c);
+  const d = maakDoos(.5, .38, .44); d.position.set(.75, .19, 1.05); d.rotation.y = -.5; g.add(d);
+  g.position.set(.1, -1.0, -.3); const uit = new THREE.Group(); uit.add(g); uit.rotation.set(.3, -.5, 0); uit.scale.setScalar(.82);
+  return schaduw(uit);
+}
+
+window.maak = async naam => { LOGO = LOGO || await laadBeeld('/site/img/logo/dereus-logo.svg'); const { scene, camera } = basis(); scene.add(await ({ dozen, wagen, trap, gereedschap, opslag, opslagopen, lift, boor, huis })[naam]()); renderer.render(scene, camera); return renderer.domElement.toDataURL('image/png'); };
+window.klaar = true;
+</script>

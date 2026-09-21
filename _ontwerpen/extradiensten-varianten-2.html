@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Extra diensten op /kosten/ · ronde 2 · echte voorwerpen en foto's</title>
+<link rel="stylesheet" href="/css/min/site.min.css">
+<style>
+/* Ronde 2. De gebruiker vond ronde 1 (extradiensten-varianten.html) te veel van hetzelfde: getekende kaartjes.
+   Nu alleen echte dingen: 3D-renders van echte voorwerpen (img/kaart-3d, bron _ai-beelden/kaart-3d: telefoon,
+   klembord, verhuisdoos) waar de echte tekst op het scherm, het papier of het etiket staat, en echte fotoscènes
+   waarin de verhuizer uit de foto stapt. Geen getekende chips, tickets of munten. Teksten exact van de pagina. */
+:root{
+  --rand-wit:#D5E2F8;
+  --val-midden:0 14px 26px -14px rgba(14,26,51,.30); --val-ver:0 46px 80px -46px rgba(11,35,82,.5);
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px rgba(14,26,51,.05),0 7px 0 var(--rand-wit),0 8px 0 rgba(14,26,51,.08),var(--val-midden),var(--val-ver);
+  --obj:drop-shadow(3px 4px 2px rgba(11,35,82,.28)) drop-shadow(14px 22px 16px rgba(11,35,82,.34));
+  --ding:drop-shadow(0 4px 3px rgba(11,35,82,.3)) drop-shadow(0 34px 28px rgba(11,35,82,.34));
+}
+html{scroll-padding-top:4.5rem}
+*,*::before,*::after{animation:none!important;transition:none!important}
+body{background:var(--off-white)}
+.onav{position:sticky;top:0;z-index:50;background:var(--brand-secondary);color:#fff;box-shadow:0 6px 18px -8px rgba(5,14,35,.6)}
+.onav .wrap{display:flex;align-items:center;gap:.3rem .4rem;flex-wrap:wrap;padding-block:.6rem}
+.onav strong{font:800 1.05rem/1 var(--font-display);font-stretch:condensed;margin-right:auto}
+.onav a{display:grid;place-items:center;min-width:2.2rem;height:2.2rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font:700 .85rem/1 var(--font-sans)}
+.onav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.okop{background:var(--ink);color:#fff}
+.okop .wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem 1.2rem;padding-block:.9rem}
+.okop b{font:800 1.5rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-accent)}
+.okop span{font:700 1.15rem/1.2 var(--font-display);font-stretch:condensed}
+.okop small{flex-basis:100%;color:rgba(255,255,255,.75);font-size:.9rem}
+.v{padding-block:clamp(2.5rem,5vw,4.5rem);background:var(--off-white)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.5rem,2.4vw,2.25rem)}
+.k{position:relative;min-width:0}
+.k h3{margin:0 0 .6rem;color:var(--brand-primary);font:var(--weight-display) var(--text-h3)/var(--leading-heading) var(--font-display);font-stretch:var(--font-display-stretch);text-wrap:balance}
+.k p{margin:0 0 1.1rem;color:var(--graphite)}
+.lnk{display:inline-flex;align-items:center;gap:.4rem;color:var(--brand-primary);font-weight:700;text-decoration:underline;text-decoration-color:var(--primary-200);text-decoration-thickness:2px;text-underline-offset:5px}
+.lnk::after{content:"→"}
+/* een echt voorwerp: de render als beeld, de tekst in het vlak dat de render teruggaf (procenten van het beeld) */
+.ding{position:relative;container-type:inline-size;width:100%;background:center/100% 100% no-repeat;filter:var(--ding)}
+.vlak{position:absolute;display:flex;flex-direction:column;overflow:hidden}
+@media (max-width:1099px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media (max-width:699px){.grid{grid-template-columns:1fr!important}}
+
+/* 1 · echte telefoon: de vraag is het bericht van de klant, het antwoord komt van De Reus */
+.r1 .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.4rem;align-items:start}
+.r1 .ding{aspect-ratio:456/900;background-image:url(/img/kaart-3d/telefoon.webp)}
+.r1 .vlak{left:13.06%;top:8.94%;width:73.87%;height:82.73%;border-radius:13%/5.9%;background:radial-gradient(circle at 1px 1px,rgba(23,70,162,.10) 1px,transparent 1.5px) 0 0/5cqw 5cqw,var(--primary-50)}
+.r1 .vlak::before{content:"";position:absolute;z-index:3;left:50%;top:2.6cqw;translate:-50% 0;width:23cqw;height:6.2cqw;border-radius:999px;background:#05080F}
+/* de glans van het glas, over de inhoud heen */
+.r1 .vlak::after{content:"";position:absolute;z-index:4;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.34) 0,rgba(255,255,255,.10) 22%,rgba(255,255,255,0) 38%)}
+.r1 .kop{display:flex;align-items:center;gap:2.4cqw;padding:12cqw 4cqw 3cqw;background:#fff;border-bottom:1px solid var(--grey-300);color:var(--ink);font:700 3.9cqw/1.2 var(--font-sans)}
+.r1 .kop::before{content:"";flex:none;width:10cqw;height:10cqw;border-radius:50%;background:var(--brand-secondary) url(/img/logo/dereus-beeldmerk-negatief.svg) center/72% no-repeat}
+.r1 .chat{display:flex;flex-direction:column;gap:2.8cqw;flex:1;padding:4cqw 3.4cqw}
+.r1 h3{align-self:flex-end;max-width:90%;margin:0;padding:2.8cqw 3.6cqw;border-radius:5cqw 5cqw 1.2cqw 5cqw;background:var(--brand-primary);color:#fff;font:600 4.3cqw/1.35 var(--font-sans);font-stretch:normal;box-shadow:0 2cqw 3cqw -2cqw rgba(11,35,82,.6)}
+.r1 p{align-self:flex-start;max-width:94%;margin:0;padding:3cqw 3.6cqw;border-radius:5cqw 5cqw 5cqw 1.2cqw;background:#fff;color:var(--ink);font-size:4cqw;line-height:1.45;box-shadow:0 0 0 1px rgba(14,26,51,.05),0 2cqw 3cqw -2cqw rgba(11,35,82,.35)}
+.r1 .lnk{align-self:flex-start;padding:2.4cqw 3.6cqw;border-radius:999px;background:var(--brand-accent);color:var(--brand-secondary);font-size:3.8cqw;text-decoration:none;box-shadow:0 .8cqw 0 var(--accent-700)}
+.r1 .balk{margin:auto 3.4cqw 4cqw;height:9.5cqw;border-radius:999px;box-shadow:inset 0 0 0 1px var(--grey-300);background:radial-gradient(circle at calc(100% - 4.7cqw) 50%,var(--brand-primary) 3.2cqw,transparent 3.4cqw),#fff}
+
+/* 2 · klembord: "het staat in de offerte". De tekst staat op het papier onder de stalen klem */
+.r2 .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.2rem;align-items:start}
+.r2 .ding{aspect-ratio:600/792;background-image:url(/img/kaart-3d/klembord.webp)}
+.r2 .vlak{left:15.85%;top:31.1%;width:68.3%;height:57.85%;overflow:visible}
+.r2 h3{margin:0 0 2.4cqw;padding-bottom:2.4cqw;border-bottom:.5cqw solid var(--brand-accent);font-size:6.1cqw}
+.r2 p{margin:0 0 3cqw;font-size:4.05cqw;line-height:1.5;color:var(--ink)}
+.r2 .lnk{margin-top:auto;font-size:4cqw;text-underline-offset:1.2cqw}
+
+/* 3 · verhuisdoos met een etiket: het etiket is echt papier op het karton, de tekst staat erop */
+.r3 .ding{aspect-ratio:840/708;background-image:url(/img/kaart-3d/doos.webp)}
+.r3 .vlak{left:13.58%;top:43.92%;width:72.84%;height:40.84%;overflow:visible}
+.r3 .etiket{position:relative;flex:1;display:flex;flex-direction:column;margin:-1.5cqw -1cqw;padding:3cqw 3.4cqw 2.6cqw;border-radius:.8cqw;background:linear-gradient(175deg,#fff,#F7F8FA);rotate:-.8deg;
+  box-shadow:0 .3cqw .5cqw rgba(58,38,17,.35),0 1.4cqw 2cqw -1cqw rgba(58,38,17,.45)}
+.r3 .etiket::before{content:"";position:absolute;left:0;right:0;top:0;height:1.3cqw;border-radius:.8cqw .8cqw 0 0;background:var(--brand-primary)}
+.r3 h3{margin:0 0 1.2cqw;font-size:3.9cqw}
+.r3 p{margin:0 0 1.6cqw;font-size:2.45cqw;line-height:1.45;color:var(--ink)}
+.r3 .lnk{margin-top:auto;font-size:2.5cqw;text-underline-offset:.8cqw}
+
+/* 4 · fotoscène in rijen: een grote foto, de verhuizer stapt over de bovenrand de pagina in */
+.r4 .grid{grid-template-columns:1fr;gap:6.5rem;padding-top:5rem}
+.r4 .k{display:flex;align-items:stretch;min-height:17rem;border-radius:22px;background:#fff;box-shadow:var(--plaat)}
+.r4 .k:nth-child(even){flex-direction:row-reverse}
+.r4 .m{position:relative;flex:none;width:46%}
+.r4 .lijst{position:absolute;inset:0;overflow:hidden;border-radius:22px 0 0 22px}
+.r4 .k:nth-child(even) .lijst{border-radius:0 22px 22px 0}
+.r4 .f,.r4 .u{position:absolute;left:0;bottom:0;width:100%;height:auto;max-width:none}
+.r4 .f{filter:brightness(.92)}
+.r4 .uit{position:absolute;inset:0;clip-path:inset(-20rem 0 0 0 round 0 0 0 22px)}
+.r4 .k:nth-child(even) .uit{clip-path:inset(-20rem 0 0 0 round 0 0 22px 0)}
+.r4 .u{filter:drop-shadow(0 12px 12px rgba(11,35,82,.4))}
+.r4 .k:nth-child(3) .uit{display:none}
+.r4 .t{display:flex;flex-direction:column;justify-content:center;padding:clamp(1.6rem,3vw,3rem)}
+.r4 .t::before{content:"";width:3.25rem;height:5px;margin-bottom:1rem;border-radius:3px;background:var(--brand-accent)}
+@media (max-width:799px){.r4 .k,.r4 .k:nth-child(even){flex-direction:column}.r4 .m{width:100%;height:14rem}}
+
+/* 5 · de foto ís de kaart: tekst in wit op de foto, de verhuizer steekt boven de kaart uit */
+.r5 .grid{padding-top:5rem;row-gap:6.5rem}
+.r5 .k{min-height:27rem;border-radius:22px;box-shadow:0 8px 0 #071838,var(--val-midden),var(--val-ver)}
+.r5 .lijst{position:absolute;inset:0;overflow:hidden;border-radius:22px;background:var(--brand-secondary)}
+.r5 .f,.r5 .u{position:absolute;left:0;top:-5.5rem;width:100%;height:auto;max-width:none}
+.r5 .lijst::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,35,82,0) 18%,rgba(11,35,82,.82) 52%,var(--brand-secondary) 78%)}
+.r5 .uit{position:absolute;inset:0;clip-path:inset(-6rem 0 55% 0)}
+.r5 .u{filter:drop-shadow(0 12px 12px rgba(3,10,28,.5))}
+.r5 .k:nth-child(3) .uit{display:none}
+.r5 .t{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:clamp(1.5rem,2.6vw,2.2rem)}
+.r5 .t::before{content:"";display:block;width:3.25rem;height:5px;margin-bottom:.9rem;border-radius:3px;background:var(--brand-accent)}
+.r5 h3,.r5 .lnk{color:#fff}.r5 p{color:rgba(255,255,255,.9)}.r5 .lnk{text-decoration-color:rgba(255,255,255,.45)}
+
+/* 6 · studio: het 3D-voorwerp groot op een vloer, met een spiegeling en een zachte schaduw */
+.r6 .k{display:flex;align-items:center;min-height:17rem;overflow:hidden;border-radius:22px;box-shadow:var(--plaat);
+  background:radial-gradient(28rem 16rem at 22% 40%,#fff,rgba(255,255,255,0) 70%),linear-gradient(180deg,#EEF3FD 0 62%,#DCE6F8 62% 100%)}
+.r6 .m{position:relative;flex:none;width:42%;align-self:stretch}
+.r6 .o,.r6 .spiegel{position:absolute;left:50%;translate:-50% 0;width:88%;height:auto;max-width:none}
+.r6 .o{bottom:30%;filter:var(--obj)}
+.r6 .spiegel{top:70%;scale:1 -1;opacity:.22;-webkit-mask-image:linear-gradient(0deg,#000,transparent 55%);mask-image:linear-gradient(0deg,#000,transparent 55%)}
+.r6 .m::after{content:"";position:absolute;left:12%;right:12%;top:66%;height:1.6rem;border-radius:50%;background:radial-gradient(closest-side,rgba(11,35,82,.4),transparent)}
+.r6 .t{padding:1.75rem 2rem 1.75rem .5rem}
+
+/* 7 · foto en voorwerp in lagen: het 3D-voorwerp staat vóór de foto, op de rand van de kaart */
+.r7 .grid{row-gap:3rem}
+.r7 .k{border-radius:22px;background:#fff;box-shadow:var(--plaat)}
+.r7 .m{position:relative;height:14rem}
+.r7 .lijst{position:absolute;inset:0;overflow:hidden;border-radius:22px 22px 0 0}
+.r7 .f{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.r7 .lijst::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(0deg,rgba(11,35,82,.45),transparent)}
+.r7 .o{position:absolute;z-index:2;right:1.2rem;bottom:-4.4rem;width:11.5rem;height:auto;filter:var(--obj)}
+.r7 .t{padding:1.8rem 13.5rem 1.8rem 2rem}.r7 .t p{padding-right:0}
+@media (max-width:699px){.r7 .t{padding-right:2rem}.r7 .o{height:7rem;bottom:-1.5rem}}
+</style>
+</head>
+<body>
+<nav class="onav" aria-label="Varianten"><div class="wrap"><strong>Extra diensten · ronde 2 · echte voorwerpen en foto's</strong><span id="nav"></span></div></nav>
+<main id="lijst"></main>
+<script>
+var D=[
+ {id:'opslag',foto:'opslag',obj:'opslag',kop:'Wat kost opslag van uw inboedel?',p:'De kosten van opslag van uw inboedel hangen af van hoeveel u opslaat en hoe lang. Omdat wij de verhuizing en de opslag samen regelen, staat alles in één offerte.',l:'Meer over tijdelijke opslag'},
+ {id:'verhuislift',foto:'verhuislift',obj:'trap',kop:'Wat kost verhuizen met een verhuislift?',p:'Of een verhuislift nodig is, en wat dat kost, hangt af van de verdieping en de plek voor uw woning. Uw verhuisadviseur bekijkt het samen met u en neemt het mee in de offerte.',l:'Meer over verhuizen met de verhuislift'},
+ {id:'montage',foto:'handyman',obj:'gereedschap',kop:'Wat kost montage bij een verhuizing?',p:'Demonteren en weer opbouwen kost tijd. Hoeveel, hangt af van het aantal meubels en hoe ingewikkeld ze zijn. Noem in uw aanvraag wat er uit elkaar moet, dan staat het in de offerte.',l:'Meer over de handymanservice'},
+ {id:'woningontruiming',foto:'woningontruiming',obj:'dozen',kop:'Wat kost een woningontruiming?',p:'Wat een woningontruiming kost, hangt af van de grootte van de woning, hoeveel er in staat en wat er met de spullen moet gebeuren. Uw verhuisadviseur bespreekt het rustig met u, en u krijgt vooraf een offerte.',l:'Meer over woningontruiming'}
+];
+function tekst(d){return '<h3>'+d.kop+'</h3><p>'+d.p+'</p><a class="lnk" href="/diensten/#'+d.id+'">'+d.l+'</a>'}
+function foto(d){return '<span class="lijst"><img class="f" src="/img/dienst-'+d.foto+'.webp" alt="" width="720" height="540"></span>'}
+function uit(d){return '<span class="uit"><img class="u" src="/img/dienst-'+d.foto+'-uit.webp" alt="" width="1080" height="810"></span>'}
+function obj(d,k){return '<img class="'+k+'" src="/img/kosten-3d/'+d.obj+'.webp" alt="">'}
+var V=[
+ ['Echte telefoon','Een 3D-render van een echte telefoon (titanium rand, zwart glas, glans). Op het scherm het gesprek: de vraag is het bericht van de klant, het antwoord komt van De Reus. De tekst is echte tekst, geen plaatje.',
+  function(d){return '<article class="k"><div class="ding"><div class="vlak"><div class="kop">Verhuisbedrijf De Reus</div><div class="chat">'+tekst(d)+'</div><div class="balk" aria-hidden="true"></div></div></div></article>'}],
+ ['Klembord met de offerte','Een echt klembord: Diepblauw gelakt, stalen klem, twee vellen papier. "Het staat in de offerte" wordt letterlijk: de tekst staat op het vel.',
+  function(d){return '<article class="k"><div class="ding"><div class="vlak">'+tekst(d)+'</div></div></article>'}],
+ ['Verhuisdoos met etiket','Een echte verhuisdoos van De Reus: karton, tape, het logo in kleur. De tekst staat op het witte etiket dat op de doos is geplakt.',
+  function(d){return '<article class="k"><div class="ding"><div class="vlak"><div class="etiket">'+tekst(d)+'</div></div></div></article>'}],
+ ['Fotoscène in rijen','Eén dienst per rij, met een grote echte foto. De verhuizer stapt over de bovenrand van de foto de pagina in. Om en om links en rechts.',
+  function(d){return '<article class="k"><div class="m" aria-hidden="true">'+foto(d)+uit(d)+'</div><div class="t">'+tekst(d)+'</div></article>'}],
+ ['De foto is de kaart','Geen witte kaart meer: de foto vult alles, de tekst staat er in wit op. De verhuizer steekt boven de kaart uit.',
+  function(d){return '<article class="k"><div aria-hidden="true">'+foto(d)+uit(d)+'</div><div class="t">'+tekst(d)+'</div></article>'}],
+ ['Studio','Het 3D-voorwerp groot op een studiovloer, met een spiegeling en een zachte schaduw, zoals een productfoto.',
+  function(d){return '<article class="k"><div class="m" aria-hidden="true">'+obj(d,'spiegel')+obj(d,'o')+'</div><div class="t">'+tekst(d)+'</div></article>'}],
+ ['Foto en voorwerp in lagen','Bovenin de echte foto, en daarvóór het 3D-voorwerp dat over de rand van de foto de tekst in komt: drie lagen diepte.',
+  function(d){return '<article class="k"><div class="m" aria-hidden="true">'+foto(d)+obj(d,'o')+'</div><div class="t">'+tekst(d)+'</div></article>'}]
+];
+var html='',nav='';
+V.forEach(function(v,n){n++;nav+='<a href="#r'+n+'">'+n+'</a>';
+  html+='<div class="okop" id="r'+n+'"><div class="wrap"><b>'+n+'</b><span>'+v[0]+'</span><small>'+v[1]+'</small></div></div><section class="v r'+n+'"><div class="wrap"><div class="grid">'+D.map(v[2]).join('')+'</div></div></section>'});
+document.getElementById('lijst').innerHTML=html;document.getElementById('nav').outerHTML=nav;
+</script>
+</body>
+</html>

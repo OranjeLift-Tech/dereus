@@ -1,0 +1,61 @@
+Eén verhuizer met een stapel dozen voor trede 3 van het blok treden ("Groot huis of kantoor") op /kosten/.
+Hij komt naast de bestaande twee figuren te staan, dus hij moet er net zo uitzien als een echte foto van het team:
+trede 1 is een verhuizer met een bureaustoel (img/treden/stoel-rechts.webp) en trede 2 zijn er twee met een bank
+(img/treden/bank.webp). Genereer hem in de Gemini-app; er staat geen API-sleutel op deze pc.
+
+Sla op als:  _ai-beelden/foto/treden/dozen.png
+Daarna:      node treden-uitsnede.mjs     (achtergrond weg  -> foto/treden/dozen-uit.png)
+             node treden-export.cjs       (bijsnijden       -> ../img/treden/dozen.webp)
+
+De opmaak staat al klaar: zodra img/treden/dozen.webp bestaat, vervangt hij vanzelf het beeldmerk op trede 3.
+
+
+==================== DRIE DINGEN DIE HET BEELD MAKEN OF BREKEN ====================
+
+1. VOETEN COMPLEET IN BEELD. Hij staat straks op de rand van een traptrede, dus de schoenen moeten er helemaal op
+   staan, met wat ruimte onder de zolen. Een eerdere poging werd afgekeurd omdat de benen bij de knieën ophielden.
+   Niets afsnijden aan de onderkant.
+
+2. HIJ LOOPT NAAR RECHTS. De andere twee figuren lopen ook naar rechts; dat is een vaste keuze. Hij gaat dus van
+   links naar rechts door het beeld, in driekwartaanzicht, met zijn gezicht schuin naar rechts.
+
+3. GEEN LOGO EN GEEN LETTERS OP DE KLEDING. Een gegenereerd logo komt er altijd vervormd uit en dat valt op naast de
+   echte teamfoto's. Een effen blauwe polo zonder opdruk is op weergavemaat niet van de echte te onderscheiden.
+
+
+==================== PROMPT ====================
+
+Photorealistic full-body photograph of a Dutch removal worker walking to the right while carrying a stack of three
+large cardboard moving boxes, photographed like a real, unretouched press photo: full-frame camera, 50 mm lens, soft
+even daylight from the upper left, realistic fabric and cardboard texture, natural skin, no HDR, no illustration,
+no 3D render, no motion blur.
+
+FRAMING: the complete person from the top of his head down to below the soles of his shoes, with a hand's width of
+empty space under his feet. Nothing is cut off at the bottom, the sides or the top. He is shown in three-quarter view
+walking from left to right, one foot forward, weight on the front leg. Full length, standing upright, seen from
+eye level.
+
+POSE: he holds the stack of boxes in front of his chest with both arms underneath, the top box just below his chin so
+his face stays clearly visible over it. He looks slightly to the right, in the direction he is walking. Relaxed,
+concentrated, not posing for the camera.
+
+CLOTHING: a plain cornflower-blue polo shirt with short sleeves, completely blank: NO logo, NO print, NO text, NO
+badge, NO embroidery anywhere on the shirt. Dark blue work trousers. Sturdy dark work shoes, both fully visible.
+
+BOXES: three plain light-brown cardboard moving boxes stacked on top of each other, blank, no tape pattern, no
+printing, no text, no logo.
+
+PERSON: a Dutch man of about 30, short dark-blond hair, clean-shaven, normal athletic build. He must NOT resemble any
+real, recognisable person or celebrity.
+
+BACKGROUND: plain, evenly lit, very light grey seamless studio background with nothing else in it (the background is
+removed afterwards). No floor line, no shadow on the background, no props, no text, no watermark.
+
+ASPECT RATIO: 2:3 (portrait). Highest resolution available.
+
+
+==================== CONTROLEER VOOR JE OPSLAAT ====================
+- staan beide schoenen er helemaal op, met ruimte eronder?
+- loopt hij naar rechts?
+- is de polo echt helemaal leeg, zonder logo of letters?
+- is de achtergrond egaal, zodat de uitsnede schoon wordt?

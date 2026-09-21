@@ -1,0 +1,199 @@
+<!doctype html>
+<meta charset="utf-8">
+<!-- Drie echte voorwerpen als drager van een kaart op /kosten/ (extra diensten): telefoon, klembord, verhuisdoos.
+     Anders dan contact-3d/kosten-3d staan ze recht voor de camera (orthografisch, alleen iets voorover gekanteld),
+     zodat het scherm, het papier en het etiketvlak een zuivere rechthoek blijven: daar komt de echte HTML-tekst
+     overheen. window.maak(naam) geeft de PNG én het vlak voor de tekst terug, in procenten van het beeld.
+     Eén lichtbron linksboven, fysieke materialen, transparante achtergrond, het echte logo. -->
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<body style="margin:0;background:#888">
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;
+document.body.appendChild(renderer.domElement);
+const omgeving = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.03).texture;
+
+function basis(bw, bh, halveHoogte) {
+  renderer.setSize(bw, bh);
+  const scene = new THREE.Scene(); scene.environment = omgeving; scene.environmentIntensity = .8;
+  const zon = new THREE.DirectionalLight(0xfff4e2, 2.9); zon.position.set(-3.2, 4.6, 5); zon.castShadow = true;
+  zon.shadow.mapSize.set(2048, 2048); zon.shadow.radius = 5; zon.shadow.bias = -0.0004;
+  Object.assign(zon.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: .5, far: 18 });
+  scene.add(zon);
+  const tegen = new THREE.DirectionalLight(0xbfd4ff, .6); tegen.position.set(3.5, 1.2, 3); scene.add(tegen);
+  const hw = halveHoogte * bw / bh;
+  const camera = new THREE.OrthographicCamera(-hw, hw, halveHoogte, -halveHoogte, .1, 40); camera.position.set(0, 0, 10); camera.lookAt(0, 0, 0);
+  return { scene, camera };
+}
+const schaduw = m => { m.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } }); return m; };
+function doek(w, h, teken) { const c = document.createElement('canvas'); c.width = w; c.height = h; teken(c.getContext('2d'), w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; }
+function ruis(g, w, h, n, alfa, licht = 255, donker = 0) { for (let i = 0; i < n; i++) { const v = Math.random() < .5 ? licht : donker; g.fillStyle = `rgba(${v},${v},${v},${Math.random() * alfa})`; g.fillRect(Math.random() * w, Math.random() * h, 1 + Math.random() * 2, 1 + Math.random() * 2); } }
+const laadBeeld = src => new Promise((ok, fout) => { const i = new Image(); i.onload = () => ok(i); i.onerror = fout; i.src = src; });
+const staal = (kleur = '#C9CFDA', ruw = .26) => new THREE.MeshPhysicalMaterial({ color: kleur, metalness: 1, roughness: ruw });
+const op = (mesh, x, y, z) => { mesh.position.set(x, y, z); return mesh; };
+/* een plaat met afgeronde hoeken en een afgeschuinde rand, gecentreerd, de voorkant op z = d/2 */
+function plaat(w, h, r, d, materiaal, schuin = .02) {
+  const s = new THREE.Shape(), x = -w / 2, y = -h / 2;
+  s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r); s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r); s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y);
+  const g = new THREE.ExtrudeGeometry(s, { depth: d - 2 * schuin, bevelEnabled: schuin > 0, bevelSize: schuin, bevelThickness: schuin, bevelSegments: 5, curveSegments: 24 });
+  g.translate(0, 0, -(d - 2 * schuin) / 2);
+  return new THREE.Mesh(g, materiaal);
+}
+/* het tekstvlak: vier hoeken in wereldcoördinaten -> procenten van het beeld */
+function vlak(groep, camera, w, h, cx, cy, z) {
+  groep.updateMatrixWorld(true);
+  const p = [[cx - w / 2, cy + h / 2], [cx + w / 2, cy - h / 2]].map(([x, y]) => new THREE.Vector3(x, y, z).applyMatrix4(groep.matrixWorld).project(camera));
+  const pct = v => ({ x: (v.x + 1) / 2 * 100, y: (1 - v.y) / 2 * 100 });
+  const a = pct(p[0]), b = pct(p[1]);
+  return { links: +a.x.toFixed(2), boven: +a.y.toFixed(2), breedte: +(b.x - a.x).toFixed(2), hoogte: +(b.y - a.y).toFixed(2) };
+}
+
+/* ---- 1. telefoon: titanium rand, zwart glas, een licht scherm waar de chat overheen komt ---- */
+function telefoon() {
+  const { scene, camera } = basis(760, 1500, 1.75);
+  const g = new THREE.Group(), W = 1.5, H = 3.1, D = .17;
+  g.add(plaat(W, H, .24, D, staal('#3A4253', .32), .03));
+  const glas = new THREE.MeshPhysicalMaterial({ color: '#05080F', roughness: .08, clearcoat: 1, clearcoatRoughness: .04, metalness: .2 });
+  g.add(op(plaat(W - .07, H - .07, .215, .02, glas, .004), 0, 0, D / 2 + .004));
+  const sw = W - .19, sh = H - .19;
+  g.add(op(plaat(sw, sh, .17, .006, new THREE.MeshBasicMaterial({ color: '#F3F7FE' }), 0), 0, 0, D / 2 + .016));
+  /* knoppen op de zijkant */
+  g.add(op(new THREE.Mesh(new RoundedBoxGeometry(.035, .5, .06, 3, .015), staal('#2B3242', .3)), W / 2 + .012, .55, 0));
+  g.add(op(new THREE.Mesh(new RoundedBoxGeometry(.035, .28, .06, 3, .015), staal('#2B3242', .3)), -W / 2 - .012, .85, 0));
+  g.add(op(new THREE.Mesh(new RoundedBoxGeometry(.035, .28, .06, 3, .015), staal('#2B3242', .3)), -W / 2 - .012, .48, 0));
+  g.rotation.x = .1; scene.add(schaduw(g));
+  return { scene, camera, tekst: vlak(g, camera, sw, sh, 0, 0, D / 2 + .02) };
+}
+
+/* ---- 2. klembord: Diepblauw gelakt bord, stalen klem, twee vellen papier ---- */
+function klembord() {
+  const { scene, camera } = basis(1000, 1320, 1.72);
+  const g = new THREE.Group(), W = 2.3, H = 3.05, D = .07;
+  g.add(plaat(W, H, .1, D, new THREE.MeshPhysicalMaterial({ color: '#0B2352', roughness: .3, clearcoat: 1, clearcoatRoughness: .15 }), .015));
+  const papier = k => new THREE.MeshPhysicalMaterial({ map: doek(512, 680, (c, w, h) => { c.fillStyle = k; c.fillRect(0, 0, w, h); ruis(c, w, h, 9000, .035, 255, 120); }), roughness: .92 });
+  const onder = op(plaat(2.02, 2.62, .01, .012, papier('#F1F3F7'), 0), .03, -.17, D / 2 + .008); onder.rotation.z = -.022; g.add(onder);
+  const pw = 2.02, ph = 2.62, py = -.15;
+  g.add(op(plaat(pw, ph, .01, .012, papier('#FFFFFF'), 0), 0, py, D / 2 + .022));
+  /* de klem: grondplaat, rol en hendel */
+  const chroom = staal('#D5DAE3', .2);
+  g.add(op(new THREE.Mesh(new RoundedBoxGeometry(1.0, .3, .05, 4, .02), chroom), 0, H / 2 - .2, D / 2 + .05));
+  const rol = new THREE.Mesh(new THREE.CylinderGeometry(.075, .075, .86, 28), chroom); rol.rotation.z = Math.PI / 2; g.add(op(rol, 0, H / 2 - .1, D / 2 + .1));
+  g.add(op(new THREE.Mesh(new RoundedBoxGeometry(.46, .2, .03, 4, .014), staal('#B9C0CC', .28)), 0, H / 2 + .02, D / 2 + .12));
+  const gat = new THREE.Mesh(new THREE.TorusGeometry(.055, .018, 12, 28), staal('#9AA3B2', .3)); g.add(op(gat, 0, H / 2 + .02, D / 2 + .14));
+  g.rotation.x = .1; scene.add(schaduw(g));
+  return { scene, camera, tekst: vlak(g, camera, pw - .24, ph - .62, 0, py - .19, D / 2 + .03) };
+}
+
+/* ---- 3. verhuisdoos: karton met het logo, tape over de naad, handgrepen; op de voorkant het vlak voor het etiket ---- */
+let LOGO;
+function doos() {
+  const { scene, camera } = basis(1400, 1180, 1.62);
+  const g = new THREE.Group(), W = 3.3, H = 2.35, D = 1.5;
+  const karton = (voor) => doek(1400, 1000, (c, w, h) => { c.fillStyle = '#C79A63'; c.fillRect(0, 0, w, h);
+    const v = c.createLinearGradient(0, 0, 0, h); v.addColorStop(0, 'rgba(255,230,190,.22)'); v.addColorStop(1, 'rgba(90,55,20,.22)'); c.fillStyle = v; c.fillRect(0, 0, w, h);
+    c.globalAlpha = .06; c.fillStyle = '#5A3A18'; for (let x = 0; x < w; x += 7) c.fillRect(x, 0, 2, h); c.globalAlpha = 1; ruis(c, w, h, 30000, .08, 255, 70);
+    if (voor) { const lw = 300, lh = lw * 828 / 1000; c.globalAlpha = .96; c.shadowColor = 'rgba(70,40,10,.55)'; c.shadowBlur = 6; c.shadowOffsetY = 2; c.drawImage(LOGO, w - lw - 70, 60, lw, lh); c.shadowColor = 'transparent'; c.globalAlpha = 1;
+      /* het "deze kant boven"-merk: twee pijlen, zoals op een echte verhuisdoos */
+      c.strokeStyle = 'rgba(58,38,17,.78)'; c.fillStyle = 'rgba(58,38,17,.78)'; c.lineWidth = 9;
+      [90, 170].forEach(x => { c.beginPath(); c.moveTo(x, 250); c.lineTo(x, 110); c.stroke(); c.beginPath(); c.moveTo(x - 30, 130); c.lineTo(x, 70); c.lineTo(x + 30, 130); c.closePath(); c.fill(); });
+      c.fillRect(55, 262, 150, 9); } });
+  const kant = t => new THREE.MeshPhysicalMaterial({ map: t, roughness: .88, sheen: .25 });
+  const boven = doek(1400, 640, (c, w, h) => { c.fillStyle = '#CFA36C'; c.fillRect(0, 0, w, h); ruis(c, w, h, 22000, .08, 255, 70); c.fillStyle = 'rgba(60,35,10,.55)'; c.fillRect(0, h / 2 - 3, w, 6); });
+  g.add(new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 4, .03), [kant(karton(false)), kant(karton(false)), kant(boven), kant(karton(false)), kant(karton(true)), kant(karton(false))]));
+  const band = new THREE.MeshPhysicalMaterial({ color: '#E2C089', roughness: .16, clearcoat: 1, clearcoatRoughness: .08, transparent: true, opacity: .92 });
+  g.add(op(new THREE.Mesh(new THREE.BoxGeometry(.42, .008, D + .01), band), 0, H / 2 + .005, 0));
+  g.add(op(new THREE.Mesh(new THREE.BoxGeometry(.42, .5, .008), band), 0, H / 2 - .25, D / 2 + .005));
+  g.rotation.x = .2; scene.add(schaduw(g));
+  return { scene, camera, tekst: vlak(g, camera, W - .5, H - 1.0, 0, -.32, D / 2 + .01) };
+}
+
+
+/* ==== voorwerpen voor het blok reviews ==== */
+/* ---- 4. tablet, liggend: zelfde opbouw als de telefoon ---- */
+function tablet() {
+  const { scene, camera } = basis(1500, 1120, 1.62);
+  const g = new THREE.Group(), W = 4.0, H = 2.85, D = .15;
+  g.add(plaat(W, H, .2, D, staal('#3A4253', .32), .03));
+  const glas = new THREE.MeshPhysicalMaterial({ color: '#05080F', roughness: .08, clearcoat: 1, clearcoatRoughness: .04, metalness: .2 });
+  g.add(op(plaat(W - .07, H - .07, .18, .02, glas, .004), 0, 0, D / 2 + .004));
+  const sw = W - .34, sh = H - .34;
+  g.add(op(plaat(sw, sh, .08, .006, new THREE.MeshBasicMaterial({ color: '#FFFFFF' }), 0), 0, 0, D / 2 + .016));
+  g.rotation.x = .1; scene.add(schaduw(g));
+  return { scene, camera, tekst: vlak(g, camera, sw, sh, 0, 0, D / 2 + .02) };
+}
+/* ---- 5. prikbord: kurk in een houten lijst ---- */
+function prikbord() {
+  const { scene, camera } = basis(2000, 1000, 1.5);
+  const g = new THREE.Group(), W = 5.7, H = 2.75;
+  const hout = new THREE.MeshPhysicalMaterial({ map: doek(1024, 512, (c, w, h) => { c.fillStyle = '#B98A55'; c.fillRect(0, 0, w, h); for (let i = 0; i < 260; i++) { c.fillStyle = 'rgba(90,55,20,' + (Math.random() * .12) + ')'; c.fillRect(0, Math.random() * h, w, 1 + Math.random() * 2); } }), roughness: .55, clearcoat: .4, clearcoatRoughness: .4 });
+  g.add(new THREE.Mesh(new RoundedBoxGeometry(W, H, .18, 4, .03), hout));
+  const kurk = new THREE.MeshPhysicalMaterial({ map: doek(1600, 800, (c, w, h) => { c.fillStyle = '#C8935A'; c.fillRect(0, 0, w, h); ruis(c, w, h, 90000, .22, 240, 60); for (let i = 0; i < 2600; i++) { c.fillStyle = 'rgba(80,45,15,' + (.15 + Math.random() * .3) + ')'; c.beginPath(); c.arc(Math.random() * w, Math.random() * h, 1 + Math.random() * 2.4, 0, 7); c.fill(); } }), roughness: .95 });
+  const kw = W - .34, kh = H - .34;
+  g.add(op(new THREE.Mesh(new THREE.BoxGeometry(kw, kh, .04), kurk), 0, 0, .075));
+  /* de lijst steekt iets boven het kurk uit: vier latten */
+  [[0, H / 2 - .085, W, .17], [0, -H / 2 + .085, W, .17], [-W / 2 + .085, 0, .17, H], [W / 2 - .085, 0, .17, H]].forEach(([x, y, w, h]) => g.add(op(new THREE.Mesh(new RoundedBoxGeometry(w, h, .1, 3, .02), hout), x, y, .11)));
+  g.rotation.x = .06; scene.add(schaduw(g));
+  return { scene, camera, tekst: vlak(g, camera, kw, kh, 0, 0, .11) };
+}
+/* ---- 6. punaise: goudgele kop, stalen pen ---- */
+function pin() {
+  const { scene, camera } = basis(300, 300, .42);
+  const g = new THREE.Group(), geel = new THREE.MeshPhysicalMaterial({ color: '#FFC72C', roughness: .22, clearcoat: 1, clearcoatRoughness: .1 });
+  const kop = new THREE.Mesh(new THREE.SphereGeometry(.17, 40, 28), geel); kop.scale.set(1, .78, 1); g.add(op(kop, 0, .12, 0));
+  g.add(op(new THREE.Mesh(new THREE.CylinderGeometry(.11, .15, .07, 40), geel), 0, -.03, 0));
+  g.add(op(new THREE.Mesh(new THREE.CylinderGeometry(.018, .006, .3, 16), staal('#C9CFDA', .2)), 0, -.2, 0));
+  g.rotation.set(1.15, 0, -.25); scene.add(schaduw(g));
+  return { scene, camera, tekst: null };
+}
+/* ---- 7. bedankkaart: een dubbele kaart die rechtop staat, iets gedraaid; de voorkant blijft een rechthoek ---- */
+function kaart() {
+  const { scene, camera } = basis(1300, 1200, 1.8);
+  const g = new THREE.Group(), W = 2.3, H = 2.95;
+  const blauw = new THREE.MeshPhysicalMaterial({ color: '#123780', roughness: .85, sheen: .3 });
+  const env = new THREE.Group(); env.add(new THREE.Mesh(new RoundedBoxGeometry(2.9, 2.05, .03, 3, .012), blauw));
+  /* de klep van de envelop: een driehoek die iets openstaat */
+  const klep = new THREE.Shape(); klep.moveTo(-1.43, 0); klep.lineTo(1.43, 0); klep.lineTo(0, -1.0); klep.closePath();
+  const km = new THREE.Mesh(new THREE.ExtrudeGeometry(klep, { depth: .012, bevelEnabled: false }), new THREE.MeshPhysicalMaterial({ color: '#0B2352', roughness: .85 })); km.position.set(0, 1.015, .02); env.add(km);
+  env.position.set(.18, .42, -.12); env.rotation.z = .16; g.add(env);
+  g.add(plaat(W, H, .03, .03, new THREE.MeshPhysicalMaterial({ color: '#FFFFFF', roughness: .9, sheen: .2 }), .004));
+  g.position.set(-.1, -.2, 0); g.rotation.x = .08; scene.add(schaduw(g));
+  return { scene, camera, tekst: vlak(g, camera, W - .36, H - .4, 0, 0, .02) };
+}
+/* ---- 8. gastenboek: een open ringband met twee bladzijden ---- */
+function boek() {
+  const { scene, camera } = basis(1800, 1180, 1.62);
+  const g = new THREE.Group(), PW = 2.15, PH = 2.85;
+  g.add(plaat(PW * 2 + .36, PH + .22, .08, .07, new THREE.MeshPhysicalMaterial({ color: '#0B2352', roughness: .35, clearcoat: 1, clearcoatRoughness: .2 }), .015));
+  const papier = new THREE.MeshPhysicalMaterial({ map: doek(512, 680, (c, w, h) => { c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, h); ruis(c, w, h, 9000, .035, 255, 120); }), roughness: .92 });
+  [-1, 1].forEach(s => { for (let i = 0; i < 4; i++) g.add(op(plaat(PW, PH, .02, .02, papier, 0), s * (PW / 2 + .09) + s * i * .006, -i * .006, .045 + (3 - i) * .016)); });
+  const ring = staal('#D5DAE3', .2);
+  for (let i = 0; i < 13; i++) { const r = new THREE.Mesh(new THREE.TorusGeometry(.11, .017, 12, 28), ring); r.rotation.y = Math.PI / 2; r.scale.set(1, 1, 1.5); g.add(op(r, 0, -PH / 2 + .22 + i * ((PH - .44) / 12), .1)); }
+  g.rotation.x = .12; scene.add(schaduw(g));
+  const z = .045 + 3 * .016 + .012;
+  return { scene, camera, tekst: { links: vlak(g, camera, PW - .42, PH - .4, -(PW / 2 + .09) - .04, 0, z), rechts: vlak(g, camera, PW - .42, PH - .4, PW / 2 + .09 + .04, 0, z) } };
+}
+/* ---- 9. ster: massief goud, voor de score ---- */
+function ster() {
+  const { scene, camera } = basis(400, 400, .62);
+  const s = new THREE.Shape(); for (let i = 0; i < 10; i++) { const r = i % 2 ? .24 : .55, a = Math.PI / 2 + i * Math.PI / 5; s[i ? 'lineTo' : 'moveTo'](Math.cos(a) * r, Math.sin(a) * r); } s.closePath();
+  const geo = new THREE.ExtrudeGeometry(s, { depth: .1, bevelEnabled: true, bevelSize: .035, bevelThickness: .05, bevelSegments: 6 }); geo.translate(0, 0, -.05);
+  const m = new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ color: '#FFCF3D', metalness: .45, roughness: .28, emissive: '#7A5200', emissiveIntensity: .25, clearcoat: 1, clearcoatRoughness: .1 }));
+  m.rotation.set(.28, -.42, .08); scene.add(schaduw(m));
+  return { scene, camera, tekst: null };
+}
+
+window.maak = async naam => {
+  LOGO = LOGO || await laadBeeld('/site/img/logo/dereus-logo.svg');
+  const { scene, camera, tekst } = ({ telefoon, klembord, doos, tablet, prikbord, pin, kaart, boek, ster })[naam]();
+  renderer.render(scene, camera);
+  return { png: renderer.domElement.toDataURL('image/png'), tekst, maat: [renderer.domElement.width, renderer.domElement.height] };
+};
+window.klaar = true;
+</script>

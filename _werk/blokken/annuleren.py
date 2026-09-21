@@ -17,11 +17,12 @@ def html(ctx, kopij, **opties) -> str:
     link = ctx.knop(k.veld("linktekst"), k.veld("link"), soort="link") if k.veld("link") else ""
     return f'''<section class="b-{NAAM} sectie sectie--wit" id="{k.id}" aria-labelledby="{k.id}-kop" data-b="{NAAM}">
       <div class="wrap">
-        <div class="b-{NAAM}__vak" data-reveal>
+        <div class="b-{NAAM}__vak b-{NAAM}__vak--kalender" data-reveal>
           <div class="b-{NAAM}__kopdeel">
             {ctx.label(k.veld("label"))}
             <h2 class="h2" id="{k.id}-kop">{ctx.inline(k.kop)}</h2>
           </div>
+          <div class="b-{NAAM}__beeld" aria-hidden="true"><img class="b-{NAAM}__kal" src="/img/kosten-kalender/bureau.webp" alt="" width="769" height="720" loading="lazy" decoding="async"></div>
           <div class="b-{NAAM}__tekst">{intro}{ctx.alineas(k.tekst)}{regels}{slot}<p class="b-{NAAM}__acties">{link}</p></div>
         </div>
       </div>

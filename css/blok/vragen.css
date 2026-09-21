@@ -52,3 +52,60 @@
   padding:.4rem 1.05rem;border-radius:var(--radius-button);background:var(--brand-primary);box-shadow:0 2px 6px rgba(0,0,0,.18);
   color:var(--white);font:var(--weight-bold) .875rem/1.2 var(--font-sans);text-decoration:none;white-space:nowrap}
 .vraag__antwoord a[href^="tel:"]:hover{background:var(--primary-600);color:var(--white);text-decoration:none}
+
+/* Het voorwerp hoort bij het paneel hieronder en dat bestaat alleen vanaf 900px; daaronder staat
+   .vragen__kop op display:contents en zou het beeld los in de stroom belanden. Dus standaard weg. */
+.vragen__beeld { display: none; }
+
+/* ---- /contact/: servicebalie met headset ----
+   Ontwerp 03 uit _ontwerpen/vragen-contact-varianten.html, gekozen door de gebruiker. Links een Diepblauw
+   paneel dat voor de sectie staat, met de headset van de verhuisadviseur die er rechtsboven uit steekt;
+   rechts de vragen als witte platen met een Koningsblauwe zijkant.
+   Alleen op /contact/ (het blok staat ook op de home, /kosten/ en /werkwijze/, die blijven zoals ze waren)
+   en alleen vanaf 900px: daaronder valt .vragen__kop uit elkaar met display:contents en schuift de
+   belkaart onder de vragen, dus dan is er geen paneel om iets op te zetten.
+   Alles staat stil; de diepte komt uit rand en schaduw, net als op /offerte/ en /kosten/. */
+@media (min-width: 900px) {
+  .p-contact .b-vragen {
+    --rand-wit: #D5E2F8; --rand-blauw: #071838; --rand-geel: #DB940E;
+    --val-midden: 0 14px 26px -14px rgba(14, 26, 51, .3);
+    --val-ver: 0 52px 90px -46px rgba(11, 35, 82, .55);
+    --plaat: inset 0 1px 0 #fff, 0 0 0 1px rgba(14, 26, 51, .06), 0 6px 0 var(--rand-wit),
+      0 7px 0 rgba(14, 26, 51, .08), var(--val-midden), var(--val-ver);
+  }
+  .p-contact .vragen__kop { isolation: isolate; display: grid; gap: 1.5rem; align-content: start;
+    margin: -1.2rem 0; padding: 2.2rem 2rem 2.4rem; border-radius: 24px; color: var(--white);
+    background: linear-gradient(158deg, var(--brand-primary), #123780 40%, var(--brand-secondary));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), 0 7px 0 var(--rand-blauw),
+      0 26px 40px -18px rgba(7, 24, 56, .55), 0 60px 90px -40px rgba(7, 24, 56, .6); }
+  .p-contact .vragen__kop::before { content: ""; position: absolute; z-index: -1; inset: 0; border-radius: 24px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .16), transparent 42%); }
+  /* het gele tabje op de bovenrand, zoals de platen elders op de site */
+  .p-contact .vragen__kop::after { content: ""; position: absolute; left: 2rem; top: 0; width: 4.25rem; height: 5px;
+    border-radius: 0 0 5px 5px; background: var(--brand-accent); }
+  .p-contact .vragen__kop .kopgroep { margin: 0; }
+  /* ctx.kopgroep levert een kale <h2> zonder klasse, dus op de tag mikken en niet op .h2 */
+  .p-contact .vragen__kop :is(h2, .h2) { color: var(--white); padding-right: 6rem; }   /* ruimte voor de headset */
+  .p-contact .vragen__kop .label { color: var(--brand-accent); }
+  .p-contact .vragen__beeld { display: block; position: absolute; z-index: 2; right: -1.6rem; top: -2.6rem; width: auto;
+    height: 11rem; max-width: none; pointer-events: none;
+    filter: drop-shadow(2px 3px 2px rgba(11, 35, 82, .35)) drop-shadow(10px 20px 14px rgba(11, 35, 82, .38)); }
+  /* de belkaart wordt een doorschijnend vlak binnen het paneel */
+  .p-contact .vragen__bel { position: relative; z-index: 1; gap: .8rem; padding: 1.4rem 1.5rem 1.6rem;
+    border: 0; border-radius: 18px; background: rgba(255, 255, 255, .08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), inset 0 0 0 1px rgba(255, 255, 255, .08),
+      0 4px 0 rgba(7, 24, 56, .5); }
+  .p-contact .vragen__bel p { color: var(--white); }
+  .p-contact .vragen__status { padding: .3rem .8rem .3rem .6rem; border-radius: 999px;
+    background: rgba(255, 255, 255, .12); color: var(--white); font-weight: var(--weight-bold); }
+  .p-contact .vragen__status .bereikbaar__stip { background: #4ADE80;
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, .25), 0 0 10px #4ADE80; }
+  .p-contact .vragen__bel .knop { background: var(--brand-accent); border-color: transparent;
+    color: var(--brand-secondary); box-shadow: 0 4px 0 var(--rand-geel), 0 14px 18px -10px rgba(0, 0, 0, .5); }
+  /* rechts: elke vraag een witte plaat met een Koningsblauwe zijkant, geen lijstlijnen meer */
+  .p-contact .vragen__lijst { display: grid; gap: 1rem; align-content: start; border-top: 0; }
+  .p-contact .vraag { border-bottom: 0; border-radius: 14px; background: var(--white);
+    box-shadow: inset 6px 0 0 var(--brand-primary), var(--plaat); }
+  .p-contact .vraag summary { padding: 1.05rem 1.2rem 1.05rem 1.6rem; }
+  .p-contact .vraag__antwoord { padding: 0 1.6rem 1.4rem 4.8rem; }
+}

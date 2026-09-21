@@ -8,10 +8,13 @@
 .b-contactkaarten__tekst .knoppen{margin-top:1.5rem}
 
 /* De belkaart: Koningsblauw, met de bereikbaarheidsstatus, het nummer groot en de tijden */
-.b-contactkaarten__belkaart{position:relative;overflow:hidden;isolation:isolate;padding:clamp(1.75rem,1.2rem + 2vw,2.75rem);border-radius:24px;background:var(--brand-primary);color:var(--white);box-shadow:0 30px 60px -30px color-mix(in srgb,var(--brand-primary) 75%,transparent)}
-.b-contactkaarten__belkaart::after{content:"";position:absolute;z-index:-1;right:-2.5rem;bottom:-2rem;width:13rem;aspect-ratio:535.3/509.8;background:color-mix(in srgb,var(--white) 8%,transparent);-webkit-mask:var(--huisje) center/contain no-repeat;mask:var(--huisje) center/contain no-repeat}
-.b-contactkaarten__belic{display:grid;place-items:center;width:3.2rem;height:3.2rem;margin-bottom:1.1rem;border-radius:var(--radius-round);background:var(--brand-accent);color:var(--brand-secondary)}
-.b-contactkaarten__belic .ic{width:1.45rem;height:1.45rem}
+.b-contactkaarten__belkaart{position:relative;overflow:visible;isolation:isolate;padding:clamp(1.75rem,1.2rem + 2vw,2.75rem);border-radius:24px;background:var(--brand-primary);color:var(--white);box-shadow:0 30px 60px -30px color-mix(in srgb,var(--brand-primary) 75%,transparent)}
+.b-contactkaarten__belkaart::after{content:"";position:absolute;z-index:-1;right:-2.5rem;bottom:-2rem;clip-path:inset(0 2.5rem 2rem 0);width:13rem;aspect-ratio:535.3/509.8;background:color-mix(in srgb,var(--white) 8%,transparent);-webkit-mask:var(--huisje) center/contain no-repeat;mask:var(--huisje) center/contain no-repeat}
+/* Een echt toestel in plaats van een getekend beliconentje. Het staat linksboven half buiten de kaart,
+   met een diepe schaduw eronder, zodat het er uit springt. Het staat stil; de hoek zit in het beeld zelf. */
+.b-contactkaarten__beltoestel{position:absolute;z-index:2;left:clamp(-2rem,-1.2vw,-1.1rem);top:clamp(-2.6rem,-2vw,-1.6rem);
+  width:auto;height:clamp(5.5rem,9vw,7.5rem);pointer-events:none;
+  filter:drop-shadow(0 2px 4px rgba(4,16,44,.45)) drop-shadow(0 16px 20px rgba(4,16,44,.5)) drop-shadow(0 34px 40px rgba(4,16,44,.4))}
 .b-contactkaarten__status{margin:0 0 .5rem;font-size:var(--text-small)}
 .b-contactkaarten__status .bereikbaar{color:var(--white)}
 .b-contactkaarten__status .bereikbaar__stip{background:var(--brand-accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand-accent) 30%,transparent)}

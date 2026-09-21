@@ -108,17 +108,8 @@
 /* ---- 4. extra diensten: platen, het icoon staat ervoor op een eigen tegel ---- */
 .p-kosten .b-extradiensten{background:
   radial-gradient(44rem 20rem at 0 100%,var(--primary-100),transparent 70%),linear-gradient(180deg,var(--primary-50),var(--off-white))}
-.p-kosten .b-extradiensten__rooster{gap:clamp(2.6rem,3vw,3.2rem) clamp(1.25rem,2.2vw,2rem);padding-top:1.75rem}
-.p-kosten .b-extradiensten__kaart{border-radius:24px;padding-top:0;box-shadow:var(--plaat)}
-.p-kosten .b-extradiensten__kaart::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;border-radius:24px 24px 0 0;background:linear-gradient(90deg,var(--brand-primary),var(--brand-secondary))}
-.p-kosten .b-extradiensten__kaart:target{box-shadow:0 0 0 3px var(--brand-accent),var(--plaat)}
-.p-kosten .b-extradiensten__icoon{position:relative;z-index:1;width:4.6rem;height:4.6rem;margin:-1.75rem 0 var(--space-5);border-radius:18px;
-  background:linear-gradient(160deg,var(--white),var(--primary-50));
-  box-shadow:inset 0 1px 0 var(--white),0 0 0 1px rgba(14,26,51,.06),0 6px 0 var(--plaat-rand),0 7px 0 rgba(14,26,51,.08),0 22px 24px -10px rgba(11,35,82,.4)}
-.p-kosten .b-extradiensten__icoon svg,.p-kosten .b-extradiensten__icoon img{width:2.8rem;height:2.8rem;filter:drop-shadow(0 3px 2px rgba(11,35,82,.25))}
 
 /* ---- 5. annuleren: een Creme plaat met een gouden onderkant ---- */
-.p-kosten .b-annuleren{background:radial-gradient(40rem 18rem at 100% 0,var(--accent-50),transparent 70%),var(--white)}
 .p-kosten .b-annuleren__vak{position:relative;isolation:isolate;overflow:clip;border-radius:26px;padding-left:clamp(2.2rem,4vw,3.8rem);
   background:linear-gradient(160deg,#FFFDF5,var(--accent-50) 55%,var(--accent-100));
   box-shadow:inset 0 1px 0 var(--white),0 0 0 1px rgba(219,148,14,.18),0 8px 0 var(--accent-200),0 9px 0 rgba(219,148,14,.35),0 16px 28px -14px rgba(120,80,0,.3),0 52px 90px -46px rgba(120,80,0,.4)}
@@ -138,3 +129,169 @@
 .p-kosten .vraag[open] .vraag__plus{box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 3px 0 var(--accent-700),0 10px 12px -6px rgba(11,35,82,.35)}
 .p-kosten .vraag__nr{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:10px;background:var(--primary-50);box-shadow:var(--verzonken)}
 .p-kosten .vragen__bel{border:0;border-radius:20px;box-shadow:var(--plaat)}
+
+/* ---- Figuren op de traptreden ----
+   Vraag van de gebruiker: op de eerste twee treden verhuizers die de trap op gaan, op de hoogste trede het beeldmerk.
+   Het zijn bestaande merkuitsnedes (img/treden/): de verhuizer met de bureaustoel en de twee met de bank. Ze staan
+   op het bovenvlak van hun trede (bottom:100%), vallen onder dezelfde slagschaduw als de trap en bewegen niet.
+   De trap krijgt erboven ruimte, zodat de figuren binnen de sectie blijven. Op de telefoon staan de treden onder
+   elkaar en is er geen plek om op te staan: daar vervallen de figuren. */
+.p-kosten .b-treden__trap{margin-top:clamp(7.5rem,5rem + 6vw,10.5rem)}
+/* een zacht lichtvlak achter de figuren, zodat de donkere broeken loskomen van het Diepblauw */
+.p-kosten .b-treden__trap{position:relative}
+.p-kosten .b-treden__trap::before{content:"";position:absolute;z-index:0;left:4%;right:6%;top:-9rem;height:22rem;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(96,146,255,.3),rgba(96,146,255,0))}
+.p-kosten .b-treden__fig{position:absolute;z-index:1;left:0;right:0;bottom:calc(100% + 5px);display:flex;justify-content:center;align-items:flex-end;pointer-events:none}
+.p-kosten .b-treden__fig img{display:block;width:auto;height:auto;max-width:none}
+.p-kosten .b-treden__fig--stoel img{width:38%;margin-left:6%}
+.p-kosten .b-treden__fig--bank img{width:102%;margin-left:-4%}
+/* trede 3 zodra de verhuizer met dozen er is; iets breder dan de stoel omdat de stapel naast hem uitsteekt */
+.p-kosten .b-treden__fig--dozen img{width:46%;margin-left:3%}
+.p-kosten .b-treden__fig--merk{bottom:calc(100% + var(--d) * .5)}
+.p-kosten .b-treden__fig--merk img{width:82%;margin-left:var(--d);
+  filter:drop-shadow(0 1px 0 #071838) drop-shadow(0 1px 0 #071838) drop-shadow(0 1px 0 #071838) drop-shadow(0 2px 0 #071838)}
+@media (max-width:699px){
+  .p-kosten .b-treden__trap{margin-top:0}
+  .p-kosten .b-treden__fig{display:none}
+}
+
+/* ---- Extra diensten: Blauwverloop ----
+   Keuze van de gebruiker uit _ontwerpen/extradiensten-3d-varianten.html (variant 06). Vier platen die van
+   wit naar Diepblauw verlopen, elk met een echte dikte eronder en een 3D-voorwerp dat erbovenuit steekt.
+   De kaart knipt niet, anders wordt het voorwerp afgesneden. */
+.p-kosten .b-extradiensten__kaart:nth-child(1){background:var(--white);box-shadow:var(--plaat)}
+.p-kosten .b-extradiensten__kaart:nth-child(2){background:var(--primary-200);box-shadow:0 7px 0 #A9C4F3,var(--val-midden),var(--val-ver)}
+.p-kosten .b-extradiensten__kaart:nth-child(3){background:var(--brand-primary);box-shadow:0 7px 0 #0F3078,var(--val-midden),var(--val-ver)}
+.p-kosten .b-extradiensten__kaart:nth-child(4){background:var(--brand-secondary);box-shadow:0 7px 0 var(--diep-rand),var(--val-midden),var(--val-ver)}
+/* op de twee donkere platen keert de tekst om; de link wordt goudgeel, want de lichtblauwe pil valt daar weg */
+.p-kosten .b-extradiensten__kaart:nth-child(n+3) .b-extradiensten__kop{color:var(--white)}
+.p-kosten .b-extradiensten__kaart:nth-child(n+3)>p{color:rgba(255,255,255,.88)}
+.p-kosten .b-extradiensten__kaart:nth-child(1):target{box-shadow:0 0 0 3px var(--brand-accent),var(--plaat)}
+.p-kosten .b-extradiensten__kaart:nth-child(2):target{box-shadow:0 0 0 3px var(--brand-accent),0 7px 0 #A9C4F3,var(--val-midden)}
+.p-kosten .b-extradiensten__kaart:nth-child(3):target{box-shadow:0 0 0 3px var(--brand-accent),0 7px 0 #0F3078,var(--val-midden)}
+.p-kosten .b-extradiensten__kaart:nth-child(4):target{box-shadow:0 0 0 3px var(--brand-accent),0 7px 0 var(--diep-rand),var(--val-midden)}
+.p-kosten .b-extradiensten__acties .knop--link{min-height:48px;padding:.55rem 1.2rem;border-radius:12px;background:var(--primary-50);color:var(--brand-primary);text-decoration:none;
+  box-shadow:inset 0 0 0 1px var(--primary-200),0 4px 0 #C9D9F5,0 14px 18px -12px rgba(11,35,82,.35)}
+.p-kosten .b-extradiensten__acties .knop--link span{text-decoration:none}
+.p-kosten .b-extradiensten__acties .knop--link:hover{background:var(--brand-primary);color:var(--white);box-shadow:inset 0 0 0 1px var(--brand-primary),0 4px 0 var(--brand-secondary),0 14px 18px -12px rgba(11,35,82,.5)}
+.p-kosten .b-extradiensten__kaart:nth-child(n+3) .knop--link{background:var(--brand-accent);color:var(--brand-secondary);box-shadow:inset 0 0 0 1px rgba(219,148,14,.5),0 4px 0 #DB940E,0 14px 18px -12px rgba(0,0,0,.45)}
+.p-kosten .b-extradiensten__kaart:nth-child(n+3) .knop--link:hover{background:var(--white);color:var(--brand-primary);box-shadow:inset 0 0 0 1px var(--white),0 4px 0 #C9D9F5,0 14px 18px -12px rgba(0,0,0,.45)}
+.p-kosten .b-extradiensten__acties .knop--link:focus-visible{outline:3px solid var(--brand-accent);outline-offset:3px}
+
+/* ---- gronden: elke sectie een eigen ondergrond ----
+   De secties leken op elkaar (wit, Mist, blauw 50 lopen in elkaar over), dus de overgangen vielen weg. Nu wisselt de
+   pagina duidelijk: wit · Hemelblauw vlak · Diepblauwe band (trap) · Mist · Creme · Koningsblauwe band (vragen) · wit.
+   Merkboek: 60 % licht, 30 % blauw, 10 % goud; hoogstens één blauwe en één diepe band, allebei met dakrand.
+   Elke lichte sectie begint met een harde lijn in plaats van een verloop, zodat je de grens ziet. */
+.p-kosten .b-antwoord{background:var(--white)}
+/* prijsopbouw: een vol lichtblauw vlak met een fijn raster, de witte platen liggen erop */
+.p-kosten .b-opbouw{border-top:1px solid var(--primary-200);
+  background:
+    linear-gradient(rgba(23,70,162,.055) 1px,transparent 1px) 0 0/100% 2.5rem,
+    linear-gradient(90deg,rgba(23,70,162,.055) 1px,transparent 1px) 0 0/2.5rem 100%,
+    linear-gradient(180deg,var(--primary-100),#DCE8FF)}
+.p-kosten .b-opbouw__of{box-shadow:inset 0 2px 0 rgba(255,255,255,.55),inset 0 0 0 4px rgba(219,148,14,.35),0 6px 0 var(--accent-700),0 0 0 7px #E1EBFF,0 22px 24px -8px rgba(11,35,82,.5)}
+.p-kosten .b-opbouw__factor:not(:last-child)::after{box-shadow:0 0 0 3px #E3EDFF,0 3px 0 3px var(--primary-300),0 10px 12px -4px rgba(11,35,82,.45)}
+/* de hoeken naast de nok van de trapband nemen de kleur van het vlak erboven over */
+.p-kosten .b-treden{background:#DCE8FF}
+/* extra diensten: neutraal Mist, zonder blauw: het rustpunt na de donkere band */
+.p-kosten .b-extradiensten{background:var(--off-white);border-bottom:1px solid var(--grey-300)}
+/* annuleren: geen eigen ondergrond (wens van de gebruiker). De sectie houdt het wit van sectie--wit;
+   het Creme vak met de gouden onderkant staat daar sterk genoeg op. */
+.p-kosten .b-annuleren__vak{background:linear-gradient(160deg,var(--white),#FFFDF5 60%,#FFF8E6)}
+/* vragen: de ene Koningsblauwe band, met dakrand; de hoeken naast de nok zijn wit (de sectie erboven) */
+.p-kosten .b-vragen{isolation:isolate;background:var(--white);padding-block:calc(var(--ruimte) + var(--dak)) var(--ruimte)}
+.p-kosten .b-vragen::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(44rem 22rem at 100% 0,rgba(58,111,214,.55),transparent 70%),radial-gradient(40rem 24rem at 0 100%,rgba(11,35,82,.55),transparent 70%),var(--brand-primary);
+  clip-path:polygon(0 var(--dak),50% 0,100% var(--dak),100% 100%,0 100%)}
+.p-kosten .b-vragen .vragen__kop .kopgroep :is(h2,.h2){color:var(--white)}
+.p-kosten .b-vragen .vragen__kop .kopgroep .label{color:var(--brand-accent)}
+.p-kosten .b-vragen .vragen__kop .kopgroep .intro{color:rgba(255,255,255,.88)}
+.p-kosten .b-vragen :focus-visible{outline-color:var(--color-focus-on-brand)}
+.p-kosten .b-vragen .vragen__lijst :focus-visible,.p-kosten .b-vragen .vragen__bel :focus-visible{outline-color:var(--color-focus)}
+/* de platen op de blauwe band: een donkere onderkant in plaats van de lichtblauwe */
+.p-kosten .b-vragen .vragen__lijst,.p-kosten .b-vragen .vragen__bel{box-shadow:inset 0 1px 0 var(--white),0 8px 0 var(--primary-200),0 9px 0 var(--diep-rand),0 30px 44px -18px rgba(5,14,35,.7)}
+/* de offertekaart sluit af op wit */
+.p-kosten .b-offertepil{background:var(--white)}
+
+/* ---- All-in prijs of Regieprijs als twee betaalpassen ----
+   Keuze van de gebruiker (variant 8 uit _ontwerpen/allin-regie-varianten.html): het blok gaat over geld, dus de twee
+   prijssoorten zijn twee passen die schuin over elkaar liggen, met een gouden chip, een rij reliëfpuntjes en het
+   euroteken. Geen bedragen en geen cijfers: die staan nergens op de site. Alleen CSS, de markup blijft gelijk:
+   ::before is de chip, ::after het euroteken, de puntjes hangen aan de kop. De gouden "of"-munt ligt op de naad.
+   rotate en translate als losse eigenschappen, zodat de onthul-transform van het blok erboven blijft werken. */
+.p-kosten .b-opbouw__duo{gap:0;padding:1.25rem 0 2.75rem}
+.p-kosten .b-opbouw__soort--a,.p-kosten .b-opbouw__soort--b{display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:clamp(15.5rem,23vw,20.5rem);padding-top:5.4rem;border-radius:22px}
+.p-kosten .b-opbouw__soort--a{z-index:1;rotate:-3deg;translate:3% 0;
+  background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,0) 44%),linear-gradient(158deg,var(--brand-primary) 0,#123780 46%,var(--brand-secondary) 100%)}
+.p-kosten .b-opbouw__soort--b{rotate:3deg;translate:-2% 7%;padding-left:clamp(3.4rem,6vw,5.4rem)}
+/* de chip: goud met contactvlakken, een eigen dikte */
+.p-kosten .b-opbouw__soort--a::before,.p-kosten .b-opbouw__soort--b::before{content:"";position:absolute;z-index:0;inset:auto;left:clamp(1.5rem,2.6vw,2.4rem);top:1.7rem;width:3.6rem;height:2.7rem;border-radius:9px;
+  background:
+    linear-gradient(90deg,transparent 31%,rgba(11,35,82,.38) 31% 34%,transparent 34% 66%,rgba(11,35,82,.38) 66% 69%,transparent 69%),
+    linear-gradient(180deg,transparent 46%,rgba(11,35,82,.3) 46% 54%,transparent 54%),
+    linear-gradient(160deg,#FFE38A,var(--brand-accent) 55%,#F5B91A);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 0 0 2px rgba(219,148,14,.55),0 3px 0 var(--accent-700),0 10px 12px -6px rgba(3,10,28,.55)}
+.p-kosten .b-opbouw__soort--b::before{left:clamp(3.4rem,6vw,5.4rem)}
+/* het euroteken rechtsboven, in reliëf */
+.p-kosten .b-opbouw__soort--a::after,.p-kosten .b-opbouw__soort--b::after{content:"€";content:"€" / "";position:absolute;z-index:0;inset:auto;right:clamp(1.5rem,2.6vw,2.4rem);top:1.25rem;bottom:auto;width:auto;aspect-ratio:auto;
+  -webkit-mask:none;mask:none;background:none;font:var(--weight-display) 3rem/1 var(--font-display);font-stretch:var(--font-display-stretch)}
+.p-kosten .b-opbouw__soort--a::after{color:rgba(255,255,255,.92);text-shadow:0 2px 0 rgba(3,10,28,.55)}
+.p-kosten .b-opbouw__soort--b::after{color:var(--brand-primary);text-shadow:0 2px 0 var(--primary-200)}
+/* vier groepjes reliëfpuntjes boven de naam, waar op een pas het nummer staat (puntjes, geen cijfers) */
+.p-kosten .b-opbouw__soort--a .b-opbouw__soortkop::before,.p-kosten .b-opbouw__soort--b .b-opbouw__soortkop::before{content:"";display:block;width:14.8rem;max-width:100%;height:.62rem;margin-bottom:1.15rem;
+  background:radial-gradient(circle at .31rem 50%,currentColor .27rem,transparent .3rem) 0 0/.78rem 100% repeat-x;opacity:.55;
+  -webkit-mask:linear-gradient(90deg,#000 0 3.12rem,transparent 0 3.9rem,#000 0 7.02rem,transparent 0 7.8rem,#000 0 10.92rem,transparent 0 11.7rem,#000 0);
+  mask:linear-gradient(90deg,#000 0 3.12rem,transparent 0 3.9rem,#000 0 7.02rem,transparent 0 7.8rem,#000 0 10.92rem,transparent 0 11.7rem,#000 0)}
+.p-kosten .b-opbouw__of{z-index:4}
+@media (max-width:799px){
+  /* onder elkaar: de passen liggen recht, de munt ertussen */
+  .p-kosten .b-opbouw__duo{padding:0}
+  .p-kosten .b-opbouw__soort--a,.p-kosten .b-opbouw__soort--b{rotate:0deg;translate:0 0;min-height:13.5rem;padding-left:clamp(1.5rem,2.6vw,2.4rem)}
+  .p-kosten .b-opbouw__soort--b::before{left:clamp(1.5rem,2.6vw,2.4rem)}
+  .p-kosten .b-opbouw__soort--a{padding-bottom:3.2rem}
+  .p-kosten .b-opbouw__of{margin:-2.2rem auto -2.2rem}
+}
+
+/* ---- Vragen als gesprek op de telefoon ----
+   Keuze van de gebruiker (ontwerp 16): de vragenlijst is een echte telefoon op de Koningsblauwe band. De vraag is het
+   bericht van de klant (rechts, Koningsblauw), het antwoord komt van De Reus (links, wit, met het beeldmerk als
+   profielfoto). Het blijven gewone details/summary: tikken op een vraag opent het antwoord. Er beweegt niets. */
+.p-kosten .b-vragen .vragen__lijst{position:relative;justify-self:center;display:grid;gap:.7rem;align-content:start;width:min(100%,27rem);margin-block:14px 26px;
+  padding:5.7rem 1rem 4.4rem;border:0;border-radius:46px;
+  background:radial-gradient(circle at 1px 1px,rgba(23,70,162,.10) 1px,transparent 1.5px) 0 0/16px 16px,linear-gradient(180deg,#EAF0FB,#DCE6F7);
+  box-shadow:0 0 0 3px #1B2B4F,0 0 0 13px #0A1730,0 0 0 14px #3A4E7A,7px 12px 0 13px #040E24,0 60px 80px -20px rgba(3,10,28,.8)}
+/* de kopbalk van het gesprek: profielfoto met het beeldmerk en de naam */
+.p-kosten .b-vragen .vragen__lijst::before{content:"Verhuisbedrijf De Reus";position:absolute;left:0;right:0;top:0;display:flex;align-items:flex-end;height:4.9rem;padding:0 1rem .95rem 4.4rem;
+  border-radius:46px 46px 0 0;border-bottom:1px solid var(--grey-300);color:var(--ink);font:700 .95rem/1.2 var(--font-sans);
+  background:url(/img/logo/dereus-beeldmerk-negatief.svg) 1.35rem calc(100% - .97rem)/1.9rem auto no-repeat,
+    radial-gradient(circle at 2.3rem calc(100% - 1.45rem),var(--brand-secondary) 1.2rem,var(--brand-accent) 1.22rem,var(--brand-accent) 1.32rem,transparent 1.36rem),#fff}
+/* de camera-uitsparing */
+.p-kosten .b-vragen .vragen__lijst::after{content:"";position:absolute;z-index:2;left:50%;top:.8rem;width:6rem;height:1.45rem;margin-left:-3rem;border-radius:999px;background:#05080F;box-shadow:inset -1.2rem 0 0 -.9rem #1E2A44}
+/* de invoerbalk onderaan, alleen als beeld */
+.p-kosten .b-vragen .vraag:last-child::after{content:"";position:absolute;left:1rem;right:1rem;bottom:1.1rem;height:2.5rem;border-radius:999px;box-shadow:inset 0 0 0 1px var(--grey-300);
+  background:radial-gradient(circle at calc(100% - 1.25rem) 50%,var(--brand-primary) .85rem,transparent .9rem),#fff}
+.p-kosten .b-vragen .vraag{display:grid;gap:.5rem;border:0}
+/* de vraag: het bericht van de klant */
+.p-kosten .b-vragen .vraag summary{justify-self:end;grid-template-columns:minmax(0,1fr) auto;gap:.6rem;min-height:44px;max-width:92%;padding:.65rem .7rem .65rem 1rem;border-radius:18px 18px 4px 18px;
+  background:linear-gradient(180deg,#2458C6,var(--brand-primary));color:var(--white);box-shadow:0 3px 0 #0F2F73,0 10px 12px -8px rgba(11,35,82,.5)}
+.p-kosten .b-vragen .vraag summary:hover{background:linear-gradient(180deg,#2E65D8,#1D51B8)}
+.p-kosten .b-vragen .vraag summary:focus-visible{outline:3px solid var(--brand-accent);outline-offset:3px}
+.p-kosten .b-vragen .vraag__nr{display:none}
+.p-kosten .b-vragen .vraag__tekst,.p-kosten .b-vragen .vraag summary:hover .vraag__tekst{color:var(--white);font:600 .98rem/1.35 var(--font-sans);letter-spacing:0}
+.p-kosten .b-vragen .vraag__plus,.p-kosten .b-vragen .vraag[open] .vraag__plus{width:1.7rem;height:1.7rem;background:rgba(255,255,255,.18);color:var(--white);box-shadow:none}
+.p-kosten .b-vragen .vraag__plus .ic{width:13px;height:13px}
+.p-kosten .b-vragen .vraag[open] .vraag__plus{background:var(--brand-accent);color:var(--brand-secondary)}
+/* het antwoord: De Reus */
+.p-kosten .b-vragen .vraag__antwoord{position:relative;justify-self:start;max-width:calc(92% - 2.6rem);margin:0 0 .3rem 2.6rem;padding:.75rem 1rem;border-radius:18px 18px 18px 4px;background:var(--white);
+  box-shadow:0 3px 0 #C9D9F5,0 10px 12px -8px rgba(11,35,82,.35)}
+.p-kosten .b-vragen .vraag__antwoord::before{content:"";position:absolute;left:-2.6rem;bottom:0;width:2.1rem;height:2.1rem;border-radius:50%;
+  background:var(--brand-secondary) url(/img/logo/dereus-beeldmerk-negatief.svg) center/78% no-repeat;box-shadow:0 2px 0 #040E24}
+.p-kosten .b-vragen .vraag__antwoord p{max-width:none;color:var(--ink);font-size:.93rem;line-height:1.5}
+.p-kosten .b-vragen .vraag__antwoord .wa-link{min-height:0;margin-inline:.35rem 0;padding:.12rem .55rem;font-size:.78rem;vertical-align:baseline}
+.p-kosten .b-vragen .vraag__antwoord .wa-link .ic{width:14px;height:14px}
+@media (max-width:899.98px){
+  .p-kosten .b-vragen .vragen__lijst{width:min(calc(100% - 20px),27rem);margin-inline:auto;
+    box-shadow:0 0 0 3px #1B2B4F,0 0 0 10px #0A1730,0 0 0 11px #3A4E7A,0 40px 60px -20px rgba(3,10,28,.8)}
+}

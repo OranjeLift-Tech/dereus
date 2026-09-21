@@ -1,0 +1,163 @@
+<!doctype html>
+<meta charset="utf-8">
+<!-- Zes kalenders voor /kosten/ #annuleren: bureau (flipkalender), blok (scheurkalender met 14), wand, kubus (blokjeskalender),
+     schuif (twee kalenders met een pijl: de datum verschuift), pen (kalenderblok met omcirkelde dag en pen).
+     Zelfde opzet als scene.html: één lichtbron linksboven, fysieke materialen, transparante achtergrond. Geen maandnamen:
+     alleen dagletters en cijfers, zodat er geen verzonnen datum in beeld staat. 14 = twee weken. -->
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<body style="margin:0;background:#888">
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const MAAT = 1200;
+const KONINGSBLAUW = '#1746A2', DIEPBLAUW = '#0B2352', GOUDGEEL = '#FFC72C';
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setSize(MAAT, MAAT); renderer.setPixelRatio(1);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;
+document.body.appendChild(renderer.domElement);
+const omgeving = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.03).texture;
+
+function basis() {
+  const scene = new THREE.Scene(); scene.environment = omgeving; scene.environmentIntensity = 0.75;
+  const zon = new THREE.DirectionalLight(0xfff4e2, 3.1); zon.position.set(-3.2, 4.6, 4.2); zon.castShadow = true;
+  zon.shadow.mapSize.set(2048, 2048); zon.shadow.radius = 5; zon.shadow.bias = -0.0004;
+  Object.assign(zon.shadow.camera, { left: -3, right: 3, top: 3, bottom: -3, near: .5, far: 14 }); scene.add(zon);
+  const tegen = new THREE.DirectionalLight(0xbfd4ff, .7); tegen.position.set(3.5, 1.2, 2); scene.add(tegen);
+  // een wijde lens dichtbij: wat naar voren steekt wordt groter, zo komt het voorwerp uit het scherm
+  const camera = new THREE.PerspectiveCamera(50, 1, .1, 50); camera.position.set(0, .35, 4.0); camera.lookAt(0, 0, 0);
+  return { scene, camera };
+}
+const schaduw = m => { m.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } }); return m; };
+function doek(w, h, teken) { const c = document.createElement('canvas'); c.width = w; c.height = h; teken(c.getContext('2d'), w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; }
+const laadBeeld = src => new Promise((ok, fout) => { const i = new Image(); i.onload = () => ok(i); i.onerror = fout; i.src = src; });
+const lak = (kleur, ruw = .24) => new THREE.MeshPhysicalMaterial({ color: kleur, roughness: ruw, clearcoat: 1, clearcoatRoughness: .12 });
+const mat = (kleur, ruw = .7) => new THREE.MeshPhysicalMaterial({ color: kleur, roughness: ruw, sheen: .3 });
+const staal = () => new THREE.MeshPhysicalMaterial({ color: '#D9DDE4', metalness: 1, roughness: .2 });
+const F = 'Arch, "Arial Narrow", sans-serif';
+
+/* Het maandraster. omcirkel = dagnummer met een goudgele schijf; weken = [eersteRij, laatsteRij] met een Crème band (twee weken). */
+function raster(c, x, y, w, h, { omcirkel = 0, weken = null, kruis = 0, start = 2 } = {}) {
+  const kw = w / 7, rh = h / 6.2;
+  c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillStyle = KONINGSBLAUW; c.font = `800 ${rh * .42}px ${F}`;
+  ['M', 'D', 'W', 'D', 'V', 'Z', 'Z'].forEach((d, i) => c.fillText(d, x + kw * (i + .5), y + rh * .45));
+  c.fillStyle = '#C9D3E4'; c.fillRect(x, y + rh * .95, w, Math.max(2, rh * .04));
+  if (weken) { c.fillStyle = '#FFF0C2'; c.beginPath(); c.roundRect(x + kw * .08, y + rh * (1.2 + weken[0]) , w - kw * .16, rh * (weken[1] - weken[0] + 1) - rh * .12, rh * .2); c.fill(); }
+  for (let d = 1; d <= 31; d++) { const p = d - 1 + start, k = p % 7, r = Math.floor(p / 7), cx = x + kw * (k + .5), cy = y + rh * (1.62 + r);
+    if (d === omcirkel) { c.fillStyle = GOUDGEEL; c.beginPath(); c.arc(cx, cy, rh * .44, 0, 7); c.fill(); c.strokeStyle = '#DB940E'; c.lineWidth = rh * .05; c.stroke(); }
+    c.fillStyle = d === omcirkel ? DIEPBLAUW : (k > 4 ? '#8A93A5' : '#25324D'); c.font = `${d === omcirkel ? 800 : 700} ${rh * .5}px ${F}`; c.fillText(String(d), cx, cy + rh * .03);
+    if (d === kruis) { c.strokeStyle = KONINGSBLAUW; c.lineWidth = rh * .09; c.lineCap = 'round'; c.beginPath(); c.moveTo(cx - rh * .3, cy - rh * .3); c.lineTo(cx + rh * .3, cy + rh * .3); c.moveTo(cx + rh * .3, cy - rh * .3); c.lineTo(cx - rh * .3, cy + rh * .3); c.stroke(); } }
+}
+const ringenrij = (n, breed, y, z, r = .075) => { const g = new THREE.Group(), m = staal(); for (let i = 0; i < n; i++) { const t = new THREE.Mesh(new THREE.TorusGeometry(r, .014, 12, 36), m); t.rotation.y = Math.PI / 2; t.position.set(-breed / 2 + breed * i / (n - 1), y, z); g.add(t); } return g; };
+function krul(W, H, sterkte = .5) { const geo = new THREE.PlaneGeometry(W, H, 60, 80), p = geo.attributes.position;
+  for (let i = 0; i < p.count; i++) { const d = Math.max(0, (p.getX(i) / W + .5) * .8 + (.5 - p.getY(i) / H) * .8 - .86); p.setZ(i, d * d * sterkte * 4); } geo.computeVertexNormals(); return geo; }
+
+/* ---- 1. bureaukalender op een standaard ---- */
+function bureau() {
+  const g = new THREE.Group(), W = 2.3, H = 1.65, hoek = .33;
+  const blad = doek(1400, 1000, (c, w, h) => { c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, h); c.fillStyle = KONINGSBLAUW; c.fillRect(0, 0, w, 150); c.fillStyle = GOUDGEEL; c.beginPath(); c.roundRect(70, 56, 230, 40, 20); c.fill();
+    c.fillStyle = 'rgba(255,255,255,.55)'; c.beginPath(); c.roundRect(w - 330, 66, 260, 20, 10); c.fill(); raster(c, 70, 190, w - 140, h - 230, { omcirkel: 24, weken: [1, 2] }); });
+  const voor = new THREE.Group();
+  voor.add(new THREE.Mesh(new RoundedBoxGeometry(W, H, .06, 4, .025), lak(DIEPBLAUW, .35)));
+  const vel = new THREE.Mesh(new THREE.BoxGeometry(W - .18, H - .2, .05), [0, 0, 0, 0, new THREE.MeshPhysicalMaterial({ map: blad, roughness: .6 }), 0].map(m => m || mat('#F3F3F0'))); vel.position.set(0, -.04, .055); voor.add(vel);
+  voor.rotation.x = -hoek; voor.position.z = Math.sin(hoek) * H / 2; g.add(voor);
+  const achter = new THREE.Mesh(new RoundedBoxGeometry(W, H, .06, 4, .025), lak(DIEPBLAUW, .35)); achter.rotation.x = hoek; achter.position.z = -Math.sin(hoek) * H / 2; g.add(achter);
+  const voet = new THREE.Mesh(new RoundedBoxGeometry(W, .05, Math.sin(hoek) * H * 2 + .1, 4, .02), lak(DIEPBLAUW, .35)); voet.position.y = -Math.cos(hoek) * H / 2; g.add(voet);
+  g.add(ringenrij(13, W - .4, Math.cos(hoek) * H / 2 - .01, 0, .085));
+  g.rotation.set(.2, -.62, .03); g.scale.setScalar(1.05); g.position.y = .05;
+  return schaduw(g);
+}
+
+/* ---- 2. scheurkalender: een dik blok vellen met de 14 van twee weken ---- */
+function blok() {
+  const g = new THREE.Group(), W = 1.55, H = 1.75, D = .34;
+  const vel = (getal, kleur) => doek(900, 1020, (c, w, h) => { c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, h); c.fillStyle = kleur; c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = `800 640px ${F}`; c.fillText(getal, w / 2, h * .5);
+    c.fillStyle = '#C9D3E4'; c.fillRect(90, h - 120, w - 180, 6); c.fillStyle = GOUDGEEL; c.beginPath(); c.roundRect(w / 2 - 110, h - 90, 220, 26, 13); c.fill(); });
+  const rand = doek(64, 512, (c, w, h) => { c.fillStyle = '#F4F2EC'; c.fillRect(0, 0, w, h); c.fillStyle = 'rgba(60,70,90,.16)'; for (let y = 0; y < h; y += 9) c.fillRect(0, y, w, 2); });
+  const zij = new THREE.MeshPhysicalMaterial({ map: rand, roughness: .85 }); const zijLig = zij.clone(); zijLig.map = rand.clone(); zijLig.map.rotation = Math.PI / 2; zijLig.map.center.set(.5, .5);
+  const bord = new THREE.Mesh(new RoundedBoxGeometry(W + .3, H + .75, .07, 4, .03), lak(DIEPBLAUW, .35)); bord.position.set(0, .2, -D / 2 - .035); g.add(bord);
+  const pak = new THREE.Mesh(new THREE.BoxGeometry(W, H, D), [zij, zij, zijLig, zijLig, new THREE.MeshPhysicalMaterial({ map: vel('15', '#C3CCDB'), roughness: .7 }), zij]); g.add(pak);
+  const boven = new THREE.Mesh(krul(W, H, .13), new THREE.MeshPhysicalMaterial({ map: vel('14', KONINGSBLAUW), roughness: .62, side: THREE.DoubleSide })); boven.position.z = D / 2 + .006; g.add(boven);
+  const kop = new THREE.Mesh(new RoundedBoxGeometry(W + .06, .42, D + .08, 5, .05), lak(KONINGSBLAUW)); kop.position.set(0, H / 2 + .2, 0); g.add(kop);
+  [-.45, .45].forEach(x => { const o = new THREE.Mesh(new THREE.TorusGeometry(.13, .022, 14, 40), staal()); o.position.set(x, H / 2 + .5, -D / 2 - .03); g.add(o); });
+  const streep = new THREE.Mesh(new RoundedBoxGeometry(.7, .07, .02, 3, .01), lak(GOUDGEEL, .3)); streep.position.set(0, H / 2 + .2, D / 2 + .05); g.add(streep);
+  g.rotation.set(.16, -.6, .05); g.scale.setScalar(.98); g.position.y = -.2;
+  return schaduw(g);
+}
+
+/* ---- 3. wandkalender aan een punaise, met het beeldmerk bovenin ---- */
+async function wand() {
+  const g = new THREE.Group(), W = 1.75, H = 2.5;
+  const merk = await laadBeeld('/site/img/logo/dereus-beeldmerk-negatief.svg');
+  const blad = doek(1050, 1500, (c, w, h) => { c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, h);
+    const v = c.createLinearGradient(0, 0, w, 620); v.addColorStop(0, '#1D51B8'); v.addColorStop(1, DIEPBLAUW); c.fillStyle = v; c.fillRect(0, 0, w, 620);
+    const mw = 640, mh = mw * 509 / 1000; c.drawImage(merk, (w - mw) / 2, 160, mw, mh); c.fillStyle = GOUDGEEL; c.fillRect(0, 620, w, 14);
+    raster(c, 70, 690, w - 140, h - 760, { omcirkel: 17, weken: [0, 1] }); });
+  const rug = new THREE.Mesh(new THREE.BoxGeometry(W, H, .03), mat('#ECEAE4')); rug.position.z = -.02; g.add(rug);
+  const vel = new THREE.Mesh(krul(W, H, .15), new THREE.MeshPhysicalMaterial({ map: blad, roughness: .58, side: THREE.DoubleSide })); g.add(vel);
+  const lat = new THREE.Mesh(new RoundedBoxGeometry(W + .04, .12, .06, 4, .02), staal()); lat.position.set(0, H / 2 - .03, .02); g.add(lat);
+  const pin = new THREE.Group(); const kop = new THREE.Mesh(new THREE.SphereGeometry(.1, 28, 20), lak(GOUDGEEL, .25)); kop.scale.z = .7; kop.position.z = .12; pin.add(kop);
+  const hals = new THREE.Mesh(new THREE.CylinderGeometry(.035, .05, .1, 20), lak(GOUDGEEL, .25)); hals.rotation.x = Math.PI / 2; hals.position.z = .06; pin.add(hals); pin.position.set(0, H / 2 + .22, 0); g.add(pin);
+  const draad = new THREE.Mesh(new THREE.TorusGeometry(.2, .012, 10, 40, Math.PI), staal()); draad.position.set(0, H / 2 + .03, .0); g.add(draad);
+  g.rotation.set(.1, -.58, .03); g.scale.setScalar(.92); g.position.y = -.1;
+  return schaduw(g);
+}
+
+/* ---- 4. blokjeskalender: twee kubussen met 1 en 4 in een bakje ---- */
+function kubus() {
+  const g = new THREE.Group(), K = 1.0;
+  const vlak = cijfer => new THREE.MeshPhysicalMaterial({ roughness: .3, clearcoat: .8, clearcoatRoughness: .2, map: doek(512, 512, (c, w) => { c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, w); c.fillStyle = KONINGSBLAUW; c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = `800 400px ${F}`; c.fillText(cijfer, w / 2, w * .54); }) });
+  const blokje = (cijfer, boven, zijde) => new THREE.Mesh(new RoundedBoxGeometry(K, K, K, 6, .07), [vlak(''), vlak(''), vlak(''), vlak(''), vlak(cijfer), vlak('')]);
+  const a = blokje('1', '2', '0'); a.position.set(-.53, .1, 0); g.add(a); const b = blokje('4', '5', '3'); b.position.set(.53, .1, 0); b.rotation.y = -.04; g.add(b);
+  const bak = lak(DIEPBLAUW, .35);
+  const bodem = new THREE.Mesh(new RoundedBoxGeometry(2.5, .16, 1.3, 5, .05), bak); bodem.position.y = -.48; g.add(bodem);
+  const rug = new THREE.Mesh(new RoundedBoxGeometry(2.5, .95, .14, 5, .05), bak); rug.position.set(0, -.08, -.58); g.add(rug);
+  [-1, 1].forEach(s => { const w = new THREE.Mesh(new RoundedBoxGeometry(.14, .62, 1.3, 5, .05), bak); w.position.set(s * 1.18, -.25, 0); g.add(w); });
+  const lip = new THREE.Mesh(new RoundedBoxGeometry(2.5, .3, .12, 5, .04), lak(GOUDGEEL, .3)); lip.position.set(0, -.41, .6); g.add(lip);
+  g.rotation.set(.34, -.6, 0); g.scale.setScalar(.92);
+  return schaduw(g);
+}
+
+/* ---- een los kalenderblok (voor 5 en 6) ---- */
+function kalenderblok(opties) {
+  const g = new THREE.Group(), W = 1.5, H = 1.55;
+  const blad = doek(900, 800, (c, w, h) => { c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, h); raster(c, 50, 30, w - 100, h - 50, opties); });
+  const wit = lak('#FFFFFF', .4);
+  const lijf = new THREE.Mesh(new RoundedBoxGeometry(W, H, .3, 6, .09), [wit, wit, wit, wit, new THREE.MeshPhysicalMaterial({ map: blad, roughness: .5, clearcoat: .4 }), wit]); g.add(lijf);
+  const kop = new THREE.Mesh(new RoundedBoxGeometry(W + .02, .5, .33, 6, .09), lak(opties.kop || KONINGSBLAUW)); kop.position.y = H / 2 + .12; g.add(kop);
+  [-.4, .4].forEach(x => { const r = new THREE.Mesh(new THREE.CapsuleGeometry(.055, .34, 8, 20), staal()); r.position.set(x, H / 2 + .36, .06); g.add(r); });
+  return g;
+}
+
+/* ---- 5. de datum verschuift: twee kalenders en een goudgele pijl ---- */
+function schuif() {
+  const g = new THREE.Group();
+  const a = kalenderblok({ kruis: 10, start: 2 }); a.scale.setScalar(.78); a.position.set(-1.0, .12, -.5); a.rotation.y = .18; g.add(a);
+  const b = kalenderblok({ omcirkel: 24, start: 2 }); b.scale.setScalar(1.0); b.position.set(.72, -.12, .45); b.rotation.y = -.1; g.add(b);
+  const s = new THREE.Shape(); [[-.55, .12], [.1, .12], [.1, .32], [.6, 0], [.1, -.32], [.1, -.12], [-.55, -.12]].forEach(([x, y], i) => i ? s.lineTo(x, y) : s.moveTo(x, y)); s.closePath();
+  const pijl = new THREE.Mesh(new THREE.ExtrudeGeometry(s, { depth: .14, bevelEnabled: true, bevelThickness: .04, bevelSize: .04, bevelSegments: 5 }), lak(GOUDGEEL, .25));
+  pijl.position.set(-.22, .95, .25); pijl.rotation.set(0, -.5, -.18); pijl.scale.setScalar(.95); g.add(pijl);
+  g.rotation.set(.22, -.42, .02); g.scale.setScalar(.9); g.position.y = -.2;
+  return schaduw(g);
+}
+
+/* ---- 6. kalenderblok met een omcirkelde dag en de pen ---- */
+function pen() {
+  const g = new THREE.Group();
+  const k = kalenderblok({ omcirkel: 17, weken: [0, 1], start: 2 }); g.add(k);
+  const p = new THREE.Group(), blauw = lak(KONINGSBLAUW, .22), metaal = staal(), geel = lak(GOUDGEEL, .3);
+  const deel = (geo, m, y) => { const o = new THREE.Mesh(geo, m); o.position.y = y; p.add(o); return o; };
+  deel(new THREE.CylinderGeometry(.055, .055, 1.15, 32), blauw, 0); deel(new THREE.CylinderGeometry(.057, .057, .08, 32), metaal, -.55); deel(new THREE.CylinderGeometry(.052, .016, .22, 32), metaal, -.7);
+  deel(new THREE.CylinderGeometry(.056, .056, .22, 32), geel, .68); deel(new THREE.SphereGeometry(.056, 24, 16), geel, .79);
+  p.rotation.set(.5, 0, -.75); p.position.set(.62, -.5, .62); p.scale.setScalar(1.15); g.add(p);
+  g.rotation.set(.2, -.58, .06); g.scale.setScalar(1.12); g.position.y = -.12;
+  return schaduw(g);
+}
+
+window.maak = async naam => { const { scene, camera } = basis(); scene.add(await ({ bureau, blok, wand, kubus, schuif, pen })[naam]()); renderer.render(scene, camera); return renderer.domElement.toDataURL('image/png'); };
+const lettertype = new FontFace('Arch', 'url(/site/fonts/archivo-condensed-latin.woff2)', { weight: '100 900', stretch: '62% 125%' });
+lettertype.load().then(f => document.fonts.add(f)).catch(() => {}).finally(() => { window.klaar = true; });
+</script>

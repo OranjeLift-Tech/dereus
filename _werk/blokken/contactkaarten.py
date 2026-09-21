@@ -56,7 +56,7 @@ def _belkaart(ctx):
     regels = "".join(f'<li><span>{ctx.esc(t["kort"])}</span><span>{ctx.esc(t["van"])} tot {ctx.esc(t["tot"])}</span></li>'
                      for t in c.TIJDEN)
     return f'''<div class="b-{NAAM}__belkaart" data-reveal>
-          <span class="b-{NAAM}__belic" aria-hidden="true">{ctx.icoon("telefoon")}</span>
+          <img class="b-{NAAM}__beltoestel" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async">
           <p class="b-{NAAM}__status">{ctx.bereikbaar("bereikbaar")}</p>
           <a class="b-{NAAM}__nummer" href="{c.TELHREF}">{ctx.esc(c.TEL)}</a>
           <ul class="b-{NAAM}__uren" role="list">{regels}</ul>

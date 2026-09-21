@@ -3,6 +3,30 @@
 .b-annuleren__vak{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(1.5rem,4vw,4rem);padding:clamp(1.6rem,3.2vw,3rem);
   border-radius:var(--radius-media);background:var(--accent-50);box-shadow:inset 6px 0 0 var(--brand-primary);scroll-margin-top:6.5rem}
 .b-annuleren__kopdeel>.h2{margin:0}
+/* Bureaukalender (keuze van de gebruiker: variant 01 uit _ontwerpen/annuleren-varianten.html). De plaat heeft een dikte
+   en een Crème onderkant; de kalender (3D-render, img/kosten-kalender/bureau.webp) staat ervóór, steekt links en boven
+   uit de plaat en werpt een schaduw op de grond. Het beeld vult de linkerkolom over beide rijen, kop en tekst staan
+   rechts. Er beweegt niets. De selectors beginnen met section, zodat ze winnen van de dieptelaag van /kosten/. */
+section.b-annuleren:has(.b-annuleren__vak--kalender){overflow-x:clip;padding-top:calc(var(--ruimte) + 3.5rem)}
+section.b-annuleren .b-annuleren__vak--kalender{position:relative;isolation:isolate;overflow:visible;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);grid-template-rows:auto 1fr;
+  column-gap:clamp(1.5rem,4vw,4rem);row-gap:1.1rem;align-items:start;border-radius:26px;padding:clamp(1.6rem,3.2vw,3rem);padding-left:clamp(2.2rem,4vw,3.8rem);
+  background:linear-gradient(160deg,#fff,#FFFDF5 55%,#FFF4D6);
+  box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(150,100,10,.12),0 8px 0 #EBD9A6,0 9px 0 rgba(120,80,0,.18),0 14px 26px -14px rgba(14,26,51,.30),0 52px 90px -46px rgba(11,35,82,.55)}
+section.b-annuleren .b-annuleren__vak--kalender::before{content:"";position:absolute;z-index:0;left:0;top:0;bottom:0;width:12px;border-radius:26px 0 0 26px;background:linear-gradient(90deg,#2A5FC4,var(--brand-primary) 45%,#123780)}
+section.b-annuleren .b-annuleren__vak--kalender::after{display:none}   /* het huisreliëf van de dieptelaag maakt plaats voor de kalender */
+.b-annuleren__beeld{position:relative;grid-column:1;grid-row:1 / 3;align-self:stretch;min-height:19rem}
+.b-annuleren__kal{position:absolute;z-index:3;left:34%;bottom:-3rem;width:auto;height:29rem;max-width:none;transform:translateX(-50%);pointer-events:none;
+  filter:drop-shadow(3px 5px 3px rgba(11,35,82,.35)) drop-shadow(18px 34px 26px rgba(11,35,82,.42))}
+/* de schaduw op de grond onder de kalender */
+.b-annuleren__beeld::after{content:"";position:absolute;z-index:2;left:8%;right:4%;bottom:-2.4rem;height:2.6rem;border-radius:50%;background:radial-gradient(closest-side,rgba(11,35,82,.38),rgba(11,35,82,0));pointer-events:none}
+.b-annuleren__vak--kalender .b-annuleren__kopdeel{grid-column:2;grid-row:1}
+.b-annuleren__vak--kalender .b-annuleren__tekst{grid-column:2;grid-row:2}
+section.b-annuleren .b-annuleren__vak--kalender .b-annuleren__regels li{background:rgba(255,255,255,.8)}
+/* de link als knop met een dikte */
+.b-annuleren__vak--kalender .b-annuleren__acties .knop--link{min-height:48px;padding:.55rem 1.2rem;border-radius:12px;background:var(--primary-50);color:var(--brand-primary);text-decoration:none;
+  box-shadow:inset 0 0 0 1px var(--primary-200),0 4px 0 #C9D9F5,0 14px 18px -12px rgba(11,35,82,.35)}
+.b-annuleren__vak--kalender .b-annuleren__acties .knop--link span{text-decoration:none}
+.b-annuleren__vak--kalender .b-annuleren__acties .knop--link:hover{background:var(--brand-primary);color:var(--white);box-shadow:inset 0 0 0 1px var(--brand-primary),0 4px 0 var(--brand-secondary)}
 .b-annuleren__tekst>p{margin:0 0 var(--space-4);max-width:var(--measure)}
 .b-annuleren__regels{display:grid;gap:.65rem;margin:0 0 var(--space-5);padding:0;list-style:none}
 .b-annuleren__regels li{position:relative;padding-left:1.6rem;line-height:var(--leading-text)}
@@ -10,4 +34,11 @@
 .b-annuleren__slot{color:var(--color-text-muted)}
 .b-annuleren__tekst>.b-annuleren__acties{margin:var(--space-5) 0 0}
 
-@media (max-width:799px){.b-annuleren__vak{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:860px){
+  .b-annuleren__vak,section.b-annuleren .b-annuleren__vak--kalender{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  section.b-annuleren .b-annuleren__vak--kalender{padding-top:0}
+  /* het beeld komt boven de kop te staan (in de bron staat de kop eerst) */
+  .b-annuleren__beeld{order:-1;grid-column:1;grid-row:auto;min-height:15rem;margin-top:-3.5rem}
+  .b-annuleren__vak--kalender .b-annuleren__kopdeel,.b-annuleren__vak--kalender .b-annuleren__tekst{grid-column:1;grid-row:auto}
+  .b-annuleren__kal{left:50%;height:17rem;bottom:-.5rem}
+}

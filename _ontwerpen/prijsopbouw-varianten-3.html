@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Prijsopbouw · ronde 3 · 3D-voorwerpen</title>
+<link rel="stylesheet" href="/css/min/site.min.css">
+<style>
+/* Ronde 3: echte 3D-voorwerpen (three.js-renders met het echte logo, bron _ai-beelden/kosten-3d) die uit de kaart
+   komen, zoals de kaarten op /contact/. Licht van linksboven, schaduw naar rechtsonder. Alles staat stil. */
+:root{
+  --rand-wit:#D5E2F8; --rand-blauw:#071838; --rand-geel:#DB940E;
+  --val-midden:0 14px 26px -14px rgba(14,26,51,.30); --val-ver:0 46px 80px -46px rgba(11,35,82,.5);
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px rgba(14,26,51,.05),0 7px 0 var(--rand-wit),0 8px 0 rgba(14,26,51,.08),var(--val-midden),var(--val-ver);
+  --plaat-blauw:inset 0 1px 0 rgba(255,255,255,.18),0 7px 0 var(--rand-blauw),var(--val-midden),var(--val-ver);
+  --obj-schaduw:drop-shadow(3px 4px 2px rgba(11,35,82,.28)) drop-shadow(14px 20px 16px rgba(11,35,82,.34));
+}
+html{scroll-padding-top:4.5rem}
+*,*::before,*::after{animation:none!important;transition:none!important}
+ol{list-style:none;margin:0;padding:0}
+.onav{position:sticky;top:0;z-index:50;background:var(--brand-secondary);color:#fff;box-shadow:0 6px 18px -8px rgba(5,14,35,.6)}
+.onav .wrap{display:flex;align-items:center;gap:.35rem .5rem;flex-wrap:wrap;padding-block:.6rem}
+.onav strong{font:800 1.05rem/1 var(--font-display);font-stretch:condensed;margin-right:auto}
+.onav a{display:grid;place-items:center;min-width:2.3rem;height:2.3rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font:700 .9rem/1 var(--font-sans)}
+.onav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.okop{background:var(--ink);color:#fff}
+.okop .wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem 1.2rem;padding-block:.9rem}
+.okop b{font:800 1.5rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-accent)}
+.okop span{font:700 1.15rem/1.2 var(--font-display);font-stretch:condensed}
+.okop small{flex:1 1 24rem;color:rgba(255,255,255,.72);font-size:.9rem}
+
+.v{position:relative;padding-block:clamp(3.5rem,2.5rem + 3vw,5.5rem);background:var(--off-white);overflow:clip}
+.kop{max-width:46rem;margin-bottom:2.5rem}
+.kop .h2{margin:0 0 1rem}
+.kop .intro-t{margin:0;font-size:var(--text-lead);max-width:68ch}
+.lijstkop{margin:0 0 1.25rem;color:var(--ink);font:700 .875rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase}
+.f h3{margin:0;color:var(--brand-secondary);font:700 var(--text-h4)/1.22 var(--font-display);font-stretch:condensed}
+.f p{margin:0;color:var(--grey-600);font-size:1rem;line-height:1.5}
+.nr{font-family:var(--font-display);font-stretch:condensed;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.schijf{display:grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font-size:1.25rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 0 var(--rand-geel),0 10px 14px -6px rgba(11,35,82,.45)}
+.rij5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(1rem,1.6vw,1.5rem)}
+.obj{display:block;width:auto;max-width:none;filter:var(--obj-schaduw);pointer-events:none}
+.duo{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;margin-top:4rem;opacity:.5;pointer-events:none}
+.duo article{padding:clamp(1.5rem,2.6vw,2.4rem);border-radius:20px}
+.duo article:first-child{background:var(--brand-primary);color:#fff} .duo article:last-of-type{background:#fff;box-shadow:inset 0 0 0 2px var(--brand-primary)}
+.duo h3{margin:0 0 .75rem;font:800 var(--text-h2)/1.1 var(--font-display);font-stretch:condensed;color:var(--brand-primary)} .duo article:first-child h3{color:#fff}
+.duo p{margin:0}
+.duo span{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:3.5rem;height:3.5rem;margin:-1.75rem 0 0 -1.75rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 0 0 5px var(--off-white);font:800 1.25rem/1 var(--font-display);text-transform:uppercase}
+
+/* ===== 1. CONTACTSTIJL: witte plaat, geel logohuis, voorwerp steekt boven de kaart uit ===== */
+.d1 .rij5{padding-top:4.2rem}
+.d1 .f{position:relative;display:flex;flex-direction:column;gap:.5rem;padding:6.4rem 1.4rem 1.7rem;border-radius:22px;background:#fff;box-shadow:var(--plaat)}
+.d1 .huis{position:absolute;left:1.2rem;top:1.2rem;width:5.4rem;aspect-ratio:535.3/509.8;background:var(--brand-accent);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.d1 .huis--rand{transform:translate(5px,6px);background:var(--rand-geel)}
+.d1 .obj{position:absolute;left:1.1rem;bottom:calc(100% - 5.9rem);width:calc(100% - 4.6rem);height:10rem;object-fit:contain;object-position:0 100%}
+.d1 .nr{position:absolute;right:1.2rem;top:1.2rem;padding:.35rem .6rem;border-radius:999px;background:var(--brand-secondary);color:var(--brand-accent);font-size:1rem}
+
+/* ===== 2. SOKKELS: elk voorwerp op een blauw podium met een lichtvlek ===== */
+.d2 .rij5{padding-top:3.6rem}
+.d2 .f{position:relative;display:flex;flex-direction:column;border-radius:22px;background:#fff;box-shadow:var(--plaat)}
+.d2 .podium{position:relative;height:8.6rem;border-radius:22px 22px 0 0;background:radial-gradient(9rem 3.2rem at 50% 88%,rgba(158,190,248,.55),transparent 70%),linear-gradient(160deg,#1E51B5,var(--brand-secondary))}
+.d2 .obj{position:absolute;left:-3%;bottom:.7rem;width:106%;height:11.2rem;object-fit:contain;object-position:50% 100%}
+.d2 .schijf{position:absolute;left:1.2rem;bottom:-1.45rem;box-shadow:0 0 0 4px #fff,0 4px 0 4px var(--rand-wit)}
+.d2 .tekst{display:grid;gap:.45rem;padding:2.2rem 1.35rem 1.6rem}
+
+/* ===== 3. PLANK: vijf voorwerpen op één dikke witte plank, plussen ertussen ===== */
+.d3 .plank{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:end;padding:0 1rem;margin-top:1rem}
+.d3 .plank::after{content:"";position:absolute;left:0;right:0;bottom:-1.5rem;height:1.5rem;border-radius:12px;background:linear-gradient(180deg,#fff,#EEF3FC);box-shadow:0 8px 0 var(--rand-wit),0 9px 0 rgba(14,26,51,.1),0 30px 40px -18px rgba(11,35,82,.5)}
+.d3 .plek{position:relative;display:grid;justify-items:center;align-items:end;height:12rem}
+.d3 .plek::before{content:"";position:absolute;left:12%;right:4%;bottom:-.5rem;height:1.4rem;background:radial-gradient(closest-side,rgba(11,35,82,.35),transparent);filter:blur(3px)}
+.d3 .obj{position:relative;width:92%;height:11rem;object-fit:contain;object-position:50% 100%;filter:drop-shadow(2px 3px 2px rgba(11,35,82,.25))}
+.d3 .plek+.plek::after{content:"+";position:absolute;z-index:2;left:-1.2rem;bottom:4.2rem;display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.6rem/1 var(--font-display);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 0 var(--rand-geel),0 10px 14px -6px rgba(11,35,82,.4)}
+.d3 .rij5{gap:0;margin-top:4.4rem;padding:0 1rem}
+.d3 .f{display:grid;align-content:start;justify-items:center;gap:.45rem;padding:0 1rem;text-align:center}
+.d3 .nr{color:var(--brand-primary);font-size:1.1rem;letter-spacing:.06em}
+
+/* ===== 4. BLAUWVERLOOP: van wit naar Diepblauw, het voorwerp breekt rechtsboven uit de kaart ===== */
+.d4 .rij5{padding-top:3.4rem}
+.d4 .f{position:relative;display:flex;flex-direction:column;gap:.5rem;min-height:17rem;padding:7.6rem 1.4rem 1.7rem;border-radius:22px}
+.d4 .obj{position:absolute;right:-.6rem;bottom:calc(100% - 6.9rem);width:calc(100% - 3.4rem);height:10.4rem;object-fit:contain;object-position:100% 100%}
+.d4 .nr{position:absolute;left:1.3rem;top:1.2rem;font-size:2.6rem}
+.d4 .f:nth-child(1){background:#fff;box-shadow:var(--plaat)} .d4 .f:nth-child(1) .nr{color:var(--brand-primary)}
+.d4 .f:nth-child(2){background:var(--primary-200);box-shadow:0 7px 0 #A9C4F3,var(--val-midden),var(--val-ver)} .d4 .f:nth-child(2) .nr{color:var(--brand-primary)} .d4 .f:nth-child(2) p{color:var(--graphite)}
+.d4 .f:nth-child(3){background:#2A5FC4;box-shadow:0 7px 0 #1A4596,var(--val-midden),var(--val-ver)}
+.d4 .f:nth-child(4){background:var(--brand-primary);box-shadow:0 7px 0 #0F3078,var(--val-midden),var(--val-ver)}
+.d4 .f:nth-child(5){background:var(--brand-secondary);box-shadow:var(--plaat-blauw)}
+.d4 .f:nth-child(n+3) h3{color:#fff} .d4 .f:nth-child(n+3) p{color:rgba(255,255,255,.88)} .d4 .f:nth-child(n+3) .nr{color:var(--brand-accent)}
+
+/* ===== 5. MOZAIEK: één grote Diepblauwe tegel met een reuzenvoorwerp, vier witte ernaast ===== */
+.d5 .rij{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:minmax(12.5rem,auto);gap:1.6rem 1.25rem;padding-top:2.5rem}
+.d5 .f{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:.45rem;padding:1.5rem 9.5rem 1.6rem 1.5rem;border-radius:24px;background:#fff;box-shadow:var(--plaat)}
+.d5 .f .obj{position:absolute;right:.4rem;top:-2.2rem;height:9.6rem}
+.d5 .f .nr{color:var(--brand-primary);font-size:1.9rem}
+.d5 .f:nth-child(1){grid-column:1/span 4;grid-row:span 2;padding:1.8rem;background:radial-gradient(22rem 14rem at 50% 38%,#1E51B5,transparent 70%),var(--brand-secondary);box-shadow:var(--plaat-blauw)}
+.d5 .f:nth-child(1) .obj{right:auto;left:50%;top:-2.6rem;height:19rem;transform:translateX(-50%)}
+.d5 .f:nth-child(1) h3{color:#fff;font-size:1.7rem} .d5 .f:nth-child(1) p{color:rgba(255,255,255,.88)} .d5 .f:nth-child(1) .nr{color:var(--brand-accent)}
+.d5 .f:nth-child(2),.d5 .f:nth-child(4){grid-column:5/span 4} .d5 .f:nth-child(3),.d5 .f:nth-child(5){grid-column:9/span 4}
+
+/* ===== 6. GELE SCHIJVEN: geen kaarten, de voorwerpen staan op gele podia, plussen ertussen ===== */
+.d6 .rij5{gap:0;padding-top:.5rem}
+.d6 .f{position:relative;display:grid;align-content:start;justify-items:center;gap:.45rem;padding:0 1.1rem;text-align:center}
+.d6 .podium{position:relative;display:grid;justify-items:center;align-items:end;width:100%;height:13rem;margin-bottom:1.3rem}
+.d6 .podium::before{content:"";position:absolute;left:50%;bottom:-.6rem;width:11.5rem;height:3.6rem;margin-left:-5.75rem;border-radius:50%;background:linear-gradient(180deg,#FFDD6B,var(--brand-accent));box-shadow:0 9px 0 var(--rand-geel),0 28px 26px -10px rgba(11,35,82,.4)}
+.d6 .obj{position:relative;width:100%;height:11.6rem;margin-bottom:.9rem;object-fit:contain;object-position:50% 100%}
+.d6 .f+.f .podium::after{content:"+";position:absolute;left:-2.35rem;bottom:4.6rem;display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:50%;background:var(--brand-secondary);color:var(--brand-accent);font:800 1.7rem/1 var(--font-display);box-shadow:0 4px 0 var(--rand-blauw),0 10px 14px -6px rgba(11,35,82,.5)}
+.d6 .nr{color:var(--brand-primary);font-size:1.1rem;letter-spacing:.06em}
+.d6 .accolade{position:relative;height:2.2rem;margin:2.2rem 1.4rem 0;border:3px solid var(--brand-secondary);border-top:0;border-radius:0 0 18px 18px}
+.d6 .accolade::after{content:"";position:absolute;left:50%;top:100%;height:1.6rem;border-left:3px solid var(--brand-secondary)}
+.d6 .duo{margin-top:1.9rem}
+
+/* ===== 7. DONKER PANEEL: één Diepblauwe plaat, vijf spots, de voorwerpen komen over de rand ===== */
+.d7 .paneel{position:relative;isolation:isolate;margin-top:4.5rem;padding:0 clamp(1rem,2vw,1.8rem) 2.2rem;border-radius:28px;background:var(--brand-secondary);box-shadow:var(--plaat-blauw)}
+.d7 .paneel::after{content:"";position:absolute;z-index:-1;inset:0;border-radius:28px;overflow:hidden;background:
+  radial-gradient(7rem 9rem at 10% 3.5rem,rgba(74,125,226,.55),transparent 70%),radial-gradient(7rem 9rem at 30% 3.5rem,rgba(74,125,226,.55),transparent 70%),radial-gradient(7rem 9rem at 50% 3.5rem,rgba(74,125,226,.55),transparent 70%),radial-gradient(7rem 9rem at 70% 3.5rem,rgba(74,125,226,.55),transparent 70%),radial-gradient(7rem 9rem at 90% 3.5rem,rgba(74,125,226,.55),transparent 70%)}
+.d7 .rij5{gap:0}
+.d7 .f{display:grid;align-content:start;justify-items:start;gap:.45rem;padding:0 1.3rem}
+.d7 .f+.f{border-left:1px solid rgba(255,255,255,.16)}
+.d7 .obj{width:100%;height:11rem;margin:-4rem 0 1rem;object-fit:contain;object-position:50% 100%;filter:drop-shadow(3px 4px 2px rgba(0,0,0,.35)) drop-shadow(14px 22px 18px rgba(0,0,0,.5))}
+.d7 .nr{color:var(--brand-accent);font-size:1.5rem}
+.d7 .f h3{color:#fff} .d7 .f p{color:rgba(255,255,255,.84)}
+
+/* ===== 8. STILLEVEN: links de lijst, rechts alle voorwerpen samen als één scène ===== */
+.d8 .in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(1.5rem,3vw,3rem);align-items:stretch;margin-top:1.5rem}
+.d8 ol{padding:.4rem 1.8rem;border-radius:24px;background:#fff;box-shadow:var(--plaat)}
+.d8 .f{display:grid;grid-template-columns:3.6rem minmax(0,1fr);gap:.1rem 1.1rem;align-items:center;padding:1rem 0}
+.d8 .f+.f{border-top:1px solid var(--grey-300)}
+.d8 .f .schijf{grid-row:span 2}
+.d8 .f p{grid-column:2}
+.d8 .scene{position:relative;min-height:26rem;border-radius:28px;background:radial-gradient(26rem 12rem at 50% 82%,rgba(158,190,248,.45),transparent 70%),linear-gradient(165deg,#1E51B5,var(--brand-secondary) 70%);box-shadow:var(--plaat-blauw)}
+.d8 .scene .obj{position:absolute;filter:drop-shadow(3px 4px 2px rgba(0,0,0,.3)) drop-shadow(14px 22px 16px rgba(0,0,0,.45))}
+.d8 .o-opslag{left:2%;bottom:36%;height:13rem}
+.d8 .o-wagen{right:-5%;bottom:30%;height:14.5rem}
+.d8 .o-trap{left:33%;bottom:20%;height:11rem}
+.d8 .o-dozen{left:4%;bottom:5%;height:11.5rem}
+.d8 .o-gereedschap{right:6%;bottom:3%;height:8.6rem}
+
+@media(max-width:1000px){
+  .rij5,.d5 .rij{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:5rem}
+  .d5 .f:nth-child(n){grid-column:auto;grid-row:auto}
+  .d3 .plank{display:none} .d3 .rij5{margin-top:0}
+  .d6 .f+.f .podium::after,.d6 .accolade{display:none}
+  .d7 .f+.f{border-left:0} .d7 .rij5{row-gap:5rem}
+  .d8 .in{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:640px){.rij5,.d5 .rij,.duo{grid-template-columns:minmax(0,1fr)} .duo span{display:none}}
+</style>
+</head>
+<body>
+<nav class="onav" aria-label="Ontwerpen"><div class="wrap"><strong>Prijsopbouw · ronde 3 · 3D</strong><span id="onav"></span></div></nav>
+<main id="main"></main>
+<script>
+const F = [
+  { n: '01', t: 'Hoeveel er mee moet', p: 'Een studio is sneller verhuisd dan een eengezinswoning.', o: 'dozen', w: 437 },
+  { n: '02', t: 'De afstand', p: 'Binnen Den Haag of naar de andere kant van het land.', o: 'wagen', w: 594 },
+  { n: '03', t: 'De bereikbaarheid', p: 'Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.', o: 'trap', w: 371 },
+  { n: '04', t: 'Wat u zelf doet', p: 'Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?', o: 'gereedschap', w: 477 },
+  { n: '05', t: 'Extra diensten', p: 'Zoals een verhuislift of tijdelijke opslag.', o: 'opslag', w: 589 },
+];
+const KOP = `<div class="kop"><p class="label">Prijsopbouw</p><h2 class="h2">Hoe de prijs tot stand komt</h2>
+  <p class="intro-t">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div>`;
+const LK = '<h3 class="lijstkop">Wat de prijs bepaalt</h3>';
+const DUO = `<div class="duo" aria-hidden="true"><article><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></article><span>of</span><article><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></article></div>`;
+const nr = (f, k = 'nr') => `<span class="${k}" aria-hidden="true">${f.n}</span>`;
+const tekst = f => `<h3>${f.t}</h3><p>${f.p}</p>`;
+const obj = (f, k = '') => `<img class="obj ${k}" src="/img/kosten-3d/${f.o}.webp" alt="" width="${f.w}" height="420" loading="lazy" decoding="async">`;
+const rij = (fn, klas = 'rij5') => `<ol class="${klas}">${F.map(f => `<li class="f">${fn(f)}</li>`).join('')}</ol>`;
+
+const V = [
+  { naam: 'Contactstijl', uitleg: '/contact/ kartlarının birebir dili: beyaz kalın levha, arkada sarı logo evi, 3D nesne kartın üstünden dışarı taşıyor.',
+    html: () => LK + rij(f => `<span class="huis huis--rand"></span><span class="huis"></span>${obj(f)}${nr(f)}${tekst(f)}`) },
+  { naam: 'Sokkels', uitleg: 'Her nesne kendi mavi podyumunda, altında ışık lekesi; nesne podyumun üstünden taşıyor, sarı numara diski dikişte.',
+    html: () => LK + rij(f => `<div class="podium">${obj(f)}${nr(f, 'nr schijf')}</div><div class="tekst">${tekst(f)}</div>`) },
+  { naam: 'Plank', uitleg: 'Beş nesne tek kalın beyaz rafın üstünde yan yana, aralarında sarı artılar. Fiyatın parçaları gerçekten "rafa dizilmiş".',
+    html: () => LK + `<div class="plank" aria-hidden="true">${F.map(f => `<div class="plek">${obj(f)}</div>`).join('')}</div>` + rij(f => nr(f) + tekst(f)) },
+  { naam: 'Blauwverloop', uitleg: 'Beyazdan Diepblauw\'a koyulaşan kartlar (alttaki basamaklarla aynı renk dili); nesne sağ üst köşeden karttan fırlıyor.',
+    html: () => LK + rij(f => obj(f) + nr(f) + tekst(f)) },
+  { naam: 'Mozaïek', uitleg: 'Dev koli yığınıyla büyük Diepblauw karo, yanında dört beyaz karo; her nesne karonun kenarından taşıyor.',
+    html: () => LK + rij(f => obj(f) + nr(f) + tekst(f), 'rij') },
+  { naam: 'Gele schijven', uitleg: 'Kart yok: nesneler sarı 3D disklerin üstünde duruyor, aralarında artılar, alttaki parantez doğrudan All-in / Regieprijs\'e iniyor.',
+    html: () => LK + rij(f => `<div class="podium">${obj(f)}</div>${nr(f)}${tekst(f)}`) + '<div class="accolade" aria-hidden="true"></div>' },
+  { naam: 'Donker paneel', uitleg: 'Tek Diepblauw levha, her nesnenin altında spot ışığı; nesneler levhanın üst kenarından dışarı çıkıyor. En "sahne" hissi veren.',
+    html: () => LK + `<div class="paneel">${rij(f => obj(f) + nr(f) + tekst(f))}</div>` },
+  { naam: 'Stilleven', uitleg: 'Solda düzgün liste, sağda beş nesnenin hepsi tek bir sahnede: depo, kamyonet, merdiven, koliler ve alet.',
+    html: () => LK + `<div class="in">${rij(f => nr(f, 'nr schijf') + tekst(f), '')}<div class="scene" aria-hidden="true">${[4, 1, 2, 0, 3].map(i => obj(F[i], 'o-' + F[i].o)).join('')}</div></div>` },
+];
+const twee = i => String(i + 1).padStart(2, '0');
+document.getElementById('onav').outerHTML = V.map((v, i) => `<a href="#d${i + 1}" title="${v.naam}">${i + 1}</a>`).join('');
+document.getElementById('main').innerHTML = V.map((v, i) => `
+  <div class="okop" id="d${i + 1}"><div class="wrap"><b>${twee(i)}</b><span>${v.naam}</span><small>${v.uitleg}</small></div></div>
+  <section class="v d${i + 1}"><div class="wrap">${KOP}${v.html()}${DUO}</div></section>`).join('');
+</script>
+</body>
+</html>

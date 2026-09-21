@@ -70,6 +70,10 @@ def paneel(ctx, home_blok, eigen):
 
 
 def html(ctx, kopij, variant="volledig", sectie=None, **opties):
+    # sterrenrij=True zet vijf gouden 3D-sterren boven de kop (/diensten/, variant 07).
+    sterrenrij = ('<div class="b-reviews__sterren" aria-hidden="true">'
+                  + '<img src="/img/kaart-3d/ster.webp" alt="" width="240" height="240" loading="lazy" decoding="async">' * 5
+                  + '</div>') if opties.get("sterrenrij") else ""
     k = kopij
     home = ctx.kopij_van("home").blok_of_leeg("reviews")
     items = list(k.items) if k.items else list(home.items)      # eigen reviews van de pagina gaan voor
@@ -84,7 +88,7 @@ def html(ctx, kopij, variant="volledig", sectie=None, **opties):
         link = home.veld("profiel-linktekst", "Bekijk alle reviews op Google")
         return f'''<section class="sectie sectie--{grond} b-reviews b-reviews--compact" id="{kid}" aria-labelledby="{kid}-kop">
   <div class="wrap">
-    <div class="kopbalk">{ctx.kopgroep(k)}
+    {sterrenrij}<div class="kopbalk">{ctx.kopgroep(k)}
       <div class="kopbalk__eind"><a class="rscore" href="{ctx.esc(ctx.cfg.GOOGLE_PROFIEL)}" rel="noopener" target="_blank">{ctx.icoon("google", "ic ic--google")}<b>{ctx.cfg.GOOGLE_SCORE}</b>{ctx.sterren(5)}<span>{ctx.inline(link)}</span><span class="vh"> (opent Google in een nieuw tabblad)</span></a></div>
     </div>
     <ul class="rraster rraster--compact" role="list" data-reveal-groep>{kaarten}</ul>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>All-in prijs of regieprijs · 10 varianten met geld</title>
+<link rel="stylesheet" href="/css/min/site.min.css">
+<style>
+/* /kosten/ #opbouw: "All-in prijs of Regieprijs" met een beeld dat over geld gaat. Tien varianten.
+   De teksten zijn in elke variant exact die van de pagina. Geen bedragen: er staan nergens prijzen op de site,
+   dus het beeld werkt met het euroteken, een slot (vast bedrag) en een klok (tijd), niet met cijfers.
+   Merkkleuren, licht van linksboven, platen met dikte, alles staat stil. */
+:root{
+  --rand-wit:#D5E2F8; --rand-blauw:#071838; --rand-geel:#DB940E;
+  --val-midden:0 14px 26px -14px rgba(14,26,51,.30); --val-ver:0 46px 80px -46px rgba(11,35,82,.5);
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px rgba(14,26,51,.05),0 7px 0 var(--rand-wit),0 8px 0 rgba(14,26,51,.08),var(--val-midden),var(--val-ver);
+  --plaat-blauw:inset 0 1px 0 rgba(255,255,255,.22),0 8px 0 var(--rand-blauw),0 26px 40px -18px rgba(7,24,56,.55),0 60px 90px -44px rgba(7,24,56,.6);
+  --goud:linear-gradient(180deg,#FFD75E,var(--brand-accent) 60%);
+  --munt:inset 0 2px 0 rgba(255,255,255,.6),inset 0 0 0 4px rgba(219,148,14,.4),0 6px 0 var(--rand-geel),0 20px 22px -8px rgba(11,35,82,.5);
+  --blauwvlak:linear-gradient(158deg,var(--brand-primary) 0,#123780 46%,var(--brand-secondary) 100%);
+}
+html{scroll-padding-top:4.5rem}
+*,*::before,*::after{animation:none!important;transition:none!important}
+body{background:#DCE8FF}
+.onav{position:sticky;top:0;z-index:50;background:var(--brand-secondary);color:#fff;box-shadow:0 6px 18px -8px rgba(5,14,35,.6)}
+.onav .wrap{display:flex;align-items:center;gap:.35rem .5rem;flex-wrap:wrap;padding-block:.6rem}
+.onav strong{font:800 1.05rem/1 var(--font-display);font-stretch:condensed;margin-right:auto}
+.onav a{display:grid;place-items:center;min-width:2.3rem;height:2.3rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font:700 .9rem/1 var(--font-sans)}
+.onav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.okop{background:var(--ink);color:#fff}
+.okop .wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem 1.2rem;padding-block:.9rem}
+.okop b{font:800 1.5rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-accent)}
+.okop span{font:700 1.15rem/1.2 var(--font-display);font-stretch:condensed}
+.okop small{flex-basis:100%;color:rgba(255,255,255,.75);font-size:.9rem}
+.v{padding-block:clamp(2.5rem,5vw,4.5rem);background:
+  linear-gradient(rgba(23,70,162,.055) 1px,transparent 1px) 0 0/100% 2.5rem,
+  linear-gradient(90deg,rgba(23,70,162,.055) 1px,transparent 1px) 0 0/2.5rem 100%,linear-gradient(180deg,var(--primary-100),#DCE8FF)}
+.duo{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.25rem,2.4vw,2.25rem);align-items:stretch}
+.s{position:relative;isolation:isolate;padding:clamp(1.5rem,2.6vw,2.4rem);border-radius:24px}
+.s h3{margin:0 0 .6rem;font:var(--weight-display) var(--text-h2)/var(--leading-heading) var(--font-display);font-stretch:var(--font-display-stretch);color:var(--brand-primary)}
+.s p{margin:0;max-width:34rem}
+.s--a{background:var(--blauwvlak);color:#fff;box-shadow:var(--plaat-blauw)}
+.s--a h3{color:#fff}
+.s--b{background:#fff;border:2px solid var(--brand-primary);box-shadow:0 8px 0 var(--rand-wit),0 9px 0 rgba(14,26,51,.08),var(--val-midden),var(--val-ver)}
+.of{position:absolute;left:50%;top:50%;z-index:3;display:grid;place-items:center;width:4.4rem;height:4.4rem;margin:-2.4rem 0 0 -2.2rem;border-radius:50%;
+  background:var(--goud);color:var(--brand-secondary);box-shadow:var(--munt),0 0 0 7px #E1EBFF;font:var(--weight-display) 1.45rem/1 var(--font-display);font-stretch:var(--font-display-stretch);text-transform:uppercase}
+svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* een munt met het euroteken */
+.munt{display:grid;place-items:center;border-radius:50%;background:var(--goud);color:var(--brand-secondary);box-shadow:var(--munt);font:800 1em/1 var(--font-display);font-stretch:condensed}
+@media (max-width:799px){.duo{grid-template-columns:1fr;gap:0}.of{position:relative;left:auto;top:auto;margin:-1rem auto;justify-self:center}}
+
+/* ---- 1. prijskaartje en stopwatch: het beeld staat als tegel vóór de plaat ---- */
+.v1 .s{padding-top:4.2rem}
+.v1 .tegel{position:absolute;left:clamp(1.5rem,2.6vw,2.4rem);top:-2rem;display:grid;place-items:center;width:5.4rem;height:5.4rem;border-radius:20px;background:#fff;color:var(--brand-primary);font-size:2.6rem;
+  box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(14,26,51,.06),0 8px 0 var(--rand-wit),0 9px 0 rgba(14,26,51,.1),0 26px 28px -12px rgba(11,35,82,.5)}
+.v1 .tegel i{position:absolute;right:-.7rem;bottom:-.5rem;width:2.2rem;height:2.2rem;font-size:1.25rem;font-style:normal}
+.v1 .duo{padding-top:2rem}
+
+/* ---- 2. de grote euromunt in het midden, de twee platen buigen eromheen ---- */
+.v2 .of{width:7.2rem;height:7.2rem;margin:-3.9rem 0 0 -3.6rem;font-size:0}
+.v2 .of::before{content:"€";font:800 3.6rem/1 var(--font-display);color:var(--brand-secondary)}
+.v2 .of::after{content:"of";position:absolute;left:50%;bottom:-1.1rem;translate:-50% 0;padding:.25rem .7rem;border-radius:999px;background:var(--brand-secondary);color:#fff;font:800 .85rem/1 var(--font-display);letter-spacing:.06em;box-shadow:0 4px 0 #030B1F}
+.v2 .s--a{padding-right:clamp(3rem,6vw,5.5rem)}.v2 .s--b{padding-left:clamp(3rem,6vw,5.5rem)}
+@media (max-width:799px){.v2 .s--a,.v2 .s--b{padding-inline:clamp(1.5rem,2.6vw,2.4rem)}.v2 .of{margin:-1.4rem auto}}
+
+/* ---- 3. kassabon: twee bonnen met een kartelrand, regels als streepjes, onderaan het euroteken ---- */
+.v3 .s{border-radius:14px 14px 0 0;padding-bottom:6rem;border:0;background:#fff;color:var(--ink);box-shadow:none;filter:drop-shadow(0 8px 0 var(--rand-wit)) drop-shadow(0 26px 26px rgba(11,35,82,.3));
+  -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - 12px) no-repeat,conic-gradient(from -45deg at 50% 100%,#0000 90deg,#000 0) bottom/24px 12px repeat-x;
+  mask:linear-gradient(#000 0 0) top/100% calc(100% - 12px) no-repeat,conic-gradient(from 135deg at 50% 0,#000 90deg,#0000 0) bottom/24px 12px repeat-x}
+.v3 .s h3{color:var(--brand-primary)}
+.v3 .s--a{background:#fff}
+.v3 .s::before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:var(--brand-primary)}
+.v3 .s--b::before{background:var(--brand-accent)}
+.v3 .bon{position:absolute;left:clamp(1.5rem,2.6vw,2.4rem);right:clamp(1.5rem,2.6vw,2.4rem);bottom:1.6rem;display:flex;align-items:center;gap:.7rem;padding-top:.8rem;border-top:2px dashed var(--grey-300);color:var(--brand-secondary);font-size:1.5rem}
+.v3 .bon span{flex:1;height:.55rem;border-radius:4px;background:repeating-linear-gradient(90deg,var(--grey-300) 0 1.6rem,transparent 0 2.2rem)}
+.v3 .bon .munt{width:2.4rem;height:2.4rem;font-size:1.3rem}
+
+/* ---- 4. de balans: twee schalen aan één juk, de munt is het draaipunt ---- */
+.v4 .duo{padding-top:4.5rem}
+.v4 .juk{position:absolute;left:12%;right:12%;top:1.6rem;height:10px;border-radius:6px;background:linear-gradient(180deg,#2A5FC4,var(--brand-primary) 50%,var(--primary-600));box-shadow:0 4px 0 var(--rand-blauw),0 14px 14px -6px rgba(11,35,82,.45)}
+.v4 .juk::before,.v4 .juk::after{content:"";position:absolute;top:10px;width:3px;height:2.4rem;background:var(--brand-secondary)}
+.v4 .juk::before{left:0}.v4 .juk::after{right:0}
+.v4 .of{top:0;margin-top:-.9rem}
+.v4 .s{border-radius:18px 18px 46px 46px}
+
+/* ---- 5. de meter: vast bedrag op slot, regie als lopende meter ---- */
+.v5 .scherm{display:flex;align-items:center;gap:.6rem;width:max-content;margin-bottom:1.1rem;padding:.55rem .9rem;border-radius:12px;background:#07142E;color:var(--brand-accent);
+  font:800 1.5rem/1 var(--font-display);font-stretch:condensed;letter-spacing:.12em;box-shadow:inset 0 2px 6px rgba(0,0,0,.6),0 0 0 3px rgba(255,255,255,.14),0 5px 0 var(--rand-blauw)}
+.v5 .s--b .scherm{box-shadow:inset 0 2px 6px rgba(0,0,0,.6),0 0 0 3px var(--primary-200),0 5px 0 var(--rand-wit)}
+.v5 .scherm svg{font-size:1.35rem;color:#fff}
+.v5 .scherm em{font-style:normal;opacity:.45}
+
+/* ---- 6. waardebon: twee biljetten met een sierrand en het euroteken als watermerk ---- */
+.v6 .s{border-radius:12px;overflow:clip}
+.v6 .s::before{content:"";position:absolute;z-index:-1;inset:10px;border-radius:6px;border:2px solid currentColor;opacity:.28;
+  background:repeating-linear-gradient(45deg,transparent 0 9px,currentColor 9px 10px),repeating-linear-gradient(-45deg,transparent 0 9px,currentColor 9px 10px);-webkit-mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);padding:12px}
+.v6 .s::after{content:"€";position:absolute;z-index:-1;right:1.6rem;top:50%;translate:0 -50%;font:800 9rem/1 var(--font-display);opacity:.12}
+.v6 .s--b{color:var(--brand-primary)}.v6 .s--b p{color:var(--ink)}
+.v6 .s{padding:clamp(2rem,3.4vw,3rem)}
+
+/* ---- 7. muntstapels: vast = gelijke stapels, regie = stapels die oplopen met de tijd ---- */
+.v7 .s{padding-bottom:6.4rem}
+.v7 .stapels{position:absolute;left:clamp(1.5rem,2.6vw,2.4rem);bottom:1.5rem;display:flex;align-items:flex-end;gap:.55rem}
+.v7 .stapels i{--n:3;display:block;width:2.7rem;height:calc(var(--n) * .62rem + .5rem);border-radius:50%/.55rem;
+  background:repeating-linear-gradient(180deg,#FFD75E 0 .3rem,var(--rand-geel) .3rem .62rem);box-shadow:inset 0 .5rem 0 -.05rem #FFE38A,0 10px 12px -6px rgba(11,35,82,.5)}
+.v7 .s--b .stapels i:nth-child(1){--n:1}.v7 .s--b .stapels i:nth-child(2){--n:2}.v7 .s--b .stapels i:nth-child(3){--n:3}.v7 .s--b .stapels i:nth-child(4){--n:5}.v7 .s--b .stapels i:nth-child(5){--n:7}
+.v7 .stapels svg{margin-left:.6rem;font-size:2rem;align-self:center}
+
+/* ---- 8. betaalpassen: de twee keuzes als twee passen die schuin over elkaar liggen ---- */
+.v8 .duo{gap:0;padding:1rem 0 2rem}
+.v8 .s{border-radius:22px;aspect-ratio:1.7/1;display:flex;flex-direction:column;justify-content:flex-end;padding-top:4.6rem}
+.v8 .s--a{rotate:-3deg;translate:4% 0;z-index:1}
+.v8 .s--b{rotate:3deg;translate:-2% 6%;padding-left:clamp(3.5rem,6vw,5.5rem)}
+.v8 .s--b .chip{left:clamp(3.5rem,6vw,5.5rem)}
+.v8 .chip{position:absolute;left:clamp(1.5rem,2.6vw,2.4rem);top:1.6rem;width:3.4rem;height:2.5rem;border-radius:8px;background:var(--goud);box-shadow:inset 0 0 0 2px rgba(219,148,14,.55),0 3px 0 var(--rand-geel)}
+.v8 .chip::before{content:"";position:absolute;inset:.45rem .9rem;border:2px solid rgba(11,35,82,.45);border-width:0 2px}
+.v8 .eur{position:absolute;right:clamp(1.5rem,2.6vw,2.4rem);top:1.3rem;font:800 2.6rem/1 var(--font-display);opacity:.9}
+.v8 .s--b .eur{color:var(--brand-primary)}
+.v8 .of{z-index:4}
+@media (max-width:799px){.v8 .s--a,.v8 .s--b{rotate:0deg;translate:0 0;aspect-ratio:auto;padding-left:clamp(1.5rem,2.6vw,2.4rem)}.v8 .s--b .chip{left:clamp(1.5rem,2.6vw,2.4rem)}}
+
+/* ---- 9. de offerte zelf: all-in is een ondertekend vel met een goudzegel, regie een urenstaat ---- */
+.v9 .s{background:#fff;color:var(--ink);border:0;border-radius:6px 28px 6px 6px;box-shadow:var(--plaat);padding-left:clamp(2.4rem,4vw,3.6rem);overflow:clip}
+.v9 .s h3{color:var(--brand-primary)}
+.v9 .s::before{content:"";position:absolute;z-index:-1;left:0;top:0;bottom:0;width:12px;background:linear-gradient(90deg,#2A5FC4,var(--brand-primary) 45%,var(--primary-600))}
+.v9 .s::after{content:"";position:absolute;right:0;top:0;border:14px solid;border-color:#DCE8FF #DCE8FF var(--primary-200) var(--primary-200);border-radius:0 0 0 8px;box-shadow:-3px 3px 6px rgba(11,35,82,.2)}
+.v9 .zegel{position:absolute;right:2rem;bottom:1.4rem;width:4.6rem;height:4.6rem;font-size:2.1rem}
+.v9 .zegel::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:3px dotted var(--rand-geel)}
+.v9 .uren{position:absolute;right:2rem;bottom:1.5rem;display:grid;grid-template-columns:repeat(5,1.15rem);gap:.3rem}
+.v9 .uren i{height:1.15rem;border-radius:4px;background:var(--primary-100);box-shadow:inset 0 1px 2px rgba(14,26,51,.15)}
+.v9 .uren i.aan{background:var(--brand-primary)}
+.v9 .s p{max-width:24rem}
+
+/* ---- 10. donkere band: twee prijslabels aan een touw, de munt hangt ertussen ---- */
+.v10{background:radial-gradient(46rem 26rem at 78% 78%,rgba(23,70,162,.85),transparent 70%),var(--brand-secondary)}
+.v10 .duo{padding-top:3.2rem}
+.v10 .touw{position:absolute;left:-2vw;right:-2vw;top:1rem;height:0;border-top:3px solid rgba(255,255,255,.55);border-radius:50%}
+.v10 .s{border-radius:18px;clip-path:polygon(0 3.2rem,3.2rem 0,calc(100% - 3.2rem) 0,100% 3.2rem,100% 100%,0 100%);padding-top:4.4rem;border:0;box-shadow:none;filter:drop-shadow(0 8px 0 rgba(3,10,28,.6)) drop-shadow(0 30px 30px rgba(3,10,28,.55))}
+.v10 .s--b{background:#fff}
+.v10 .s--a{background:var(--goud);color:var(--brand-secondary)}
+.v10 .s--a h3{color:var(--brand-secondary)}
+.v10 .oog{position:absolute;left:50%;top:1.3rem;width:1.5rem;height:1.5rem;margin-left:-.75rem;border-radius:50%;background:var(--brand-secondary);box-shadow:inset 0 3px 4px rgba(0,0,0,.6),0 0 0 4px rgba(255,255,255,.55)}
+.v10 .of{box-shadow:var(--munt),0 0 0 7px rgba(255,255,255,.14)}
+.v10 .eur{position:absolute;right:clamp(1.5rem,2.6vw,2.4rem);bottom:1.2rem;font:800 3.4rem/1 var(--font-display);opacity:.22}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="slot" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="klok" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6M12 2v3"/></symbol>
+  <symbol id="label" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.2"/></symbol>
+  <symbol id="vink" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<nav class="onav" aria-label="Varianten"><div class="wrap"><strong>All-in prijs of regieprijs · 10 varianten met geld</strong>
+<a href="#v1">1</a><a href="#v2">2</a><a href="#v3">3</a><a href="#v4">4</a><a href="#v5">5</a><a href="#v6">6</a><a href="#v7">7</a><a href="#v8">8</a><a href="#v9">9</a><a href="#v10">10</a></div></nav>
+
+<!-- 1 -->
+<div class="okop" id="v1"><div class="wrap"><b>1</b><span>Prijskaartje en stopwatch</span><small>Vast bedrag = prijskaartje met een slot. Tijd = stopwatch. Het beeld staat als tegel vóór de plaat.</small></div></div>
+<section class="v v1"><div class="wrap"><div class="duo">
+  <article class="s s--a"><span class="tegel" aria-hidden="true"><svg class="i"><use href="#label"/></svg><i class="munt">€</i></span><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></article>
+  <span class="of">of</span>
+  <article class="s s--b"><span class="tegel" aria-hidden="true"><svg class="i"><use href="#klok"/></svg><i class="munt">€</i></span><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></article>
+</div></div></section>
+
+<!-- 2 -->
+<div class="okop" id="v2"><div class="wrap"><b>2</b><span>De grote euromunt</span><small>De “of” wordt een grote gouden euromunt tussen de twee platen. Het rustigst: alleen de munt verandert.</small></div></div>
+<section class="v v2"><div class="wrap"><div class="duo">
+  <article class="s s--a"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></article>
+  <span class="of">of</span>
+  <article class="s s--b"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></article>
+</div></div></section>
+
+<!-- 3 -->
+<div class="okop" id="v3"><div class="wrap"><b>3</b><span>Kassabon</span><small>Twee bonnen met een kartelrand. Links sluit de bon af met een slot (vast), rechts met een klok (tijd).</small></div></div>
+<section class="v v3"><div class="wrap"><div class="duo">
+  <article class="s s--a"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p><div class="bon" aria-hidden="true"><svg class="i"><use href="#slot"/></svg><span></span><i class="munt">€</i></div></article>
+  <span class="of">of</span>
+  <article class="s s--b"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p><div class="bon" aria-hidden="true"><svg class="i"><use href="#klok"/></svg><span></span><i class="munt">€</i></div></article>
+</div></div></section>
+
+<!-- 4 -->
+<div class="okop" id="v4"><div class="wrap"><b>4</b><span>De balans</span><small>Twee schalen aan één juk, de gouden munt is het draaipunt: u weegt de twee prijzen tegen elkaar af.</small></div></div>
+<section class="v v4"><div class="wrap"><div class="duo">
+  <span class="juk" aria-hidden="true"></span>
+  <article class="s s--a"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></article>
+  <span class="of">of</span>
+  <article class="s s--b"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></article>
+</div></div></section>
+
+<!-- 5 -->
+<div class="okop" id="v5"><div class="wrap"><b>5</b><span>De meter</span><small>Een schermpje zoals op een taximeter: links staat het bedrag op slot, rechts loopt de meter met de klok mee. Zonder cijfers.</small></div></div>
+<section class="v v5"><div class="wrap"><div class="duo">
+  <article class="s s--a"><div class="scherm" aria-hidden="true"><svg class="i"><use href="#slot"/></svg>€ <em>– – –</em></div><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></article>
+  <span class="of">of</span>
+  <article class="s s--b"><div class="scherm" aria-hidden="true"><svg class="i"><use href="#klok"/></svg>€ <em>– – –</em></div><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></article>
+</div></div></section>
+
+<!-- 6 -->
+<div class="okop" id="v6"><div class="wrap"><b>6</b><span>Waardebon</span><small>De twee platen als biljetten: sierrand en een groot euroteken als watermerk.</small></div></div>
+<section class="v v6"><div class="wrap"><div class="duo">
+  <article class="s s--a"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></article>
+  <span class="of">of</span>
+  <article class="s s--b"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></article>
+</div></div></section>
+
+<!-- 7 -->
+<div class="okop" id="v7"><div class="wrap"><b>7</b><span>Muntstapels</span><small>Het verschil in één beeld: links vijf gelijke stapels (vast), rechts stapels die oplopen met de tijd.</small></div></div>
+<section class="v v7"><div class="wrap"><div class="duo">
+  <article class="s s--a"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p><div class="stapels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><svg class="i"><use href="#slot"/></svg></div></article>
+  <span class="of">of</span>
+  <article class="s s--b"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p><div class="stapels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><svg class="i" style="color:var(--brand-primary)"><use href="#klok"/></svg></div></article>
+</div></div></section>
+
+<!-- 8 -->
+<div class="okop" id="v8"><div class="wrap"><b>8</b><span>Betaalpassen</span><small>De twee keuzes als twee passen die schuin over elkaar liggen, met een gouden chip en het euroteken.</small></div></div>
+<section class="v v8"><div class="wrap"><div class="duo">
+  <article class="s s--a"><span class="chip" aria-hidden="true"></span><span class="eur" aria-hidden="true">€</span><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></article>
+  <span class="of">of</span>
+  <article class="s s--b"><span class="chip" aria-hidden="true"></span><span class="eur" aria-hidden="true">€</span><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></article>
+</div></div></section>
+
+<!-- 9 -->
+<div class="okop" id="v9"><div class="wrap"><b>9</b><span>De offerte zelf</span><small>Twee vellen papier met een omgevouwen hoek: links de offerte met een goudzegel, rechts een urenstaat die gevuld raakt.</small></div></div>
+<section class="v v9"><div class="wrap"><div class="duo">
+  <article class="s s--a"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p><i class="munt zegel" aria-hidden="true">€</i></article>
+  <span class="of">of</span>
+  <article class="s s--b"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p><div class="uren" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i class="aan"></i><i class="aan"></i><i class="aan"></i><i class="aan"></i><i class="aan"></i><i></i><i></i><i></i></div></article>
+</div></div></section>
+
+<!-- 10 -->
+<div class="okop" id="v10"><div class="wrap"><b>10</b><span>Prijslabels aan een touw</span><small>Op een donkere band: twee hanglabels met een afgesneden hoek en een oog, de munt hangt ertussen. Het opvallendst.</small></div></div>
+<section class="v v10"><div class="wrap"><div class="duo">
+  <span class="touw" aria-hidden="true"></span>
+  <article class="s s--a"><span class="oog" aria-hidden="true"></span><span class="eur" aria-hidden="true">€</span><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></article>
+  <span class="of">of</span>
+  <article class="s s--b"><span class="oog" aria-hidden="true"></span><span class="eur" aria-hidden="true" style="color:var(--brand-primary)">€</span><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></article>
+</div></div></section>
+</body>
+</html>

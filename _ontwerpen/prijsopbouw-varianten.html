@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Prijsopbouw · 10 ontwerpen</title>
+<!-- Merkboek: kleuren, Archivo Condensed + Inter, label met huisje, .h2, .wrap komen uit de echte kernlaag van de site. -->
+<link rel="stylesheet" href="/css/min/site.min.css">
+<style>
+/* Alles staat stil (geen animatie, geen hover-beweging). Diepte komt uit rand en schaduw, zoals op /kosten/. */
+:root{
+  --rand-wit:#D5E2F8; --rand-blauw:#071838; --rand-geel:#DB940E;
+  --val-midden:0 14px 26px -14px rgba(14,26,51,.30); --val-ver:0 52px 90px -46px rgba(11,35,82,.55);
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px rgba(14,26,51,.05),0 7px 0 var(--rand-wit),0 8px 0 rgba(14,26,51,.08),var(--val-midden),var(--val-ver);
+  --plaat-blauw:inset 0 1px 0 rgba(255,255,255,.18),0 7px 0 var(--rand-blauw),var(--val-midden),var(--val-ver);
+  --plaat-geel:inset 0 1px 0 rgba(255,255,255,.6),0 7px 0 var(--rand-geel),var(--val-midden),var(--val-ver);
+}
+html{scroll-padding-top:4.5rem}
+body{background:var(--white)}
+*,*::before,*::after{animation:none!important;transition:none!important}
+ol{list-style:none;margin:0;padding:0}
+.disp{font-family:var(--font-display);font-stretch:var(--font-display-stretch)}
+
+/* ---- navigatie van deze ontwerppagina ---- */
+.onav{position:sticky;top:0;z-index:50;background:var(--brand-secondary);color:#fff;box-shadow:0 6px 18px -8px rgba(5,14,35,.6)}
+.onav .wrap{display:flex;align-items:center;gap:.4rem 1rem;flex-wrap:wrap;padding-block:.6rem}
+.onav strong{font:800 1.05rem/1 var(--font-display);font-stretch:condensed;letter-spacing:.02em;margin-right:auto}
+.onav a{display:grid;place-items:center;min-width:2.3rem;height:2.3rem;padding-inline:.5rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font:700 .9rem/1 var(--font-sans)}
+.onav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.okop{background:var(--ink);color:#fff}
+.okop .wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem 1.2rem;padding-block:.9rem}
+.okop b{font:800 1.5rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-accent)}
+.okop span{font:700 1.15rem/1.2 var(--font-display);font-stretch:condensed}
+.okop small{flex:1 1 24rem;color:rgba(255,255,255,.72);font-size:.9rem}
+
+/* ---- gedeeld: sectie en kop ---- */
+.v{position:relative;padding-block:clamp(3.5rem,2.5rem + 3vw,5.5rem);overflow:clip}
+.v--mist{background:var(--off-white)} .v--lucht{background:var(--primary-50)}
+.kop{max-width:46rem;margin-bottom:2.5rem}
+.kop .h2{margin:0 0 1rem}
+.kop p.intro-t{margin:0;font-size:var(--text-lead);max-width:68ch}
+.lijstkop{margin:0 0 1.25rem;color:var(--ink);font:700 .875rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase}
+.f h3{margin:0;color:var(--brand-secondary);font:700 var(--text-h4)/1.25 var(--font-display);font-stretch:condensed}
+.f p{margin:0;color:var(--grey-600);font-size:1rem;line-height:1.5}
+
+/* =====================================================================
+   1. OPTELSOM: vijf dikke platen, gele plusschijven, en onderaan de som
+   ===================================================================== */
+.v1 .rij{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2.4rem}
+.v1 .f{position:relative;display:flex;flex-direction:column;gap:.55rem;padding:1.5rem 1.35rem 1.7rem;border-radius:20px;background:#fff;box-shadow:var(--plaat)}
+.v1 .nr{font:800 4.2rem/.9 var(--font-display);font-stretch:condensed;color:var(--brand-primary);letter-spacing:-.02em;
+  text-shadow:1px 1px 0 #123780,2px 2px 0 #10306F,3px 3px 0 #0E2A61,4px 4px 0 #0B2352,5px 5px 0 #0B2352,10px 14px 14px rgba(11,35,82,.25)}
+.v1 .f:not(:last-child)::after{content:"+";position:absolute;z-index:2;right:-2.4rem;top:50%;display:grid;place-items:center;width:2.4rem;height:2.4rem;margin:-1.2rem 0 0;transform:translateX(0);
+  border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.6rem/1 var(--font-display);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 0 var(--rand-geel),0 10px 14px -6px rgba(11,35,82,.4)}
+.v1 .som{position:relative;display:flex;align-items:center;gap:1.2rem;margin-top:2.6rem;padding:1.15rem 1.6rem;border-radius:20px;background:var(--brand-secondary);color:#fff;box-shadow:var(--plaat-blauw)}
+.v1 .som::before{content:"";position:absolute;left:2rem;right:2rem;top:-1.55rem;height:0;border-top:3px solid var(--brand-secondary)}
+.v1 .som i{display:grid;place-items:center;flex:none;width:3rem;height:3rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 2rem/1 var(--font-display);font-style:normal;box-shadow:0 4px 0 var(--rand-geel)}
+.v1 .som b{font:800 clamp(1.6rem,1.2rem + 1.4vw,2.3rem)/1 var(--font-display);font-stretch:condensed}
+.v1 .som span{margin-left:auto;color:rgba(255,255,255,.8);font-size:1rem}
+
+/* =====================================================================
+   2. DOZENSTAPEL: vijf verhuisdozen in De Reus-blauw met geel tape
+   ===================================================================== */
+.v2 .in{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(2rem,5vw,5rem);align-items:end}
+.v2 .kop{margin-bottom:0}
+.v2 .stapel{--d:30px;position:relative;padding:0 var(--d) 0 0}
+.v2 .stapel::after{content:"";position:absolute;left:-3%;right:-2%;bottom:-26px;height:46px;background:radial-gradient(closest-side,rgba(11,35,82,.38),transparent);filter:blur(6px);z-index:0}
+.v2 .laag{position:relative;z-index:1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0 6px}
+.v2 .laag--boven{z-index:2}
+.v2 .laag--onder{margin-top:calc(var(--d) * -1)}
+.v2 .f{position:relative;grid-column:span 2;margin-top:var(--d);min-height:13.5rem;padding:2.9rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.45rem;
+  background:linear-gradient(180deg,#1E51B5,var(--brand-primary) 60%,#143D90)}
+.v2 .laag--boven .f:first-child{grid-column:2/span 2}
+.v2 .f::before{content:"";position:absolute;left:0;bottom:100%;width:100%;height:var(--d);transform:skewX(-45deg);transform-origin:bottom left;
+  background:linear-gradient(90deg,#3D6FD0 calc(50% - 24px),var(--accent-600) 0 calc(50% + 24px),#3D6FD0 0)}
+.v2 .f::after{content:"";position:absolute;left:100%;top:0;width:var(--d);height:100%;transform:skewY(-45deg);transform-origin:top left;background:linear-gradient(180deg,#0F2F73,var(--brand-secondary))}
+.v2 .tape{position:absolute;left:50%;top:0;width:48px;height:2.1rem;margin-left:-24px;background:var(--brand-accent);box-shadow:inset 0 -3px 0 rgba(219,148,14,.5)}
+.v2 .nr{position:absolute;left:1.2rem;top:.75rem;font:800 1.5rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-accent)}
+.v2 .f h3{color:#fff} .v2 .f p{color:rgba(255,255,255,.88);font-size:.95rem}
+
+/* =====================================================================
+   3. FOTOPANELEN: vijf schuine panelen met de echte foto's
+   ===================================================================== */
+.v3 .rij{--s:2.4rem;display:flex;padding-left:var(--s)}
+.v3 .f{position:relative;flex:1 1 0;min-width:0;height:27rem;margin-left:calc(var(--s) * -1 + 8px);clip-path:polygon(var(--s) 0,100% 0,calc(100% - var(--s)) 100%,0 100%);background:var(--brand-secondary)}
+.v3 .f img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v3 .f::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,35,82,.55) 0,rgba(11,35,82,.05) 30%,rgba(11,35,82,.82) 62%,#0B2352 100%)}
+.v3 .tekst{position:absolute;z-index:1;left:calc(var(--s) * .55 + .9rem);right:calc(var(--s) + .6rem);bottom:1.5rem;display:grid;gap:.45rem}
+.v3 .nr{position:absolute;z-index:1;top:1rem;left:calc(var(--s) + 1rem);font:800 3.4rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-accent);text-shadow:0 4px 14px rgba(5,14,35,.6)}
+.v3 .f h3{color:#fff;font-size:1.45rem} .v3 .f p{color:rgba(255,255,255,.9);font-size:.95rem}
+.v3 .streep{height:6px;width:3rem;border-radius:6px;background:var(--brand-accent)}
+
+/* =====================================================================
+   4. NACHTBLAUW: de Diepblauwe band met dakrand, reuzencijfers in gele omlijning
+   ===================================================================== */
+.v4{isolation:isolate;color:#fff;padding-top:calc(clamp(3.5rem,2.5rem + 3vw,5.5rem) + var(--dak));background:var(--off-white)}
+.v4::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(60rem 30rem at 85% 10%,#16408F,transparent 65%),var(--brand-secondary);clip-path:polygon(0 var(--dak),50% 0,100% var(--dak),100% 100%,0 100%)}
+.v4::after{content:"";position:absolute;z-index:-1;right:-6rem;bottom:-7rem;width:38rem;aspect-ratio:535.3/509.8;background:rgba(255,255,255,.035);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.v4 .label{color:var(--brand-accent)} .v4 .h2{color:#fff} .v4 .intro-t{color:rgba(255,255,255,.88)} .v4 .lijstkop{color:var(--primary-300)}
+.v4 .rij{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.22)}
+.v4 .f{position:relative;display:flex;flex-direction:column;gap:.6rem;padding:1.6rem 1.4rem .4rem;border-left:1px solid rgba(255,255,255,.22)}
+.v4 .f:first-child{border-left:0;padding-left:0}
+.v4 .f::before{content:"";position:absolute;left:1.4rem;top:-3px;width:3rem;height:5px;background:var(--brand-accent)}
+.v4 .f:first-child::before{left:0}
+.v4 .nr{font:800 6.5rem/.85 var(--font-display);font-stretch:condensed;color:transparent;-webkit-text-stroke:2px var(--brand-accent);letter-spacing:-.02em;margin-bottom:.6rem}
+.v4 .f h3{color:#fff;font-size:1.5rem} .v4 .f p{color:rgba(255,255,255,.82)}
+
+/* =====================================================================
+   5. HUISVENSTER: de foto in de vorm van het huis uit het logo, ernaast een strakke lijst
+   ===================================================================== */
+.v5 .in{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(2rem,5vw,5.5rem);align-items:center}
+.v5 .huis{position:relative;isolation:isolate;aspect-ratio:535.3/509.8;margin:1rem 1.6rem 1.6rem 0;filter:drop-shadow(0 40px 50px rgba(11,35,82,.35))}
+.v5 .huis::before{content:"";position:absolute;z-index:-1;inset:0;transform:translate(1.6rem,1.6rem);background:var(--brand-accent);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.v5 .huis img{width:100%;height:100%;object-fit:cover;object-position:30% 50%;-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.v5 .huis::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,70,162,.92) 0,rgba(23,70,162,.55) 22%,transparent 46%);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.v5 .kop{margin-bottom:1.75rem}
+.v5 .f{display:grid;grid-template-columns:4.2rem minmax(0,1fr);gap:0 1rem;align-items:baseline;padding:1rem 0;border-top:1px solid var(--grey-300)}
+.v5 .f:last-child{border-bottom:1px solid var(--grey-300)}
+.v5 .nr{grid-row:span 2;font:800 2.6rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-primary)}
+.v5 .nr::after{content:"";display:block;width:2rem;height:5px;margin-top:.35rem;border-radius:5px;background:var(--brand-accent)}
+.v5 .f h3{font-size:1.4rem;color:var(--brand-secondary)} .v5 .f p{grid-column:2}
+
+/* =====================================================================
+   6. MEETLINT: een geel rolmaatlint, de factoren hangen aan de maatstrepen
+   ===================================================================== */
+.v6 .rij{--lint:3.6rem;position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.25rem;padding:calc(var(--lint) + 3.2rem) 0 0 8rem}
+.v6 .lint{position:absolute;left:3rem;right:-50vw;top:1rem;height:var(--lint);
+  background:
+    repeating-linear-gradient(90deg,var(--brand-secondary) 0 2px,transparent 2px 4rem) 0 0/100% 58% no-repeat,
+    repeating-linear-gradient(90deg,rgba(11,35,82,.6) 0 1px,transparent 1px .5rem) 0 0/100% 28% no-repeat,
+    linear-gradient(180deg,#FFDD6B,var(--brand-accent) 45%,var(--accent-600));
+  box-shadow:0 5px 0 var(--rand-geel),0 18px 22px -10px rgba(11,35,82,.4)}
+.v6 .huls{position:absolute;z-index:2;left:0;top:-.6rem;width:6.8rem;height:6.8rem;border-radius:22px;background:linear-gradient(160deg,#16408F,var(--brand-secondary));box-shadow:var(--plaat-blauw)}
+.v6 .huls::before{content:"";position:absolute;inset:1.25rem;border-radius:50%;background:var(--brand-accent);box-shadow:inset 0 0 0 .55rem var(--brand-secondary),inset 0 0 0 .75rem rgba(255,255,255,.25)}
+.v6 .f{position:relative;display:flex;flex-direction:column;gap:.5rem;padding:1.4rem 1.25rem 1.5rem;border-radius:18px;background:#fff;box-shadow:var(--plaat)}
+.v6 .f::before{content:"";position:absolute;left:2.4rem;bottom:100%;height:2.7rem;border-left:3px solid var(--brand-secondary)}
+.v6 .nr{position:absolute;left:1.05rem;bottom:calc(100% + 2.55rem);display:grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:50%;background:var(--brand-secondary);color:var(--brand-accent);
+  font:800 1.3rem/1 var(--font-display);font-stretch:condensed;box-shadow:0 0 0 4px #fff,0 4px 0 4px var(--rand-blauw),0 12px 16px -4px rgba(11,35,82,.45)}
+
+/* =====================================================================
+   7. OFFERTEBLAD: de factoren als regels op het vel waar ze uiteindelijk op staan
+   ===================================================================== */
+.v7 .in{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.v7 .kop{margin-bottom:0}
+.v7 .stapel{position:relative;isolation:isolate;filter:drop-shadow(0 34px 40px rgba(11,35,82,.28)) drop-shadow(0 2px 3px rgba(11,35,82,.2))}
+.v7 .stapel::before{content:"";position:absolute;z-index:-1;inset:.6rem -.4rem 1.4rem .4rem;transform:rotate(2.4deg);background:var(--primary-100)}
+.v7 .vel{transform:rotate(-1.1deg);padding:2rem clamp(1.4rem,3vw,2.6rem) 2.8rem;background:#fff;
+  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/18px 51% repeat-x,linear-gradient(#000 0 0) top/100% 50.5% no-repeat;
+  mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/18px 51% repeat-x,linear-gradient(#000 0 0) top/100% 50.5% no-repeat}
+.v7 .velkop{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-bottom:1.1rem;margin-bottom:.4rem;border-bottom:3px solid var(--brand-secondary)}
+.v7 .velkop img{width:11rem;height:auto}
+.v7 .velkop .lijstkop{margin:0;text-align:right}
+.v7 .f{display:grid;grid-template-columns:2.6rem minmax(0,1fr) auto;gap:.1rem 1rem;align-items:start;padding:.95rem 0;border-bottom:2px dotted var(--grey-300)}
+.v7 .nr{grid-row:span 2;font:800 1.5rem/1.15 var(--font-display);font-stretch:condensed;color:var(--grey-400)}
+.v7 .f h3{font-size:1.3rem} .v7 .f p{grid-column:2;font-size:.95rem}
+.v7 .plus{grid-column:3;grid-row:1/span 2;align-self:center;display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;background:var(--primary-100);color:var(--brand-primary);font:800 1.4rem/1 var(--font-display)}
+.v7 .totaal{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-top:1.1rem;padding-top:1rem;border-top:3px solid var(--brand-secondary)}
+.v7 .totaal b{font:800 2rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-secondary);background:linear-gradient(180deg,transparent 58%,var(--brand-accent) 58% 94%,transparent 94%);padding-inline:.15em}
+.v7 .totaal span{color:var(--grey-600);font-size:.95rem}
+
+/* =====================================================================
+   8. BENTO: ongelijke tegels, foto, blauw, wit en geel
+   ===================================================================== */
+.v8 .rij{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:minmax(13.5rem,auto);gap:1.4rem 1.25rem}
+.v8 .f{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:.5rem;padding:1.6rem;border-radius:24px;background:#fff;box-shadow:var(--plaat)}
+.v8 .nr{position:absolute;z-index:-1;right:1.1rem;top:.6rem;font:800 6rem/1 var(--font-display);font-stretch:condensed;color:var(--primary-100);letter-spacing:-.02em}
+.v8 .f h3{font-size:1.5rem}
+.v8 .f:nth-child(1){grid-column:1/span 4;grid-row:span 2;color:#fff;background:var(--brand-secondary);box-shadow:var(--plaat-blauw)}
+.v8 .f:nth-child(2){grid-column:5/span 4}
+.v8 .f:nth-child(3){grid-column:9/span 4;background:linear-gradient(160deg,#1E51B5,var(--brand-primary));box-shadow:var(--plaat-blauw)}
+.v8 .f:nth-child(4){grid-column:5/span 5;background:var(--brand-secondary);box-shadow:var(--plaat-blauw)}
+.v8 .f:nth-child(5){grid-column:10/span 3;background:linear-gradient(160deg,#FFDD6B,var(--brand-accent));box-shadow:var(--plaat-geel)}
+.v8 .f img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover}
+.v8 .f:nth-child(1)::before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(180deg,rgba(11,35,82,.15) 20%,rgba(11,35,82,.92) 78%)}
+.v8 .f:nth-child(4) img{left:auto;width:46%;-webkit-mask:linear-gradient(90deg,transparent,#000 45%);mask:linear-gradient(90deg,transparent,#000 45%)}
+.v8 .f:nth-child(4)>*:not(img){max-width:56%}
+.v8 .f:nth-child(1) h3,.v8 .f:nth-child(3) h3,.v8 .f:nth-child(4) h3{color:#fff}
+.v8 .f:nth-child(1) p,.v8 .f:nth-child(3) p,.v8 .f:nth-child(4) p{color:rgba(255,255,255,.88)}
+.v8 .f:nth-child(1) .nr{z-index:1;color:var(--brand-accent);font-size:4.5rem;right:auto;left:1.5rem;top:1.2rem}
+.v8 .f:nth-child(3) .nr,.v8 .f:nth-child(4) .nr{color:rgba(255,255,255,.12)}
+.v8 .f:nth-child(4) .nr{right:auto;left:1.4rem}
+.v8 .f:nth-child(5) .nr{color:rgba(11,35,82,.14)}
+.v8 .f:nth-child(5) h3{color:var(--brand-secondary)} .v8 .f:nth-child(5) p{color:var(--brand-secondary)}
+
+/* =====================================================================
+   9. LAGEN: de prijs wordt laag voor laag opgebouwd, elke laag breder en dieper blauw
+   ===================================================================== */
+.v9 .in{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:clamp(2rem,5vw,5rem);align-items:end}
+.v9 .kop{margin-bottom:0}
+.v9 .rij{display:grid;gap:.85rem;padding-bottom:.6rem}
+.v9 .f{position:relative;display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.15rem 1.2rem;align-items:center;min-height:4.9rem;padding:.9rem 4.2rem .9rem 1.2rem;border-radius:16px;color:#fff}
+.v9 .f:nth-child(1){width:64%;background:#2A5FC4;box-shadow:0 7px 0 #1D4A9F,var(--val-midden)}
+.v9 .f:nth-child(2){width:73%;background:#1E51B5;box-shadow:0 7px 0 #153F92,var(--val-midden)}
+.v9 .f:nth-child(3){width:82%;background:var(--brand-primary);box-shadow:0 7px 0 #0F3078,var(--val-midden)}
+.v9 .f:nth-child(4){width:91%;background:var(--primary-600);box-shadow:0 7px 0 #0B2559,var(--val-midden)}
+.v9 .f:nth-child(5){width:100%;background:var(--brand-secondary);box-shadow:0 7px 0 var(--rand-blauw),var(--val-midden),var(--val-ver)}
+.v9 .nr{display:grid;place-items:center;width:3.2rem;height:3.2rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.4rem/1 var(--font-display);font-stretch:condensed;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 0 var(--rand-geel)}
+.v9 .nr{grid-row:span 2} .v9 .f h3{align-self:end;color:#fff;font-size:1.35rem} .v9 .f p{grid-column:2;align-self:start;color:rgba(255,255,255,.88);font-size:.95rem}
+.v9 .f::after{content:"+";position:absolute;right:1.1rem;top:50%;margin-top:-1rem;display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;border:2px solid rgba(255,255,255,.45);color:#fff;font:800 1.3rem/1 var(--font-display)}
+.v9 .f:last-child::after{content:"="}
+
+/* =====================================================================
+   10. GROOT GEZET: alleen typografie, reuzenkoppen op haarlijnen
+   ===================================================================== */
+.v10 .rij{border-top:3px solid var(--brand-secondary)}
+.v10 .f{display:grid;grid-template-columns:5.5rem minmax(0,1.25fr) minmax(0,.75fr);gap:0 clamp(1rem,3vw,3rem);align-items:center;padding:1.15rem 0;border-bottom:1px solid var(--grey-300)}
+.v10 .nr{font:800 1.6rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-secondary)}
+.v10 .nr::before{content:"";display:inline-block;vertical-align:middle;width:1.4rem;height:1.4rem;margin-right:.6rem;border-radius:50%;background:var(--brand-accent)}
+.v10 .f h3{font:800 clamp(2.2rem,1rem + 4.2vw,4.4rem)/.95 var(--font-display);font-stretch:condensed;color:var(--brand-primary);letter-spacing:-.015em;text-wrap:balance}
+.v10 .f:nth-child(odd) h3{color:var(--brand-secondary)}
+.v10 .f p{font-size:1.0625rem;color:var(--ink)}
+
+/* ---- smaller scherm: alles onder elkaar, zonder de kunstgrepen die breedte nodig hebben ---- */
+@media(max-width:1000px){
+  .v1 .rij,.v4 .rij,.v6 .rij{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .v1 .f:not(:last-child)::after{display:none}
+  .v2 .in,.v5 .in,.v7 .in,.v9 .in{grid-template-columns:minmax(0,1fr)}
+  .v3 .rij{--s:0rem;flex-direction:column;gap:.75rem;padding-left:0} .v3 .f{height:15rem;margin-left:0;flex:none;border-radius:18px}
+  .v4 .f,.v4 .f:first-child{border-left:0;padding-left:0} .v4 .f::before{left:0}
+  .v6 .rij{padding-left:0} .v6 .huls{display:none} .v6 .lint{left:0} .v6 .f::before,.v6 .nr{position:static} .v6 .f::before{display:none} .v6 .nr{box-shadow:none}
+  .v8 .rij{grid-template-columns:minmax(0,1fr)} .v8 .f:nth-child(n){grid-column:auto;grid-row:auto;min-height:13rem}
+  .v9 .f:nth-child(n){width:100%;grid-template-columns:3.4rem minmax(0,1fr)} .v9 .f p{grid-column:2}
+  .v10 .f{grid-template-columns:3.5rem minmax(0,1fr)} .v10 .f p{grid-column:2}
+}
+@media(max-width:640px){
+  .v1 .rij,.v4 .rij,.v6 .rij{grid-template-columns:minmax(0,1fr)}
+  .v2 .laag{grid-template-columns:minmax(0,1fr);gap:0} .v2 .f{min-height:0;padding-bottom:1.6rem} .v2 .f,.v2 .laag--boven .f:first-child{grid-column:auto} .v2 .laag--onder{margin-top:0}
+}
+</style>
+</head>
+<body>
+<nav class="onav" aria-label="Ontwerpen"><div class="wrap"><strong>Prijsopbouw · 10 ontwerpen</strong><span id="onav"></span></div></nav>
+<main id="main"></main>
+
+<script>
+// Tekst is letterlijk die van /kosten/#opbouw; alleen de vorm verschilt per ontwerp.
+const F = [
+  { n: '01', t: 'Hoeveel er mee moet', p: 'Een studio is sneller verhuisd dan een eengezinswoning.', img: '/img/dienst-particulier.webp' },
+  { n: '02', t: 'De afstand', p: 'Binnen Den Haag of naar de andere kant van het land.', img: '/img/dienst-nationaal.webp' },
+  { n: '03', t: 'De bereikbaarheid', p: 'Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.', img: '/img/dienst-verhuislift.webp' },
+  { n: '04', t: 'Wat u zelf doet', p: 'Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?', img: '/img/verwachten-inpakken.webp' },
+  { n: '05', t: 'Extra diensten', p: 'Zoals een verhuislift of tijdelijke opslag.', img: '/img/dienst-opslag.webp' },
+];
+const kop = (metLijstkop = true) => `<div class="kop"><p class="label">Prijsopbouw</p><h2 class="h2">Hoe de prijs tot stand komt</h2>
+  <p class="intro-t">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div>${metLijstkop ? LK : ''}`;
+const LK = '<h3 class="lijstkop">Wat de prijs bepaalt</h3>';
+const basis = f => `<span class="nr" aria-hidden="true">${f.n}</span><h3>${f.t}</h3><p>${f.p}</p>`;
+const li = (f, binnen) => `<li class="f">${binnen ?? basis(f)}</li>`;
+const foto = f => `<img src="${f.img}" alt="" loading="lazy" decoding="async">`;
+
+const V = [
+  { naam: 'Optelsom', klas: 'v v--mist v1', uitleg: 'Fiyat kelimenin tam anlamıyla toplanıyor: kalın levhalar, 3D rakamlar, sarı artı diskleri ve altta toplam çubuğu. ("Uw offerte" satırı tek eklenen metin.)',
+    html: () => `<div class="wrap">${kop()}<ol class="rij">${F.map(f => li(f)).join('')}</ol>
+      <div class="som"><i>=</i><b>Uw offerte</b></div></div>` },
+  { naam: 'Dozenstapel', klas: 'v v--lucht v2', uitleg: 'Beş faktör, sarı bantlı De Reus mavisi taşınma kolileri olarak üst üste. Statik 3D: üst ve yan yüzler CSS ile.',
+    html: () => `<div class="wrap in"><div>${kop(false)}</div><div>${LK}<div class="stapel">
+      <ol class="laag laag--boven">${F.slice(0, 2).map(f => li(f, `<span class="tape"></span>${basis(f)}`)).join('')}</ol>
+      <ol class="laag laag--onder" start="3">${F.slice(2).map(f => li(f, `<span class="tape"></span>${basis(f)}`)).join('')}</ol></div></div></div>` },
+  { naam: 'Fotopanelen', klas: 'v v3', uitleg: 'Her faktörün kendi gerçek fotoğrafı var: eğik kesilmiş beş panel, Diepblauw geçiş, sarı dev rakam.',
+    html: () => `<div class="wrap">${kop()}<ol class="rij">${F.map(f => li(f, `${foto(f)}<span class="nr" aria-hidden="true">${f.n}</span><div class="tekst"><span class="streep"></span><h3>${f.t}</h3><p>${f.p}</p></div>`)).join('')}</ol></div>` },
+  { naam: 'Nachtblauw', klas: 'v v4', uitleg: 'Çatı kenarlı Diepblauw bant, sarı konturlu dev rakamlar, ince çizgilerle ayrılmış dergi düzeni. Dikkat: merkboek sayfa başına tek koyu bant diyor; /kosten/ üzerinde zaten bir tane var.',
+    html: () => `<div class="wrap">${kop()}<ol class="rij">${F.map(f => li(f)).join('')}</ol></div>` },
+  { naam: 'Huisvenster', klas: 'v v--mist v5', uitleg: 'Gerçek fotoğraf logodaki ev şeklinde kesilmiş, arkasında sarı ev gölgesi. Sağda sade, çizgili numaralı liste.',
+    html: () => `<div class="wrap in"><div class="huis">${foto(F[0])}</div><div>${kop()}<ol>${F.map(f => li(f)).join('')}</ol></div></div>` },
+  { naam: 'Meetlint', klas: 'v v--mist v6', uitleg: 'Sarı bir şerit metre sayfadan dışarı uzanıyor; faktörler ölçü çizgilerine asılı. Nakliyecinin kendi aleti, çizim değil grafik.',
+    html: () => `<div class="wrap">${kop()}<ol class="rij"><li class="lint" aria-hidden="true"></li><li class="huls" aria-hidden="true"></li>${F.map(f => li(f)).join('')}</ol></div>` },
+  { naam: 'Offerteblad', klas: 'v v--lucht v7', uitleg: 'Faktörler, sonunda gerçekten yazılacakları yerde: hafif eğik duran, alt kenarı tırtıklı bir teklif kâğıdının satırları. Fiyat uydurulmadı; sadece "+" ve "Uw offerte".',
+    html: () => `<div class="wrap in"><div>${kop(false)}</div><div class="stapel"><div class="vel">
+      <div class="velkop"><img src="/img/logo/dereus-logo-horizontaal.svg" alt="Verhuisbedrijf De Reus" width="2444" height="509">${LK}</div>
+      <ol>${F.map(f => li(f, `${basis(f)}<span class="plus" aria-hidden="true">+</span>`)).join('')}</ol>
+      <div class="totaal"><b>Uw offerte</b></div></div></div></div>` },
+  { naam: 'Bento', klas: 'v v--mist v8', uitleg: 'Eşit olmayan karolar: büyük fotoğraf karosu, beyaz, Koningsblauw, fotoğraflı Diepblauw ve Goudgeel. Hepsi kalın levha olarak duruyor.',
+    html: () => `<div class="wrap">${kop()}<ol class="rij">${F.map((f, i) => li(f, `${i === 0 || i === 3 ? foto(i === 3 ? F[3] : f) : ''}${basis(f)}`)).join('')}</ol></div>` },
+  { naam: 'Lagen', klas: 'v v9', uitleg: 'Fiyat kat kat örülüyor: her kat bir öncekinden daha geniş ve daha koyu mavi, sonunda "=" ile bitiyor. Sayfadaki merdivenle (treden) çakışmasın diye yatay.',
+    html: () => `<div class="wrap in"><div>${kop(false)}</div><div>${LK}<ol class="rij">${F.map(f => li(f)).join('')}</ol></div></div>` },
+  { naam: 'Groot gezet', klas: 'v v10', uitleg: 'Sadece tipografi: ince çizgiler üzerinde dev Archivo Condensed başlıklar. En sakin, en "gerçek ajans" görünümlü seçenek.',
+    html: () => `<div class="wrap">${kop()}<ol class="rij">${F.map(f => li(f)).join('')}</ol></div>` },
+];
+
+const nr = i => String(i + 1).padStart(2, '0');
+document.getElementById('onav').outerHTML = V.map((v, i) => `<a href="#v${i + 1}" title="${v.naam}">${i + 1}</a>`).join('');
+document.getElementById('main').innerHTML = V.map((v, i) => `
+  <div class="okop" id="v${i + 1}"><div class="wrap"><b>${nr(i)}</b><span>${v.naam}</span><small>${v.uitleg}</small></div></div>
+  <section class="${v.klas}">${v.html()}</section>`).join('');
+</script>
+</body>
+</html>

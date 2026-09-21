@@ -231,7 +231,7 @@ def footer(ctx):
       <div class="footer__blokken">
         <div class="footer__blok">
           <address><span class="footer__sub">{esc(f.veld("adres-label", "Hoofdkantoor"))}</span>{esc(cfg.STRAAT)}<br>{esc(cfg.POSTCODE)} {esc(cfg.PLAATS)}</address>
-          <ul><li><a href="{cfg.TELHREF}">{cfg.TEL}</a></li><li><a href="mailto:{cfg.MAIL}">{cfg.MAIL}</a></li><li><a href="{cfg.ROUTE}" rel="noopener">Route plannen{ctx.icoon("extern")}</a></li></ul>
+          <ul><li><a href="{cfg.TELHREF}">{ctx.icoon("telefoon")}{cfg.TEL}</a></li><li><a href="mailto:{cfg.MAIL}">{ctx.icoon("mail")}{cfg.MAIL}</a></li><li><a href="{cfg.ROUTE}" rel="noopener">Route plannen{ctx.icoon("extern")}</a></li></ul>
         </div>
         <div class="footer__blok">
           <p class="footer__sub">{esc(f.veld("bereikbaar-kop", "Bereikbaar"))}</p>

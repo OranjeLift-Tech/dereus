@@ -9,10 +9,19 @@ NAAM = "vragen"
 CSS = True
 JS = False
 
+# Optie beeld (/contact/): een voorwerp uit de 3D-reeks dat uit het paneel steekt. Naam -> bron, breedte, hoogte.
+# De vormgeving staat onderaan css/blok/vragen.css en geldt alleen op /contact/.
+BEELDEN = {"headset": ("/img/contact-3d/headset.webp", 287, 320)}
+
 
 def html(ctx, kopij, sectie="mist", open=None, **opties):
     k = kopij
     kid = ctx.esc(k.id or "vragen")
+    beeld = ""
+    if opties.get("beeld") in BEELDEN:
+        src, bb, bh = BEELDEN[opties["beeld"]]
+        beeld = (f'<img class="vragen__beeld" src="{src}" alt="" width="{bb}" height="{bh}" '
+                 f'loading="lazy" decoding="async">')
     vragen = []
     for i, it in enumerate(k.items, 1):
         antwoord = ctx.alineas(it.tekst) + (ctx.lijst(it.lijst, "vinklijst") if it.lijst else "")
@@ -32,7 +41,7 @@ def html(ctx, kopij, sectie="mist", open=None, **opties):
     return f'''<section class="sectie sectie--{sectie} b-vragen" id="{kid}" aria-labelledby="{kid}-kop">
   <div class="wrap vragen">
     <div class="vragen__kop">
-      {ctx.kopgroep(k)}
+      {beeld}{ctx.kopgroep(k)}
       {kaart}
     </div>
     <div class="vragen__lijst" data-reveal>

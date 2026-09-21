@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Reviews op /diensten/ · 10 varianten met echte voorwerpen en foto's</title>
+<link rel="stylesheet" href="/css/min/site.min.css">
+<style>
+/* Blok reviews ("Wat klanten zeggen") op /diensten/. Tien varianten in de stijl die de gebruiker koos: echte
+   3D-voorwerpen (img/kaart-3d, bron _ai-beelden/kaart-3d), echte foto's, echte dingen als drager van de tekst.
+   De teksten zijn exact die van de pagina: label, kop, intro, de score met de link, drie reviews met naam.
+   Geen verzonnen klantfoto's. Alles staat stil. */
+:root{
+  --rand-wit:#D5E2F8;--val-midden:0 14px 26px -14px rgba(14,26,51,.30);--val-ver:0 46px 80px -46px rgba(11,35,82,.5);
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px rgba(14,26,51,.05),0 7px 0 var(--rand-wit),0 8px 0 rgba(14,26,51,.08),var(--val-midden),var(--val-ver);
+  --obj:drop-shadow(3px 4px 2px rgba(11,35,82,.28)) drop-shadow(14px 22px 16px rgba(11,35,82,.34));
+  --ding:drop-shadow(0 4px 3px rgba(11,35,82,.3)) drop-shadow(0 34px 28px rgba(11,35,82,.34));
+}
+html{scroll-padding-top:4.5rem}
+*,*::before,*::after{animation:none!important;transition:none!important}
+body{background:#fff}
+.onav{position:sticky;top:0;z-index:50;background:var(--brand-secondary);color:#fff;box-shadow:0 6px 18px -8px rgba(5,14,35,.6)}
+.onav .wrap{display:flex;align-items:center;gap:.3rem .4rem;flex-wrap:wrap;padding-block:.6rem}
+.onav strong{font:800 1.05rem/1 var(--font-display);font-stretch:condensed;margin-right:auto}
+.onav a{display:grid;place-items:center;min-width:2.2rem;height:2.2rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font:700 .85rem/1 var(--font-sans)}
+.onav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.okop{background:var(--ink);color:#fff}
+.okop .wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem 1.2rem;padding-block:.9rem}
+.okop b{font:800 1.5rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-accent)}
+.okop span{font:700 1.15rem/1.2 var(--font-display);font-stretch:condensed}
+.okop small{flex-basis:100%;color:rgba(255,255,255,.75);font-size:.9rem}
+.v{position:relative;padding-block:clamp(3rem,5vw,5rem);background:#fff}
+/* de kop van het blok */
+.kp{max-width:46rem;margin:0 auto clamp(2rem,3vw,3rem);text-align:center}
+.kp .label{justify-content:center}.kp h2{margin:0}.kp .intro{margin-inline:auto}
+.sc{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.1rem;padding:.55rem 1.1rem;border:1px solid var(--grey-300);border-radius:999px;background:var(--off-white);color:var(--brand-primary);font-weight:700;text-decoration:none}
+.sc b{color:var(--ink);font:800 1.4rem/1 var(--font-display);font-stretch:condensed}
+.g{flex:none;width:1.25em;height:1.25em}
+.st{color:var(--brand-accent);letter-spacing:.08em}
+/* een review */
+.rv{margin:0;display:flex;flex-direction:column;min-width:0}
+.rv blockquote{margin:.5em 0 .9em}.rv blockquote p{margin:0;color:var(--graphite)}
+.rv blockquote p::before{content:"\201C"}.rv blockquote p::after{content:"\201D"}
+.rv figcaption{display:flex;align-items:center;gap:.7em;margin-top:auto}
+.rv figcaption b{display:block;color:var(--ink);line-height:1.25}.rv figcaption small{color:var(--grey-600);font-size:.85em}
+.av{display:grid;place-items:center;flex:none;width:2.6em;height:2.6em;border-radius:50%;font:800 .95em/1 var(--font-display);font-stretch:condensed}
+.av--a{background:var(--brand-primary);color:#fff}.av--b{background:var(--brand-accent);color:var(--brand-secondary)}.av--c{background:var(--brand-secondary);color:#fff}
+.drie{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.2rem,2vw,2rem)}
+.ding{position:relative;container-type:inline-size;width:100%;background:center/100% 100% no-repeat;filter:var(--ding)}
+.vlak{position:absolute;display:flex;flex-direction:column}
+@media (max-width:899px){.drie{grid-template-columns:1fr}}
+
+/* 1 · telefoon: de reviews komen binnen als berichten */
+.w1 .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,24rem);gap:clamp(2rem,6vw,6rem);align-items:center}
+.w1 .kp{margin:0;text-align:left}.w1 .kp .label{justify-content:flex-start}.w1 .kp .intro{margin-inline:0}
+.w1 .ding{aspect-ratio:456/900;background-image:url(/img/kaart-3d/telefoon.webp)}
+.w1 .vlak{left:13.06%;top:8.94%;width:73.87%;height:82.73%;overflow:hidden;border-radius:13%/5.9%;background:var(--primary-50)}
+.w1 .vlak::before{content:"";position:absolute;z-index:3;left:50%;top:2.6cqw;translate:-50% 0;width:23cqw;height:6.2cqw;border-radius:999px;background:#05080F}
+.w1 .vlak::after{content:"";position:absolute;z-index:4;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.3),rgba(255,255,255,.08) 22%,transparent 38%)}
+.w1 .balk{flex:none;display:flex;align-items:center;gap:2cqw;padding:12cqw 4cqw 3cqw;background:#fff;border-bottom:1px solid var(--grey-300);font:700 4cqw/1.2 var(--font-sans);color:var(--ink)}
+.w1 .balk b{font:800 5.2cqw/1 var(--font-display)}
+.w1 .feed{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:3cqw;padding:4cqw 3.4cqw;scrollbar-width:thin}
+.w1 .rv{align-self:flex-start;max-width:95%;padding:3cqw 3.6cqw;border-radius:5cqw 5cqw 5cqw 1.2cqw;background:#fff;font-size:3.9cqw;line-height:1.45;box-shadow:0 0 0 1px rgba(14,26,51,.05),0 2cqw 3cqw -2cqw rgba(11,35,82,.35)}
+.w1 .rv blockquote p{color:var(--ink)}
+@media (max-width:899px){.w1 .in{grid-template-columns:1fr;justify-items:center}.w1 .kp{text-align:center}.w1 .kp .label{justify-content:center}.w1 .ding{max-width:22rem}}
+
+/* 2 · tablet: de reviews zoals u ze op Google ziet, op een echt scherm */
+.w2 .ding{max-width:64rem;margin-inline:auto;aspect-ratio:900/672;background-image:url(/img/kaart-3d/tablet.webp)}
+.w2 .vlak{left:7.83%;top:11.75%;width:84.35%;height:77.08%;overflow:hidden;border-radius:1.6cqw;background:#fff}
+.w2 .vlak::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.35),rgba(255,255,255,.06) 20%,transparent 34%)}
+.w2 .balk{display:flex;align-items:center;gap:1.4cqw;padding:2.2cqw 3cqw;border-bottom:1px solid var(--grey-300);font-size:1.7cqw;color:var(--brand-primary);font-weight:700}
+.w2 .balk b{color:var(--ink);font:800 2.8cqw/1 var(--font-display)}.w2 .balk a{margin-left:auto;color:inherit}
+.w2 .drie{flex:1;gap:0;grid-template-columns:repeat(3,1fr)}
+.w2 .rv{padding:3cqw 2.6cqw;font-size:1.62cqw;line-height:1.5;border-right:1px solid var(--grey-300)}.w2 .rv:last-child{border:0}
+
+/* 3 · prikbord: echte kurk, echte punaises, de reviews als briefjes */
+.w3 .ding{aspect-ratio:1200/600;background-image:url(/img/kaart-3d/prikbord.webp)}
+.w3 .vlak{left:5.33%;top:10.13%;width:89.33%;height:80.19%;display:grid;grid-template-columns:.8fr 1fr 1fr 1fr;gap:2.4cqw;padding:3.4cqw 2.6cqw 2.4cqw}
+.w3 .brief{position:relative;display:flex;flex-direction:column;padding:3cqw 1.8cqw 1.6cqw;background:#fff;font-size:1.22cqw;line-height:1.5;box-shadow:0 .2cqw .3cqw rgba(58,38,17,.35),.5cqw 1.4cqw 1.6cqw -.6cqw rgba(58,38,17,.55)}
+.w3 .brief:nth-child(1){rotate:-2.2deg;background:var(--accent-100);align-self:center;text-align:center;align-items:center;gap:.8cqw}
+.w3 .brief:nth-child(2){rotate:1.4deg}.w3 .brief:nth-child(3){rotate:-1.1deg;margin-top:1.4cqw}.w3 .brief:nth-child(4){rotate:1.8deg}
+.w3 .brief::before{content:"";position:absolute;left:50%;top:-2.6cqw;translate:-50% 0;width:5cqw;height:5cqw;background:url(/img/kaart-3d/pin.webp) center/contain no-repeat;filter:drop-shadow(.3cqw .6cqw .4cqw rgba(58,38,17,.5))}
+.w3 .brief b.cijfer{font:800 5cqw/1 var(--font-display);color:var(--brand-secondary)}
+.w3 .brief a{color:var(--brand-primary);font-weight:700}
+
+/* 4 · bedankkaarten: een witte kaart op haar blauwe envelop, per review één */
+.w4 .ding{aspect-ratio:780/720;background-image:url(/img/kaart-3d/kaart.webp)}
+.w4 .vlak{left:22.56%;top:20.3%;width:49.74%;height:70.61%;font-size:3.3cqw;line-height:1.5}
+.w4 .rv{flex:1}
+.w4 .drie{gap:0}
+
+/* 5 · gastenboek: een open ringband, links de kop en de eerste review, rechts de andere twee */
+.w5 .ding{max-width:66rem;margin-inline:auto;aspect-ratio:1080/708;background-image:url(/img/kaart-3d/boek.webp)}
+.w5 .vlak{top:12.85%;width:35%;height:75.07%;gap:2.2cqw;font-size:1.45cqw;line-height:1.5}
+.w5 .vlak--l{left:8.12%}.w5 .vlak--r{left:56.88%}
+.w5 .kp{margin:0;text-align:left}.w5 .kp .label{justify-content:flex-start;font-size:1.2cqw;margin-bottom:.8cqw}.w5 .kp h2{font-size:3.3cqw}.w5 .kp .intro{margin:.8cqw 0 0;font-size:1.5cqw}
+.w5 .sc{margin-top:1.2cqw;padding:.7cqw 1.3cqw;font-size:1.35cqw}.w5 .sc b{font-size:2cqw}
+.w5 .rv{flex:1;padding-top:1.8cqw;border-top:.2cqw dashed var(--grey-300)}
+
+/* 6 · verhuisdozen: elke review is een etiket op een echte doos van De Reus */
+.w6 .ding{aspect-ratio:840/708;background-image:url(/img/kaart-3d/doos.webp)}
+.w6 .vlak{left:10%;top:42%;width:80%;height:47%}
+.w6 .etiket{flex:1;display:flex;padding:3.4cqw 4cqw 2.6cqw;border-radius:.8cqw;background:linear-gradient(175deg,#fff,#F7F8FA);rotate:-.8deg;font-size:2.85cqw;line-height:1.4;
+  box-shadow:inset 0 1.3cqw 0 var(--brand-primary),0 .3cqw .5cqw rgba(58,38,17,.35),0 1.4cqw 2cqw -1cqw rgba(58,38,17,.45)}
+.w6 .ding:nth-child(2) .etiket{rotate:.9deg}
+
+/* 7 · vijf gouden sterren in 3D, de score groot, de reviews als platen eronder */
+.w7{background:linear-gradient(180deg,#fff,var(--primary-50))}
+.w7 .rij{display:flex;justify-content:center;align-items:flex-end;gap:clamp(.2rem,1vw,1rem);margin-bottom:1rem}
+.w7 .rij img{width:clamp(4rem,9vw,8rem);height:auto;filter:var(--obj)}
+.w7 .rij img:nth-child(odd){translate:0 .6rem}.w7 .rij img:nth-child(3){width:clamp(5rem,11vw,10rem);translate:0 0}
+.w7 .rv{padding:clamp(1.4rem,2.4vw,2rem);border-radius:22px;background:#fff;box-shadow:var(--plaat);font-size:var(--text-small);line-height:1.6}
+
+/* 8 · fotoscène: een brede echte foto, de verhuizer stapt eruit, de reviews liggen over de onderrand */
+.w8{padding-top:0;background:var(--off-white)}
+.w8 .foto{position:relative;height:clamp(24rem,38vw,32rem);background:var(--brand-secondary) url(/img/footer-wagen.webp) right 30%/cover}
+.w8 .foto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,35,82,.88) 0 38%,rgba(11,35,82,.35) 70%,rgba(11,35,82,.15))}
+.w8 .foto .wrap{position:relative;z-index:1;display:flex;align-items:center;height:calc(100% - 6rem)}
+.w8 .kp{margin:0;text-align:left}.w8 .kp .label{justify-content:flex-start;color:var(--brand-accent)}.w8 .kp h2{color:#fff}.w8 .kp .intro{margin-inline:0;color:rgba(255,255,255,.9)}
+.w8 .drie{position:relative;z-index:2;margin-top:-7rem}
+.w8 .rv{padding:clamp(1.4rem,2.4vw,2rem);border-radius:22px;background:#fff;box-shadow:var(--plaat);font-size:var(--text-small);line-height:1.6}
+
+/* 9 · studio: de 3D-reviewkaart met sterren groot op de vloer, de reviews als rustige lijst ernaast */
+.w9 .in{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.w9 .podium{position:relative;border-radius:26px;min-height:26rem;overflow:hidden;box-shadow:var(--plaat);background:radial-gradient(24rem 14rem at 40% 38%,#fff,rgba(255,255,255,0) 70%),linear-gradient(180deg,#EEF3FD 0 66%,#DCE6F8 66%)}
+.w9 .podium img{position:absolute;left:50%;translate:-50% 0;width:78%;height:auto}
+.w9 .podium .o{bottom:26%;filter:var(--obj)}
+.w9 .podium .sp{top:74%;scale:1 -1;opacity:.2;-webkit-mask-image:linear-gradient(0deg,#000,transparent 60%);mask-image:linear-gradient(0deg,#000,transparent 60%)}
+.w9 .kp{margin:0 0 1.5rem;text-align:left}.w9 .kp .label{justify-content:flex-start}.w9 .kp .intro{margin-inline:0}
+.w9 .rv{padding:1.2rem 0;border-top:1px solid var(--grey-300);font-size:var(--text-small);line-height:1.6}
+.w9 .rv blockquote{margin:.3em 0 .7em}
+@media (max-width:899px){.w9 .in{grid-template-columns:1fr}}
+
+/* 10 · de foto is de kaart: elke review op een echte foto van het werk, de verhuizer steekt erboven uit */
+.w10 .drie{padding-top:5rem}
+.w10 .kaart{position:relative;min-height:30rem;border-radius:22px;box-shadow:0 8px 0 #071838,var(--val-midden),var(--val-ver)}
+.w10 .lijst{position:absolute;inset:0;overflow:hidden;border-radius:22px;background:var(--brand-secondary)}
+.w10 .lijst img,.w10 .uit img{position:absolute;left:-18%;top:-5rem;width:136%;max-width:none;height:auto}
+.w10 .lijst::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,35,82,0) 20%,rgba(11,35,82,.85) 50%,var(--brand-secondary) 72%)}
+.w10 .uit{position:absolute;inset:0;clip-path:inset(-6rem 0 58% 0)}.w10 .uit img{filter:drop-shadow(0 12px 12px rgba(3,10,28,.5))}
+.w10 .rv{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:clamp(1.3rem,2.2vw,1.9rem);font-size:var(--text-small);line-height:1.6}
+.w10 .av{box-shadow:0 0 0 2px rgba(255,255,255,.65)}
+.w10 .rv blockquote p{color:rgba(255,255,255,.92)}.w10 .rv figcaption b{color:#fff}.w10 .rv figcaption small{color:rgba(255,255,255,.75)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="gg" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.6l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></symbol></svg>
+<nav class="onav" aria-label="Varianten"><div class="wrap"><strong>Reviews · 10 varianten met echte voorwerpen en foto's</strong><span id="nav"></span></div></nav>
+<main id="lijst"></main>
+<script>
+var GOOGLE='https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus';
+var R=[
+ {i:'MV',k:'a',n:'Mick Versnel',t:"Verhuisbedrijf de Reus, absoluut top!! Netjes, voorzichtig en respectvol met m'n spullen! Een aanrader!",f:'particulier'},
+ {i:'DH',k:'b',n:'Daniëlle Van haaften',t:'Dennis jack en Vincent. Bedankt voor de goede verhuizing. Zeer netjes gewerkt. Alles netjes neergezet. De montage liep vlekkeloos. Zeker een aanrader. Bedankt jongens.',f:'nationaal'},
+ {i:'CK',k:'c',n:'Charlie K',t:'Deze jongens zijn de hardstwerkende, eerlijkste en liefste mensen die ik ooit had kunnen vinden. Mijn verhuizing was echt zwaar en moeilijk, maar Omar bleef altijd positief, vrolijk en professioneel.',f:'woningontruiming'}
+];
+var G='<svg class="g" aria-hidden="true"><use href="#gg"/></svg>', ST='<span class="st" aria-hidden="true">★★★★★</span>';
+function rv(r){return '<figure class="rv">'+ST+'<span class="vh">5 van 5 sterren</span><blockquote><p>'+r.t+'</p></blockquote><figcaption><span class="av av--'+r.k+'" aria-hidden="true">'+r.i+'</span><span><b>'+r.n+'</b><small>Review op Google</small></span></figcaption></figure>'}
+function sc(){return '<a class="sc" href="'+GOOGLE+'" rel="noopener" target="_blank">'+G+'<b>4,9</b>'+ST+'<span>Bekijk alle reviews op Google</span></a>'}
+function kp(){return '<div class="kp"><p class="label">Reviews</p><h2>Wat klanten zeggen</h2><p class="intro">Netjes, voorzichtig en respectvol: zo omschrijven klanten ons op Google.</p>'+sc()+'</div>'}
+var alle=function(){return R.map(rv).join('')};
+var V=[
+ ['Telefoon: de reviews komen binnen','Een echte telefoon (3D-render). De drie reviews staan als binnengekomen berichten op het scherm, met bovenin de Google-score.',
+  function(){return '<div class="in">'+kp()+'<div class="ding"><div class="vlak"><div class="balk">'+G+'<b>4,9</b>'+ST+'</div><div class="feed">'+alle()+'</div></div></div></div>'}],
+ ['Tablet met Google-reviews','Een echte tablet, liggend. Op het scherm de score en de drie reviews naast elkaar, zoals u ze op Google ziet.',
+  function(){return kp()+'<div class="ding"><div class="vlak"><div class="balk">'+G+'<b>4,9</b>'+ST+'<a href="'+GOOGLE+'">Bekijk alle reviews op Google</a></div><div class="drie">'+alle()+'</div></div></div>'}],
+ ['Prikbord','Echt kurk in een houten lijst, met goudgele punaises. De score en de drie reviews hangen er als briefjes op, elk iets scheef.',
+  function(){return kp()+'<div class="ding"><div class="vlak"><div class="brief">'+G+'<b class="cijfer">4,9</b>'+ST+'<a href="'+GOOGLE+'">Bekijk alle reviews op Google</a></div>'+R.map(function(r){return '<div class="brief">'+rv(r)+'</div>'}).join('')+'</div></div>'}],
+ ['Bedankkaarten','Klanten bedanken de verhuizers: elke review is een witte kaart op haar blauwe envelop.',
+  function(){return kp()+'<div class="drie">'+R.map(function(r){return '<div class="ding"><div class="vlak">'+rv(r)+'</div></div>'}).join('')+'</div>'}],
+ ['Gastenboek','Een open ringband: links de kop, de score en de eerste review, rechts de andere twee.',
+  function(){return '<div class="ding"><div class="vlak vlak--l">'+kp()+rv(R[0])+'</div><div class="vlak vlak--r">'+rv(R[1])+rv(R[2])+'</div></div>'}],
+ ['Verhuisdozen met etiket','Drie echte dozen van De Reus; elke review staat op het etiket dat op de doos is geplakt.',
+  function(){return kp()+'<div class="drie">'+R.map(function(r){return '<div class="ding"><div class="vlak"><div class="etiket">'+rv(r)+'</div></div></div>'}).join('')+'</div>'}],
+ ['Vijf gouden sterren','Vijf massieve gouden sterren in 3D boven de kop; de reviews als witte platen eronder.',
+  function(){return '<div class="rij" aria-hidden="true">'+[1,2,3,4,5].map(function(){return '<img src="/img/kaart-3d/ster.webp" alt="">'}).join('')+'</div>'+kp()+'<div class="drie">'+alle()+'</div>'}],
+ ['Fotoscène','Een brede echte foto als band, de kop erop in wit; de drie reviews liggen als platen over de onderrand van de foto.',
+  function(){return '</div><div class="foto"><div class="wrap">'+kp()+'</div></div><div class="wrap"><div class="drie">'+alle()+'</div>'}],
+ ['Studio met de 3D-reviewkaart','Links de 3D-reviewkaart met sterren groot op een studiovloer (met spiegeling), rechts de reviews als rustige lijst.',
+  function(){return '<div class="in"><div class="podium" aria-hidden="true"><img class="sp" src="/img/contact-3d/score.webp" alt=""><img class="o" src="/img/contact-3d/score.webp" alt=""></div><div>'+kp()+alle()+'</div></div>'}],
+ ['De foto is de kaart','Elke review staat op een echte foto van het werk; de verhuizer steekt boven de kaart uit.',
+  function(){return kp()+'<div class="drie">'+R.map(function(r){return '<div class="kaart"><span class="lijst"><img src="/img/dienst-'+r.f+'.webp" alt=""></span><span class="uit"><img src="/img/dienst-'+r.f+'-uit.webp" alt=""></span>'+rv(r)+'</div>'}).join('')+'</div>'}]
+];
+var html='',nav='';
+V.forEach(function(v,n){n++;nav+='<a href="#w'+n+'">'+n+'</a>';
+  html+='<div class="okop" id="w'+n+'"><div class="wrap"><b>'+n+'</b><span>'+v[0]+'</span><small>'+v[1]+'</small></div></div><section class="v w'+n+'"><div class="wrap">'+v[2]()+'</div></section>'});
+document.getElementById('lijst').innerHTML=html;document.getElementById('nav').outerHTML=nav;
+</script>
+</body>
+</html>

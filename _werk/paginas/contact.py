@@ -19,6 +19,6 @@ PAGINA = Pagina(
         ("contactkaarten", {}),
         ("formulier", {"variant": "contact", "grond": "lucht"}),
         ("na-bericht", {}),
-        ("vragen", {"sectie": "wit"}),
+        ("vragen", {"sectie": "wit", "beeld": "headset"}),   # servicebalie: het paneel met de headset erboven
     ],
 )

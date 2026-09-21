@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Prijsopbouw · ronde 2 · 15 ontwerpen</title>
+<!-- Kernlaag van de site: merkboekkleuren, Archivo Condensed + Inter, label met huisje, .h2, .wrap. -->
+<link rel="stylesheet" href="/css/min/site.min.css">
+<style>
+/* Ronde 2: geen rekwisieten. Elk ontwerp past in het echte blok: Mist-sectie, kop links, vijf factoren over de
+   volle breedte, daaronder All-in / Regieprijs (hier gedimd als context). Alles staat stil. */
+:root{
+  --rand-wit:#D5E2F8; --rand-blauw:#071838; --rand-geel:#DB940E;
+  --val-dicht:0 1px 2px rgba(14,26,51,.08); --val-midden:0 14px 26px -14px rgba(14,26,51,.30); --val-ver:0 46px 80px -46px rgba(11,35,82,.5);
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px rgba(14,26,51,.05),0 7px 0 var(--rand-wit),0 8px 0 rgba(14,26,51,.08),var(--val-midden),var(--val-ver);
+  --plaat-blauw:inset 0 1px 0 rgba(255,255,255,.18),0 7px 0 var(--rand-blauw),var(--val-midden),var(--val-ver);
+  --verzonken:inset 0 2px 4px rgba(14,26,51,.12),inset 0 0 0 1px rgba(14,26,51,.04);
+}
+html{scroll-padding-top:4.5rem}
+*,*::before,*::after{animation:none!important;transition:none!important}
+ol{list-style:none;margin:0;padding:0}
+.onav{position:sticky;top:0;z-index:50;background:var(--brand-secondary);color:#fff;box-shadow:0 6px 18px -8px rgba(5,14,35,.6)}
+.onav .wrap{display:flex;align-items:center;gap:.35rem .5rem;flex-wrap:wrap;padding-block:.6rem}
+.onav strong{font:800 1.05rem/1 var(--font-display);font-stretch:condensed;margin-right:auto}
+.onav a{display:grid;place-items:center;min-width:2.2rem;height:2.2rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font:700 .85rem/1 var(--font-sans)}
+.onav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.okop{background:var(--ink);color:#fff}
+.okop .wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem 1.2rem;padding-block:.9rem}
+.okop b{font:800 1.5rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-accent)}
+.okop span{font:700 1.15rem/1.2 var(--font-display);font-stretch:condensed}
+.okop small{flex:1 1 24rem;color:rgba(255,255,255,.72);font-size:.9rem}
+
+/* ---- het echte blok ---- */
+.v{position:relative;padding-block:clamp(3.5rem,2.5rem + 3vw,5.5rem);background:var(--off-white);overflow:clip}
+.kop{max-width:46rem;margin-bottom:2.5rem}
+.kop .h2{margin:0 0 1rem}
+.kop .intro-t{margin:0;font-size:var(--text-lead);max-width:68ch}
+.lijstkop{margin:0 0 1.25rem;color:var(--ink);font:700 .875rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase}
+.f h3{margin:0;color:var(--brand-secondary);font:700 var(--text-h4)/1.22 var(--font-display);font-stretch:condensed}
+.f p{margin:0;color:var(--grey-600);font-size:1rem;line-height:1.5}
+.nr{font-family:var(--font-display);font-stretch:condensed;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.rij5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(1rem,1.6vw,1.5rem)}
+/* context: het vervolg van het blok, gedimd */
+.duo{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;margin-top:4rem;opacity:.5;pointer-events:none}
+.duo article{padding:clamp(1.5rem,2.6vw,2.4rem);border-radius:20px}
+.duo article:first-child{background:var(--brand-primary);color:#fff} .duo article:last-of-type{background:#fff;box-shadow:inset 0 0 0 2px var(--brand-primary)}
+.duo h3{margin:0 0 .75rem;font:800 var(--text-h2)/1.1 var(--font-display);font-stretch:condensed;color:var(--brand-primary)} .duo article:first-child h3{color:#fff}
+.duo p{margin:0}
+.duo span{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:3.5rem;height:3.5rem;margin:-1.75rem 0 0 -1.75rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 0 0 5px var(--off-white);font:800 1.25rem/1 var(--font-display);text-transform:uppercase}
+/* foto: scherp op zacht, zoals de dienstenpanelen */
+.beeld{position:relative;isolation:isolate}
+.beeld .zacht{position:absolute;inset:0;overflow:hidden;border-radius:inherit;background:var(--brand-secondary)}
+.beeld .zacht img{width:100%;height:100%;object-fit:cover;filter:blur(1.6px) brightness(.86) saturate(.9);transform:scale(1.03)}
+.beeld .uit{position:absolute;inset:0;z-index:1;filter:drop-shadow(0 2px 2px rgba(14,26,51,.4)) drop-shadow(0 18px 18px rgba(14,26,51,.4))}
+.beeld .uit img{width:100%;height:100%;object-fit:cover}
+
+/* ============ 1. FOTOKAARTEN: scherp op zacht, schijf op de hoek ============ */
+.w1 .f{position:relative;display:flex;flex-direction:column;border-radius:22px;background:#fff;box-shadow:var(--plaat)}
+.w1 .beeld{aspect-ratio:4/3;margin:.55rem .55rem 0;border-radius:16px}
+.w1 .uit{clip-path:inset(-20% 0 0 0 round 0 0 16px 16px)} .w1 .uit img{transform:scale(1.07);transform-origin:50% 100%}
+.w1 .nr{position:absolute;z-index:2;left:1.1rem;top:-1.1rem;display:grid;place-items:center;width:3.1rem;height:3.1rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font-size:1.35rem;box-shadow:0 0 0 4px #fff,0 4px 0 4px var(--rand-wit),0 12px 16px -4px rgba(11,35,82,.4)}
+.w1 .tekst{display:grid;gap:.4rem;padding:1.1rem 1.25rem 1.5rem}
+.w1 .rij5{padding-top:1.1rem}
+
+/* ============ 2. MEDAILLONS: ronde foto's aan één lijn ============ */
+.w2 .rij5{position:relative;gap:1.25rem}
+.w2 .rij5::before{content:"";position:absolute;left:10%;right:10%;top:5rem;border-top:2px dashed var(--primary-300)}
+.w2 .f{position:relative;display:grid;justify-items:center;gap:.45rem;text-align:center}
+.w2 .rond{position:relative;width:10rem;height:10rem;margin-bottom:.8rem;border-radius:50%;background:#fff;box-shadow:0 0 0 6px #fff,0 0 0 8px var(--brand-accent),0 8px 0 8px var(--rand-wit),0 30px 40px -14px rgba(11,35,82,.45)}
+.w2 .rond img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.w2 .nr{position:absolute;right:-.2rem;bottom:-.2rem;display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--brand-secondary);color:var(--brand-accent);font-size:1.25rem;box-shadow:0 0 0 4px #fff}
+.w2 .f p{max-width:22ch}
+
+/* ============ 3. EEN PLAAT: vijf vakken, plus op de naad ============ */
+.w3 .rij5{position:relative;gap:0;border-radius:24px;background:#fff;box-shadow:var(--plaat);overflow:visible}
+.w3 .rij5::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;border-radius:24px 24px 0 0;background:linear-gradient(90deg,var(--brand-primary),var(--brand-secondary))}
+.w3 .f{position:relative;display:flex;flex-direction:column;gap:.5rem;padding:2.2rem 1.6rem 2rem}
+.w3 .f+.f{border-left:1px solid var(--grey-300)}
+.w3 .f+.f::before{content:"+";position:absolute;left:-1rem;top:50%;margin-top:-1rem;display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.35rem/1 var(--font-display);box-shadow:0 0 0 4px #fff,0 3px 0 4px var(--rand-wit)}
+.w3 .nr{font-size:3rem;color:var(--brand-primary);margin-bottom:.35rem}
+
+/* ============ 4. BLAUWVERLOOP: van blauw 50 naar Diepblauw, zoals de treden eronder ============ */
+.w4 .f{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;gap:.5rem;min-height:15.5rem;padding:5.6rem 1.4rem 1.7rem;border-radius:22px}
+.w4 .f::before{content:"";width:2.6rem;height:5px;border-radius:5px;background:var(--brand-accent)}
+.w4 .nr{position:absolute;z-index:-1;right:1rem;top:.9rem;font-size:5.2rem;letter-spacing:-.02em}
+.w4 .f:nth-child(1){background:#fff;box-shadow:var(--plaat)} .w4 .f:nth-child(1) .nr{color:var(--primary-100)}
+.w4 .f:nth-child(2){background:var(--primary-200);box-shadow:0 7px 0 #A9C4F3,var(--val-midden),var(--val-ver)} .w4 .f:nth-child(2) .nr{color:rgba(23,70,162,.16)} .w4 .f:nth-child(2) p{color:var(--graphite)}
+.w4 .f:nth-child(3){background:#2A5FC4;box-shadow:0 7px 0 #1A4596,var(--val-midden),var(--val-ver)}
+.w4 .f:nth-child(4){background:var(--brand-primary);box-shadow:0 7px 0 #0F3078,var(--val-midden),var(--val-ver)}
+.w4 .f:nth-child(5){background:var(--brand-secondary);box-shadow:var(--plaat-blauw)}
+.w4 .f:nth-child(n+3) h3{color:#fff} .w4 .f:nth-child(n+3) p{color:rgba(255,255,255,.88)} .w4 .f:nth-child(n+3) .nr{color:rgba(255,255,255,.13)}
+
+/* ============ 5. ICONEN: merkiconen in een verzonken vak ============ */
+.w5 .f{position:relative;display:flex;flex-direction:column;gap:.5rem;padding:1.5rem 1.4rem 1.7rem;border-radius:22px;background:#fff;box-shadow:var(--plaat)}
+.w5 .vak{display:grid;place-items:center;width:4.6rem;height:4.6rem;margin-bottom:.7rem;border-radius:18px;background:var(--primary-50);box-shadow:var(--verzonken)}
+.w5 .vak img{width:2.7rem;height:2.7rem}
+.w5 .nr{position:absolute;right:1.2rem;top:1.4rem;padding:.35rem .6rem;border-radius:999px;background:var(--brand-secondary);color:var(--brand-accent);font-size:1rem}
+
+/* ============ 6. FOTOSTROOK: één brede foto, de kaarten schuiven eroverheen ============ */
+.w6 .strook{position:relative;height:17rem;border-radius:26px;overflow:hidden;background:var(--brand-secondary);box-shadow:var(--val-midden)}
+.w6 .strook img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.w6 .strook::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,35,82,0) 30%,rgba(11,35,82,.78))}
+.w6 .rij5{position:relative;margin:-6.5rem 1.5rem 0}
+.w6 .f{display:flex;flex-direction:column;gap:.45rem;padding:1.35rem 1.25rem 1.6rem;border-radius:20px;background:#fff;box-shadow:var(--plaat)}
+.w6 .nr{display:grid;place-items:center;width:2.8rem;height:2.8rem;margin-bottom:.4rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font-size:1.2rem;box-shadow:0 3px 0 var(--rand-geel)}
+
+/* ============ 7. DIEPBLAUW PANEEL: één donkere plaat op Mist (geen band) ============ */
+.w7 .paneel{position:relative;isolation:isolate;overflow:hidden;padding:2.2rem clamp(1.5rem,3vw,2.6rem) 2.4rem;border-radius:28px;background:radial-gradient(50rem 22rem at 90% 0,#1B4BA6,transparent 65%),var(--brand-secondary);box-shadow:var(--plaat-blauw)}
+.w7 .paneel::after{content:"";position:absolute;z-index:-1;right:-3rem;bottom:-5rem;width:24rem;aspect-ratio:535.3/509.8;background:rgba(255,255,255,.05);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.w7 .lijstkop{color:var(--primary-300)}
+.w7 .rij5{gap:0}
+.w7 .f{display:flex;flex-direction:column;gap:.5rem;padding:.2rem 1.5rem .2rem}
+.w7 .f:first-child{padding-left:0} .w7 .f+.f{border-left:1px solid rgba(255,255,255,.2)}
+.w7 .nr{font-size:2.8rem;color:var(--brand-accent);margin-bottom:.5rem}
+.w7 .f h3{color:#fff} .w7 .f p{color:rgba(255,255,255,.84)}
+
+/* ============ 8. LIJST EN FOTO: de factoren als nette lijst, ernaast één grote foto ============ */
+.w8 .in{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(1.5rem,3vw,3rem);align-items:stretch}
+.w8 ol{padding:.4rem 1.8rem;border-radius:24px;background:#fff;box-shadow:var(--plaat)}
+.w8 .f{display:grid;grid-template-columns:3.6rem minmax(0,15rem) minmax(0,1fr);gap:0 1.2rem;align-items:center;padding:1.05rem 0}
+.w8 .f+.f{border-top:1px solid var(--grey-300)}
+.w8 .nr{display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--primary-50);color:var(--brand-primary);font-size:1.25rem;box-shadow:var(--verzonken)}
+.w8 .beeld{min-height:20rem;border-radius:24px;margin:0 1rem 1rem 0}
+.w8 .beeld::before{content:"";position:absolute;z-index:-1;inset:1rem -1rem -1rem 1rem;border-radius:24px;background:var(--brand-accent)}
+.w8 .zacht img,.w8 .uit img{object-position:35% 50%}
+
+/* ============ 9. KOPBAND: dezelfde blauwe kopband als de offertekaart ============ */
+.w9 .f{position:relative;display:flex;flex-direction:column;border-radius:20px;background:#fff;box-shadow:var(--plaat);overflow:hidden}
+.w9 .band{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;gap:.3rem;min-height:7.2rem;padding:1.1rem 1.25rem 1rem;background:linear-gradient(135deg,var(--brand-primary),var(--brand-secondary))}
+.w9 .band::before{content:"";position:absolute;left:1.25rem;top:0;width:2.6rem;height:5px;border-radius:0 0 5px 5px;background:var(--brand-accent)}
+.w9 .band::after{content:"";position:absolute;z-index:-1;right:-1.2rem;bottom:-1.6rem;width:7rem;aspect-ratio:535.3/509.8;background:rgba(255,255,255,.08);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.w9 .nr{font-size:1.5rem;color:var(--brand-accent)}
+.w9 .f h3{color:#fff}
+.w9 .f p{padding:1.1rem 1.25rem 1.5rem}
+
+/* ============ 10. REUZENCIJFERS: het cijfer staat achter de kaart ============ */
+.w10 .f{position:relative;display:flex;flex-direction:column}
+.w10 .nr{position:relative;z-index:0;padding-left:.9rem;font-size:7.5rem;line-height:1.05;letter-spacing:-.03em;color:transparent;background:linear-gradient(180deg,#2A5FC4,var(--brand-secondary));-webkit-background-clip:text;background-clip:text}
+.w10 .kaart{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:.45rem;margin-top:-3.4rem;padding:1.4rem 1.3rem 1.6rem;border-radius:20px;background:#fff;box-shadow:var(--plaat)}
+.w10 .kaart::before{content:"";width:2.4rem;height:5px;border-radius:5px;background:var(--brand-accent);margin-bottom:.2rem}
+
+/* ============ 11. MOZAIEK: drie boven, foto en twee onder ============ */
+.w11 .rij{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem 1.25rem}
+.w11 .f{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:auto minmax(0,1fr);gap:.35rem 1.1rem;align-content:center;min-height:9.5rem;padding:1.5rem 1.6rem;border-radius:22px;background:#fff;box-shadow:var(--plaat)}
+.w11 .nr{grid-row:span 2;align-self:start;font-size:2.6rem;color:var(--brand-primary)}
+.w11 .nr::after{content:"";display:block;width:100%;height:5px;margin-top:.4rem;border-radius:5px;background:var(--brand-accent)}
+.w11 .f p{grid-column:2}
+.w11 .beeld{min-height:9.5rem;border-radius:22px;box-shadow:0 7px 0 var(--rand-blauw),var(--val-midden),var(--val-ver)}
+
+/* ============ 12. RAIL: geen kaarten, vijf kolommen aan een blauwe lijn ============ */
+.w12 .rij5{position:relative;gap:0;padding-top:1.9rem}
+.w12 .rij5::before{content:"";position:absolute;left:0;right:0;top:.45rem;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--brand-primary),var(--brand-secondary))}
+.w12 .f{position:relative;display:flex;flex-direction:column;gap:.5rem;padding:0 1.6rem 0 0}
+.w12 .f+.f{padding-left:1.6rem;border-left:1px solid var(--grey-300)}
+.w12 .f::before{content:"";position:absolute;left:0;top:-1.9rem;width:1.3rem;height:1.3rem;border-radius:50%;background:var(--brand-accent);box-shadow:0 0 0 4px var(--off-white),0 0 0 6px var(--brand-secondary)}
+.w12 .f+.f::before{left:1.6rem}
+.w12 .nr{font-size:1.05rem;letter-spacing:.06em;color:var(--grey-600)}
+.w12 .f h3{font-size:1.65rem;color:var(--brand-primary)}
+
+/* ============ 13. HOGE FOTOKAARTEN: tekst op de foto, recht en rond ============ */
+.w13 .f{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:.45rem;min-height:23rem;padding:1.4rem 1.3rem 1.6rem;border-radius:22px;background:var(--brand-secondary);box-shadow:0 7px 0 var(--rand-blauw),var(--val-midden),var(--val-ver)}
+.w13 .f img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover}
+.w13 .f::before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(180deg,rgba(11,35,82,.1) 25%,rgba(11,35,82,.86) 66%,var(--brand-secondary))}
+.w13 .nr{position:absolute;left:1.1rem;top:1.1rem;display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font-size:1.3rem;box-shadow:0 3px 0 var(--rand-geel),0 10px 14px -4px rgba(5,14,35,.6)}
+.w13 .f h3{color:#fff;font-size:1.5rem} .w13 .f p{color:rgba(255,255,255,.9)}
+
+/* ============ 14. OPBOUWBALK: één balk in vijf delen, met een accolade naar de prijssoorten ============ */
+.w14 .balk{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));height:4rem;border-radius:999px;overflow:hidden;box-shadow:0 6px 0 var(--rand-blauw),var(--val-midden)}
+.w14 .balk span{display:grid;place-items:center;color:#fff;font:800 1.6rem/1 var(--font-display);font-stretch:condensed;border-left:3px solid var(--off-white)}
+.w14 .balk span:first-child{border-left:0}
+.w14 .balk span:nth-child(1){background:#5F8CE0} .w14 .balk span:nth-child(2){background:#2A5FC4} .w14 .balk span:nth-child(3){background:var(--brand-primary)} .w14 .balk span:nth-child(4){background:var(--primary-600)} .w14 .balk span:nth-child(5){background:var(--brand-secondary);color:var(--brand-accent)}
+.w14 .rij5{gap:0;margin-top:1.6rem}
+.w14 .f{display:flex;flex-direction:column;gap:.45rem;padding:0 1.4rem}
+.w14 .f+.f{border-left:1px solid var(--grey-300)}
+.w14 .f .nr{display:none}
+.w14 .accolade{position:relative;height:2.2rem;margin:1.8rem 1.4rem 0;border:3px solid var(--brand-secondary);border-top:0;border-radius:0 0 18px 18px}
+.w14 .accolade::after{content:"";position:absolute;left:50%;top:100%;height:1.6rem;border-left:3px solid var(--brand-secondary)}
+.w14 .duo{margin-top:1.9rem}
+
+/* ============ 15. TROG EN PILLEN: verzonken goot met vijf opliggende pillen, zoals de velden van de offertekaart ============ */
+.w15 .trog{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;padding:.6rem;border-radius:22px;background:#E6ECF6;box-shadow:var(--verzonken)}
+.w15 .pil{display:flex;align-items:center;gap:.75rem;min-height:4.4rem;padding:.6rem .9rem .6rem .6rem;border-radius:16px;background:#fff;box-shadow:inset 0 1px 0 #fff,0 4px 0 var(--rand-wit),0 10px 16px -8px rgba(14,26,51,.35)}
+.w15 .pil .nr{flex:none;display:grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font-size:1.2rem;box-shadow:0 3px 0 var(--rand-geel)}
+.w15 .pil h3{font-size:1.2rem}
+.w15 .rij5{gap:.6rem;padding:0 .6rem;margin-top:0}
+.w15 .tekst{position:relative;padding:1.6rem .9rem 0 .6rem}
+.w15 .tekst::before{content:"";position:absolute;left:2.05rem;top:.35rem;height:.9rem;border-left:2px solid var(--primary-300)}
+
+/* ---- smal ---- */
+@media(max-width:1000px){
+  .rij5,.w11 .rij,.w15 .trog{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .w3 .f+.f,.w7 .f+.f,.w12 .f+.f,.w14 .f+.f{border-left:0} .w3 .f+.f::before{display:none}
+  .w7 .f,.w7 .f:first-child,.w12 .f,.w12 .f+.f,.w14 .f{padding:1rem 0}
+  .w12 .rij5::before,.w12 .f::before,.w2 .rij5::before{display:none}
+  .w8 .in{grid-template-columns:minmax(0,1fr)} .w8 .f{grid-template-columns:3.6rem minmax(0,1fr)} .w8 .f p{grid-column:2}
+  .w6 .rij5{margin-inline:.75rem}
+  .w14 .balk{height:3rem} .w14 .accolade{display:none}
+  .w15 .rij5{display:none} .w15 .pil{align-items:flex-start}
+}
+@media(max-width:640px){.rij5,.w11 .rij,.w15 .trog,.duo{grid-template-columns:minmax(0,1fr)} .duo span{display:none}}
+</style>
+</head>
+<body>
+<nav class="onav" aria-label="Ontwerpen"><div class="wrap"><strong>Prijsopbouw · ronde 2</strong><span id="onav"></span></div></nav>
+<main id="main"></main>
+
+<script>
+// Tekst letterlijk van /kosten/#opbouw. Foto's en iconen zijn die van de site zelf.
+const F = [
+  { n: '01', t: 'Hoeveel er mee moet', p: 'Een studio is sneller verhuisd dan een eengezinswoning.', b: 'dienst-particulier', i: 'icoon-particulier' },
+  { n: '02', t: 'De afstand', p: 'Binnen Den Haag of naar de andere kant van het land.', b: 'dienst-nationaal', i: 'icoon-nationaal' },
+  { n: '03', t: 'De bereikbaarheid', p: 'Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.', b: 'dienst-verhuislift', i: 'icoon-verhuislift' },
+  { n: '04', t: 'Wat u zelf doet', p: 'Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?', b: 'dienst-handyman', i: 'icoon-handyman' },
+  { n: '05', t: 'Extra diensten', p: 'Zoals een verhuislift of tijdelijke opslag.', b: 'dienst-opslag', i: 'icoon-opslag' },
+];
+const KOP = `<div class="kop"><p class="label">Prijsopbouw</p><h2 class="h2">Hoe de prijs tot stand komt</h2>
+  <p class="intro-t">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div>`;
+const LK = '<h3 class="lijstkop">Wat de prijs bepaalt</h3>';
+const DUO = `<div class="duo" aria-hidden="true"><article><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></article><span>of</span><article><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></article></div>`;
+const nr = f => `<span class="nr" aria-hidden="true">${f.n}</span>`;
+const tekst = f => `<h3>${f.t}</h3><p>${f.p}</p>`;
+const basis = f => nr(f) + tekst(f);
+const foto = f => `<img src="/img/${f.b}.webp" alt="" loading="lazy" decoding="async">`;
+const beeld = f => `<div class="beeld"><div class="zacht">${foto(f)}</div><div class="uit"><img src="/img/${f.b}-uit.webp" alt="" loading="lazy" decoding="async"></div></div>`;
+const rij = (fn, klas = 'rij5') => `<ol class="${klas}">${F.map(f => `<li class="f">${fn(f)}</li>`).join('')}</ol>`;
+
+const V = [
+  { naam: 'Fotokaarten', uitleg: 'Her faktör kendi gerçek fotoğrafıyla: arka plan yumuşak, kişi net (diensten panelleriyle aynı teknik). Sarı numara diski köşede.',
+    html: () => LK + rij(f => `${nr(f)}${beeld(f)}<div class="tekst">${tekst(f)}</div>`) },
+  { naam: 'Medaillons', uitleg: 'Tek bir kesik çizgiye dizilmiş yuvarlak fotoğraflar, sarı halka ve Diepblauw numara. Sıcak ve insani.',
+    html: () => LK + rij(f => `<div class="rond">${foto(f)}${nr(f)}</div>${tekst(f)}`) },
+  { naam: 'Eén plaat', uitleg: 'Tek kalın levha, beş bölme. Artı işaretleri bölme çizgilerinin üstünde duruyor; şimdiki fikrin en derli toplu hali.',
+    html: () => LK + rij(basis) },
+  { naam: 'Blauwverloop', uitleg: 'Beyazdan Diepblauw\'a koyulaşan beş levha: hemen altındaki "Wat kost een verhuizing?" basamak kartlarıyla aynı renk dili.',
+    html: () => LK + rij(basis) },
+  { naam: 'Iconen', uitleg: 'Merkboek ikonları gömülü (verzonken) bir yuvada, numara küçük koyu etiket olarak. En sakin "ürün sayfası" görünümü.',
+    html: () => LK + rij(f => `<span class="vak"><img src="/img/iconen/${f.i}.svg" alt=""></span>${basis(f)}`) },
+  { naam: 'Fotostrook', uitleg: 'Tek geniş gerçek fotoğraf, kartlar alt kenarından üstüne biniyor (De Kievit tarzı). Bölüme hava ve derinlik katıyor.',
+    html: () => LK + `<div class="strook"><img src="/img/hero-bg-1920.webp" alt="" loading="lazy" decoding="async"></div>` + rij(basis) },
+  { naam: 'Diepblauw paneel', uitleg: 'Mist zemin üstünde tek koyu levha (bant değil, kart): sarı rakamlar, ince çizgiler, köşede logo evi. Altındaki mavi All-in kartıyla bağ kuruyor.',
+    html: () => `<div class="paneel">${LK}${rij(basis)}</div>` },
+  { naam: 'Lijst en foto', uitleg: 'Faktörler düzgün bir liste levhasında, yanında sarı gölgeli büyük gerçek fotoğraf. En kolay okunan düzen.',
+    html: () => LK + `<div class="in">${rij(basis, '')}${beeld(F[0])}</div>` },
+  { naam: 'Kopband', uitleg: 'Beğendiğin offertekaart\'ın mavi başlık bandı her kartta: sarı nok, beyaz başlık, arkada soluk logo evi.',
+    html: () => LK + rij(f => `<div class="band">${nr(f)}<h3>${f.t}</h3></div><p>${f.p}</p>`) },
+  { naam: 'Reuzencijfers', uitleg: 'Dev mavi rakamlar kartın arkasında duruyor, alt yarıları kartın arkasına giriyor. Tipografik ama derinlikli.',
+    html: () => LK + rij(f => `${nr(f)}<div class="kaart">${tekst(f)}</div>`) },
+  { naam: 'Mozaïek', uitleg: 'Üstte üç, altta fotoğraf + iki: beşinci kartın boş bıraktığı yeri gerçek fotoğraf dolduruyor.',
+    html: () => LK + `<ol class="rij">${F.slice(0, 3).map(f => `<li class="f">${basis(f)}</li>`).join('')}<li aria-hidden="true">${beeld(F[1])}</li>${F.slice(3).map(f => `<li class="f">${basis(f)}</li>`).join('')}</ol>` },
+  { naam: 'Rail', uitleg: 'Kart yok: mavi bir ray, sarı noktalar, büyük başlıklar ve dikey ince çizgiler. Dergi gibi hafif.',
+    html: () => LK + rij(basis) },
+  { naam: 'Hoge fotokaarten', uitleg: 'Uzun, yuvarlak köşeli fotoğraf kartları; metin fotoğrafın üstünde Diepblauw geçişte. İlk turdaki eğik panellerin düz ve sakin hali.',
+    html: () => LK + rij(f => `${foto(f)}${basis(f)}`) },
+  { naam: 'Opbouwbalk', uitleg: 'Fiyat tek bir çubukta beş parça olarak "örülüyor", alttaki parantez doğrudan All-in / Regieprijs seçimine iniyor. Bölümün hikâyesini en iyi anlatan.',
+    html: () => LK + `<div class="balk" aria-hidden="true">${F.map(f => `<span>${f.n}</span>`).join('')}</div>` + rij(basis) + '<div class="accolade" aria-hidden="true"></div>' },
+  { naam: 'Trog en pillen', uitleg: 'Offertekaart\'taki gömülü alanların dili: gömülü bir oluk içinde beş kabarık hap, açıklamalar hemen altında.',
+    html: () => LK + `<div class="trog">${F.map(f => `<div class="pil f">${nr(f)}<h3>${f.t}</h3></div>`).join('')}</div><ol class="rij5">${F.map(f => `<li class="f tekst"><p>${f.p}</p></li>`).join('')}</ol>` },
+];
+
+const twee = i => String(i + 1).padStart(2, '0');
+document.getElementById('onav').outerHTML = V.map((v, i) => `<a href="#w${i + 1}" title="${v.naam}">${i + 1}</a>`).join('');
+document.getElementById('main').innerHTML = V.map((v, i) => `
+  <div class="okop" id="w${i + 1}"><div class="wrap"><b>${twee(i)}</b><span>${v.naam}</span><small>${v.uitleg}</small></div></div>
+  <section class="v w${i + 1}"><div class="wrap">${KOP}${v.html()}${DUO}</div></section>`).join('');
+</script>
+</body>
+</html>

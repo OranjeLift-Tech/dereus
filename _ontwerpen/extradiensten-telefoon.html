@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Extra diensten op /kosten/ · één telefoon met het gesprek</title>
+<link rel="stylesheet" href="/css/min/site.min.css">
+<style>
+/* Keuze van de gebruiker: één echte telefoon (3D-render, img/kaart-3d/telefoon.webp). De vier vragen staan rechts,
+   als berichten van de bezoeker. Tik je op een vraag, dan antwoordt De Reus links, met de link eronder.
+   Elke vraag is een <details>: het werkt zonder JavaScript, de antwoorden staan gewoon in de pagina (zoekmachines,
+   schermlezers) en de ankers #opslag, #verhuislift, #montage en #woningontruiming blijven bestaan. Het script
+   opent alleen het juiste gesprek bij een anker en schuift het in beeld. Teksten exact van de pagina. */
+:root{--obj:drop-shadow(3px 4px 2px rgba(11,35,82,.28)) drop-shadow(14px 22px 16px rgba(11,35,82,.34))}
+body{background:var(--off-white)}
+.proef{padding-block:clamp(3rem,6vw,5rem)}
+.toneel{position:relative;display:grid;place-items:center;min-height:46rem}
+/* de 3D-voorwerpen van de vier diensten staan om de telefoon heen */
+.toneel .o{position:absolute;width:clamp(9rem,15vw,13.5rem);height:auto;filter:var(--obj)}
+.o--1{left:6%;top:6%}.o--2{right:6%;top:9%}.o--3{left:9%;bottom:7%}.o--4{right:8%;bottom:5%}
+.tel{position:relative;z-index:1;container-type:inline-size;width:min(24rem,100%);aspect-ratio:456/900;background:url(/img/kaart-3d/telefoon.webp) center/100% 100% no-repeat;
+  filter:drop-shadow(0 4px 3px rgba(11,35,82,.3)) drop-shadow(0 40px 34px rgba(11,35,82,.38))}
+.scherm{position:absolute;left:13.06%;top:8.94%;width:73.87%;height:82.73%;display:flex;flex-direction:column;overflow:hidden;border-radius:13%/5.9%;
+  background:radial-gradient(circle at 1px 1px,rgba(23,70,162,.10) 1px,transparent 1.5px) 0 0/5cqw 5cqw,var(--primary-50)}
+.scherm::before{content:"";position:absolute;z-index:3;left:50%;top:2.6cqw;translate:-50% 0;width:23cqw;height:6.2cqw;border-radius:999px;background:#05080F}
+.scherm::after{content:"";position:absolute;z-index:4;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.3) 0,rgba(255,255,255,.08) 22%,rgba(255,255,255,0) 38%)}
+.kop{flex:none;display:flex;align-items:center;gap:2.4cqw;padding:12cqw 4cqw 3cqw;background:#fff;border-bottom:1px solid var(--grey-300);color:var(--ink);font:700 3.9cqw/1.2 var(--font-sans)}
+.kop::before{content:"";flex:none;width:10cqw;height:10cqw;border-radius:50%;background:var(--brand-secondary) url(/img/logo/dereus-beeldmerk-negatief.svg) center/72% no-repeat}
+.chat{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:3cqw;padding:4cqw 3.4cqw;scrollbar-width:thin}
+/* de vraag: een bericht van de bezoeker, rechts. Het is de knop van het gesprek. */
+.gesprek{display:flex;flex-direction:column;gap:2.6cqw;scroll-margin-top:7rem}
+.gesprek summary{align-self:flex-end;display:flex;align-items:center;gap:2cqw;max-width:92%;list-style:none;cursor:pointer;padding:2.8cqw 3.6cqw;border-radius:5cqw 5cqw 1.2cqw 5cqw;
+  background:var(--brand-primary);color:#fff;box-shadow:0 2cqw 3cqw -2cqw rgba(11,35,82,.6)}
+.gesprek summary::-webkit-details-marker{display:none}
+.gesprek summary h3{margin:0;color:inherit;font:600 4.3cqw/1.35 var(--font-sans);font-stretch:normal;text-wrap:pretty}
+/* het pijltje zegt: tik om het antwoord te zien; open wordt het een vinkje "gelezen" */
+.gesprek summary::after{content:"";flex:none;width:5.2cqw;height:5.2cqw;border-radius:50%;background:rgba(255,255,255,.22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/70% no-repeat}
+.gesprek[open] summary{background:var(--primary-600)}
+.gesprek[open] summary::after{background-color:var(--brand-accent);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%230B2352' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.gesprek summary:hover{background:var(--primary-600)}
+.gesprek summary:focus-visible{outline:3px solid var(--brand-accent);outline-offset:2px}
+/* het antwoord: De Reus, links */
+.antwoord{display:flex;flex-direction:column;align-items:flex-start;gap:2.2cqw}
+.antwoord p{max-width:94%;margin:0;padding:3cqw 3.6cqw;border-radius:5cqw 5cqw 5cqw 1.2cqw;background:#fff;color:var(--ink);font-size:4cqw;line-height:1.45;box-shadow:0 0 0 1px rgba(14,26,51,.05),0 2cqw 3cqw -2cqw rgba(11,35,82,.35)}
+.antwoord a{display:inline-flex;align-items:center;gap:1.6cqw;padding:2.4cqw 3.6cqw;border-radius:999px;background:var(--brand-accent);color:var(--brand-secondary);font:700 3.8cqw/1.25 var(--font-sans);text-decoration:none;box-shadow:0 .8cqw 0 var(--accent-700)}
+.antwoord a::after{content:"→"}
+.antwoord a:hover{background:#FFD75E}
+.balk{flex:none;margin:2cqw 3.4cqw 4cqw;height:9.5cqw;border-radius:999px;box-shadow:inset 0 0 0 1px var(--grey-300);background:radial-gradient(circle at calc(100% - 4.7cqw) 50%,var(--brand-primary) 3.2cqw,transparent 3.4cqw),#fff}
+@media (max-width:899px){.toneel{min-height:0}.toneel .o{display:none}}
+</style>
+</head>
+<body>
+<section class="proef"><div class="wrap">
+  <div class="toneel">
+    <img class="o o--1" src="/img/kosten-3d/opslag.webp" alt="" aria-hidden="true">
+    <img class="o o--2" src="/img/kosten-3d/trap.webp" alt="" aria-hidden="true">
+    <img class="o o--3" src="/img/kosten-3d/gereedschap.webp" alt="" aria-hidden="true">
+    <img class="o o--4" src="/img/kosten-3d/dozen.webp" alt="" aria-hidden="true">
+    <div class="tel">
+      <div class="scherm">
+        <div class="kop" aria-hidden="true">Verhuisbedrijf De Reus</div>
+        <div class="chat" data-chat>
+          <details class="gesprek" id="opslag"><summary><h3>Wat kost opslag van uw inboedel?</h3></summary>
+            <div class="antwoord"><p>De kosten van opslag van uw inboedel hangen af van hoeveel u opslaat en hoe lang. Omdat wij de verhuizing en de opslag samen regelen, staat alles in één offerte.</p><a href="/diensten/#opslag">Meer over tijdelijke opslag</a></div></details>
+          <details class="gesprek" id="verhuislift"><summary><h3>Wat kost verhuizen met een verhuislift?</h3></summary>
+            <div class="antwoord"><p>Of een verhuislift nodig is, en wat dat kost, hangt af van de verdieping en de plek voor uw woning. Uw verhuisadviseur bekijkt het samen met u en neemt het mee in de offerte.</p><a href="/diensten/#verhuislift">Meer over verhuizen met de verhuislift</a></div></details>
+          <details class="gesprek" id="montage"><summary><h3>Wat kost montage bij een verhuizing?</h3></summary>
+            <div class="antwoord"><p>Demonteren en weer opbouwen kost tijd. Hoeveel, hangt af van het aantal meubels en hoe ingewikkeld ze zijn. Noem in uw aanvraag wat er uit elkaar moet, dan staat het in de offerte.</p><a href="/diensten/#montage">Meer over de handymanservice</a></div></details>
+          <details class="gesprek" id="woningontruiming"><summary><h3>Wat kost een woningontruiming?</h3></summary>
+            <div class="antwoord"><p>Wat een woningontruiming kost, hangt af van de grootte van de woning, hoeveel er in staat en wat er met de spullen moet gebeuren. Uw verhuisadviseur bespreekt het rustig met u, en u krijgt vooraf een offerte.</p><a href="/diensten/#woningontruiming">Meer over woningontruiming</a></div></details>
+        </div>
+        <div class="balk" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<script>
+/* Het gesprek: een geopende vraag schuift met haar antwoord in beeld binnen het scherm; een anker (#opslag …) opent de vraag. */
+(function(){
+  var chat=document.querySelector('[data-chat]'); if(!chat) return;
+  function toon(d){ var t=d.offsetTop-chat.offsetTop-8; chat.scrollTop=Math.max(0,Math.min(t,chat.scrollHeight)); }
+  chat.querySelectorAll('details').forEach(function(d){ d.addEventListener('toggle',function(){ if(d.open) toon(d); }); });
+  function anker(){ var d=location.hash&&chat.querySelector('details'+location.hash); if(d){ d.open=true; toon(d); } }
+  window.addEventListener('hashchange',anker); anker();
+})();
+</script>
+</body>
+</html>

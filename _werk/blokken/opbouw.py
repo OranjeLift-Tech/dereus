@@ -11,11 +11,19 @@ JS = False
 
 _FACTOR = re.compile(r"^\*\*(.+?)\*\*\s*(.*)$")
 
+# Optie voorwerpen (/kosten/): per factor een 3D-voorwerp op een gele schijf, bestand in img/kosten-3d/ met breedte bij
+# 420 px hoogte. Renders uit _ai-beelden/kosten-3d (three.js, het echte logo); vormgeving in css/blok/opbouw-3d.css.
+VOORWERPEN = [("dozen", 437), ("wagen", 594), ("trap", 371), ("gereedschap", 477), ("opslag", 589)]
 
-def _factor(ctx, regel, nr):
+
+def _factor(ctx, regel, nr, voorwerp=None):
     m = _FACTOR.match(regel)
     kop, uitleg = (m.group(1).rstrip("."), m.group(2)) if m else (regel, "")
-    return (f'<li class="b-{NAAM}__factor"><span class="b-{NAAM}__nr" aria-hidden="true">{nr:02d}</span>'
+    podium = ""
+    if voorwerp:
+        podium = (f'<span class="b-{NAAM}__podium" aria-hidden="true"><img class="b-{NAAM}__obj" src="/img/kosten-3d/{voorwerp[0]}.webp" alt="" '
+                  f'width="{voorwerp[1]}" height="420" loading="lazy" decoding="async"></span>')
+    return (f'<li class="b-{NAAM}__factor">{podium}<span class="b-{NAAM}__nr" aria-hidden="true">{nr:02d}</span>'
             f'<h3 class="b-{NAAM}__factorkop">{ctx.inline(kop)}</h3><p>{ctx.inline(uitleg)}</p></li>')
 
 
@@ -28,7 +36,10 @@ def _soort(ctx, it, klasse=""):
 
 def html(ctx, kopij, **opties) -> str:
     k = kopij
-    factoren = "".join(_factor(ctx, r, i + 1) for i, r in enumerate(k.lijst))
+    drie_d = bool(opties.get("voorwerpen"))
+    factoren = "".join(_factor(ctx, r, i + 1, VOORWERPEN[i] if drie_d and i < len(VOORWERPEN) else None) for i, r in enumerate(k.lijst))
+    accolade = f'<div class="b-{NAAM}__accolade" aria-hidden="true"></div>' if drie_d else ""
+    variant = f" b-{NAAM}--3d" if drie_d else ""
     lijstkop = f'<h3 class="b-{NAAM}__lijstkop">{ctx.inline(k.veld("lijstkop"))}</h3>' if k.veld("lijstkop") else ""
     duo, rest = k.items[:2], k.items[2:]
     duo_html = ""
@@ -42,7 +53,7 @@ def html(ctx, kopij, **opties) -> str:
     rest_html = f'<div class="b-{NAAM}__stroken" data-reveal-groep>{rest_html}</div>' if rest_html else ""
     slot = f'<p class="b-{NAAM}__slot">{ctx.inline(k.veld("slot"))}</p>' if k.veld("slot") else ""
     intro = f'<p class="b-{NAAM}__intro">{ctx.inline(k.veld("intro"))}</p>' if k.veld("intro") else ""
-    return f'''<section class="b-{NAAM} sectie sectie--mist" id="{k.id}" aria-labelledby="{k.id}-kop" data-b="{NAAM}">
+    return f'''<section class="b-{NAAM}{variant} sectie sectie--mist" id="{k.id}" aria-labelledby="{k.id}-kop" data-b="{NAAM}">
       <div class="wrap">
         <div class="b-{NAAM}__kop" data-reveal>
           {ctx.label(k.veld("label"))}
@@ -51,6 +62,7 @@ def html(ctx, kopij, **opties) -> str:
         </div>
         {lijstkop}
         <ol class="b-{NAAM}__factoren" data-reveal-groep>{factoren}</ol>
+        {accolade}
         {duo_html}
         {slot}
         {rest_html}

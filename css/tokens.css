@@ -119,6 +119,9 @@
   --error-50: #FEF3F2;
   --success: #1E7A3C;                    /* 5,38:1 op wit; erfgenaam van het oude CTA-groen */
   --success-50: #EDF7F0;
+  --whatsapp: #25D366;                   /* het groen uit het WhatsApp-logo zelf, 7,69:1 op Diepblauw.
+                                            Alleen voor WhatsApp-tekst op een donkere band; op wit is het te licht,
+                                            daar blijft de knop --success. */
 
   /* ---------------------------------------------------------------
      2. Tinten (doelwaarden, OKLCH op de tint van de merkkleur)

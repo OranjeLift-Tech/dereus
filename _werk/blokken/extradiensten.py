@@ -13,6 +13,11 @@ JS = False
 
 STANDAARD = ["opslag", "verhuislift", "montage", "woningontruiming"]
 
+# Het 3D-voorwerp dat op elke kaart staat en er bovenuit steekt (img/kosten-3d/, alle 420 px hoog):
+# naam en breedte. Vormgeving: css/blok/extradiensten.css en css/blok/kosten-diepte.css.
+VOORWERP = {"opslag": ("opslagopen", 569), "verhuislift": ("lift", 210), "montage": ("boor", 509),
+            "woningontruiming": ("huis", 425)}
+
 
 def html(ctx, kopij, **opties) -> str:
     kaarten = ""
@@ -21,7 +26,7 @@ def html(ctx, kopij, **opties) -> str:
         # "Meer over deze dienst": het anker op /diensten/, of de eigen dienstpagina zodra die live is
         meer = ctx.knop(k.veld("linktekst"), _b4.schakel(ctx, k.veld("link")), soort="link") if k.veld("link") else ""
         kaarten += f'''<article class="b-{NAAM}__kaart" id="{k.id}" aria-labelledby="{k.id}-kop">
-          <span class="b-{NAAM}__icoon">{ctx.dienst_icoon(k.id, inline=True)}</span>
+          <img class="b-{NAAM}__obj" src="/img/kosten-3d/{VOORWERP[k.id][0]}.webp" alt="" width="{VOORWERP[k.id][1]}" height="420" loading="lazy" decoding="async">
           <h2 class="b-{NAAM}__kop" id="{k.id}-kop">{ctx.inline(k.kop)}</h2>
           {ctx.alineas(k.tekst)}
           <p class="b-{NAAM}__acties">{meer}</p>

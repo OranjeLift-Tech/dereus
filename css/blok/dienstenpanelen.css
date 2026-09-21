@@ -180,11 +180,11 @@
 /* 07: Creme zijkolom. Vol Goudgeel was het grootste gele vlak van de site en brak het paneel in
    twee stukken; volgens het merkboek is Goudgeel een accent. Het goud zit nu in het volgnummer
    en in de streep onder de kop. */
-/* de Crème kleur loopt over het hele paneel, ook achter de tekst: zo leest 07 als één blok (vraag van de gebruiker) */
-.b-dienstenpanelen__paneel--montage{--band:var(--accent-50)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li,.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li:first-child{border-color:var(--accent-200)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__beeld{background:var(--accent-50)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__nr{color:var(--accent-600)}
+/* dezelfde blauw-100 als de zijkolom van 03 (wens van de gebruiker); die kleur loopt over het hele paneel, ook achter de tekst: zo leest 07 als één blok (vraag van de gebruiker) */
+.b-dienstenpanelen__paneel--montage{--band:var(--primary-100)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li,.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li:first-child{border-color:var(--primary-200)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__beeld{background:var(--primary-100)}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__nr{color:var(--brand-primary)}
 .b-dienstenpanelen__paneel--montage .b-dienstenpanelen__kader::before{background:var(--brand-secondary)}
 .b-dienstenpanelen__paneel--montage .b-dienstenpanelen__tekst>.h2::after{background:var(--brand-accent)}
 /* 03: de kop krijgt de goudgele streep links in plaats van eronder */

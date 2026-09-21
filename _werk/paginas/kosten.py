@@ -10,15 +10,15 @@ PAGINA = Pagina(
     kopij="kosten",
     header="transparant",
     body_klasse="p-kosten",
-    extra_css=("kosten-diepte",),             # de pagina in lagen: platen met dikte, de trap op de Diepblauwe band
+    extra_css=("kosten-diepte", "opbouw-3d"),             # de pagina in lagen: platen met dikte, de trap op de Diepblauwe band
     blokken=[
         ("kop", {}),
         ("antwoord", {"chips": CHIPS}),
-        ("opbouw", {}),
-        ("treden", {"kopij_id": "verhuizing"}),
+        ("opbouw", {"voorwerpen": True}),                           # 3D-voorwerpen op gele schijven (css/blok/opbouw-3d.css)
+        ("treden", {"kopij_id": "verhuizing", "figuren": True}),   # verhuizers op trede 1 en 2, beeldmerk op trede 3
         ("extradiensten", {"kopij_ids": EXTRA}),
         ("annuleren", {}),
-        ("vragen", {"kopij_id": "vragen"}),
+        ("vragen", {"kopij_id": "vragen", "open": 1}),             # gesprek op de telefoon: de eerste vraag staat open
         ("offertepil", {"variant": "los"}),
     ],
 )

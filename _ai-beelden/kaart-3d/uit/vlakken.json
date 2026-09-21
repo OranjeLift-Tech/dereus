@@ -1,0 +1,92 @@
+{
+  "telefoon": {
+    "links": 13.06,
+    "boven": 8.94,
+    "breedte": 73.87,
+    "hoogte": 82.73,
+    "beeld": [
+      456,
+      900
+    ]
+  },
+  "klembord": {
+    "links": 15.85,
+    "boven": 31.1,
+    "breedte": 68.3,
+    "hoogte": 57.85,
+    "beeld": [
+      600,
+      792
+    ]
+  },
+  "doos": {
+    "links": 13.58,
+    "boven": 43.92,
+    "breedte": 72.84,
+    "hoogte": 40.84,
+    "beeld": [
+      840,
+      708
+    ]
+  },
+  "tablet": {
+    "links": 7.83,
+    "boven": 11.75,
+    "breedte": 84.35,
+    "hoogte": 77.08,
+    "beeld": [
+      900,
+      672
+    ]
+  },
+  "prikbord": {
+    "links": 5.33,
+    "boven": 10.13,
+    "breedte": 89.33,
+    "hoogte": 80.19,
+    "beeld": [
+      1200,
+      600
+    ]
+  },
+  "pin": {
+    "beeld": [
+      180,
+      180
+    ]
+  },
+  "kaart": {
+    "links": 22.56,
+    "boven": 20.3,
+    "breedte": 49.74,
+    "hoogte": 70.61,
+    "beeld": [
+      780,
+      720
+    ]
+  },
+  "boek": {
+    "links": {
+      "links": 8.12,
+      "boven": 12.85,
+      "breedte": 35,
+      "hoogte": 75.07
+    },
+    "rechts": {
+      "links": 56.88,
+      "boven": 12.85,
+      "breedte": 35,
+      "hoogte": 75.07
+    },
+    "beeld": [
+      1080,
+      708
+    ]
+  },
+  "ster": {
+    "beeld": [
+      240,
+      240
+    ]
+  }
+}

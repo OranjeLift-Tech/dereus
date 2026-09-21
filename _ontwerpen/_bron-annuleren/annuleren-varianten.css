@@ -1,0 +1,155 @@
+/* Alles staat stil (geen animatie, geen hover-beweging). Diepte komt uit rand, schaduw en het voorwerp dat uit de kaart steekt.
+   De kalenders zijn 3D-renders met één lichtbron linksboven. Teksten zijn letterlijk die van /kosten/ #annuleren. */
+:root{
+  --rand-wit:#D5E2F8; --rand-blauw:#071838; --rand-geel:#DB940E; --rand-creme:#EBD9A6;
+  --val-midden:0 14px 26px -14px rgba(14,26,51,.30); --val-ver:0 52px 90px -46px rgba(11,35,82,.55);
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px rgba(14,26,51,.06),0 7px 0 var(--rand-wit),0 8px 0 rgba(14,26,51,.08),var(--val-midden),var(--val-ver);
+  --verzonken:inset 0 2px 4px rgba(14,26,51,.12),inset 0 0 0 1px rgba(14,26,51,.06);
+  --val-kal:drop-shadow(3px 5px 3px rgba(11,35,82,.35)) drop-shadow(18px 34px 26px rgba(11,35,82,.42));
+}
+html{scroll-padding-top:4.5rem}
+body{background:var(--white)}
+*,*::before,*::after{animation:none!important;transition:none!important}
+.onav{position:sticky;top:0;z-index:50;background:var(--brand-secondary);color:#fff;box-shadow:0 6px 18px -8px rgba(5,14,35,.6)}
+.onav .wrap{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;padding-block:.55rem}
+.onav strong{font:800 1.05rem/1 var(--font-display);font-stretch:condensed;letter-spacing:.02em;margin-right:auto}
+.onav a{display:grid;place-items:center;min-width:2.3rem;height:2.3rem;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;font:700 .85rem/1 var(--font-sans);text-decoration:none}
+.onav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.ov{border-bottom:10px solid var(--off-white)}
+.ov__kop{display:flex;align-items:flex-start;gap:1rem;padding-block:2.25rem .5rem}
+.ov__nr{flex:none;display:grid;place-items:center;width:3.2rem;height:3.2rem;border-radius:12px;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.5rem/1 var(--font-display);font-stretch:condensed;box-shadow:0 4px 0 var(--rand-geel)}
+.ov__kop h3{margin:0 0 .2rem;font:800 1.5rem/1.1 var(--font-display);font-stretch:condensed;color:var(--brand-secondary)}
+.ov__kop p{margin:0;max-width:80ch;color:var(--grey-600);font-size:.95rem;line-height:1.5}
+
+/* ---- de gedeelde basis ---- */
+.aq{position:relative;isolation:isolate;overflow-x:clip;padding-block:clamp(4.5rem,3.5rem + 4vw,7rem) clamp(3rem,2.5rem + 3vw,5rem)}
+.vak{position:relative;display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:clamp(1.5rem,4vw,4rem);align-items:center;padding:clamp(1.6rem,3.2vw,3rem);border-radius:26px;background:var(--white);box-shadow:var(--plaat)}
+.beeld{position:relative;align-self:stretch;min-height:19rem}
+.kal{position:absolute;z-index:3;left:50%;bottom:-1rem;width:auto;height:24rem;max-width:none;transform:translateX(-50%);filter:var(--val-kal);pointer-events:none}
+/* de schaduw op de grond onder de kalender */
+.beeld::after{content:"";position:absolute;z-index:2;left:8%;right:4%;bottom:-2.4rem;height:2.6rem;border-radius:50%;background:radial-gradient(closest-side,rgba(11,35,82,.38),rgba(11,35,82,0));pointer-events:none}
+.tekst .kop{margin-bottom:1.1rem}.tekst .label{justify-content:flex-start}.tekst .h2{margin:0}
+.tekst .in{margin:0 0 1rem;max-width:62ch}
+.rg{display:grid;gap:.65rem;margin:0 0 1.25rem;padding:0;list-style:none}
+.rg li{position:relative;padding:.8rem 1rem .8rem 2.7rem;border-radius:12px;background:var(--off-white);box-shadow:var(--verzonken);line-height:1.5}
+.rg li::before{content:"";position:absolute;left:1rem;top:1.2em;width:.7rem;height:.7rem;border-radius:3px;background:var(--brand-primary);box-shadow:0 2px 0 var(--brand-secondary)}
+.slot{margin:0;color:var(--grey-600);max-width:62ch}
+.ac{margin:1.25rem 0 0}
+.ac .knop--link{min-height:48px;padding:.55rem 1.2rem;border-radius:12px;background:var(--primary-50);color:var(--brand-primary);text-decoration:none;box-shadow:inset 0 0 0 1px var(--primary-200),0 4px 0 #C9D9F5,0 14px 18px -12px rgba(11,35,82,.35)}
+.ac .knop--link span{text-decoration:none}
+.ac .knop--link:hover{background:var(--brand-primary);color:var(--white);box-shadow:inset 0 0 0 1px var(--brand-primary),0 4px 0 var(--brand-secondary)}
+@media(max-width:860px){.vak{grid-template-columns:minmax(0,1fr);padding-top:0}.beeld{min-height:15rem;margin-top:-3.5rem}.kal{height:19rem}}
+
+/* ==== 01 bureaukalender op de Crème plaat ==== */
+.a1{background:var(--white)}
+.a1 .vak{padding-left:clamp(2.2rem,4vw,3.8rem);background:linear-gradient(160deg,#fff,#FFFDF5 55%,#FFF4D6);box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(150,100,10,.12),0 8px 0 var(--rand-creme),0 9px 0 rgba(120,80,0,.18),var(--val-midden),var(--val-ver)}
+.a1 .vak::before{content:"";position:absolute;left:0;top:0;bottom:0;width:12px;border-radius:26px 0 0 26px;background:linear-gradient(90deg,#2A5FC4,var(--brand-primary) 45%,#123780)}
+.a1 .kal{left:34%;bottom:-3rem;height:29rem}
+.a1 .rg li{background:rgba(255,255,255,.8)}
+
+/* ==== 02 scheurkalender op een blauw paneel ==== */
+.a2{background:linear-gradient(180deg,var(--off-white),var(--primary-50))}
+.a2 .vak{padding-left:0;padding-block:0;align-items:stretch}
+.a2 .beeld{margin:-1.4rem 0 -1.4rem -1rem;border-radius:26px;isolation:isolate;background:linear-gradient(158deg,var(--brand-primary),#123780 40%,var(--brand-secondary));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 7px 0 var(--rand-blauw),22px 0 38px -22px rgba(7,24,56,.55),0 60px 90px -40px rgba(7,24,56,.6)}
+.a2 .beeld::before{content:"";position:absolute;left:2rem;top:0;width:4.25rem;height:5px;border-radius:0 0 5px 5px;background:var(--brand-accent)}
+.a2 .beeld::after{left:18%;right:10%;bottom:1.2rem;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent)}
+.a2 .kal{bottom:2.2rem;height:27rem}
+.a2 .tekst{padding-block:clamp(1.8rem,3vw,3rem);padding-right:clamp(1.6rem,3vw,3rem)}
+
+/* ==== 03 wandkalender aan de kaartrand ==== */
+.a3{background:linear-gradient(180deg,var(--white),var(--off-white));padding-top:clamp(6rem,5rem + 4vw,8.5rem)}
+.a3 .vak{box-shadow:inset 0 5px 0 var(--brand-primary),var(--plaat)}
+.a3 .kal{bottom:auto;top:-7.2rem;height:29rem;left:46%}
+.a3 .beeld{min-height:21rem}.a3 .beeld::after{display:none}
+
+/* ==== 04 blokjeskalender op een plank ==== */
+.a4{background:linear-gradient(180deg,var(--primary-50),var(--white))}
+.a4 .vak{background:none;box-shadow:none;padding:0}
+.a4 .beeld{min-height:17rem;align-self:center}
+.a4 .beeld::before{content:"";position:absolute;left:-2rem;right:0;bottom:1.2rem;height:1.5rem;border-radius:6px;background:linear-gradient(180deg,#FFDA6B,var(--brand-accent));box-shadow:0 8px 0 var(--rand-geel),0 34px 34px -12px rgba(11,35,82,.45)}
+.a4 .beeld::after{display:none}
+.a4 .kal{bottom:2.2rem;height:17rem;left:48%}
+.a4 .rg{gap:1rem;counter-reset:r}
+.a4 .rg li{counter-increment:r;padding:1rem 1.2rem 1rem 4.4rem;border-radius:16px;background:var(--white);box-shadow:var(--plaat)}
+.a4 .rg li:nth-child(2){margin-left:1.5rem}.a4 .rg li:nth-child(3){margin-left:3rem}
+.a4 .rg li::before{content:counter(r);left:.9rem;top:50%;display:grid;place-items:center;width:2.6rem;height:2.6rem;margin-top:-1.3rem;border-radius:50%;background:linear-gradient(180deg,#FFD75E,var(--brand-accent) 60%);color:var(--brand-secondary);
+  font:800 1.25rem/1 var(--font-display);font-stretch:condensed;box-shadow:inset 0 2px 0 rgba(255,255,255,.55),0 4px 0 var(--rand-geel),0 12px 14px -6px rgba(11,35,82,.4)}
+
+/* ==== 05 de datum verschuift ==== */
+.a5{background:linear-gradient(180deg,var(--white),var(--primary-50))}
+.a5 .kal{height:25rem;bottom:-1.6rem;left:44%}
+.a5 .slot{position:relative;max-width:none;padding:1.1rem 1.3rem 1.1rem 4.2rem;border-radius:16px;color:var(--white);background:linear-gradient(135deg,var(--brand-primary),var(--brand-secondary));box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 6px 0 var(--rand-blauw),0 24px 30px -16px rgba(11,35,82,.55)}
+.a5 .slot::before{content:"";position:absolute;left:1rem;top:50%;width:2.3rem;height:2.3rem;margin-top:-1.15rem;border-radius:50%;background:var(--brand-accent);box-shadow:0 3px 0 var(--rand-geel)}
+.a5 .slot::after{content:"";position:absolute;left:1.55rem;top:50%;width:1.2rem;height:1.2rem;margin-top:-.6rem;background:var(--brand-secondary);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h15m-6-6l6 6-6 6' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h15m-6-6l6 6-6 6' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+
+/* ==== 06 kalender met pen, regels op papier ==== */
+.a6{background:linear-gradient(180deg,#EEF2F8,var(--off-white))}
+.a6 .vak{background:none;box-shadow:none;padding:0}
+.a6 .kal{height:26rem;bottom:-1rem}
+.a6 .tekst{position:relative;padding:3rem 2rem 2rem;border-radius:6px 6px 14px 14px;background:#FFFEFB;box-shadow:0 0 0 1px rgba(14,26,51,.07),0 7px 0 #E4E1D8,4px 12px 0 -2px #F3F1EA,4px 13px 0 -2px rgba(14,26,51,.12),var(--val-midden),var(--val-ver)}
+.a6 .tekst::before{content:"";position:absolute;left:50%;top:-1.3rem;width:10rem;height:3rem;margin-left:-5rem;border-radius:10px 10px 6px 6px;background:linear-gradient(180deg,#F6F8FB,#BAC2CF 60%,#8B94A4);box-shadow:inset 0 1px 0 #fff,0 4px 0 #5F6878,0 12px 14px -6px rgba(0,0,0,.45)}
+.a6 .rg{gap:0}
+.a6 .rg li{padding:.85rem .4rem .85rem 2.9rem;border-radius:0;background:none;box-shadow:none;border-bottom:1.5px solid #D8DEE9}
+.a6 .rg li::before{left:.3rem;top:.95em;width:1.5rem;height:1.5rem;border-radius:5px;background:#fff;box-shadow:inset 0 0 0 2.5px var(--brand-primary)}
+.a6 .rg li::after{content:"";position:absolute;left:.55rem;top:1.1em;width:1.1rem;height:1.1rem;background:var(--brand-primary);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+
+/* ==== 07 Koningsblauwe band, de kalender breekt uit ==== */
+.a7{background:var(--white);padding-top:calc(clamp(4.5rem,3.5rem + 4vw,7rem) + 2.6rem)}
+.a7::before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(46rem 24rem at 12% 40%,rgba(58,111,214,.6),transparent 70%),linear-gradient(180deg,var(--brand-primary),#123780);clip-path:polygon(0 2.6rem,50% 0,100% 2.6rem,100% 100%,0 100%)}
+.a7 .vak{background:none;box-shadow:none;padding:0;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+.a7 .kal{height:29rem;left:47%;bottom:-1.2rem;filter:drop-shadow(3px 5px 3px rgba(3,10,28,.5)) drop-shadow(24px 44px 30px rgba(3,10,28,.6))}
+.a7 .beeld::after{background:radial-gradient(closest-side,rgba(3,10,28,.6),transparent);bottom:-2.4rem}
+.a7 .tekst{padding:clamp(1.6rem,3vw,2.6rem);border-radius:24px;background:var(--white);box-shadow:inset 0 5px 0 var(--brand-accent),0 8px 0 var(--primary-200),0 9px 0 var(--rand-blauw),0 40px 60px -24px rgba(3,10,28,.7)}
+
+/* ==== 08 tijdlijn van twee weken ==== */
+.a8{background:linear-gradient(180deg,var(--white),var(--off-white))}
+.a8 .vak{box-shadow:inset 0 5px 0 var(--brand-accent),var(--plaat)}
+.a8 .kal{height:27rem;bottom:-1.4rem}
+.a8 .rg{position:relative;gap:.9rem;padding-left:3.6rem}
+.a8 .rg::before{content:"";position:absolute;left:1.05rem;top:.6rem;bottom:.6rem;width:8px;border-radius:8px;background:linear-gradient(90deg,#123780,var(--brand-secondary));box-shadow:3px 0 0 #040E24,8px 12px 12px -6px rgba(11,35,82,.4)}
+.a8 .rg li{padding-left:1.2rem;background:var(--white);box-shadow:var(--plaat);border-radius:14px}
+.a8 .rg li::before{left:-3.6rem;top:50%;width:2.6rem;height:2.6rem;margin-top:-1.3rem;border-radius:50%;background:linear-gradient(180deg,#FFD75E,var(--brand-accent) 60%);box-shadow:inset 0 2px 0 rgba(255,255,255,.55),0 4px 0 var(--rand-geel),0 0 0 4px var(--white),0 4px 0 4px var(--rand-wit)}
+.a8 .rg li::after{content:"";position:absolute;left:-.5rem;top:50%;width:1rem;height:1rem;margin-top:-.5rem;background:var(--white);transform:rotate(45deg);box-shadow:-1px 1px 0 rgba(14,26,51,.07)}
+
+/* ==== 09 memoblaadjes ==== */
+.a9{background:linear-gradient(180deg,var(--off-white),#E9EEF6);padding-top:clamp(6rem,5rem + 4vw,8.5rem)}
+.a9 .vak{background:none;box-shadow:none;padding:0}
+.a9 .kal{bottom:auto;top:-5.5rem;height:30rem}
+.a9 .beeld{min-height:24rem}.a9 .beeld::after{display:none}
+.a9 .rg{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;margin-block:1.6rem 1.8rem}
+.a9 .rg li{padding:2rem 1rem 1.2rem;border-radius:3px 3px 3px 18px;font-size:.95rem;background:linear-gradient(170deg,#FFF3C4,#FFE48F);box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 22px 24px -14px rgba(11,35,82,.45),0 2px 4px rgba(11,35,82,.15);transform:rotate(-2deg)}
+.a9 .rg li:nth-child(2){background:linear-gradient(170deg,#fff,#EEF4FF);transform:rotate(1.5deg) translateY(.5rem)}
+.a9 .rg li:nth-child(3){background:linear-gradient(170deg,#DCE8FF,#C3D8FF);transform:rotate(-1deg)}
+.a9 .rg li::before{left:50%;top:-.6rem;width:4.2rem;height:1.4rem;margin-left:-2.1rem;border-radius:2px;background:rgba(255,255,255,.65);box-shadow:0 1px 3px rgba(11,35,82,.25);transform:rotate(-3deg)}
+@media(max-width:1100px){.a9 .rg{grid-template-columns:minmax(0,1fr)}}
+
+/* ==== 10 3D-blokken op Diepblauw ==== */
+.a10{background:var(--white);color:var(--white);padding-top:calc(clamp(4.5rem,3.5rem + 4vw,7rem) + 2.6rem)}
+.a10::before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(50rem 26rem at 15% 45%,rgba(58,111,214,.45),transparent 70%),linear-gradient(180deg,#0F2D66,var(--brand-secondary));clip-path:polygon(0 2.6rem,50% 0,100% 2.6rem,100% 100%,0 100%)}
+.a10 .vak{background:none;box-shadow:none;padding:0}
+.a10 .h2{color:var(--white)}.a10 .label{color:var(--brand-accent)}.a10 .in{color:rgba(255,255,255,.9)}.a10 .slot{color:rgba(255,255,255,.82)}
+.a10 .kal{height:21rem;left:44%;bottom:0;filter:drop-shadow(3px 5px 3px rgba(3,10,28,.5)) drop-shadow(24px 44px 30px rgba(3,10,28,.6))}
+.a10 .beeld::after{background:radial-gradient(closest-side,rgba(3,10,28,.65),transparent);bottom:-1.6rem}
+.a10 .rg{--d:14px;gap:calc(var(--d) + .7rem);padding:var(--d) var(--d) 0 0;filter:drop-shadow(0 22px 20px rgba(3,10,28,.55))}
+.a10 .rg li{--vlak:#F3F7FE;--boven:#fff;--zij:#B9CDEF;padding:.95rem 1.2rem;border-radius:0;background:var(--vlak);box-shadow:none;color:var(--ink)}
+.a10 .rg li:nth-child(2){--vlak:var(--brand-accent);--boven:#FFE28A;--zij:var(--rand-geel);color:var(--brand-secondary)}
+.a10 .rg li:nth-child(3){--vlak:var(--brand-primary);--boven:#3A6FD6;--zij:#0F2F73;color:var(--white)}
+.a10 .rg li::after{content:"";position:absolute;left:0;top:calc(var(--d) * -1);width:100%;height:var(--d);background:var(--boven);transform:skewX(-45deg);transform-origin:left bottom}
+.a10 .rg li::before{left:100%;top:0;width:var(--d);height:100%;margin:0;border-radius:0;box-shadow:none;background:var(--zij);transform:skewY(-45deg);transform-origin:left top}
+.a10 .rg li{isolation:isolate}
+.a10 .rg li > *{position:relative}
+.a10 .ac .knop--link{background:var(--brand-accent);color:var(--brand-secondary);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 0 var(--rand-geel),0 14px 18px -10px rgba(0,0,0,.5)}
+
+/* ---- telefoon: de kalender staat gecentreerd boven de tekst en blijft binnen het scherm ---- */
+@media(max-width:860px){
+  .aq .kal{left:50%;height:17rem;top:auto;bottom:-.5rem}
+  .a3 .kal,.a9 .kal{top:-4rem;bottom:auto;height:19rem}
+  .a2 .beeld{margin:0 -.4rem 0}.a2 .tekst{padding-inline:1.4rem}
+  .a7 .vak,.a4 .vak,.a6 .vak,.a9 .vak,.a10 .vak{grid-template-columns:minmax(0,1fr)}
+  .a4 .rg li:nth-child(2),.a4 .rg li:nth-child(3){margin-left:0}
+}

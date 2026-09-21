@@ -13,3 +13,11 @@
 @media(min-width:768px) and (min-height:850px){.hero__figuur--team{width:440px;height:290px}}
 @media(min-width:1000px) and (max-height:740px){.hero{padding-top:calc(var(--header-h) + .65rem)}.hero__grid{gap:.65rem}.hero__h1{font-size:3rem}.hero__figuur--team{height:220px}}
 @media(max-width:767.98px){.hero{--hero-onder:3rem;padding-top:calc(var(--header-h) + 1.15rem)}.hero__intro{font-size:1rem;max-width:35rem}.hero__grid{gap:1.1rem}.hero__figuur--team{width:min(88vw,390px);height:auto;aspect-ratio:1.5}.hero__bel{font-size:.85rem}.hero-pil{margin-top:-2rem}}
+
+/* ---- De foto loopt door achter de offertekaart ----
+   De grens tussen foto en achtergrond viel samen met de onderkant van de blauwe kopband van de kaart. Nu ligt hij
+   halverwege de veldenrij. Onderruimte, hoogte en overlap groeien met hetzelfde bedrag (3.25rem, telefoon 5.25rem),
+   dus de kaart en de tekst in de kop blijven staan waar ze stonden. */
+.hero{--hero-onder:calc(5rem + 3.25rem)}
+.hero-pil{margin-top:calc(-4rem - 3.25rem)}
+@media(max-width:767.98px){.hero{--hero-onder:calc(3rem + 5.25rem)}.hero-pil{margin-top:calc(-2rem - 5.25rem)}}
