@@ -361,8 +361,34 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .bereikbaar__knop::before { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 .bereikbaar__knop .ic { flex: none; width: .85em; height: .85em; opacity: .75; }
 .bereikbaar__knop[aria-expanded="true"] .ic { transform: rotate(180deg); }
-.bereikbaar--tijden:hover .bereikbaar__knop .ic, .bereikbaar__knop:focus-visible .ic { opacity: 1; }
-@media (prefers-reduced-motion: no-preference) { .bereikbaar__knop .ic { transition: transform .2s var(--ease), opacity .2s var(--ease); } }
+/* Het hovereffect zit op de tegel en niet alleen op het chevron. Dat chevron is 0,85em; je ziet het
+   pas veranderen als je al weet dat je moet kijken.
+   Wat er nu gebeurt: de tegel wordt dicht. In rust staat hij op een doorzichtige laag zodat de foto
+   erdoorheen speelt; bij hover wordt die laag massief Diepblauw, met hetzelfde haarlijntje dat de
+   twee knoppen ernaast in rust al dragen. De tegel komt dus naar voren in plaats van op te lichten.
+   Die richting is geen smaak maar een eis: gemeten haalt wit op de doorzichtige tegel 7,6:1 en wit
+   op de dichte tegel 14,7:1. Lichter maken zou precies de leesbaarheidswinst opeten die deze tegel
+   op een foto juist oplevert, en op een foto is dat de enige reden dat die laag er zit.
+   Alleen de hoverkleur staat hier; de rustkleur blijft in css/blok/hero.css, waar hij hoort.
+
+   Toetsenbordfocus en de open stand doen hetzelfde, en hover staat apart achter (hover: hover).
+   Dat is geen voorzorg maar een gemeten noodzaak: op een aanraakscherm blijft :hover na een tik aan
+   het element plakken tot je ergens anders tikt. Zonder die scheiding bleef de tegel na het sluiten
+   oplichten terwijl het paneel dicht was. Nu komt de dichte stand daar alleen uit aria-expanded, en
+   krijgt een tik dus dezelfde bevestiging als een muisaanwijzer zonder de bijwerking. */
+.bereikbaar--tijden:has(.bereikbaar__knop:focus-visible),
+.bereikbaar--tijden:has(.bereikbaar__knop[aria-expanded="true"]) {
+  background: var(--brand-secondary); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28); }
+.bereikbaar__knop:focus-visible .ic, .bereikbaar__knop[aria-expanded="true"] .ic { opacity: 1; }
+@media (hover: hover) {
+  .bereikbaar--tijden:hover {
+    background: var(--brand-secondary); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28); }
+  .bereikbaar--tijden:hover .bereikbaar__knop .ic { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bereikbaar__knop .ic { transition: transform .2s var(--ease), opacity .2s var(--ease); }
+  .bereikbaar--tijden { transition: background-color .2s var(--ease), box-shadow .2s var(--ease); }
+}
 
 .bereikbaar__tijden { position: absolute; z-index: 30; top: calc(100% + .45rem); left: 50%; translate: -50% 0;
   width: max-content; max-width: min(18rem, calc(100vw - 2 * var(--pad))); padding: .65rem .9rem;
