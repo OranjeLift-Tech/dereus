@@ -1,0 +1,58 @@
+{
+  "particulier": {
+    "boven": 0.337,
+    "onder": 0.9556,
+    "links": 0.1991,
+    "rechts": 0.8213,
+    "kb": 59
+  },
+  "zakelijk": {
+    "boven": 0.1889,
+    "onder": 0.9988,
+    "links": 0.2083,
+    "rechts": 0.8019,
+    "kb": 47
+  },
+  "nationaal": {
+    "boven": 0.0284,
+    "onder": 0.9988,
+    "links": 0.1435,
+    "rechts": 0.7991,
+    "kb": 76
+  },
+  "internationaal": {
+    "boven": 0.2123,
+    "onder": 0.9988,
+    "links": 0,
+    "rechts": 0.9519,
+    "kb": 78
+  },
+  "verhuislift": {
+    "boven": 0.2247,
+    "onder": 0.9988,
+    "links": 0.113,
+    "rechts": 0.9157,
+    "kb": 97
+  },
+  "opslag": {
+    "boven": 0.2605,
+    "onder": 0.9988,
+    "links": 0.3546,
+    "rechts": 0.687,
+    "kb": 23
+  },
+  "handyman": {
+    "boven": 0.1765,
+    "onder": 0.7765,
+    "links": 0.1926,
+    "rechts": 0.6639,
+    "kb": 42
+  },
+  "woningontruiming": {
+    "boven": 0.0914,
+    "onder": 0.9988,
+    "links": 0.2083,
+    "rechts": 0.9991,
+    "kb": 55
+  }
+}

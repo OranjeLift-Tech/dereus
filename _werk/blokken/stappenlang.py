@@ -13,6 +13,9 @@ JS = False
 # dezelfde lijniconen als het blok werkwijze op de home, in dezelfde volgorde
 ICONEN = ["document", "telefoon", "mail", "kalender", "vrachtwagen"]
 
+# het eind van de route: een echte voordeur in het huisvlak uit het logo
+HUIS = ("/img/nieuw-huis.webp", 400, 450)
+
 
 def _stap(ctx, k, it, nr):
     icoon = ICONEN[(nr - 1) % len(ICONEN)]
@@ -36,9 +39,28 @@ def _stap(ctx, k, it, nr):
       </li>'''
 
 
+def _einde(ctx, k):
+    """Het eind van de route: de schijf met het huisje, de foto van de nieuwe voordeur en de stap naar de offerte."""
+    titel = k.veld("einde-titel")
+    if not titel:
+        return ""
+    tekst = k.veld("einde-tekst")
+    knop = ctx.knop(k.veld("einde-linktekst"), k.veld("einde-link")) if k.veld("einde-link") else ""
+    src, breedte, hoogte = HUIS
+    beeld = ctx.beeld(src, k.veld("einde-alt", "Een voordeur van een woning"), breedte, hoogte)
+    return f'''<div class="b-{NAAM}__einde" data-reveal>
+          <span class="b-{NAAM}__vlag" aria-hidden="true"></span>
+          <figure class="b-{NAAM}__huis">
+            <span class="b-{NAAM}__huisfoto"><span class="huisvenster">{beeld}</span></span>
+            <figcaption><b>{ctx.inline(titel)}</b>{f"<p>{ctx.inline(tekst)}</p>" if tekst else ""}{knop}</figcaption>
+          </figure>
+        </div>'''
+
+
 def html(ctx, kopij, **opties) -> str:
     k = kopij
     stappen = "".join(_stap(ctx, k, it, i) for i, it in enumerate(k.items, 1))
+    einde = _einde(ctx, k)
     return f'''<section class="b-{NAAM} sectie sectie--mist" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
       <div class="wrap">
         {ctx.kopgroep(k, "kopgroep--midden")}
@@ -46,5 +68,6 @@ def html(ctx, kopij, **opties) -> str:
           <div class="b-{NAAM}__route" aria-hidden="true"><span class="b-{NAAM}__bus">{ctx.icoon("vrachtwagen")}</span></div>
           <ol class="b-{NAAM}__lijst" role="list">{stappen}</ol>
         </div>
+        {einde}
       </div>
     </section>'''
