@@ -23,9 +23,9 @@ def html(ctx, kopij, **opties):
         <h3 class="wkaart__titel">{ctx.inline(it.titel)}</h3>
         <p>{ctx.inline(it.veld("tekst"))}</p>
       </li>''')
+    # Eén knop, en dus één doorverwijzing die een handeling is. De velden linktekst en link in
+    # home.md worden hier niet meer gerenderd; ze staan er nog maar doen niets. Zie design-notes A5.
     knop = ctx.knop(k.veld("knop", "Offerte aanvragen"), "/offerte/") if k.veld("knop") else ""
-    if k.veld("linktekst") and ctx.live(k.veld("link", "/kosten/")):
-        knop += ctx.knop(k.veld("linktekst"), k.veld("link", "/kosten/"), soort="link")
     return f'''<section class="sectie sectie--wit b-waarom" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop">
   <div class="wrap waarom">
     <div class="waarom__kop" data-reveal>

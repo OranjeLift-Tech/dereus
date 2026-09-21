@@ -80,6 +80,17 @@ a.homecontact__waarde:hover{text-decoration-color:currentColor}
   .homecontact__plek{display:grid;grid-template-rows:1fr auto;min-height:0}
   .homecontact .wereld{height:auto;min-height:clamp(15rem,22vw,18.5rem)}
 }
+/* De onderkant van de kaart is de onderkant van de kolom. Het bijschrift stond eronder in de rij en
+   kostte 29 px, dus eindigde de kaart net zoveel hoger dan de kaart met het formulier ernaast.
+   De plek heeft nu één rij, zodat de kaart hem helemaal vult, en het bijschrift hangt eronder.
+   Het staat dus lager dan de uitlijning in plaats van ertussen; dezelfde behandeling als bij
+   werkgebied, want de klant vroeg in beide blokken hetzelfde. Het valt in de onderruimte van de
+   sectie en maakt het blok niet hoger.
+   Onder 1080 px staat alles in één kolom en blijft het bijschrift gewoon in de stroom staan. */
+@media(min-width:1080px){
+  .homecontact__plek{position:relative;grid-template-rows:1fr}
+  .homecontact__bron{position:absolute;left:0;right:0;top:100%;margin:.45rem 0 0}
+}
 /* Onder 1080 px staat alles in één kolom en staan de gegevens naast elkaar in twee vakken.
    "De ruimte vullen" bestaat daar niet, dus de kaart houdt daar gewoon zijn eigen hoogte. */
 @media(max-width:1079.98px){

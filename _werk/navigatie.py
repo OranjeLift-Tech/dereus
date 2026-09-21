@@ -264,7 +264,7 @@ def footer(ctx):
       <p class="footer__claim">{inline(claim)}</p>
       <p class="footer__omschrijving">{inline(f.veld("omschrijving", "Vanuit Den Haag verhuizen wij u door heel Nederland. Met één vast aanspreekpunt, van aanvraag tot verhuisdag."))}</p>
     </div>
-    <nav class="footer__kolom" aria-labelledby="f-diensten"><p class="footer__kop" id="f-diensten">{esc(f.veld("kolom-diensten", "Diensten"))}</p><ul>{diensten}</ul></nav>
+    <nav class="footer__kolom footer__kolom--diensten" aria-labelledby="f-diensten"><p class="footer__kop" id="f-diensten">{esc(f.veld("kolom-diensten", "Diensten"))}</p><ul>{diensten}</ul></nav>
     <nav class="footer__kolom" aria-labelledby="f-dereus"><p class="footer__kop" id="f-dereus">{esc(f.veld("kolom-dereus", "De Reus"))}</p><ul>{dereus}</ul></nav>
     <div class="footer__kolom footer__kolom--contact"><p class="footer__kop">{esc(f.veld("kolom-contact", "Contact"))}</p>
       <div class="footer__blokken">

@@ -38,17 +38,22 @@
    de review: dat laat de vulling gelijk en duwt de hele lege band naar onderen, precies waar de
    klacht over ging. Gemeten op 1440: van 52 procent vulling met een lege band van 187 px naar 100
    procent en nul. */
+/* De onderrand van het kaartvlak is de onderrand van de kolom, dus die lijnt uit met het tekstblok
+   links. Het bijschrift hing daar eerst tussen en kostte 32 px; nu hangt het eronder, lager dan de
+   uitlijning. Het staat absoluut, telt dus niet mee in de hoogte en valt in de onderruimte van de
+   band. Zelfde behandeling als het contactblok op de home. */
 @media (min-width: 900px) {
-  .wg__kaart { align-self: stretch; display: flex; flex-direction: column; }
-  .wg__kaartvlak { flex: 1 1 auto; }
+  .wg__kaart { align-self: stretch; position: relative; }
+  .wg__kaartvlak { height: 100%; }
   .wg__beeld { height: 100%; object-fit: cover; }
+  .wg__bron { position: absolute; left: 0; right: 0; top: 100%; margin: .45rem 0 0; }
 }
 /* Smalle kolom, net boven het breekpunt: daar wordt de kolom zo hoog en smal dat een volle uitsnede
    de wijknamen doormidden snijdt ("ransvaalkwartier"). Hier dus een zachtere uitsnede en de kaart
    gecentreerd, wat de lege band op 900 van 290 naar 116 px brengt in plaats van hem te verplaatsen. */
 @media (min-width: 900px) and (max-width: 1060px) {
-  .wg__kaart { align-self: center; display: block; }
-  .wg__kaartvlak { aspect-ratio: .65; }
+  .wg__kaart { align-self: end; }
+  .wg__kaartvlak { height: auto; aspect-ratio: .65; }
 }
 
 @media (max-width: 899.98px) {
