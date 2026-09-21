@@ -99,7 +99,9 @@
     --plaat: inset 0 1px 0 #fff, 0 0 0 1px rgba(14, 26, 51, .06), 0 6px 0 var(--rand-wit),
       0 7px 0 rgba(14, 26, 51, .08), var(--val-midden), var(--val-ver);
   }
-  .p-contact .vragen__kop { isolation: isolate; display: grid; gap: 1.5rem; align-content: start;
+  /* position:relative: de headset (.vragen__beeld) en de ::before/::after hangen aan dit paneel. Vroeger deed de sticky
+     van .vragen__kop dat; die is uit de basis gehaald, en zonder dit schoot de headset naar de rechterrand van het scherm. */
+  .p-contact .vragen__kop { position: relative; isolation: isolate; display: grid; gap: 1.5rem; align-content: start;
     margin: -1.2rem 0; padding: 2.2rem 2rem 2.4rem; border-radius: 24px; color: var(--white);
     background: linear-gradient(158deg, var(--brand-primary), #123780 40%, var(--brand-secondary));
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), 0 7px 0 var(--rand-blauw),

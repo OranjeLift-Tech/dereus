@@ -201,7 +201,9 @@
 .p-kosten .b-annuleren__vak{background:linear-gradient(160deg,var(--white),#FFFDF5 60%,#FFF8E6)}
 /* vragen: de ene Koningsblauwe band, met dakrand; de hoeken naast de nok zijn wit (de sectie erboven) */
 .p-kosten .b-vragen{isolation:isolate;background:var(--white);padding-block:calc(var(--ruimte) + var(--dak)) var(--ruimte)}
-.p-kosten .b-vragen::before{content:"";position:absolute;inset:0;z-index:-1;
+/* mask-image:none: de kernlaag legt op elke Mist-sectie een ::before met een ovaal masker (stippenraster, vrij midden).
+   Deze band gebruikt dezelfde ::before; zonder dit blijft dat masker staan en is het midden van de band wit. */
+.p-kosten .b-vragen::before{content:"";position:absolute;inset:0;z-index:-1;-webkit-mask-image:none;mask-image:none;background-size:auto;
   background:radial-gradient(44rem 22rem at 100% 0,rgba(58,111,214,.55),transparent 70%),radial-gradient(40rem 24rem at 0 100%,rgba(11,35,82,.55),transparent 70%),var(--brand-primary);
   clip-path:polygon(0 var(--dak),50% 0,100% var(--dak),100% 100%,0 100%)}
 .p-kosten .b-vragen .vragen__kop .kopgroep :is(h2,.h2){color:var(--white)}
