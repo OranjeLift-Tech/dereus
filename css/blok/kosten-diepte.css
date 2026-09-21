@@ -297,3 +297,16 @@
   .p-kosten .b-vragen .vragen__lijst{width:min(calc(100% - 20px),27rem);margin-inline:auto;
     box-shadow:0 0 0 3px #1B2B4F,0 0 0 10px #0A1730,0 0 0 11px #3A4E7A,0 40px 60px -20px rgba(3,10,28,.8)}
 }
+
+/* ---- Vraagtekens onder de kop van de vragen ----
+   Vraag van de gebruiker. Drie massieve 3D-vraagtekens (render: img/kaart-3d/vraagtekens.webp, bron _ai-beelden/kaart-3d)
+   vullen de ruimte tussen de kop en de belkaart. Zonder markup: een ::before van de kolom die als flex-kind tussen de kop
+   en de belkaart staat (order) en de vrije hoogte neemt. Alleen vanaf 900px: daaronder is de kolom display:contents en
+   zou het beeld los boven de kop in het raster belanden. Er beweegt niets. */
+@media (min-width:900px){
+  .p-kosten .b-vragen .vragen__kop::before{content:"";order:1;flex:1 1 auto;min-height:11rem;max-height:21rem;margin:.5rem 0 1.5rem -.5rem;
+    background:url(/img/kaart-3d/vraagtekens.webp) left center/contain no-repeat;
+    filter:drop-shadow(0 3px 2px rgba(3,10,28,.35)) drop-shadow(0 26px 22px rgba(3,10,28,.5))}
+  .p-kosten .b-vragen .vragen__kop .kopgroep{order:0}
+  .p-kosten .b-vragen .vragen__kop .vragen__bel{order:2;margin-top:0}
+}

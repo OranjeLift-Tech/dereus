@@ -100,3 +100,29 @@ a.b-kaart__waarde:hover{text-decoration-color:currentColor}
 .b-kaart__venster .wereld:not(.is-kaart):hover .wereld__terugval{filter:brightness(.94)}
 @media(max-width:960px){.b-kaart__venster{aspect-ratio:4/3}}
 @media(max-width:560px){.b-kaart__venster{aspect-ratio:4/5}}
+
+/* ---- Adres en openingstijden: één plaat, twee kolommen ----
+   (de naam van dit blok is gebleven; het zijn nu twee rijen.) Twee losse kaarten van ongelijke hoogte stonden als
+   vreemden naast elkaar, en even hoog gaf een lege adreskaart. Nu is het één witte plaat met een dikte: bovenaan het
+   adres, daaronder de tijden, met een dunne lijn ertussen. De twee tijden staan naast elkaar, zodat de plaat laag
+   blijft en er nergens lege ruimte overblijft. Op de telefoon staan de tijden onder elkaar. */
+.b-kaart__gegevens{grid-template-columns:minmax(0,1fr);gap:0;border-radius:18px;background:var(--white);overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 0 color-mix(in srgb,var(--brand-primary) 20%,var(--white)),0 26px 38px -24px rgba(5,14,35,.78)}
+.b-kaart .b-kaart__gegevens .b-kaart__gegeven{border:0;border-radius:0;background:none;box-shadow:none;padding:1.1rem 1.3rem}
+.b-kaart .b-kaart__gegevens .b-kaart__gegeven+.b-kaart__gegeven{border-top:1px solid var(--grey-300)}
+.b-kaart__gegeven>div{flex:1 1 auto}
+.b-kaart__gegeven--adres .b-kaart__waarde{color:var(--ink)}
+.b-kaart__tijden{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem 1.5rem}
+@media(max-width:560px){.b-kaart__tijden{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- Het hoofdkantoor rechts in de adresrij ----
+   Vraag van de gebruiker: de rechterkant van de adresrij stond leeg. Er is geen foto van het echte pand, en een nagemaakte
+   foto naast het echte adres zou misleiden. Daarom een 3D-render van een kantoortje in de huisstijl met het logo op de gevel
+   (img/kaart-3d/kantoor.webp, bron _ai-beelden/kaart-3d/scene.html, functie kantoor). Puur versiering, dus zonder markup: een
+   ::after van de adresrij, op een lichte studiovloer. Komt er een echte foto van het pand, vervang dan alleen de url en zet
+   background-size op cover. */
+.b-kaart .b-kaart__gegevens .b-kaart__gegeven--adres{align-items:center;padding-right:0;overflow:hidden}
+.b-kaart__gegeven--adres::after{content:"";flex:none;align-self:stretch;width:clamp(9rem,36%,13rem);margin:-1.1rem 0 -1.1rem .5rem;min-height:7.6rem;
+  background:url(/img/kaart-3d/kantoor.webp) 50% 56%/100% auto no-repeat,linear-gradient(180deg,#EEF3FD 0 70%,#DCE6F8 70%);
+  border-left:1px solid var(--grey-300)}
+@media(max-width:560px){.b-kaart__gegeven--adres::after{width:5.8rem;min-height:6.2rem;margin-left:.25rem;background-size:116% auto,auto}}

@@ -189,9 +189,71 @@ function ster() {
   return { scene, camera, tekst: null };
 }
 
+/* ---- 10. vraagtekens: drie massieve, glanzende vraagtekens (goud, wit, lichtblauw) voor het blok vragen op /kosten/.
+        Geen letter uit een font maar een buis langs een kromme met bolle uiteinden en een bol als punt: dat geeft
+        het ronde, tastbare voorwerp dat bij de andere renders past. ---- */
+function vraagtekens() {
+  const { scene, camera } = basis(1300, 760, 1.55);
+  const teken = (kleur, metaal) => {
+    const g = new THREE.Group(), r = .155;
+    const m = new THREE.MeshPhysicalMaterial({ color: kleur, metalness: metaal, roughness: .2, clearcoat: 1, clearcoatRoughness: .08 });
+    const pts = [[-.42, .52], [-.34, .82], [-.04, 1.0], [.3, .9], [.45, .6], [.34, .32], [.1, .12], [0, -.08], [0, -.26]].map(([x, y]) => new THREE.Vector3(x, y, 0));
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'catmullrom', .5), 90, r, 28, false), m));
+    [pts[0], pts[pts.length - 1]].forEach(p => g.add(op(new THREE.Mesh(new THREE.SphereGeometry(r, 28, 20), m), p.x, p.y, 0)));
+    g.add(op(new THREE.Mesh(new THREE.SphereGeometry(.2, 36, 26), m), 0, -.68, 0));
+    return g;
+  };
+  const a = teken('#FFC72C', .35); a.position.set(-.15, -.12, .4); a.rotation.set(.12, -.5, .12); a.scale.setScalar(1.28);
+  const b = teken('#FFFFFF', 0); b.position.set(-1.75, -.35, -.2); b.rotation.set(.1, .45, -.28); b.scale.setScalar(.92);
+  const c = teken('#9EBEF8', .1); c.position.set(1.55, .1, -.5); c.rotation.set(.14, -.2, .34); c.scale.setScalar(.74);
+  const g = new THREE.Group(); g.add(a, b, c); scene.add(schaduw(g));
+  return { scene, camera, tekst: null };
+}
+
+/* ---- 11. kantoor: het hoofdkantoor als voorwerp, voor de adreskaart op /contact/. Geen foto van het echte pand
+        (die is er niet en namaken zou misleiden), maar een herkenbaar kantoortje in de huisstijl: lichte gevel,
+        Koningsblauwe plint en dakrand, glas, een goudgele luifel boven de deur en het logo op de gevel. ---- */
+async function kantoor() {
+  const { scene, camera } = basis(1200, 900, 1.5);
+  const LIGGEND = await laadBeeld('/site/img/logo/dereus-logo-horizontaal.svg');
+  const g = new THREE.Group(), W = 2.7, H = 1.55, D = 1.7;
+  const gevel = new THREE.MeshPhysicalMaterial({ color: '#F4F6FA', roughness: .75 });
+  const blauw = new THREE.MeshPhysicalMaterial({ color: '#1746A2', roughness: .35, clearcoat: .6, clearcoatRoughness: .2 });
+  const diep = new THREE.MeshPhysicalMaterial({ color: '#0B2352', roughness: .4, clearcoat: .5 });
+  const geel = new THREE.MeshPhysicalMaterial({ color: '#FFC72C', roughness: .3, clearcoat: 1, clearcoatRoughness: .12 });
+  const glas = new THREE.MeshPhysicalMaterial({ color: '#16305F', roughness: .06, metalness: .35, clearcoat: 1, clearcoatRoughness: .03 });
+  const kozijn = new THREE.MeshPhysicalMaterial({ color: '#FFFFFF', roughness: .4 });
+  const doos = (w, h, d, m, r = .012) => new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, r), m);
+  g.add(op(doos(W, H, D, gevel, .02), 0, H / 2, 0));
+  g.add(op(doos(W + .04, .2, D + .04, blauw), 0, .1, 0));                       /* plint */
+  g.add(op(doos(W + .16, .13, D + .16, diep, .02), 0, H + .065, 0));            /* dakrand */
+  g.add(op(doos(W + .1, .05, D + .1, geel), 0, H - .01, 0));                    /* goudgele lijn onder de dakrand */
+  /* een raam: kozijn met glas, op de voor- of de zijgevel */
+  const raam = (x, y, w, h, zij) => { const k = new THREE.Group(); k.add(doos(w + .07, h + .07, .04, kozijn)); k.add(op(doos(w, h, .02, glas, .006), 0, 0, .02));
+    if (zij) { k.rotation.y = Math.PI / 2; k.position.set(W / 2 + .005, y, x); } else k.position.set(x, y, D / 2 + .005); g.add(k); };
+  [-.95, -.38].forEach(x => raam(x, .62, .42, .62, false));                     /* begane grond, links van de deur */
+  [.2, .78].forEach(x => raam(x, 1.3, .42, .2, false));            /* bovenlichten */
+  [-.5, 0, .5].forEach(z => { raam(z, .62, .36, .62, true); raam(z, 1.17, .36, .34, true); });
+  /* de entree: dubbele glazen deur, luifel en het logo erboven */
+  g.add(op(doos(.95, .86, .04, kozijn), .5, .63, D / 2 + .005));
+  [.27, .73].forEach(x => g.add(op(doos(.4, .76, .02, glas, .006), x, .62, D / 2 + .03)));
+  [.44, .56].forEach(x => g.add(op(doos(.018, .22, .03, geel, .006), x, .6, D / 2 + .05)));          /* deurgrepen */
+  g.add(op(doos(1.2, .06, .42, geel), .5, 1.1, D / 2 + .2));                     /* luifel */
+  g.add(op(doos(.8, .05, .3, new THREE.MeshPhysicalMaterial({ color: '#D3D7DE', roughness: .8 })), .5, .025, D / 2 + .16));   /* stoep */
+  const bord = doek(1024, 250, (c, w, h) => { c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, w, h); const lh = 170, lw = lh * 2444 / 509; c.drawImage(LIGGEND, (w - lw) / 2, (h - lh) / 2, lw, lh); });
+  g.add(op(new THREE.Mesh(new RoundedBoxGeometry(1.5, .37, .05, 3, .012), [kozijn, kozijn, kozijn, kozijn, new THREE.MeshPhysicalMaterial({ map: bord, roughness: .5 }), kozijn]), -.6, H - .3 + .0, D / 2 + .03));
+  /* een verhuisdoos bij de deur, zodat je ziet wat voor bedrijf het is */
+  const karton = new THREE.MeshPhysicalMaterial({ color: '#C79A63', roughness: .88 });
+  const k1 = doos(.34, .26, .3, karton); k1.position.set(-1.05, .13 + .2, D / 2 + .3); k1.rotation.y = -.3; g.add(k1);
+  const k2 = doos(.26, .2, .24, karton); k2.position.set(-1.07, .13 + .2 + .23, D / 2 + .31); k2.rotation.y = .25; g.add(k2);
+  g.position.y = -H / 2 - .12; const uit = new THREE.Group(); uit.add(g); uit.rotation.set(.42, -.62, 0); uit.scale.setScalar(.82);
+  scene.add(schaduw(uit));
+  return { scene, camera, tekst: null };
+}
+
 window.maak = async naam => {
   LOGO = LOGO || await laadBeeld('/site/img/logo/dereus-logo.svg');
-  const { scene, camera, tekst } = ({ telefoon, klembord, doos, tablet, prikbord, pin, kaart, boek, ster })[naam]();
+  const { scene, camera, tekst } = await ({ telefoon, klembord, doos, tablet, prikbord, pin, kaart, boek, ster, vraagtekens, kantoor })[naam]();
   renderer.render(scene, camera);
   return { png: renderer.domElement.toDataURL('image/png'), tekst, maat: [renderer.domElement.width, renderer.domElement.height] };
 };
