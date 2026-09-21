@@ -85,3 +85,18 @@ a.b-kaart__waarde:hover{text-decoration-color:currentColor}
   .b-kaart__img{left:50%;top:50%;width:190%;height:auto;max-width:none;transform:translate(-50%,-50%)}
   .b-kaart__gegevens{grid-template-columns:1fr}
 }
+
+/* ---- de echte kaart: wereldbol in het venster ----
+   Het venster bevat het paneel van blok wereld. De getekende kaart is de terugval; een klik laadt de echte kaart,
+   een bol die naar Den Haag vliegt. Het paneel vult het venster en neemt de vorm van het bord over: geen eigen
+   radius of schaduw. De inset-schaduw van het venster (::after, pointer-events:none) blijft erboven liggen. */
+.b-kaart__venster .wereld{position:absolute;inset:0;height:auto;border-radius:0;box-shadow:none}
+/* op de blauwe band kleurt de sectie knoppen en links wit; in het lichte kaartpaneel moeten ze donker blijven */
+.b-kaart .wereld .wereld__start{border-color:transparent;background:var(--white);color:var(--brand-primary);box-shadow:0 10px 22px -8px rgba(5,14,35,.55)}
+.b-kaart .wereld .wereld__start:hover{background:var(--accent-100);color:var(--brand-secondary)}
+.b-kaart.sectie--blauw .wereld__route{color:var(--brand-primary)}
+.b-kaart.sectie--blauw .wereld__melding{color:var(--ink)}
+.b-kaart__venster .wereld:not(.is-kaart) .wereld__terugval{transition:filter .3s var(--ease)}
+.b-kaart__venster .wereld:not(.is-kaart):hover .wereld__terugval{filter:brightness(.94)}
+@media(max-width:960px){.b-kaart__venster{aspect-ratio:4/3}}
+@media(max-width:560px){.b-kaart__venster{aspect-ratio:4/5}}

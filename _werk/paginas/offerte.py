@@ -9,7 +9,7 @@ PAGINA = Pagina(
     extra_css=("offerte-diepte",),            # de pagina in lagen: plaat, paneel ervoor, verzonken velden
     blokken=[
         ("kop", {}),
-        ("formulier", {"variant": "offerte"}),
+        ("formulier", {"variant": "offerte", "merk": True}),   # beeldmerk onder de belknop, loopt mee in de zijkolom
         ("stappen-na-aanvraag", {"kopij_id": "na-aanvraag"}),
     ],
 )

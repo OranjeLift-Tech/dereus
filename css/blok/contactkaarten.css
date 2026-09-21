@@ -20,9 +20,9 @@
 .b-contactkaarten__nummer:hover{color:var(--white);text-decoration:underline;text-decoration-color:var(--brand-accent);text-decoration-thickness:4px;text-underline-offset:8px}
 .b-contactkaarten__nummer:focus-visible{outline-color:var(--white)}
 /* WhatsApp als groene knop onder het nummer, dezelfde vorm als de knop in de footer */
-.b-contactkaarten__nummer + .wa-link{display:flex;width:fit-content;min-height:50px;margin:.95rem 0 0;padding:.55rem 1.4rem;gap:.55rem;border-radius:var(--radius-button);background:var(--success);box-shadow:0 3px 9px rgba(0,0,0,.22);color:var(--white);font-weight:var(--weight-bold);text-decoration:none}
-.b-contactkaarten__nummer + .wa-link:hover{background:color-mix(in srgb,var(--success) 85%,black);box-shadow:0 5px 12px rgba(0,0,0,.28);color:var(--white)}
-.b-contactkaarten__nummer + .wa-link .ic{width:22px;height:22px}
+/* WhatsApp als kleine groene knop onder het nummer: display:flex zet hem op een eigen regel,
+   fit-content houdt hem zo breed als zijn inhoud. De maat komt van .wa-link in style.css. */
+.b-contactkaarten__nummer + .wa-link{display:flex;width:fit-content;margin:.7rem 0 0;margin-inline-start:0}
 .b-contactkaarten__uren{list-style:none;display:grid;gap:.3rem;margin:1.25rem 0 0;padding:1rem 0 0;border-top:1px solid color-mix(in srgb,var(--white) 22%,transparent);font-size:var(--text-small)}
 .b-contactkaarten__uren li{display:flex;justify-content:space-between;gap:1rem;color:color-mix(in srgb,var(--white) 88%,transparent);font-variant-numeric:tabular-nums}
 
@@ -63,5 +63,5 @@
 .b-contactkaarten__obj--telefoon{left:2.9rem;height:10.2rem}
 .b-contactkaarten__obj--doos{left:1.7rem;height:9.2rem}
 /* de groene WhatsApp-knop onder het nummer: eigen breedte en lucht, niet tegen de link aan */
-.b-contactkaarten__kanaal>.wa-link{align-self:flex-start;margin:.7rem 0 0}
+.b-contactkaarten__kanaal>.wa-link{align-self:flex-start;margin:.7rem 0 0;margin-inline-start:0}
 @media(max-width:1080px){.b-contactkaarten__kanalen{row-gap:4.6rem}}

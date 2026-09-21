@@ -12,3 +12,14 @@
 @media(min-width:1280px){.pk__grond::after{content:"";position:absolute;right:0;top:calc(var(--header-h) + 1rem);width:8rem;height:15rem;background:var(--beeldboog) right center/100% 100% no-repeat;pointer-events:none}}
 @media(min-width:1000px) and (max-height:740px){.pk{padding-top:calc(var(--header-h) + 1.5rem);min-height:440px}}
 @media(max-width:767.98px){.pk{min-height:440px;padding:calc(var(--header-h) + 1.8rem) 0 5.5rem}.pk__intro{font-size:1rem}.pk-pil{margin-top:-2rem}.pk__chips{margin-top:1rem}.pk__chip{padding-inline:.8rem}}
+
+/* ---- Dienstchips onder de kaart: kleine platen met het huis uit het logo ----
+   Wit met een blauwe dikte eronder; bij hover kleurt de chip Koningsblauw (alleen kleur, geen beweging). */
+.pk__chips{margin-top:1.75rem}
+.pk__chips ul{gap:.65rem .6rem}
+.pk__chip{gap:.5rem;min-height:46px;padding:.5rem 1.1rem .5rem .85rem;border:0;font-size:var(--text-small);font-weight:var(--weight-bold);
+  box-shadow:inset 0 1px 0 var(--white),0 0 0 1px rgba(14,26,51,.08),0 4px 0 #C9D9F5,0 14px 18px -12px rgba(11,35,82,.4)}
+.pk__chip::before{content:"";flex:none;width:1.05rem;aspect-ratio:535.3/509.8;background:var(--brand-accent);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.pk__chip:hover{background:var(--brand-primary);color:var(--white);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 0 0 1px var(--brand-primary),0 4px 0 var(--brand-secondary),0 14px 18px -12px rgba(11,35,82,.55)}
+.pk__chip:focus-visible{outline:3px solid var(--brand-accent);outline-offset:3px}
+@media(max-width:767.98px){.pk__chips{margin-top:1.25rem}.pk__chip{padding-inline:.75rem .95rem}}

@@ -1,0 +1,44 @@
+Drie klantportretten voor het blok reviews ("Wat klanten zeggen"): achter elke reviewkaart staat een klant,
+hoofd en schouders steken boven de kaart uit. Het zijn gegenereerde, niet-bestaande personen: sfeerbeeld bij de
+review, geen foto van de echte schrijver. Genereer ze in de Gemini-app (er staat geen API-sleutel op deze pc).
+
+Sla op als:  _ai-beelden/foto/reviews/klant-1.png   (bij de review van Mick Versnel)
+             _ai-beelden/foto/reviews/klant-2.png   (bij de review van Daniëlle Van haaften)
+             _ai-beelden/foto/reviews/klant-3.png   (bij de review van Charlie K)
+Daarna: node reviews-uitsnede.mjs  (achtergrond weg)  en  node reviews-export.cjs  (-> img/review-klant-<n>.webp).
+De opmaak (css/blok/reviews.css + de <img> in de reviewkaarten) zet Claude er daarna in.
+
+Geen logo uploaden: klanten dragen geen De Reus-kleding.
+
+
+==================== GEMEENSCHAPPELIJK (plak dit vóór elke scène) ====================
+Photorealistic head-and-shoulders portrait of an ordinary Dutch customer, photographed like a real, unretouched
+snapshot by a good photographer: full-frame camera, 85 mm lens, soft natural window light from the left, realistic skin
+texture with pores and small imperfections, natural hair, no beauty retouching, no HDR, no illustration, no 3D render.
+FRAMING: the person faces the camera, centred, from the top of the head down to mid-chest. The whole head is inside the
+frame with some space above it. Both shoulders fully visible, arms hanging down out of frame. Body straight towards
+the camera, relaxed.
+BACKGROUND: plain, evenly lit, very light grey seamless studio background with nothing else in it (the background will
+be removed afterwards). No shadows on the background, no props, no text, no watermark.
+CLOTHING: ordinary everyday clothes, no logos, no text, no uniform. NOT blue polo shirts (that is what the movers wear).
+EXPRESSION: genuinely pleased and relaxed, a natural closed or slight open smile, looking into the lens. Not a posed
+stock-photo grin.
+The person must NOT resemble any real, recognisable person or celebrity.
+ASPECT RATIO: 4:5 (portrait). Highest resolution available.
+
+
+==================== klant-1 ====================
+SCENE: a Dutch man of about 35, short light-brown hair, light stubble, average build, wearing a plain dark-green
+crew-neck sweater over a white T-shirt.
+
+
+==================== klant-2 ====================
+SCENE: a Dutch woman of about 45, shoulder-length dark-blonde hair, a few laugh lines, wearing a plain mustard-yellow
+knitted cardigan over a cream top, small stud earrings.
+
+
+==================== klant-3 ====================
+SCENE: a young Dutch woman of about 28 with a mixed background, dark curly hair tied back loosely, round thin-rimmed
+glasses, wearing a plain light-grey hoodie.
+(Charlie K kan ook een man zijn: vervang dan door "a young Dutch man of about 28, dark curly short hair, round
+thin-rimmed glasses, plain light-grey hoodie".)

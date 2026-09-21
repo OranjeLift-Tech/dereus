@@ -135,26 +135,34 @@ def _maat(pad, terugval):
         return terugval
 
 
-def _bovenaan(ctx, beeld, merk):
-    """Bovenin de zijkolom: een uitsneefoto (beeld) of het beeldmerk (merk), voor pagina's zonder eigen foto."""
-    if beeld:
-        breed, hoog = _maat(beeld, (640, 954))
-        return ctx.beeld(beeld, "", breed, hoog, klasse=f"b-{NAAM}__beeld")
-    if merk:
-        breed, hoog = ctx.cfg.LOGO_MATEN["beeldmerk"]
-        return ctx.beeld(ctx.logo(merk), "", breed, hoog, klasse=f"b-{NAAM}__merk")
-    return ""
+def _bovenaan(ctx, beeld):
+    """Bovenin de zijkolom: de uitsneefoto van de pagina, als die er is.
+
+    Hier stond ook een tak voor het beeldmerk, van voor de samenvoeging. Die vervalt: merk is nu een
+    ja/nee, en het beeldmerk hoort onderaan de zijkolom (zie MERK hieronder), niet bovenaan.
+    """
+    if not beeld:
+        return ""
+    breed, hoog = _maat(beeld, (640, 954))
+    return ctx.beeld(beeld, "", breed, hoog, klasse=f"b-{NAAM}__beeld")
 
 
-def _zijkolom(ctx, k, beeld=None, merk=None):
+# Optie merk: het beeldmerk als laatste onderdeel van de zijkolom (/offerte/). Het staat binnen __zijin, zodat het
+# meeloopt met het blok dat tijdens het invullen in beeld blijft. Vormgeving: css/blok/offerte-diepte.css.
+MERK = ('<img class="b-formulier__merk" src="/img/logo/dereus-beeldmerk-negatief.svg" alt="" width="1000" height="509" '
+        'loading="lazy" decoding="async">')
+
+
+def _zijkolom(ctx, k, beeld=None, merk=False):
     if not k.veld("zij-kop"):
         return ""
     vinkjes = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
     return f'''<aside class="b-{NAAM}__zij"><div class="b-{NAAM}__zijin">
-      {_bovenaan(ctx, beeld, merk)}
+      {_bovenaan(ctx, beeld)}
       <p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
       <ul class="b-{NAAM}__vinkjes">{vinkjes}</ul>
       <a class="b-{NAAM}__tel" href="{ctx.telhref}">{TELEFOON_SVG}<span>{ctx.esc(ctx.tel)}</span></a>
+      {MERK if merk else ""}
     </div></aside>'''
 
 
@@ -166,7 +174,7 @@ def html(ctx, kopij, **opties) -> str:
     grond = opties.get("grond", "mist")
     sleutel = getattr(ctx.cfg, "WEB3FORMS_KEY", "")
     zonder_sleutel = _is_placeholder(sleutel)
-    zij = _zijkolom(ctx, k, opties.get("beeld"), opties.get("merk")) if opties.get("zijkolom", True) else ""
+    zij = _zijkolom(ctx, k, opties.get("beeld"), opties.get("merk", False)) if opties.get("zijkolom", True) else ""
     prefix = ctx.esc(opties.get("prefix", "f"))
     bereik = (f'<a href="{ctx.telhref}">{ctx.esc(ctx.tel)}</a> <span aria-hidden="true">·</span> '
               f'<a href="mailto:{ctx.esc(ctx.mail)}">{ctx.esc(ctx.mail)}</a>')

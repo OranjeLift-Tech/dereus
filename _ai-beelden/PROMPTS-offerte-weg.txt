@@ -1,0 +1,35 @@
+Eén foto voor /offerte/, blok "Zo gaat het verder" (#na-aanvraag): een echte weg die van links naar rechts door het
+beeld loopt, als achtergrondband achter de drie stapkaarten. De gestippelde routelijn wordt dan de weg; het huis met
+de biceps rechts blijft het eindpunt. Genereer hem in de Gemini-app (er staat geen API-sleutel op deze pc).
+
+Sla op als:  _ai-beelden/foto/offerte/weg.png
+Daarna zet Claude hem om naar img/offerte-weg.webp (2400 breed) + img/offerte-weg-mobiel.webp en komt de opmaak
+in een eigen bestand (css/blok/stappen-weg.css), zodat css/blok/offerte-diepte.css van de andere sessie heel blijft.
+
+Geen logo uploaden: er staat geen wagen en geen tekst op de foto.
+
+
+==================== PROMPT ====================
+Photorealistic aerial drone photograph, camera pointing STRAIGHT DOWN (true top-down, 90 degrees, no horizon, no sky),
+of one straight two-lane Dutch country road that runs perfectly HORIZONTALLY from the left edge of the frame to the
+right edge, exactly through the vertical middle of the image. The road stays the same width along the whole frame and
+does not bend.
+ROAD: clean dark-grey asphalt, a white dashed centre line and thin solid white edge lines, realistic fine asphalt
+texture, a few faint tyre marks. The road takes up about one fifth of the image height.
+SURROUNDINGS: flat Dutch polder landscape seen from above: fresh green grass fields on both sides, a narrow ditch with
+water running parallel to the road on one side, a low grass verge, maybe one or two small trees with short soft
+shadows. Calm and tidy, lots of even green. No buildings, no people, no cars, no trucks, no road signs, no text.
+LIGHT: soft, bright overcast-to-sunny daylight around noon, short soft shadows, natural colours, no HDR, no orange
+sunset tones, no heavy contrast, no vignette.
+STYLE: looks like a real, unretouched DJI drone photo. Sharp from edge to edge. No illustration, no 3D render, no
+painting, no tilt-shift blur, no watermark.
+COMPOSITION: left and right ends of the road must run cleanly out of the frame. The top and bottom thirds of the image
+are plain green field (they will fade to white on the website), so keep them quiet and free of details.
+ASPECT RATIO: 21:9 (very wide landscape). Highest resolution available.
+
+
+==================== ALS HET NIET GOED KOMT ====================
+- Weg loopt schuin of buigt:        voeg toe  "The road is a perfectly straight horizontal line, parallel to the top and bottom edges."
+- Er staat toch een auto op:         voeg toe  "Completely empty road, zero vehicles."
+- Te donker of te veel contrast:     voeg toe  "Light, airy exposure, pastel greens."
+- Schuin perspectief met horizon:    voeg toe  "Nadir view, orthographic look, like a satellite image but sharper."

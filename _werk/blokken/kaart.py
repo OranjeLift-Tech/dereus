@@ -6,12 +6,16 @@ hier maar in de kanaalkaarten van contactkaarten (design review 1.7, C1: het num
 Kopij: contact.md, blok {#kaart}: label, kop (het adres), intro, knop.
 Gegevens (adres, telefoon, e-mail, tijden, route) komen uit config.py.
 Optionele velden: label-adres, label-tijden, offerte-link.
-Het beeld is img/kaart-den-haag.svg (_werk/kaart/maak_kaart.py, OpenStreetMap-data, ODbL): geen embed.
+Het beeld is img/kaart-den-haag.svg (_werk/kaart/maak_kaart.py, OpenStreetMap-data, ODbL). Die getekende kaart is de
+terugval in het paneel van blok wereld: een klik erop (of op de knop) laadt de echte kaart, een wereldbol die naar
+Den Haag vliegt, net als op de home. De pin en "Route plannen" in het paneel openen de routeplanner.
+Optioneel veld: kaart-knop.
 """
 
 NAAM = "kaart"
 CSS = True
 JS = False
+AFHANKELIJK = ["wereld"]          # stijl en gedrag van de wereldbol (css/blok/wereld.css, js/blok/wereld.js)
 
 BEELD = "/img/kaart-den-haag.svg"
 BREEDTE, HOOGTE = 1400, 933
@@ -59,8 +63,17 @@ def html(ctx, kopij, **opties) -> str:
     return f'''<section class="b-{NAAM} sectie sectie--{grond}" id="{sid}" aria-labelledby="{sid}-kop">
       <div class="wrap b-{NAAM}__in">
         <figure class="b-{NAAM}__beeld" data-reveal>
-          <div class="b-{NAAM}__venster">{ctx.beeld(BEELD, alt, BREEDTE, HOOGTE, klasse=f"b-{NAAM}__img", sizes="(min-width: 1024px) 40vw, 100vw")}</div>
-          <p class="b-{NAAM}__pil">{ctx.icoon("pin")}<span>{ctx.esc(c.STRAAT)}, {ctx.esc(c.PLAATS)}</span></p>
+          <div class="b-{NAAM}__venster">
+            <div class="wereld b-{NAAM}__wereld" data-wereld data-lat="{c.GEO[0]}" data-lng="{c.GEO[1]}">
+              {ctx.beeld(BEELD, alt, BREEDTE, HOOGTE, klasse="wereld__terugval", sizes="(min-width: 1024px) 40vw, 100vw")}
+              <button class="wereld__start knop knop--licht" type="button" data-wereld-start>{ctx.icoon("wereld")}{ctx.esc(k.veld("kaart-knop", "Bekijk interactieve kaart"))}</button>
+              <p class="wereld__melding vh" role="status" data-wereld-melding></p>
+              <div class="wereld__info"><span class="wereld__ic">{ctx.icoon("pin")}</span><div>
+                <address class="wereld__adres">{ctx.esc(c.STRAAT)}<br>{ctx.esc(c.POSTCODE)} {ctx.esc(c.PLAATS)}</address>
+                <a class="wereld__route" href="{c.ROUTE}" rel="noopener">{ctx.esc(k.veld("knop", "Route plannen"))}{ctx.icoon("pijl")}</a>
+              </div></div>
+            </div>
+          </div>
           <figcaption class="b-{NAAM}__bron">Kaartgegevens © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap-bijdragers</a></figcaption>
         </figure>
         <div class="b-{NAAM}__tekst">

@@ -89,3 +89,7 @@
 .wereld__start{position:absolute;top:1rem;left:1rem;z-index:4;font-size:.875rem}
 .wereld.is-kaart .wereld__start{display:none}
 .wereld__melding:not(.vh){position:absolute;top:4.5rem;left:1rem;right:1rem;z-index:4;background:var(--white);color:var(--ink);padding:.6rem;border-radius:var(--radius-control);font-size:.8rem}
+/* de getekende kaart opent de echte kaart, de pin is een link naar de routeplanner */
+.wereld:not(.is-kaart) .wereld__terugval{cursor:pointer}
+a.wereld__marker{display:block;text-decoration:none;cursor:pointer}
+a.wereld__marker:focus-visible{outline:var(--focus-ring);outline-offset:6px;border-radius:50%}

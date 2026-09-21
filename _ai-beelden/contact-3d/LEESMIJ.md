@@ -12,3 +12,13 @@ Opnieuw maken:
 
 Verandert een maat, werk dan `VOORWERP` in `_werk/blokken/contactkaarten.py` bij. Vormgeving staat onderaan
 `css/blok/contactkaarten.css`.
+
+## Vertrouwensrij (reviewkaart, schild, headset, klok)
+
+Zelfde opzet, eigen bestanden: `scene-vertrouwen.html` met `score`, `schild`, `headset` en `klok`.
+
+1. `node render2.cjs scene-vertrouwen.html score schild headset klok` schrijft `uit/<naam>.png` en een controleblad
+   `uit/blad-scene-vertrouwen.png`. De Google-G komt uit de sprite in `contact/index.html`, dus in de echte kleuren.
+2. `node export2.cjs score schild headset klok` schrijft `img/contact-3d/<naam>.webp` (320 px hoog).
+
+Maten staan in `VOORWERP` in `_werk/blokken/vertrouwensrij.py`; vormgeving onderaan `css/blok/vertrouwensrij.css`.
