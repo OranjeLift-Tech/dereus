@@ -21,3 +21,26 @@
 
 @media (max-width:899px){.b-checklist__kaart{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:479px){.b-checklist__kaart{padding:var(--space-5) var(--space-4);border-radius:var(--radius-media)}}
+
+/* ---- Indeling "breed" (/werkwijze/) ----
+   De kop staat op het midden boven de punten en de punten staan eronder in twee kolommen. In de indeling
+   ernaast droeg de rechterkolom alle vlakken en bleef links de onderste helft leeg; zo staat het gewicht
+   aan beide kanten gelijk. Het goudgele lipje boven de kaart is hetzelfde middel als bij blok feitenkaart. */
+.b-checklist--breed .b-checklist__kaart{position:relative;grid-template-columns:minmax(0,1fr);justify-items:center;
+  gap:clamp(1.5rem,3vw,2.5rem);padding-top:clamp(2rem,3.8vw,3.5rem)}
+.b-checklist--breed .b-checklist__kaart::before{content:"";position:absolute;left:50%;top:0;width:3.5rem;height:5px;margin-left:-1.75rem;
+  border-radius:0 0 4px 4px;background:var(--brand-accent)}
+.b-checklist--breed .b-checklist__kop{width:100%;max-width:46rem;text-align:center}
+.b-checklist--breed .b-checklist__kop>p{max-width:none}
+.b-checklist--breed .b-checklist__lijstdeel{width:100%}
+/* "Uw lijstje" met een streepje links en rechts, zodat de lijst een eigen begin krijgt */
+.b-checklist--breed .b-checklist__lijstkop{display:flex;align-items:center;justify-content:center;gap:var(--space-4);margin-bottom:var(--space-5)}
+.b-checklist--breed .b-checklist__lijstkop::before,.b-checklist--breed .b-checklist__lijstkop::after{content:"";flex:1 1 0;max-width:5rem;height:1px;background:var(--color-border)}
+.b-checklist--breed .b-checklist__lijst{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+.b-checklist--breed .b-checklist__voet{width:100%;max-width:46rem;text-align:center}
+.b-checklist--breed .b-checklist__slot{margin:0;padding:var(--space-4) var(--space-5);border-radius:var(--radius-card);
+  background:var(--white);font-size:var(--text-small);line-height:var(--leading-text)}
+.b-checklist--breed.b-checklist--mist .b-checklist__slot{background:var(--off-white)}
+.b-checklist--breed .b-checklist__voet>.b-checklist__acties{margin:var(--space-5) 0 0}
+
+@media (max-width:767px){.b-checklist--breed .b-checklist__lijst{grid-template-columns:minmax(0,1fr)}}

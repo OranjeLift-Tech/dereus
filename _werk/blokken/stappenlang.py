@@ -27,8 +27,10 @@ def _stap(ctx, k, it, nr):
     return f'''<li class="b-{NAAM}__stap" id="{ctx.esc(it.id)}">
         <span class="b-{NAAM}__schijf" aria-hidden="true"><b>{nr}</b></span>
         <article class="b-{NAAM}__kaart" data-reveal>
-          <span class="b-{NAAM}__icoon" aria-hidden="true">{ctx.icoon(icoon)}</span>
-          <h3 class="b-{NAAM}__titel"><span class="vh">{ctx.esc(k.veld("stap-woord", "Stap"))} {nr}: </span>{ctx.inline(it.titel)}</h3>
+          <div class="b-{NAAM}__kop">
+            <span class="b-{NAAM}__icoon" aria-hidden="true">{ctx.icoon(icoon)}</span>
+            <h3 class="b-{NAAM}__titel"><span class="vh">{ctx.esc(k.veld("stap-woord", "Stap"))} {nr}: </span>{ctx.inline(it.titel)}</h3>
+          </div>
           {ctx.alineas(it.tekst)}
           {duo}
           {link}

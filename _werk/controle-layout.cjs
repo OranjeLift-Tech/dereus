@@ -110,21 +110,35 @@ const path = require('node:path');
     assert.ok(await page.locator('.header__cta').evaluate(el => {
       const style = getComputedStyle(el); return style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2;
     }), 'Keyboard focus remains visible on green buttons');
-    const toggle = page.locator('.nav__open');
-    await toggle.focus();
-    await page.keyboard.press('Enter');
-    assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
+    /* Submenu Diensten: de rubriekslink draagt de chevron en de ARIA. Er is geen
+       schakelknop meer; het paneel komt bij hover en bij focus, klikken navigeert. */
+    const sublink = page.locator('.nav__link--sub');
+    assert.equal(await sublink.getAttribute('aria-controls'), 'menu-diensten');
+    await sublink.focus();
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'visible');
+    assert.equal(await sublink.getAttribute('aria-expanded'), 'true', 'submenu opens on keyboard focus');
     await page.keyboard.press('Tab');
-    assert.equal(await page.evaluate(() => document.activeElement.closest('.mega') !== null), true);
+    assert.equal(await page.evaluate(() => document.activeElement.closest('.mega') !== null), true, 'submenu is reachable by keyboard');
     await page.screenshot({ path: path.join(out, 'menu-desktop.png') });
     await page.keyboard.press('Escape');
-    assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
+    assert.equal(await sublink.getAttribute('aria-expanded'), 'false', 'Escape closes the submenu');
+    assert.equal(await sublink.evaluate(el => el === document.activeElement), true, 'Escape returns focus to the link');
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'hidden');
+    /* Na Escape mag Tab niet in het uitfadende paneel landen, dan valt de focus naar de body. */
+    await page.keyboard.press('Tab');
+    assert.equal(await page.evaluate(() => document.activeElement !== document.body && document.activeElement.closest('.mega') === null), true, 'focus moves past the dismissed submenu');
+    /* Hover opent het paneel ook, Escape sluit het weer. */
     await page.locator('.nav__item--sub').hover();
-    assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'visible');
+    assert.equal(await sublink.getAttribute('aria-expanded'), 'true', 'submenu opens on hover');
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'hidden');
     await page.mouse.move(5, 500);
-    await toggle.blur();
+    await sublink.blur();
+    /* De chevron zit in de link: erop klikken gaat naar de dienstenpagina, het schakelt niet. */
+    await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle' }), page.locator('.nav__link--sub .ic').click()]);
+    assert.equal(new URL(page.url()).pathname, '/diensten/', 'clicking the chevron opens the services page');
+    await page.goto(base, { waitUntil: 'networkidle' });
     await page.locator('.footer').scrollIntoViewIfNeeded();
     await page.locator('.footer').screenshot({ path: path.join(out, 'footer-desktop.png'), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
     assert.equal(await page.locator('.header').evaluate(el => el.classList.contains('is-vast')), true);

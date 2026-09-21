@@ -12,6 +12,8 @@
 /* de inhoud loopt mee tijdens het invullen, zodat de kolom nooit leeg naast het formulier staat (review F3) */
 .b-formulier__zijin{position:sticky;top:7rem;display:flex;flex-direction:column;gap:var(--space-6)}
 .b-formulier__beeld{width:min(100%,18rem);height:19rem;object-fit:contain;object-position:center bottom;align-self:center}
+/* het beeldmerk in plaats van een foto, voor pagina's die nog geen eigen beeld hebben */
+.b-formulier__merk{width:min(100%,13rem);height:auto;align-self:center}
 .b-formulier__zijkop{margin:0;color:var(--brand-primary);font:var(--weight-display) var(--text-h2)/var(--leading-heading) var(--font-display);
   font-stretch:var(--font-display-stretch);text-wrap:balance}
 .b-formulier__vinkjes{list-style:none;margin:0;padding:0;display:grid;gap:.8rem}
@@ -92,6 +94,16 @@
 
 /* de honeypot: buiten beeld, niet in de tabvolgorde */
 .b-formulier__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;overflow:hidden}
+
+/* /contact/: het bericht is kort, dus daar staat de kaart smaller en liggen de twee kolommen dichter bij
+   elkaar. Zo staat het formulier midden op de pagina in plaats van tegen de rechterrand. Staat bewust in een
+   min-width query, zodat de kaart onder 900px gewoon één kolom blijft. /offerte/ verandert hier niet van. */
+@media (min-width:900px){
+  .b-formulier--contact .b-formulier__kaart:not(.b-formulier__kaart--smal){grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);max-width:62rem;margin-inline:auto}
+  /* de kaart is hier korter dan het scherm, dus meelopen heeft geen zin: de kolom staat gecentreerd */
+  .b-formulier--contact .b-formulier__zij{display:flex}
+  .b-formulier--contact .b-formulier__zijin{position:static;justify-content:center;flex:1 1 auto}
+}
 
 @media (hover:hover){.b-formulier__tel:hover svg{transform:rotate(-12deg) scale(1.06)}}
 

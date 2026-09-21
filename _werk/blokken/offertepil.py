@@ -52,7 +52,7 @@ def pil(ctx, knoptekst, id_, dienst=None, van="", naar=""):
 def google(ctx, klasse="of-google"):
     return (f'<a class="{klasse}" href="{ctx.esc(ctx.cfg.GOOGLE_PROFIEL)}" rel="noopener" target="_blank">'
             f'{ctx.icoon("google", "ic ic--google")}<b>{ctx.cfg.GOOGLE_SCORE}</b>'
-            f'<span>{ctx.sterren(5)}<small>uit 5 op Google</small></span></a>')
+            f'<span>{ctx.sterren()}<small>uit 5 op Google</small></span></a>')
 
 
 def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="", **opties):

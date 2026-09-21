@@ -17,7 +17,8 @@ PAGINA = Pagina(
         ("vertrouwensrij", {"kopij_id": "vertrouwen"}),
         ("kaart", {}),
         ("contactkaarten", {}),
-        ("formulier", {"variant": "contact"}),
+        # merk: het beeldmerk in de zijkolom. Zodra De Reus een eigen foto kiest wordt dit "beeld": "/img/...".
+        ("formulier", {"variant": "contact", "merk": "beeldmerk"}),
         ("na-bericht", {}),
         ("vragen", {}),
     ],

@@ -13,3 +13,10 @@ _voorbeeld/
 website/review/
 Thumbs.db
 Desktop.ini
+
+# Beeldkandidaten, varianten en archief blijven lokaal: te zwaar voor een publieke repo
+beeld-opties/
+logo-opties/
+logo_try.jpeg
+_ai-beelden/archief/
+_ai-beelden/foto/*-proef/

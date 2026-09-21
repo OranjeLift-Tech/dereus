@@ -53,6 +53,13 @@ FOOTER_EXTRA = [
 ]
 
 _LINK = re.compile(r"^\[([^\]]+)\]\(([^)\s]+)\)$")
+_CIJFER = re.compile(r"(\d+(?:[.,]\d+)?)")
+
+
+def _cijfer(score):
+    """Alleen het cijfer uit een scorezin: "4,9 uit 5 op Google" geeft 4,9."""
+    m = _CIJFER.search(score or "")
+    return m.group(1) if m else cfg.GOOGLE_SCORE
 
 
 def _links(blok, standaard):
@@ -102,12 +109,17 @@ def bereikbaar_html(ctx, klasse="bereikbaar"):
 
 
 def header_acties(ctx):
+    """Reviewblok, telefoon en CTA rechts in de header.
+
+    Het reviewblok is compact: de Google-G, één ster en het cijfer. De ster is hier een merkteken dat zegt
+    dat het over reviews gaat, geen meter; het cijfer ernaast draagt de score. Daarom staat hier
+    ctx.icoon("ster") en niet ctx.sterren(1), want dat laatste zou een schaal van één ster betekenen.
+    De volledige score staat in aria-label van de link, zodat schermlezers hem onverkort voorlezen.
+    """
     t = _gedeeld("topbalk")
     score = t.veld("score", ctx.score)
     return f'''<div class="header__acties">
-      <a class="header__reviews" href="{esc(t.veld("score-link", "/#reviews"))}" aria-label="{esc(score)}">
-        {ctx.icoon("google")}<span>{ctx.sterren()}<small>{inline(score)}</small></span>
-      </a>
+      <a class="header__reviews" href="{esc(t.veld("score-link", "/#reviews"))}" aria-label="{esc(score)}">{ctx.icoon("google")}<span class="header__reviews__ster" aria-hidden="true">{ctx.icoon("ster")}</span><b aria-hidden="true">{esc(_cijfer(score))}</b></a>
       <a class="header__tel" href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{esc(t.veld("telefoon", cfg.TEL))}</span></a>
       <a class="knop knop--cta header__cta" href="/offerte/"><span>{esc(_gedeeld("menu").veld("knop", "Offerte aanvragen"))}</span>{ctx.icoon("pijl")}</a>
     </div>'''
@@ -134,8 +146,10 @@ def header(ctx):
             continue
         cur = _huidig(pad, href)
         if href == "/diensten/":
+            # Label en chevron zitten in dezelfde link: klikken gaat naar /diensten/,
+            # het paneel komt bij hover en bij focus. De ARIA verhuist mee naar de link.
             items.append(f'''<li class="nav__item nav__item--sub">
-        <a class="nav__link" href="{href}"{cur}>{esc(label)}</a><button class="nav__open" type="button" aria-expanded="false" aria-controls="menu-diensten"><span class="vh">{esc(label)}: submenu</span>{ctx.icoon("chevron")}</button>
+        <a class="nav__link nav__link--sub" href="{href}"{cur} aria-expanded="false" aria-controls="menu-diensten">{esc(label)}<span class="vh"> met submenu</span>{ctx.icoon("chevron")}</a>
         {_mega(ctx)}
       </li>''')
         else:
@@ -199,6 +213,7 @@ def lade(ctx):
 def footer(ctx):
     f = _gedeeld("footer")
     claim = f.veld("claim", "Sterk in verhuizen. Zorgeloos geregeld.")
+    # De lijst blijft één lijst; de CSS zet hem in twee even lange kolommen zodra de kolom breed genoeg is.
     diensten = "".join(f'<li><a href="{dienst_href(sl)}">{esc(naam)}</a></li>' for sl, naam, _ in DIENSTEN)
     links = [(l, h) for l, h in _links(f, DE_REUS) if ctx.live(h)]
     links += [(l, h) for l, h in FOOTER_EXTRA if h in kit.ALLE_PADEN and ctx.live(h) and h not in [x for _, x in links]]
@@ -221,15 +236,15 @@ def footer(ctx):
   </div>
   <div class="wrap footer__top">
     <div class="footer__merk">
-      <a href="/" aria-label="{esc(cfg.NAAM)}, naar de homepage"><img class="footer__logo" src="{ctx.logo("logo-horizontaal-negatief")}" alt="" width="{cfg.LOGO_MATEN["horizontaal"][0]}" height="{cfg.LOGO_MATEN["horizontaal"][1]}" loading="lazy" decoding="async"></a>
+      <a href="/" aria-label="{esc(cfg.NAAM)}, naar de homepage"><img class="footer__logo footer__logo--truck" src="/img/footer-truck.webp" alt="Verhuiswagen van {esc(cfg.NAAM)}" width="960" height="640" loading="lazy" decoding="async"></a>
       <p class="footer__claim">{inline(claim)}</p>
       <p class="footer__omschrijving">{inline(f.veld("omschrijving", "Vanuit Den Haag verhuizen wij u door heel Nederland. Met één vast aanspreekpunt, van aanvraag tot verhuisdag."))}</p>
     </div>
-    <nav class="footer__kolom" aria-labelledby="f-diensten"><p class="footer__kop" id="f-diensten">{esc(f.veld("kolom-diensten", "Diensten"))}</p><ul>{diensten}</ul></nav>
-    <nav class="footer__kolom" aria-labelledby="f-dereus"><p class="footer__kop" id="f-dereus">{esc(f.veld("kolom-dereus", "De Reus"))}</p><ul>{dereus}</ul></nav>
-    <div class="footer__kolom"><p class="footer__kop">{esc(f.veld("kolom-contact", "Contact"))}</p>
+    <nav class="footer__kolom footer__kolom--links" aria-labelledby="f-diensten"><p class="footer__kop" id="f-diensten">{esc(f.veld("kolom-diensten", "Diensten"))}</p><ul>{diensten}</ul></nav>
+    <nav class="footer__kolom footer__kolom--links" aria-labelledby="f-dereus"><p class="footer__kop" id="f-dereus">{esc(f.veld("kolom-dereus", "De Reus"))}</p><ul>{dereus}</ul></nav>
+    <div class="footer__kolom footer__kolom--contact"><p class="footer__kop">{esc(f.veld("kolom-contact", "Contact"))}</p>
       <address><span class="footer__sub">{esc(f.veld("adres-label", "Hoofdkantoor"))}</span>{esc(cfg.STRAAT)}<br>{esc(cfg.POSTCODE)} {esc(cfg.PLAATS)}</address>
-      <ul><li><a href="{cfg.TELHREF}">{cfg.TEL}</a></li><li><a href="mailto:{cfg.MAIL}">{cfg.MAIL}</a></li><li><a href="{cfg.ROUTE}" rel="noopener">Route plannen{ctx.icoon("extern")}</a></li></ul>
+      <ul><li><a href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{cfg.TEL}</span></a></li><li><a href="mailto:{cfg.MAIL}">{ctx.icoon("mail")}<span>{esc(cfg.MAIL)}</span></a></li><li><a href="{cfg.ROUTE}" rel="noopener"><span>Route plannen</span>{ctx.icoon("extern")}</a></li></ul>
       <p class="footer__sub">{esc(f.veld("bereikbaar-kop", "Bereikbaar"))}</p>
       <ul class="footer__tijden">{tijden}</ul>
       {bereikbaar_html(ctx, "bereikbaar bereikbaar--footer")}

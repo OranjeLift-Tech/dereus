@@ -189,12 +189,21 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .header__tel { display: inline-flex; align-items: center; gap: .45rem; color: inherit; font-size: .9rem; font-weight: var(--weight-bold); text-decoration: none; white-space: nowrap; }
 .header__tel:hover { color: inherit; text-decoration: underline; }
 .header__tel .ic { width: 17px; height: 17px; }
-.header__reviews { display: inline-flex; align-items: center; gap: .5rem; color: inherit; text-decoration: none; }
+/* Compact reviewblok: de G, één gouden ster als merkteken en het cijfer. De volledige score staat in
+   aria-label van de link. Een rij van vijf kleine sterren was breder en liet het verschil tussen 4,9 en 5
+   toch niet zien, want de rechterpunt van een ster is bijna geen inkt. */
+.header__reviews {
+  display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .6rem; border-radius: var(--radius-button);
+  background: rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .26);
+  color: inherit; text-decoration: none;
+  transition: background-color .35s var(--ease), box-shadow .35s var(--ease);
+}
+/* De pil houdt de drie merken bij elkaar: binnen de pil is de ruimte 4,8 px, ernaast 16 px naar de telefoon. */
+:is(.header.is-vast, .header--vast) .header__reviews { background: var(--white); box-shadow: inset 0 0 0 1px var(--color-border); }
 .header__reviews:hover { color: inherit; }
-.header__reviews > .ic { width: 23px; height: 23px; }
-.header__reviews > span { display: grid; gap: .3rem; }
-.header__reviews .sterren { font-size: .75rem; }
-.header__reviews small { font-size: .65rem; line-height: 1.2; white-space: nowrap; }
+.header__reviews > .ic { width: 20px; height: 20px; }
+.header__reviews__ster { display: inline-flex; color: var(--brand-accent); font-size: .9375rem; }
+.header__reviews b { font: var(--weight-bold) .9375rem/1 var(--font-sans); }
 .header__cta { min-height: 46px; padding: .7rem 1.1rem; font-size: .875rem; white-space: nowrap; }
 .header__menu {
   display: none; place-items: center; width: 46px; height: 46px; margin-left: .25rem; border: 1px solid rgba(255, 255, 255, .45);
@@ -211,10 +220,10 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .nav__link:hover, .nav__link[aria-current] { color: var(--accent-200); }
 :is(.header.is-vast, .header--vast) :is(.nav__link:hover, .nav__link[aria-current]) { color: var(--brand-primary); }
 .nav__link[aria-current] { text-decoration: underline; text-decoration-color: var(--brand-accent); text-decoration-thickness: 3px; text-underline-offset: 8px; }
-.nav__item--sub .nav__link { padding-right: .2rem; }
-.nav__open { display: grid; place-items: center; width: 32px; height: 44px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; border-radius: 6px; }
-.nav__open .ic { width: 16px; height: 16px; transition: transform .25s var(--ease); }
-.nav__item--sub.is-open .nav__open .ic { transform: rotate(180deg); }
+/* De chevron staat in de link zelf, tegen het woord aan, en draait mee als het paneel openstaat. */
+.nav__link--sub { display: flex; align-items: center; gap: .3rem; }
+.nav__link--sub .ic { flex: none; width: 16px; height: 16px; transition: transform .25s var(--ease); }
+.nav__item--sub.is-open .nav__link--sub .ic { transform: rotate(180deg); }
 .mega, .uitklap {
   position: absolute; top: calc(100% + 8px); left: 50%; transform: translate(-50%, 6px); z-index: 5;
   visibility: hidden; opacity: 0; pointer-events: none;
@@ -301,42 +310,64 @@ body.lade-open { overflow: hidden; }
 .footer__uitnodiging > p:not(.label) { max-width: 48ch; line-height: 1.65; }
 .footer__uitnodiging .knoppen { margin-top: 1.4rem; }
 .footer__beeldmerk { width: 100%; max-width: 430px; opacity: .13; justify-self: end; }
-.footer__top { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start; gap: clamp(1.5rem, 2.5vw, 2.5rem); padding-block: 2.5rem 3rem; }
+.footer__top { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: clamp(1.5rem, 2.5vw, 2.5rem); padding-block: 2.5rem 3rem; }
 .footer__top::before { content: ""; position: absolute; top: 0; left: var(--pad); right: var(--pad); height: 1px; background: rgba(255, 255, 255, .18); }
 .footer__top > * { min-width: 0; }
 .footer__logo { width: 200px; height: auto; margin-bottom: 1.25rem; }
-.footer__claim { margin: 0 0 .8rem; font-weight: var(--weight-semibold); color: var(--white); max-width: 24ch; }
-.footer__omschrijving { margin: 0; color: rgba(255, 255, 255, .7); font-size: .875rem; max-width: 30ch; }
-.footer__tel { display: inline-flex; align-items: center; gap: .6rem; font: var(--weight-display) clamp(1.6rem, 1.3rem + 1vw, 2.1rem)/1 var(--font-display); font-stretch: var(--font-display-stretch); color: var(--brand-accent) !important; }
+.footer__logo--truck { display: block; width: min(100%, 300px); height: auto; margin-bottom: .75rem; object-fit: contain; }
+/* De merkstrook loopt over de volle breedte met de wagen naast de tekst. Daardoor houden de linkkolommen
+   eronder genoeg breedte over, en kan Contact in twee kolommen staan in plaats van als één lange sliert. */
+.footer__merk { display: grid; grid-column: 1 / -1; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: start; gap: 0 clamp(1.25rem, 3vw, 2rem); }
+.footer__merk > a { grid-row: span 2; align-self: center; }
+.footer__merk .footer__logo { margin-bottom: 0; }
+.footer__claim { margin: 0 0 .8rem; font-weight: var(--weight-semibold); color: var(--white); }
+.footer__omschrijving { margin: 0; color: rgba(255, 255, 255, .7); font-size: .875rem; max-width: 52ch; }
+.footer__tel { display: inline-flex; align-items: center; gap: .6rem; padding-block: .6rem; font: var(--weight-display) clamp(1.6rem, 1.3rem + 1vw, 2.1rem)/1 var(--font-display); font-stretch: var(--font-display-stretch); color: var(--brand-accent) !important; }
 .footer__tel .ic { width: .8em; height: .8em; }
 .footer__kop { margin: .25rem 0 1rem; color: var(--brand-accent); font: var(--weight-bold) .8125rem/1.3 var(--font-sans); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; }
 .footer__kolom ul { margin: 0 0 1rem; padding: 0; list-style: none; display: grid; gap: .35rem; }
-.footer__kolom a { display: inline-block; padding-block: .2rem; overflow-wrap: anywhere; }
+/* Linklijsten vallen vanzelf in twee kolommen zodra de kolom daar breed genoeg voor is, en anders in één.
+   Zo blijven de kolommen even lang zonder dat een naam halverwege afbreekt. */
+.footer__kolom--links > ul { display: block; max-width: 28rem; columns: 180px 2; column-gap: clamp(1rem, 1.6vw, 1.75rem); }
+.footer__kolom--links > ul > li { margin-bottom: .35rem; break-inside: avoid; }
+.footer__kolom a { display: inline-block; padding-block: .35rem; overflow-wrap: anywhere; }
 .footer__kolom > ul > li { min-width: 0; }
-.footer__kolom > ul > li > a:not(.wa-link) { max-width: 21ch; text-wrap: pretty; line-height: 1.45; }
-.footer__kolom > ul > li > a[href^="mailto:"] { max-width: 100%; }
+.footer__kolom > ul > li > a:not(.wa-link) { text-wrap: pretty; line-height: 1.45; }
 .footer__kolom .ic { width: .85em; height: .85em; margin-left: .4rem; }
+.footer__kolom--contact > ul > li > a:not(.wa-link) { display: inline-flex; align-items: center; }
+.footer__kolom--contact > ul > li > a:not(.wa-link) > .ic:first-child { width: 1em; height: 1em; margin-left: 0; margin-right: .5rem; }
+.footer__kolom--contact > ul > li > a > span { min-width: 0; overflow-wrap: anywhere; }
 .footer__kolom address { margin-bottom: 1rem; line-height: 1.6; }
+.footer__kolom--contact { grid-column: 1 / -1; max-width: 30rem; columns: 200px 2; column-gap: 1.25rem; }
+.footer__kolom--contact > * { break-inside: avoid; }
+.footer__kolom--contact > .footer__kop { column-span: all; }
 .footer__tijden { color: rgba(255, 255, 255, .78); }
 .bereikbaar--footer { color: var(--white); font-size: .8125rem; line-height: 1.5; align-items: baseline; }
-.footer__onder { background: var(--blauw-900); font-size: var(--text-xs); }
-.footer__onder .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1.5rem; padding-block: 1.1rem; }
+.footer__onder { background: var(--blauw-900); color: rgba(255, 255, 255, .7); font-size: var(--text-xs); }
+.footer__onder .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1.5rem; padding-block: .9rem; }
+.footer__onder a { display: inline-block; padding-block: .7rem; }
 .footer__onder p { margin: 0; }
 .footer__onder ul { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin: 0; padding: 0; list-style: none; }
-@media (max-width: 999.98px) { .footer__top { grid-template-columns: 1fr 1fr; } }
+/* Vanaf 1200px passen Diensten, De Reus en Contact naast elkaar, elk breed genoeg voor hun eigen opdeling. */
+@media (min-width: 1200px) {
+  .footer__top { grid-template-columns: minmax(0, 2.05fr) minmax(0, .95fr) minmax(0, 2.3fr); }
+  .footer__kolom--contact { grid-column: auto; }
+}
 @media (max-width: 767.98px) {
   .footer__intro { grid-template-columns: 1fr; }
   .footer__beeldmerk { position: absolute; width: 65%; right: -15%; bottom: 2rem; opacity: .06; pointer-events: none; }
 }
+/* Onder 560px staat alles onder elkaar over de volle breedte. */
 @media (max-width: 559.98px) {
-  .footer__top { gap: 2rem 1rem; }
-  .footer__merk, .footer__kolom:last-child { grid-column: 1 / -1; }
+  .footer__top { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .footer__merk { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .footer__merk > a { grid-row: auto; }
+  .footer__claim { max-width: 24ch; }
+  .footer__merk .footer__logo { margin-bottom: .75rem; }
   .footer__omschrijving { max-width: 40ch; }
-  .footer__kolom a { padding-block: .4rem; }
+  .footer__kolom a { padding-block: .7rem; }
   .footer__onder .wrap { gap: .8rem; }
 }
-
-@media (max-width: 359.98px) { .footer__top { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---- Mobiele belbalk ---- */
 .mcta {

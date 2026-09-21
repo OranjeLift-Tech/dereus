@@ -1,15 +1,29 @@
 /* Gecentreerde fotokop en team, volgens de richting van Brocken en De Kievit. */
-.hero{--hero-onder:5rem;position:relative;isolation:isolate;overflow:hidden;color:var(--white);background:var(--brand-secondary);padding-top:calc(var(--header-h) + 1.1rem);padding-bottom:var(--hero-onder)}
-.hero__grond,.hero__foto,.hero__waas{position:absolute;inset:0;pointer-events:none}.hero__grond{z-index:-1}.hero__foto img{width:100%;height:100%;object-fit:cover}.hero__waas{background:linear-gradient(180deg,rgba(20,22,25,.54),rgba(20,22,25,.1) 32%,rgba(20,22,25,.08) 67%,rgba(20,22,25,.4))}
+/* --kop-h is de gedeelde kophoogte. Dezelfde waarden en dezelfde grenzen staan in kop.css,
+   zodat de homepage en alle paginakoppen op een en hetzelfde mechanisme zitten in plaats van
+   het ene op inhoud en het andere op een clamp. De waarde is de natuurlijke hoogte van deze
+   hero bij de breedste stand in de band, zodat de kop alleen ruimte krijgt en nooit inlevert. */
+.hero{--hero-onder:5rem;--kop-h:673px;position:relative;isolation:isolate;overflow:hidden;color:var(--white);background:var(--brand-secondary);padding-top:calc(var(--header-h) + 1.1rem);padding-bottom:var(--hero-onder);min-height:var(--kop-h);display:flex;align-items:center}
+.hero__grond,.hero__foto,.hero__waas{position:absolute;inset:0;pointer-events:none}.hero__grond{z-index:-1}.hero__foto img{width:100%;height:100%;object-fit:cover}.hero__waas{background:linear-gradient(180deg,rgba(20,22,25,.56),rgba(20,22,25,.2) 32%,rgba(20,22,25,.2) 67%,rgba(20,22,25,.46))}
 .hero__textuur,.hero__korrel{display:none}
-.hero__grid{position:relative;display:grid;justify-items:center;gap:1rem;width:100%}.hero__tekst{position:relative;isolation:isolate;width:100%;max-width:58rem;text-align:center}.hero__tekst::before{content:"";position:absolute;z-index:-1;inset:-2rem -3rem;background:radial-gradient(ellipse,rgba(16,19,24,.63),rgba(16,19,24,.36) 52%,transparent 74%);pointer-events:none}.hero__label{justify-content:center;margin-bottom:.7rem;font-size:.75rem}
+.hero__grid{position:relative;display:grid;justify-items:center;gap:1rem;width:100%}.hero__tekst{position:relative;isolation:isolate;width:100%;max-width:58rem;text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.32)}
+/* closest-side laat de ovaal in zijn eigen vak op nul lopen. Zonder die maat kiest de browser farthest-corner,
+   valt de doorzichtige stop buiten het vak en knipt de verdonkering als een rechthoek af. */
+.hero__tekst::before{content:"";position:absolute;z-index:-1;inset:-4rem -8rem;background:radial-gradient(ellipse closest-side at 50% 50%,rgba(12,14,18,.58),rgba(12,14,18,.56) 55%,rgba(12,14,18,.34) 78%,rgba(12,14,18,.12) 90%,transparent 100%);pointer-events:none}.hero__label{justify-content:center;margin-bottom:.7rem;font-size:.75rem}
 .hero__h1{margin:0;color:var(--white);font:var(--weight-display) clamp(2.3rem,3.8vw,3.4rem)/1.06 var(--font-display);font-stretch:var(--font-display-stretch);text-shadow:0 3px 18px rgba(0,0,0,.2)}
-.hero__intro{margin:.7rem auto 0;max-width:46rem;font-size:1.0625rem;line-height:1.5;color:rgba(255,255,255,.92);text-wrap:pretty}.hero__bel{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem 1rem;margin:.75rem 0 0;font-size:.9rem;font-weight:var(--weight-semibold)}.hero__bel a{display:inline-flex;align-items:center;gap:.45rem;color:var(--white);text-decoration:underline;text-decoration-color:var(--brand-accent);text-underline-offset:5px}.hero__bel a .ic{color:var(--brand-accent)}.hero__status{padding:.35rem .7rem;border-radius:999px;background:rgba(255,255,255,.1);font-size:.75rem}
+.hero__intro{margin:.7rem auto 0;max-width:46rem;font-size:1.0625rem;line-height:1.5;color:var(--white);text-wrap:pretty}.hero__bel{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem 1rem;margin:.75rem 0 0;font-size:.9rem;font-weight:var(--weight-semibold)}.hero__bel a{display:inline-flex;align-items:center;gap:.45rem;color:var(--white);text-decoration:underline;text-decoration-color:var(--brand-accent);text-underline-offset:5px}.hero__bel a .ic{color:var(--brand-accent)}.hero__status{padding:.35rem .7rem;border-radius:999px;background:rgba(255,255,255,.1);font-size:.75rem}
 .hero__figuur{position:relative;width:400px;height:260px}.hero__figuur--team{width:400px;height:260px}.hero__team{position:absolute;z-index:2;top:0;left:50%;translate:-50% 0;width:100%}.hero__team img{width:100%;height:auto;filter:drop-shadow(0 10px 22px rgba(9,25,56,.3))}
 .hero__huis{position:absolute;inset:0;background:var(--primary-100);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}.hero__mascotte{position:absolute;height:260px;width:auto;left:50%;transform:translateX(-50%);bottom:-45px}.hero__beeldmerk{position:absolute;width:200px;left:50%;transform:translateX(-50%);bottom:0}.doos{display:none}
 .hero-pil{position:relative;z-index:5;margin-top:-4rem;padding-bottom:.75rem}
 /* De boog is afgesneden door de buitenste beeldrand, ruim buiten tekst en offerte. */
 @media(min-width:1280px){.hero__grond::after{content:"";position:absolute;right:0;top:calc(var(--header-h) + 1rem);width:8rem;height:15rem;background:var(--beeldboog) right center/100% 100% no-repeat;pointer-events:none}}
 @media(min-width:768px) and (min-height:850px){.hero__figuur--team{width:440px;height:290px}}
+@media(min-width:1000px) and (max-height:849px){.hero{padding-top:calc(var(--header-h) + .85rem)}.hero__figuur--team{height:248px}}
 @media(min-width:1000px) and (max-height:740px){.hero{padding-top:calc(var(--header-h) + .65rem)}.hero__grid{gap:.65rem}.hero__h1{font-size:3rem}.hero__figuur--team{height:220px}}
-@media(max-width:767.98px){.hero{--hero-onder:3rem;padding-top:calc(var(--header-h) + 1.15rem)}.hero__intro{font-size:1rem;max-width:35rem}.hero__grid{gap:1.1rem}.hero__figuur--team{width:min(88vw,390px);height:auto;aspect-ratio:1.5}.hero__bel{font-size:.85rem}.hero-pil{margin-top:-2rem}}
+/* Kophoogte per band. Losse regels, want de bestaande queries hieronder zijn op min-width:1000px
+   afgestemd en die grens klopt niet voor de hoogte zelf. Zie de queries hierboven. */
+@media(max-height:849px){.hero{--kop-h:627px}}
+@media(max-height:740px){.hero{--kop-h:584px}}
+/* Tussen 768 en 999 krimpt de hero niet mee, want zijn compacte stand begint pas op 1000. */
+@media(min-width:768px) and (max-width:999.98px) and (max-height:740px){.hero{--kop-h:624px}}
+@media(max-width:767.98px){.hero{--hero-onder:3rem;--kop-h:658px;padding-top:calc(var(--header-h) + 1.15rem)}.hero__intro{font-size:1rem;max-width:35rem}.hero__grid{gap:1.1rem}.hero__figuur--team{width:min(88vw,390px);height:auto;aspect-ratio:1.5}.hero__bel{font-size:.85rem}.hero-pil{margin-top:-2rem}}

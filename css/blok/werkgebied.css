@@ -1,6 +1,7 @@
-/* Werkgebied: Diepblauwe band met dakrand, drie regels links en een lichte kaart rechts */
-.wg { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
+/* De ruime kaart begint naast de hoofdkop; de volledige geografie blijft zichtbaar. */
+.wg { display: grid; grid-template-columns: minmax(20rem, .8fr) minmax(0, 1.35fr); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
 .wg .kopgroep { margin-bottom: 2rem; }
+.wg .label { display: flex; }
 .wg__regels { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, .16); }
 .wg__regel { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.1rem; padding: 1.35rem 0; border-bottom: 1px solid rgba(255, 255, 255, .16); }
 .wg__icoon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--brand-accent); color: var(--brand-secondary); }
@@ -14,9 +15,9 @@
 
 .wg__alinea { max-width: 60ch; }
 .wg .knoppen { margin-top: 1.5rem; }
-.wg__kaart { margin: 0; }
+.wg__kaart { min-width: 0; margin: calc(var(--text-h6) + 1rem) 0 0; }
 .wg__kaartvlak { position: relative; overflow: hidden; border-radius: var(--r-paneel); background: var(--off-white); box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .6); }
-.wg__beeld { width: 100%; height: auto; }
+.wg__beeld { display: block; width: 100%; height: auto; aspect-ratio: 1400 / 933; object-fit: contain; }
 .wg__pil {
   position: absolute; left: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: .7rem; padding: .6rem 1rem .6rem .7rem;
   border-radius: 999px; background: var(--white); color: var(--ink); box-shadow: var(--schaduw);
@@ -29,6 +30,7 @@
 
 @media (max-width: 899.98px) {
   .wg { grid-template-columns: minmax(0, 1fr); }
+  .wg__kaart { margin: 0; width: 100%; }
   .wg__pil { left: .6rem; bottom: .6rem; padding: .45rem .8rem .45rem .5rem; }
   .wg__bron { text-align: left; }
 }

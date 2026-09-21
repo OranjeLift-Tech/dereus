@@ -80,17 +80,37 @@ LIJN = {
     "wereld": '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
     "quote": '<path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>',
 }
-# WhatsApp: gespreksballon met de bestaande telefoonlijn, als lokale SVG.
-LIJN["whatsapp"] = ('<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.45L3 21l1.8-5.55A8.5 8.5 0 1 1 21 11.5Z"/>'
-                    + '<g transform="translate(6 5) scale(.5)">' + LIJN["telefoon"] + '</g>')
-
 # Gevulde symbolen (geen streep)
 VOL = {
     "ster": '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
     "google": '<path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.6l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/>',
+    # WhatsApp: het officiële glyph uit het Brand Resource Center (2026), vorm onveranderd.
+    # Bron: brandbook/assets/merken/whatsapp-glyph.svg. De merkkleur staat vast in het
+    # pad, zodat geen enkele blokstijl het merk in de kleuren van De Reus kan trekken.
+    "whatsapp": '<path fill="#25D366" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#25D366" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/>',
+    # Dezelfde vorm in het wit, voor op een groene knop.
+    "whatsapp-wit": '<path fill="#fff" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#fff" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/>',
     # Het huis uit het logo, met deur (voor labels en de FAQ)
     "huisje": '<path d="M12 .35l2.39 2.03V0h1.61v3.76L24 10.58h-3.48V22.9h-5.89v-5.63H9.37v5.63H3.48V10.58H0z"/>',
 }
+
+# Tekenvlak van een gevuld symbool, als het geen 24x24 is. Het WhatsApp-glyph houdt
+# zijn eigen 720-raster; de marge eromheen is de vrije ruimte die het merk vraagt en
+# zet het optisch op dezelfde grootte als de lijniconen.
+VOLBOX = {"huisje": "0 0 24 23", "whatsapp": "-72 -72 864 864", "whatsapp-wit": "-72 -72 864 864"}
+
+# De ster vult het 24-raster niet helemaal; dit is het vlak van de tekening zelf.
+# Een deels gevulde ster knipt op dat vlak, anders oogt 4,9 meteen als een volle vijf.
+STER_LINKS, STER_BREED = 2.16, 19.68
+
+
+def googlecijfer():
+    """De Google-score uit config als getal. In de kopij staat hij met een komma."""
+    try:
+        return float(str(cfg.GOOGLE_SCORE).replace(",", "."))
+    except ValueError:
+        raise BouwFout(f"GOOGLE_SCORE '{cfg.GOOGLE_SCORE}' is geen cijfer")
+
 
 # Dienstsleutel (anker) naar het bestand van het merkicoon
 DIENST_ICOON = {
@@ -107,7 +127,7 @@ def sprite(namen):
         if n in LIJN:
             delen.append(f'<symbol id="i-{n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{LIJN[n]}</symbol>')
         elif n in VOL:
-            vb = "0 0 24 23" if n == "huisje" else "0 0 24 24"
+            vb = VOLBOX.get(n, "0 0 24 24")
             inhoud = f'<g transform="translate(2.64 2.64) scale(.78)">{VOL[n]}</g>' if n == "google" else VOL[n]
             delen.append(f'<symbol id="i-{n}" viewBox="{vb}" fill="currentColor">{inhoud}</symbol>')
     if not delen:
@@ -373,19 +393,30 @@ class Ctx:
         t = tekst or f"Bel {cfg.TEL}"
         return self.knop(t, cfg.TELHREF, soort=soort, icoon="telefoon", klasse=f"knop--icoon-voor {klasse}".strip())
 
-    def whatsapp(self, klasse="wa-link", tekst="WhatsApp"):
+    def whatsapp(self, klasse="wa-link", tekst="WhatsApp", glyph=None):
+        """WhatsApp-link met het officiële glyph.
+
+        De zweefknop (klasse "whatsapp") heeft een groene achtergrond en krijgt daarom
+        het witte glyph; overal elders staat het in WhatsApp-groen. Beide zijn merkkleuren.
+        """
+        if glyph is None:
+            glyph = "whatsapp-wit" if "whatsapp" in klasse.split() else "whatsapp"
         return (f'<a class="{esc(klasse)}" href="{cfg.WHATSAPP}" data-whatsapp-business '
                 f'aria-label="Contact met {esc(cfg.NAAM)} via WhatsApp" title="Contact via WhatsApp">'
-                f'{self.icoon("whatsapp")}<span class="wa-link__tekst">{esc(tekst)}</span></a>')
+                f'{self.icoon(glyph)}<span class="wa-link__tekst">{esc(tekst)}</span></a>')
 
     def contactlinks(self, fragment):
-        """Eén gedeelde regel voor alle blokken: naast bellen ook WhatsApp."""
+        """Eén gedeelde regel voor alle blokken: naast bellen ook WhatsApp.
+
+        Een punt of komma die direct op de bellink volgt gaat mee naar voren, anders
+        komt het leesteken los achter de knop: "Bel 085 000 5647 WhatsApp ."
+        """
         parser = _ContactTekst()
         parser.feed(fragment)
         parser.close()
         fragment = "".join(parser.delen)
         patroon = re.compile(r'<a\b(?=[^>]*\bhref=[\"\']' + re.escape(cfg.TELHREF)
-                             + r'[\"\'])[^>]*>(?:(?!</a>).)*</a>(?!\s*<a\b[^>]*data-whatsapp-business)', re.S)
+                             + r'[\"\'])[^>]*>(?:(?!</a>).)*</a>(?![.,;:!?]?\s*<a\b[^>]*data-whatsapp-business)[.,;:!?]?', re.S)
         return patroon.sub(lambda m: m.group(0) + self.whatsapp(), fragment)
 
     def icoon(self, naam, klasse="ic", label=None):
@@ -396,9 +427,38 @@ class Ctx:
             return f'<svg class="{klasse}" role="img" aria-label="{esc(label)}"><use href="#i-{naam}"/></svg>'
         return f'<svg class="{klasse}" aria-hidden="true" focusable="false"><use href="#i-{naam}"/></svg>'
 
-    def sterren(self, aantal=5, klasse="sterren"):
-        s = "".join(self.icoon("ster") for _ in range(aantal))
-        return f'<span class="{klasse}" aria-hidden="true">{s}</span>'
+    def sterren(self, aantal=None, klasse="sterren", waarde=None):
+        """Rij van vijf sterren, gevuld tot de score.
+
+        Zonder argumenten komt de vulling uit config.GOOGLE_SCORE: 4,9 geeft vier hele
+        sterren en een vijfde die voor negen tiende gevuld is. Een blok dat voor een losse
+        review van vijf sterren staat noemt dat cijfer zelf, ctx.sterren(5) blijft dus vijf
+        hele sterren. Bij een rond cijfer is de uitvoer gelijk aan die van vroeger.
+        """
+        rij = 5 if aantal is None else aantal
+        if waarde is None:
+            waarde = googlecijfer() if aantal is None else float(aantal)
+        heel = max(0, min(int(waarde), rij))
+        delen = [self.icoon("ster") for _ in range(heel)]
+        if len(delen) < rij:
+            delen.append(self.deelster(waarde - heel))
+        while len(delen) < rij:
+            delen.append(self.deelster(0))
+        return f'<span class="{klasse}" aria-hidden="true">{"".join(delen)}</span>'
+
+    def deelster(self, deel):
+        """Eén ster die voor <deel> gevuld is; de rest blijft als lichte ster staan.
+
+        De knip zit in de SVG zelf, zodat er geen stijlregel bij hoeft en de minifier
+        er niet aan kan komen.
+        """
+        self.iconen.add("ster")
+        knip = self.uniek("sterknip")
+        tot = round(STER_LINKS + STER_BREED * max(0.0, min(1.0, deel)), 2)
+        return ('<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+                f'<clipPath id="{knip}"><rect width="{tot}" height="24"/></clipPath>'
+                '<use href="#i-ster" opacity=".28"/>'
+                f'<use href="#i-ster" clip-path="url(#{knip})"/></svg>')
 
     def dienst_icoon(self, sleutel, inline=False, klasse="dicoon"):
         """Gevuld tweekleurig merkicoon. inline=True maakt kleuren via CSS aanpasbaar (op blauw)."""

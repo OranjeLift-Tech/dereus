@@ -31,13 +31,16 @@
 .b-stappenlang__stap:nth-child(even) .b-stappenlang__kaart::before{left:auto;right:100%}
 .b-stappenlang__stap:target .b-stappenlang__kaart{box-shadow:var(--shadow-raised),inset 4px 0 0 var(--brand-primary)}
 
-.b-stappenlang__icoon{display:inline-grid;place-items:center;width:44px;height:44px;margin-bottom:var(--space-3);border-radius:12px;background:var(--primary-50);color:var(--brand-primary)}
+/* Icoon en titel op één regel: dat scheelt hoogte en zet het merkicoon naast de kop in plaats van erboven. */
+.b-stappenlang__kop{display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-4)}
+.b-stappenlang__icoon{display:inline-grid;place-items:center;flex:none;width:44px;height:44px;border-radius:12px;background:var(--primary-50);color:var(--brand-primary)}
 .b-stappenlang__icoon .ic{width:22px;height:22px}
-.b-stappenlang__titel{margin:0 0 var(--space-3);color:var(--brand-primary);font-size:var(--text-h3);line-height:var(--leading-heading)}
+.b-stappenlang__titel{margin:0;color:var(--brand-primary);font-size:var(--text-h3);line-height:var(--leading-heading);text-wrap:balance}
 .b-stappenlang__kaart>p{margin:0 0 var(--space-4)}
-.b-stappenlang__duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3);margin:var(--space-5) 0 0}
-.b-stappenlang__wie{padding:var(--space-4);border-radius:var(--radius-card);background:var(--off-white)}
-.b-stappenlang__wie--wij{background:var(--primary-50)}
+/* Wat u doet krijgt de goudgele rand, wat wij doen de koningsblauwe: twee kolommen die eerst bijna gelijk waren. */
+.b-stappenlang__duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3);margin:var(--space-4) 0 0}
+.b-stappenlang__wie{padding:var(--space-4);border-left:3px solid var(--brand-accent);border-radius:var(--radius-card);background:var(--off-white)}
+.b-stappenlang__wie--wij{border-left-color:var(--brand-primary);background:var(--primary-50)}
 .b-stappenlang__wie dt{margin:0 0 .3rem;color:var(--brand-secondary);font:var(--weight-bold) var(--text-xs)/1.3 var(--font-sans);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
 .b-stappenlang__wie dd{margin:0;font-size:var(--text-small);line-height:var(--leading-text)}
 .b-stappenlang__kaart>.b-stappenlang__acties{margin:var(--space-5) 0 0}
