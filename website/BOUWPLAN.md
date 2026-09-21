@@ -63,7 +63,9 @@
 └── website/content/*.md       alle teksten (dereus-4e)
 ```
 
-De oude bestanden van de basis-site (`css/hero.css`, `css/3d.css`, `css/rit.css`, `css/werkwijze.css`, `js/3d.js`, `js/hero.js`, `js/rit.js`, `js/main.js`, `img/avatar-*.webp`) worden niet meer geladen. Wat we ervan houden, gaat over naar een blok. **Niet verwijderen**: dat beslist de gebruiker, via dereus-28.
+De oude bestanden van de basis-site zijn verwijderd. De gebruiker besloot op 21-09-2026 dat de dode CSS in de wortel van `css/` weg mocht en bevestigde daarna hetzelfde voor de dode JS. Daarmee gingen ook de bestanden weg die hier eerder met name stonden: `css/hero.css`, `css/3d.css`, `css/rit.css`, `css/werkwijze.css`, `js/3d.js`, `js/hero.js`, `js/rit.js` en `js/main.js`. In totaal veertien CSS en acht JS. In de wortels staan nu alleen nog `css/style.css`, `css/tokens.css` en `js/site.js`; al het andere hoort in `css/blok/` en `js/blok/`. Hierover staat dus niets meer open.
+
+`img/avatar-*.webp` stond in dezelfde regel maar valt hierbuiten. Die vier beelden staan er nog en daarover is niets besloten. **Niet verwijderen**: dat beslist de gebruiker, via dereus-28.
 
 ## 3. De build-API
 

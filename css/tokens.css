@@ -107,6 +107,10 @@
   --grey-300: #D3D7DE;                   /* Zilvergrijs: decoratieve lijnen */
   --grey-300-cmyk: "20 13 11 0";
   --grey-300-pantone: "7541 C";
+  --grey-200: #E2E5EB;                   /* Lichte lijn, alleen scherm: 1,26:1 op wit, 1,18:1 op Mist.
+                                            Zilvergrijs blijft ongemoeid omdat daar een Pantone aan hangt. */
+  --grey-200-cmyk: "nog afleiden";
+  --grey-200-pantone: "geen, alleen scherm";
   --off-white: #F6F7F9;                  /* Mist: afwisselende secties */
   --off-white-cmyk: "4 2 2 0";
   --off-white-pantone: "geen, alleen scherm";
@@ -153,10 +157,29 @@
   --color-on-brand: var(--white);
   --color-highlight: var(--brand-accent);        /* labels, markeringen, sterren */
   --color-on-highlight: var(--brand-secondary);
-  --color-border: var(--grey-300);
+  /* Decoratieve lijn. Staat los van --color-border-strong, want dat is de rand van invoervelden
+     en die moet op 3:1 blijven (WCAG 1.4.11). Nooit die twee door elkaar halen. */
+  --color-border: var(--grey-200);
   --color-border-strong: var(--grey-400);
   --color-focus: var(--brand-primary);
   --color-focus-on-brand: var(--white);
+
+  /* Sterkte van de achtergronddetails. Elk middel rekent hiermee door, dus de hele laag gaat
+     in een waarde omhoog of omlaag. Nooit losse dekkingen bijstellen, altijd deze. */
+  --detail-sterkte: 1;
+
+  /* Randmotieven: dezelfde vormen die de site voluit gebruikt, hier als masker.
+     Het huis komt uit het logo, de doos en de bus uit de pictogrammenset. */
+  --motief-huis:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 11.4 L12 3 L22 11.4 Z'/%3E%3Cpath d='M4.9 11.4 V21.4 H19.1 V11.4'/%3E%3Cpath d='M15 5.5 V3.4 H17.7 V7.8'/%3E%3C/svg%3E");   /* het huis uit het logo, opnieuw als lijn getekend */
+  --motief-doos:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z'/%3E%3Cpath d='M12 22V12'/%3E%3Cpath d='m3.3 7 7.7 4.73a2 2 0 0 0 2 0L20.7 7'/%3E%3Cpath d='m7.5 4.27 9 5.15'/%3E%3C/svg%3E");   /* de verhuisdoos uit de pictogrammen */
+  --motief-bus:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2'/%3E%3Cpath d='M15 18H9'/%3E%3Cpath d='M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14'/%3E%3Ccircle cx='17' cy='18' r='2'/%3E%3Ccircle cx='7' cy='18' r='2'/%3E%3C/svg%3E");    /* de verhuisbus uit de pictogrammen */
+  --motief-pin:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");    /* het adresspeldje: waar het heen gaat */
+  --motief-wereld:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20'/%3E%3Cpath d='M2 12h20'/%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E"); /* de wereldbol: de internationale verhuizingen */
 
   /* CTA-knop "Offerte aanvragen": groen met witte tekst (besluit gebruiker). Voorlopige waarden tot
      dereus-6e de definitieve tokens levert. Goudgeel blijft alleen accent (markering, label, schijven, sterren). */

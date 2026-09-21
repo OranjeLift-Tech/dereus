@@ -5,7 +5,10 @@ Twee plekken:
   home #over-ons     korte teaser met knop en de link "Meer over De Reus" (velden knop, linktekst, link)
   /over-ons/ #verhaal  het verhaal; met optie feiten=True komen de bevestigde feiten eronder
                        (OPRICHTINGSJAAR, EIGENAAR, TEAM, RECHTSVORM, KVK uit config.FEITEN; onbekend = geen rij)
-Teamfoto: staat FEITEN["TEAM_BEELD"] op een pad, dan toont het huisvenster die foto.
+Huisvenster: staat FEITEN["TEAM_BEELD"] op een pad, dan toont het venster dat beeld, met
+FEITEN["TEAM_BEELD_ALT"] als alt-tekst. Die twee horen bij elkaar en moeten samen vervangen worden:
+het bijschrift beschrijft wat er in beeld is en claimt niet wie het zijn. Er staat nu een gegenereerd
+beeld van fictieve verhuizers, geen foto van de echte ploeg.
 De home gebruikt anders de bestaande illustratieve uitsnede, zonder een teamidentiteit te claimen.
 Opties: feiten (False), motto (True), sectie ("wit").
 """
@@ -44,7 +47,9 @@ def html(ctx, kopij, feiten=False, motto=True, sectie="wit", **opties):
     tekst_motto = getattr(cfg, "MOTTO", "") if motto else ""
     foto = ctx.feit("TEAM_BEELD")
     if foto:
-        venster = (f'<div class="huisvenster over__foto">{ctx.beeld(foto, "Het team van " + cfg.NAAM, 1200, 1140)}</div>')
+        # De alt-tekst komt uit de config, naast het beeld zelf, want alleen daar is bekend wat er te zien is.
+        # Zonder alt-tekst laten we hem leeg: liever niets zeggen dan iets beweren wat het beeld niet waarmaakt.
+        venster = (f'<div class="huisvenster over__foto">{ctx.beeld(foto, ctx.feit("TEAM_BEELD_ALT") or "", 1200, 1140)}</div>')
     elif k.id == "over-ons":
         venster = f'''<div class="over__compositie">
         <span class="over__fotoplaat" aria-hidden="true"></span>

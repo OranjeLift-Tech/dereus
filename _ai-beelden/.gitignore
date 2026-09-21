@@ -1,2 +1,12 @@
 node_modules/
 package-lock.json
+
+# Bronfotos blijven lokaal. De afgewerkte beelden staan in img/ en de scripts
+# hiernaast maken ze opnieuw.
+foto/
+
+
+# Kandidatenreeksen van 18-09-2026 plus zip-kopieen van diezelfde PNG's (54,5 MB).
+# De json's ernaast blijven wel: die leggen vast wat er gegenereerd is.
+archief/**/*.png
+archief/**/*.zip

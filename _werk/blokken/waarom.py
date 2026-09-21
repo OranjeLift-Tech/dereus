@@ -6,20 +6,26 @@ JS = False
 # Icoon per kaart, op volgorde van de kopij
 ICONEN = ["persoon", "doos", "euro", "schild"]
 
+# Kleuraccent van de badge per kaart, op dezelfde volgorde. Twee vlakken maal twee pictogramkleuren
+# geeft vier herkenbare badges zonder dat er een kleur buiten het palet bij komt.
+# Goudgeel draagt hier een pictogram op donker; het staat nergens als tekst op wit.
+ACCENTEN = ["diep-goud", "koning-wit", "diep-wit", "koning-goud"]
+
 
 def html(ctx, kopij, **opties):
     k = kopij
     kaarten = []
     for i, it in enumerate(k.items):
         icoon = ICONEN[i % len(ICONEN)]
-        kaarten.append(f'''<li class="wkaart">
+        accent = ACCENTEN[i % len(ACCENTEN)]
+        kaarten.append(f'''<li class="wkaart wkaart--{accent}">
         <span class="huisbadge">{ctx.icoon(icoon)}</span>
         <h3 class="wkaart__titel">{ctx.inline(it.titel)}</h3>
         <p>{ctx.inline(it.veld("tekst"))}</p>
       </li>''')
+    # Eén knop, en dus één doorverwijzing die een handeling is. De sleutels linktekst en link zijn
+    # hier ook uit home.md gehaald, zodat er geen veld staat dat niets doet. Zie design-notes A5.
     knop = ctx.knop(k.veld("knop", "Offerte aanvragen"), "/offerte/") if k.veld("knop") else ""
-    if k.veld("linktekst") and ctx.live(k.veld("link", "/kosten/")):
-        knop += ctx.knop(k.veld("linktekst"), k.veld("link", "/kosten/"), soort="link")
     return f'''<section class="sectie sectie--wit b-waarom" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop">
   <div class="wrap waarom">
     <div class="waarom__kop" data-reveal>

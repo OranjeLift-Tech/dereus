@@ -31,6 +31,38 @@ const path = require('node:path');
           return {
             width: document.documentElement.scrollWidth,
             viewport: innerWidth,
+            /* Wie steekt er werkelijk buiten beeld? scrollWidth telt ook inhoud mee die een
+               voorouder netjes afsnijdt, en dat is bij ons juist de bedoeling: een uitsnede
+               stapt uit zijn kader en het kader knipt hem af. Zulke breedte is geen fout.
+               Een element dat tot aan de vensterrand doorloopt is dat wel, want daar hakt de
+               vensterrand de figuur doormidden. Die zoeken we hier op, en de breedste wint.
+               Dit draait alleen als er iets mis is, dus het kost niets in de schone gang. */
+            overloop: (() => {
+              if (document.documentElement.scrollWidth <= innerWidth + 1) return null;
+              const knipt = el => /hidden|clip|auto|scroll/.test(getComputedStyle(el).overflowX);
+              const noem = el => {
+                const klassen = [...el.classList].map(klasse => '.' + klasse).join('');
+                const bron = el.tagName === 'IMG' ? ' ' + (el.currentSrc || el.src || '').split('/').pop() : '';
+                return el.tagName.toLowerCase() + klassen + bron;
+              };
+              let ergste = null;
+              for (const el of document.querySelectorAll('body *')) {
+                const box = el.getBoundingClientRect();
+                if (!box.width || box.right <= innerWidth + 1) continue;
+                let afgesneden = false, eerste = null;
+                for (let ouder = el.parentElement; ouder && ouder !== document.body; ouder = ouder.parentElement) {
+                  if (!eerste && ouder.classList.length) eerste = noem(ouder);
+                  /* Knipt een voorouder, dan is dit element niet de schuldige. Steekt die voorouder
+                     zelf ook buiten beeld, dan komt hij in deze zelfde ronde langs en wordt hij
+                     gemeld; we hoeven hem hier dus niet apart te vangen. */
+                  if (knipt(ouder)) { afgesneden = true; break; }
+                }
+                if (afgesneden) continue;
+                const over = Math.round(box.right - innerWidth);
+                if (!ergste || over > ergste.over) ergste = { naam: noem(el), over, breed: Math.round(box.width), ouder: eerste || 'body' };
+              }
+              return ergste;
+            })(),
             headerOverflow: visible.some(el => el.getBoundingClientRect().right > innerWidth + 1),
             broken: [...document.images].filter(img => img.complete && !img.naturalWidth).map(img => img.src),
             duplicateIds: [...document.querySelectorAll('[id]')].map(el => el.id).filter((id, i, ids) => ids.indexOf(id) !== i),
@@ -40,7 +72,15 @@ const path = require('node:path');
             h1: document.querySelectorAll('h1').length
           };
         });
-        assert.ok(layout.width <= layout.viewport + 1, `${width} ${route}: overflow ${layout.width}`);
+        /* De melding noemt de schuldige. De naam van het element dat scrollWidth oprekt is niet
+           vanzelf de naam van het element dat de fout maakt, en op die verwarring is eerder een
+           halve dag weggelopen. De grens zelf blijft staan: hier niets oprekken om groen te
+           worden, want juist het onzichtbare geval telt. De pagina schuift dan niet, maar de
+           figuur wordt wel door de vensterrand doorgesneden. */
+        assert.ok(layout.width <= layout.viewport + 1,
+          `${width} ${route}: overflow ${layout.width} bij venster ${layout.viewport}. ${layout.overloop
+            ? `${layout.overloop.naam} steekt ${layout.overloop.over}px buiten beeld (breed ${layout.overloop.breed}, in ${layout.overloop.ouder})`
+            : 'geen enkel element steekt rechts ongeknipt buiten beeld, kijk naar de linkerrand of naar de wortel zelf'}`);
         assert.ok(!layout.headerOverflow, `${width} ${route}: header overflow`);
         assert.equal(layout.h1, 1, route);
         assert.deepEqual(layout.broken, [], `${width} ${route}: broken images`);
@@ -60,10 +100,41 @@ const path = require('node:path');
           const visible = el => !!el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
           return visible(tel) && !visible(wa) ? ['Visible phone without visible WhatsApp'] : [];
         })), [], `${width} ${route}: paired business phone contacts`);
-        assert.deepEqual(await page.locator('.knop--cta').evaluateAll(items => items.filter(el => el.getClientRects().length).flatMap(el => {
-          const style = getComputedStyle(el), box = el.getBoundingClientRect();
-          return box.height < 44 || style.boxShadow.includes('inset') || parseFloat(style.borderTopWidth) > 1 ? [el.className] : [];
-        })), [], `${width} ${route}: clean CTA styling and touch size`);
+        /* Een CTA moet als knop leesbaar blijven: groot genoeg om te raken, geen kaderrand, en
+           niet ingedrukt of uitgeschakeld ogend. De eerste versie verwierp elke inset-schaduw en
+           dat is te bot: een lichte inset van 1px is een glansrandje dat een knop juist verhoogd
+           laat lijken, terwijl een donkere inset hem ingedrukt maakt. We kijken daarom naar wat
+           de laag doet in plaats van naar het woord inset: hoeveel donkerder maakt hij de knop.
+           De ingedrukte stand mag een donkere inset hebben; die meet dit niet, want
+           getComputedStyle geeft hier de ruststand. */
+        assert.deepEqual(await page.locator('.knop--cta').evaluateAll(items => {
+          const lagen = waarde => {                       // splitsen op komma's buiten haakjes
+            const uit = []; let diep = 0, nu = '';
+            for (const teken of waarde) {
+              if (teken === '(') diep++;
+              else if (teken === ')') diep--;
+              else if (teken === ',' && !diep) { uit.push(nu.trim()); nu = ''; continue; }
+              nu += teken;
+            }
+            if (nu.trim()) uit.push(nu.trim());
+            return uit;
+          };
+          const verduistering = laag => {                 // 0 = laat de knop licht, 1 = maakt hem zwart
+            const kleur = laag.match(/rgba?\(([^)]+)\)/);
+            if (!kleur) return 0;
+            const [r, g, b, a = 1] = kleur[1].split(',').map(Number);
+            return (1 - (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255) * a;
+          };
+          return items.filter(el => el.getClientRects().length).flatMap(el => {
+            const style = getComputedStyle(el), box = el.getBoundingClientRect(), redenen = [];
+            if (box.height < 44) redenen.push(`hoogte ${Math.round(box.height)}px`);
+            if (parseFloat(style.borderTopWidth) > 1) redenen.push(`rand ${style.borderTopWidth}`);
+            for (const laag of lagen(style.boxShadow)) {
+              if (laag.includes('inset') && verduistering(laag) > 0.12) redenen.push(`donkere inset ${laag}`);
+            }
+            return redenen.length ? [`${el.className}: ${redenen.join('; ')}`] : [];
+          });
+        }), [], `${width} ${route}: clean CTA styling and touch size`);
         assert.ok(await whatsapp.evaluate(el => {
           const box = el.getBoundingClientRect(), bar = document.querySelector('.mcta').getBoundingClientRect();
           return box.left >= 0 && box.right <= innerWidth && box.bottom <= innerHeight && (!bar.height || box.bottom <= bar.top - 10);
@@ -110,21 +181,35 @@ const path = require('node:path');
     assert.ok(await page.locator('.header__cta').evaluate(el => {
       const style = getComputedStyle(el); return style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2;
     }), 'Keyboard focus remains visible on green buttons');
-    const toggle = page.locator('.nav__open');
-    await toggle.focus();
-    await page.keyboard.press('Enter');
-    assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
+    /* Submenu Diensten: de rubriekslink draagt de chevron en de ARIA. Er is geen
+       schakelknop meer; het paneel komt bij hover en bij focus, klikken navigeert. */
+    const sublink = page.locator('.nav__link--sub');
+    assert.equal(await sublink.getAttribute('aria-controls'), 'menu-diensten');
+    await sublink.focus();
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'visible');
+    assert.equal(await sublink.getAttribute('aria-expanded'), 'true', 'submenu opens on keyboard focus');
     await page.keyboard.press('Tab');
-    assert.equal(await page.evaluate(() => document.activeElement.closest('.mega') !== null), true);
+    assert.equal(await page.evaluate(() => document.activeElement.closest('.mega') !== null), true, 'submenu is reachable by keyboard');
     await page.screenshot({ path: path.join(out, 'menu-desktop.png') });
     await page.keyboard.press('Escape');
-    assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
+    assert.equal(await sublink.getAttribute('aria-expanded'), 'false', 'Escape closes the submenu');
+    assert.equal(await sublink.evaluate(el => el === document.activeElement), true, 'Escape returns focus to the link');
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'hidden');
+    /* Na Escape mag Tab niet in het uitfadende paneel landen, dan valt de focus naar de body. */
+    await page.keyboard.press('Tab');
+    assert.equal(await page.evaluate(() => document.activeElement !== document.body && document.activeElement.closest('.mega') === null), true, 'focus moves past the dismissed submenu');
+    /* Hover opent het paneel ook, Escape sluit het weer. */
     await page.locator('.nav__item--sub').hover();
-    assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
+    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'visible');
+    assert.equal(await sublink.getAttribute('aria-expanded'), 'true', 'submenu opens on hover');
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'hidden');
     await page.mouse.move(5, 500);
-    await toggle.blur();
+    await sublink.blur();
+    /* De chevron zit in de link: erop klikken gaat naar de dienstenpagina, het schakelt niet. */
+    await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle' }), page.locator('.nav__link--sub .ic').click()]);
+    assert.equal(new URL(page.url()).pathname, '/diensten/', 'clicking the chevron opens the services page');
+    await page.goto(base, { waitUntil: 'networkidle' });
     await page.locator('.footer').scrollIntoViewIfNeeded();
     await page.locator('.footer').screenshot({ path: path.join(out, 'footer-desktop.png'), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
     assert.equal(await page.locator('.header').evaluate(el => el.classList.contains('is-vast')), true);

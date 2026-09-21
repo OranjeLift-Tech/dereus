@@ -4,7 +4,14 @@
    elders op de site. De uitsnede zonder achtergrond ligt daar onafgeknipt overheen, zodat de
    verhuizer uit de huisvorm stapt. De panelen wisselen om en om van kant, zodat acht blokken onder elkaar ritme
    houden in plaats van een lange, gelijkvormige kolom. */
-.b-dienstenpanelen{--ease:cubic-bezier(.22,.61,.36,1);
+/* De foto en de uitsnede staan allebei vergroot in een doos die veel breder is dan het huis; het
+   meeste daarvan is doorzichtig en clip-path knipt alleen wat er getekend wordt, niet wat er aan
+   breedte meetelt. Bij de panelen met het beeld rechts en een grote --uit-schaal (02, 04 en 06)
+   stak die doos daardoor tot 66 px buiten het venster tussen 900 en 1440 px.
+   Knippen gebeurt hier, op de sectie: die is al zo breed als het venster, dus de banden van rand
+   tot rand en de verhuizer die uit zijn huis stapt blijven allebei heel. Knippen op het paneel zou
+   de banden terugsnijden tot de tekstkolom. */
+.b-dienstenpanelen{overflow-x:clip;--ease:cubic-bezier(.22,.61,.36,1);
   --huisvorm:polygon(50% 1.5%,59.9% 10.4%,59.9% 0,66.7% 0,66.7% 16.5%,100% 46.3%,85.5% 46.3%,85.5% 100%,14.5% 100%,14.5% 46.3%,0 46.3%);
   --beeldbreedte:clamp(12rem,24vw,20rem)}
 .b-dienstenpanelen__in{max-width:76rem}

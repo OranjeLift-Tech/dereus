@@ -28,6 +28,7 @@ einde-link: /offerte/
 einde-alt: Voordeur van een woning in Den Haag
 
 ### Offerte aanvragen {#stap-1}
+beeld: /img/stap-aanvraag.webp
 u: U vult het formulier in, of u belt ons op 085 000 5647.
 wij: Wij lezen uw aanvraag en koppelen u aan een vaste verhuisadviseur.
 linktekst: Offerte aanvragen
@@ -36,12 +37,14 @@ link: /offerte/
 U vertelt ons kort waar u vandaan komt, waar u naartoe gaat en wanneer u wilt verhuizen. Meer hoeven wij in deze stap nog niet te weten.
 
 ### Persoonlijk contact {#stap-2}
+beeld: /img/stap-telefoon.webp
 u: U vertelt wat er mee moet, hoe beide adressen bereikbaar zijn en wat u zelf wilt doen.
 wij: Wij denken mee, beantwoorden uw vragen en schatten in hoeveel werk de verhuizing is.
 
 Binnen 24 uur na uw aanvraag belt uw verhuisadviseur u. In dat gesprek nemen we uw wensen en uw inboedel door.
 
 ### Offerte ontvangen {#stap-3}
+beeld: /img/stap-offerte.webp
 u: U leest de offerte rustig door. Wilt u iets aanpassen, dan laat u het uw verhuisadviseur weten.
 wij: Wij stellen de offerte op, doorgaans nog dezelfde dag als het gesprek.
 linktekst: Wat de prijs bepaalt
@@ -50,12 +53,14 @@ link: /kosten/
 U krijgt een duidelijke, vrijblijvende offerte op maat. Daarin staat of u een all-in prijs of een regieprijs krijgt.
 
 ### Planning bevestigen {#stap-4}
+beeld: /img/stap-agenda.webp
 u: U accepteert de offerte.
 wij: Wij zetten de datum vast en bereiden de verhuisdag voor.
 
 Pas als u de offerte accepteert, is de afspraak rond. Daarna regelen wij de rest.
 
 ### Verhuisdag {#stap-5}
+beeld: /img/stap-verhuisdag.webp
 u: U wijst aan waar alles moet komen.
 wij: Wij doen het zware werk, van de eerste doos tot de laatste kast.
 
@@ -79,12 +84,15 @@ intro: Op de verhuisdag doen wij het zware werk. U houdt het overzicht.
 slot: Betalen doet u op de verhuisdag, tenzij we samen iets anders hebben afgesproken. Ziet u schade aan uw spullen? Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze [algemene voorwaarden](/algemene-voorwaarden/).
 
 ### Aankomst
+beeld: verhuisdag-aankomst
 Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.
 
 ### Inladen
+beeld: verhuisdag-dragen
 Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.
 
 ### Uitladen en opbouwen
+beeld: verhuisdag-uitladen
 In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.
 
 ## Na de verhuizing {#na-de-verhuizing}

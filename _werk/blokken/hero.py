@@ -62,7 +62,7 @@ def html(ctx, kopij, **opties):
     b, h = cfg.LOGO_MATEN["beeldmerk"]
     textuur = f'<img class="hero__textuur" src="{ctx.logo("beeldmerk-negatief")}" alt="" width="{b}" height="{h}" decoding="async">'
     intro = k.veld("intro")
-    bel = (f'<p class="hero__bel">{ctx.bereikbaar("bereikbaar hero__status")}'
+    bel = (f'<p class="hero__bel">{ctx.bereikbaar("bereikbaar hero__status", tijden_id="hero-tijden")}'
            f'<a href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>Bel {ctx.tel}</span></a></p>')
     return f'''<section class="hero{" hero--foto" if foto else ""}" id="{ctx.esc(k.id or "offerte")}" aria-labelledby="hero-h1">
   <div class="hero__grond" aria-hidden="true">{achter}<span class="hero__waas"></span>{textuur}<span class="hero__korrel"></span></div>

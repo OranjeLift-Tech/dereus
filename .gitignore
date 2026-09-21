@@ -11,5 +11,15 @@ __pycache__/
 # Gegenereerde concepten en browserprofielen blijven lokaal
 _voorbeeld/
 website/review/
+
+# Kandidatenreeksen waaruit gekozen wordt. De gekozen beelden staan in img/,
+# de rest is tussenmateriaal en samen bijna een halve gigabyte.
+beeld-opties/
+logo-opties/
+
+# Schermafdrukken van Brocken en De Kievit: de analyses ernaast blijven wel.
+# Beide sites staan als repo op deze machine, dus opnieuw maken kan altijd.
+website/referentie/*
+!website/referentie/*.md
 Thumbs.db
 Desktop.ini

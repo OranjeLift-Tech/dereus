@@ -117,6 +117,36 @@ def _velden(ctx, k, variant):
     return label + wanneer + persoon + _veld(ctx, k.item("opmerkingen"), "textarea", False, breed=True)
 
 
+def _maat(pad, terugval):
+    """Werkelijke afmetingen van een beeldbestand, met een terugval als het niet te lezen is.
+
+    width en height bestaan om de browser de juiste verhouding te geven voordat de CSS geladen is.
+    Een vaste maat voor elk beeld doet precies het omgekeerde: het blok kreeg 640x954 mee terwijl
+    aanvraag.py er een liggende 720x540 in hangt. De CSS zet beide maten daarna vast, dus je ziet het
+    niet, maar de verhouding die de browser vooraf krijgt klopt dan niet.
+    PIL is geen harde afhankelijkheid van de build, vandaar de import hier en de terugval.
+    """
+    try:
+        from PIL import Image
+        from kit import WORTEL
+        with Image.open(WORTEL / pad.lstrip("/")) as im:
+            return im.size
+    except Exception:
+        return terugval
+
+
+def _bovenaan(ctx, beeld):
+    """Bovenin de zijkolom: de uitsneefoto van de pagina, als die er is.
+
+    Hier stond ook een tak voor het beeldmerk, van voor de samenvoeging. Die vervalt: merk is nu een
+    ja/nee, en het beeldmerk hoort onderaan de zijkolom (zie MERK hieronder), niet bovenaan.
+    """
+    if not beeld:
+        return ""
+    breed, hoog = _maat(beeld, (640, 954))
+    return ctx.beeld(beeld, "", breed, hoog, klasse=f"b-{NAAM}__beeld")
+
+
 # Optie merk: het beeldmerk als laatste onderdeel van de zijkolom (/offerte/). Het staat binnen __zijin, zodat het
 # meeloopt met het blok dat tijdens het invullen in beeld blijft. Vormgeving: css/blok/offerte-diepte.css.
 MERK = ('<img class="b-formulier__merk" src="/img/logo/dereus-beeldmerk-negatief.svg" alt="" width="1000" height="509" '
@@ -128,7 +158,7 @@ def _zijkolom(ctx, k, beeld=None, merk=False):
         return ""
     vinkjes = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
     return f'''<aside class="b-{NAAM}__zij"><div class="b-{NAAM}__zijin">
-      {ctx.beeld(beeld, "", 640, 954, klasse="b-formulier__beeld") if beeld else ""}
+      {_bovenaan(ctx, beeld)}
       <p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
       <ul class="b-{NAAM}__vinkjes">{vinkjes}</ul>
       <a class="b-{NAAM}__tel" href="{ctx.telhref}">{TELEFOON_SVG}<span>{ctx.esc(ctx.tel)}</span></a>

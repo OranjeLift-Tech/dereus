@@ -53,6 +53,13 @@ FOOTER_EXTRA = [
 ]
 
 _LINK = re.compile(r"^\[([^\]]+)\]\(([^)\s]+)\)$")
+_CIJFER = re.compile(r"(\d+(?:[.,]\d+)?)")
+
+
+def _cijfer(score):
+    """Alleen het cijfer uit een scorezin: "4,9 uit 5 op Google" geeft 4,9."""
+    m = _CIJFER.search(score or "")
+    return m.group(1) if m else cfg.GOOGLE_SCORE
 
 
 def _links(blok, standaard):
@@ -92,22 +99,52 @@ def tijden_regels():
     return [f'{t["kort"]} {t["van"]} tot {t["tot"]} uur' for t in cfg.TIJDEN]
 
 
-def bereikbaar_html(ctx, klasse="bereikbaar"):
-    """Live status 'Nu bereikbaar'. js/site.js vult hem in; zonder JS blijft hij verborgen."""
+def bereikbaar_html(ctx, klasse="bereikbaar", tijden_id=None):
+    """Live status 'Nu bereikbaar'. js/site.js vult hem in; zonder JS blijft hij verborgen.
+
+    Met tijden_id erbij klapt de chip de openingstijden uit. Dat is bewust een echte knop en niet
+    alleen hover: hover bestaat niet op een telefoon, en een span vangt geen toetsenbord. Tikken en
+    Enter doen dus hetzelfde als de muis met hover krijgt, en de hover zelf zit er gewoon bij. Zo
+    komt iedereen bij de tijden en houdt de muisgebruiker de beweging die gevraagd was.
+
+    De regels komen uit tijden_regels() en dus uit config.TIJDEN, zodat ze niet uit de pas kunnen
+    lopen met de lijsten in de voet, de contactband, de kaart en het homecontactblok.
+
+    tijden_id moet je zelf meegeven en per pagina uniek houden, want aria-controls wijst ernaar.
+    Een teller hier zou per bouwronde andere ids geven en dat maakt de diffs onleesbaar.
+
+    Let op bij het inbouwen: in de hero staat de chip binnen een <p>, dus het paneel mag alleen
+    phrasing content bevatten. Daarom spans en geen <ul> of <div>.
+    """
     b = _gedeeld("bereikbaar")
     data = (f' data-open="{esc(b.veld("open", "Nu bereikbaar"))}"'
             f' data-dicht="{esc(b.veld("dicht", "Nu gesloten"))}"'
             f' data-morgen="{esc(b.veld("morgen", "Morgen weer bereikbaar vanaf {tijd} uur"))}"')
-    return f'<span class="{klasse}" data-bereikbaar{data} hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span>'
+    binnen = '<span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span>'
+    if not tijden_id:
+        return f'<span class="{klasse}" data-bereikbaar{data} hidden>{binnen}</span>'
+    regels = " ".join(f'<span class="bereikbaar__regel">{esc(r)}</span>' for r in tijden_regels())
+    return (f'<span class="{klasse} bereikbaar--tijden" data-bereikbaar{data} hidden>'
+            f'<button class="bereikbaar__knop" type="button" aria-expanded="false" aria-controls="{esc(tijden_id)}">'
+            f'{binnen}<span class="vh">, bekijk onze openingstijden</span>'
+            f'{ctx.icoon("chevron")}</button>'
+            f'<span class="bereikbaar__tijden" id="{esc(tijden_id)}" hidden>'
+            f'<span class="bereikbaar__tijden-kop">{esc(b.veld("tijden-kop", "Openingstijden"))}</span> '
+            f'{regels}</span></span>')
 
 
 def header_acties(ctx):
+    """Reviewblok, telefoon en CTA rechts in de header.
+
+    Het reviewblok is compact: de Google-G, één ster en het cijfer. De ster is hier een merkteken dat zegt
+    dat het over reviews gaat, geen meter; het cijfer ernaast draagt de score. Daarom staat hier
+    ctx.icoon("ster") en niet ctx.sterren(1), want dat laatste zou een schaal van één ster betekenen.
+    De volledige score staat in aria-label van de link, zodat schermlezers hem onverkort voorlezen.
+    """
     t = _gedeeld("topbalk")
     score = t.veld("score", ctx.score)
     return f'''<div class="header__acties">
-      <a class="header__reviews" href="{esc(t.veld("score-link", "/#reviews"))}" aria-label="{esc(score)}">
-        {ctx.icoon("google")}<span>{ctx.sterren()}<small>{inline(score)}</small></span>
-      </a>
+      <a class="header__reviews" href="{esc(t.veld("score-link", "/#reviews"))}" aria-label="{esc(score)}">{ctx.icoon("google")}<span class="header__reviews__ster" aria-hidden="true">{ctx.icoon("ster")}</span><b aria-hidden="true">{esc(_cijfer(score))}</b></a>
       <a class="header__tel" href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{esc(t.veld("telefoon", cfg.TEL))}</span></a>
       <a class="knop knop--cta header__cta" href="/offerte/"><span>{esc(_gedeeld("menu").veld("knop", "Offerte aanvragen"))}</span>{ctx.icoon("pijl")}</a>
     </div>'''
@@ -134,8 +171,10 @@ def header(ctx):
             continue
         cur = _huidig(pad, href)
         if href == "/diensten/":
+            # Label en chevron zitten in dezelfde link: klikken gaat naar /diensten/,
+            # het paneel komt bij hover en bij focus. De ARIA verhuist mee naar de link.
             items.append(f'''<li class="nav__item nav__item--sub">
-        <a class="nav__link" href="{href}"{cur}>{esc(label)}</a><button class="nav__open" type="button" aria-expanded="false" aria-controls="menu-diensten"><span class="vh">{esc(label)}: submenu</span>{ctx.icoon("chevron")}</button>
+        <a class="nav__link nav__link--sub" href="{href}"{cur} aria-expanded="false" aria-controls="menu-diensten">{esc(label)}<span class="vh"> met submenu</span>{ctx.icoon("chevron")}</a>
         {_mega(ctx)}
       </li>''')
         else:
@@ -251,7 +290,7 @@ def footer(ctx):
 def belbalk(ctx):
     b = _gedeeld("belbalk")
     return f'''<nav class="mcta" aria-label="Snel contact">
-  <a class="knop knop--licht" href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{esc(b.veld("bellen", "Bellen"))}</span></a>
+  <a class="knop knop--licht" href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{esc(b.veld("bellen", "Bellen"))}</span></a>{ctx.whatsapp(glyph="whatsapp")}
   <a class="knop knop--cta" href="/offerte/"><span>{esc(b.veld("offerte", "Offerte aanvragen"))}</span></a>
 </nav>
 {ctx.whatsapp(klasse="whatsapp")}'''

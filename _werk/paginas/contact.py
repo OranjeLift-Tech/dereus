@@ -17,7 +17,9 @@ PAGINA = Pagina(
         ("vertrouwensrij", {"kopij_id": "vertrouwen", "grond": "wit"}),   # wit, zodat de dakrand erboven schoon aansluit
         ("kaart", {"grond": "blauw"}),                                    # de ene Koningsblauwe band van deze pagina
         ("contactkaarten", {}),
-        ("formulier", {"variant": "contact", "grond": "lucht"}),
+        # beeld: de uitsnede van de verhuisadviseur in de zijkolom, genormaliseerd op 640x954.
+        # grond: lucht komt van de bandenronde en blijft staan.
+        ("formulier", {"variant": "contact", "beeld": "/img/contact-adviseur-uit.webp", "grond": "lucht"}),
         ("na-bericht", {}),
         ("vragen", {"sectie": "wit", "beeld": "headset"}),   # servicebalie: het paneel met de headset erboven
     ],

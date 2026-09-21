@@ -31,7 +31,7 @@
 
 /* Vier kanaalkaarten */
 .b-contactkaarten__kanalen{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.9rem,.6rem + 1vw,1.25rem);margin:clamp(2.5rem,1.8rem + 2.5vw,4rem) 0 0;padding:0}
-.b-contactkaarten__kanaal{display:flex;flex-direction:column;min-width:0;padding:clamp(1.25rem,1rem + 1vw,1.6rem);border:1px solid var(--grey-300);border-radius:var(--radius-card);background:var(--white);box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 5%,transparent),0 14px 34px -22px color-mix(in srgb,var(--ink) 28%,transparent)}
+.b-contactkaarten__kanaal{display:flex;flex-direction:column;min-width:0;padding:clamp(1.25rem,1rem + 1vw,1.6rem);border-radius:var(--radius-card);background:var(--white);box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 5%,transparent),0 14px 34px -22px color-mix(in srgb,var(--ink) 28%,transparent)}
 /* Goudgele huisbadge in plaats van een bleke icoontegel (merkboek: geel als vlak, STIJLANALYSE 6.4) */
 .b-contactkaarten__ic{display:grid;place-items:end center;width:3rem;aspect-ratio:535.3/509.8;margin-bottom:1rem;padding-bottom:.4rem;
   background:var(--brand-accent);color:var(--brand-secondary);

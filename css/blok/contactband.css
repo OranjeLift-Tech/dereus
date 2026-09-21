@@ -1,8 +1,6 @@
 /* Contactband: witte kaart met een Diepblauw paneel met de gegevens */
-.cband {
-  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); overflow: hidden;
-  background: var(--white); border: 1px solid var(--grey-300); border-radius: var(--r-paneel); box-shadow: var(--schaduw);
-}
+.cband {display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); overflow: hidden;
+  background: var(--white); border-radius: var(--r-paneel); box-shadow: var(--schaduw)}
 .cband__tekst { padding: clamp(1.75rem, 1.2rem + 2.5vw, 3.5rem); }
 .cband__tekst .kopgroep { margin-bottom: 1.25rem; }
 .cband__tekst p { max-width: 58ch; color: var(--graphite); }

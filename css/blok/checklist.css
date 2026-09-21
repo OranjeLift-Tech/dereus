@@ -32,3 +32,81 @@
 @media (min-width:900px){.b-checklist__kop{position:sticky;top:calc(var(--header-h) + 1.5rem);align-self:start}}
 @media (max-width:899px){.b-checklist__kaart{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:479px){.b-checklist__kaart{padding:var(--space-5) var(--space-4);border-radius:var(--radius-media)}}
+
+/* ---- De voorbereiding als compositie (alleen waar de optie beeld aan staat) ----
+   Overgenomen uit de Brocken-repo, site/assets/css/blok/checklist.min.css. Daar staat dezelfde
+   sectie: kop, foto, bord met punten. Wat die sectie interessant maakt is niet hoeveel foto er is,
+   maar dat er lagen over elkaar liggen. Drie dingen doen het werk, en ik heb ze alle drie geteld
+   in hun 54 blokken: 19 blokken trekken een laag met een negatieve marge over de buurman heen,
+   29 draaien iets, 26 snijden een vorm. Hun eigen checklist doet:
+     1. een vlak dat schuin achter de compositie langs loopt en links buiten beeld doorloopt
+        (.b-checklist__in::before, skewY(-5deg), left:-50dvw, right:42%);
+     2. foto en bord die elkaar overlappen (margin-right:-6.5rem op de foto, bord eroverheen);
+     3. het bord als voorwerp: een gedraaid vlak erachter, een wit vlak ervoor, een klem erop.
+   Wij doen hetzelfde met onze eigen vormen: het schuine vlak krijgt de dakrand in plaats van hun
+   skew, en de klem is het huisvlak uit het logo in plaats van hun monogram. De maten (-6.5rem,
+   1.8rem, -1.2rem, -1.6 graden) zijn de hunne; die zijn daar uitgeprobeerd en werken. */
+/* clip en niet hidden: het gedraaide vlak achter het bord steekt met zijn hoek buiten de wrap, en op
+   320 en 390 is de zijmarge van de wrap smaller dan die hoek. Clip haalt dat uit de scrollbreedte
+   zonder een scrollcontainer te maken; de hoek loopt dan netjes de vensterrand uit, net als het
+   schuine vlak hieronder dat daar juist voor bedoeld is. */
+.b-checklist--compositie{overflow-x:clip}
+.b-checklist--compositie .b-checklist__kaart{position:relative;display:grid;grid-template-columns:minmax(0,1fr);
+  gap:2.4rem;padding:0;border-radius:0;background:none;box-shadow:none}
+/* het schuine vlak: loopt links buiten beeld door, de bovenrand stijgt zoals de linkerhelft van de
+   dakrand. body heeft overflow-x:clip, dus het steekt niet uit in de scrollbreedte. */
+.b-checklist--compositie .b-checklist__kaart::before{content:"";position:absolute;z-index:-1;left:-50vw;right:28%;
+  top:36%;height:58%;pointer-events:none;background:linear-gradient(90deg,var(--brand-secondary),var(--brand-primary));
+  clip-path:polygon(0 calc(var(--dak) * 2),100% 0,100% 100%,0 100%)}
+
+.b-checklist__beeld{position:relative;margin:0;overflow:clip;border-radius:var(--radius-media);aspect-ratio:4/3;
+  box-shadow:0 30px 50px -30px rgba(14,26,51,.55)}
+.b-checklist__foto{display:block;width:100%;height:100%;object-fit:cover;object-position:42% 62%;
+  transition:transform .8s cubic-bezier(.22,.61,.36,1)}
+@media (hover:hover){.b-checklist__beeld:hover .b-checklist__foto{transform:scale(1.04)}}
+
+/* het bord: een gedraaid blauw vlak erachter, een wit vlak ervoor, het huisvlak als klem erop */
+.b-checklist--compositie .b-checklist__lijstdeel{position:relative;z-index:2;isolation:isolate;
+  padding:3rem clamp(1.15rem,3vw,2.1rem) 1.6rem}
+.b-checklist--compositie .b-checklist__lijstdeel::before{content:"";position:absolute;z-index:-2;inset:-1.1rem -1.1rem -1.5rem;
+  border-radius:var(--radius-media);background:linear-gradient(160deg,var(--brand-secondary),var(--primary-600));
+  transform:rotate(-1.6deg);box-shadow:0 34px 60px -34px rgba(14,26,51,.7)}
+.b-checklist--compositie .b-checklist__lijstdeel::after{content:"";position:absolute;z-index:-1;inset:0;
+  border-radius:var(--radius-card);background:var(--white);box-shadow:0 1px 2px rgba(14,26,51,.08)}
+.b-checklist--compositie .b-checklist__lijstkop{margin:0 0 .3rem;padding-bottom:.8rem;
+  border-bottom:2px solid var(--brand-secondary)}
+/* de klem: het huisvlak uit het logo, 535,3 bij 509,8, dus hoogte is breedte maal 0,952. In Goudgeel,
+   want in dezelfde blauw als het bord verdwijnt de vorm erin; bij Brocken is de klem ook het enige
+   onderdeel van het bord met een eigen materiaal. */
+.b-checklist--compositie .b-checklist__lijstkop::before{content:"";position:absolute;top:-2.5rem;left:50%;
+  width:4.6rem;height:4.38rem;margin-left:-2.3rem;background:var(--brand-accent);
+  -webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat;
+  filter:drop-shadow(0 6px 12px rgba(14,26,51,.45))}
+/* op het bord zijn de punten regels op papier, geen losse doosjes meer */
+.b-checklist--compositie .b-checklist__lijst{gap:0}
+.b-checklist--compositie .b-checklist__lijst li{padding:.95rem 0 .95rem 2.6rem;border-radius:0;background:none;
+  box-shadow:none;border-bottom:1px dashed var(--primary-100)}
+.b-checklist--compositie .b-checklist__lijst li:last-child{border-bottom:0}
+.b-checklist--compositie .b-checklist__lijst li::before,.b-checklist--compositie .b-checklist__lijst li::after{left:0;top:1.05rem}
+
+@media (min-width:960px){
+  .b-checklist--compositie .b-checklist__kaart{grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:clamp(2.5rem,5vw,4.5rem);row-gap:2.4rem;align-items:start}
+  .b-checklist--compositie .b-checklist__kop{grid-column:1;grid-row:1}
+  .b-checklist--compositie .b-checklist__beeld{grid-column:1;grid-row:2;margin-right:-6.5rem}
+  .b-checklist--compositie .b-checklist__lijstdeel{grid-column:2;grid-row:1/span 2;margin-top:1.8rem}
+}
+@media (max-width:959.98px){
+  .b-checklist--compositie .b-checklist__beeld{width:100%;max-width:40rem;margin-inline:auto}
+  .b-checklist--compositie .b-checklist__beeld+.b-checklist__lijstdeel{margin-top:-1.2rem}
+  .b-checklist--compositie .b-checklist__kaart::before{right:22%;top:32%;height:26%}
+}
+@media (prefers-reduced-motion:reduce){
+  .b-checklist__foto{transition:none}
+  .b-checklist__beeld:hover .b-checklist__foto{transform:none}
+}
+/* Geen sticky in deze sectie. Regel 32 hierboven maakt de kopkolom vanaf 900 plakkend; dat patroon
+   is vier keer afgewezen, en in deze stapeling zou de kop over de foto heen schuiven die eronder in
+   dezelfde kolom staat. De andere instantie van dit blok (#na-de-verhuizing) houdt hem voorlopig:
+   dat is een andere sectie en een aparte beslissing. */
+@media (min-width:900px){.b-checklist--compositie .b-checklist__kop{position:static}}

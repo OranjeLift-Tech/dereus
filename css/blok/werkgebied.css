@@ -1,5 +1,9 @@
 /* Werkgebied: Diepblauwe band met dakrand, drie regels links en een lichte kaart rechts */
-.wg { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
+/* Even brede kolommen: de kaart is precies zo breed als het tekstblok ernaast. Dat tekstblok is
+   even breed met als zonder de kopgroep, want die vult de kolom ook; gemeten op 1440 waren kop,
+   h2 en de drie regels alle drie 538 px terwijl de kaart 595 was. Het verschil zat dus alleen in
+   de kolomverhouding, en die stond op .95 tegen 1.05. */
+.wg { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
 .wg .kopgroep { margin-bottom: 2rem; }
 .wg__regels { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, .16); }
 .wg__regel { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.1rem; padding: 1.35rem 0; border-bottom: 1px solid rgba(255, 255, 255, .16); }
@@ -26,6 +30,31 @@
 .wg__pil small { display: block; font-size: .8rem; color: var(--grey-600); }
 .wg__bron { margin-top: .75rem; font-size: .8rem; color: rgba(255, 255, 255, .7); text-align: right; }
 .b-werkgebied .wg__bron a { color: rgba(255, 255, 255, .85); }
+
+/* De kaart vult de kolom, zodat er rechtsonder geen lege band meer overblijft. De tekstkolom is
+   ruim tweemaal zo hoog als een kaart van 3:2, dus gecentreerd bleef er boven en onder bijna 190 px
+   Diepblauw over. Rekken vult dat helemaal; de uitsnede loopt via object-fit, dus de kaart verschuift
+   niet, hij laat links en rechts minder zien. Dit is nadrukkelijk niet align-self: start uit H1 van
+   de review: dat laat de vulling gelijk en duwt de hele lege band naar onderen, precies waar de
+   klacht over ging. Gemeten op 1440: van 52 procent vulling met een lege band van 187 px naar 100
+   procent en nul. */
+/* De onderrand van het kaartvlak is de onderrand van de kolom, dus die lijnt uit met het tekstblok
+   links. Het bijschrift hing daar eerst tussen en kostte 32 px; nu hangt het eronder, lager dan de
+   uitlijning. Het staat absoluut, telt dus niet mee in de hoogte en valt in de onderruimte van de
+   band. Zelfde behandeling als het contactblok op de home. */
+@media (min-width: 900px) {
+  .wg__kaart { align-self: stretch; position: relative; }
+  .wg__kaartvlak { height: 100%; }
+  .wg__beeld { height: 100%; object-fit: cover; }
+  .wg__bron { position: absolute; left: 0; right: 0; top: 100%; margin: .45rem 0 0; }
+}
+/* Smalle kolom, net boven het breekpunt: daar wordt de kolom zo hoog en smal dat een volle uitsnede
+   de wijknamen doormidden snijdt ("ransvaalkwartier"). Hier dus een zachtere uitsnede en de kaart
+   gecentreerd, wat de lege band op 900 van 290 naar 116 px brengt in plaats van hem te verplaatsen. */
+@media (min-width: 900px) and (max-width: 1060px) {
+  .wg__kaart { align-self: end; }
+  .wg__kaartvlak { height: auto; aspect-ratio: .65; }
+}
 
 @media (max-width: 899.98px) {
   .wg { grid-template-columns: minmax(0, 1fr); }

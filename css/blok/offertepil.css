@@ -14,7 +14,7 @@
 
 .of-google {
   display: inline-flex; align-items: center; gap: .65rem; padding: .55rem 1rem .55rem .6rem; border-radius: 999px;
-  background: var(--off-white); box-shadow: inset 0 0 0 1px var(--grey-300); color: var(--ink); text-decoration: none; flex: none;
+  background: var(--off-white); box-shadow: inset 0 0 0 1px var(--color-border); color: var(--ink); text-decoration: none; flex: none;
 }
 .of-google:hover { background: var(--primary-50); color: var(--ink); }
 .of-google .ic--google { width: 1.9rem; height: 1.9rem; padding: .3rem; border-radius: 50%; background: var(--white); box-shadow: 0 1px 3px rgba(14, 26, 51, .14); }
@@ -26,7 +26,7 @@
 /* De pil zelf */
 .of-pil {
   display: flex; align-items: stretch; gap: 0; padding: .4rem; border-radius: 999px;
-  background: var(--off-white); box-shadow: inset 0 0 0 1px var(--grey-300);
+  background: var(--off-white); box-shadow: inset 0 0 0 1px var(--color-border);
 }
 .of-veld { position: relative; flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: .45rem 1.1rem; border-radius: 999px; cursor: text; }
 .of-veld:first-child { padding-left: 1.5rem; }
@@ -73,14 +73,14 @@
 .b-offertepil .of-box--los { max-width: 72rem; margin-inline: auto; }
 
 /* Rustige, compacte headerkaart met duidelijke velden en korte selectietekst. */
-.of-box--header { padding:1rem 1.25rem; border:1px solid var(--grey-300); border-radius:18px; box-shadow:0 12px 35px -24px rgba(11,35,82,.3); }
+.of-box--header { padding:1rem 1.25rem; border-radius:18px; box-shadow:0 12px 35px -24px rgba(11,35,82,.3); }
 .of-box--header::before { width:3.25rem; height:3px; left:1.25rem; }
 .of-box--header .of-kop { gap:.75rem 1.5rem; margin-bottom:.85rem; align-items:center; }
 .of-box--header .of-titel { font-size:1.5rem; }
 .of-box--header .of-google { padding:.3rem .7rem .3rem .4rem; background:transparent; box-shadow:none; }
 .of-box--header .of-google b { font-size:1.5rem; }
 .of-box--header .of-google .ic--google { width:1.8rem; height:1.8rem; }
-.of-box--header .of-pil { border-radius:14px; padding:.3rem; box-shadow:inset 0 0 0 1px var(--grey-300); }
+.of-box--header .of-pil { border-radius:14px; padding:.3rem; box-shadow:inset 0 0 0 1px var(--color-border); }
 .of-box--header .of-veld { padding:.4rem 1rem; border-radius:10px; gap:.15rem; }
 .of-box--header .of-veld:first-child { padding-left:1rem; }
 .of-box--header .of-veld > span { line-height:1.25; font-size:.75rem; letter-spacing:0; }
@@ -97,7 +97,7 @@
 @media (max-width: 999.98px) {
   .of-pil { flex-wrap: wrap; border-radius: 20px; padding: .5rem; gap: .5rem; background: transparent; box-shadow: none; }
   .of-streep { display: none; }
-  .of-veld, .of-veld:first-child { flex: 1 1 calc(50% - .25rem); padding: .6rem 1rem; border-radius: 14px; background: var(--off-white); box-shadow: inset 0 0 0 1px var(--grey-300); }
+  .of-veld, .of-veld:first-child { flex: 1 1 calc(50% - .25rem); padding: .6rem 1rem; border-radius: 14px; background: var(--off-white); box-shadow: inset 0 0 0 1px var(--color-border); }
   .of-veld:focus-within { box-shadow: inset 0 0 0 2px var(--brand-primary); }
   .of-knop { flex: 1 1 100%; margin: .25rem 0 0; }
   .of-pil { padding: 0; }
@@ -112,13 +112,18 @@
   .of-veld :is(input, select) { font-size: 1rem; min-height: 32px; }
   .of-kop { gap: .75rem; margin-bottom: 1rem; }
   .of-vinken { gap: .35rem; font-size: .95rem; }
-  .of-bel > a { flex: 1 1 100%; }
+  /* Op 320 px houdt de kaart 248 px over, terwijl "Liever bellen? 085 000 5647" met nowrap een
+     minimale breedte van 291 px heeft: daar liep de pagina 7 px op over. Hier mag de regel dus
+     afbreken en mag de knop krimpen (min-width:0, anders houdt een flex-item zijn min-content).
+     Het nummer zelf blijft aan elkaar, zodat het nooit middenin afbreekt. */
+  .of-bel > a { flex: 1 1 100%; min-width: 0; flex-wrap: wrap; padding-inline: 1rem; white-space: normal; text-align: center; }
+  .of-bel__nr { white-space: nowrap; }
 }
 
 @media (max-width:999.98px) {
   .of-box--header .of-pil { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.65rem; padding:0; background:transparent; box-shadow:none; }
   .of-box--header .of-streep { display:none; }
-  .of-box--header .of-veld, .of-box--header .of-veld:first-child { min-width:0; padding:.55rem .85rem; background:var(--off-white); box-shadow:inset 0 0 0 1px var(--grey-300); }
+  .of-box--header .of-veld, .of-box--header .of-veld:first-child { min-width:0; padding:.55rem .85rem; background:var(--off-white); box-shadow:inset 0 0 0 1px var(--color-border); }
   .of-box--header .of-knop { grid-column:1/-1; width:100%; margin:0; }
 }
 @media (max-width:559.98px) {
