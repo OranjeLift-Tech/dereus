@@ -1,6 +1,6 @@
 /* Verhuisbedrijf De Reus · blok kortestappen (sjabloon dienstdetail, #hoe)
    De stappen in het kort: goudgele genummerde schijven aan een liggende gestippelde route, familie van werkwijze
-   (home) en stappenlang (/werkwijze/). Op licht is de route Koningsblauw 300. Op mobiel loopt de route verticaal. */
+   (home) en tijdlijn (/werkwijze/). Op licht is de route Koningsblauw 300. Op mobiel loopt de route verticaal. */
 .b-kortestappen{--schijf:56px}
 .b-kortestappen__tekst{max-width:50rem}
 .b-kortestappen__tekst>p{margin:0 0 var(--space-4);max-width:var(--measure)}

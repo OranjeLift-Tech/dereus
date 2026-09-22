@@ -13,7 +13,7 @@ PAGINA = Pagina(
     extra_css=("kosten-diepte", "opbouw-3d"),             # de pagina in lagen: platen met dikte, de trap op de Diepblauwe band
     blokken=[
         ("kop", {}),
-        ("antwoord", {"chips": CHIPS}),
+        ("antwoord", {"chips": CHIPS, "beeld": ("/img/verhuisdozen-uit.webp", 562, 522)}),
         ("opbouw", {"voorwerpen": True}),                           # 3D-voorwerpen op gele schijven (css/blok/opbouw-3d.css)
         ("treden", {"kopij_id": "verhuizing", "figuren": True}),   # verhuizers op trede 1 en 2, beeldmerk op trede 3
         ("extradiensten", {"kopij_ids": EXTRA}),

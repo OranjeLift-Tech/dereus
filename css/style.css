@@ -165,34 +165,37 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
        dus er schuift niets richting de tekst. */
     --motief-bloed: 1.5;
     --motief-basis: calc((var(--vrij) - var(--motief-vrijloop)) * var(--motief-bloed));
-    /* De vorm is gevuld met hetzelfde materiaal als de band zelf, alleen dichter op elkaar.
-       Daardoor is het motief een verdichting van de achtergrond en niet iets wat erop ligt. */
-    --motief-vulling: radial-gradient(rgb(var(--motief-kleur) / var(--motief-alfa)) 1.35px, transparent 1.9px);
-    --motief-raster: 7px 7px;
+    /* De vorm is gevuld met de daklijnen van de blauwe band: lijnen van 1px in de helling van
+       het dak, 6px uit elkaar. Zo delen alle banden een textuur, en het motief is een stuk
+       oppervlak met richting in plaats van een plaatje dat erop ligt. Op wit en Mist in de
+       kleur van de Mist-stippen, dezelfde losse waarde als het huisraster hierboven en bewust
+       geen token, zodat stippen en lijnen nooit uit elkaar kunnen lopen. */
+    --motief-vulling: repeating-linear-gradient(22deg,
+      rgb(var(--motief-kleur) / var(--motief-alfa)) 0 1px, transparent 1px 6px);
     --motief-maat: calc(var(--motief-basis) * var(--motief-schaal));
     --motief-uit: calc(var(--vrij) - var(--motief-vrijloop) - var(--motief-maat));
     --motief-hoog: 34%;
-    --motief-kleur: 14 26 51;
-    --motief-alfa: calc(var(--detail-sterkte) * .62);
+    --motief-kleur: 122 158 226;
+    --motief-alfa: calc(var(--detail-sterkte) * .50);
   }
+  /* Mist is iets donkerder dan wit, dus iets meer dekking voor hetzelfde gewicht. */
+  .sectie--mist { --motief-alfa: calc(var(--detail-sterkte) * .55); }
+  /* Op de blauwe band zijn de lijnen wit, net als de daklijnen van de band zelf. */
   :is(.sectie--blauw, .sectie--diep) {
     --motief-kleur: 255 255 255;
     --motief-alfa: calc(var(--detail-sterkte) * .30);
-    /* De blauwe band is van daklijnen gemaakt, dus daar is het motief dat ook. */
-    --motief-vulling: repeating-linear-gradient(22deg,
-      rgb(var(--motief-kleur) / var(--motief-alfa)) 0 1px, transparent 1px 6px);
-    --motief-raster: auto;
   }
   .sectie:not(.sectie--diep):not(.sectie *)::after {
     content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
     background-image: var(--motief-vulling);
-    background-size: var(--motief-raster);
     -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
     -webkit-mask-size: var(--motief-maat); mask-size: var(--motief-maat);
   }
   /* Op de blauwe band is ::before de dekkende kleur zelf, daar kan het motief niet onder.
-     Daar ligt het er net boven, nog steeds onder de inhoud. */
-  .sectie--blauw:not(.sectie *)::after { z-index: -1; }
+     Daar ligt het er net boven, nog steeds onder de inhoud. De extra :not is geen versiering:
+     de regel hierboven weegt (0,3,1), en met alleen .sectie--blauw:not(.sectie *) kwam deze op
+     (0,2,1) en verloor hij, waardoor het motief op de blauwe band onzichtbaar bleef. */
+  .sectie--blauw:not(.sectie--diep):not(.sectie *)::after { z-index: -1; }
   /* Teller 1, de vorm, draait in vijven. */
   .sectie:nth-child(5n + 1 of .sectie:not(.sectie--diep):not(.sectie *))::after { -webkit-mask-image: var(--motief-huis);   mask-image: var(--motief-huis); }
   .sectie:nth-child(5n + 2 of .sectie:not(.sectie--diep):not(.sectie *))::after { -webkit-mask-image: var(--motief-doos);   mask-image: var(--motief-doos); }
@@ -453,9 +456,10 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 :is(.header.is-vast, .header--vast) :is(.nav__link:hover, .nav__link[aria-current]) { color: var(--brand-primary); }
 .nav__link[aria-current] { text-decoration: underline; text-decoration-color: var(--brand-accent); text-decoration-thickness: 3px; text-underline-offset: 8px; }
 .nav__item--sub .nav__link { padding-right: .2rem; }
-.nav__open { display: grid; place-items: center; width: 32px; height: 44px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; border-radius: 6px; }
-.nav__open .ic { width: 16px; height: 16px; transition: transform .25s var(--ease); }
-.nav__item--sub.is-open .nav__open .ic { transform: rotate(180deg); }
+/* Het chevron is een inline svg in de link. Zonder dit staat hij op de basislijn en hangt hij ruim 4px
+   boven het midden van de x-hoogte; middle legt zijn midden precies daarop. */
+.nav__link--sub .ic { vertical-align: middle; transition: transform .25s var(--ease); }
+.nav__item--sub.is-open .nav__link--sub .ic { transform: rotate(180deg); }
 .mega, .uitklap {
   position: absolute; top: calc(100% + 8px); left: 50%; transform: translate(-50%, 6px); z-index: 5;
   visibility: hidden; opacity: 0; pointer-events: none;
@@ -543,11 +547,10 @@ body.lade-open { overflow: hidden; }
 .footer .wrap { --pad: 1.5rem; max-width: 1440px; }
 .footer a:not(.knop) { color: var(--white); text-decoration: none; }
 .footer a:not(.knop):hover { color: var(--white); text-decoration: underline; }
-.footer__intro { position: relative; display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 3rem; padding-block: clamp(2.25rem, 3.5vw, 3.25rem); }
+.footer__intro { position: relative; display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 3rem; padding-block: clamp(1.75rem, 2.75vw, 2.5rem); }
 .footer__uitnodiging { position: relative; z-index: 1; max-width: 36rem; }
 .footer__uitnodiging h2 { max-width: 23ch; color: var(--white); font-size: clamp(2rem, 1.5rem + 1.5vw, 2.75rem); }
 .footer__uitnodiging > p:not(.label) { max-width: 48ch; line-height: 1.65; }
-.footer__uitnodiging .knoppen { margin-top: 1rem; }
 /* De verhuiswagen als achtergrond van de band (De Kievit-stijl): rechts vrij zichtbaar, naar links weg in
    het Diepblauw zodat de tekst leesbaar blijft. De foto staat buiten de tekststroom, dus de band wordt er
    niet hoger van. Het verloop ligt erover heen; de uitnodiging staat er met z-index 1 bovenop. */

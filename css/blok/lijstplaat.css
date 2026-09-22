@@ -1,0 +1,143 @@
+/* Verhuisbedrijf De Reus · blok lijstplaat (/werkwijze/ #voorbereiding)
+   Eén grote Koningsblauwe plaat, hetzelfde middel als de belkaart op /contact/: een verloop van
+   Koningsblauw naar Diepblauw, een zichtbare dikte onder de onderrand, één schaduw naar beneden, een
+   goudgeel tabje op de bovenrand en het huisje uit het logo in de hoek. Het 3D-klembord hangt over de
+   bovenrand. De kop en de intro staan links erboven op wit, zodat de plaat het enige gekleurde vlak is.
+   In de plaat: links de foto, in de huisvorm uit het logo geknipt met een goudgeel huis er net iets
+   omheen (het diepte-idee van de panelen op /diensten/, maar met één laag), rechts de afvinklijst in twee
+   kolommen, en daaronder de slotregel als tipvak met een goudgele kantlijn.
+   Alles staat stil. Geen zweven, geen hover-animaties, alleen de eigen data-reveal van de site.
+   Alle klassen staan onder b-lijstplaat, zodat dit blok geen naam deelt met een ander blok op de pagina. */
+
+/* knippen op de sectie, niet op de plaat: de plaat moet het klembord boven zijn rand laten uitsteken */
+.b-lijstplaat{
+  overflow-x: clip;
+  /* de huisvorm uit het logo als knipvorm, zoals op /diensten/: clip-path in plaats van een masker, want
+     drop-shadow werkt na het knippen en volgt dan de huisvorm in plaats van het vierkant eromheen */
+  --huisvorm: polygon(50% 1.5%, 59.9% 10.4%, 59.9% 0, 66.7% 0, 66.7% 16.5%, 100% 46.3%, 85.5% 46.3%, 85.5% 100%, 14.5% 100%, 14.5% 46.3%, 0 46.3%);
+}
+.b-lijstplaat__kop{ max-width: 56ch; margin-inline: 0; margin-bottom: 0; text-align: left; }
+.b-lijstplaat__kop .label{ justify-content: flex-start; }
+.b-lijstplaat__kop .intro{ margin-inline: 0; }
+
+/* ---- de plaat ---- */
+.b-lijstplaat__plaat{
+  --plaat-rand: color-mix(in srgb, var(--brand-secondary) 60%, var(--ink));
+  --plaat-vlak: color-mix(in srgb, var(--white) 9%, transparent);
+  --plaat-lijn: color-mix(in srgb, var(--white) 20%, transparent);
+  --plaat-pad: clamp(1.5rem, 1rem + 2.2vw, 3rem);
+  --plaat-tekst: color-mix(in srgb, var(--white) 88%, transparent);
+  position: relative; isolation: isolate; overflow: visible;
+  /* de ruimte erboven is de ruimte waar het klembord in hangt */
+  margin-top: clamp(4rem, 6vw, 5.5rem);
+  padding: var(--plaat-pad);
+  border-radius: 24px; color: var(--white);
+  background: linear-gradient(162deg, var(--brand-primary), var(--primary-600) 58%, var(--brand-secondary));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--white) 26%, transparent),
+    0 7px 0 var(--plaat-rand),
+    0 26px 40px -18px color-mix(in srgb, var(--brand-secondary) 55%, transparent),
+    0 60px 90px -40px color-mix(in srgb, var(--brand-secondary) 60%, transparent);
+}
+/* het huisje uit het logo in de hoek, exact het middel van de belkaart: de vorm wordt op de kaartrand
+   afgeknipt, zodat hij in de hoek zit in plaats van erop te liggen */
+.b-lijstplaat__plaat::before{
+  content: ""; position: absolute; z-index: -1; right: -2.5rem; bottom: -2rem;
+  clip-path: inset(0 2.5rem 2rem 0); width: clamp(9rem, 18vw, 15rem); aspect-ratio: 535.3/509.8;
+  background: color-mix(in srgb, var(--white) 8%, transparent);
+  -webkit-mask: var(--huisje) center/contain no-repeat; mask: var(--huisje) center/contain no-repeat;
+}
+/* het goudgele tabje op de bovenrand, zoals de platen op /contact/ */
+.b-lijstplaat__plaat::after{
+  content: ""; position: absolute; left: var(--plaat-pad); top: 0; width: 4.25rem; height: 5px;
+  border-radius: 0 0 5px 5px; background: var(--brand-accent);
+}
+/* het 3D-klembord staat rechtsboven, tegenover de lijstkop: het staat stil, de hoek zit in het beeld zelf */
+.b-lijstplaat__klembord{
+  position: absolute; z-index: 2; width: auto; max-width: none; pointer-events: none;
+  right: clamp(.6rem, 2.2vw, 2rem); top: clamp(-5.6rem, -6vw, -4rem); height: clamp(5.4rem, 8.5vw, 7.6rem);
+  filter: drop-shadow(0 2px 4px color-mix(in srgb, var(--brand-secondary) 45%, transparent))
+    drop-shadow(0 16px 20px color-mix(in srgb, var(--brand-secondary) 50%, transparent))
+    drop-shadow(0 34px 40px color-mix(in srgb, var(--brand-secondary) 40%, transparent));
+}
+.b-lijstplaat__plaat a:not(.knop){
+  color: var(--white); font-weight: var(--weight-bold); text-decoration: underline;
+  text-decoration-color: var(--brand-accent); text-decoration-thickness: 2px; text-underline-offset: 4px;
+}
+
+/* ---- lijstkop, foto en lijst ---- */
+/* Links de lijstkop met de foto eronder als één kolom, rechts de afvinklijst. De lijst begint op dezelfde
+   hoogte als de lijstkop, en het klembord hangt zo ver boven de rand dat het die eerste regel niet raakt. */
+.b-lijstplaat__lijstkop{
+  margin: 0 0 clamp(.9rem, 1.4vw, 1.35rem); color: var(--white);
+  font: var(--weight-display) clamp(1.5rem, 1.3rem + .8vw, 2rem)/1.1 var(--font-display);
+  font-stretch: var(--font-display-stretch);
+}
+.b-lijstplaat__in{
+  display: grid; grid-template-columns: clamp(10rem, 18vw, 16.5rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem); align-items: start;
+}
+.b-lijstplaat__zij{ min-width: 0; }
+/* de foto in de huisvorm, met een goudgeel huis er net iets omheen. De slagschaduw staat op die gele laag
+   en volgt de huisvorm, want drop-shadow werkt na het knippen: het huis staat daardoor op de plaat in
+   plaats van erin geplakt. Eén laag, geen uitsnede die uit het huis stapt. */
+.b-lijstplaat__beeld{ position: relative; display: block; }
+.b-lijstplaat__beeld::before{
+  content: ""; position: absolute; inset: 0; background: var(--brand-accent);
+  clip-path: var(--huisvorm); transform: scale(1.06);
+  filter: drop-shadow(0 14px 18px color-mix(in srgb, var(--brand-secondary) 60%, transparent));
+}
+.b-lijstplaat__huis{
+  position: relative; display: block; aspect-ratio: 535.3/509.8;
+  background: var(--primary-600); clip-path: var(--huisvorm);
+}
+/* De foto is breed (16:9) en het huis is bijna vierkant, dus cover snijdt er flink vanaf. Op 25 procent
+   blijft de voorste doos met het merkteken heel en is er nog net genoeg kamer omheen te zien; in het midden
+   of rechts valt die doos buiten beeld. */
+.b-lijstplaat__foto{ display: block; width: 100%; height: 100%; object-fit: cover; object-position: 25% center; }
+
+.b-lijstplaat__lijst{
+  list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(.85rem, 1.4vw, 1.25rem) clamp(1.5rem, 2.5vw, 2.5rem); margin: 0; padding: 0;
+}
+/* elke regel begint met een haarlijn: zo houdt de lijst zijn ritme ook als de teksten ongelijk lopen */
+.b-lijstplaat__lijst li{
+  display: flex; align-items: flex-start; gap: .8rem; padding-top: clamp(.85rem, 1.4vw, 1.25rem);
+  border-top: 1px solid var(--plaat-lijn); color: var(--plaat-tekst); line-height: var(--leading-text);
+}
+/* het vinkje in een goudgele schijf met een Diepblauw haakje: geel als vlak, nooit als lijn */
+.b-lijstplaat__lijst .ic{
+  flex: none; width: 1.6rem; height: 1.6rem; margin-top: .12em; padding: .32rem; border-radius: 50%;
+  background: var(--brand-accent); color: var(--brand-secondary); stroke-width: 3.2;
+}
+.b-lijstplaat__lijst b{ color: var(--white); }
+
+/* ---- slotregel als tipvak ---- */
+/* dezelfde goudgele kantlijn als het tipvak op /diensten/, hier als inset-schaduw zodat de gele balk de
+   ronding van het vlak volgt in plaats van er recht doorheen te lopen */
+.b-lijstplaat__slot{
+  margin: clamp(1.4rem, 2.2vw, 2rem) 0 0; padding: 1rem 1.25rem 1rem 1.5rem; border-radius: 14px;
+  background: var(--plaat-vlak); color: var(--white);
+  box-shadow: inset 5px 0 0 var(--brand-accent), inset 0 1px 0 color-mix(in srgb, var(--white) 12%, transparent);
+}
+.b-lijstplaat__acties{ margin: clamp(1.1rem, 1.8vw, 1.6rem) 0 0; }
+.b-lijstplaat__link{ color: var(--white); }
+.b-lijstplaat__link span{ text-decoration-color: var(--brand-accent); text-decoration-thickness: 2px; }
+.b-lijstplaat__link:hover{ color: var(--white); }
+.b-lijstplaat__link:hover span{ text-decoration-color: var(--white); }
+.b-lijstplaat__link:focus-visible{ outline-color: var(--white); }
+
+/* ---- smallere vensters ---- */
+@media (max-width: 1000px){
+  .b-lijstplaat__in{ grid-template-columns: minmax(0, 1fr); gap: clamp(1.25rem, 2.5vw, 1.75rem); }
+  /* onder elkaar: de lijstkop volle breedte, de foto eronder op bijna de halve kolom */
+  .b-lijstplaat__zij{ display: grid; }
+  .b-lijstplaat__lijstkop{ padding-right: clamp(5.5rem, 12vw, 9rem); }
+  .b-lijstplaat__beeld{ width: min(13rem, 46%); }
+}
+@media (max-width: 860px){
+  .b-lijstplaat__lijst{ grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px){
+  .b-lijstplaat__lijstkop{ font-size: 1.5rem; padding-right: 4.5rem; }
+  .b-lijstplaat__beeld{ width: min(11rem, 52%); }
+}

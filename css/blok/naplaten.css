@@ -1,0 +1,78 @@
+/* Verhuisbedrijf De Reus · blok naplaten (/werkwijze/ #na-de-verhuizing)
+   Twee brede witte platen die de pagina afsluiten, in dezelfde plaatstijl als de vertrouwensrij op /contact/:
+   een zichtbare dikte en één schaduw, allebei naar rechtsonder. Boven elke plaat het goudgele huis uit het logo
+   met daarvoor een 3D-render uit img/contact-3d/ of img/kaart-3d/ die over de bovenrand komt.
+   De sectie komt na de blauwe verhuisdagband en sluit de pagina af, dus twee platen op ruime maat en gecentreerd:
+   groter dan de platen van een lijstsectie, zodat het een slot is en geen lijstje.
+   Alles staat stil: geen zweven, geen hover-effect. */
+.b-naplaten .kopgroep{margin-bottom:0}
+
+/* ---- de rij ---- */
+/* De padding bovenaan is de ruimte waar de voorwerpen in staan; de rij zelf knipt niets af. */
+.b-naplaten__rij{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(1.2rem,.6rem + 1.6vw,2.2rem);row-gap:5rem;max-width:56rem;margin:0 auto;padding:4.8rem 0 0}
+
+/* ---- de plaat ---- */
+/* De dikte (twee harde schaduwen) en de diepte (twee zachte) wijken allebei naar rechtsonder, zodat de rij
+   één lichtbron houdt met de kanaalkaarten op /contact/. */
+.b-naplaten__plaat{position:relative;display:flex;flex-direction:column;gap:.45rem;min-width:0;
+  padding:0 clamp(1.3rem,1rem + 1vw,1.8rem) clamp(1.4rem,1.2rem + .6vw,1.7rem);
+  border-radius:var(--radius-media);background:var(--white);
+  box-shadow:inset 0 1px 0 var(--white),
+    0 0 0 1px color-mix(in srgb,var(--ink) 7%,transparent),
+    5px 7px 0 var(--primary-200),
+    6px 8px 0 color-mix(in srgb,var(--ink) 8%,transparent),
+    14px 20px 28px -16px color-mix(in srgb,var(--ink) 30%,transparent),
+    28px 48px 68px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
+/* Op wit valt wit op wit weg: daar mag de ring om de plaat een slag donkerder. */
+.b-naplaten--wit .b-naplaten__plaat{box-shadow:inset 0 1px 0 var(--white),
+  0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent),
+  5px 7px 0 var(--primary-200),
+  6px 8px 0 color-mix(in srgb,var(--ink) 9%,transparent),
+  14px 20px 28px -16px color-mix(in srgb,var(--ink) 28%,transparent),
+  28px 48px 68px -44px color-mix(in srgb,var(--brand-secondary) 50%,transparent)}
+
+/* ---- goudgeel huis met het voorwerp ervoor ---- */
+/* ::before is de donkere zijkant van het huis, ::after het vlak. Het voorwerp ligt erboven en steekt
+   met zijn bovenkant buiten de plaat. */
+.b-naplaten__huis{position:relative;isolation:isolate;display:block;width:100%;height:5.2rem;margin-top:-1.6rem;
+  filter:drop-shadow(3px 8px 7px color-mix(in srgb,var(--brand-secondary) 22%,transparent))}
+.b-naplaten__huis::before,.b-naplaten__huis::after{content:"";position:absolute;left:0;bottom:0;width:4.9rem;
+  aspect-ratio:535.3/509.8;-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.b-naplaten__huis::before{background:var(--accent-700);transform:translate(5px,6px)}
+.b-naplaten__huis::after{background:linear-gradient(160deg,
+  color-mix(in srgb,var(--brand-accent) 74%,var(--white)),
+  var(--brand-accent) 55%,
+  color-mix(in srgb,var(--brand-accent) 78%,var(--accent-700)))}
+.b-naplaten__obj{position:absolute;z-index:1;left:1.4rem;bottom:-.4rem;width:auto;height:7.8rem;max-width:none;
+  filter:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 32%,transparent))
+         drop-shadow(10px 20px 14px color-mix(in srgb,var(--brand-secondary) 36%,transparent))}
+.b-naplaten__obj--headset{left:1.5rem;height:7.4rem}
+.b-naplaten__obj--ster{left:2rem;height:5.3rem;bottom:.2rem}
+.b-naplaten__obj--schild{left:1.8rem;height:7.2rem}
+.b-naplaten__obj--envelop{left:1.5rem;height:7rem}
+.b-naplaten__obj--telefoon{left:2rem;height:7.6rem}
+/* Een goudgeel voorwerp op een goudgeel huis wordt één vlek. Staat het voorwerp zelf in de merkkleur,
+   dan wordt het huis wit met een blauwgrijze zijkant, precies zoals de Googlekaart in de vertrouwensrij
+   op /contact/ dat doet. Het huis uit het logo blijft daarmee de vorm, alleen niet de kleur. */
+.b-naplaten__huis--licht::before{background:color-mix(in srgb,var(--primary-200) 78%,var(--brand-secondary))}
+.b-naplaten__huis--licht::after{background:linear-gradient(160deg,var(--primary-50),var(--primary-100) 60%,var(--primary-200))}
+
+/* Terugval zonder 3D-render: het lijnicoon staat in het huis, zoals bij de contactkaarten. */
+.b-naplaten__huis--icoon{display:grid;place-items:end center;width:4.9rem;height:auto;aspect-ratio:535.3/509.8;
+  padding-bottom:.6rem;margin-top:-1.6rem;color:var(--brand-secondary)}
+.b-naplaten__huis--icoon .ic{position:relative;z-index:1;width:1.6rem;height:1.6rem;stroke-width:2.4}
+
+/* ---- tekst ---- */
+.b-naplaten__titel{margin:.2rem 0 0;color:var(--color-heading);
+  font:var(--weight-bold) clamp(1.25rem,1.1rem + .5vw,1.5rem)/1.18 var(--font-display);
+  font-stretch:var(--font-display-stretch);text-wrap:balance}
+.b-naplaten__plaat p{margin:0;max-width:34ch;color:var(--graphite);font-size:var(--text-small);line-height:var(--leading-text)}
+
+/* ---- smallere vensters ---- */
+@media(max-width:700px){
+  .b-naplaten__rij{grid-template-columns:1fr;row-gap:4.2rem;padding-top:4.2rem}
+  .b-naplaten__obj{height:7rem}
+  .b-naplaten__obj--headset{height:6.7rem}
+  .b-naplaten__obj--ster{height:4.8rem}
+}

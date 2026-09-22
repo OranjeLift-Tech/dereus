@@ -24,6 +24,6 @@ PAGINA = Pagina(
     beschrijving=_B.velden.get("beschrijving") or _kort(_B.veld("intro", "")),
     blokken=[
         ("kop", {"kopij_id": "offerte-bedankt"}),
-        ("bedankt", {"kopij_id": "offerte-bedankt"}),
+        ("bedankt", {"kopij_id": "offerte-bedankt", "beeld": ("/img/kosten-kalender/wand.webp", 363, 720)}),
     ],
 )

@@ -9,10 +9,10 @@ PAGINA = Pagina(
     body_klasse="p-werkwijze",
     blokken=[
         ("kop", {}),
-        ("stappenlang", {"kopij_id": "stappen"}),
-        ("checklist", {"kopij_id": "voorbereiding", "grond": "wit", "beeld": True}),   # wit, zodat de dakrand erboven schoon aansluit
+        ("tijdlijn", {"kopij_id": "stappen"}),
+        ("lijstplaat", {"kopij_id": "voorbereiding", "grond": "wit"}),    # wit, zodat de dakrand erboven schoon aansluit
         ("verhuisdag", {}),
-        ("checklist", {"kopij_id": "na-de-verhuizing", "grond": "mist"}),
+        ("naplaten", {"kopij_id": "na-de-verhuizing", "grond": "mist"}),   # twee brede slotplaten, ronde 6
         ("reviews", {"variant": "compact"}),                              # wit, tussen twee Mist-secties
         ("vragen", {"kopij_id": "vragen"}),
         ("offertepil", {"variant": "los"}),

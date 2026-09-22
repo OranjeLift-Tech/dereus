@@ -28,8 +28,6 @@ omschrijving: Vanuit Den Haag verhuizen wij u door heel Nederland. Met één vas
 kolom-diensten: Diensten
 kolom-dereus: De Reus
 kolom-contact: Contact
-knop: Offerte aanvragen
-mail-knop: Mail ons
 bereikbaar-kop: Bereikbaar
 adres-label: Hoofdkantoor
 onderregel: © 2026 Verhuisbedrijf De Reus

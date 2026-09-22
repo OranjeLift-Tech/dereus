@@ -70,8 +70,8 @@ def html(ctx, kopij, **opties):
           <div class="homecontact__bericht">
             <div class="homecontact__kaart">
               <div class="homecontact__beeld" aria-hidden="true">
-                {ctx.beeld('/img/contact-klantenservice.webp', '', 1200, 800, klasse='homecontact__achter')}
-                {ctx.beeld('/img/contact-uit.webp', '', 1200, 800, klasse='homecontact__uit')}
+                {ctx.beeld('/img/contact-klantenservice-foto.webp', '', 1200, 800, klasse='homecontact__achter')}
+                {ctx.beeld('/img/contact-klantenservice-uit.webp', '', 1200, 800, klasse='homecontact__uit')}
               </div>
               {formulier}
             </div>

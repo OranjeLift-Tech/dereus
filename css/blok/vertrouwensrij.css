@@ -34,7 +34,7 @@
    Reviewkaart met sterren, schild, headset en klok zijn 3D-renders (img/contact-3d/, bron: _ai-beelden/contact-3d/
    scene-vertrouwen.html), in dezelfde stijl als de kanaalkaarten verderop. Drie lagen: de plaat, het goudgele huis
    uit het logo, en daarvoor het voorwerp dat net boven de kaartrand uitkomt. Schaduw naar rechtsonder, niets beweegt. */
-.b-vertrouwensrij,.b-offertepil + .b-vertrouwensrij{padding-top:clamp(2.6rem,2rem + 1.6vw,3.4rem)}
+.b-vertrouwensrij,.b-offertepil + .b-vertrouwensrij{padding-top:clamp(3.1rem,2.4rem + 2.2vw,4.4rem)}
 .b-vertrouwensrij__rij{row-gap:2.6rem}
 /* het voorwerp staat boven de tekst en steekt boven de kaartrand uit */
 .b-vertrouwensrij__kaart{flex-direction:column;align-items:flex-start;gap:.8rem;padding:0 1.25rem 1.3rem}

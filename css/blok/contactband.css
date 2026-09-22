@@ -25,3 +25,24 @@
 .cband__tijden ul { margin: 0; padding: 0; list-style: none; color: rgba(255, 255, 255, .8); }
 
 @media (max-width: 899.98px) { .cband { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- optionele uitsnede in de tekstkolom (optie beeld) ----
+   De uitsnede staat rechtsonder in de witte kaart, met de voeten op de onderrand, zoals de uitsnede
+   in de zijkolom van het formulier. Absoluut geplaatst en niet als extra kolom: zo blijft de tekst
+   staan waar hij stond en wordt de kaart geen stuk hoger. De tekstkolom houdt rechts ruimte vrij,
+   anders zou de tekst onder de figuur doorlopen. Niets beweegt. */
+@media (min-width: 720px) {
+  .cband--beeld .cband__tekst { position: relative; padding-right: clamp(9rem, 17vw, 13rem); }
+  .cband__uit {
+    position: absolute; right: clamp(.5rem, 1.5vw, 1.75rem); bottom: 0;
+    width: clamp(7rem, 13vw, 10rem); height: auto;
+    filter: drop-shadow(3px 8px 10px color-mix(in srgb, var(--brand-secondary) 26%, transparent));
+  }
+}
+/* smal scherm: de figuur staat onder de tekst en blijft klein, anders wordt de kaart te hoog */
+@media (max-width: 719.98px) {
+  .cband__uit {
+    display: block; width: 7rem; height: auto; margin: 1.25rem 0 0;
+    filter: drop-shadow(3px 8px 10px color-mix(in srgb, var(--brand-secondary) 26%, transparent));
+  }
+}

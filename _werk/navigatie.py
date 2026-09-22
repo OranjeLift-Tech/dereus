@@ -251,10 +251,6 @@ def footer(ctx):
       <h2>{inline(f.veld("contact-kop", "Uw verhuizing begint met een goed gesprek."))}</h2>
       <p>{inline(f.veld("contact-tekst", "Vertel ons waar u naartoe verhuist en welke hulp u nodig heeft. Uw vaste verhuisadviseur denkt met u mee."))}</p>
       <a class="footer__tel" href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{cfg.TEL}</span></a>
-      <div class="knoppen">
-        <a class="knop knop--cta" href="/offerte/"><span>{esc(f.veld("knop", "Offerte aanvragen"))}</span>{ctx.icoon("pijl")}</a>
-        <a class="knop knop--licht" href="mailto:{cfg.MAIL}">{ctx.icoon("mail")}<span>{esc(f.veld("mail-knop", "Mail ons"))}</span></a>
-      </div>
     </div>
     <img class="footer__wagen" src="/img/footer-wagen.webp" alt="" width="1380" height="974" loading="lazy" decoding="async">
   </div>

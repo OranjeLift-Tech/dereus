@@ -2,6 +2,8 @@
 Mist met links de kop, de tekst en de knoppen, rechts een Diepblauw paneel met telefoon, e-mail, adres,
 openingstijden en de live bereikbaarheid. Licht van buiten, dus mag direct boven de footer.
 Velden: label, kop, alinea's, knop (CTA-knop naar /offerte/), belregel.
+Optie beeld: ("/img/...-uit.webp", breedte, hoogte) zet een staande uitsnede naast de tekst, met de
+voeten op de onderrand van de kaart. Zonder die optie blijft de band zoals hij is.
 """
 import navigatie
 
@@ -17,14 +19,18 @@ def html(ctx, kopij, sectie="mist", **opties):
     if k.veld("knop"):
         knoppen.append(ctx.knop(k.veld("knop"), "/offerte/"))
     tijden = "".join(f"<li>{ctx.esc(r)}</li>" for r in navigatie.tijden_regels())
+    uit = ""
+    if opties.get("beeld"):
+        src, breed, hoog = opties["beeld"]
+        uit = ctx.beeld(src, "", breed, hoog, klasse="cband__uit")
     return f'''<section class="sectie sectie--{sectie} b-contactband" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop">
   <div class="wrap">
-    <div class="cband" data-reveal>
+    <div class="cband{" cband--beeld" if uit else ""}" data-reveal>
       <div class="cband__tekst">
         {ctx.kopgroep(k)}
         {ctx.alineas(k.tekst)}
         <div class="knoppen">{"".join(knoppen)}</div>
-        {ctx.belregel(k.veld("belregel"))}
+        {ctx.belregel(k.veld("belregel"))}{uit}
       </div>
       <div class="cband__paneel">
         {ctx.bereikbaar("bereikbaar cband__status")}

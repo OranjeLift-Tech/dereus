@@ -10,11 +10,11 @@ CSS = True
 JS = False
 
 # de verhuisadviseur die terugbelt, in het huisvlak uit het logo (zelfde uitsnede-familie als de kop van /contact/)
-FOTO = ("/img/contact-klantenservice.webp", 1200, 800)
+FOTO = ("/img/contact-klantenservice-foto.webp", 1200, 800)
 # dezelfde foto zonder achtergrond (_ai-beelden/contact-uitsnede.mjs). Die laag ligt over de foto
 # en wordt aan de bovenkant niet afgesneden, dus zij komt met haar hoofd uit de lijst; de maten
 # staan in css/blok/na-bericht.css. Zelfde paar als homecontact op de home.
-UITSNEDE = ("/img/contact-uit.webp", 1200, 800)
+UITSNEDE = ("/img/contact-klantenservice-uit.webp", 1200, 800)
 
 
 def html(ctx, kopij, **opties) -> str:

@@ -31,7 +31,7 @@ PAGINA = Pagina(
         ("reviews", {}),
         ("over-ons", {}),
         ("werkgebied", {}),
-        ("vragen", {}),
+        ("vragen", {"beeld": "headset-huis"}),
         ("aanvraag", {"kopij": None}),
         ("homecontact", {"kopij_id": "contact"}),
     ],

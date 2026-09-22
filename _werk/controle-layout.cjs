@@ -156,6 +156,120 @@ const path = require('node:path');
           assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.b-kaart__beeld').getBoundingClientRect().top
             - document.querySelector('#kaart-kop').getBoundingClientRect().top) < 2), `${width}: map top aligns address heading`);
         }
+        if (route === '/werkwijze/') {
+          /* De tijdlijn (blok tijdlijn, sinds ronde 6) verving de stappenrail. De ankers stap-1 tot
+             stap-5 blijven, want daar kan van buiten naar gelinkt worden. De vorige vorm mag niet
+             half blijven staan: dat is de manier waarop zo'n vervanging stilletjes misgaat. */
+          await page.locator('#stappen').scrollIntoViewIfNeeded();
+          assert.equal(await page.locator('.b-stappenlang').count(), 0, `${width}: de oude stappenrail staat er nog`);
+          assert.deepEqual(await page.locator('.b-tijdlijn__stap').evaluateAll(items => items.map(el => el.id)),
+            ['stap-1', 'stap-2', 'stap-3', 'stap-4', 'stap-5'], `${width}: de vijf stations en hun ankers`);
+          assert.equal(await page.locator('#stappen .knop--cta').count(), 1, `${width}: een primaire knop in de sectie`);
+          /* Het 3D-voorwerp staat voor het gele huis en komt boven de plaat uit; zakt het terug
+             achter de kaartrand, dan is de hele vorm weg zonder dat er iets stuk lijkt. */
+          assert.deepEqual(await page.locator('.b-tijdlijn__stap').evaluateAll(items => items.flatMap(el => {
+            const obj = el.querySelector('.b-tijdlijn__obj').getBoundingClientRect();
+            const plaat = el.querySelector('.b-tijdlijn__plaat').getBoundingClientRect();
+            const fout = [];
+            if (obj.top >= plaat.top - 4) fout.push(`${el.id}: voorwerp steekt niet boven de plaat uit`);
+            /* en het mag de tekst niet afdekken: de wagen is de breedste render en schoof op smal
+               scherm over het volgnummer heen. */
+            for (const naam of ['nr', 'titel']) {
+              const t = el.querySelector(`.b-tijdlijn__${naam}`).getBoundingClientRect();
+              if (obj.right > t.left && obj.left < t.right && obj.top < t.bottom && obj.bottom > t.top) {
+                fout.push(`${el.id}: voorwerp ligt over ${naam}`);
+              }
+            }
+            return fout;
+          })), [], `${width}: renders boven de kaartrand en vrij van de tekst`);
+          /* De WhatsApp-knop komt van ctx.contactlinks en landt in "Wat u doet". Die kolom is op
+             breed scherm maar 100 px en de pil 133, dus zonder de eigen regel onderaan de plaat
+             valt hij over de kolom ernaast heen. Dat zag er op 1440 net goed uit en botste toch. */
+          assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('.b-tijdlijn__duo .wa-link')].flatMap(wa => {
+            const box = wa.getBoundingClientRect();
+            const buur = wa.closest('.b-tijdlijn__wie').nextElementSibling?.querySelector('dd');
+            if (!buur) return [];
+            const t = buur.getBoundingClientRect();
+            return box.right > t.left && box.left < t.right && box.top < t.bottom && box.bottom > t.top
+              ? [`WhatsApp-knop overlapt "${buur.textContent.slice(0, 30)}..."`] : [];
+          })), [], `${width}: WhatsApp-knop vrij van de kolom ernaast`);
+          const stations = await page.locator('.b-tijdlijn__stap').evaluateAll(items =>
+            items.map(el => Math.round(el.getBoundingClientRect().top)));
+          if (width > 1180) {
+            assert.ok(Math.max(...stations) - Math.min(...stations) <= 2,
+              `${width}: de vijf stations horen naast elkaar op een rij (tops ${stations.join(', ')})`);
+          } else {
+            assert.ok(stations.every((top, i) => i === 0 || top > stations[i - 1]),
+              `${width}: de tijdlijn hoort een kolom te zijn (tops ${stations.join(', ')})`);
+          }
+          /* De voorbereiding (blok lijstplaat, sinds ronde 6) verving de witte checklistkaart. Het blok
+             checklist bestaat nog, voor de dienst- en landpagina's, maar staat sinds ronde 6 niet meer op
+             deze pagina; de regel bij #na-de-verhuizing hieronder telt dat er nergens meer een staat. */
+          await page.locator('#voorbereiding').scrollIntoViewIfNeeded();
+          assert.equal(await page.locator('#voorbereiding .b-checklist__kaart').count(), 0,
+            `${width}: de oude checklistkaart staat nog in de voorbereiding`);
+          assert.equal(await page.locator('.b-lijstplaat__lijst > li').count(), 6, `${width}: de zes punten van het lijstje`);
+          /* De foto hoort er ook echt te zijn: een pad dat verschuift laat een leeg geel huis achter,
+             en dat valt op een blauwe plaat niet op. */
+          assert.ok(await page.locator('.b-lijstplaat__foto').evaluate(el => el.complete && el.naturalWidth > 0),
+            `${width}: de foto in de huisvorm is geladen`);
+          /* Zelfde val als bij de tijdlijn: het klembord steekt boven de plaatrand uit en mag de lijstkop
+             en de eerste regel niet afdekken. Het staat rechtsboven, de lijstkop links, en die twee
+             kwamen op smal scherm tegen elkaar aan. */
+          assert.deepEqual(await page.evaluate(() => {
+            const obj = document.querySelector('.b-lijstplaat__klembord').getBoundingClientRect();
+            const plaat = document.querySelector('.b-lijstplaat__plaat').getBoundingClientRect();
+            const fout = [];
+            if (obj.top >= plaat.top - 4) fout.push('klembord steekt niet boven de plaat uit');
+            for (const kies of ['.b-lijstplaat__lijstkop', '.b-lijstplaat__lijst > li']) {
+              const t = document.querySelector(kies).getBoundingClientRect();
+              if (obj.right > t.left && obj.left < t.right && obj.top < t.bottom && obj.bottom > t.top) {
+                fout.push(`klembord ligt over ${kies}`);
+              }
+            }
+            /* en de foto mag niet over de lijst heen vallen als de kolommen krap worden */
+            const foto = document.querySelector('.b-lijstplaat__beeld').getBoundingClientRect();
+            const lijst = document.querySelector('.b-lijstplaat__lijst').getBoundingClientRect();
+            if (foto.right > lijst.left + 1 && foto.left < lijst.right - 1
+              && foto.top < lijst.bottom - 1 && foto.bottom > lijst.top + 1) fout.push('foto ligt over de lijst');
+            return fout;
+          }), [], `${width}: klembord boven de plaatrand, foto en tekst vrij van elkaar`);
+          /* Na de verhuizing (blok naplaten, sinds ronde 6) verving de laatste checklistkaart. Daarmee is
+             de checklist van deze pagina weg; blijft er ergens een halve staan, dan staan er twee vormen
+             van hetzelfde lijstje onder elkaar zonder dat er iets stuk lijkt. */
+          await page.locator('#na-de-verhuizing').scrollIntoViewIfNeeded();
+          assert.equal(await page.locator('.b-checklist').count(), 0, `${width}: er staat nog een checklist op de werkwijze`);
+          assert.equal(await page.locator('.b-naplaten__plaat').count(), 2, `${width}: de twee slotplaten`);
+          /* Zelfde val als bij de tijdlijn en het lijstje: de render staat voor het gele huis en komt boven
+             de plaatrand uit, en mag de titel eronder niet afdekken. */
+          assert.deepEqual(await page.locator('.b-naplaten__plaat').evaluateAll(items => items.flatMap(el => {
+            const titelEl = el.querySelector('.b-naplaten__titel');
+            const naam = titelEl.textContent.trim();
+            const obj = el.querySelector('.b-naplaten__obj').getBoundingClientRect();
+            const plaat = el.getBoundingClientRect();
+            const titel = titelEl.getBoundingClientRect();
+            const fout = [];
+            if (obj.top >= plaat.top - 4) fout.push(`${naam}: voorwerp steekt niet boven de plaat uit`);
+            if (obj.right > titel.left && obj.left < titel.right && obj.top < titel.bottom && obj.bottom > titel.top) {
+              fout.push(`${naam}: voorwerp ligt over de titel`);
+            }
+            return fout;
+          })), [], `${width}: renders boven de plaatrand en vrij van de titel`);
+          /* De renders moeten er ook echt zijn: een pad dat verschuift laat een leeg huis achter, en dat
+             valt bij twee platen naast elkaar niet op. */
+          assert.deepEqual(await page.locator('.b-naplaten__obj').evaluateAll(items =>
+            items.filter(el => !(el.complete && el.naturalWidth > 0)).map(el => el.getAttribute('src'))),
+            [], `${width}: de renders in de slotplaten zijn geladen`);
+          const slotplaten = await page.locator('.b-naplaten__plaat').evaluateAll(items =>
+            items.map(el => Math.round(el.getBoundingClientRect().top)));
+          if (width > 700) {
+            assert.ok(Math.abs(slotplaten[0] - slotplaten[1]) <= 2,
+              `${width}: de twee slotplaten horen naast elkaar (tops ${slotplaten.join(', ')})`);
+          } else {
+            assert.ok(slotplaten[1] > slotplaten[0],
+              `${width}: de slotplaten horen onder elkaar (tops ${slotplaten.join(', ')})`);
+          }
+        }
         const heading = route === '/' ? '.hero__tekst' : '.pk__tekst';
         if (await page.locator(heading).count()) {
           assert.ok(await page.locator(heading).evaluate(el => {

@@ -117,25 +117,30 @@
 }
 
 /* ---- de instantie op de homepagina (aanvraag.py, id="aanvraag") ----
-   Twee dingen, en ze hangen samen.
-   De zijkolom liep mee tijdens het scrollen. Dat staat hier stil: de inhoud blijft op zijn plek en de
-   overgebleven ruimte verdeelt zich boven en onder de inhoud in plaats van zich onderaan op te hopen.
-   En de vaste hoogte van 19rem op het beeld is eraf. Die doos was hoger dan de foto zelf, want de
-   uitsnede is liggend en past in 288 bij 216; de rest van die 19rem was pure lege ruimte binnen het
-   beeld. Sizing op de eigen verhouding haalt die eruit zonder iets weg te laten.
+   De zijkolom is zo hoog als het formulier ernaast (956 px op 1440), en de inhoud is maar 680 px.
+   Die 207 px stond als twee dode banden van ruim 100 px boven en onder de inhoud, want justify-content
+   verdeelde de rest over beide uiteinden. Nu gaat die ruimte naar het beeld: de tekst staat bovenaan en
+   de uitsnede sluit de kolom af en loopt door tot aan de onderrand van de kaart. Dat is ook
+   waar de harde rechthoekrand van de uitsnede verdwijnt: die valt nu buiten de kaart in plaats van los
+   in het blauw te hangen. De kaart knipt zelf af (overflow:clip op __kaart).
+   De vaste hoogte van 19rem op het beeld is eraf: die doos was hoger dan de liggende foto zelf.
    Alleen deze instantie: /offerte/ deelt de variant maar is niet genoemd. Zie het rapport. */
 @media (min-width:900px){
-  #aanvraag .b-formulier__zij{display:flex}
-  #aanvraag .b-formulier__zijin{position:static;justify-content:center;flex:1 1 auto}
-  /* Het beeld is het enige elastische element in deze kolom, dus dat vult de ruimte. Van min(100%,18rem)
-     naar de volle kolombreedte: 288x216 wordt 354x266, ruim anderhalf keer zoveel beeld. height:auto houdt
-     de eigen verhouding aan, dus er komt geen lege doos omheen en er wordt niets bijgesneden. */
-  #aanvraag .b-formulier__beeld{width:100%;height:auto}
-  /* De kolom is zo hoog als het formulier ernaast, dus de tweede helft van de winst zit in de kaart zelf
-     korter maken. 46px padding naar 36 en 20px tussen de velden naar 17: samen 39px lager zonder dat het
-     formulier krap wordt. Alleen deze instantie; /offerte/ en /contact/ delen het blok maar niet dit. */
-  #aanvraag .b-formulier__hoofd,#aanvraag .b-formulier__zij{padding:clamp(1.5rem,2.4vw,2.25rem)}
+  /* eigen maat: iets minder lucht dan op /offerte/, zodat de kaart korter is en het formulier niet krap
+     wordt. Het staat in --zij-pad, want de negatieve marges van het beeld moeten dezelfde maat volgen. */
+  #aanvraag{--zij-pad:clamp(1.5rem,2.4vw,2.25rem)}
+  #aanvraag .b-formulier__zij{display:flex;padding:var(--zij-pad)}
+  #aanvraag .b-formulier__hoofd{padding:var(--zij-pad)}
   #aanvraag .b-formulier__form{gap:1.05rem}
+  #aanvraag .b-formulier__zijin{position:static;justify-content:flex-start;flex:1 1 auto}
+  /* order:1 zet de uitsnede onderaan zonder de bronvolgorde te wijzigen; hij is sier (alt="") dus een
+     schermlezer merkt er niets van. flex:1 1 auto laat hem de rest van de kolom opnemen, de negatieve
+     marges trekken hem tot de drie randen van de kolom, en cover snijdt dan links en rechts bij in
+     plaats van een lege doos over te houden. Boven uitlijnen, zodat het hoofd nooit wegvalt. */
+  #aanvraag .b-formulier__beeld{order:1;flex:1 1 auto;
+    width:100%;height:auto;min-height:12rem;
+    margin:0 0 calc(var(--zij-pad) * -1);
+    object-fit:cover;object-position:center top}
 }
 
 @media (hover:hover){.b-formulier__tel:hover svg{transform:rotate(-12deg) scale(1.06)}}

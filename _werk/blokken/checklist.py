@@ -1,8 +1,12 @@
-"""Een afvinklijst in een witte kaart: links de kop, rechts de punten. Voor #voorbereiding en #na-de-verhuizing.
+"""Een afvinklijst in een witte kaart: links de kop, rechts de punten.
 
-Pagina: /werkwijze/. Opties: kopij_id (welk blok), grond = "wit" of "mist", beeld (aan of uit).
+Pagina's: de dienstpagina's ("tips" en "waarom") en de landpagina's ("tips"). Opties: kopij_id (welk blok),
+grond = "wit" of "mist".
 Kopij: label, intro, lijstkop, lijst (een regel mag beginnen met een vette kop: "**Dozen op tijd.** uitleg"), slot,
 en optioneel linktekst en link.
+
+De optie beeld (de compositie met de foto en het bord) is in ronde 6 vervallen samen met /werkwijze/ #voorbereiding,
+de enige pagina die hem meegaf. De bijbehorende CSS is uit css/blok/checklist.css.
 """
 import re
 
@@ -11,12 +15,7 @@ CSS = True
 JS = False
 
 # de verhuisadviseur bij het tipvak: dezelfde uitsnede als op /contact/
-ADVIES = ("/img/contact-uit.webp", 1200, 800)
-
-# Het beeld van de optie "beeld": de tafel met agenda, rolmaat en ingepakte dozen op de achtergrond.
-# Geen mensen in beeld, dus A3 blijft staan. Hetzelfde bestand als de kop van /kosten/; Brocken doet
-# dat ook, daar staat de seniorenfoto van de home op de werkwijzepagina.
-BEELD = ("/img/headers/kosten.webp", 1600, 900)
+ADVIES = ("/img/contact-klantenservice-uit.webp", 1200, 800)
 
 _VET = re.compile(r"^\*\*(.+?)\*\*\s*(.*)$")
 
@@ -40,19 +39,10 @@ def html(ctx, kopij, **opties) -> str:
                 f'<p>{ctx.inline(k.veld("slot"))}</p></div>')
     link = ctx.knop(k.veld("linktekst"), k.veld("link"), soort="link") if k.veld("link") else ""
     link = f'<p class="b-{NAAM}__acties">{link}</p>' if link else ""
-    # Met beeld is de sectie geen kaart maar een stapeling: kop, foto en bord over elkaar heen.
-    # De vormgeving staat in css/blok/checklist.css; alt blijft leeg, want de lijst ernaast zegt alles
-    # wat het beeld laat zien.
-    beeld, compositie = "", ""
-    if opties.get("beeld"):
-        beeld = (f'<figure class="b-{NAAM}__beeld" data-reveal>'
-                 f'{ctx.beeld(BEELD[0], "", BEELD[1], BEELD[2], klasse=f"b-{NAAM}__foto")}</figure>')
-        compositie = f" b-{NAAM}--compositie"
-    return f'''<section class="b-{NAAM} b-{NAAM}--{grond}{compositie} sectie sectie--{grond}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
+    return f'''<section class="b-{NAAM} b-{NAAM}--{grond} sectie sectie--{grond}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
       <div class="wrap">
         <div class="b-{NAAM}__kaart">
           <div class="b-{NAAM}__kop" data-reveal>{ctx.kopgroep(k)}{ctx.alineas(k.tekst)}{slot}{link}</div>
-          {beeld}
           <div class="b-{NAAM}__lijstdeel">
             {lijstkop}
             <ul class="b-{NAAM}__lijst" data-reveal-groep>{punten}</ul>

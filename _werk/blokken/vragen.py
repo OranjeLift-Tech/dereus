@@ -9,19 +9,32 @@ NAAM = "vragen"
 CSS = True
 JS = False
 
-# Optie beeld (/contact/): een voorwerp uit de 3D-reeks dat uit het paneel steekt. Naam -> bron, breedte, hoogte.
-# De vormgeving staat onderaan css/blok/vragen.css en geldt alleen op /contact/.
-BEELDEN = {"headset": ("/img/contact-3d/headset.webp", 287, 320)}
+# Optie beeld: een voorwerp uit de 3D-reeks. Naam -> bron, breedte, hoogte, behandeling.
+#   "steekt-uit" (/contact/): de uitsnede steekt rechtsboven uit het Diepblauwe paneel. Absoluut geplaatst,
+#     dus de plek in de markup doet er niet toe en hij staat vóór de kopgroep.
+#   "vult-gat" (home): het voorwerp staat vóór het goudgele huis uit het logo en vult als flexkind de vrije
+#     hoogte tussen de kop en de belkaart. Die plek in de markup is hier wél de plek op het scherm, dus het
+#     staat tussen de kopgroep en de belkaart in.
+# Vormgeving: onderaan css/blok/vragen.css.
+BEELDEN = {
+    "headset": ("/img/contact-3d/headset.webp", 287, 320, "steekt-uit"),
+    "headset-huis": ("/img/contact-3d/headset.webp", 287, 320, "vult-gat"),
+}
 
 
 def html(ctx, kopij, sectie="mist", open=None, **opties):
     k = kopij
     kid = ctx.esc(k.id or "vragen")
-    beeld = ""
+    beeld = beeld_tussen = ""
     if opties.get("beeld") in BEELDEN:
-        src, bb, bh = BEELDEN[opties["beeld"]]
-        beeld = (f'<img class="vragen__beeld" src="{src}" alt="" width="{bb}" height="{bh}" '
-                 f'loading="lazy" decoding="async">')
+        src, bb, bh, behandeling = BEELDEN[opties["beeld"]]
+        img = (f'<img class="vragen__beeld" src="{src}" alt="" width="{bb}" height="{bh}" '
+               f'loading="lazy" decoding="async">')
+        if behandeling == "vult-gat":
+            beeld_tussen = (f'<span class="vragen__vulling" aria-hidden="true">'
+                            f'<span class="vragen__huis"></span>{img}</span>')
+        else:
+            beeld = img
     vragen = []
     for i, it in enumerate(k.items, 1):
         antwoord = ctx.alineas(it.tekst) + (ctx.lijst(it.lijst, "vinklijst") if it.lijst else "")
@@ -41,7 +54,7 @@ def html(ctx, kopij, sectie="mist", open=None, **opties):
     return f'''<section class="sectie sectie--{sectie} b-vragen" id="{kid}" aria-labelledby="{kid}-kop">
   <div class="wrap vragen">
     <div class="vragen__kop">
-      {beeld}{ctx.kopgroep(k)}
+      {beeld}{ctx.kopgroep(k)}{beeld_tussen}
       {kaart}
     </div>
     <div class="vragen__lijst" data-reveal>

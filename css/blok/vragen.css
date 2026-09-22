@@ -1,5 +1,5 @@
 /* Veelgestelde vragen: kop links, genummerde details rechts */
-.vragen { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: start; }
+.vragen { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: start; }
 .vragen__kop .kopgroep { margin-bottom: 1.75rem; }
 /* De kop staat naast de vragen, dus links uitgelijnd; op mobiel (kop boven de lijst) blijft hij gecentreerd. */
 @media (min-width: 900px) {
@@ -136,4 +136,36 @@
     box-shadow: inset 6px 0 0 var(--brand-primary), var(--plaat); }
   .p-contact .vraag summary { padding: 1.05rem 1.2rem 1.05rem 1.6rem; }
   .p-contact .vraag__antwoord { padding: 0 1.6rem 1.4rem 4.8rem; }
+}
+
+/* ---- home: het voorwerp vult het gat tussen de kop en de belkaart ----
+   De kopkolom is vanaf 900px een flexkolom waarin de belkaart met margin-top:auto naar de onderrand
+   zakt. Tussen de kop en die kaart bleef daardoor een gat van 178px open staan; dat is wat de
+   gebruiker zag. Dit vak staat in de markup tussen die twee en neemt met flex:1 1 auto precies de
+   vrije hoogte, dus het vult het gat zonder de sectie een pixel hoger te maken.
+   Drie lagen, zoals de kanaalkaarten op /contact/: de donkergele zijkant van het huis, het goudgele
+   huisvlak, en daarvoor de render die eruit stapt. Op Mist leest dat: blauw op geel. De vraagtekens
+   van /kosten/ konden hier niet, want daar staan een wit en een lichtblauw vraagteken in en die
+   verdwijnen op een lichte grond; op de Koningsblauwe kop van /kosten/ werken ze juist wel.
+   Onder 900px staat .vragen__kop op display:contents en valt de kolom uit elkaar, dus dan is er geen
+   gat en blijft het vak weg. Alles staat stil. */
+.vragen__vulling { display: none; }
+@media (min-width: 900px) {
+  .vragen__vulling {
+    position: relative; display: block; flex: 1 1 auto; min-height: 6.5rem; max-height: 13rem;
+    margin: .5rem 0 1.2rem;
+    filter: drop-shadow(3px 8px 8px color-mix(in srgb, var(--brand-secondary) 22%, transparent));
+  }
+  .vragen__huis { position: absolute; left: 0; bottom: 0; display: block; height: 100%; aspect-ratio: 535.3/509.8; }
+  .vragen__huis::before, .vragen__huis::after {
+    content: ""; position: absolute; inset: 0;
+    -webkit-mask: var(--huisvlak) center/contain no-repeat; mask: var(--huisvlak) center/contain no-repeat;
+  }
+  .vragen__huis::before { background: var(--accent-700); translate: 4px 5px; }
+  .vragen__huis::after { background: linear-gradient(160deg, var(--accent-200), var(--brand-accent) 55%, var(--accent-600)); }
+  .vragen__vulling .vragen__beeld {
+    display: block; position: absolute; z-index: 1; left: 0; bottom: -4%; height: 92%; width: auto; max-width: none;
+    filter: drop-shadow(2px 3px 2px color-mix(in srgb, var(--brand-secondary) 30%, transparent))
+            drop-shadow(8px 16px 12px color-mix(in srgb, var(--brand-secondary) 32%, transparent));
+  }
 }

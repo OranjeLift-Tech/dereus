@@ -20,6 +20,6 @@ PAGINA = Pagina(
         ("kernwaarden", {"kopij_id": "zo-werken-wij"}),
         ("reviews", {}),
         ("werkgebied", {"kopij_id": "den-haag"}),
-        ("contactband", {"kopij_id": "contact"}),
+        ("contactband", {"kopij_id": "contact", "beeld": ("/img/contact-adviseur-uit.webp", 640, 954)}),
     ],
 )

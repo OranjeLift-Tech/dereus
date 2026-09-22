@@ -31,3 +31,26 @@
   .b-antwoord__acties .knop{width:100%;justify-content:center}
 }
 @media (prefers-reduced-motion:reduce){.b-antwoord__chips a{transition:none}}
+
+/* ---- optionele beeldkolom naast de kaart (optie beeld) ----
+   De 3D-render voor het goudgele huis uit het logo, zoals de voorwerpen op /contact/. Vanaf 900 px
+   staat hij rechts naast het antwoord, daaronder boven de chips. De chips houden de volle breedte.
+   Zonder de optie beeld blijft .b-antwoord__in de enkele kolom die het nu is. */
+.b-antwoord__beeld{position:relative;display:block;width:clamp(9rem,18vw,13rem);
+  filter:drop-shadow(4px 8px 7px color-mix(in srgb,var(--brand-secondary) 24%,transparent))}
+.b-antwoord__huis{position:relative;display:block;width:100%;aspect-ratio:535.3/509.8}
+.b-antwoord__huis::before,.b-antwoord__huis::after{content:"";position:absolute;inset:0;
+  -webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.b-antwoord__huis::before{background:var(--accent-700);translate:5px 6px}
+.b-antwoord__huis::after{background:linear-gradient(160deg,var(--accent-200),var(--brand-accent) 55%,var(--accent-600))}
+.b-antwoord__obj{position:absolute;z-index:1;left:58%;bottom:-4%;translate:-50% 0;
+  width:auto;height:var(--obj-h,70%);max-width:none;
+  filter:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 32%,transparent))
+         drop-shadow(9px 17px 13px color-mix(in srgb,var(--brand-secondary) 36%,transparent))}
+@media (min-width:900px){
+  .b-antwoord__in--beeld{grid-template-columns:minmax(0,1fr) clamp(10rem,19vw,14rem);
+    column-gap:clamp(2rem,4vw,3.5rem);align-items:center}
+  .b-antwoord__in--beeld>.b-antwoord__kaart{grid-column:1;grid-row:1}
+  .b-antwoord__in--beeld>.b-antwoord__beeld{grid-column:2;grid-row:1;justify-self:center}
+  .b-antwoord__in--beeld>.b-antwoord__chips{grid-column:1/-1;grid-row:2}
+}

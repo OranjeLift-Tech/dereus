@@ -10,3 +10,27 @@
 .b-bedankt__stap p{margin:0;color:var(--grey-600)}
 .b-bedankt__bel{margin:0;color:var(--ink);font-weight:var(--weight-semibold)}
 .b-bedankt__bel a{white-space:nowrap}
+
+/* ---- optioneel 3D-voorwerp op de kaart (optie beeld) ----
+   Zelfde drie lagen als de kanaalkaarten op /contact/: het goudgele huis uit het logo met een
+   donkergele zijkant (::before) en daarvoor de render, die over de bovenrand van de kaart heen
+   steekt. Het huis balanceert het gele vinkje linksboven. Alles staat stil.
+   Zonder de optie beeld staat er geen extra markup, dus dit raakt de bestaande kaart niet. */
+.b-bedankt__kaart--beeld{position:relative}
+.b-bedankt__beeld{position:absolute;z-index:1;right:clamp(1.25rem,3vw,2.75rem);top:-2.1rem;width:6.5rem;
+  filter:drop-shadow(3px 8px 7px color-mix(in srgb,var(--brand-secondary) 24%,transparent))}
+.b-bedankt__huis{position:relative;display:block;width:100%;aspect-ratio:535.3/509.8}
+.b-bedankt__huis::before,.b-bedankt__huis::after{content:"";position:absolute;inset:0;
+  -webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.b-bedankt__huis::before{background:var(--accent-700);translate:4px 5px}
+.b-bedankt__huis::after{background:linear-gradient(160deg,var(--accent-200),var(--brand-accent) 55%,var(--accent-600))}
+/* de render staat naast het midden, zodat de goudgele dakrand zichtbaar blijft */
+.b-bedankt__obj{position:absolute;z-index:1;left:58%;bottom:-.3rem;translate:-50% 0;
+  width:auto;height:6.6rem;max-width:none;
+  filter:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 32%,transparent))
+         drop-shadow(8px 16px 12px color-mix(in srgb,var(--brand-secondary) 36%,transparent))}
+/* smal scherm: kleiner en dichter op de hoek, zodat het voorwerp de kop niet raakt */
+@media (max-width:639px){
+  .b-bedankt__beeld{right:.9rem;top:-1.5rem;width:4.8rem}
+  .b-bedankt__obj{height:4.9rem}
+}
