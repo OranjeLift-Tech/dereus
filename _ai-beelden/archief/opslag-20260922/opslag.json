@@ -1,0 +1,28 @@
+{
+  "beeld": "dienst-opslag",
+  "datum": "2026-09-22",
+  "bestanden": ["img/dienst-opslag.webp", "img/dienst-opslag-uit.webp"],
+  "aanleiding": "Beeldcontrole 22-09-2026, lijst Opnieuw maken: het borstlogo is uitgelopen, de armen zijn ongelijk en de naam vervalt tot een veeg. De uitsnede heeft dezelfde fout.",
+  "aanpak": "compositie, geen generatie",
+  "prompt": null,
+  "referentiegezichten": [],
+  "waarom_geen_generatie": "Gezichten en handen zijn in orde; alleen de drie gedrukte merken waren verzonnen. Opnieuw genereren gooit kadrering, gezicht en handen weg (bevestigd 22-09-2026, zie de geheugennotitie logo-in-gegenereerde-beelden).",
+  "werkwijze": [
+    "gewerkt op de bronfoto _ai-beelden/foto/Onze diensten/Tijdelijke opslag.jpg (1200x896), niet op de webp van 720x540",
+    "oude inkt gemaskeerd op chromaticiteit (rood-aandeel min blauw-aandeel), niet op vaste drempels: de rechterkant van de doos ligt in de schaduw",
+    "de hele omhullende van de oude print weggevuld vanuit de omgeving, plus het tekstvlak eronder, want de vage tweede regel heeft te weinig kleur om op inkt te maskeren",
+    "luminantie van de gevulde ondergrond als schaduwkaart, inktkleuren geijkt op de oude print zodat het merk in hetzelfde licht staat",
+    "officiele logo erin gepast met een IoU-zoektocht op het oude merkteken, daarna verkleind tot het volledig op het doosvlak of de stof valt",
+    "korrel van de ondergrond teruggezet over het gewijzigde vlak"
+  ],
+  "merken": {
+    "doos-groot": "brandbook/assets/logo/dereus-logo.png (kleur, met VERHUISBEDRIJF en DE REUS), 195x166 px op de bron",
+    "doos-links": "dereus-logo.png zonder tekstblok: op 70 px breed zou een naamregel weer onleesbaar worden",
+    "borst": "brandbook/assets/logo/dereus-logo-negatief.png zonder tekstblok (witte armen, geel huis) - koningsblauwe polo krijgt het negatieve merk, en kleding draagt geen tekst"
+  },
+  "gewijzigd": "5,96 procent van de bronpixels, in vijf gebieden die alle drie de prints beslaan. Gezicht, handen, doosrand en de rest van de polo zijn pixelgelijk aan het origineel.",
+  "uitsnede": "bestaande alfa uit foto/Onze diensten/uitsnede/opslag.png behouden, alleen de kleuren eronder vervangen. Omhullende identiek aan uitstap.json (boven 26,05 procent, onder 99,88, links 35,46, rechts 68,70), 23 kB zoals daar genoteerd.",
+  "resten": "Drie bleke stippen van de oude rechterarm naast het borstmerk, samen circa 40 px op de bron (4 px op 720). Ze hebben kartonkleur; harder wegpoetsen zou stof over de doosrand schilderen, en dat is erger dan de stippen.",
+  "scripts": ["composiet.py", "export.cjs"],
+  "controle": "_werk/controle-beelden.py: A 11, B 9, C 0, D 0, gelijk aan voor deze wijziging; geen regel over opslag behalve de bekende bron-plus-uitsnede-waarschuwing die alle acht dienstbeelden hebben."
+}

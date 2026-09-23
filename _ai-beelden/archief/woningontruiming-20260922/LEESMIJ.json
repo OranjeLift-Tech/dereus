@@ -1,0 +1,27 @@
+{
+  "beeld": "img/dienst-woningontruiming.webp en img/dienst-woningontruiming-uit.webp",
+  "datum": "2026-09-22",
+  "aanleiding": "Beeldcontrole 22-09 (website/review/beeldcontrole/rapport.md): rugprint met verzonnen woordmerk in een rond lettertype, naam boven het merkteken, naamregel eronder.",
+  "diagnose": {
+    "gezichten": "beide in orde, geen anatomische fouten; wel het bekende gladde type van eind twintig, allebei",
+    "handen": "vier zichtbare handen of onderarmen, alle met vijf vingers of buiten beeld, greep past bij een doos",
+    "rugprint": "verzonnen woordmerk De Reus in een rond lettertype boven het teken, naamregel Verhuisbedrijf - Den Haag eronder, grijze armen",
+    "borstlogo": "zelfde verzonnen opbouw, klein, naamregel onleesbaar",
+    "dozen": "beide dozen dragen hetzelfde verzonnen woordmerk met leesbare naamregel; niet aangepakt, dezelfde klasse als de zeven andere dienstbeelden"
+  },
+  "aanpak": "geen generatie; het echte merk gecomposit met sharp op de bronfoto van 1184x896 (herstel.cjs met jobs.json): oude print gemaskeerd op chromaticiteit, blauwdominante pixels nooit, muur en huid uitgesloten; wegvullen vanuit de omliggende stof; luminantie van de gevulde stof als schaduwkaart; merk erin vermenigvuldigd met 0,97 dekking en de gemeten stofkorrel",
+  "merkbestanden": {
+    "rug": "brandbook/assets/logo/dereus-logo-negatief.png, 150 px breed op de bron",
+    "borst": "brandbook/assets/logo/dereus-beeldmerk-negatief.png, 52 px breed op de bron"
+  },
+  "referentiegezichten": "geen, de gezichten zijn niet vervangen",
+  "pogingen": {
+    "poging-1": "verworpen: gebied liep tot in mouw en muur, die werden blauw gevuld",
+    "poging-2": "verworpen: oude s rechtsboven bleef staan door te ruim uitsluitingsvlak, wit spikkeltje bij de mouwnaad",
+    "poging-3": "verworpen: nog een lichtblauw restje van twee pixels bij de mouwnaad",
+    "poging-4": "verworpen: idem, restje op de uitgesloten kolom",
+    "poging-5": "gekozen"
+  },
+  "uitsnede": "img/dienst-woningontruiming-uit.webp: bestaande alfa van foto/Onze diensten/uitsnede/woningontruiming.png behouden, kleuren uit de gecorrigeerde bron, daarna dezelfde stappen als diensten-uit-export.cjs (1080x810, drempel 45)",
+  "origineel": "origineel/ bevat de bron, de uitsnede en de twee webp's van voor de correctie"
+}

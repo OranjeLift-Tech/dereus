@@ -1,0 +1,52 @@
+{
+  "naam": "lijstplaat-dozen",
+  "titel": "Foto in de huisvorm bij \"Wat u vooraf kunt regelen\"",
+  "lead": "Vijf versies van de foto links in de plaat op /werkwijze/. Gestapelde, ingepakte verhuisdozen in een Nederlands huis, zonder mensen. De dozen zijn blanco gegenereerd; het echte beeldmerk komt er daarna op met het bestand uit het brandbook, dus het merk op de voorste doos klopt letterlijk. De uitsnede in de plaat begint links en wordt in de huisvorm geknipt, dus de stapel staat in alle vijf links van het midden en laag in beeld. Onder elke versie staat het merk op 3x.",
+  "ratio": "16:9",
+  "grootte": "2K",
+  "eenheid": "Versie",
+  "extra": "STILLEVEN, GEEN MENSEN (this round only):\n- There is NOBODY in this photograph. No person, no hand, no arm, no leg, no shadow of a person, no reflection of a person. The subject is the boxes and the room.\n- THE SUBJECT SITS LEFT OF CENTRE AND LOW: the stack of boxes stands in the left half of the frame, roughly a third in from the left edge, with its base in the lower half. The right half of the frame is the room behind it. A square crop taken from the left of this picture has to contain the whole stack.\n- THE FRONT BOX IS BLANK: the box facing the camera has one clean, flat, unbroken front panel of plain brown kraft cardboard. No print, no logo, no lettering, no stickers, no tape crossing that panel, no handwriting, no shipping label, nothing at all on it. A mark is printed on afterwards, so anything the camera sees there has to be removed again. The tape runs along the TOP of the boxes, never down the front face.\n- USED BUT SOUND: these boxes have moved house before. Softened corners, a scuffed edge or two, a faint dent in a lid, slightly furred cardboard where a hand has gripped, one box a shade darker than the next. Not flat-packed-this-morning, not battered or crushed either. The room has lived in it too: a scuff on the skirting board, a slightly worn floorboard.\n- DUTCH HOME: white plastered walls or soft off-white, white-painted skirting, a wooden floor or a light tiled floor, daylight from a tall window with a white frame. Calm, honest, not styled like a catalogue.\n- LIGHT: soft, even daylight from the side. The front panel of the front box is evenly lit, unshadowed and free of any hard highlight, because the mark has to sit on it convincingly.\n- No text anywhere in the image: no writing on the boxes, no labels, no book titles, no signs.",
+  "versies": [
+    {
+      "nr": 1,
+      "naam": "Stapel bij het raam",
+      "scene": "A stack of four plain brown kraft moving boxes standing on a wooden floor in the living room of a Dutch house, a third in from the left of the frame. The stack stands square to the camera so the front box shows its full flat front panel. A roll of packing tape and a folded moving blanket lie on the top box. Behind and to the right, a tall window with a white frame and soft daylight, a bare wall, the corner of an empty bookcase."
+    },
+    {
+      "nr": 2,
+      "naam": "In de gang bij de voordeur",
+      "scene": "Four plain brown kraft moving boxes stacked in the hallway of a Dutch row house, left of centre, seen from a low angle so the stack rises through the frame and the front box is large and square to the camera. Behind them the front door stands ajar with daylight coming in, a coat hook rail on the wall, a doormat, a pair of shoes set aside. Warm, ordinary, nobody in sight."
+    },
+    {
+      "nr": 3,
+      "naam": "Tegen de muur, klaar om te gaan",
+      "scene": "A stack of three plain brown kraft moving boxes against a white plastered wall in an almost empty room, positioned left of centre with the base low in the frame. Beside the stack a rolled-up rug leaning on the wall and a house plant in a terracotta pot. The front box faces the camera flat on. Bare wooden floor, white skirting, soft daylight from the right."
+    },
+    {
+      "nr": 4,
+      "naam": "Twee stapels in de lege kamer",
+      "scene": "Two stacks of plain brown kraft moving boxes on a light wooden floor in an empty Dutch room, the taller stack left of centre and closer to the camera with its front panel flat to the lens, the smaller stack further back on the right. Tall windows with white frames along the back wall, bare walls, one folded moving blanket draped over the smaller stack. Cool even daylight, long soft shadows on the floor."
+    },
+    {
+      "nr": 5,
+      "naam": "Bovenaan de trap",
+      "scene": "Three plain brown kraft moving boxes stacked on a landing at the top of a Dutch staircase, left of centre, the white-painted banister running along the right of the frame. The front box faces the camera square on. A closed bedroom door behind, soft daylight from a skylight above, a worn wooden tread in the foreground. Quiet and still."
+    }
+  ],
+  "lagen": [
+    {
+      "patroon": "versie-{nr}-merk.png",
+      "label": "met het echte beeldmerk",
+      "klasse": "klaar"
+    },
+    {
+      "patroon": "versie-{nr}.png",
+      "label": "blanco doos, ruw uit de generator",
+      "klasse": "ruw"
+    }
+  ],
+  "crop": {
+    "patroon": "versie-{nr}-crop.png",
+    "label": "links: wat de plaat op /werkwijze/ hiervan toont. rechts: het beeldmerk op 3x"
+  }
+}

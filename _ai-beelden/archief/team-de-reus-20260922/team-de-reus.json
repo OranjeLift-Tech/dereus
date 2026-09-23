@@ -1,0 +1,13 @@
+{
+  "datum": "2026-09-22",
+  "bron": "img/team-de-reus.webp (origineel, 1200x1140)",
+  "aanpak": "Geen generatie en geen referentiegezichten: gezichten en handen waren goed, alleen de drie borstprints waren volledig geel. Het officiele negatieve beeldmerk (brandbook/assets/logo/dereus-beeldmerk-negatief.png) is met sharp over de oude prints gezet: oude print gemaskerd op geelheid, 4 tot 8 px verwijd, harmonisch gevuld vanuit de stof, luminantie van de stof als schaduwkaart, merk op de breedte van de oude print. Script: composiet.cjs hiernaast.",
+  "prompt": null,
+  "referenties": ["brandbook/assets/logo/dereus-beeldmerk-negatief.png"],
+  "kandidaten": {
+    "team-de-reus-a-links-geknepen-merk.png": "verworpen: het wegdraaiende merk op de linkerschouder wordt bij 15 px breed een witte druppel met een geel huis, leest niet als het merk",
+    "team-de-reus-b-gekozen.png": "gekozen: linkersliver weggevuld (de linkerborst van die verhuizer is van de camera af), midden en rechts het echte merk in negatief"
+  },
+  "veranderd": "2335 pixels, 0,17 procent, allemaal binnen x 418-1047, y 562-630",
+  "geleverd": "img/team-de-reus.webp, 1200x1140, webp kwaliteit 90"
+}

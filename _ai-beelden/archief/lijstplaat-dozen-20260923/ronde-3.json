@@ -1,0 +1,42 @@
+{
+  "naam": "lijstplaat-dozen",
+  "titel": "Foto in de huisvorm bij “Wat u vooraf kunt regelen”, ronde 3",
+  "lead": "Ronde 3, op dezelfde foto uit ronde 2: dezelfde gang, dezelfde deur op een kier, hetzelfde licht. Drie dingen zijn veranderd. Beide dozen dragen nu de belettering. Het nummer staat lager: de grondlijn ligt op de onderrand van het paneel, met het logo bovenaan en ruimte ertussen. En de inkt heeft het licht van zijn eigen doos overgenomen: de voorste doos staat in de schaduw en krijgt donkerder, warmer inkt, de achterste vangt het daglicht van de deur en krijgt lichter, koeler inkt. De achterste doos draagt alleen het beeldmerk; de naam en het nummer zouden daar te klein worden om te lezen. Onder het beeld staat links wat de plaat hiervan toont en daarnaast beide dozen op 3x.",
+  "ratio": "16:9",
+  "grootte": "2K",
+  "eenheid": "Versie",
+  "extra": "STILLEVEN, GEEN MENSEN (this round only):\n- There is NOBODY in this photograph. No person, no hand, no arm, no leg, no shadow of a person, no reflection of a person. The subject is the boxes and the room.\n- THE SUBJECT SITS LEFT OF CENTRE AND LOW: the stack of boxes stands in the left half of the frame, roughly a third in from the left edge, with its base in the lower half. The right half of the frame is the room behind it. A square crop taken from the left of this picture has to contain the whole stack.\n- THE FRONT BOX IS BLANK: the box facing the camera has one clean, flat, unbroken front panel of plain brown kraft cardboard. No print, no logo, no lettering, no stickers, no tape crossing that panel, no handwriting, no shipping label, nothing at all on it. A mark is printed on afterwards, so anything the camera sees there has to be removed again. The tape runs along the TOP of the boxes, never down the front face.\n- USED BUT SOUND: these boxes have moved house before. Softened corners, a scuffed edge or two, a faint dent in a lid, slightly furred cardboard where a hand has gripped, one box a shade darker than the next. Not flat-packed-this-morning, not battered or crushed either. The room has lived in it too: a scuff on the skirting board, a slightly worn floorboard.\n- DUTCH HOME: white plastered walls or soft off-white, white-painted skirting, a wooden floor or a light tiled floor, daylight from a tall window with a white frame. Calm, honest, not styled like a catalogue.\n- LIGHT: soft, even daylight from the side. The front panel of the front box is evenly lit, unshadowed and free of any hard highlight, because the mark has to sit on it convincingly.\n- No text anywhere in the image: no writing on the boxes, no labels, no book titles, no signs.",
+  "versies": [
+    {
+      "nr": 2,
+      "naam": "In de gang bij de voordeur",
+      "scene": "Four plain brown kraft moving boxes stacked in the hallway of a Dutch row house, left of centre, seen from a low angle so the stack rises through the frame and the front box is large and square to the camera. Behind them the front door stands ajar with daylight coming in, a coat hook rail on the wall, a doormat, a pair of shoes set aside. Warm, ordinary, nobody in sight."
+    }
+  ],
+  "lagen": [
+    {
+      "patroon": "versie-{nr}-r3.png",
+      "label": "ronde 3: beide dozen, nummer lager, licht per doos",
+      "klasse": "klaar"
+    },
+    {
+      "patroon": "versie-{nr}-r2.png",
+      "label": "ronde 2",
+      "klasse": "ruw"
+    },
+    {
+      "patroon": "versie-{nr}-merk.png",
+      "label": "ronde 1",
+      "klasse": "ruw"
+    },
+    {
+      "patroon": "versie-{nr}.png",
+      "label": "ronde 1, blanco doos",
+      "klasse": "ruw"
+    }
+  ],
+  "crop": {
+    "patroon": "versie-{nr}-crop.png",
+    "label": "links: wat de plaat op /werkwijze/ hiervan toont. rechts: het beeldmerk op 3x"
+  }
+}

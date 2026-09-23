@@ -147,3 +147,25 @@ a.homecontact__waarde:hover{text-decoration-color:currentColor}
   .sectie--mist + .sectie.b-homecontact:not(.sectie *) > .wrap::before{
     --env-hoog:5.5rem;top:calc(var(--overgang-hoogte) * .9 - var(--env-hoog) * .62)}
 }
+/* ---- Minder ruimte tussen het offerteformulier en dit blok (alleen de home) ----
+   "reduce the space between Zo regelt u het in een paar minuten and Wilt u iets bespreken over uw
+   verhuizing? sections in homepage". Van de onderkant van de offertekaart tot het label "Contact" was
+   het 207 px op 1440 (199 op 1366): de onderruimte van het formulier (--ruimte, 83) plus de bovenruimte
+   van dit blok, die de schuine rand ophoogt tot --overgang-hoogte + 1rem (120). Nu 108 op 1440 en 105
+   op 1366.
+   Keuze B uit website/review/homecontact-ruimte-20260923/; A was 1/2 in plaats van 1/4 (129 px op 1440).
+   De bovenruimte gaat terug naar --ruimte. De kop staat midden en de schuine rand is rechts het diepst,
+   dus de rand blijft 32 px boven het rechteinde van het label en 45 boven dat van de kop (1440).
+   De onderruimte van het formulier gaat naar een kwart. Dit bestand laadt alleen op de home, en de regel
+   geldt alleen waar dit blok direct volgt; /contact/ en /offerte/ blijven zoals ze zijn.
+   z-index: de sectie hierna schildert over de vorige heen, dus de slagschaduw van de offertekaart (40px
+   80px -48px, tot 72 px onder de kaart) werd op de sectiegrens recht afgesneden: een trede van 11 tinten
+   op 1440 al bij de helft van --ruimte. Met z-index 1 loopt de schaduw door over de naad (gemeten: geen trede). Alleen
+   vanaf 900 px, want daaronder steekt de envelop hierboven tot 19 px boven deze sectie uit en zou
+   hij onder het formulier verdwijnen. Vanaf 900 staat hij helemaal binnen deze sectie. Onder 900 blijft
+   de onderruimte gelijk: op de telefoon staat de envelop in dat gat (37 px tot de kaart, 23 tot de kop),
+   en het is daar 116 px, het gewone gat tussen twee kleuren. */
+.sectie--mist + .sectie.b-homecontact:not(.sectie *){padding-top:var(--ruimte)}
+@media(min-width:900px){
+  .sectie.b-formulier--offerte:not(.sectie *):has(+ .sectie.b-homecontact){z-index:1;padding-bottom:calc(var(--ruimte) * .25)}
+}

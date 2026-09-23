@@ -1,0 +1,18 @@
+{
+  "beeld": "img/verhuisdag-aankomst.webp",
+  "datum": "2026-09-22",
+  "aanpak": "Geen generatie. Gezichten en handen van het origineel waren in orde; alleen de drie merktekens waren fout. Officieel beeldmerk gecomposit met sharp (composiet.cjs in deze map).",
+  "prompt": null,
+  "referenties": [
+    "brandbook/assets/logo/dereus-beeldmerk-negatief.png (polo's, witte armen en geel huis)",
+    "brandbook/assets/logo/dereus-beeldmerk.png (buspaneel, kleurenmerk)"
+  ],
+  "referentiegezichten": [],
+  "pogingen": {
+    "composiet-1.png": "polo's goed; buslogo mislukt: drempelmasker pakte het hele paneel, vulling smeerde ruit en arm uit",
+    "composiet-2.png": "bus met vast maskervak en vlakfit: vulling lichter dan omgeving, halo van de oude plaat buiten het masker",
+    "composiet-3.png": "masker vergroot, halo uit de fit gehouden: nog steeds zichtbare lichte rechthoek",
+    "composiet-4.png": "gekozen: richtingsvulling links/rechts/onder met vervaging, oude plaat volledig weg, kleurenmerk 120 px breed"
+  },
+  "origineel": "website/review/beeld-verhuisdag-aankomst-ronde-1/origineel/verhuisdag-aankomst.webp"
+}

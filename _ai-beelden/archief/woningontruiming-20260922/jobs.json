@@ -1,0 +1,75 @@
+[
+ {
+  "naam": "rug",
+  "gebied": {
+   "left": 985,
+   "top": 330,
+   "width": 167,
+   "height": 225
+  },
+  "buiten": [
+   {
+    "left": 144,
+    "top": 0,
+    "width": 23,
+    "height": 5
+   },
+   {
+    "left": 151,
+    "top": 5,
+    "width": 16,
+    "height": 5
+   },
+   {
+    "left": 156,
+    "top": 10,
+    "width": 11,
+    "height": 5
+   },
+   {
+    "left": 161,
+    "top": 15,
+    "width": 6,
+    "height": 5
+   },
+   {
+    "left": 166,
+    "top": 150,
+    "width": 1,
+    "height": 75
+   }
+  ],
+  "dilatie": 3,
+  "logo": "dereus-logo-negatief.png",
+  "plaats": {
+   "cx": 82,
+   "cy": 118,
+   "breedte": 150,
+   "blur": 0.6
+  },
+  "extraMask": [
+   {
+    "left": 156,
+    "top": 166,
+    "width": 10,
+    "height": 18
+   }
+  ]
+ },
+ {
+  "naam": "borst",
+  "gebied": {
+   "left": 478,
+   "top": 325,
+   "width": 90,
+   "height": 80
+  },
+  "logo": "dereus-beeldmerk-negatief.png",
+  "plaats": {
+   "cx": 47,
+   "cy": 40,
+   "breedte": 52,
+   "blur": 0.5
+  }
+ }
+]

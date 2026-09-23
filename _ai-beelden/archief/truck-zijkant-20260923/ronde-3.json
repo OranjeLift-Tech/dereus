@@ -1,0 +1,42 @@
+{
+  "naam": "truck-zijkant",
+  "titel": "Vrachtwagen met logo, naam en telefoonnummer op de zijkant, ronde 3",
+  "lead": "Ronde 3, op dezelfde foto en dezelfde hoekpunten. Het nummer staat waar B het had: onderaan, op 94 procent van de flankbreedte. Twee dingen zijn veranderd. Het logo is verplaatst, en omdat “gecentreerd” twee kanten op kan, ziet u beide: bij C staat het logo in het hart van de flank, bij D in het hart van de ruimte boven het nummer. En de belettering heeft sleet gekregen die van de wagen zelf is afgelezen: waar de flank een veeg of een kras heeft, verliest de folie daar dekking, met een vuilband onderin. Gemiddeld 12 procent minder dekking op de inkt. Het nummer blijft leesbaar, ook als de site het beeld klein toont. Onder het beeld liggen B, C en D naast elkaar op 3x.",
+  "ratio": "3:2",
+  "grootte": "2K",
+  "eenheid": "Versie",
+  "extra": "TRUCK OVERRIDE (this round only, it overrules the VAN OR TRUCK rule above):\n- The vehicle IS the subject of this photograph. It is close, sharp and fills most of the frame. The rule about keeping a van far away and out of focus does NOT apply here.\n- THE SIDE PANEL IS COMPLETELY BLANK. The large flat side of the body is one even, plain white surface: no lettering, no logo, no emblem, no house, no symbol, no phone number, no website, no stripe, no pinstripe, no graphic, no sticker, no advertising of any kind, and no text on the cab doors either. Plain white sheet metal only. Lettering is added afterwards by hand, so anything the camera sees there has to be removed again.\n- WORKED-IN, NOT NEW: this van has done a year of moving jobs. A faint film of road grime along the bottom edge of the body and around the wheel arches, a light spray pattern behind the rear wheels, dull rather than showroom-polished paint, one or two shallow scuffs low down near the loading edge, visible panel seams and rivet lines, tyres that are not black-new. The large panel itself stays clean, flat and evenly lit, but the vehicle around it has been used.\n- The white panel must be readable as one flat plane: photograph it so that all four corners of that flat side are inside the frame, with the whole panel unobstructed. Nothing parked in front of it, no person standing against it, no tree branch or lamppost crossing it, no strong dappled shade over it.\n- Number plates: leave the plate surface blank or out of frame. No text anywhere in the image.",
+  "versies": [
+    {
+      "nr": 5,
+      "naam": "Lage hoek in de avondzon",
+      "scene": "A white box-body moving truck from a low camera position at the front three-quarter on the right, close to the vehicle so it looms slightly, the blank white side panel running back along the right of the frame and still fully visible from the cab to the rear corner. Late afternoon golden light raking along the panel from behind the camera, a Dutch brick street and row houses in warm light behind. The panel itself stays evenly lit and unshadowed."
+    }
+  ],
+  "lagen": [
+    {
+      "patroon": "versie-{nr}-r3.png",
+      "label": "ronde 3: C en D",
+      "klasse": "klaar"
+    },
+    {
+      "patroon": "versie-{nr}-B.png",
+      "label": "ronde 2, variant B",
+      "klasse": "ruw"
+    },
+    {
+      "patroon": "versie-{nr}-merk.png",
+      "label": "ronde 1",
+      "klasse": "ruw"
+    },
+    {
+      "patroon": "versie-{nr}.png",
+      "label": "blanke flank",
+      "klasse": "ruw"
+    }
+  ],
+  "crop": {
+    "patroon": "versie-{nr}-r3crop.png",
+    "label": "B, C en D op 3x, hetzelfde stuk flank"
+  }
+}

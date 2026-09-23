@@ -1,0 +1,52 @@
+{
+  "naam": "truck-zijkant",
+  "titel": "Vrachtwagen met logo, naam en telefoonnummer op de zijkant",
+  "lead": "Vijf versies van een De Reus wagen met de zijkant in beeld. Het beeldmerk, de naam en het nummer 085 000 5647 zijn er na het genereren op gezet met het echte logo uit het brandbook; het model heeft ze nooit zelf getekend. Per versie staat de zijkant er ook nog eens op 3x onder, zodat u kunt lezen of het klopt. De wagens verschillen in type, hoek en omgeving; de belettering is in alle vijf dezelfde.",
+  "ratio": "3:2",
+  "grootte": "2K",
+  "eenheid": "Versie",
+  "extra": "TRUCK OVERRIDE (this round only, it overrules the VAN OR TRUCK rule above):\n- The vehicle IS the subject of this photograph. It is close, sharp and fills most of the frame. The rule about keeping a van far away and out of focus does NOT apply here.\n- THE SIDE PANEL IS COMPLETELY BLANK. The large flat side of the body is one even, plain white surface: no lettering, no logo, no emblem, no house, no symbol, no phone number, no website, no stripe, no pinstripe, no graphic, no sticker, no advertising of any kind, and no text on the cab doors either. Plain white sheet metal only. Lettering is added afterwards by hand, so anything the camera sees there has to be removed again.\n- WORKED-IN, NOT NEW: this van has done a year of moving jobs. A faint film of road grime along the bottom edge of the body and around the wheel arches, a light spray pattern behind the rear wheels, dull rather than showroom-polished paint, one or two shallow scuffs low down near the loading edge, visible panel seams and rivet lines, tyres that are not black-new. The large panel itself stays clean, flat and evenly lit, but the vehicle around it has been used.\n- The white panel must be readable as one flat plane: photograph it so that all four corners of that flat side are inside the frame, with the whole panel unobstructed. Nothing parked in front of it, no person standing against it, no tree branch or lamppost crossing it, no strong dappled shade over it.\n- Number plates: leave the plate surface blank or out of frame. No text anywhere in the image.",
+  "versies": [
+    {
+      "nr": 1,
+      "naam": "Bakwagen recht van opzij",
+      "scene": "A white box-body moving truck (7.5 tonne, flat vertical cargo box, roller shutter at the back) photographed straight on from the side, the camera exactly perpendicular to the blank white side panel, so the panel reads as a clean rectangle filling most of the frame. It stands along the kerb of a Dutch brick street in The Hague, brick row houses with white window frames behind it, a few bicycles against a railing, bare trees. Soft bright overcast daylight, no hard shadows on the panel."
+    },
+    {
+      "nr": 2,
+      "naam": "Bestelbus schuin voor",
+      "scene": "A white long-wheelbase delivery van (Sprinter type, high roof) seen from the front three-quarter on the left, parked half on the pavement in front of a Hague row house with a green front door. The blank white flank runs away from the camera in perspective, the whole flank visible from the sliding door to the rear light. The back doors stand open with two blank brown kraft moving boxes inside. Morning light, long soft shadows on the brick."
+    },
+    {
+      "nr": 3,
+      "naam": "Laadklep omlaag, schuin achter",
+      "scene": "A white box-body moving truck seen from the rear three-quarter on the left, its hydraulic tail lift lowered to the pavement with two blank brown kraft moving boxes and a moving blanket on it. The long blank white side panel is fully in view along the left of the frame, angled away from the camera. Behind the truck a Hague canal street with brick houses and a row of parked bicycles. Flat soft daylight, wet brick from an earlier shower."
+    },
+    {
+      "nr": 4,
+      "naam": "Grote verhuiswagen op het plein",
+      "scene": "A large white removals lorry with a tall square cargo body, almost side on but turned perhaps fifteen degrees towards the camera, so the blank white flank is broad and slightly foreshortened and the cab front is just visible on the right. It stands alone on an open paved forecourt at the edge of the city, low buildings and a wide Dutch sky with light clouds behind it. Clean even daylight, the whole vehicle from the front wheel to the rear corner inside the frame."
+    },
+    {
+      "nr": 5,
+      "naam": "Lage hoek in de avondzon",
+      "scene": "A white box-body moving truck from a low camera position at the front three-quarter on the right, close to the vehicle so it looms slightly, the blank white side panel running back along the right of the frame and still fully visible from the cab to the rear corner. Late afternoon golden light raking along the panel from behind the camera, a Dutch brick street and row houses in warm light behind. The panel itself stays evenly lit and unshadowed."
+    }
+  ],
+  "lagen": [
+    {
+      "patroon": "versie-{nr}-merk.png",
+      "label": "met logo, naam en nummer",
+      "klasse": "klaar"
+    },
+    {
+      "patroon": "versie-{nr}.png",
+      "label": "blanke flank, ruw uit de generator",
+      "klasse": "ruw"
+    }
+  ],
+  "crop": {
+    "patroon": "versie-{nr}-merkcrop.png",
+    "label": "de belettering op 3x"
+  }
+}
