@@ -127,3 +127,49 @@
     0 14px 26px -14px rgba(14,26,51,.30),0 46px 80px -46px rgba(11,35,82,.5)}
 @media (max-width:599px){.p-diensten .b-reviews__sterren{gap:.1rem}.p-diensten .b-reviews__sterren img{width:3.4rem}
   .p-diensten .b-reviews__sterren img:nth-child(3){width:4.2rem}}
+
+/* Een ploeg van drie in plaats van een klantportret (alleen /werkwijze/, zie ploegbeeld() in het blok).
+   Groter en dieper achter de kaart dan een portret: de uitsnede is bij de handen afgesneden en die rand
+   hoort achter de kaartrand te verdwijnen. Dezelfde plek en dezelfde schaduw als het portret, dus de
+   regels hierboven blijven gelden; deze staan er later in het bestand en winnen daarom van de maten
+   voor het portret. */
+.rraster--compact { --ploeg-hoogte: clamp(8rem, 14vw, 13rem); --ploeg-achter: clamp(3.5rem, 7vw, 6.5rem); }
+.rraster--compact:has(.rkaart__klant--ploeg) { margin-top: calc(var(--ploeg-hoogte) - var(--ploeg-achter)); }
+/* Naar links: de ploeg staat boven de eerste kaart, links in de rij, gecentreerd boven die kaart.
+   Links uitlijnen binnen de middelste kaart gaf een ploeg die boven de naad tussen twee kaarten hing
+   en bij geen van beide hoorde. */
+.rkaart__klant--ploeg { height: var(--ploeg-hoogte); bottom: calc(100% - var(--ploeg-achter)); }
+
+/* De ruimte tussen de koptekst en de kaarten is op breed scherm de gereserveerde hoogte van het beeld
+   (de marge van het raster en de marge onder de kopbalk klappen samen, de grootste wint). Dieper achter
+   de kaart betekent dus minder gereserveerde hoogte en een kleiner gat, zonder het beeld te verkleinen.
+   Op de telefoon staat het raster zonder marge en telt de kopbalk wel, dus die krijgt hier een eigen,
+   kleinere waarde. .kopbalk staat in style.css en wordt door meer secties gebruikt, vandaar alleen
+   binnen dit blok. */
+.b-reviews--compact .kopbalk { margin-bottom: clamp(1.25rem, .9rem + 1.2vw, 2rem); }
+/* Onder 640 px staan de kaarten onder elkaar. De ruimte hoort dan niet boven het raster maar boven
+   de kaart met het beeld, anders schuift de ploeg achter de kaart erboven. */
+@media (max-width: 639.98px) {
+  .rraster--compact:has(.rkaart__klant--ploeg) { margin-top: 0; }
+  .rraster--compact .rkaart:has(.rkaart__klant--ploeg) { margin-top: calc(var(--ploeg-hoogte) - var(--ploeg-achter)); }
+}
+
+/* ---- de koptekst lager, zonder de gezichten af te dekken ----
+   Gevraagd: de koptekst lager, en hij mag de koppen van de drie mannen niet afdekken. Op breed scherm
+   staat de tekst naast de figuur en niet erboven (op 1440 loopt de tekst van x=489 tot 951 en de figuur
+   van 159 tot 463, dus ze raken elkaar niet), daar is de grens dus de bovenrand van de kaarten. Op de
+   telefoon staat de tekst wel boven de figuur, over de volle breedte, en is er maar 26 px tussen de
+   onderkant van de tekst en zijn kruin. Daarom zakt de kop mee met de breedte: ruim op desktop, klein
+   op de telefoon.
+
+   De zak komt van de gereserveerde strook af in plaats van er bovenop, zodat de sectie niet groeit en
+   het gat dat we vanmiddag van 169 naar 106 px brachten niet terugkomt. Alles hangt aan
+   :has(.rkaart__klant--ploeg), dus de home, /diensten/ en /over-ons/ merken er niets van. */
+.b-reviews--compact:has(.rkaart__klant--ploeg){--kop-zak:clamp(.5rem,3.5vw - 1rem,2.75rem)}
+.b-reviews--compact .kopbalk{margin-top:var(--kop-zak,0)}
+/* alleen waar het raster die strook ook echt heeft: onder 640 px staat het beeld boven de tweede
+   kaart in de kolom en is de strook 0, dus daar valt niets af te trekken en zou deze regel de
+   mobiele regel hierboven overschrijven (staat later in het bestand) */
+@media (min-width:640px){
+  .rraster--compact:has(.rkaart__klant--ploeg){margin-top:calc(var(--ploeg-hoogte) - var(--ploeg-achter) - var(--kop-zak,0px))}
+}

@@ -1,6 +1,8 @@
 """Het gedeelde formulier: offerteaanvraag (/offerte/) en contactbericht (/contact/).
 
-Opties: variant = "offerte" of "contact"; id (standaard "formulier").
+Opties: variant = "offerte" of "contact"; id (standaard "formulier"); beeld = uitsneefoto bovenin de
+zijkolom; team = groepsfoto onderaan de zijkolom, tegen de onderrand (/contact/); merk = het beeldmerk
+onderaan het meeschuivende blok (/offerte/). beeld en team sluiten elkaar in de praktijk uit.
 Kopij: het blok {#formulier} van de pagina. Blokvelden: knop, privacy, fout-kop, fout-versturen, bezig,
 zij-kop en lijst (de drie vinkjes in de zijkolom; zonder zij-kop vervalt de zijkolom).
 Per veld een ###-item met de veldnaam als id: de titel is het label, met hulp, placeholder, fout,
@@ -135,6 +137,19 @@ def _maat(pad, terugval):
         return terugval
 
 
+def _onderaan(ctx, team):
+    """Onderaan de zijkolom, buiten __zijin: de teamfoto tegen de onderrand van de kolom (/contact/).
+
+    Buiten __zijin en niet erin, want dat blok is sticky en schuift mee terwijl de bezoeker invult;
+    de foto hoort juist aan de kolom vast te zitten. b-formulier__zij--team maakt onderin ruimte vrij
+    en b-formulier__team legt hem daar neer, allebei in css/blok/formulier.css.
+    """
+    if not team:
+        return ""
+    breed, hoog = _maat(team, (900, 462))
+    return "\n    " + ctx.beeld(team, "", breed, hoog, klasse=f"b-{NAAM}__team")
+
+
 def _bovenaan(ctx, beeld):
     """Bovenin de zijkolom: de uitsneefoto van de pagina, als die er is.
 
@@ -153,17 +168,18 @@ MERK = ('<img class="b-formulier__merk" src="/img/logo/dereus-beeldmerk-negatief
         'loading="lazy" decoding="async">')
 
 
-def _zijkolom(ctx, k, beeld=None, merk=False):
+def _zijkolom(ctx, k, beeld=None, merk=False, team=None):
     if not k.veld("zij-kop"):
         return ""
     vinkjes = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
-    return f'''<aside class="b-{NAAM}__zij"><div class="b-{NAAM}__zijin">
+    variant = f" b-{NAAM}__zij--team" if team else ""
+    return f'''<aside class="b-{NAAM}__zij{variant}"><div class="b-{NAAM}__zijin">
       {_bovenaan(ctx, beeld)}
       <p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
       <ul class="b-{NAAM}__vinkjes">{vinkjes}</ul>
       <a class="b-{NAAM}__tel" href="{ctx.telhref}">{TELEFOON_SVG}<span>{ctx.esc(ctx.tel)}</span></a>
       {MERK if merk else ""}
-    </div></aside>'''
+    </div>{_onderaan(ctx, team)}</aside>'''
 
 
 def html(ctx, kopij, **opties) -> str:
@@ -174,7 +190,8 @@ def html(ctx, kopij, **opties) -> str:
     grond = opties.get("grond", "mist")
     sleutel = getattr(ctx.cfg, "WEB3FORMS_KEY", "")
     zonder_sleutel = _is_placeholder(sleutel)
-    zij = _zijkolom(ctx, k, opties.get("beeld"), opties.get("merk", False)) if opties.get("zijkolom", True) else ""
+    zij = (_zijkolom(ctx, k, opties.get("beeld"), opties.get("merk", False), opties.get("team"))
+           if opties.get("zijkolom", True) else "")
     prefix = ctx.esc(opties.get("prefix", "f"))
     bereik = (f'<a href="{ctx.telhref}">{ctx.esc(ctx.tel)}</a> <span aria-hidden="true">·</span> '
               f'<a href="mailto:{ctx.esc(ctx.mail)}">{ctx.esc(ctx.mail)}</a>')

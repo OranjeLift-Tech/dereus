@@ -1,413 +1,474 @@
 /* Controle van de gedeelde navigatie en de pagina's op desktop en mobiel.
-   Gebruik: node _werk/controle-layout.cjs <pad-naar-playwright> [basis-url] */
-const { chromium } = require(process.argv[2] || 'playwright');
-const assert = require('node:assert/strict');
+
+   node _werk/controle-layout.cjs [pad-naar-playwright] [basis-url] [--snel]
+   Beide argumenten mogen weg: dan zoekt controle-kit.cjs Playwright zelf en start het een
+   eigen server. Onder _werk/controle.cjs draait dit als module, op de gedeelde browser.
+
+   Dit is het net waarmee te zien is of parallelle sessies elkaar niet gesloopt hebben. Het
+   loopt daarom alle breedtes en alle routes af voordat het een uitslag geeft: een run levert
+   de hele lijst op, niet alleen de eerste fout. --snel doet 1440 en 390, voor tussendoor. */
 const fs = require('node:fs');
 const path = require('node:path');
+const kit = require('./controle-kit.cjs');
 
-(async () => {
-  const browser = await chromium.launch({ channel: 'msedge', headless: true });
+const UIT = path.resolve(__dirname, '../website/review/cleanup');
+const ROUTES = ['/', '/diensten/', '/kosten/', '/offerte/', '/contact/', '/over-ons/', '/werkwijze/',
+  '/algemene-voorwaarden/', '/privacyverklaring/', '/offerte/bedankt/', '/contact/bedankt/', '/404.html'];
+const BREEDTES = [1440, 1100, 768, 390, 320];
+const BREEDTES_SNEL = [1440, 390];
+
+async function draai({ browser, basis, snel = false } = {}) {
+  const { assert, omhul, meld, rapport } = kit.zacht('layout');
   const context = await browser.newContext({ reducedMotion: 'reduce' });
-  const page = await context.newPage();
-  const base = process.argv[3] || 'http://127.0.0.1:8765';
-  const out = path.resolve(__dirname, '../website/review/cleanup');
-  fs.mkdirSync(out, { recursive: true });
+  const page = kit.temmen(await context.newPage());
+  fs.mkdirSync(UIT, { recursive: true });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => {
-    if (response.status() >= 400 && response.url().startsWith(base)) errors.push(`${response.status()} ${response.url()}`);
+    if (response.status() >= 400 && response.url().startsWith(basis)) errors.push(`${response.status()} ${response.url()}`);
   });
-  const routes = ['/', '/diensten/', '/kosten/', '/offerte/', '/contact/', '/over-ons/', '/werkwijze/',
-    '/algemene-voorwaarden/', '/privacyverklaring/', '/offerte/bedankt/', '/contact/bedankt/', '/404.html'];
+
+  /* Lui geladen beelden mogen na het scrollen nog even onderweg zijn. Eerst wachten tot ze
+     klaar zijn, dan pas oordelen: anders hangt de uitslag aan de laadsnelheid in plaats van
+     aan het pad, en dat gaf om de andere run een andere uitslag. Loopt de tijd af, dan zegt
+     de assert hieronder alsnog wat er mis is. */
+  const beeldenKlaar = kies => page.waitForFunction(
+    s => [...document.querySelectorAll(s)].every(el => el.complete), kies, { timeout: 5000 }).catch(() => {});
   try {
-    for (const width of (process.env.LAYOUT_INTERACTIES ? [] : [1440, 1100, 768, 390, 320])) {
+    for (const width of (process.env.LAYOUT_INTERACTIES ? [] : (snel ? BREEDTES_SNEL : BREEDTES))) {
       await page.setViewportSize({ width, height: 900 });
-      for (const route of routes) {
-        await page.goto(base + route, { waitUntil: 'networkidle' });
-        await page.evaluate(() => document.fonts.ready);
-        const layout = await page.evaluate(() => {
-          const header = document.querySelector('.header');
-          const visible = [...header.querySelectorAll('a, button')].filter(el => el.getClientRects().length);
-          return {
-            width: document.documentElement.scrollWidth,
-            viewport: innerWidth,
-            /* Wie steekt er werkelijk buiten beeld? scrollWidth telt ook inhoud mee die een
-               voorouder netjes afsnijdt, en dat is bij ons juist de bedoeling: een uitsnede
-               stapt uit zijn kader en het kader knipt hem af. Zulke breedte is geen fout.
-               Een element dat tot aan de vensterrand doorloopt is dat wel, want daar hakt de
-               vensterrand de figuur doormidden. Die zoeken we hier op, en de breedste wint.
-               Dit draait alleen als er iets mis is, dus het kost niets in de schone gang. */
-            overloop: (() => {
-              if (document.documentElement.scrollWidth <= innerWidth + 1) return null;
-              const knipt = el => /hidden|clip|auto|scroll/.test(getComputedStyle(el).overflowX);
-              const noem = el => {
-                const klassen = [...el.classList].map(klasse => '.' + klasse).join('');
-                const bron = el.tagName === 'IMG' ? ' ' + (el.currentSrc || el.src || '').split('/').pop() : '';
-                return el.tagName.toLowerCase() + klassen + bron;
-              };
-              let ergste = null;
-              for (const el of document.querySelectorAll('body *')) {
-                const box = el.getBoundingClientRect();
-                if (!box.width || box.right <= innerWidth + 1) continue;
-                let afgesneden = false, eerste = null;
-                for (let ouder = el.parentElement; ouder && ouder !== document.body; ouder = ouder.parentElement) {
-                  if (!eerste && ouder.classList.length) eerste = noem(ouder);
-                  /* Knipt een voorouder, dan is dit element niet de schuldige. Steekt die voorouder
-                     zelf ook buiten beeld, dan komt hij in deze zelfde ronde langs en wordt hij
-                     gemeld; we hoeven hem hier dus niet apart te vangen. */
-                  if (knipt(ouder)) { afgesneden = true; break; }
+      for (const route of ROUTES) {
+        await omhul(`${width} ${route}`, async () => {
+          await page.goto(basis + route, { waitUntil: 'load' });
+          await page.evaluate(() => document.fonts.ready);
+          const layout = await page.evaluate(() => {
+            const header = document.querySelector('.header');
+            const visible = [...header.querySelectorAll('a, button')].filter(el => el.getClientRects().length);
+            return {
+              width: document.documentElement.scrollWidth,
+              viewport: innerWidth,
+              /* Wie steekt er werkelijk buiten beeld? scrollWidth telt ook inhoud mee die een
+                 voorouder netjes afsnijdt, en dat is bij ons juist de bedoeling: een uitsnede
+                 stapt uit zijn kader en het kader knipt hem af. Zulke breedte is geen fout.
+                 Een element dat tot aan de vensterrand doorloopt is dat wel, want daar hakt de
+                 vensterrand de figuur doormidden. Die zoeken we hier op, en de breedste wint.
+                 Dit draait alleen als er iets mis is, dus het kost niets in de schone gang. */
+              overloop: (() => {
+                if (document.documentElement.scrollWidth <= innerWidth + 1) return null;
+                const knipt = el => /hidden|clip|auto|scroll/.test(getComputedStyle(el).overflowX);
+                const noem = el => {
+                  const klassen = [...el.classList].map(klasse => '.' + klasse).join('');
+                  const bron = el.tagName === 'IMG' ? ' ' + (el.currentSrc || el.src || '').split('/').pop() : '';
+                  return el.tagName.toLowerCase() + klassen + bron;
+                };
+                let ergste = null;
+                for (const el of document.querySelectorAll('body *')) {
+                  const box = el.getBoundingClientRect();
+                  if (!box.width || box.right <= innerWidth + 1) continue;
+                  let afgesneden = false, eerste = null;
+                  for (let ouder = el.parentElement; ouder && ouder !== document.body; ouder = ouder.parentElement) {
+                    if (!eerste && ouder.classList.length) eerste = noem(ouder);
+                    /* Knipt een voorouder, dan is dit element niet de schuldige. Steekt die voorouder
+                       zelf ook buiten beeld, dan komt hij in deze zelfde ronde langs en wordt hij
+                       gemeld; we hoeven hem hier dus niet apart te vangen. */
+                    if (knipt(ouder)) { afgesneden = true; break; }
+                  }
+                  if (afgesneden) continue;
+                  const over = Math.round(box.right - innerWidth);
+                  if (!ergste || over > ergste.over) ergste = { naam: noem(el), over, breed: Math.round(box.width), ouder: eerste || 'body' };
                 }
-                if (afgesneden) continue;
-                const over = Math.round(box.right - innerWidth);
-                if (!ergste || over > ergste.over) ergste = { naam: noem(el), over, breed: Math.round(box.width), ouder: eerste || 'body' };
-              }
-              return ergste;
-            })(),
-            headerOverflow: visible.some(el => el.getBoundingClientRect().right > innerWidth + 1),
-            broken: [...document.images].filter(img => img.complete && !img.naturalWidth).map(img => img.src),
-            duplicateIds: [...document.querySelectorAll('[id]')].map(el => el.id).filter((id, i, ids) => ids.indexOf(id) !== i),
-            brokenLabels: [...document.querySelectorAll('label[for]')].filter(el => !document.getElementById(el.htmlFor)).map(el => el.htmlFor),
-            brokenAria: [...document.querySelectorAll('[aria-controls],[aria-labelledby],[aria-describedby]')].flatMap(el =>
-              ['aria-controls', 'aria-labelledby', 'aria-describedby'].flatMap(attr => (el.getAttribute(attr) || '').split(/\s+/).filter(id => id && !document.getElementById(id)))),
-            h1: document.querySelectorAll('h1').length
-          };
-        });
-        /* De melding noemt de schuldige. De naam van het element dat scrollWidth oprekt is niet
-           vanzelf de naam van het element dat de fout maakt, en op die verwarring is eerder een
-           halve dag weggelopen. De grens zelf blijft staan: hier niets oprekken om groen te
-           worden, want juist het onzichtbare geval telt. De pagina schuift dan niet, maar de
-           figuur wordt wel door de vensterrand doorgesneden. */
-        assert.ok(layout.width <= layout.viewport + 1,
-          `${width} ${route}: overflow ${layout.width} bij venster ${layout.viewport}. ${layout.overloop
-            ? `${layout.overloop.naam} steekt ${layout.overloop.over}px buiten beeld (breed ${layout.overloop.breed}, in ${layout.overloop.ouder})`
-            : 'geen enkel element steekt rechts ongeknipt buiten beeld, kijk naar de linkerrand of naar de wortel zelf'}`);
-        assert.ok(!layout.headerOverflow, `${width} ${route}: header overflow`);
-        assert.equal(layout.h1, 1, route);
-        assert.deepEqual(layout.broken, [], `${width} ${route}: broken images`);
-        assert.deepEqual(layout.duplicateIds, [], `${width} ${route}: duplicate ids`);
-        assert.deepEqual(layout.brokenLabels, [], `${width} ${route}: broken form labels`);
-        assert.deepEqual(layout.brokenAria, [], `${width} ${route}: broken ARIA references`);
-        const whatsapp = page.locator('.whatsapp');
-        assert.equal(await whatsapp.count(), 1, `${width} ${route}: WhatsApp contact`);
-        assert.equal(await whatsapp.getAttribute('aria-label'), 'Contact met Verhuisbedrijf De Reus via WhatsApp');
-        assert.equal(await whatsapp.getAttribute('href'), 'https://wa.me/31850005647');
-        assert.equal(await whatsapp.getAttribute('disabled'), null);
-        assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('a[href="tel:+31850005647"]')].flatMap(tel => {
-          const wa = tel.nextElementSibling;
-          if (!wa || wa.href !== 'https://wa.me/31850005647' || !wa.hasAttribute('data-whatsapp-business')) return [tel.outerHTML];
-          if (wa.nextElementSibling?.hasAttribute('data-whatsapp-business')) return ['Duplicate WhatsApp alternative'];
-          if (wa.target === '_blank' && !wa.rel.includes('noopener')) return ['Unsafe new tab'];
-          const visible = el => !!el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
-          return visible(tel) && !visible(wa) ? ['Visible phone without visible WhatsApp'] : [];
-        })), [], `${width} ${route}: paired business phone contacts`);
-        /* Een CTA moet als knop leesbaar blijven: groot genoeg om te raken, geen kaderrand, en
-           niet ingedrukt of uitgeschakeld ogend. De eerste versie verwierp elke inset-schaduw en
-           dat is te bot: een lichte inset van 1px is een glansrandje dat een knop juist verhoogd
-           laat lijken, terwijl een donkere inset hem ingedrukt maakt. We kijken daarom naar wat
-           de laag doet in plaats van naar het woord inset: hoeveel donkerder maakt hij de knop.
-           De ingedrukte stand mag een donkere inset hebben; die meet dit niet, want
-           getComputedStyle geeft hier de ruststand. */
-        assert.deepEqual(await page.locator('.knop--cta').evaluateAll(items => {
-          const lagen = waarde => {                       // splitsen op komma's buiten haakjes
-            const uit = []; let diep = 0, nu = '';
-            for (const teken of waarde) {
-              if (teken === '(') diep++;
-              else if (teken === ')') diep--;
-              else if (teken === ',' && !diep) { uit.push(nu.trim()); nu = ''; continue; }
-              nu += teken;
-            }
-            if (nu.trim()) uit.push(nu.trim());
-            return uit;
-          };
-          const verduistering = laag => {                 // 0 = laat de knop licht, 1 = maakt hem zwart
-            const kleur = laag.match(/rgba?\(([^)]+)\)/);
-            if (!kleur) return 0;
-            const [r, g, b, a = 1] = kleur[1].split(',').map(Number);
-            return (1 - (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255) * a;
-          };
-          return items.filter(el => el.getClientRects().length).flatMap(el => {
-            const style = getComputedStyle(el), box = el.getBoundingClientRect(), redenen = [];
-            if (box.height < 44) redenen.push(`hoogte ${Math.round(box.height)}px`);
-            if (parseFloat(style.borderTopWidth) > 1) redenen.push(`rand ${style.borderTopWidth}`);
-            for (const laag of lagen(style.boxShadow)) {
-              if (laag.includes('inset') && verduistering(laag) > 0.12) redenen.push(`donkere inset ${laag}`);
-            }
-            return redenen.length ? [`${el.className}: ${redenen.join('; ')}`] : [];
+                return ergste;
+              })(),
+              headerOverflow: visible.some(el => el.getBoundingClientRect().right > innerWidth + 1),
+              broken: [...document.images].filter(img => img.complete && !img.naturalWidth).map(img => img.src),
+              duplicateIds: [...document.querySelectorAll('[id]')].map(el => el.id).filter((id, i, ids) => ids.indexOf(id) !== i),
+              brokenLabels: [...document.querySelectorAll('label[for]')].filter(el => !document.getElementById(el.htmlFor)).map(el => el.htmlFor),
+              brokenAria: [...document.querySelectorAll('[aria-controls],[aria-labelledby],[aria-describedby]')].flatMap(el =>
+                ['aria-controls', 'aria-labelledby', 'aria-describedby'].flatMap(attr => (el.getAttribute(attr) || '').split(/\s+/).filter(id => id && !document.getElementById(id)))),
+              h1: document.querySelectorAll('h1').length
+            };
           });
-        }), [], `${width} ${route}: clean CTA styling and touch size`);
-        assert.ok(await whatsapp.evaluate(el => {
-          const box = el.getBoundingClientRect(), bar = document.querySelector('.mcta').getBoundingClientRect();
-          return box.left >= 0 && box.right <= innerWidth && box.bottom <= innerHeight && (!bar.height || box.bottom <= bar.top - 10);
-        }), `${width} ${route}: WhatsApp safe position`);
-        assert.equal(await page.locator('#i-google > g').getAttribute('transform'), 'translate(2.64 2.64) scale(.78)');
-        assert.ok(await page.evaluate(() => [...document.querySelectorAll('script[type="application/ld+json"]')].every(script => {
-          const data = JSON.parse(script.textContent), graph = data['@graph'] || [data];
-          return graph.filter(item => item['@type'] === 'MovingCompany').every(item =>
-            item.logo.url.endsWith('/img/logo/dereus-logo.svg') && item.logo.width === 1000 && item.logo.height === 828);
-        })), `${route}: approved JSON-LD logo`);
-        if (route === '/diensten/') {
-          assert.equal(await page.locator('.b-dienstenpanelen__index').count(), 0);
-          assert.equal(await page.locator('.b-dienstenpanelen__paneel').count(), 8);
-          assert.ok(await page.locator('.b-dienstenpanelen__panelen').evaluate(el => {
-            const box = el.getBoundingClientRect(); return Math.abs((box.left + box.right) / 2 - innerWidth / 2) < 2;
-          }), `${width}: service panels centered without an empty sidebar`);
-        }
-        if (route === '/contact/' && width > 960) {
-          assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.b-kaart__beeld').getBoundingClientRect().top
-            - document.querySelector('#kaart-kop').getBoundingClientRect().top) < 2), `${width}: map top aligns address heading`);
-        }
-        if (route === '/werkwijze/') {
-          /* De tijdlijn (blok tijdlijn, sinds ronde 6) verving de stappenrail. De ankers stap-1 tot
-             stap-5 blijven, want daar kan van buiten naar gelinkt worden. De vorige vorm mag niet
-             half blijven staan: dat is de manier waarop zo'n vervanging stilletjes misgaat. */
-          await page.locator('#stappen').scrollIntoViewIfNeeded();
-          assert.equal(await page.locator('.b-stappenlang').count(), 0, `${width}: de oude stappenrail staat er nog`);
-          assert.deepEqual(await page.locator('.b-tijdlijn__stap').evaluateAll(items => items.map(el => el.id)),
-            ['stap-1', 'stap-2', 'stap-3', 'stap-4', 'stap-5'], `${width}: de vijf stations en hun ankers`);
-          assert.equal(await page.locator('#stappen .knop--cta').count(), 1, `${width}: een primaire knop in de sectie`);
-          /* Het 3D-voorwerp staat voor het gele huis en komt boven de plaat uit; zakt het terug
-             achter de kaartrand, dan is de hele vorm weg zonder dat er iets stuk lijkt. */
-          assert.deepEqual(await page.locator('.b-tijdlijn__stap').evaluateAll(items => items.flatMap(el => {
-            const obj = el.querySelector('.b-tijdlijn__obj').getBoundingClientRect();
-            const plaat = el.querySelector('.b-tijdlijn__plaat').getBoundingClientRect();
-            const fout = [];
-            if (obj.top >= plaat.top - 4) fout.push(`${el.id}: voorwerp steekt niet boven de plaat uit`);
-            /* en het mag de tekst niet afdekken: de wagen is de breedste render en schoof op smal
-               scherm over het volgnummer heen. */
-            for (const naam of ['nr', 'titel']) {
-              const t = el.querySelector(`.b-tijdlijn__${naam}`).getBoundingClientRect();
-              if (obj.right > t.left && obj.left < t.right && obj.top < t.bottom && obj.bottom > t.top) {
-                fout.push(`${el.id}: voorwerp ligt over ${naam}`);
+          /* De melding noemt de schuldige. De naam van het element dat scrollWidth oprekt is niet
+             vanzelf de naam van het element dat de fout maakt, en op die verwarring is eerder een
+             halve dag weggelopen. De grens zelf blijft staan: hier niets oprekken om groen te
+             worden, want juist het onzichtbare geval telt. De pagina schuift dan niet, maar de
+             figuur wordt wel door de vensterrand doorgesneden. */
+          assert.ok(layout.width <= layout.viewport + 1,
+            `${width} ${route}: overflow ${layout.width} bij venster ${layout.viewport}. ${layout.overloop
+              ? `${layout.overloop.naam} steekt ${layout.overloop.over}px buiten beeld (breed ${layout.overloop.breed}, in ${layout.overloop.ouder})`
+              : 'geen enkel element steekt rechts ongeknipt buiten beeld, kijk naar de linkerrand of naar de wortel zelf'}`);
+          assert.ok(!layout.headerOverflow, `${width} ${route}: header overflow`);
+          assert.equal(layout.h1, 1, route);
+          assert.deepEqual(layout.broken, [], `${width} ${route}: broken images`);
+          assert.deepEqual(layout.duplicateIds, [], `${width} ${route}: duplicate ids`);
+          assert.deepEqual(layout.brokenLabels, [], `${width} ${route}: broken form labels`);
+          assert.deepEqual(layout.brokenAria, [], `${width} ${route}: broken ARIA references`);
+          const whatsapp = page.locator('.whatsapp');
+          assert.equal(await whatsapp.count(), 1, `${width} ${route}: WhatsApp contact`);
+          assert.equal(await whatsapp.getAttribute('aria-label'), 'Contact met Verhuisbedrijf De Reus via WhatsApp');
+          assert.equal(await whatsapp.getAttribute('href'), 'https://wa.me/31850005647');
+          assert.equal(await whatsapp.getAttribute('disabled'), null);
+          /* WhatsApp naast een telefoonnummer is sinds 23-09-2026 een richtlijn en geen harde eis.
+             De gebruiker: "remove the rule of always whatsapp by phone number, make it a guidance
+             instead." De standaard blijft: ctx.contactlinks() hangt achter elk nummer een knop.
+             Een tel-link met data-geen-whatsapp is een bewuste uitzondering in de bron en telt
+             niet mee. Een nummer zonder knop wordt als richtlijn gemeld en laat de run niet
+             vallen. Wel hard: een knop die er staat maar dubbel is of onveilig een tab opent. */
+          const koppels = await page.evaluate(() => {
+            const hard = [], richtlijn = [];
+            const visible = el => !!el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
+            const waar = tel => `#${tel.closest('[id]')?.id || '?'}`;
+            for (const tel of document.querySelectorAll('a[href="tel:+31850005647"]')) {
+              if (tel.hasAttribute('data-geen-whatsapp')) continue;
+              const wa = tel.nextElementSibling;
+              if (!wa || wa.href !== 'https://wa.me/31850005647' || !wa.hasAttribute('data-whatsapp-business')) {
+                richtlijn.push(`${waar(tel)}: nummer zonder WhatsApp-knop`);
+                continue;
               }
+              if (wa.nextElementSibling?.hasAttribute('data-whatsapp-business')) hard.push('Duplicate WhatsApp alternative');
+              else if (wa.target === '_blank' && !wa.rel.includes('noopener')) hard.push('Unsafe new tab');
+              else if (visible(tel) && !visible(wa)) richtlijn.push(`${waar(tel)}: nummer zichtbaar, WhatsApp-knop niet`);
             }
-            return fout;
-          })), [], `${width}: renders boven de kaartrand en vrij van de tekst`);
-          /* De WhatsApp-knop komt van ctx.contactlinks en landt in "Wat u doet". Die kolom is op
-             breed scherm maar 100 px en de pil 133, dus zonder de eigen regel onderaan de plaat
-             valt hij over de kolom ernaast heen. Dat zag er op 1440 net goed uit en botste toch. */
-          assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('.b-tijdlijn__duo .wa-link')].flatMap(wa => {
-            const box = wa.getBoundingClientRect();
-            const buur = wa.closest('.b-tijdlijn__wie').nextElementSibling?.querySelector('dd');
-            if (!buur) return [];
-            const t = buur.getBoundingClientRect();
-            return box.right > t.left && box.left < t.right && box.top < t.bottom && box.bottom > t.top
-              ? [`WhatsApp-knop overlapt "${buur.textContent.slice(0, 30)}..."`] : [];
-          })), [], `${width}: WhatsApp-knop vrij van de kolom ernaast`);
-          const stations = await page.locator('.b-tijdlijn__stap').evaluateAll(items =>
-            items.map(el => Math.round(el.getBoundingClientRect().top)));
-          if (width > 1180) {
-            assert.ok(Math.max(...stations) - Math.min(...stations) <= 2,
-              `${width}: de vijf stations horen naast elkaar op een rij (tops ${stations.join(', ')})`);
-          } else {
-            assert.ok(stations.every((top, i) => i === 0 || top > stations[i - 1]),
-              `${width}: de tijdlijn hoort een kolom te zijn (tops ${stations.join(', ')})`);
-          }
-          /* De voorbereiding (blok lijstplaat, sinds ronde 6) verving de witte checklistkaart. Het blok
-             checklist bestaat nog, voor de dienst- en landpagina's, maar staat sinds ronde 6 niet meer op
-             deze pagina; de regel bij #na-de-verhuizing hieronder telt dat er nergens meer een staat. */
-          await page.locator('#voorbereiding').scrollIntoViewIfNeeded();
-          assert.equal(await page.locator('#voorbereiding .b-checklist__kaart').count(), 0,
-            `${width}: de oude checklistkaart staat nog in de voorbereiding`);
-          assert.equal(await page.locator('.b-lijstplaat__lijst > li').count(), 6, `${width}: de zes punten van het lijstje`);
-          /* De foto hoort er ook echt te zijn: een pad dat verschuift laat een leeg geel huis achter,
-             en dat valt op een blauwe plaat niet op. */
-          assert.ok(await page.locator('.b-lijstplaat__foto').evaluate(el => el.complete && el.naturalWidth > 0),
-            `${width}: de foto in de huisvorm is geladen`);
-          /* Zelfde val als bij de tijdlijn: het klembord steekt boven de plaatrand uit en mag de lijstkop
-             en de eerste regel niet afdekken. Het staat rechtsboven, de lijstkop links, en die twee
-             kwamen op smal scherm tegen elkaar aan. */
-          assert.deepEqual(await page.evaluate(() => {
-            const obj = document.querySelector('.b-lijstplaat__klembord').getBoundingClientRect();
-            const plaat = document.querySelector('.b-lijstplaat__plaat').getBoundingClientRect();
-            const fout = [];
-            if (obj.top >= plaat.top - 4) fout.push('klembord steekt niet boven de plaat uit');
-            for (const kies of ['.b-lijstplaat__lijstkop', '.b-lijstplaat__lijst > li']) {
-              const t = document.querySelector(kies).getBoundingClientRect();
-              if (obj.right > t.left && obj.left < t.right && obj.top < t.bottom && obj.bottom > t.top) {
-                fout.push(`klembord ligt over ${kies}`);
+            return { hard, richtlijn };
+          });
+          assert.deepEqual(koppels.hard, [], `${width} ${route}: paired business phone contacts`);
+          for (const r of koppels.richtlijn) meld(`richtlijn ${width} ${route}: ${r}`);
+          /* Een CTA moet als knop leesbaar blijven: groot genoeg om te raken, geen kaderrand, en
+             niet ingedrukt of uitgeschakeld ogend. De eerste versie verwierp elke inset-schaduw en
+             dat is te bot: een lichte inset van 1px is een glansrandje dat een knop juist verhoogd
+             laat lijken, terwijl een donkere inset hem ingedrukt maakt. We kijken daarom naar wat
+             de laag doet in plaats van naar het woord inset: hoeveel donkerder maakt hij de knop.
+             De ingedrukte stand mag een donkere inset hebben; die meet dit niet, want
+             getComputedStyle geeft hier de ruststand. */
+          assert.deepEqual(await page.locator('.knop--cta').evaluateAll(items => {
+            const lagen = waarde => {                       // splitsen op komma's buiten haakjes
+              const uit = []; let diep = 0, nu = '';
+              for (const teken of waarde) {
+                if (teken === '(') diep++;
+                else if (teken === ')') diep--;
+                else if (teken === ',' && !diep) { uit.push(nu.trim()); nu = ''; continue; }
+                nu += teken;
               }
-            }
-            /* en de foto mag niet over de lijst heen vallen als de kolommen krap worden */
-            const foto = document.querySelector('.b-lijstplaat__beeld').getBoundingClientRect();
-            const lijst = document.querySelector('.b-lijstplaat__lijst').getBoundingClientRect();
-            if (foto.right > lijst.left + 1 && foto.left < lijst.right - 1
-              && foto.top < lijst.bottom - 1 && foto.bottom > lijst.top + 1) fout.push('foto ligt over de lijst');
-            return fout;
-          }), [], `${width}: klembord boven de plaatrand, foto en tekst vrij van elkaar`);
-          /* Na de verhuizing (blok naplaten, sinds ronde 6) verving de laatste checklistkaart. Daarmee is
-             de checklist van deze pagina weg; blijft er ergens een halve staan, dan staan er twee vormen
-             van hetzelfde lijstje onder elkaar zonder dat er iets stuk lijkt. */
-          await page.locator('#na-de-verhuizing').scrollIntoViewIfNeeded();
-          assert.equal(await page.locator('.b-checklist').count(), 0, `${width}: er staat nog een checklist op de werkwijze`);
-          assert.equal(await page.locator('.b-naplaten__plaat').count(), 2, `${width}: de twee slotplaten`);
-          /* Zelfde val als bij de tijdlijn en het lijstje: de render staat voor het gele huis en komt boven
-             de plaatrand uit, en mag de titel eronder niet afdekken. */
-          assert.deepEqual(await page.locator('.b-naplaten__plaat').evaluateAll(items => items.flatMap(el => {
-            const titelEl = el.querySelector('.b-naplaten__titel');
-            const naam = titelEl.textContent.trim();
-            const obj = el.querySelector('.b-naplaten__obj').getBoundingClientRect();
-            const plaat = el.getBoundingClientRect();
-            const titel = titelEl.getBoundingClientRect();
-            const fout = [];
-            if (obj.top >= plaat.top - 4) fout.push(`${naam}: voorwerp steekt niet boven de plaat uit`);
-            if (obj.right > titel.left && obj.left < titel.right && obj.top < titel.bottom && obj.bottom > titel.top) {
-              fout.push(`${naam}: voorwerp ligt over de titel`);
-            }
-            return fout;
-          })), [], `${width}: renders boven de plaatrand en vrij van de titel`);
-          /* De renders moeten er ook echt zijn: een pad dat verschuift laat een leeg huis achter, en dat
-             valt bij twee platen naast elkaar niet op. */
-          assert.deepEqual(await page.locator('.b-naplaten__obj').evaluateAll(items =>
-            items.filter(el => !(el.complete && el.naturalWidth > 0)).map(el => el.getAttribute('src'))),
-            [], `${width}: de renders in de slotplaten zijn geladen`);
-          const slotplaten = await page.locator('.b-naplaten__plaat').evaluateAll(items =>
-            items.map(el => Math.round(el.getBoundingClientRect().top)));
-          if (width > 700) {
-            assert.ok(Math.abs(slotplaten[0] - slotplaten[1]) <= 2,
-              `${width}: de twee slotplaten horen naast elkaar (tops ${slotplaten.join(', ')})`);
-          } else {
-            assert.ok(slotplaten[1] > slotplaten[0],
-              `${width}: de slotplaten horen onder elkaar (tops ${slotplaten.join(', ')})`);
+              if (nu.trim()) uit.push(nu.trim());
+              return uit;
+            };
+            const verduistering = laag => {                 // 0 = laat de knop licht, 1 = maakt hem zwart
+              const kleur = laag.match(/rgba?\(([^)]+)\)/);
+              if (!kleur) return 0;
+              const [r, g, b, a = 1] = kleur[1].split(',').map(Number);
+              return (1 - (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255) * a;
+            };
+            return items.filter(el => el.getClientRects().length).flatMap(el => {
+              const style = getComputedStyle(el), box = el.getBoundingClientRect(), redenen = [];
+              if (box.height < 44) redenen.push(`hoogte ${Math.round(box.height)}px`);
+              if (parseFloat(style.borderTopWidth) > 1) redenen.push(`rand ${style.borderTopWidth}`);
+              for (const laag of lagen(style.boxShadow)) {
+                if (laag.includes('inset') && verduistering(laag) > 0.12) redenen.push(`donkere inset ${laag}`);
+              }
+              return redenen.length ? [`${el.className}: ${redenen.join('; ')}`] : [];
+            });
+          }), [], `${width} ${route}: clean CTA styling and touch size`);
+          assert.ok(await whatsapp.evaluate(el => {
+            const box = el.getBoundingClientRect(), bar = document.querySelector('.mcta').getBoundingClientRect();
+            return box.left >= 0 && box.right <= innerWidth && box.bottom <= innerHeight && (!bar.height || box.bottom <= bar.top - 10);
+          }), `${width} ${route}: WhatsApp safe position`);
+          assert.equal(await page.locator('#i-google > g').getAttribute('transform'), 'translate(2.64 2.64) scale(.78)');
+          assert.ok(await page.evaluate(() => [...document.querySelectorAll('script[type="application/ld+json"]')].every(script => {
+            const data = JSON.parse(script.textContent), graph = data['@graph'] || [data];
+            return graph.filter(item => item['@type'] === 'MovingCompany').every(item =>
+              item.logo.url.endsWith('/img/logo/dereus-logo.svg') && item.logo.width === 1000 && item.logo.height === 828);
+          })), `${route}: approved JSON-LD logo`);
+          if (route === '/diensten/') {
+            assert.equal(await page.locator('.b-dienstenpanelen__index').count(), 0);
+            assert.equal(await page.locator('.b-dienstenpanelen__paneel').count(), 8);
+            assert.ok(await page.locator('.b-dienstenpanelen__panelen').evaluate(el => {
+              const box = el.getBoundingClientRect(); return Math.abs((box.left + box.right) / 2 - innerWidth / 2) < 2;
+            }), `${width}: service panels centered without an empty sidebar`);
           }
-        }
-        const heading = route === '/' ? '.hero__tekst' : '.pk__tekst';
-        if (await page.locator(heading).count()) {
-          assert.ok(await page.locator(heading).evaluate(el => {
-            const r = el.getBoundingClientRect();
-            return Math.abs((r.left + r.right) / 2 - innerWidth / 2) < 2;
-          }), `${width} ${route}: header not centered`);
-        }
-        if (route === '/') {
-          assert.ok(await page.locator('.hero__team').evaluate(el => {
-            const r = el.getBoundingClientRect();
-            const text = document.querySelector('.hero__tekst').getBoundingClientRect();
-            return Math.abs((r.left + r.right) / 2 - innerWidth / 2) < 2 && r.top >= text.bottom;
-          }), `${width}: workers not centered below heading`);
-        }
+          if (route === '/contact/' && width > 960) {
+            assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.b-kaart__beeld').getBoundingClientRect().top
+              - document.querySelector('#kaart-kop').getBoundingClientRect().top) < 2), `${width}: map top aligns address heading`);
+          }
+          if (route === '/werkwijze/') {
+            /* De tijdlijn (blok tijdlijn, sinds ronde 6) verving de stappenrail. De ankers stap-1 tot
+               stap-5 blijven, want daar kan van buiten naar gelinkt worden. De vorige vorm mag niet
+               half blijven staan: dat is de manier waarop zo'n vervanging stilletjes misgaat. */
+            await page.locator('#stappen').scrollIntoViewIfNeeded();
+            assert.equal(await page.locator('.b-stappenlang').count(), 0, `${width}: de oude stappenrail staat er nog`);
+            assert.deepEqual(await page.locator('.b-tijdlijn__stap').evaluateAll(items => items.map(el => el.id)),
+              ['stap-1', 'stap-2', 'stap-3', 'stap-4', 'stap-5'], `${width}: de vijf stations en hun ankers`);
+            assert.equal(await page.locator('#stappen .knop--cta').count(), 1, `${width}: een primaire knop in de sectie`);
+            /* Het 3D-voorwerp staat voor het gele huis en komt boven de plaat uit; zakt het terug
+               achter de kaartrand, dan is de hele vorm weg zonder dat er iets stuk lijkt. */
+            assert.deepEqual(await page.locator('.b-tijdlijn__stap').evaluateAll(items => items.flatMap(el => {
+              const obj = el.querySelector('.b-tijdlijn__obj').getBoundingClientRect();
+              const plaat = el.querySelector('.b-tijdlijn__plaat').getBoundingClientRect();
+              const fout = [];
+              if (obj.top >= plaat.top - 4) fout.push(`${el.id}: voorwerp steekt niet boven de plaat uit`);
+              /* en het mag de tekst niet afdekken: de wagen is de breedste render en schoof op smal
+                 scherm over het volgnummer heen. */
+              for (const naam of ['nr', 'titel']) {
+                const t = el.querySelector(`.b-tijdlijn__${naam}`).getBoundingClientRect();
+                if (obj.right > t.left && obj.left < t.right && obj.top < t.bottom && obj.bottom > t.top) {
+                  fout.push(`${el.id}: voorwerp ligt over ${naam}`);
+                }
+              }
+              return fout;
+            })), [], `${width}: renders boven de kaartrand en vrij van de tekst`);
+            /* De WhatsApp-knop komt van ctx.contactlinks en landt in "Wat u doet". Die kolom is op
+               breed scherm maar 100 px en de pil 133, dus zonder de eigen regel onderaan de plaat
+               valt hij over de kolom ernaast heen. Dat zag er op 1440 net goed uit en botste toch. */
+            assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('.b-tijdlijn__duo .wa-link')].flatMap(wa => {
+              const box = wa.getBoundingClientRect();
+              const buur = wa.closest('.b-tijdlijn__wie').nextElementSibling?.querySelector('dd');
+              if (!buur) return [];
+              const t = buur.getBoundingClientRect();
+              return box.right > t.left && box.left < t.right && box.top < t.bottom && box.bottom > t.top
+                ? [`WhatsApp-knop overlapt "${buur.textContent.slice(0, 30)}..."`] : [];
+            })), [], `${width}: WhatsApp-knop vrij van de kolom ernaast`);
+            const stations = await page.locator('.b-tijdlijn__stap').evaluateAll(items =>
+              items.map(el => Math.round(el.getBoundingClientRect().top)));
+            if (width > 1180) {
+              assert.ok(Math.max(...stations) - Math.min(...stations) <= 2,
+                `${width}: de vijf stations horen naast elkaar op een rij (tops ${stations.join(', ')})`);
+            } else {
+              assert.ok(stations.every((top, i) => i === 0 || top > stations[i - 1]),
+                `${width}: de tijdlijn hoort een kolom te zijn (tops ${stations.join(', ')})`);
+            }
+            /* De voorbereiding (blok lijstplaat, sinds ronde 6) verving de witte checklistkaart. Het blok
+               checklist bestaat nog, voor de dienst- en landpagina's, maar staat sinds ronde 6 niet meer op
+               deze pagina; de regel bij #na-de-verhuizing hieronder telt dat er nergens meer een staat. */
+            await page.locator('#voorbereiding').scrollIntoViewIfNeeded();
+            assert.equal(await page.locator('#voorbereiding .b-checklist__kaart').count(), 0,
+              `${width}: de oude checklistkaart staat nog in de voorbereiding`);
+            assert.equal(await page.locator('.b-lijstplaat__lijst > li').count(), 6, `${width}: de zes punten van het lijstje`);
+            /* De foto hoort er ook echt te zijn: een pad dat verschuift laat een leeg geel huis achter,
+               en dat valt op een blauwe plaat niet op. */
+            await beeldenKlaar('.b-lijstplaat__foto');
+            assert.ok(await page.locator('.b-lijstplaat__foto').evaluate(el => el.complete && el.naturalWidth > 0),
+              `${width}: de foto in de huisvorm is geladen`);
+            /* Zelfde val als bij de tijdlijn: het klembord steekt boven de plaatrand uit en mag de lijstkop
+               en de eerste regel niet afdekken. Het staat rechtsboven, de lijstkop links, en die twee
+               kwamen op smal scherm tegen elkaar aan. */
+            assert.deepEqual(await page.evaluate(() => {
+              const obj = document.querySelector('.b-lijstplaat__klembord').getBoundingClientRect();
+              const plaat = document.querySelector('.b-lijstplaat__plaat').getBoundingClientRect();
+              const fout = [];
+              if (obj.top >= plaat.top - 4) fout.push('klembord steekt niet boven de plaat uit');
+              for (const kies of ['.b-lijstplaat__lijstkop', '.b-lijstplaat__lijst > li']) {
+                const t = document.querySelector(kies).getBoundingClientRect();
+                if (obj.right > t.left && obj.left < t.right && obj.top < t.bottom && obj.bottom > t.top) {
+                  fout.push(`klembord ligt over ${kies}`);
+                }
+              }
+              /* en de foto mag niet over de lijst heen vallen als de kolommen krap worden */
+              const foto = document.querySelector('.b-lijstplaat__beeld').getBoundingClientRect();
+              const lijst = document.querySelector('.b-lijstplaat__lijst').getBoundingClientRect();
+              if (foto.right > lijst.left + 1 && foto.left < lijst.right - 1
+                && foto.top < lijst.bottom - 1 && foto.bottom > lijst.top + 1) fout.push('foto ligt over de lijst');
+              return fout;
+            }), [], `${width}: klembord boven de plaatrand, foto en tekst vrij van elkaar`);
+            /* Na de verhuizing (blok naplaten, sinds ronde 6) verving de laatste checklistkaart. Daarmee is
+               de checklist van deze pagina weg; blijft er ergens een halve staan, dan staan er twee vormen
+               van hetzelfde lijstje onder elkaar zonder dat er iets stuk lijkt. */
+            await page.locator('#na-de-verhuizing').scrollIntoViewIfNeeded();
+            assert.equal(await page.locator('.b-checklist').count(), 0, `${width}: er staat nog een checklist op de werkwijze`);
+            assert.equal(await page.locator('.b-naplaten__plaat').count(), 2, `${width}: de twee slotplaten`);
+            /* Zelfde val als bij de tijdlijn en het lijstje: de render staat voor het gele huis en komt boven
+               de plaatrand uit, en mag de titel eronder niet afdekken. */
+            assert.deepEqual(await page.locator('.b-naplaten__plaat').evaluateAll(items => items.flatMap(el => {
+              const titelEl = el.querySelector('.b-naplaten__titel');
+              const naam = titelEl.textContent.trim();
+              const obj = el.querySelector('.b-naplaten__obj').getBoundingClientRect();
+              const plaat = el.getBoundingClientRect();
+              const titel = titelEl.getBoundingClientRect();
+              const fout = [];
+              if (obj.top >= plaat.top - 4) fout.push(`${naam}: voorwerp steekt niet boven de plaat uit`);
+              if (obj.right > titel.left && obj.left < titel.right && obj.top < titel.bottom && obj.bottom > titel.top) {
+                fout.push(`${naam}: voorwerp ligt over de titel`);
+              }
+              return fout;
+            })), [], `${width}: renders boven de plaatrand en vrij van de titel`);
+            /* De renders moeten er ook echt zijn: een pad dat verschuift laat een leeg huis achter, en dat
+               valt bij twee platen naast elkaar niet op. */
+            await beeldenKlaar('.b-naplaten__obj');
+            assert.deepEqual(await page.locator('.b-naplaten__obj').evaluateAll(items =>
+              items.filter(el => !(el.complete && el.naturalWidth > 0)).map(el => el.getAttribute('src'))),
+              [], `${width}: de renders in de slotplaten zijn geladen`);
+            const slotplaten = await page.locator('.b-naplaten__plaat').evaluateAll(items =>
+              items.map(el => Math.round(el.getBoundingClientRect().top)));
+            if (width > 700) {
+              assert.ok(Math.abs(slotplaten[0] - slotplaten[1]) <= 2,
+                `${width}: de twee slotplaten horen naast elkaar (tops ${slotplaten.join(', ')})`);
+            } else {
+              assert.ok(slotplaten[1] > slotplaten[0],
+                `${width}: de slotplaten horen onder elkaar (tops ${slotplaten.join(', ')})`);
+            }
+          }
+          const heading = route === '/' ? '.hero__tekst' : '.pk__tekst';
+          if (await page.locator(heading).count()) {
+            assert.ok(await page.locator(heading).evaluate(el => {
+              const r = el.getBoundingClientRect();
+              return Math.abs((r.left + r.right) / 2 - innerWidth / 2) < 2;
+            }), `${width} ${route}: header not centered`);
+          }
+          if (route === '/') {
+            assert.ok(await page.locator('.hero__team').evaluate(el => {
+              const r = el.getBoundingClientRect();
+              const text = document.querySelector('.hero__tekst').getBoundingClientRect();
+              return Math.abs((r.left + r.right) / 2 - innerWidth / 2) < 2 && r.top >= text.bottom;
+            }), `${width}: workers not centered below heading`);
+          }
+        });
       }
-      console.log(`${width}px: ${routes.length} pagina's gecontroleerd`);
+      meld(`${width}px: ${ROUTES.length} pagina's gecontroleerd`);
     }
 
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await page.goto(base, { waitUntil: 'networkidle' });
-    await page.screenshot({ path: path.join(out, 'home-desktop.png') });
-    await page.locator('.header__cta').focus();
-    assert.ok(await page.locator('.header__cta').evaluate(el => {
-      const style = getComputedStyle(el); return style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2;
-    }), 'Keyboard focus remains visible on green buttons');
-    /* Submenu Diensten: de rubriekslink draagt de chevron en de ARIA. Er is geen
-       schakelknop meer; het paneel komt bij hover en bij focus, klikken navigeert. */
-    const sublink = page.locator('.nav__link--sub');
-    assert.equal(await sublink.getAttribute('aria-controls'), 'menu-diensten');
-    await sublink.focus();
-    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'visible');
-    assert.equal(await sublink.getAttribute('aria-expanded'), 'true', 'submenu opens on keyboard focus');
-    await page.keyboard.press('Tab');
-    assert.equal(await page.evaluate(() => document.activeElement.closest('.mega') !== null), true, 'submenu is reachable by keyboard');
-    await page.screenshot({ path: path.join(out, 'menu-desktop.png') });
-    await page.keyboard.press('Escape');
-    assert.equal(await sublink.getAttribute('aria-expanded'), 'false', 'Escape closes the submenu');
-    assert.equal(await sublink.evaluate(el => el === document.activeElement), true, 'Escape returns focus to the link');
-    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'hidden');
-    /* Na Escape mag Tab niet in het uitfadende paneel landen, dan valt de focus naar de body. */
-    await page.keyboard.press('Tab');
-    assert.equal(await page.evaluate(() => document.activeElement !== document.body && document.activeElement.closest('.mega') === null), true, 'focus moves past the dismissed submenu');
-    /* Hover opent het paneel ook, Escape sluit het weer. */
-    await page.locator('.nav__item--sub').hover();
-    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'visible');
-    assert.equal(await sublink.getAttribute('aria-expanded'), 'true', 'submenu opens on hover');
-    await page.keyboard.press('Escape');
-    await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'hidden');
-    await page.mouse.move(5, 500);
-    await sublink.blur();
-    /* De chevron zit in de link: erop klikken gaat naar de dienstenpagina, het schakelt niet. */
-    await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle' }), page.locator('.nav__link--sub .ic').click()]);
-    assert.equal(new URL(page.url()).pathname, '/diensten/', 'clicking the chevron opens the services page');
-    await page.goto(base, { waitUntil: 'networkidle' });
-    await page.locator('.footer').scrollIntoViewIfNeeded();
-    await page.locator('.footer').screenshot({ path: path.join(out, 'footer-desktop.png'), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
-    assert.equal(await page.locator('.header').evaluate(el => el.classList.contains('is-vast')), true);
+    await omhul('interacties desktop', async () => {
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.goto(basis, { waitUntil: 'load' });
+      await page.screenshot({ path: path.join(UIT, 'home-desktop.png') });
+      await page.locator('.header__cta').focus();
+      assert.ok(await page.locator('.header__cta').evaluate(el => {
+        const style = getComputedStyle(el); return style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2;
+      }), 'Keyboard focus remains visible on green buttons');
+      /* Submenu Diensten: de rubriekslink draagt de chevron en de ARIA. Er is geen
+         schakelknop meer; het paneel komt bij hover en bij focus, klikken navigeert. */
+      const sublink = page.locator('.nav__link--sub');
+      assert.equal(await sublink.getAttribute('aria-controls'), 'menu-diensten');
+      await sublink.focus();
+      await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'visible');
+      assert.equal(await sublink.getAttribute('aria-expanded'), 'true', 'submenu opens on keyboard focus');
+      await page.keyboard.press('Tab');
+      assert.equal(await page.evaluate(() => document.activeElement.closest('.mega') !== null), true, 'submenu is reachable by keyboard');
+      await page.screenshot({ path: path.join(UIT, 'menu-desktop.png') });
+      await page.keyboard.press('Escape');
+      assert.equal(await sublink.getAttribute('aria-expanded'), 'false', 'Escape closes the submenu');
+      assert.equal(await sublink.evaluate(el => el === document.activeElement), true, 'Escape returns focus to the link');
+      await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'hidden');
+      /* Na Escape mag Tab niet in het uitfadende paneel landen, dan valt de focus naar de body. */
+      await page.keyboard.press('Tab');
+      assert.equal(await page.evaluate(() => document.activeElement !== document.body && document.activeElement.closest('.mega') === null), true, 'focus moves past the dismissed submenu');
+      /* Hover opent het paneel ook, Escape sluit het weer. */
+      await page.locator('.nav__item--sub').hover();
+      await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'visible');
+      assert.equal(await sublink.getAttribute('aria-expanded'), 'true', 'submenu opens on hover');
+      await page.keyboard.press('Escape');
+      await page.waitForFunction(() => getComputedStyle(document.querySelector('.mega')).visibility === 'hidden');
+      await page.mouse.move(5, 500);
+      await sublink.blur();
+      /* De chevron zit in de link: erop klikken gaat naar de dienstenpagina, het schakelt niet. */
+      await Promise.all([page.waitForNavigation({ waitUntil: 'load' }), page.locator('.nav__link--sub .ic').click()]);
+      assert.equal(new URL(page.url()).pathname, '/diensten/', 'clicking the chevron opens the services page');
+      await page.goto(basis, { waitUntil: 'load' });
+      await page.locator('.footer').scrollIntoViewIfNeeded();
+      await page.locator('.footer').screenshot({ path: path.join(UIT, 'footer-desktop.png'), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
+      assert.equal(await page.locator('.header').evaluate(el => el.classList.contains('is-vast')), true);
+    });
 
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(base, { waitUntil: 'networkidle' });
-    await page.screenshot({ path: path.join(out, 'home-mobile.png') });
-    await page.locator('.header__menu').click();
-    assert.equal(await page.locator('main').evaluate(el => el.inert), true);
-    assert.equal(await page.locator('.header__menu').getAttribute('aria-expanded'), 'true');
-    await page.locator('.lade__logo').focus();
-    await page.keyboard.press('Shift+Tab');
-    assert.equal(await page.locator('.lade__mail').evaluate(el => el === document.activeElement), true);
-    await page.keyboard.press('Tab');
-    assert.equal(await page.locator('.lade__logo').evaluate(el => el === document.activeElement), true);
-    await page.keyboard.press('Tab');
-    assert.equal(await page.evaluate(() => !!document.activeElement.closest('.lade__paneel')), true);
-    await page.screenshot({ path: path.join(out, 'menu-mobile.png') });
-    await page.keyboard.press('Escape');
-    assert.equal(await page.locator('main').evaluate(el => el.inert), false);
-    assert.equal(await page.locator('.header__menu').evaluate(el => el === document.activeElement), true);
-    await page.locator('.footer').scrollIntoViewIfNeeded();
-    await page.locator('.header__menu').blur();
-    await page.locator('.footer').screenshot({ path: path.join(out, 'footer-mobile.png'), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
+    await omhul('interacties mobiel', async () => {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(basis, { waitUntil: 'load' });
+      await page.screenshot({ path: path.join(UIT, 'home-mobile.png') });
+      await page.locator('.header__menu').click();
+      assert.equal(await page.locator('main').evaluate(el => el.inert), true);
+      assert.equal(await page.locator('.header__menu').getAttribute('aria-expanded'), 'true');
+      await page.locator('.lade__logo').focus();
+      await page.keyboard.press('Shift+Tab');
+      assert.equal(await page.locator('.lade__mail').evaluate(el => el === document.activeElement), true);
+      await page.keyboard.press('Tab');
+      assert.equal(await page.locator('.lade__logo').evaluate(el => el === document.activeElement), true);
+      await page.keyboard.press('Tab');
+      assert.equal(await page.evaluate(() => !!document.activeElement.closest('.lade__paneel')), true);
+      await page.screenshot({ path: path.join(UIT, 'menu-mobile.png') });
+      await page.keyboard.press('Escape');
+      assert.equal(await page.locator('main').evaluate(el => el.inert), false);
+      assert.equal(await page.locator('.header__menu').evaluate(el => el === document.activeElement), true);
+      await page.locator('.footer').scrollIntoViewIfNeeded();
+      await page.locator('.header__menu').blur();
+      await page.locator('.footer').screenshot({ path: path.join(UIT, 'footer-mobile.png'), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
+    });
 
-    await page.setViewportSize({ width: 1366, height: 650 });
-    await page.goto(base, { waitUntil: 'networkidle' });
-    await page.locator('.hero').screenshot({ path: path.join(out, 'home-laptop.png') });
-    await page.locator('#header-of-van').fill('Den Haag');
-    await page.locator('#header-of-naar').fill('Delft');
-    await page.locator('#header-of-dienst').selectOption('particulier');
-    await page.locator('.of-box--header .of-knop').click();
-    await page.waitForURL('**/offerte/?**');
-    assert.equal(await page.locator('#f-van').inputValue(), 'Den Haag');
-    assert.equal(await page.locator('#f-naar').inputValue(), 'Delft');
-    assert.equal(await page.locator('#f-dienst').inputValue(), 'particulier');
+    await omhul('interacties formulieren', async () => {
+      await page.setViewportSize({ width: 1366, height: 650 });
+      await page.goto(basis, { waitUntil: 'load' });
+      await page.locator('.hero').screenshot({ path: path.join(UIT, 'home-laptop.png') });
+      await page.locator('#header-of-van').fill('Den Haag');
+      await page.locator('#header-of-naar').fill('Delft');
+      await page.locator('#header-of-dienst').selectOption('particulier');
+      await page.locator('.of-box--header .of-knop').click();
+      await page.waitForURL('**/offerte/?**');
+      assert.equal(await page.locator('#f-van').inputValue(), 'Den Haag');
+      assert.equal(await page.locator('#f-naar').inputValue(), 'Delft');
+      assert.equal(await page.locator('#f-dienst').inputValue(), 'particulier');
 
-    await page.goto(base, { waitUntil: 'networkidle' });
-    for (const [id, field] of [['aanvraag', 'aanvraag-van'], ['contact-formulier', 'bericht-naam']]) {
-      const form = page.locator(`#${id} form`);
-      await form.locator('button[type=submit]').click();
-      assert.equal(await page.locator(`#${field}`).getAttribute('aria-invalid'), 'true');
-      assert.equal(await page.locator(`#${id} .b-formulier__foutlijst`).isVisible(), true);
-    }
-    for (const id of ['diensten', 'waarom', 'cijfers', 'werkwijze', 'over-ons', 'aanvraag', 'contact']) {
-      const section = page.locator(`#${id}`);
-      assert.equal(await section.count(), 1, `Missing restored section: ${id}`);
-      await section.scrollIntoViewIfNeeded();
-      await section.screenshot({ path: path.join(out, `${id}-desktop.png`), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
-    }
-    assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('.beeldaccent')].flatMap(art => {
-      if (getComputedStyle(art).display === 'none') return [];
-      const box = art.getBoundingClientRect(), parent = art.parentElement.getBoundingClientRect();
-      const failures = [];
-      if (box.left < parent.left || box.right > parent.right || box.top < parent.top || box.bottom > parent.bottom) failures.push('accent outside photo');
-      if (getComputedStyle(art).pointerEvents !== 'none' || art.getAttribute('aria-hidden') !== 'true') failures.push('interactive accent');
-      const walker = document.createTreeWalker(art.closest('section'), NodeFilter.SHOW_TEXT);
-      while (walker.nextNode()) {
-        const node = walker.currentNode;
-        if (!node.textContent.trim() || node.parentElement.closest('script,style,svg,.vh')) continue;
-        const range = document.createRange(); range.selectNodeContents(node);
-        if ([...range.getClientRects()].some(r => r.width && r.height && r.left < box.right && r.right > box.left && r.top < box.bottom && r.bottom > box.top)) failures.push('accent crosses text');
+      await page.goto(basis, { waitUntil: 'load' });
+      for (const [id, field] of [['aanvraag', 'aanvraag-van'], ['contact-formulier', 'bericht-naam']]) {
+        const form = page.locator(`#${id} form`);
+        await form.locator('button[type=submit]').click();
+        assert.equal(await page.locator(`#${field}`).getAttribute('aria-invalid'), 'true');
+        assert.equal(await page.locator(`#${id} .b-formulier__foutlijst`).isVisible(), true);
       }
-      return failures;
-    })), [], 'Photo accents remain inside images and clear of text');
-    await page.route('https://cdn.jsdelivr.net/**', route => route.abort());
-    await page.route('https://cdnjs.cloudflare.com/**', route => route.abort());
-    await page.locator('[data-wereld-start]').click();
-    await page.waitForFunction(() => !document.querySelector('[data-wereld-melding]').classList.contains('vh'));
-    assert.equal(await page.locator('.wereld__terugval').isVisible(), true);
-    assert.equal(await page.locator('[data-wereld-start]').isEnabled(), true);
+    });
+    await omhul('interacties secties en kaart', async () => {
+      for (const id of ['diensten', 'waarom', 'cijfers', 'werkwijze', 'over-ons', 'aanvraag', 'contact']) {
+        const section = page.locator(`#${id}`);
+        assert.equal(await section.count(), 1, `Missing restored section: ${id}`);
+        await section.scrollIntoViewIfNeeded();
+        await section.screenshot({ path: path.join(UIT, `${id}-desktop.png`), style: '.header, .mcta, .skiplink { visibility: hidden !important; }' });
+      }
+      assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('.beeldaccent')].flatMap(art => {
+        if (getComputedStyle(art).display === 'none') return [];
+        const box = art.getBoundingClientRect(), parent = art.parentElement.getBoundingClientRect();
+        const failures = [];
+        if (box.left < parent.left || box.right > parent.right || box.top < parent.top || box.bottom > parent.bottom) failures.push('accent outside photo');
+        if (getComputedStyle(art).pointerEvents !== 'none' || art.getAttribute('aria-hidden') !== 'true') failures.push('interactive accent');
+        const walker = document.createTreeWalker(art.closest('section'), NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          if (!node.textContent.trim() || node.parentElement.closest('script,style,svg,.vh')) continue;
+          const range = document.createRange(); range.selectNodeContents(node);
+          if ([...range.getClientRects()].some(r => r.width && r.height && r.left < box.right && r.right > box.left && r.top < box.bottom && r.bottom > box.top)) failures.push('accent crosses text');
+        }
+        return failures;
+      })), [], 'Photo accents remain inside images and clear of text');
+      await page.route('https://cdn.jsdelivr.net/**', route => route.abort());
+      await page.route('https://cdnjs.cloudflare.com/**', route => route.abort());
+      await page.locator('[data-wereld-start]').click();
+      await page.waitForFunction(() => !document.querySelector('[data-wereld-melding]').classList.contains('vh'));
+      assert.equal(await page.locator('.wereld__terugval').isVisible(), true);
+      assert.equal(await page.locator('[data-wereld-start]').isEnabled(), true);
 
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await page.goto(base + '/diensten/', { waitUntil: 'networkidle' });
-    await page.locator('.b-dienstenpanelen').scrollIntoViewIfNeeded();
-    await page.screenshot({ path: path.join(out, 'diensten-desktop.png') });
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(base + '/diensten/', { waitUntil: 'networkidle' });
-    await page.locator('.b-dienstenpanelen').scrollIntoViewIfNeeded();
-    await page.screenshot({ path: path.join(out, 'diensten-mobile.png') });
-    assert.deepEqual(errors, [], 'Browser errors');
-    console.log('Navigatie, focus, afbeeldingen en browserconsole: akkoord.');
-    console.log(`Screenshots: ${out}`);
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.goto(basis + '/diensten/', { waitUntil: 'load' });
+      await page.locator('.b-dienstenpanelen').scrollIntoViewIfNeeded();
+      await page.screenshot({ path: path.join(UIT, 'diensten-desktop.png') });
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(basis + '/diensten/', { waitUntil: 'load' });
+      await page.locator('.b-dienstenpanelen').scrollIntoViewIfNeeded();
+      await page.screenshot({ path: path.join(UIT, 'diensten-mobile.png') });
+      assert.deepEqual(errors, [], 'Browser errors');
+      meld('navigatie, focus, afbeeldingen en browserconsole: gecontroleerd');
+    });
   } finally {
-    await browser.close();
+    await context.close();
   }
-})().catch(error => { console.error(error); process.exitCode = 1; });
+
+  meld(`schermafdrukken: ${UIT}`);
+  return rapport();
+}
+
+module.exports = { draai };
+
+if (require.main === module) {
+  (async () => {
+    const args = kit.argumenten();
+    const omgeving = await kit.opzet(args);
+    try {
+      const uitslag = await draai({ ...omgeving, snel: args.snel });
+      process.exitCode = uitslag.fouten.length ? 1 : 0;
+    } finally {
+      await omgeving.op();
+    }
+  })().catch(error => { console.error(error); process.exitCode = 1; });
+}

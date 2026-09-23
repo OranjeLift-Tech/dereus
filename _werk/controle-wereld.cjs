@@ -1,8 +1,9 @@
 /* Browsercontrole van kaartladen, terugval en toetsenbordfocus, met lokale CDN/API-mocks.
-   Gebruik: node _werk/controle-wereld.cjs <pad-naar-playwright> [basis-url] */
-const { chromium } = require(process.argv[2] || 'playwright');
-const assert = require('node:assert/strict');
-const base = process.argv[3] || 'http://127.0.0.1:8765';
+
+   node _werk/controle-wereld.cjs [pad-naar-playwright] [basis-url]
+   Beide argumenten mogen weg: dan zoekt controle-kit.cjs Playwright zelf en start het een
+   eigen server. Onder _werk/controle.cjs draait dit als module, op de gedeelde browser. */
+const kit = require('./controle-kit.cjs');
 
 function bibliotheekMock() {
   const state = window.kaartControle = { maps: [], layers: [], removed: 0 };
@@ -39,13 +40,13 @@ function bibliotheekMock() {
   };
 }
 
-(async () => {
-  const browser = await chromium.launch({ channel: 'msedge', headless: true });
-  let checks = 0;
-  try {
-    for (const scenario of ['globe-success', 'globe-error', 'globe-timeout-retry', 'leaflet-success', 'leaflet-error', 'cdn-error']) {
-      const page = await browser.newPage({ reducedMotion: 'reduce' });
-      const errors = [], requests = [];
+async function draai({ browser, basis } = {}) {
+  const { assert, omhul, meld, rapport } = kit.zacht('wereld');
+
+  for (const scenario of ['globe-success', 'globe-error', 'globe-timeout-retry', 'leaflet-success', 'leaflet-error', 'cdn-error']) {
+    const page = kit.temmen(await browser.newPage({ reducedMotion: 'reduce' }));
+    const errors = [], requests = [];
+    await omhul(scenario, async () => {
       page.on('pageerror', error => errors.push(error.message));
       await page.addInitScript(leaflet => {
         Object.defineProperty(window, 'WebGL2RenderingContext', { configurable: true, value: leaflet ? undefined : function () {} });
@@ -60,7 +61,7 @@ function bibliotheekMock() {
         const css = route.request().url().endsWith('.css');
         return route.fulfill({ contentType: css ? 'text/css' : 'application/javascript', body: css ? '/* local map test */' : `(${bibliotheekMock.toString()})();` });
       });
-      await page.goto(base, { waitUntil: 'networkidle' });
+      await page.goto(basis, { waitUntil: 'networkidle' });
       assert.equal(requests.length, 0, `${scenario}: no CDN requests before consent`);
       if (scenario.includes('timeout')) await page.clock.install();
       const start = page.locator('[data-wereld-start]');
@@ -108,9 +109,25 @@ function bibliotheekMock() {
       }
       assert.equal(await page.locator('[data-wereld]').getAttribute('aria-busy'), null);
       assert.deepEqual(errors, [], `${scenario}: no browser errors`);
-      console.log(`${scenario}: akkoord`); checks++;
-      await page.close();
+      meld(`${scenario}: gecontroleerd`);
+    });
+    await page.close();
+  }
+
+  return rapport();
+}
+
+module.exports = { draai };
+
+if (require.main === module) {
+  (async () => {
+    const args = kit.argumenten();
+    const omgeving = await kit.opzet(args);
+    try {
+      const uitslag = await draai(omgeving);
+      process.exitCode = uitslag.fouten.length ? 1 : 0;
+    } finally {
+      await omgeving.op();
     }
-    console.log(`${checks} kaartscenario's gecontroleerd met lokale bibliotheekmocks.`);
-  } finally { await browser.close(); }
-})().catch(error => { console.error(error); process.exitCode = 1; });
+  })().catch(error => { console.error(error); process.exitCode = 1; });
+}

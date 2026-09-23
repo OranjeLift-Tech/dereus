@@ -5,6 +5,12 @@ rechtsonder. Boven elke plaat staat het goudgele huis uit het logo met daarvoor 
 dat over de bovenrand heen komt. Groter dan de platen in een lijstsectie, zodat twee punten als slot lezen en niet
 als nog een lijstje. Alles staat stil (css/blok/naplaten.css).
 
+Optie beeld: (pad, bestand_breed, bestand_hoog, x, y, w, h) zet de kop links en een uitsnede rechts, op de
+gedeelde plaat uit css/blok/uitsnede.css (zelfde behandeling als "Zo werken wij" en "Kennismaken?"). De foto
+komt NAAST de twee platen, niet in plaats van de 3D-voorwerpen: die voorwerpen benoemen elk hun eigen plaat
+(headset = vragen, ster = review) en zijn de vormtaal die dit blok deelt met de vertrouwensrij op /contact/.
+De pagina moet dan extra_css=("uitsnede",) hebben. Zonder de optie blijft de kop gecentreerd zoals hij was.
+
 Kopij: werkwijze.md, blok {#na-de-verhuizing}: label, kop, intro en een lijst waarvan elke regel begint met een
 vette kop, zoals bij checklist: "**Tevreden?** uitleg". Opties: grond ("mist" of "wit").
 Het voorwerp volgt uit die vette kop; staat er geen voorwerp bij, dan blijft het lijnicoon in het goudgele huis staan.
@@ -88,9 +94,19 @@ def html(ctx, kopij, **opties) -> str:
             {titel}
             <p>{ctx.inline(uitleg)}</p>
           </li>''')
+    beeld = opties.get("beeld")
+    if beeld:
+        src, breed, hoog, ux, uy, uw, uh = beeld
+        # alt leeg: de uitsnede illustreert de kop ernaast en voegt er niets aan toe
+        foto = ctx.beeld(src, "", breed, hoog, klasse=f"uitsnede__beeld b-{NAAM}__foto")
+        maten = f"--uit-breed:{breed};--uit-hoog:{hoog};--uit-x:{ux};--uit-y:{uy};--uit-w:{uw};--uit-h:{uh}"
+        hoofd = (f'<div class="b-{NAAM}__hoofd">{ctx.kopgroep(k, klasse=f"b-{NAAM}__tekst")}'
+                 f'<div class="uitsnede b-{NAAM}__beeld" style="{maten}" data-reveal>{foto}</div></div>')
+    else:
+        hoofd = ctx.kopgroep(k, klasse="kopgroep--midden")
     return f'''<section class="b-{NAAM} b-{NAAM}--{grond} sectie sectie--{grond}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
       <div class="wrap">
-        {ctx.kopgroep(k, klasse="kopgroep--midden")}
+        {hoofd}
         <ul class="b-{NAAM}__rij" role="list" data-reveal-groep>{"".join(platen)}</ul>
       </div>
     </section>'''

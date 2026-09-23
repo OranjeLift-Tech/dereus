@@ -52,11 +52,9 @@ MOTTO = "Geen verhuizing te groot!"
 
 # De teamfoto in de hero, vrijstaand, met de rechte onderrand achter de offertekaart (zoals Brocken).
 # Pad zonder maat en extensie; _werk/teambeeld.py maakt -700, -1100 en -1600.webp, een png-terugval en
-# een .json met de maten. Staat hij aan, dan vervangt hij de mascotte. None = mascotte of beeldmerk.
-HERO_TEAM = "/img/team/team-hero"
+# een .json met de maten. None = het beeldmerk.
+HERO_TEAM = "/img/team/team-hero-dozen"
 HERO_TEAM_ALT = "Drie verhuizers van Verhuisbedrijf De Reus in uniform"
-# De blauwe mascotte van de basis-site in de hero (alleen als HERO_TEAM None is). Eén schakelaar.
-MASCOTTE_IN_HERO = False
 # Achtergrondfoto van de hero. None = grafische hero (Diepblauw naar Koningsblauw, huismotief).
 # Komt er een eigen foto van De Reus, zet dan het pad hier, bijvoorbeeld "/img/hero-de-reus.webp"
 # (1920 x 1120, webp, onder 250 KB). De waas en de korrel liggen er al klaar voor.

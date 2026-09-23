@@ -1,17 +1,25 @@
-/* Controle van de gekozen accordion: toetsenbord, onderbroken animaties, mobiel en zonder JS. */
-const { chromium } = require(process.argv[2] || 'playwright');
-const assert = require('node:assert/strict');
-const path = require('node:path');
-const base = process.argv[3] || 'http://127.0.0.1:8765';
+/* Controle van de gekozen accordion: toetsenbord, onderbroken animaties, mobiel en zonder JS.
 
-(async () => {
-  const browser = await chromium.launch({ channel: 'msedge', headless: true });
-  try {
-    for (const reducedMotion of ['no-preference', 'reduce']) for (const width of [1440, 390, 320]) {
-      const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion });
-      const errors = [];
-      page.on('pageerror', error => errors.push(error.message));
-      await page.goto(base, { waitUntil: 'networkidle' });
+   node _werk/controle-werkwijze.cjs [pad-naar-playwright] [basis-url] [--snel]
+   Beide argumenten mogen weg: dan zoekt controle-kit.cjs Playwright zelf en start het een
+   eigen server. Onder _werk/controle.cjs draait dit als module, op de gedeelde browser. */
+const path = require('node:path');
+const kit = require('./controle-kit.cjs');
+
+const UIT = path.resolve(__dirname, '../website/review/cleanup');
+
+async function draai({ browser, basis, snel = false } = {}) {
+  const { assert, omhul, meld, rapport } = kit.zacht('werkwijze');
+  const standen = snel ? [['no-preference', 1440], ['reduce', 390]]
+    : [['no-preference', 1440], ['no-preference', 390], ['no-preference', 320],
+       ['reduce', 1440], ['reduce', 390], ['reduce', 320]];
+
+  for (const [reducedMotion, width] of standen) {
+    const page = kit.temmen(await browser.newPage({ viewport: { width, height: 900 }, reducedMotion }));
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await omhul(`${width}px motion=${reducedMotion}`, async () => {
+      await page.goto(basis, { waitUntil: 'load' });
       const section = page.locator('[data-werkwijze]');
       await section.scrollIntoViewIfNeeded();
       const buttons = section.locator('summary');
@@ -43,21 +51,42 @@ const base = process.argv[3] || 'http://127.0.0.1:8765';
         assert.equal(await page.locator(`[id="${id}"]`).count(), 1);
       }
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
-      if ((width === 1440 && reducedMotion === 'no-preference') || (width === 390 && reducedMotion === 'reduce')) {
-        await page.locator('#werkwijze').screenshot({ path: path.join(__dirname, `../website/review/cleanup/werkwijze-selected5-${width}.png`),
+      if (!snel && ((width === 1440 && reducedMotion === 'no-preference') || (width === 390 && reducedMotion === 'reduce'))) {
+        await page.locator('#werkwijze').screenshot({ path: path.join(UIT, `werkwijze-selected5-${width}.png`),
           style: '.header, .mcta, .whatsapp, .skiplink { visibility: hidden !important; }' });
       }
       await page.evaluate(() => { location.hash = 'stap-3'; });
       await page.waitForFunction(() => document.querySelector('#stap-3 details').open);
       assert.equal(await section.locator('details[open]').count(), 1);
       assert.deepEqual(errors, []);
-      console.log(`${width}px, motion=${reducedMotion}: akkoord`);
-      await page.close();
-    }
-    const page = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 900 } });
-    await page.goto(base, { waitUntil: 'networkidle' });
+      meld(`${width}px, motion=${reducedMotion}: gecontroleerd`);
+    });
+    await page.close();
+  }
+
+  const page = kit.temmen(await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 900 } }));
+  await omhul('zonder JavaScript', async () => {
+    await page.goto(basis, { waitUntil: 'load' });
     await page.locator('#stap-4 summary').click();
     assert.equal(await page.locator('#stap-4 .werkwijze__antwoord').isVisible(), true, 'native accordion works without JS');
-    console.log('Zonder JavaScript: akkoord');
-  } finally { await browser.close(); }
-})().catch(error => { console.error(error); process.exitCode = 1; });
+    meld('zonder JavaScript: gecontroleerd');
+  });
+  await page.close();
+
+  return rapport();
+}
+
+module.exports = { draai };
+
+if (require.main === module) {
+  (async () => {
+    const args = kit.argumenten();
+    const omgeving = await kit.opzet(args);
+    try {
+      const uitslag = await draai({ ...omgeving, snel: args.snel });
+      process.exitCode = uitslag.fouten.length ? 1 : 0;
+    } finally {
+      await omgeving.op();
+    }
+  })().catch(error => { console.error(error); process.exitCode = 1; });
+}

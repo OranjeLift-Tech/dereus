@@ -73,6 +73,10 @@ a.b-kaart__waarde:hover{text-decoration-color:currentColor}
   .b-kaart__tekst{justify-content:flex-start}
   .b-kaart__kop .label{display:flex}
   .b-kaart__beeld{margin-top:calc(var(--text-h6) + 1rem)}
+  /* De onderkant van het bord valt gelijk met de onderkant van "Route plannen". Op de blauwe band heeft
+     het bord een massieve rand van 15px (de box-shadow 0 15px 0 hierboven); zonder deze marge eindigde
+     het vak gelijk met de knop en het zichtbare bord 15px lager. Past die rand, pas dan dit getal mee aan. */
+  .b-kaart.sectie--blauw .b-kaart__beeld{margin-bottom:15px}
 }
 
 @media(max-width:960px){

@@ -37,14 +37,12 @@ link: /offerte/
 U vertelt ons kort waar u vandaan komt, waar u naartoe gaat en wanneer u wilt verhuizen. Meer hoeven wij in deze stap nog niet te weten.
 
 ### Persoonlijk contact {#stap-2}
-beeld: /img/stap-telefoon.webp
 u: U vertelt wat er mee moet, hoe beide adressen bereikbaar zijn en wat u zelf wilt doen.
 wij: Wij denken mee, beantwoorden uw vragen en schatten in hoeveel werk de verhuizing is.
 
 Binnen 24 uur na uw aanvraag belt uw verhuisadviseur u. In dat gesprek nemen we uw wensen en uw inboedel door.
 
 ### Offerte ontvangen {#stap-3}
-beeld: /img/stap-offerte.webp
 u: U leest de offerte rustig door. Wilt u iets aanpassen, dan laat u het uw verhuisadviseur weten.
 wij: Wij stellen de offerte op, doorgaans nog dezelfde dag als het gesprek.
 linktekst: Wat de prijs bepaalt
@@ -53,7 +51,6 @@ link: /kosten/
 U krijgt een duidelijke, vrijblijvende offerte op maat. Daarin staat of u een all-in prijs of een regieprijs krijgt.
 
 ### Planning bevestigen {#stap-4}
-beeld: /img/stap-agenda.webp
 u: U accepteert de offerte.
 wij: Wij zetten de datum vast en bereiden de verhuisdag voor.
 
@@ -106,6 +103,8 @@ Notitie: of De Reus dozen komt ophalen of andere nazorg geeft, is niet bekend. P
 ## Zo gaat het in de praktijk {#reviews}
 label: Reviews
 intro: Klanten vertellen op Google hoe hun verhuizing met De Reus verliep.
+beeld: /img/review-verhuizers.webp
+beeld-bij: 1
 
 ## Veelgestelde vragen {#vragen}
 label: Vragen over de werkwijze

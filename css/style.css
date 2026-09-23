@@ -90,7 +90,7 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
    Alles rekent door op --detail-sterkte, zodat de hele laag met een waarde te regelen is.
    Regels: hoogstens een textuur per sectie, nooit op een foto, nooit op wit, en het masker
    houdt het midden vrij zodat er nooit iets achter lopende tekst komt te staan. */
-.sectie--wit, .sectie--mist, .sectie--blauw, .sectie--diep { isolation: isolate; }
+.sectie--wit, .sectie--mist, .sectie--lucht, .sectie--blauw, .sectie--diep { isolation: isolate; }
 
 /* Het vrije midden volgt de breedste inhoud van de sectie, niet de tekstkolom. Een sectie met
    bredere inhoud dan de tekst, zoals een rij lijsten tot 1440px, zet --detail-inhoud zelf hoger
@@ -99,15 +99,20 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .sectie { --detail-inhoud: var(--maxw); }
 
 /* Vrij midden, dicht naar de randen. Werkt op elke breedte, ook op een telefoon. */
-.sectie--mist:not(.sectie *)::before, .sectie--diep:not(.sectie *)::after {
+.sectie--mist:not(.sectie *)::before, .sectie--lucht:not(.sectie *)::before, .sectie--diep:not(.sectie *)::after {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   -webkit-mask-image: radial-gradient(ellipse calc(var(--detail-inhoud) / 2 + 7rem) 58% at 50% 50%, transparent calc(var(--detail-inhoud) / 2), #000 100%);
   mask-image: radial-gradient(ellipse calc(var(--detail-inhoud) / 2 + 7rem) 58% at 50% 50%, transparent calc(var(--detail-inhoud) / 2), #000 100%);
 }
 
-/* Huisraster: de stippen van de oude hero-korrel, nu op de Mist-banden waar ze voor bedoeld waren. */
+/* Huisraster: de stippen van de oude hero-korrel, nu op de Mist-banden waar ze voor bedoeld waren.
+   Lucht krijgt hetzelfde raster. Die band is Blauw 50 en dus ongeveer even licht als Mist: dezelfde
+   stippen op dezelfde dekking geven er hetzelfde gewicht, gemeten en niet geschat, dus geen eigen
+   getal ervoor. Tot 23-09-2026 stond --lucht in geen van deze regels en ook niet in de isolatie
+   hierboven, waardoor de sectie wel een randmotief had en geen oppervlak, en dat motief bovendien
+   achter de eigen achtergrond viel. Beide lagen waren daardoor onzichtbaar. */
 .sectie--mist { background: var(--off-white); }
-.sectie--mist:not(.sectie *)::before {
+:is(.sectie--mist, .sectie--lucht):not(.sectie *)::before {
   background-image: radial-gradient(rgb(122 158 226 / calc(var(--detail-sterkte) * .34)) 1px, transparent 1.6px);
   background-size: 22px 22px;
 }
@@ -179,7 +184,7 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
     --motief-alfa: calc(var(--detail-sterkte) * .50);
   }
   /* Mist is iets donkerder dan wit, dus iets meer dekking voor hetzelfde gewicht. */
-  .sectie--mist { --motief-alfa: calc(var(--detail-sterkte) * .55); }
+  :is(.sectie--mist, .sectie--lucht) { --motief-alfa: calc(var(--detail-sterkte) * .55); }
   /* Op de blauwe band zijn de lijnen wit, net als de daklijnen van de band zelf. */
   :is(.sectie--blauw, .sectie--diep) {
     --motief-kleur: 255 255 255;
@@ -216,6 +221,55 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
   .sectie:nth-child(even of .sectie:not(.sectie--diep):not(.sectie *))::after {
     -webkit-mask-position: right var(--motief-uit) top var(--motief-hoog);
     mask-position: right var(--motief-uit) top var(--motief-hoog);
+  }
+
+  /* Naad tussen "Zo werkt het" en de reviews op de homepage. Twee Mist-secties achter elkaar
+     lezen als een vlak, en met hun motieven op 38% en 26% van elk bleef de marge rond de
+     overgang aan beide kanten kaal: op 1440 een strook van 773px zonder iets links of rechts.
+     Elk van de twee krijgt een tweede masker in dezelfde laag, aan de kant waar het zelf geen
+     motief heeft en tegen de naad aan: de doos rechts onderin werkwijze, het huis links bovenin
+     reviews. Zo loopt het links, rechts, links, rechts door de naad heen.
+     De eerste laag herhaalt wat teller 1 en 3 hier al gaven (bus links, speld rechts), want een
+     maskerlijst laat zich niet aanvullen, alleen vervangen. Verschuift de volgorde van de
+     secties, pas die twee dan mee aan. */
+  .sectie.b-werkwijze:not(.sectie *):has(+ .sectie.b-reviews),
+  .sectie.b-werkwijze + .sectie.b-reviews:not(.sectie *) {
+    --naad-maat: calc(var(--motief-basis) * .78);
+    --naad-uit: calc(var(--vrij) - var(--motief-vrijloop) - var(--naad-maat));
+    --naad-afstand: calc(var(--ruimte) * .25);
+  }
+  .sectie.b-werkwijze:not(.sectie *):has(+ .sectie.b-reviews)::after {
+    -webkit-mask-image: var(--motief-bus), var(--motief-doos);
+    mask-image: var(--motief-bus), var(--motief-doos);
+    -webkit-mask-size: var(--motief-maat), var(--naad-maat);
+    mask-size: var(--motief-maat), var(--naad-maat);
+    -webkit-mask-position: left var(--motief-uit) top var(--motief-hoog), right var(--naad-uit) bottom var(--naad-afstand);
+    mask-position: left var(--motief-uit) top var(--motief-hoog), right var(--naad-uit) bottom var(--naad-afstand);
+  }
+  .sectie.b-werkwijze + .sectie.b-reviews:not(.sectie *)::after {
+    -webkit-mask-image: var(--motief-pin), var(--motief-huis);
+    mask-image: var(--motief-pin), var(--motief-huis);
+    -webkit-mask-size: var(--motief-maat), var(--naad-maat);
+    mask-size: var(--motief-maat), var(--naad-maat);
+    -webkit-mask-position: right var(--motief-uit) top var(--motief-hoog), left var(--naad-uit) top var(--naad-afstand);
+    mask-position: right var(--motief-uit) top var(--motief-hoog), left var(--naad-uit) top var(--naad-afstand);
+  }
+
+  /* Een echte doos op de naad, links: de 3D-verhuisdoos uit de contactkaarten (img/contact-3d/),
+     half in werkwijze en half in reviews, voor het huismotief langs. Hij hangt aan de wrap van
+     reviews, want de sectie zelf gebruikt ::before en ::after al voor textuur en motief; de wrap
+     staat niet gepositioneerd, dus de doos rekent vanaf de sectie. De breedte groeit met het venster
+     en de doos steekt deels de tekstkolom in. Dat mag hier: op de naad is die kolom links leeg,
+     de kop van reviews staat in het midden en de kaarten beginnen pas ruim onder de doos. */
+  .sectie.b-werkwijze + .sectie.b-reviews:not(.sectie *) > .wrap::before {
+    --doos-breed: clamp(8rem, 10vw, 13rem);
+    content: ""; position: absolute; z-index: 1; pointer-events: none;
+    left: calc(var(--vrij) - var(--doos-breed) * .55);
+    top: calc(var(--doos-breed) * 400 / 425 * -.45);
+    width: var(--doos-breed); aspect-ratio: 425 / 400;
+    background: url("/img/contact-3d/doos.webp") center / contain no-repeat;
+    filter: drop-shadow(2px 3px 2px color-mix(in srgb, var(--brand-secondary) 28%, transparent))
+            drop-shadow(10px 18px 14px color-mix(in srgb, var(--brand-secondary) 26%, transparent));
   }
 }
 
@@ -561,6 +615,13 @@ body.lade-open { overflow: hidden; }
 .footer__intro::after { content: ""; position: absolute; z-index: 0; inset: 0 calc(50% - 50vw); pointer-events: none;
   background: linear-gradient(90deg, var(--brand-secondary) 0 30%, rgba(11, 35, 82, .9) 44%, rgba(11, 35, 82, .52) 64%, rgba(11, 35, 82, .22) 100%),
     linear-gradient(0deg, rgba(11, 35, 82, .55), rgba(11, 35, 82, 0) 55%); }
+/* Gevraagd op 23-09-2026: "option B, but without adding more height to the footer". De band houdt zijn hoogte;
+   de hele wagen, van het dak tot onder de wielen, past er alleen in als hij kleiner wordt.
+   Het vak is even hoog als de band en 732 van de 847 fotorijen breed-op-hoog (aspect-ratio 1200/732), zodat
+   cover precies rij 64 tot 796 laat zien, op elke breedte. Rechts uitgelijnd en het masker blijven zoals ze waren. */
+@media (min-width: 768px) {
+  .footer__wagen { width: auto; aspect-ratio: 1200 / 732; object-position: 50% 55.7%; }
+}
 /* Vier kolommen op één rij: merk, Diensten (zelf twee kolommen breed), De Reus, Contact. Elke kolom is precies
    zo breed als zijn inhoud en de ruimte die overblijft gaat naar de tussenruimtes (space-between), zodat de rij
    de wrap van 1280px vult en er rechts geen gat valt. Onder 1100px past dat niet meer; daar krijgt het merk een
@@ -601,6 +662,12 @@ body.lade-open { overflow: hidden; }
 .footer__blok > :last-child { margin-bottom: 0; }
 .footer__tijden { color: rgba(255, 255, 255, .78); }
 .bereikbaar--footer { color: var(--white); font-size: .8125rem; line-height: 1.5; align-items: baseline; }
+/* ---- Route plannen onder Nu bereikbaar ---- */
+/* "Route plannen" stond als losse regel onder het adres, met een gat naast "Nu bereikbaar". Hij hoort
+   bij de bereikbaarheid, op zijn eigen regel onder de stip. Een grid en niet zomaar twee blokken:
+   de stip is inline-flex en de link inline-block, die zouden anders naast elkaar uitlijnen. */
+.footer__nu { display: grid; justify-items: start; gap: .15rem; margin: 0; }
+.footer__nu > a { white-space: nowrap; }
 .footer__onder { background: var(--blauw-900); font-size: var(--text-xs); }
 .footer__onder .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1.5rem; padding-block: 1.1rem; }
 .footer__onder p { margin: 0; }

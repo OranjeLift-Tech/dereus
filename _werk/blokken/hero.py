@@ -3,7 +3,6 @@ De compacte offertekaart valt over de onderrand; de fotoachtergrond komt uit de 
 headerbeeldenlijst. De oude stockachtergrond uit Wix wordt niet gebruikt.
 Onder de tekst staat, in deze volgorde van voorrang:
   config.HERO_TEAM         de vrijstaande teamfoto (besluit gebruiker), de onderrand valt achter de offertekaart;
-  config.MASCOTTE_IN_HERO  de blauwe mascotte;
   anders                   het negatieve beeldmerk.
 Het teambeeld is het grootste element boven de vouw (LCP): geen lazy, fetchpriority high, en de home
 preloadt de juiste maat (kit.HERO_SIZES).
@@ -37,12 +36,8 @@ def figuur(ctx):
         return f'''<div class="hero__figuur hero__figuur--team">
       {team(ctx)}
     </div>'''
-    if getattr(cfg, "MASCOTTE_IN_HERO", False):
-        beeld = ('<img class="hero__mascotte" src="/img/reus-verhuizer.webp" alt="" width="760" height="1140" '
-                 'decoding="async" fetchpriority="low">')
-    else:
-        b, h = cfg.LOGO_MATEN["beeldmerk"]
-        beeld = f'<img class="hero__beeldmerk" src="{ctx.logo("beeldmerk")}" alt="" width="{b}" height="{h}" decoding="async">'
+    b, h = cfg.LOGO_MATEN["beeldmerk"]
+    beeld = f'<img class="hero__beeldmerk" src="{ctx.logo("beeldmerk")}" alt="" width="{b}" height="{h}" decoding="async">'
     return f'''<div class="hero__figuur" aria-hidden="true">
       <span class="hero__huis"></span>
       {doos("doos--a")}

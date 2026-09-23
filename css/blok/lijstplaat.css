@@ -73,27 +73,32 @@
   font-stretch: var(--font-display-stretch);
 }
 .b-lijstplaat__in{
-  display: grid; grid-template-columns: clamp(10rem, 18vw, 16.5rem) minmax(0, 1fr);
-  gap: clamp(1.5rem, 3vw, 2.75rem); align-items: start;
+  display: grid; grid-template-columns: clamp(14rem, 30vw, 28rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem); align-items: stretch;
 }
-.b-lijstplaat__zij{ min-width: 0; }
-/* de foto in de huisvorm, met een goudgeel huis er net iets omheen. De slagschaduw staat op die gele laag
-   en volgt de huisvorm, want drop-shadow werkt na het knippen: het huis staat daardoor op de plaat in
-   plaats van erin geplakt. Eén laag, geen uitsnede die uit het huis stapt. */
-.b-lijstplaat__beeld{ position: relative; display: block; }
-.b-lijstplaat__beeld::before{
-  content: ""; position: absolute; inset: 0; background: var(--brand-accent);
-  clip-path: var(--huisvorm); transform: scale(1.06);
-  filter: drop-shadow(0 14px 18px color-mix(in srgb, var(--brand-secondary) 60%, transparent));
+/* stretch plus een flexkolom: het beeld groeit tot onderaan de lijst ernaast. Met een vaste
+   aspect-ratio bleef er op 1440 nog 165 px blauw onder het beeld staan, en een ratio klopt maar
+   op één schermbreedte; zo vult het beeld de kolom op elke breedte. */
+.b-lijstplaat__zij{ min-width: 0; display: flex; flex-direction: column; }
+/* Het beeld vult de kolom. Sinds 23-09-2026 geen huisvorm en geen goudgele rand meer; de reden staat
+   in _werk/blokken/lijstplaat.py bij FOTO, met zijn woorden erbij. Wat er nu staat is een rechthoek
+   met een zachte hoek die even hoog wordt als de lijst ernaast.
+   De slagschaduw hing aan de ::before die de huisvorm droeg. Die is weg, dus hij hangt nu aan het
+   beeld zelf; haal hem daar niet weg zonder er iets voor terug te zetten, anders ligt de foto plat
+   op de plaat. Er komt met opzet GEEN geel terug in deze kolom. */
+.b-lijstplaat__beeld{
+  position: relative; display: block; flex: 1 1 auto; min-height: 0;
+  filter: drop-shadow(0 14px 18px color-mix(in srgb, var(--brand-secondary) 55%, transparent));
 }
 .b-lijstplaat__huis{
-  position: relative; display: block; aspect-ratio: 535.3/509.8;
-  background: var(--primary-600); clip-path: var(--huisvorm);
+  position: relative; display: block; height: 100%; min-height: 11rem;
+  background: var(--primary-600); border-radius: 14px; overflow: hidden;
 }
-/* De foto is breed (16:9) en het huis is bijna vierkant, dus cover snijdt er flink vanaf. Op 25 procent
-   blijft de voorste doos met het merkteken heel en is er nog net genoeg kamer omheen te zien; in het midden
-   of rechts valt die doos buiten beeld. */
-.b-lijstplaat__foto{ display: block; width: 100%; height: 100%; object-fit: cover; object-position: 25% center; }
+/* Het vak is hoger dan breed zodra het de kolom vult, dus van een liggende foto blijft ongeveer de
+   helft van de breedte over. Daarom staat de uitsnede nu in het MIDDEN en niet meer op 25 procent:
+   die 25 procent hoorde bij de huisvorm, waar het onderwerp links moest staan. Exporteer een bron
+   met marge aan weerszijden (zie _werk/export-lijstplaat-trap.cjs), niet het volle kader. */
+.b-lijstplaat__foto{ display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% center; }
 
 .b-lijstplaat__lijst{
   list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -130,14 +135,17 @@
 @media (max-width: 1000px){
   .b-lijstplaat__in{ grid-template-columns: minmax(0, 1fr); gap: clamp(1.25rem, 2.5vw, 1.75rem); }
   /* onder elkaar: de lijstkop volle breedte, de foto eronder op bijna de halve kolom */
-  .b-lijstplaat__zij{ display: grid; }
+  /* gestapeld: er staat geen lijst meer naast, dus er valt niets te vullen. Het beeld pakt de volle
+     kolombreedte met een eigen verhouding in plaats van de hoogte van de buurman. */
+  .b-lijstplaat__zij{ display: block; }
+  .b-lijstplaat__huis{ height: auto; aspect-ratio: 16 / 10; }
   .b-lijstplaat__lijstkop{ padding-right: clamp(5.5rem, 12vw, 9rem); }
-  .b-lijstplaat__beeld{ width: min(13rem, 46%); }
+  .b-lijstplaat__beeld{ width: 100%; }
 }
 @media (max-width: 860px){
   .b-lijstplaat__lijst{ grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 480px){
   .b-lijstplaat__lijstkop{ font-size: 1.5rem; padding-right: 4.5rem; }
-  .b-lijstplaat__beeld{ width: min(11rem, 52%); }
+  .b-lijstplaat__beeld{ width: 100%; }
 }

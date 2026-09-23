@@ -17,19 +17,17 @@ JS = False
 DIENSTEN = ["particulier", "zakelijk", "nationaal", "internationaal",
             "verhuislift", "opslag", "montage", "woningontruiming"]
 
-# Welke dienstfoto in het huis komt. Dezelfde kaart als in blok diensten (home); alleen montage
-# wijkt af, want dat beeld heet handyman.
+# Welke dienstfoto in het huis komt. Dezelfde kaart als in blok diensten (home).
 FOTOS = {"particulier": "particulier", "zakelijk": "zakelijk", "nationaal": "nationaal",
-         "internationaal": "internationaal", "verhuislift": "verhuislift", "opslag": "opslag",
-         "montage": "handyman", "woningontruiming": "woningontruiming"}
+         "internationaal": "internationaal", "verhuislift": "verhuislift", "opslag": "opslag-v2",
+         "montage": "montage", "woningontruiming": "woningontruiming"}
 
 # Van welke dienstfoto een uitsnede zonder achtergrond bestaat (/img/dienst-<naam>-uit.webp, uit
 # _ai-beelden/diensten-uitsnede.mjs + diensten-uit-export.cjs). Die laag komt over de foto heen
-# zonder in de huisvorm geknipt te worden, dus de verhuizer stapt uit het huis. Bij handymanservice
-# is het geen persoon maar de hand met de boor die naar buiten komt (uitsnede met de hand gemaakt:
-# _ai-beelden/handyman-uitsnede.cjs; de maatvoering staat bij paneel 07 in de CSS).
-UITSNEDEN = {"particulier", "zakelijk", "nationaal", "internationaal", "verhuislift", "opslag",
-             "handyman", "woningontruiming"}
+# zonder in de huisvorm geknipt te worden, dus de verhuizer stapt uit het huis. Bij montage is het
+# geen persoon maar de 3D-boor die voor het huis staat (_ai-beelden/dienst-montage-3d.py).
+UITSNEDEN = {"particulier", "zakelijk", "nationaal", "internationaal", "verhuislift", "opslag", "opslag-v2",
+             "montage", "woningontruiming"}
 
 
 def _met_tel(ctx, tekst):

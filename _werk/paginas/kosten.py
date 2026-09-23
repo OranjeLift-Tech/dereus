@@ -18,7 +18,7 @@ PAGINA = Pagina(
         ("treden", {"kopij_id": "verhuizing", "figuren": True}),   # verhuizers op trede 1 en 2, beeldmerk op trede 3
         ("extradiensten", {"kopij_ids": EXTRA}),
         ("annuleren", {}),
-        ("vragen", {"kopij_id": "vragen", "open": 1}),             # gesprek op de telefoon: de eerste vraag staat open
+        ("vragen", {"kopij_id": "vragen", "beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),   # hetzelfde blauwe paneel als op de home, /werkwijze/ en /contact/ (23-09-2026)
         ("offertepil", {"variant": "los"}),
     ],
 )

@@ -8,5 +8,5 @@ AFHANKELIJK = ["formulier"]
 def html(ctx, kopij, **opties):
     return ctx.register["formulier"].html(
         ctx, ctx.kopij_van("offerte").blok("formulier"),
-        id="aanvraag", prefix="aanvraag", beeld="/img/aanvraag-foto-uit.webp",
+        id="aanvraag", prefix="aanvraag", beeld="/img/verhuizer-doos-schouder-uit.webp",
     )

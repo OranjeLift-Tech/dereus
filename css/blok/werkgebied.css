@@ -61,3 +61,26 @@
   .wg__pil { left: .6rem; bottom: .6rem; padding: .45rem .8rem .45rem .5rem; }
   .wg__bron { text-align: left; }
 }
+
+/* ---- Tape en schroevendraaier op de naad met "Sterk waar het zwaar is" (alleen home) ----
+   Keuze van de gebruiker uit website/review/naad-3d-home-r2-20260923/ (optie D). Het voorwerp
+   (img/kosten-3d/gereedschap.webp, 477x420, zonder doorzichtige rand) ligt links op de dakrand: een
+   stukje in het wit erboven, de rest in het Diepblauw. Het hangt aan de wrap van deze sectie, want de
+   sectie zelf gebruikt ::before en ::after al voor het dak en het motief; de wrap staat niet
+   gepositioneerd, dus het rekent vanaf de sectie. Zelfde techniek als de doos van dereus-66 op de naad
+   "Zo werkt het"/reviews in css/style.css.
+   Alleen waar b-over direct voor deze sectie staat, en dat is alleen op de home.
+   Laag gehouden: hoogstens 37% van de breedte boven de naad (64 px op 1440). De sectie erboven laat
+   links maar 101 tot 108 px vrij (56 op 390), en 81 tot 88 als de twee knoppen terugkomen.
+   Wordt die sectie lager of komt er links meer inhoud onderaan, meet dan opnieuw. */
+.sectie.b-over + .sectie.b-werkgebied:not(.sectie *) > .wrap::before {
+  --naad-breed: clamp(6rem, 12vw, 11.5rem);
+  --naad-rand: calc(max((100vw - 1280px) / 2, 0px) + clamp(1rem, .5rem + 2vw, 2.5rem));
+  content: ""; position: absolute; z-index: 1; pointer-events: none;
+  left: calc(var(--naad-rand) - .25rem);
+  top: calc(var(--naad-breed) * -.37);
+  width: var(--naad-breed); aspect-ratio: 477 / 420;
+  background: url("/img/kosten-3d/gereedschap.webp") center / contain no-repeat;
+  filter: drop-shadow(2px 3px 2px color-mix(in srgb, var(--brand-secondary) 28%, transparent))
+          drop-shadow(10px 18px 14px color-mix(in srgb, var(--brand-secondary) 26%, transparent));
+}

@@ -32,6 +32,26 @@ def klantbeeld(i):
     return f'<img class="rkaart__klant" src="{pad}" alt="" loading="lazy" decoding="async">'
 
 
+def ploegbeeld(k, i):
+    """Een beeld van de ploeg boven een van de kaarten, als de pagina er in haar eigen kopij om vraagt.
+
+    Dit blok staat op vier pagina's, dus het beeld hangt aan de kopij en niet aan het blok: alleen de
+    pagina met beeld: en beeld-bij: in haar {#reviews}-blok krijgt het, de rest blijft zoals hij was.
+    Het gebruikt de plek die klantbeeld() al had (rkaart__klant), met een eigen maat in de CSS.
+    """
+    pad = k.veld("beeld")
+    if not pad:
+        return ""
+    try:
+        bij = int(k.veld("beeld-bij") or 1)
+    except ValueError:
+        bij = 1
+    if i + 1 != bij:
+        return ""
+    return (f'<img class="rkaart__klant rkaart__klant--ploeg" src="{pad}" alt="" '
+            f'width="760" height="504" loading="lazy" decoding="async">')
+
+
 def initialen(naam):
     delen = [d for d in re.split(r"\s+", naam.strip()) if d]
     if not delen:
@@ -84,7 +104,7 @@ def html(ctx, kopij, variant="volledig", sectie=None, **opties):
     if variant == "compact":
         grond = sectie or "wit"
         rij = (uit + rest)[:3]
-        kaarten = "".join(kaart(ctx, it, i, klant=klantbeeld(i)) for i, it in enumerate(rij))
+        kaarten = "".join(kaart(ctx, it, i, klant=ploegbeeld(k, i) or klantbeeld(i)) for i, it in enumerate(rij))
         link = home.veld("profiel-linktekst", "Bekijk alle reviews op Google")
         return f'''<section class="sectie sectie--{grond} b-reviews b-reviews--compact" id="{kid}" aria-labelledby="{kid}-kop">
   <div class="wrap">

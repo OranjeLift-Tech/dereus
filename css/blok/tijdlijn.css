@@ -9,7 +9,7 @@
 .b-tijdlijn .kopgroep{margin-bottom:clamp(2.4rem,1.8rem + 1.8vw,3.4rem)}
 
 /* ---- de lijn met vijf stations ---- */
-.b-tijdlijn__lijst{position:relative;list-style:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+.b-tijdlijn__lijst{position:relative;list-style:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;
   gap:clamp(.75rem,.1rem + 1vw,1.35rem);margin:0;padding:0}
 /* de lijn loopt op halve hoogte door de huisjes, van het eerste naar het laatste station */
 .b-tijdlijn__lijst::before{content:"";position:absolute;z-index:0;left:10%;right:10%;top:2.5rem;height:4px;
@@ -62,7 +62,6 @@
    heen vallen. Krimpen helpt niet: het woord WhatsApp moet leesbaar blijven en de raakvlak van
    44 px moet heel blijven. Hij krijgt daarom de volle breedte onderaan de plaat, en de plaat met
    zo'n knop houdt daar ruimte voor vrij. */
-.b-tijdlijn__plaat:has(.wa-link){padding-bottom:4.1rem}
 .b-tijdlijn__duo .wa-link{position:absolute;left:.9rem;bottom:1rem;margin:0;margin-inline-start:0}
 .b-tijdlijn__meer{margin:.75rem 0 0;margin-top:auto;padding-top:.75rem;text-align:left}
 .b-tijdlijn__meer .knop--link{font-size:.8125rem}
@@ -133,8 +132,53 @@
   .b-tijdlijn__duo dt,.b-tijdlijn__duo dd{font-size:.9375rem}
   /* hier zijn de kolommen weer te smal voor de pil (op 320 px nog geen 95 px), dus net als op
      breed scherm krijgt hij een eigen regel over de volle plaatbreedte */
-  .b-tijdlijn__plaat:has(.wa-link){padding-bottom:3.9rem}
   .b-tijdlijn__duo .wa-link{position:absolute;left:.95rem;bottom:.9rem;margin:0}
   .b-tijdlijn__slot{grid-template-columns:minmax(0,1fr);justify-items:start;row-gap:.7rem}
   .b-tijdlijn__ic--slot{width:5rem;height:3.4rem}
+}
+
+/* ---- de uitklap: wat u doet en wat wij doen ----
+   Vijf kaarten met elk drie tekststrengen gaven 221 woorden tegelijk in beeld. De twee kolommen en de
+   stapknop staan daarom achter een native details: dicht leest de bezoeker vijf titels met een regel,
+   open krijgt hij dezelfde tekst als eerst, over de volle plaatbreedte.
+
+   Openen verandert geen hoogte. Het paneel staat absoluut onder de plaat, dus de plaat blijft 271 px,
+   de rij blijft even hoog en alles onder de sectie blijft staan waar het staat. Zolang het openstaat
+   ligt het paneel over wat eronder staat; daarom heeft het een eigen witte plaat met rand en schaduw
+   en een z-index boven de buren, zodat het leest als een kaartje dat erboven ligt en niet als tekst
+   die door de pagina heen loopt.
+
+   De knop moet er als een knop uitzien, ook als er niets beweegt: een pil met een rand, een lichte
+   vulling en het plusje in een rondje, hetzelfde teken als de accordeon op de home. Open kantelt het
+   plusje naar een kruisje en wordt het rondje goudgeel, precies zoals daar. */
+.b-tijdlijn__uitklap{margin-top:auto}
+.b-tijdlijn__uitklap summary{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
+  padding:.3rem .3rem .3rem .75rem;border:1px solid color-mix(in srgb,var(--brand-primary) 22%,transparent);
+  border-radius:999px;background:color-mix(in srgb,var(--brand-primary) 5%,var(--white));
+  color:var(--brand-primary);font-weight:var(--weight-bold);font-size:.8125rem;line-height:1.25;
+  text-align:left;cursor:pointer;list-style:none}
+.b-tijdlijn__uitklap summary::-webkit-details-marker{display:none}
+.b-tijdlijn__uitklap summary:hover{background:color-mix(in srgb,var(--brand-primary) 10%,var(--white));
+  border-color:color-mix(in srgb,var(--brand-primary) 38%,transparent)}
+.b-tijdlijn__plus{display:grid;place-items:center;flex:none;width:1.7rem;height:1.7rem;border-radius:50%;
+  background:var(--white);color:var(--brand-primary);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--brand-primary) 20%,transparent);
+  transition:transform .28s var(--ease),background-color .28s var(--ease)}
+.b-tijdlijn__plus .ic{width:.95rem;height:.95rem;stroke-width:2.4}
+.b-tijdlijn__uitklap[open] .b-tijdlijn__plus{background:var(--brand-accent);transform:rotate(45deg)}
+@media(prefers-reduced-motion:reduce){.b-tijdlijn__plus{transition:none}}
+
+.b-tijdlijn__paneel{position:absolute;z-index:4;left:0;right:0;top:calc(100% + .45rem);
+  padding:.95rem 1.05rem 1.05rem;border-radius:var(--radius-card);background:var(--white);text-align:left;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 9%,transparent),
+    0 18px 30px -18px color-mix(in srgb,var(--ink) 38%,transparent),
+    0 44px 64px -40px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
+/* de open plaat en haar paneel liggen boven de buren en boven alles wat eronder komt */
+.b-tijdlijn__stap:has(.b-tijdlijn__uitklap[open]){z-index:5}
+.b-tijdlijn__paneel .b-tijdlijn__duo{grid-template-columns:minmax(0,1fr);gap:.55rem}
+.b-tijdlijn__paneel .b-tijdlijn__meer{margin:.65rem 0 0;padding-top:0}
+/* in het paneel is de volle plaatbreedte beschikbaar, dus de pil loopt hier gewoon mee in de tekst */
+.b-tijdlijn__paneel .wa-link{position:static;display:flex;width:fit-content;margin:.5rem 0 0;margin-inline-start:0}
+@media(max-width:1180px){
+  .b-tijdlijn__uitklap summary{font-size:var(--text-small)}
 }

@@ -133,6 +133,8 @@
 }
 
 /* ==== acht panelen, acht stijlen ====
+   Sinds 23-09-2026 niet meer voor de opsomming: "Wat erbij kan horen" is op elk paneel dezelfde kale lijst in twee
+   kolommen, en elke kop heeft dezelfde korte streep eronder (keuze A uit website/review/diensten-stijl-20260923/).
    Alle acht delen dezelfde opbouw (huis uit het logo, kop, opsomming, knoppen), maar elk paneel
    heeft een eigen grond, kaderkleur, kopaccent en opsomming, zodat de pagina niet acht keer
    hetzelfde blok toont. Alleen merkkleuren; de teksten blijven gelijk.
@@ -152,8 +154,16 @@
 .b-dienstenpanelen__paneel:target{box-shadow:none}
 .b-dienstenpanelen__paneel:target::before{box-shadow:inset 0 6px 0 var(--brand-accent)}
 
-/* 01 particulier: wit, met een goudgele lijn langs de bovenkant */
-.b-dienstenpanelen__paneel--particulier{--band:linear-gradient(var(--brand-accent) 0 7px,var(--white) 7px)}
+/* 01 particulier: wit. De goudgele lijn langs de bovenkant is er op 23-09-2026 af gehaald: hij liep
+   over de volle breedte vlak onder de ankerchips en las als een streep onder die rij in plaats van
+   als de bovenkant van het eerste paneel. De band is daarmee gelijk aan de standaard van .paneel;
+   hij blijft hier staan zodat de reeks 01 t/m 08 op een rij te lezen is. */
+.b-dienstenpanelen__paneel--particulier{--band:var(--white)}
+
+/* De ankerchips staan direct boven dit blok. Sectiepadding plus de bandpadding van het eerste
+   paneel gaf samen 156 tot 168 px tussen de chiprij en de eerste kop; de bandpadding alleen is
+   genoeg. Alleen wanneer de chiprij er echt boven staat, dus /diensten/ en niets anders. */
+.pk__ankers + .b-dienstenpanelen{padding-top:0}
 
 /* 02 zakelijk en 04 internationaal: donkere band, witte tekst, goudgele vinkjes */
 .b-dienstenpanelen__paneel--zakelijk{--band:var(--brand-primary)}
@@ -189,20 +199,10 @@
    en in de streep onder de kop. */
 /* dezelfde blauw-100 als de zijkolom van 03 (wens van de gebruiker); die kleur loopt over het hele paneel, ook achter de tekst: zo leest 07 als één blok (vraag van de gebruiker) */
 .b-dienstenpanelen__paneel--montage{--band:var(--primary-100)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li,.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li:first-child{border-color:var(--primary-200)}
 .b-dienstenpanelen__paneel--montage .b-dienstenpanelen__beeld{background:var(--primary-100)}
 .b-dienstenpanelen__paneel--montage .b-dienstenpanelen__nr{color:var(--brand-primary)}
 .b-dienstenpanelen__paneel--montage .b-dienstenpanelen__kader::before{background:var(--brand-secondary)}
 .b-dienstenpanelen__paneel--montage .b-dienstenpanelen__tekst>.h2::after{background:var(--brand-accent)}
-/* 03: de kop krijgt de goudgele streep links in plaats van eronder */
-.b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__tekst>.h2{padding-left:1rem;border-left:6px solid var(--brand-accent)}
-.b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__tekst>.h2::after{content:none}
-/* 07: opsomming onder elkaar, met een lijn ertussen */
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst{grid-template-columns:minmax(0,1fr);gap:0}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li{padding-block:.7rem;border-bottom:1px solid var(--grey-300)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li:first-child{border-top:1px solid var(--grey-300)}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li::before,
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__lijst li::after{top:calc(.7rem + .2em)}
 
 /* 05 verhuislift: Creme band met een Koningsblauw huis */
 .b-dienstenpanelen__paneel--verhuislift{--band:var(--accent-50)}
@@ -213,15 +213,6 @@
 /* 06 opslag: lichtblauwe band, opsomming als witte tegels */
 .b-dienstenpanelen__paneel--opslag{--band:var(--primary-50)}
 .b-dienstenpanelen__paneel--opslag .b-dienstenpanelen__nr{color:var(--primary-300)}
-.b-dienstenpanelen__paneel--opslag .b-dienstenpanelen__tekst>.h2::after{width:100%;height:2px;background:var(--primary-200)}
-:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst{gap:.6rem}
-:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst li{padding:.7rem .9rem .7rem 2.7rem;border-radius:var(--radius-control)}
-:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst li::before,
-:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst li::after{left:.85rem;top:calc(.7rem + .2em)}
-.b-dienstenpanelen__paneel--opslag .b-dienstenpanelen__lijst li{background:var(--white);box-shadow:0 0 0 1px var(--primary-200)}
-.b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__lijst li{background:var(--primary-50)}
-/* tegels: een losse laatste regel loopt over de volle breedte, zodat er geen leeg vak overblijft */
-:is(.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--nationaal) .b-dienstenpanelen__lijst li:last-child:nth-child(odd){grid-column:1/-1}
 
 /* 08 woningontruiming: rustig. Mist, geen geel, een zachtblauw huis */
 .b-dienstenpanelen__paneel--woningontruiming{--band:var(--off-white)}
@@ -264,14 +255,71 @@
 .b-dienstenpanelen__paneel--opslag{--uit-schaal:1.36;--uit-x:-2%}
 .b-dienstenpanelen__paneel--woningontruiming{--uit-schaal:1.08;--uit-x:-14.5%}
 .b-dienstenpanelen__paneel--woningontruiming .b-dienstenpanelen__uit img{-webkit-mask-image:linear-gradient(90deg,#000 95%,transparent);mask-image:linear-gradient(90deg,#000 95%,transparent)}
-/* 07 montage: de hand met de boor komt uit het huis. De uitsnede (img/dienst-handyman-uit.webp, bron:
-   _ai-beelden/handyman-uitsnede.cjs) bevat boor, handschoen, beide onderarmen en de rechterhand. De foto staat groter,
-   naar links en omlaag (--uit-y), zodat boor en handschoen door de linkermuur steken. De armen lopen tot de rand van de
-   foto; daarom knipt de img zelf boven de dakrand op de huisvorm: de armen komen van binnen, alleen onder de dakrand
-   mag het beeld naar links en naar onder het huis uit. De veelhoek is de huisvorm omgerekend naar de coördinaten van
-   de img bij precies deze schaal en verschuiving: verandert een van de drie, reken hem dan opnieuw uit. */
-.b-dienstenpanelen__paneel--montage{--uit-schaal:1.36;--uit-x:-14%;--uit-y:27%}
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__uit img{clip-path:polygon(-3.5% 40.7%,31.3% 40.7%,60.3% 7.7%,66.0% 14.3%,66.0% 6.6%,70.0% 6.6%,70.0% 18.8%,89.3% 40.7%,80.9% 40.7%,80.9% 80.1%,-3.5% 109.6%)}
-/* de boor steekt links uit het huis: op smallere schermen schuift het huis iets op, zodat hij niet tegen de schermrand wordt afgesneden */
-.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__kader{--schuif:clamp(0rem,calc((1400px - 100vw) * .2),3rem);margin-left:var(--schuif)}
-@media (min-width:900px){.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__kader{width:calc(100% - var(--schuif))}}
+/* 07 montage: sinds 23-09-2026 de 3D-boor uit de kosten-3d-reeks op een achtergrond in merkblauw
+   (img/dienst-montage.webp en -uit, gemaakt door _ai-beelden/dienst-montage-3d.py), in plaats van de foto van een
+   hand met een boor (dienst-handyman, door de gebruiker op "delete" gezet). Foto en uitsnede liggen op dezelfde
+   plek, zoals bij de andere panelen: de boor staat scherp voor het huis en steekt met zijn bovenhoeken over het dak. */
+.b-dienstenpanelen__paneel--montage{--uit-schaal:1.08}
+
+/* ==== schuine naden: de banden als planken ====
+   Wens van de gebruiker (23-09-2026): de kleurwissels tussen de panelen schuin, als planken met schaduw, "but
+   dont make all of them the same". Elke naad krijgt een eigen richting en steilte. De steilte is --steil keer de
+   dakhelling over de volle breedte (2 x --dak), dus nooit steiler dan het dak; de flauwere naden zijn een bewuste
+   uitzondering op de ene hoek van de site. Review: website/review/diensten-overgangen-r2-20260923/.
+   De naad ligt gecentreerd op de grens: de band eronder reikt --naad/2 omhoog in de onderpadding van de band
+   erboven, en die reikt --naad/2 omlaag. Niets aan de layout verandert: ::before wordt hoger en ::after schildert
+   de kleur van de band erboven. ::after staat op z-index -1 na de zijkolom in de boom, dus hij knipt die mee.
+   De schaduw is een verloop loodrecht op de naad, hoek 180deg +/- atan2(naad, schermbreedte). */
+.b-dienstenpanelen__panelen{container-type:inline-size}
+.b-dienstenpanelen__paneel{--steil:1;--naad:calc(2*var(--dak)*var(--steil));--rand:2rem;
+  --vorm:polygon(0 0,100% 0,100% 100%);--hoek:calc(180deg + atan2(var(--naad),100vw));
+  /* --kol: de rechterrand van de zijkolom van 03, vanaf de schermrand; 100cqw is de paneelbreedte */
+  --kol:calc(50vw - 50cqw + var(--beeldbreedte) + var(--ppad));--band-l:var(--band);
+  --naadschaduw:linear-gradient(var(--hoek),rgba(11,35,82,0) 50%,rgba(11,35,82,.26) 50%,rgba(11,35,82,0) calc(50% + 1.4rem))
+    0 calc(-1*var(--rand))/100% calc(var(--naad) + 2*var(--rand)) no-repeat}
+.b-dienstenpanelen__paneel:first-child{--naadschaduw:none}
+.b-dienstenpanelen__paneel::before{background:var(--naadschaduw),linear-gradient(90deg,var(--band-l) var(--kol),var(--band) 0)}
+.b-dienstenpanelen__paneel+.b-dienstenpanelen__paneel::before{top:calc(-.5*var(--naad))}
+.b-dienstenpanelen__paneel+.b-dienstenpanelen__paneel::after{content:"";position:absolute;z-index:-1;pointer-events:none;
+  left:calc(50% - 50vw);right:calc(50% - 50vw);top:calc(-.5*var(--naad));height:var(--naad);
+  background:linear-gradient(90deg,var(--vorig-l,var(--vorig)) var(--kol),var(--vorig) 0);clip-path:var(--vorm)}
+/* per naad; de klasse is het paneel ONDER de naad:
+   01>02 links hoog, vol        02>03 links hoog, half       03>04 rechts hoog, driekwart
+   04>05 links hoog, driekwart  05>06 rechts hoog, half      06>07 rechts hoog, vol
+   07>08 links hoog, vol. Geen twee buren gelijk; alleen de eerste en de laatste naad rijmen. */
+.b-dienstenpanelen__paneel--internationaal,.b-dienstenpanelen__paneel--opslag,.b-dienstenpanelen__paneel--montage{
+  --vorm:polygon(0 0,100% 0,0 100%);--hoek:calc(180deg - atan2(var(--naad),100vw))}
+.b-dienstenpanelen__paneel--nationaal,.b-dienstenpanelen__paneel--opslag{--steil:.5}
+.b-dienstenpanelen__paneel--internationaal,.b-dienstenpanelen__paneel--verhuislift{--steil:.75}
+/* de kleur van de band erboven */
+.b-dienstenpanelen__paneel--zakelijk{--vorig:var(--white)}
+.b-dienstenpanelen__paneel--nationaal{--vorig:var(--brand-primary)}
+.b-dienstenpanelen__paneel--internationaal{--vorig:var(--white)}
+.b-dienstenpanelen__paneel--verhuislift{--vorig:var(--brand-secondary)}
+.b-dienstenpanelen__paneel--opslag{--vorig:var(--accent-50)}
+.b-dienstenpanelen__paneel--montage{--vorig:var(--primary-50)}
+.b-dienstenpanelen__paneel--woningontruiming{--vorig:var(--primary-100)}
+/* De zijkolommen van 03 en 07 schilderen hun kleur niet meer zelf maar laten dat aan de band over. Anders legt de
+   kolom zich over de naad en de schaduw heen en snijdt ze horizontaal af op de grens. */
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__beeld,
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__beeld::before,
+.b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__beeld{background:none}
+@media (min-width:900px){
+  .b-dienstenpanelen__paneel--nationaal{--band-l:var(--primary-100)}
+  .b-dienstenpanelen__paneel--internationaal{--vorig-l:var(--primary-100)}
+  .b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__beeld::before{background:none}
+}
+/* telefoon: de zijkolom van 03 is een band van rand tot rand bovenaan het paneel; de bovenste 3rem schildert de
+   band, de rest de kolom zelf */
+@media (max-width:899px){
+  .b-dienstenpanelen__paneel--nationaal::before{background:var(--naadschaduw),linear-gradient(var(--primary-100) calc(.5*var(--naad) + 3rem + 1px),var(--band) 0)}
+  .b-dienstenpanelen__paneel--nationaal .b-dienstenpanelen__beeld::before{top:3rem;background:var(--primary-100)}
+}
+/* het aangeklikte anker: de goudgele lijn loopt nu langs de naad in plaats van recht over de band */
+.b-dienstenpanelen__paneel+.b-dienstenpanelen__paneel:target::before{box-shadow:none;
+  --naadschaduw:linear-gradient(var(--hoek),transparent 50%,var(--brand-accent) 50%,var(--brand-accent) calc(50% + 6px),transparent calc(50% + 6px))
+    0 calc(-1*var(--rand))/100% calc(var(--naad) + 2*var(--rand)) no-repeat}
+@media (forced-colors:active){
+  .b-dienstenpanelen__paneel{--naadschaduw:none}
+  .b-dienstenpanelen__paneel+.b-dienstenpanelen__paneel::after{display:none}
+}

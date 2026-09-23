@@ -13,13 +13,14 @@ PAGINA = Pagina(
     header="transparant",
     body_klasse="p-over-ons",
     feiten=("OPRICHTINGSJAAR", "EIGENAAR", "TEAM", "RECHTSVORM", "KVK", "TEAM_BEELD"),
+    extra_css=("uitsnede",),                  # de gedeelde uitsnede-plaat van "Zo werken wij" en "Kennismaken?"
     blokken=[
         ("kop", {}),
         ("offertepil", {"variant": "los", "over_kop": True, "kopij": None}),
         ("over-ons", {"kopij_id": "verhaal", "feiten": True, "motto": False}),
-        ("kernwaarden", {"kopij_id": "zo-werken-wij"}),
+        ("kernwaarden", {"kopij_id": "zo-werken-wij", "beeld": ("/img/dienst-particulier-uit.webp", 1080, 810, 215, 273, 673, 502), "compact": "krap"}),
         ("reviews", {}),
         ("werkgebied", {"kopij_id": "den-haag"}),
-        ("contactband", {"kopij_id": "contact", "beeld": ("/img/contact-adviseur-uit.webp", 640, 954)}),
+        ("contactband", {"kopij_id": "contact", "beeld": ("/img/verhuizer-twee-dozen-uit.webp", 407, 1200, 0, 0, 407, 1200), "compact": "krap"}),
     ],
 )

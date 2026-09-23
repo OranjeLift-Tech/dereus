@@ -6,7 +6,30 @@
     python _werk/build.py --serve        bouw en start http://127.0.0.1:8000
     python _werk/build.py --streng       ontbrekende kopijvelden zijn ook een fout
     python _werk/build.py --concept      ook alle conceptpagina's, in _voorbeeld/ (overzicht op /_concept/)
+    python _werk/build.py --droog        alles renderen en de bewakers draaien, niets schrijven, plus
+                                         de lijst bestanden die een echte build zou aanraken
+    python _werk/build.py --alles        negeer de cache en herbouw alles
+    python _werk/build.py --sessie naam  zet je sessienaam in het slot (anders $CLAUDE_SESSION_NAME)
     python _werk/build.py --serve --poort 8001   andere poort
+
+Veilig naast andere sessies (sinds 22-09-2026). Een volledige build duurt 0,3 seconde, dus traag was
+hij nooit; onveilig wel. Vier dingen maken hem nu wel veilig:
+
+  1. Een slot (_werk/.build.lock) met de sessienaam erin. Draait er al een build, dan stopt de tweede
+     meteen en zegt wie er bezig is.
+  2. Elk bestand gaat atomair naar schijf: eerst een tijdelijk bestand, dan os.replace(). Een lezer
+     (een Playwright-run, controle-layout.cjs) ziet nooit een halve pagina.
+  3. Identieke inhoud wordt niet herschreven, ook niet bij het kopiëren van logo's en iconen. Dat houdt
+     git status schoon en voorkomt dat sessies elkaars wijzigingen als ruis zien.
+  4. De build onthoudt in _werk/.bouwcache.json wat hij zelf geschreven heeft. Is een bestand daarna
+     buiten de build om gewijzigd, met de hand gespliced bijvoorbeeld, dan zegt hij dat hardop
+     voordat hij het overschrijft, in plaats van het zwijgend weg te gooien.
+
+Diezelfde cache slaat de hele build over als er niets veranderd is: hij vergelijkt een vingerafdruk van
+alle invoer (_werk/*.py, blokken, paginas, css, js, website/content/*.md, de logo-bron) met de vorige
+en controleert of alle uitvoer nog staat zoals hij hem achterliet. Dat is heel-of-niets, met opzet: de
+uitvoer van één pagina hangt ook aan kit.py, navigatie.py en aan welke pagina's live zijn, dus
+per-pagina overslaan zou stille, verouderde uitvoer opleveren. Wijkt er iets af, dan bouwt hij alles.
 
 Zie website/BOUWPLAN.md voor de API van pagina's en blokken.
 """
@@ -14,9 +37,11 @@ import hashlib
 import importlib
 import importlib.util
 import json
+import os
 import re
 import shutil
 import sys
+import time
 from pathlib import Path
 
 HIER = Path(__file__).resolve().parent
@@ -30,6 +55,67 @@ import bewakers               # noqa: E402
 from kopij import BouwFout    # noqa: E402
 
 CSS_KERN = ["css/tokens.css", "css/style.css"]
+
+# --droog: alles renderen, de bewakers draaien, en niets op schijf veranderen. Nodig omdat er
+# parallel aan deze repo gewerkt wordt: een echte build herschrijft elke pagina en elke
+# css/min/*.min.css en haalt daarmee het halve werk van een teamgenoot onderuit. Droog bouwen
+# geeft dezelfde uitslag plus de lijst bestanden die een echte build zou aanraken.
+DROOG = False
+GEWIJZIGD = []
+
+# Elk bestand dat deze build als zijn uitvoer beschouwt, in volgorde van aanraken. Aan het eind gaan
+# de hashes ervan in de cache, zodat een volgende build ziet of er iemand tussendoor aan gezeten heeft.
+UITVOERPADEN = []
+# Bestanden die sinds de vorige build buiten de build om veranderd zijn. Die overschrijven we niet
+# stilletjes: ze komen als waarschuwing terug, want dit is precies het handwerk dat sessies splicen.
+VREEMDE_HAND = []
+
+
+def _noteer_uitvoer(doel):
+    if doel not in UITVOERPADEN:
+        UITVOERPADEN.append(doel)
+
+
+def schrijf(doel, tekst):
+    """Schrijft tekst atomair, of noteert in een droge run alleen dat dit bestand zou veranderen."""
+    _noteer_uitvoer(doel)
+    oud = doel.read_text(encoding="utf-8") if doel.exists() else None
+    if oud == tekst:
+        return False
+    GEWIJZIGD.append(("nieuw" if oud is None else "anders", doel))
+    _meld_vreemde_hand(doel, oud)
+    if not DROOG:
+        doel.parent.mkdir(parents=True, exist_ok=True)
+        _atomair(doel, tekst)
+    return True
+
+
+def _atomair(doel, tekst):
+    """Schrijf via een tijdelijk bestand in dezelfde map en hernoem. os.replace() is atomair op
+    hetzelfde volume, ook op Windows, dus een gelijktijdige lezer krijgt de oude of de nieuwe
+    versie en nooit een halve. Tekstmodus blijft tekstmodus: de uitvoer houdt zijn CRLF-regeleindes."""
+    tijdelijk = doel.with_name(f".{doel.name}.tmp{os.getpid()}")
+    try:
+        tijdelijk.write_text(tekst, encoding="utf-8")
+        os.replace(tijdelijk, doel)
+    except BaseException:
+        tijdelijk.unlink(missing_ok=True)
+        raise
+
+
+def _meld_vreemde_hand(doel, oud):
+    """Stond dit bestand anders op schijf dan de vorige build het achterliet, dan heeft iemand er met
+    de hand aan gewerkt, gespliced werk meestal. We schrijven wel, maar nooit zwijgend: de melding
+    komt per bestand en op het moment zelf, niet als één regel achteraf."""
+    if oud is None:
+        return
+    rel = _rel(doel)
+    vorige = _CACHE_VORIGE.get("uitvoer", {}).get(rel)
+    if not vorige or vorige == _hash_bytes(doel.read_bytes()):
+        return
+    VREEMDE_HAND.append(rel)
+    wat = "zou overschrijven" if DROOG else "OVERSCHRIJFT"
+    print(f"  !! {wat} {rel}: dit bestand is buiten de build om gewijzigd sinds de vorige build")
 
 
 # ---------------------------------------------------------------------------
@@ -60,6 +146,159 @@ def hash_van(*teksten):
     for t in teksten:
         h.update(t.encode("utf-8"))
     return h.hexdigest()[:10]
+
+
+# ---------------------------------------------------------------------------
+# Cache: wat is er sinds de vorige build veranderd?
+# ---------------------------------------------------------------------------
+CACHE = HIER / ".bouwcache.json"
+CACHE_VERSIE = 1
+
+
+def _rel(pad):
+    """Pad ten opzichte van de repo-wortel. Ligt het erbuiten, dan het pad zelf: een melding mag
+    nooit omvallen omdat een bestand ergens anders staat."""
+    p = Path(pad).resolve()
+    try:
+        return p.relative_to(WORTEL).as_posix()
+    except ValueError:
+        return p.as_posix()
+
+
+def _hash_bytes(rauw):
+    return hashlib.sha1(rauw).hexdigest()
+
+
+def invoer_bestanden():
+    """Alles wat de uitvoer kan veranderen. Ruim genomen: liever een build te veel dan een pagina
+    die stiekem oud blijft."""
+    groepen = [
+        HIER.glob("*.py"),
+        (HIER / "blokken").glob("*.py"),
+        (HIER / "paginas").glob("*.py"),
+        (WORTEL / "css").glob("*.css"),
+        (WORTEL / "css" / "blok").glob("*.css"),
+        (WORTEL / "js").glob("*.js"),
+        (WORTEL / "js" / "blok").glob("*.js"),
+        (WORTEL / "website" / "content").rglob("*.md"),
+        (WORTEL / cfg.LOGO_BRON).glob("dereus-*"),          # kopieer_merk() leest hieruit
+        (WORTEL / "brandbook" / "assets" / "imagery").glob("icoon-*.svg"),
+    ]
+    uit = []
+    for groep in groepen:
+        uit += [p for p in groep if p.is_file()]
+    return sorted(set(uit))
+
+
+def invoer_vingerafdruk():
+    h = hashlib.sha1()
+    for pad in invoer_bestanden():
+        h.update(_rel(pad).encode("utf-8"))
+        h.update(b"\0")
+        h.update(hashlib.sha1(pad.read_bytes()).digest())
+    return h.hexdigest()
+
+
+def cache_lezen():
+    try:
+        data = json.loads(CACHE.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return data if data.get("versie") == CACHE_VERSIE else {}
+
+
+_CACHE_VORIGE = cache_lezen()
+
+
+def cache_actueel():
+    """(waarom_niet, vingerafdruk). waarom_niet is None als er echt niets te doen is."""
+    afdruk = invoer_vingerafdruk()
+    if not _CACHE_VORIGE:
+        return "geen bruikbare cache", afdruk
+    if _CACHE_VORIGE.get("invoer") != afdruk:
+        return "de invoer is veranderd", afdruk
+    if not _CACHE_VORIGE.get("bewakers_ok"):
+        return "de vorige build kwam niet langs de bewakers", afdruk
+    for rel, verwacht in _CACHE_VORIGE.get("uitvoer", {}).items():
+        doel = WORTEL / rel
+        if not doel.exists():
+            return f"{rel} is weg", afdruk
+        if _hash_bytes(doel.read_bytes()) != verwacht:
+            return f"{rel} is buiten de build om gewijzigd", afdruk
+    return None, afdruk
+
+
+def cache_schrijven(afdruk, bewakers_ok):
+    uitvoer = {}
+    for doel in UITVOERPADEN:
+        if doel.exists():
+            uitvoer[_rel(doel)] = _hash_bytes(doel.read_bytes())
+    data = {
+        "versie": CACHE_VERSIE,
+        "geschreven": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "invoer": afdruk,
+        "bewakers_ok": bool(bewakers_ok),
+        "uitvoer": uitvoer,
+    }
+    _atomair(CACHE, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+
+
+# ---------------------------------------------------------------------------
+# Slot: twee builds tegelijk lopen elkaar niet over
+# ---------------------------------------------------------------------------
+SLOT = HIER / ".build.lock"
+SLOT_VEROUDERD = 300          # seconden; een build duurt 0,3 s, dus dit is ruim
+
+
+def sessienaam(gevraagd=None):
+    return (gevraagd or os.environ.get("CLAUDE_SESSION_NAME")
+            or os.environ.get("CLAUDE_AGENT_NAME") or f"pid{os.getpid()}")
+
+
+class SlotBezet(Exception):
+    pass
+
+
+class Slot:
+    """Neemt _werk/.build.lock, of vertelt wie er bezig is. --droog neemt geen slot: die leest alleen."""
+
+    def __init__(self, naam, nodig=True):
+        self.naam = naam
+        self.nodig = nodig
+        self.genomen = False
+
+    def __enter__(self):
+        if not self.nodig:
+            return self
+        for poging in (1, 2):
+            try:
+                fd = os.open(SLOT, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            except FileExistsError:
+                houder = self._houder()
+                oud = time.time() - SLOT.stat().st_mtime if SLOT.exists() else 0
+                if poging == 1 and oud > SLOT_VEROUDERD:
+                    print(f"  let op   slot van {houder} is {int(oud)} s oud, die build is blijven hangen; ik neem het over")
+                    SLOT.unlink(missing_ok=True)
+                    continue
+                raise SlotBezet(f"{houder} bouwt op dit moment (slot: {_rel(SLOT)})")
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                json.dump({"sessie": self.naam, "pid": os.getpid(),
+                           "sinds": time.strftime("%Y-%m-%dT%H:%M:%S")}, f)
+            self.genomen = True
+            return self
+        raise SlotBezet("slot niet te nemen")
+
+    def _houder(self):
+        try:
+            d = json.loads(SLOT.read_text(encoding="utf-8"))
+            return f"sessie {d.get('sessie', '?')} (pid {d.get('pid', '?')}, sinds {d.get('sinds', '?')})"
+        except (OSError, ValueError):
+            return "een andere build"
+
+    def __exit__(self, *_):
+        if self.genomen:
+            SLOT.unlink(missing_ok=True)
+        return False
 
 
 # ---------------------------------------------------------------------------
@@ -115,20 +354,39 @@ def paginas_lijst():
 # ---------------------------------------------------------------------------
 # Kopiëren van merkbestanden
 # ---------------------------------------------------------------------------
+def kopieer(bron, doel):
+    """Kopieert alleen als de inhoud echt verschilt, en dan atomair. Onvoorwaardelijk kopiëren gaf
+    elke build een nieuwe mtime op vijfentwintig logo- en icoonbestanden."""
+    _noteer_uitvoer(doel)
+    rauw = bron.read_bytes()
+    if doel.exists() and doel.read_bytes() == rauw:
+        return False
+    GEWIJZIGD.append(("nieuw" if not doel.exists() else "anders", doel))
+    if not DROOG:
+        doel.parent.mkdir(parents=True, exist_ok=True)
+        tijdelijk = doel.with_name(f".{doel.name}.tmp{os.getpid()}")
+        try:
+            tijdelijk.write_bytes(rauw)
+            shutil.copystat(bron, tijdelijk)
+            os.replace(tijdelijk, doel)
+        except BaseException:
+            tijdelijk.unlink(missing_ok=True)
+            raise
+    return True
+
+
 def kopieer_merk():
     bron = WORTEL / cfg.LOGO_BRON
     doel = WORTEL / "img" / "logo"
-    doel.mkdir(parents=True, exist_ok=True)
-    for f in bron.glob("dereus-*"):
+    for f in sorted(bron.glob("dereus-*")):
         if f.suffix in (".svg", ".ico", ".png") and (f.suffix == ".svg" or "favicon" in f.name):
-            shutil.copy2(f, doel / f.name)
+            kopieer(f, doel / f.name)
     fav = bron / "dereus-favicon.ico"
     if fav.exists():
-        shutil.copy2(fav, WORTEL / "favicon.ico")      # browsers vragen /favicon.ico
+        kopieer(fav, WORTEL / "favicon.ico")           # browsers vragen /favicon.ico
     icdoel = WORTEL / "img" / "iconen"
-    icdoel.mkdir(parents=True, exist_ok=True)
-    for f in (WORTEL / "brandbook" / "assets" / "imagery").glob("icoon-*.svg"):
-        shutil.copy2(f, icdoel / f.name)
+    for f in sorted((WORTEL / "brandbook" / "assets" / "imagery").glob("icoon-*.svg")):
+        kopieer(f, icdoel / f.name)
 
 
 # ---------------------------------------------------------------------------
@@ -140,10 +398,11 @@ class Bestanden:
     def __init__(self):
         self.css_urls = {}
         self.js_urls = {}
-        (WORTEL / "css" / "min").mkdir(parents=True, exist_ok=True)
+        if not DROOG:
+            (WORTEL / "css" / "min").mkdir(parents=True, exist_ok=True)
         kern = "\n".join((WORTEL / p).read_text(encoding="utf-8") for p in CSS_KERN)
         mini = css_verklein(kern)
-        (WORTEL / "css" / "min" / "site.min.css").write_text(mini, encoding="utf-8")
+        schrijf(WORTEL / "css" / "min" / "site.min.css", mini)
         self.kern_css = f"/css/min/site.min.css?v={hash_van(mini)}"
         js = (WORTEL / "js" / "site.js").read_text(encoding="utf-8")
         self.kern_js = f"/js/site.js?v={hash_van(js)}"
@@ -155,7 +414,7 @@ class Bestanden:
         url = None
         if bron.exists():
             mini = css_verklein(bron.read_text(encoding="utf-8"))
-            (WORTEL / "css" / "min" / f"{naam}.min.css").write_text(mini, encoding="utf-8")
+            schrijf(WORTEL / "css" / "min" / f"{naam}.min.css", mini)
             url = f"/css/min/{naam}.min.css?v={hash_van(mini)}"
         self.css_urls[naam] = url
         return url
@@ -346,7 +605,26 @@ def concept_overzicht(paginas):
 </body></html>'''
 
 
-def bouw(alleen=None, streng=False, concept=False):
+def bouw(alleen=None, streng=False, concept=False, alles=False):
+    # De cache geldt alleen voor de volledige, gewone build. --alleen en --concept bouwen een deel
+    # of naar een andere wortel, en mogen de staat van een volledige build niet claimen.
+    volledige_build = not alleen and not concept
+    afdruk = None
+    if volledige_build:
+        reden, afdruk = cache_actueel()
+        if reden is not None:
+            print(f"Herbouwen, want {reden}.")
+        elif DROOG:
+            # Droog stopt nooit vroeg: de bewakers draaien is juist waar --droog voor is.
+            print("Cache is actueel: een echte build zou hier stoppen met 'niets te doen'.")
+            print("Droog rendert toch alles, zodat de bewakers langskomen.")
+        elif alles:
+            print("Cache is actueel, maar --alles is gegeven: alles wordt opnieuw gebouwd.")
+        else:
+            print("Niets te doen: alle invoer en uitvoer staan nog zoals de vorige build ze achterliet.")
+            print("  --alles  bouwt toch opnieuw")
+            print("  --droog  rendert alles en draait de bewakers zonder te schrijven")
+            return 0
     kopieer_merk()
     register = blokken_register()
     paginas = paginas_lijst()
@@ -367,26 +645,31 @@ def bouw(alleen=None, streng=False, concept=False):
         if concept and p.concept:
             html = html.replace('<a class="skiplink"', concept_balk(p) + '\n<a class="skiplink"', 1)
         doel = uitroot / p.bestand
-        doel.parent.mkdir(parents=True, exist_ok=True)
-        doel.write_text(html, encoding="utf-8")
+        schrijf(doel, html)
         uitvoer[p.pad] = html
         waarschuwingen += ctx.waarschuwingen
         print(f"  gebouwd  {p.pad:28} -> {'_voorbeeld/' if concept else ''}{p.bestand}{'  (concept)' if p.concept else ''}")
     if concept:
-        (VOORBEELD / "_concept").mkdir(parents=True, exist_ok=True)
-        (VOORBEELD / "_concept" / "index.html").write_text(concept_overzicht(paginas), encoding="utf-8")
+        if not DROOG:
+            (VOORBEELD / "_concept").mkdir(parents=True, exist_ok=True)
+        schrijf(VOORBEELD / "_concept" / "index.html", concept_overzicht(paginas))
         print("  overzicht /_concept/ -> _voorbeeld/_concept/index.html")
     else:
         # Een concept dat (weer) uit staat mag geen oud bestand in de deploy-root achterlaten
         for p in paginas:
             oud = WORTEL / p.bestand
             if not p.live and oud.exists() and "data-header" in oud.read_text(encoding="utf-8", errors="ignore"):
-                oud.unlink()
-                print(f"  verwijderd {p.bestand} (concept staat uit)")
+                if not DROOG:
+                    oud.unlink()
+                print(f"  {'zou verwijderen' if DROOG else 'verwijderd'} {p.bestand} (concept staat uit)")
     if not alleen and not concept:
         try:
             import seo  # dereus-e7
-            seo.schrijf(te_bouwen, cfg)
+            if not DROOG:
+                seo.schrijf(te_bouwen, cfg)   # sitemap.xml en robots.txt zijn ook schrijven
+            # seo schrijft buiten schrijf() om; toch in de cache, anders mist die drie bestanden
+            for naam in ("sitemap.xml", "robots.txt", "_werk/.lastmod.json"):
+                _noteer_uitvoer(WORTEL / naam)
         except ImportError:
             waarschuwingen.append("seo.py ontbreekt nog: geen sitemap.xml en robots.txt")
     verborgen = kit.ALLE_PADEN - kit.ZICHTBAAR
@@ -398,9 +681,35 @@ def bouw(alleen=None, streng=False, concept=False):
         print("\nBEWAKERS: de build is afgekeurd")
         for f in fouten:
             print(f"  FOUT     {f}")
+        if volledige_build and not DROOG:
+            cache_schrijven(afdruk, bewakers_ok=False)   # afgekeurd telt niet als geldige staat
         return 1
-    print(f"\nKlaar: {len(uitvoer)} pagina's, {len(waarschuwingen)} waarschuwingen.")
+    _meld_handwerk()
+    if DROOG:
+        print(f"\nDroog: {len(uitvoer)} pagina's gerenderd, {len(waarschuwingen)} waarschuwingen, niets geschreven.")
+        if GEWIJZIGD:
+            print(f"Een echte build zou {len(GEWIJZIGD)} bestand(en) aanraken:")
+            for soort, doel in GEWIJZIGD:
+                print(f"  {soort:7} {doel.relative_to(WORTEL).as_posix()}")
+        else:
+            print("Een echte build zou niets veranderen.")
+        return 0
+    if volledige_build:
+        cache_schrijven(afdruk, bewakers_ok=True)
+    print(f"\nKlaar: {len(uitvoer)} pagina's, {len(waarschuwingen)} waarschuwingen, "
+          f"{len(GEWIJZIGD)} bestand(en) veranderd.")
     return 0
+
+
+def _meld_handwerk():
+    if not VREEMDE_HAND:
+        return
+    kop = "zou overschrijven" if DROOG else "overschreven"
+    print(f"\nHANDWERK {kop.upper()}: {len(VREEMDE_HAND)} bestand(en) waren buiten de build om gewijzigd.")
+    for rel in VREEMDE_HAND:
+        print(f"  {rel}")
+    print("  Terugkijken wat eruit ging:  git diff -- " + " ".join(VREEMDE_HAND[:3])
+          + (" ..." if len(VREEMDE_HAND) > 3 else ""))
 
 
 def serve(poort=8000, concept=False):
@@ -441,12 +750,23 @@ if __name__ == "__main__":
     if "--alleen" in args:
         alleen = args[args.index("--alleen") + 1]
     poort = int(args[args.index("--poort") + 1]) if "--poort" in args else 8000
+    naam = args[args.index("--sessie") + 1] if "--sessie" in args else None
     concept = "--concept" in args
+    DROOG = "--droog" in args
+    begonnen = time.perf_counter()
     try:
-        code = bouw(alleen=alleen, streng="--streng" in args, concept=concept)
+        # Droog draaien leest alleen, dus dat hoeft niet te wachten op een ander.
+        with Slot(sessienaam(naam), nodig=not DROOG):
+            code = bouw(alleen=alleen, streng="--streng" in args, concept=concept,
+                        alles="--alles" in args)
+    except SlotBezet as bezet:
+        print(f"\nBEZET: {bezet}")
+        print("  Wachten of --droog draaien; dat leest alleen en heeft geen slot nodig.")
+        sys.exit(3)
     except BouwFout as fout:
         print(f"\nBOUWFOUT: {fout}")
         sys.exit(2)
+    print(f"({time.perf_counter() - begonnen:.2f} s)")
     if "--serve" in args:
         serve(poort, concept=concept)
     sys.exit(code)

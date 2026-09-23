@@ -33,8 +33,16 @@ def feitenlijst(ctx):
     return f'<ul class="over__feiten" role="list">{li}</ul>'
 
 
-def html(ctx, kopij, feiten=False, motto=True, sectie="wit", **opties):
+def html(ctx, kopij, feiten=False, motto=True, sectie="wit", kopij_van=None, **opties):
     k = kopij
+    anker = k.id
+    if kopij_van:
+        # Sinds 23-09-2026 toont de home letterlijk de sectie van /over-ons/: "Sterk waar het zwaar is in
+        # homepage should be copy of Sterk waar het zwaar is in /over-ons/". De tekst komt dan uit dat
+        # blok, zodat hij op één plek staat en de twee niet uit elkaar lopen. Het anker blijft dat van de
+        # eigen pagina (#over-ons op de home), de kop houdt het id uit de bron.
+        pagina, kid = kopij_van
+        k = ctx.kopij_van(pagina).blok(kid)
     cfg = ctx.cfg
     b, h = cfg.LOGO_MATEN["beeldmerk"]
     knoppen = []
@@ -50,18 +58,12 @@ def html(ctx, kopij, feiten=False, motto=True, sectie="wit", **opties):
         # De alt-tekst komt uit de config, naast het beeld zelf, want alleen daar is bekend wat er te zien is.
         # Zonder alt-tekst laten we hem leeg: liever niets zeggen dan iets beweren wat het beeld niet waarmaakt.
         venster = (f'<div class="huisvenster over__foto">{ctx.beeld(foto, ctx.feit("TEAM_BEELD_ALT") or "", 1200, 1140)}</div>')
-    elif k.id == "over-ons":
-        venster = f'''<div class="over__compositie">
-        <span class="over__fotoplaat" aria-hidden="true"></span>
-        {ctx.beeld("/img/over-foto-achter.webp", "", 640, 954, klasse="over__achtergrond")}
-        {ctx.beeld("/img/over-foto-uit.webp", "Illustratief beeld van een man bij verhuisdozen", 640, 954, klasse="over__uitsnede")}
-      </div>'''
     else:
         venster = f'''<div class="over__huis">
         <img class="over__merk" src="{ctx.logo("beeldmerk-negatief")}" alt="Het beeldmerk van De Reus: een huis met twee sterke armen" width="{b}" height="{h}" loading="lazy" decoding="async">
         {f'<p class="over__motto">{ctx.esc(tekst_motto)}</p>' if tekst_motto else ""}
       </div>'''
-    return f'''<section class="sectie sectie--{sectie} b-over" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop">
+    return f'''<section class="sectie sectie--{sectie} b-over" id="{ctx.esc(anker)}" aria-labelledby="{ctx.esc(k.id)}-kop">
   <div class="wrap over">
     <div class="over__tekst" data-reveal>
       {ctx.kopgroep(k)}

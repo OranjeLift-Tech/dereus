@@ -22,6 +22,7 @@ PAGINA = Pagina(
     header="transparant",
     body_klasse="p-home",
     preload_beeld=_preload(),
+    extra_css=("reviews-ster",),              # de gouden 3D-ster op de uitgelichte review, alleen hier
     blokken=[
         ("hero", {"kopij_id": "offerte"}),
         ("diensten", {}),
@@ -29,9 +30,12 @@ PAGINA = Pagina(
         ("cijfers", {}),
         ("werkwijze", {}),
         ("reviews", {}),
-        ("over-ons", {}),
+        ("over-ons", {"kopij_van": ("over-ons", "verhaal"), "feiten": True, "motto": False}),   # een kopie van /over-ons/ #verhaal
         ("werkgebied", {}),
-        ("vragen", {"beeld": "headset-huis"}),
+        # kopkaart: de sectiekop hoort in de belkaart. De headset verhuist mee naar de
+        # rechterbovenhoek van die kaart ("hoek"); het gat dat "headset-huis" vulde bestaat
+        # niet meer zodra de kop in de kaart staat.
+        ("vragen", {"beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),
         ("aanvraag", {"kopij": None}),
         ("homecontact", {"kopij_id": "contact"}),
     ],

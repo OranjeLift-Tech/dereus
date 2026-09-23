@@ -8,8 +8,8 @@
   {
     "route": "/diensten/",
     "name": "diensten",
-    "source": "_ai-beelden/foto/logo-correcties/dienst-particulier-imagegen.png",
-    "kind": "corrected-existing"
+    "source": "_ai-beelden/foto/header-achtergronden/werk-straat.png",
+    "kind": "generated"
   },
   {
     "route": "/kosten/",
@@ -19,27 +19,27 @@
   },
   {
     "route": "/offerte/",
-    "name": "offerte",
-    "source": "img/stap-1-formulier.webp",
-    "kind": "existing-soft"
+    "name": "offerte-bedankt",
+    "source": "_ai-beelden/foto/header-achtergronden/offerte-bedankt.png",
+    "kind": "generated"
   },
   {
     "route": "/over-ons/",
     "name": "over-ons",
-    "source": "_ai-beelden/foto/header-achtergronden/over-ons-selected.png",
-    "kind": "user-selected"
+    "source": "_ai-beelden/foto/header-achtergronden/werk-gang.png",
+    "kind": "generated"
   },
   {
     "route": "/werkwijze/",
     "name": "werkwijze",
-    "source": "_ai-beelden/foto/logo-correcties/verwachten-inpakken-imagegen.png",
-    "kind": "corrected-existing"
+    "source": "_ai-beelden/foto/header-achtergronden/werk-inpakken.png",
+    "kind": "generated"
   },
   {
     "route": "/contact/",
-    "name": "contact",
-    "source": "img/contact-klantenservice.webp",
-    "kind": "existing"
+    "name": "contact-telefoon",
+    "source": "_ai-beelden/foto/header-achtergronden/contact-telefoon.png",
+    "kind": "generated"
   },
   {
     "route": "/privacyverklaring/",
@@ -55,9 +55,9 @@
   },
   {
     "route": "/contact/bedankt/",
-    "name": "contact-bedankt",
-    "source": "img/stap-2-bellen.webp",
-    "kind": "existing-soft"
+    "name": "contact-telefoon",
+    "source": "_ai-beelden/foto/header-achtergronden/contact-telefoon.png",
+    "kind": "generated"
   },
   {
     "route": "/offerte/bedankt/",

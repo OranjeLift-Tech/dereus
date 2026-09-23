@@ -369,13 +369,19 @@ class Ctx:
         k = f"kopgroep {klasse}".strip()
         return f'<div class="{k}">{lab}<{h} id="{kid}">{inline(blok.kop)}</{h}>{it}{extra}</div>'
 
-    def belregel(self, tekst, klasse="belregel"):
-        """Zin met het telefoonnummer: het nummer wordt een tel-link met icoon."""
+    def belregel(self, tekst, klasse="belregel", whatsapp=True):
+        """Zin met het telefoonnummer: het nummer wordt een tel-link met icoon.
+
+        whatsapp=False zet data-geen-whatsapp op die tel-link, waarna contactlinks() er geen
+        WhatsApp-knop achter hangt. Voor een plek waar zo'n knop al vlak ernaast staat en een
+        tweede alleen ruis is. Het nummer zelf blijft gewoon aanklikbaar.
+        """
         if not tekst:
             return ""
         t = inline(tekst)
         if cfg.TEL in t:
-            t = t.replace(cfg.TEL, f'<a href="{cfg.TELHREF}">{cfg.TEL}</a>', 1)
+            merk = "" if whatsapp else " data-geen-whatsapp"
+            t = t.replace(cfg.TEL, f'<a href="{cfg.TELHREF}"{merk}>{cfg.TEL}</a>', 1)
         return f'<p class="{klasse}">{self.icoon("telefoon")}<span>{t}</span></p>'
 
     def label(self, tekst, klasse=""):
@@ -415,13 +421,20 @@ class Ctx:
 
         Een punt of komma die direct op de bellink volgt gaat mee naar voren, anders
         komt het leesteken los achter de knop: "Bel 085 000 5647 WhatsApp ."
+
+        Een tel-link met data-geen-whatsapp wordt overgeslagen. Dat is de uitzondering en niet
+        de regel: elk nummer dat het attribuut niet draagt krijgt zijn knop gewoon, op elke
+        pagina. Zet het alleen waar vlak ernaast al een WhatsApp-knop staat, en zet het op de
+        link zelf, zodat in de bron te lezen is dat het met opzet gebeurt. Sinds 23-09-2026 is
+        het koppelen begeleiding en geen harde eis meer; controle-layout.cjs meldt een
+        onbeantwoord nummer nog wel, maar laat de run er niet meer op vallen.
         """
         parser = _ContactTekst()
         parser.feed(fragment)
         parser.close()
         fragment = "".join(parser.delen)
         patroon = re.compile(r'<a\b(?=[^>]*\bhref=[\"\']' + re.escape(cfg.TELHREF)
-                             + r'[\"\'])[^>]*>(?:(?!</a>).)*</a>(?![.,;:!?]?\s*<a\b[^>]*data-whatsapp-business)[.,;:!?]?', re.S)
+                             + r'[\"\'])(?![^>]*data-geen-whatsapp)[^>]*>(?:(?!</a>).)*</a>(?![.,;:!?]?\s*<a\b[^>]*data-whatsapp-business)[.,;:!?]?', re.S)
         return patroon.sub(lambda m: m.group(0) + self.whatsapp(), fragment)
 
     def icoon(self, naam, klasse="ic", label=None):

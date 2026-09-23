@@ -1,6 +1,17 @@
 """Controle van de beelden in de gebouwde pagina's.
 
 Gebruik: python _werk/controle-beelden.py [--streng]
+         python _werk/controle-beelden.py --vangnet
+
+--vangnet is het net onder de opruimronde: elk beeld-, svg- en lettertypepad dat een
+geserveerd bestand opvraagt moet naar een bestaand bestand wijzen. Waar controle A alleen
+naar src, srcset, link en og:image in de html kijkt, gaat het vangnet ook door de css en de
+js, en door `url(...)` en inline styles. Dat is geen theorie: `css/blok/kaart.css` laadt
+`/img/kaart-3d/kantoor.webp` uitsluitend via `url()`, en controle A ziet dat niet.
+
+Het vangnet heeft een eigen afsluitcode 1, want dit is de enige controle die na een
+verplaatsing meteen rood moet staan. De rest van dit bestand rapporteert en hangt niet aan
+de build; dat blijft zo.
 
 Vier controles:
   A  elk beeld waar de HTML om vraagt bestaat ook echt op schijf
@@ -312,9 +323,46 @@ def zelftest():
     return goed
 
 
+def vangnet():
+    """Elk pad dat een geserveerd bestand opvraagt moet bestaan.
+
+    Patronen (`/img/kaart-{slug}.svg`) blijven buiten beschouwing: die staan in de bouwbron en
+    niet in een geserveerd bestand, en of ze ergens op uitkomen is de vraag van beeldpaden.py.
+    """
+    import beeldpaden
+
+    ontbreekt, gekeken, bestanden = [], 0, 0
+    for rel_bron, pad in beeldpaden.geserveerd():
+        try:
+            tekst = pad.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        bestanden += 1
+        for kern, is_patroon in sorted(beeldpaden.verwijzingen(tekst)):
+            if is_patroon:
+                continue
+            gekeken += 1
+            if not (beeldpaden.WORTEL / kern).exists():
+                ontbreekt.append((rel_bron, kern))
+
+    print("Vangnet: %d verwijzingen in %d geserveerde bestanden" % (gekeken, bestanden))
+    if not ontbreekt:
+        print("GOED  elk pad komt uit op een bestaand bestand")
+        return 0
+    print("FOUT  %d %s naar een bestand dat er niet is:"
+          % (len(ontbreekt),
+             "verwijzing wijst" if len(ontbreekt) == 1 else "verwijzingen wijzen"))
+    for bron, kern in ontbreekt:
+        print("  %s  vraagt om /%s" % (bron, kern))
+    print("\nTerugzetten: python _werk/opruimen-beelden.py --terug")
+    return 1
+
+
 def main():
     if "--zelftest" in sys.argv:
         return 0 if zelftest() else 1
+    if "--vangnet" in sys.argv:
+        return vangnet()
     fouten, waarsch = controleer()
     los = uitsnedes_zonder_bestand()
     aantal = len(paginas())

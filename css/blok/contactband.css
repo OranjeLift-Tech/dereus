@@ -1,12 +1,48 @@
-/* Contactband: witte kaart met een Diepblauw paneel met de gegevens */
+/* Contactband: witte kaart met een Diepblauw paneel met de gegevens
+
+   De maten die de hoogte bepalen staan als knoppen bij elkaar, niet verspreid door het bestand,
+   net als in css/blok/kernwaarden.css. Een compactheidsniveau is daardoor een blok waarden.
+   De standaard hieronder is de oude maatvoering: precies wat het was. */
+.b-contactband {
+  --cb-band: 1;                                            /* aandeel van --ruimte om de sectie */
+  --cb-pad: clamp(1.75rem, 1.2rem + 2.5vw, 3.5rem);        /* in de tekstkolom */
+  --cb-paneel-pad: clamp(1.75rem, 1.2rem + 2vw, 3rem);     /* in het blauwe paneel */
+  --cb-paneel-gap: 1rem;                                   /* tussen de regels in dat paneel */
+  --cb-kop-marge: 1.25rem;                                 /* onder de kopgroep */
+  --cb-figuur: clamp(5rem, 9.2vw, 7.3rem);                 /* breedte van de uitsnede */
+  --cb-figuur-smal: 6.4rem;                                /* en op smal scherm */
+  padding-block: calc(var(--ruimte) * var(--cb-band));
+}
+/* Twee niveaus, zoals bij kernwaarden. Ze staan na .b-contactband, dus bij gelijke
+   specificiteit winnen deze waarden. De plaat en de overlap blijven staan: die staan in
+   procenten van de figuur en schalen mee. */
+.b-contactband--gematigd {
+  --cb-band: .78;
+  --cb-pad: clamp(1.4rem, 1rem + 1.9vw, 2.75rem);
+  --cb-paneel-pad: clamp(1.4rem, 1rem + 1.6vw, 2.4rem);
+  --cb-paneel-gap: .8rem;
+  --cb-kop-marge: 1rem;
+  --cb-figuur: clamp(4.8rem, 8.6vw, 6.9rem);
+  --cb-figuur-smal: 6rem;
+}
+.b-contactband--krap {
+  --cb-band: .62;
+  --cb-pad: clamp(1.15rem, .85rem + 1.5vw, 2.25rem);
+  --cb-paneel-pad: clamp(1.15rem, .85rem + 1.25vw, 2rem);
+  --cb-paneel-gap: .65rem;
+  --cb-kop-marge: .8rem;
+  --cb-figuur: clamp(4.6rem, 8.2vw, 6.5rem);
+  --cb-figuur-smal: 5.5rem;
+}
 .cband {display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); overflow: hidden;
   background: var(--white); border-radius: var(--r-paneel); box-shadow: var(--schaduw)}
-.cband__tekst { padding: clamp(1.75rem, 1.2rem + 2.5vw, 3.5rem); }
-.cband__tekst .kopgroep { margin-bottom: 1.25rem; }
+.cband__tekst { padding: var(--cb-pad); }
+.cband__tekst .kopgroep { margin-bottom: var(--cb-kop-marge); }
 .cband__tekst p { max-width: 58ch; color: var(--graphite); }
-.cband__tekst .belregel { margin-top: 1.5rem; }
+/* de belregel staat in de knoppenrij: naast de knop waar het past, eronder waar niet (de gap van .knoppen) */
+.cband__tekst .knoppen .belregel { margin: 0; }
 .cband__paneel {
-  position: relative; isolation: isolate; display: grid; align-content: center; gap: 1rem; padding: clamp(1.75rem, 1.2rem + 2vw, 3rem);
+  position: relative; isolation: isolate; display: grid; align-content: center; gap: var(--cb-paneel-gap); padding: var(--cb-paneel-pad);
   background: var(--brand-secondary); color: rgba(255, 255, 255, .88); font-size: var(--text-small);
 }
 .cband__paneel::after {
@@ -27,22 +63,41 @@
 @media (max-width: 899.98px) { .cband { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---- optionele uitsnede in de tekstkolom (optie beeld) ----
-   De uitsnede staat rechtsonder in de witte kaart, met de voeten op de onderrand, zoals de uitsnede
-   in de zijkolom van het formulier. Absoluut geplaatst en niet als extra kolom: zo blijft de tekst
-   staan waar hij stond en wordt de kaart geen stuk hoger. De tekstkolom houdt rechts ruimte vrij,
-   anders zou de tekst onder de figuur doorlopen. Niets beweegt. */
+   De figuur staat rechtsonder in de witte kaart, met de voeten op de onderrand. Absoluut
+   geplaatst en niet als extra kolom: zo blijft de tekst staan waar hij stond en wordt de kaart
+   geen stuk hoger. De tekstkolom houdt rechts ruimte vrij, anders loopt de tekst eronder door.
+
+   Het vak zelf is .uitsnede uit css/blok/uitsnede.css, hetzelfde mechanisme als "Zo werken wij":
+   een effen plaat erachter en de figuur die er boven- en onderlangs overheen valt. Daar staan
+   ook de zes getallen uitgelegd die het blok als inline stijl meegeeft. Hier staan alleen de
+   waarden die afwijken van de standaard, want die standaard is gemaakt voor de Koningsblauwe
+   band en deze kaart is wit. Niets beweegt. */
+/* Let op de dubbele klasse in deze selectors. css/blok/uitsnede.css wordt via extra_css NA de
+   CSS van de blokken geladen en zet daar .uitsnede{position:relative}. Met alleen .cband__figuur
+   (even zwaar, maar eerder in de stapel) wint die relative, valt de figuur terug in de flow en
+   wordt de kaart 350px hoger. Met .cband--beeld ervoor wint deze regel, ongeacht de volgorde. */
 @media (min-width: 720px) {
-  .cband--beeld .cband__tekst { position: relative; padding-right: clamp(9rem, 17vw, 13rem); }
-  .cband__uit {
+  .cband--beeld .cband__tekst { position: relative; padding-right: clamp(6.5rem, 12vw, 9rem); }
+  .cband--beeld .cband__figuur {
     position: absolute; right: clamp(.5rem, 1.5vw, 1.75rem); bottom: 0;
-    width: clamp(7rem, 13vw, 10rem); height: auto;
-    filter: drop-shadow(3px 8px 10px color-mix(in srgb, var(--brand-secondary) 26%, transparent));
+    width: var(--cb-figuur);
   }
 }
 /* smal scherm: de figuur staat onder de tekst en blijft klein, anders wordt de kaart te hoog */
 @media (max-width: 719.98px) {
-  .cband__uit {
-    display: block; width: 7rem; height: auto; margin: 1.25rem 0 0;
-    filter: drop-shadow(3px 8px 10px color-mix(in srgb, var(--brand-secondary) 26%, transparent));
-  }
+  .cband--beeld .cband__figuur { position: relative; width: var(--cb-figuur-smal); margin: 1.5rem 0 0; }
+}
+.cband__figuur {
+  /* plaat: lichtblauw op wit in plaats van diepblauw op de blauwe band */
+  /* Dieper dan op de andere twee secties, en met opzet: de uitsnede draagt een witte doos en
+     die verliest zijn rand volledig tegen primary-100. Een plaat is hier dus geen smaakkwestie
+     maar wat de doos leesbaar houdt. Gecontroleerd door de figuur over beide platen te leggen. */
+  --uit-plaat-vulling: linear-gradient(158deg, var(--primary-300), var(--primary-200));
+  --uit-plaat-rand: rgb(23 70 162 / .14);
+  --uit-plaat-links: 5%; --uit-plaat-rechts: 3%;
+  --uit-plaat-boven: 14%; --uit-plaat-onder: 11%;
+  /* de figuur is staand, dus het huis erachter mag groter en moet zachter op wit */
+  --uit-motief-kleur: var(--brand-primary); --uit-motief-alfa: .12;
+  --uit-motief-breed: 58%; --uit-motief-boven: 2%; --uit-motief-rechts: -4%;
+  --uit-schaduw: 0 12px 18px rgb(14 26 51 / .26);
 }

@@ -10,9 +10,9 @@
 /* De belkaart: Koningsblauw, met de bereikbaarheidsstatus, het nummer groot en de tijden */
 .b-contactkaarten__belkaart{position:relative;overflow:visible;isolation:isolate;padding:clamp(1.75rem,1.2rem + 2vw,2.75rem);border-radius:24px;background:var(--brand-primary);color:var(--white);box-shadow:0 30px 60px -30px color-mix(in srgb,var(--brand-primary) 75%,transparent)}
 .b-contactkaarten__belkaart::after{content:"";position:absolute;z-index:-1;right:-2.5rem;bottom:-2rem;clip-path:inset(0 2.5rem 2rem 0);width:13rem;aspect-ratio:535.3/509.8;background:color-mix(in srgb,var(--white) 8%,transparent);-webkit-mask:var(--huisje) center/contain no-repeat;mask:var(--huisje) center/contain no-repeat}
-/* Een echt toestel in plaats van een getekend beliconentje. Het staat linksboven half buiten de kaart,
+/* Een echt toestel in plaats van een getekend beliconentje. Het staat rechtsboven half buiten de kaart,
    met een diepe schaduw eronder, zodat het er uit springt. Het staat stil; de hoek zit in het beeld zelf. */
-.b-contactkaarten__beltoestel{position:absolute;z-index:2;left:clamp(-2rem,-1.2vw,-1.1rem);top:clamp(-2.6rem,-2vw,-1.6rem);
+.b-contactkaarten__beltoestel{position:absolute;z-index:2;right:clamp(-2rem,-1.2vw,-1.1rem);top:clamp(-2.6rem,-2vw,-1.6rem);
   width:auto;height:clamp(5.5rem,9vw,7.5rem);pointer-events:none;
   filter:drop-shadow(0 2px 4px rgba(4,16,44,.45)) drop-shadow(0 16px 20px rgba(4,16,44,.5)) drop-shadow(0 34px 40px rgba(4,16,44,.4))}
 .b-contactkaarten__status{margin:0 0 .5rem;font-size:var(--text-small)}
@@ -68,3 +68,38 @@
 /* de groene WhatsApp-knop onder het nummer: eigen breedte en lucht, niet tegen de link aan */
 .b-contactkaarten__kanaal>.wa-link{align-self:flex-start;margin:.7rem 0 0;margin-inline-start:0}
 @media(max-width:1080px){.b-contactkaarten__kanalen{row-gap:4.6rem}}
+/* Op een telefoon is er rechts van de kaart geen marge meer: daar stak het toestel 2 px buiten het
+   venster en noemde controle-layout het bij naam in de overflow van /contact/. Het schuift dan tot
+   tegen de kaartrand. De pagina is op die maten al te breed door een andere oorzaak; dit haalt
+   alleen dit element uit de meting. */
+@media(max-width:560px){.b-contactkaarten__beltoestel{right:0}}
+
+/* ---- de verhuizer tussen de kop en de belkaart, in lagen (optie figuur, /contact/) ----
+   Gevraagd: een beeld in het lege vak tussen de kop en het blok "Nu bereikbaar", met een achtergrond
+   en een voorgrond om de verhuizer heen voor diepte. Drie lagen, van achter naar voor:
+   1. de plaat en het huis van .uitsnede (css/blok/uitsnede.css, ::before en ::after), dezelfde
+      achtergrond als "Zo werken wij" en "Kennismaken?", met de waarden voor een witte ondergrond;
+   2. de verhuizer zelf, die boven de plaat uitsteekt;
+   3. een stapel dozen (.b-contactkaarten__voorgrond) die voor zijn benen staat, iets lager dan zijn
+      voeten, want wat dichterbij staat, staat lager in beeld.
+   De figuur wordt een eigen kolom en staat met zijn voeten op de onderrand van de belkaart. Onder
+   1024 px wordt de belkaart te smal naast een figuur van 140 px (het nummer loopt er dan uit), en
+   onder 861 px staan kop en kaart onder elkaar zonder vak ertussen; daar valt de figuur weg.
+   De dubbele klasse wint van uitsnede.css, dat na deze CSS laadt. */
+@media(min-width:1024px){
+  .b-contactkaarten__boven:has(>.b-contactkaarten__figuur){grid-template-columns:minmax(0,1.15fr) auto minmax(0,.85fr);column-gap:clamp(2rem,.5rem + 3vw,4rem)}
+}
+/* overflow:visible in plaats van de clip van .uitsnede: de verhuizer raakt zijn vak aan alle kanten,
+   dus de clip sneed de slagschaduw recht af, en de dozen staan er bewust half buiten. Veilig hier: de
+   figuur staat in de middelste kolom, ver van de paginarand, en onder 1024 px staat hij uit. */
+.b-contactkaarten__boven .b-contactkaarten__figuur{align-self:end;height:clamp(15rem,21vw,19.5rem);width:auto;overflow:visible;pointer-events:none;
+  --uit-schaduw:0 10px 14px rgb(14 26 51 / .24);
+  --uit-plaat-vulling:linear-gradient(158deg,var(--primary-300),var(--primary-200));
+  --uit-plaat-rand:rgb(23 70 162 / .14);
+  --uit-plaat-links:-8%;--uit-plaat-rechts:-10%;--uit-plaat-boven:22%;--uit-plaat-onder:6%;
+  --uit-motief-kleur:var(--brand-accent);--uit-motief-alfa:.9;--uit-motief-breed:62%;--uit-motief-boven:8%;--uit-motief-rechts:-26%}
+/* de dozen: het bestand heeft onderaan 82 van 522 px doorzichtige rand, vandaar translate 15.7% (van
+   de eigen hoogte) zodat de zichtbare onderkant op de bodem staat; daarna nog iets lager */
+.b-contactkaarten__boven .b-contactkaarten__voorgrond{position:absolute;z-index:2;left:-22%;bottom:-5%;width:80%;height:auto;max-width:none;translate:0 15.7%;
+  filter:drop-shadow(4px 8px 8px rgb(14 26 51 / .28))}
+@media(max-width:1023.98px){.b-contactkaarten__boven .b-contactkaarten__figuur{display:none}}

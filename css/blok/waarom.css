@@ -1,4 +1,11 @@
 /* Verwachtingen: een rustige fotocompositie naast vier concrete afspraken. */
+
+/* Het gat tussen "Welke verhuizing u ook plant" en deze sectie was 203px op 1440: 83px onderruimte
+   van de dienstensectie plus 120px bovenruimte hier. Die 120 is niet het gewone ritme maar de
+   schuine overgang tussen de grijze en de witte band: max(--ruimte, 2 x --dak + 1rem). Met de helft
+   van de schuinte valt de padding terug op --ruimte en blijft de overgang zichtbaar. Alleen op de
+   home; op /diensten/ staat hetzelfde blok en daar is niets gevraagd. */
+.p-home .b-waarom { --overgang-hoek: .5; }
 .waarom__kop { max-width: 52rem; margin-inline: auto; text-align: center; }
 .waarom__kop .label, .waarom__knoppen { justify-content: center; }
 .waarom__kop .intro { margin-inline: auto; }
@@ -8,24 +15,30 @@
 .waarom__knoppen { margin-top: 2rem; }
 
 .wkaarten { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(.75rem, .5rem + .8vw, 1.25rem); margin: 0; padding: 0; list-style: none; }
-/* Alle vier de kaarten dezelfde ondergrond. De afwisseling die hier stond zette kaart 2 en 3 in een
-   andere kleur dan 1 en 4, en dat koppelde kaarten aan elkaar die niets met elkaar te maken hebben.
-   Het verschil zit nu in de badge, want dat is het element dat zegt waar de kaart over gaat. */
-.wkaart { padding: clamp(1.4rem, 1.1rem + 1vw, 2rem); border-radius: var(--radius-card); background: var(--primary-50); border: 1px solid var(--primary-100); }
+/* Vier kaarten, vier ondergronden die net van elkaar verschillen: blauw, crème, mint en Mist, alle
+   vier de lichtste stap van hun kleur in het palet. Vier verschillende tinten koppelen geen kaarten
+   aan elkaar, wat de oude afwisseling van twee kleuren (1 en 4 tegen 2 en 3) wel deed.
+   De rand is dezelfde tint een fractie donkerder, zodat elke kaart zijn eigen kleur houdt.
+   Tekst gemeten op elke tint: de kop haalt minstens 7,87:1 (op mint) en de lopende tekst minstens
+   11,05:1, dus ruim boven de 4,5:1 van WCAG 1.4.3. */
+.wkaart {
+  --kaart-vlak: var(--primary-50);
+  padding: clamp(1.4rem, 1.1rem + 1vw, 2rem); border-radius: var(--radius-card);
+  background: var(--kaart-vlak); border: 1px solid color-mix(in srgb, var(--kaart-vlak) 92%, var(--brand-secondary));
+}
+.wkaart--blauw { --kaart-vlak: var(--primary-50); }
+.wkaart--creme { --kaart-vlak: var(--accent-50); }
+.wkaart--mint  { --kaart-vlak: var(--success-50); }
+.wkaart--mist  { --kaart-vlak: var(--off-white); }
 
-/* Vier badges uit twee vlakken en twee pictogramkleuren. Gemeten, niet geschat:
-   het pictogram haalt 10,13:1 (diep op goud), 8,63:1 (koning op wit), 15,26:1 (diep op wit) en
-   5,73:1 (koning op goud), allemaal ruim boven de 3:1 van WCAG 1.4.11 voor niet-tekst.
-   De badgevorm zelf haalt 14,20:1 respectievelijk 8,03:1 tegen de kaart.
-   Goudgeel als vlak kan hier niet: dat haalt 1,40:1 tegen deze kaart en dan verdwijnt de huisvorm.
-   Dat is hetzelfde getal waar de dienstpictogrammen op stukliepen. */
-.wkaart { --badge-vlak: var(--brand-primary); --badge-icoon: var(--white); }
-.wkaart--diep-goud   { --badge-vlak: var(--brand-secondary); --badge-icoon: var(--brand-accent); }
-.wkaart--koning-wit  { --badge-vlak: var(--brand-primary);   --badge-icoon: var(--white); }
-.wkaart--diep-wit    { --badge-vlak: var(--brand-secondary); --badge-icoon: var(--white); }
-.wkaart--koning-goud { --badge-vlak: var(--brand-primary);   --badge-icoon: var(--brand-accent); }
-.wkaart .huisbadge { width: 4.4rem; margin-bottom: 1rem; background: var(--badge-vlak); color: var(--badge-icoon); }
-.wkaart .huisbadge .ic { width: 1.8rem; height: 1.8rem; }
+/* Het pictogram is een 3D-voorwerp uit dezelfde reeks als de contactkaarten. Elk staat in hetzelfde
+   vak en op dezelfde grondlijn linksonder, zodat een brede wagen en een smal schild even zwaar wegen. */
+.wkaart__voorwerp { display: block; margin-bottom: 1rem; }
+.wkaart__obj {
+  display: block; width: 5.4rem; height: 4.6rem; max-width: none; object-fit: contain; object-position: left bottom;
+  filter: drop-shadow(1px 2px 1.5px color-mix(in srgb, var(--brand-secondary) 26%, transparent))
+          drop-shadow(5px 9px 8px color-mix(in srgb, var(--brand-secondary) 22%, transparent));
+}
 .wkaart__titel { margin: 0 0 .5rem; font-size: var(--text-h4); line-height: 1.15; }
 .wkaart p { margin: 0; font-size: var(--text-small); line-height: 1.55; color: var(--graphite); }
 
@@ -36,6 +49,6 @@
 @media (max-width: 559.98px) {
   .wkaarten { grid-template-columns: minmax(0, 1fr); }
   .wkaart { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 1rem; align-items: start; }
-  .wkaart .huisbadge { grid-row: 1 / span 2; width: 3.4rem; margin: 0; padding-bottom: .35rem; }
-  .wkaart .huisbadge .ic { width: 1.35rem; height: 1.35rem; }
+  .wkaart__voorwerp { grid-row: 1 / span 2; margin: 0; }
+  .wkaart__obj { width: 3.8rem; height: 3.4rem; }
 }

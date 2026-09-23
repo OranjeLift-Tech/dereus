@@ -121,10 +121,23 @@ def html(ctx, kopij, **opties) -> str:
 
 ### 3.3 Draaien
 
-- `python _werk/build.py` bouwt alles en draait daarna de bewakers. Faalt een bewaker, dan stopt de build met een foutcode en een lijst.
+- `python _werk/build.py` bouwt alles en draait daarna de bewakers. Faalt een bewaker, dan stopt de build met een foutcode en een lijst. Is er sinds de vorige build niets aan de invoer en niets aan de uitvoer veranderd, dan meldt hij "niets te doen" en stopt in 0,11 seconde. Een volledige build duurt 0,37 seconde.
 - `python _werk/build.py --alleen /diensten/` bouwt één pagina (plus de gedeelde bestanden).
+- `python _werk/build.py --alles` negeert de cache en bouwt alles opnieuw.
+- `python _werk/build.py --droog` rendert alles en draait de bewakers, maar schrijft niets; het sluit af met de lijst bestanden die een echte build zou aanraken. Het neemt geen slot, dus dit mag altijd.
+- **Naast andere sessies bouwen mag sinds 22-09-2026.** Een slot in `_werk/.build.lock` met de sessienaam erin houdt twee builds uit elkaar: de tweede stopt met exitcode 3 en noemt de houder. Elk bestand gaat atomair naar schijf (tijdelijk bestand plus hernoemen), zodat een gelijktijdige lezer nooit een halve pagina ziet. Identieke inhoud wordt niet herschreven, ook niet bij het kopiëren van de logo's en iconen. En de build onthoudt in `_werk/.bouwcache.json` wat hij zelf geschreven heeft; staat een bestand daarna anders op schijf, met de hand gespliced bijvoorbeeld, dan noemt hij dat bestand bij naam voordat hij het overschrijft.
+- **De generator blijft de bron.** Een build draait handwerk in de gebouwde HTML altijd terug, hij zegt het nu alleen hardop. Zet een wijziging dus in `_werk/blokken/` of `_werk/paginas/` en niet in de uitvoer. Zo ging het mis met de teamfoto op `/contact/` (commit 7fe41fb): die stond alleen in `contact/index.html` en niet in `formulier.py`, en was bij de eerstvolgende build verdwenen.
 - `python _werk/build.py --serve` bouwt en start een lokale server op http://127.0.0.1:8000 (met `trailingSlash`-gedrag).
 - Screenshots: headless Edge (`C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe`), 1440 en 390 px. **Kijk naar je screenshots.**
+
+### 3.4 Controleren
+
+`node _werk/controle.cjs` draait de hele keten: layout, headers, wereld, werkwijze en `controle-beelden.py`. Het start zelf een server op een vrije poort, zoekt zelf Playwright en deelt één browser, dus er hoeft niets klaargezet te worden.
+
+- `node _werk/controle.cjs layout headers` doet alleen die checks; `--snel` neemt twee breedtes in plaats van vijf; `--serie` draait ze achter elkaar in plaats van tegelijk; `--basis http://127.0.0.1:8012` gebruikt een server die al draait.
+- Elk script draait ook los, met dezelfde argumenten als altijd: `node _werk/controle-layout.cjs [pad-naar-playwright] [basis-url]`. Beide argumenten mogen nu weg.
+- **Een run stopt niet bij de eerste fout.** De asserts zijn zacht (`_werk/controle-kit.cjs`): een fout wordt opgeschreven met de eenheid waarin hij viel en de sweep loopt door, zodat één run de hele lijst geeft in plaats van alleen het eerste geval. De afsluitcode is nog steeds 1 zodra er iets rood is.
+- Raakt een verandering een klassenaam waar `controle-layout.cjs` op toetst, werk dat script dan in dezelfde verandering bij en draai het groen voordat je oplevert.
 
 ## 4. Naamgeving en conventies
 

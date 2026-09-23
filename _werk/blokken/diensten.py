@@ -7,15 +7,15 @@ JS = False
 
 FOTOS = {
     "particulier": "particulier", "zakelijk": "zakelijk", "nationaal": "nationaal",
-    "internationaal": "internationaal", "verhuislift": "verhuislift", "opslag": "opslag",
-    "montage": "handyman", "woningontruiming": "woningontruiming",
+    "internationaal": "internationaal", "verhuislift": "verhuislift", "opslag": "opslag-v2",
+    "montage": "montage", "woningontruiming": "woningontruiming",
 }
 
 # Uitstap-effect: hoe ver de fotolaag boven het kader uitsteekt (pop) en waar het kader
 # begint, gemeten over die laag (knip). De uitsnede zonder achtergrond wordt niet afgeknipt, dus
 # alles wat boven de kaderlijn zit komt boven de kaart uit. Berekend uit het alfamasker door
-# _ai-beelden/diensten-uit-export.cjs; niet met de hand aanpassen. Handymanservice staat er
-# bewust niet bij: die foto is een close-up van een hand, zonder persoon om uit te laten stappen.
+# _ai-beelden/diensten-uit-export.cjs; niet met de hand aanpassen. Montage staat er bewust niet
+# bij: dat beeld is een 3D-boor op een achtergrond, zonder persoon om uit te laten stappen.
 UITSTAP = {
     "particulier": ("67.4%", "40.27%"),
     "zakelijk": ("36.9%", "26.93%"),
@@ -23,6 +23,9 @@ UITSTAP = {
     "internationaal": ("40.9%", "29.04%"),
     "verhuislift": ("43.2%", "30.15%"),
     "opslag": ("50.1%", "33.38%"),
+    # opslag-v2 (23-09-2026, ander gezicht, zelfde uitsnede): de bovenkant van de persoon zakt van 26,05% naar
+    # 26,54% (korter haar), verder is de alfa gelijk, dus dezelfde pop en knip als opslag.
+    "opslag-v2": ("50.1%", "33.38%"),
     "woningontruiming": ("22.2%", "18.14%"),
 }
 

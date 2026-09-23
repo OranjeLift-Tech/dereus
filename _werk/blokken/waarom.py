@@ -1,25 +1,31 @@
-"""Waarom De Reus: vier afspraken naast de inpakillustratie uit de visuele homepage."""
+"""Waarom De Reus: vier afspraken naast een foto van twee verhuizers die samen een fauteuil dragen."""
 NAAM = "waarom"
 CSS = True
 JS = False
 
-# Icoon per kaart, op volgorde van de kopij
-ICONEN = ["persoon", "doos", "euro", "schild"]
+# Per kaart het 3D-voorwerp, op volgorde van de kopij: map, bestandsnaam, breedte en hoogte.
+# Allemaal renders uit dezelfde reeks als de contactkaarten en /kosten/ (één lichtbron linksboven),
+# dus vier gelijke pictogrammen in plaats van vier badges in vier kleurcombinaties.
+VOORWERP = [
+    ("contact-3d", "headset", 287, 320),   # één vaste verhuisadviseur
+    ("kosten-3d", "trap", 371, 420),       # vakmensen: de kast veilig de trap af
+    ("kosten-3d", "wagen", 594, 420),      # geen voorrijkosten: de rit naar uw adres
+    ("contact-3d", "schild", 251, 320),    # standaard verzekerd
+]
 
-# Kleuraccent van de badge per kaart, op dezelfde volgorde. Twee vlakken maal twee pictogramkleuren
-# geeft vier herkenbare badges zonder dat er een kleur buiten het palet bij komt.
-# Goudgeel draagt hier een pictogram op donker; het staat nergens als tekst op wit.
-ACCENTEN = ["diep-goud", "koning-wit", "diep-wit", "koning-goud"]
+# Ondergrond per kaart, op dezelfde volgorde. Vier lichte tinten uit het palet die net van elkaar
+# verschillen; zie waarom.css.
+ONDERGROND = ["blauw", "creme", "mint", "mist"]
 
 
 def html(ctx, kopij, **opties):
     k = kopij
     kaarten = []
     for i, it in enumerate(k.items):
-        icoon = ICONEN[i % len(ICONEN)]
-        accent = ACCENTEN[i % len(ACCENTEN)]
-        kaarten.append(f'''<li class="wkaart wkaart--{accent}">
-        <span class="huisbadge">{ctx.icoon(icoon)}</span>
+        map_, naam, b, h = VOORWERP[i % len(VOORWERP)]
+        grond = ONDERGROND[i % len(ONDERGROND)]
+        kaarten.append(f'''<li class="wkaart wkaart--{grond}">
+        <span class="wkaart__voorwerp" aria-hidden="true"><img class="wkaart__obj wkaart__obj--{naam}" src="/img/{map_}/{naam}.webp" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>
         <h3 class="wkaart__titel">{ctx.inline(it.titel)}</h3>
         <p>{ctx.inline(it.veld("tekst"))}</p>
       </li>''')
@@ -33,7 +39,7 @@ def html(ctx, kopij, **opties):
     </div>
     <div class="waarom__inhoud">
       <figure class="waarom__beeld" data-reveal>
-        {ctx.beeld("/img/verwachten-inpakken.webp", "Illustratie van het zorgvuldig inpakken van een verhuizing", 720, 540)}
+        {ctx.beeld("/img/verhuisdag-dragen.webp", "Twee verhuizers dragen samen een fauteuil, ingepakt in een deken en folie", 1400, 1050)}
       </figure>
       <ul class="wkaarten" role="list" data-reveal-groep>{"".join(kaarten)}</ul>
     </div>

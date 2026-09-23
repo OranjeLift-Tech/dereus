@@ -8,6 +8,11 @@ node_modules/
 __pycache__/
 *.py[cod]
 
+# Werkstaat van build.py: het slot van de draaiende build en de cache met invoer- en uitvoerhashes.
+# Allebei per machine, nooit delen. .lastmod.json blijft wel in git: dat zijn de sitemap-datums.
+_werk/.build.lock
+_werk/.bouwcache.json
+
 # Gegenereerde concepten en browserprofielen blijven lokaal
 _voorbeeld/
 website/review/

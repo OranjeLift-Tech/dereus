@@ -4,8 +4,8 @@ CSS = True
 JS = True
 
 FOTOS = [
-    "stap-1-formulier.webp", "stap-2-bellen.webp", "stap-3-offerte.webp",
-    "stap-4-planning.webp", "stap-5-verhuisdag.webp",
+    "stap-1-laptop.webp", "stap-2-contact.webp", "stap-3-offerte.webp",
+    "stap-4-planning.webp", "stap-5-bank-voordeur.webp",
 ]
 
 

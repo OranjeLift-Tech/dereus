@@ -76,3 +76,40 @@
   .b-naplaten__obj--headset{height:6.7rem}
   .b-naplaten__obj--ster{height:4.8rem}
 }
+
+/* ---- kop met uitsnede (optie beeld) ----
+   De foto staat naast de kop, niet in de platen: de 3D-voorwerpen boven de platen benoemen elk hun
+   eigen plaat en blijven dus staan. Het vak zelf is .uitsnede uit css/blok/uitsnede.css, hetzelfde
+   mechanisme als "Zo werken wij" en "Kennismaken?"; daar staat ook uitgelegd wat de zes getallen
+   doen die het blok als inline stijl meegeeft.
+   Let op de dubbele klasse: uitsnede.css wordt via extra_css NA de blok-CSS geladen, dus een regel
+   die het daarvan moet winnen heeft twee klassen nodig. Alles staat stil. */
+/* auto-kolom plus een vaste maximumbreedte: de uitsnede is staand (394x710), dus een fr-kolom
+   zou hem bij elke vensterbreedte een andere hoogte geven en de sectie laten meeademen. */
+/* Zelfde 56rem als .b-naplaten__rij hieronder: anders staat de foto rechts buiten de kolom waar
+   de twee platen in staan en hangt de kop los van zijn eigen sectie. */
+.b-naplaten__hoofd{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;
+  gap:clamp(1rem,.5rem + 2vw,2.75rem);max-width:56rem;margin-inline:auto}
+.b-naplaten .b-naplaten__beeld{width:clamp(9rem,17vw,13.5rem)}
+.b-naplaten__hoofd .kopgroep{max-width:34rem;margin:0;text-align:left}
+.b-naplaten__hoofd .kopgroep .label{justify-content:flex-start}
+.b-naplaten__hoofd .kopgroep .intro{margin-inline:0}
+.b-naplaten .b-naplaten__beeld{
+  /* plaat: lichtblauw op Mist, net als in de contactband */
+  --uit-plaat-vulling:linear-gradient(158deg,var(--primary-200),var(--primary-100));
+  --uit-plaat-rand:rgb(23 70 162 / .10);
+  --uit-plaat-links:3%;--uit-plaat-rechts:3%;--uit-plaat-boven:26%;--uit-plaat-onder:9%;
+  --uit-motief-kleur:var(--brand-primary);--uit-motief-alfa:.12;
+  --uit-motief-breed:40%;--uit-motief-boven:0;--uit-motief-rechts:-2%;
+  --uit-schaduw:0 12px 18px rgb(14 26 51 / .24);
+}
+/* de rij eronder houdt zijn eigen ruimte voor de voorwerpen; de kop hoeft er niet nog eens bij */
+.b-naplaten__hoofd + .b-naplaten__rij{padding-top:4.2rem}
+
+@media (max-width:899.98px){
+  .b-naplaten__hoofd{grid-template-columns:minmax(0,1fr);justify-items:center}
+  .b-naplaten__hoofd .kopgroep{margin-inline:auto;text-align:center}
+  .b-naplaten__hoofd .kopgroep .label{justify-content:center}
+  .b-naplaten__hoofd .kopgroep .intro{margin-inline:auto}
+  .b-naplaten .b-naplaten__beeld{width:min(100%,11rem);margin-top:1.25rem}
+}

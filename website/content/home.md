@@ -131,14 +131,8 @@ tekst: Deze jongens zijn de hardstwerkende, eerlijkste en liefste mensen die ik 
 tekst: Goede en duidelijke communicatie, hele fijne samenwerking. Gaat zorgvuldig met de items om en is zeer behulpzaam. Top professional en zou dit bedrijf zeker weer inhuren voor een volgende verhuizing!
 
 ## Sterk waar het zwaar is {#over-ons}
-label: Over De Reus
-knop: Offerte aanvragen
-linktekst: Meer over De Reus
-link: /over-ons/
 
-Verhuizen is zwaar werk. Daar is De Reus voor: vakmensen met jaren ervaring, geen studenten, en één vaste verhuisadviseur als aanspreekpunt. Klanten noemen ons in hun reviews netjes, voorzichtig en respectvol.
-
-Notitie: korte teaser. Het verhaal van de naam en hoe wij werken staat op /over-ons/ (over-ons.md).
+Notitie: sinds 23-09-2026 toont de home hier letterlijk de sectie "Sterk waar het zwaar is" van /over-ons/ (over-ons.md, #verhaal), op verzoek van de gebruiker. De tekst staat daar; wat hier staat wordt niet gebruikt. Zie de optie kopij_van in _werk/paginas/home.py.
 
 ## Vanuit Den Haag, door heel Nederland {#werkgebied}
 label: Werkgebied

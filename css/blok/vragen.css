@@ -83,7 +83,14 @@
    .vragen__kop op display:contents en zou het beeld los in de stroom belanden. Dus standaard weg. */
 .vragen__beeld { display: none; }
 
-/* ---- /contact/: servicebalie met headset ----
+/* ---- de paneelopmaak: /contact/, en sinds 23-09 ook elders ----
+   Dit blok was `.p-contact`-only. De gebruiker vroeg "make all use the /contact version", dus de
+   selectors zijn verbreed naar `:is(.p-contact, .b-vragen--paneel)`: /contact/ blijft letterlijk
+   wat het was, en elke andere pagina kan dezelfde opmaak aanzetten met de optie stijl="paneel".
+   Niets is hier verplaatst of hernoemd, alleen de selectorlijst is langer geworden, zodat de
+   uitvoer van /contact/ byte voor byte gelijk blijft.
+
+---- /contact/: servicebalie met headset ----
    Ontwerp 03 uit _ontwerpen/vragen-contact-varianten.html, gekozen door de gebruiker. Links een Diepblauw
    paneel dat voor de sectie staat, met de headset van de verhuisadviseur die er rechtsboven uit steekt;
    rechts de vragen als witte platen met een Koningsblauwe zijkant.
@@ -92,7 +99,7 @@
    belkaart onder de vragen, dus dan is er geen paneel om iets op te zetten.
    Alles staat stil; de diepte komt uit rand en schaduw, net als op /offerte/ en /kosten/. */
 @media (min-width: 900px) {
-  .p-contact .b-vragen {
+  :is(.p-contact .b-vragen, .b-vragen--paneel) {
     --rand-wit: #D5E2F8; --rand-blauw: #071838; --rand-geel: #DB940E;
     --val-midden: 0 14px 26px -14px rgba(14, 26, 51, .3);
     --val-ver: 0 52px 90px -46px rgba(11, 35, 82, .55);
@@ -101,41 +108,41 @@
   }
   /* position:relative: de headset (.vragen__beeld) en de ::before/::after hangen aan dit paneel. Vroeger deed de sticky
      van .vragen__kop dat; die is uit de basis gehaald, en zonder dit schoot de headset naar de rechterrand van het scherm. */
-  .p-contact .vragen__kop { position: relative; isolation: isolate; display: grid; gap: 1.5rem; align-content: start;
+  :is(.p-contact, .b-vragen--paneel) .vragen__kop { position: relative; isolation: isolate; display: grid; gap: 1.5rem; align-content: start;
     margin: -1.2rem 0; padding: 2.2rem 2rem 2.4rem; border-radius: 24px; color: var(--white);
     background: linear-gradient(158deg, var(--brand-primary), #123780 40%, var(--brand-secondary));
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), 0 7px 0 var(--rand-blauw),
       0 26px 40px -18px rgba(7, 24, 56, .55), 0 60px 90px -40px rgba(7, 24, 56, .6); }
-  .p-contact .vragen__kop::before { content: ""; position: absolute; z-index: -1; inset: 0; border-radius: 24px;
+  :is(.p-contact, .b-vragen--paneel) .vragen__kop::before { content: ""; position: absolute; z-index: -1; inset: 0; border-radius: 24px;
     background: linear-gradient(135deg, rgba(255, 255, 255, .16), transparent 42%); }
   /* het gele tabje op de bovenrand, zoals de platen elders op de site */
-  .p-contact .vragen__kop::after { content: ""; position: absolute; left: 2rem; top: 0; width: 4.25rem; height: 5px;
+  :is(.p-contact, .b-vragen--paneel) .vragen__kop::after { content: ""; position: absolute; left: 2rem; top: 0; width: 4.25rem; height: 5px;
     border-radius: 0 0 5px 5px; background: var(--brand-accent); }
-  .p-contact .vragen__kop .kopgroep { margin: 0; }
+  :is(.p-contact, .b-vragen--paneel) .vragen__kop .kopgroep { margin: 0; }
   /* ctx.kopgroep levert een kale <h2> zonder klasse, dus op de tag mikken en niet op .h2 */
-  .p-contact .vragen__kop :is(h2, .h2) { color: var(--white); padding-right: 6rem; }   /* ruimte voor de headset */
-  .p-contact .vragen__kop .label { color: var(--brand-accent); }
-  .p-contact .vragen__beeld { display: block; position: absolute; z-index: 2; right: -1.6rem; top: -2.6rem; width: auto;
+  :is(.p-contact, .b-vragen--paneel) .vragen__kop :is(h2, .h2) { color: var(--white); padding-right: 6rem; }   /* ruimte voor de headset */
+  :is(.p-contact, .b-vragen--paneel) .vragen__kop .label { color: var(--brand-accent); }
+  :is(.p-contact, .b-vragen--paneel) .vragen__beeld { display: block; position: absolute; z-index: 2; right: -1.6rem; top: -2.6rem; width: auto;
     height: 11rem; max-width: none; pointer-events: none;
     filter: drop-shadow(2px 3px 2px rgba(11, 35, 82, .35)) drop-shadow(10px 20px 14px rgba(11, 35, 82, .38)); }
   /* de belkaart wordt een doorschijnend vlak binnen het paneel */
-  .p-contact .vragen__bel { position: relative; z-index: 1; gap: .8rem; padding: 1.4rem 1.5rem 1.6rem;
+  :is(.p-contact, .b-vragen--paneel) .vragen__bel { position: relative; z-index: 1; gap: .8rem; padding: 1.4rem 1.5rem 1.6rem;
     border: 0; border-radius: 18px; background: rgba(255, 255, 255, .08);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), inset 0 0 0 1px rgba(255, 255, 255, .08),
       0 4px 0 rgba(7, 24, 56, .5); }
-  .p-contact .vragen__bel p { color: var(--white); }
-  .p-contact .vragen__status { padding: .3rem .8rem .3rem .6rem; border-radius: 999px;
+  :is(.p-contact, .b-vragen--paneel) .vragen__bel p { color: var(--white); }
+  :is(.p-contact, .b-vragen--paneel) .vragen__status { padding: .3rem .8rem .3rem .6rem; border-radius: 999px;
     background: rgba(255, 255, 255, .12); color: var(--white); font-weight: var(--weight-bold); }
-  .p-contact .vragen__status .bereikbaar__stip { background: #4ADE80;
+  :is(.p-contact, .b-vragen--paneel) .vragen__status .bereikbaar__stip { background: #4ADE80;
     box-shadow: 0 0 0 3px rgba(74, 222, 128, .25), 0 0 10px #4ADE80; }
-  .p-contact .vragen__bel .knop { background: var(--brand-accent); border-color: transparent;
+  :is(.p-contact, .b-vragen--paneel) .vragen__bel .knop { background: var(--brand-accent); border-color: transparent;
     color: var(--brand-secondary); box-shadow: 0 4px 0 var(--rand-geel), 0 14px 18px -10px rgba(0, 0, 0, .5); }
   /* rechts: elke vraag een witte plaat met een Koningsblauwe zijkant, geen lijstlijnen meer */
-  .p-contact .vragen__lijst { display: grid; gap: 1rem; align-content: start; border-top: 0; }
-  .p-contact .vraag { border-bottom: 0; border-radius: 14px; background: var(--white);
+  :is(.p-contact, .b-vragen--paneel) .vragen__lijst { display: grid; gap: 1rem; align-content: start; border-top: 0; }
+  :is(.p-contact, .b-vragen--paneel) .vraag { border-bottom: 0; border-radius: 14px; background: var(--white);
     box-shadow: inset 6px 0 0 var(--brand-primary), var(--plaat); }
-  .p-contact .vraag summary { padding: 1.05rem 1.2rem 1.05rem 1.6rem; }
-  .p-contact .vraag__antwoord { padding: 0 1.6rem 1.4rem 4.8rem; }
+  :is(.p-contact, .b-vragen--paneel) .vraag summary { padding: 1.05rem 1.2rem 1.05rem 1.6rem; }
+  :is(.p-contact, .b-vragen--paneel) .vraag__antwoord { padding: 0 1.6rem 1.4rem 4.8rem; }
 }
 
 /* ---- home: het voorwerp vult het gat tussen de kop en de belkaart ----
@@ -168,4 +175,178 @@
     filter: drop-shadow(2px 3px 2px color-mix(in srgb, var(--brand-secondary) 30%, transparent))
             drop-shadow(8px 16px 12px color-mix(in srgb, var(--brand-secondary) 32%, transparent));
   }
+}
+
+/* ---- optie kopkaart + foto (/werkwijze/): de kop gaat de belkaart in ----
+   Vraag van de gebruiker: zet de sectiekop in het blok met "nu bereikbaar" en de contactgegevens,
+   en zet er rechts een verhuizer bij. De kop stond op elke pagina boven die witte kaart, nooit erin.
+   Alleen met de optie aan; zonder deze klassen verandert er niets aan de andere pagina's.
+
+   De foto staat op een getinte plaat en niet los op het wit van de kaart. Alle vier de uitsneden
+   dragen een WITTE doos, en die verliest op wit zijn omtrek; primary-100 is daar al te licht voor,
+   dus primary-200 naar primary-300. Zijn hoofd steekt boven de plaat uit, net als de uitsneden
+   elders op de site: dat is wat de figuur uit de kaart laat stappen in plaats van erin geplakt. */
+.vragen__kop--kaart .kopgroep { margin: 0 0 .35rem; max-width: none; margin-inline: 0; text-align: left; }
+.vragen__kop--kaart .kopgroep .label { justify-content: flex-start; }
+/* De belknop is 223 px breed en krimpt niet mee; die maat bepaalt waar de figuur nog naast de
+   tekst past. Onder 480 px gaat de zijkant van de kaart daarom terug van 1,5rem naar 1rem, en
+   onder 380 px is er geen ruimte meer en blijft de figuur weg: 288 - 32 - 74 laat 182 px over
+   voor een knop die er 223 nodig heeft, en een knop die uit zijn kaart loopt is erger dan geen
+   verhuizer. Op 390, de breedte die we nakijken, past hij wel. */
+.vragen__bel--kop { padding: 1.5rem 1rem 1.6rem; }
+.vragen__beltekst { display: grid; justify-items: start; gap: .75rem; }
+.vragen__figuur { display: none; }
+@media (min-width: 480px) { .vragen__bel--kop { padding: 1.5rem 1.5rem 1.6rem; } }
+
+@media (min-width: 380px) {
+  .vragen__bel--kop { grid-template-columns: minmax(0, 1fr) auto; align-items: stretch;
+    column-gap: clamp(.6rem, 1.5vw, 1.75rem); }
+  /* De plaat is even hoog als de tekst ernaast en de figuur is hoger dan de plaat, dus steekt hij
+     er bovenuit. Geen vaste hoogte: dan klopt hij niet meer zodra de kop twee regels wordt. */
+  .vragen__figuur { position: relative; display: block; align-self: stretch; justify-self: end;
+    width: clamp(4.6rem, 19vw, 8rem); min-height: 6.5rem; border-radius: 12px;
+    background: linear-gradient(165deg, var(--primary-200), var(--primary-300)); }
+  .vragen__foto { position: absolute; left: 50%; bottom: 0; translate: -50% 0;
+    display: block; width: auto; height: calc(100% + 2.6rem); max-width: none;
+    filter: drop-shadow(2px 4px 4px rgba(14, 26, 51, .22)); }
+}
+/* Onder 900px staat .vragen__kop op display:contents en zakt de belkaart onder de vragen. Dat kan
+   hier niet: de kop zit nu IN die kaart, dus dan zou de sectie met de vragen beginnen en pas
+   daaronder zijn eigen kop krijgen. Met de optie aan blijft de kolom dus een gewoon blok. */
+@media (max-width: 899.98px) {
+  .vragen__kop--kaart { display: block; margin-bottom: 2rem; }
+}
+/* De figuur is 0,34 breed op hoog en krijgt zijn breedte uit zijn hoogte. Op een telefoon is de
+   tekstkolom zo hoog (kop over drie regels, plus twee knoppen onder elkaar) dat een plaat die
+   meerekt de figuur breder maakt dan de plaat zelf, en dan steekt hij de kaart uit. Dus onder
+   480 px rekt de plaat niet mee maar staat hij op een eigen hoogte, onderaan uitgelijnd. */
+@media (max-width: 479.98px) {
+  .vragen__figuur { align-self: end; height: clamp(10.5rem, 45vw, 15rem); min-height: 0; }
+}
+/* Vanaf 900px zakt de kaart normaal met margin-top:auto naar de onderrand van de kolom. Met de kop
+   erin is de kaart het hele blok links, dus hoort hij boven te beginnen, gelijk met de vragen, en
+   door te lopen tot onderaan.
+
+   Gevraagd: de kaart moet even hoog worden als de vragenlijst ernaast, boven gelijk met de eerste
+   vraag en onder met de laatste. Boven klopte het al op een pixel na; onder bleef de kaart 22 tot
+   23 px te kort, omdat zijn hoogte uit zijn inhoud kwam. Niet oplossen met padding of met een
+   hoogte in pixels: die kloppen alleen bij deze ene tekst en dit ene aantal vragen. De kolom wordt
+   door het raster al tot de hoogte van de vragenlijst gerekt, dus de kaart hoeft alleen die ruimte
+   te vullen. Dat is flex:1 1 auto, en dan klopt het ook als er een vraag bij komt of de kop over
+   drie regels gaat.
+
+   De inhoud blijft wel bovenaan staan: de tekst op align-self:start, zodat de kop niet naar het
+   midden zakt. De plaat met de verhuizer rekt juist wel mee, dus die wordt een paar px hoger. */
+@media (min-width: 900px) {
+  .vragen__kop--kaart .vragen__bel { margin-top: 0; }
+  /* Alleen meerekken als er iets IS dat die hoogte vult. Op /werkwijze/ staat de verhuizer in de
+     kaart en groeit de plaat mee; op de home staat er alleen tekst, en dan levert meerekken een
+     kaart op die voor een kwart leeg is. Gemeten op de home: kaart 484 px tegen 350 px inhoud,
+     dus 134 px wit onder de knoppen. Vandaar de :has() in plaats van de optie altijd aan. */
+  .vragen__kop--kaart:has(.vragen__figuur) .vragen__bel { flex: 1 1 auto; }
+}
+.vragen__beltekst { align-self: start; }
+
+/* ---- behandeling "hoek" (home): het voorwerp op de rechterbovenhoek van de kaart ----
+   Vraag van de gebruiker: de kop in de kaart, en de headset naar rechtsboven, een stukje buiten
+   de kaart. Dat is dezelfde vormtaal als de headset op /contact/, maar die zit daar vast aan
+   .p-contact; dit is de paginaonafhankelijke versie, en hij hangt aan de kaart zelf.
+
+   De overhang is 12 px opzij en 24 px omhoog. Die 12 is geen smaak maar een grens: de wrap houdt
+   op elke breedte 16 px marge naast de kaart, dus alles tot 16 px kan er nooit een horizontale
+   schuifbalk van maken. Op /contact/ staat al de hele dag een beeld 44 px te breed en dat breekt
+   daar vier breedtes; deze blijft er per definitie binnen. Gemeten: op 320 px eindigt de kaart op
+   304 en het voorwerp op 316, dus 4 px over.
+
+   Het gele huis uit de "vult-gat"-behandeling gaat hier NIET mee. Dat vak bestond om het gat
+   tussen de kop en de kaart te vullen, en met de kop in de kaart is dat gat er niet meer. Een
+   tweede sierlaag achter een voorwerp van 7 rem op een hoek maakt de hoek alleen maar druk. */
+.vragen__bel--kop { position: relative; }
+.vragen__bel--kop > .vragen__beeld {
+  display: block; position: absolute; z-index: 2; top: -1.5rem; right: -.75rem;
+  width: auto; height: clamp(5rem, 11vw, 7rem); max-width: none; pointer-events: none;
+  filter: drop-shadow(2px 3px 2px color-mix(in srgb, var(--brand-secondary) 30%, transparent))
+          drop-shadow(8px 16px 12px color-mix(in srgb, var(--brand-secondary) 28%, transparent));
+}
+/* De kop mag niet onder het voorwerp door lopen: rechts ruimte vrijhouden zolang het daar hangt. */
+.vragen__bel--kop > .vragen__beeld ~ .vragen__beltekst .kopgroep { padding-right: 5.5rem; }
+@media (max-width: 559.98px) {
+  .vragen__bel--kop > .vragen__beeld ~ .vragen__beltekst .kopgroep { padding-right: 4rem; }
+}
+
+/* ---- paneelopmaak samen met kopkaart ----
+   Op /contact/ staat de kop op het paneel en is de belkaart een doorschijnend blok eronder. Met
+   kopkaart zit de kop IN die kaart, en dan zou dat doorschijnende blok bijna het hele paneel
+   vullen: een doos in een doos. Op een paneel is het paneel zelf het blok, dus de kaart geeft daar
+   zijn achtergrond op en zet alleen de inhoud neer. Dat levert precies het beeld van /contact/ op:
+   blauw paneel, kop, status, regel, knoppen, en de headset op de hoek. */
+@media (min-width: 900px) {
+  .b-vragen--paneel .vragen__bel--kop { background: none; box-shadow: none; padding: 0; }
+  /* Het voorwerp hangt op het PANEEL en niet op de kaart zodra er een paneel is; de kaart heeft
+     daar geen eigen rand meer om aan te hangen. Dit is dezelfde plek als op /contact/. */
+  .b-vragen--paneel .vragen__bel--kop > .vragen__beeld { top: -3.4rem; right: -3rem; height: 11rem; }
+  .b-vragen--paneel .vragen__bel--kop > .vragen__beeld ~ .vragen__beltekst .kopgroep { padding-right: 6rem; }
+  /* De plaat achter de verhuizer mag lichter dan het paneel, anders verdwijnt hij erin. */
+  .b-vragen--paneel .vragen__figuur { background: linear-gradient(165deg, var(--primary-100), var(--primary-300)); }
+  .b-vragen--paneel .vragen__status { color: var(--white); }
+}
+/* Onder 900px bestaat het paneel niet (daar valt .vragen__kop uit elkaar), dus dan blijft de
+   kaart gewoon de witte kaart die hij was. Niets van het bovenstaande grijpt daar aan: alles zit
+   in de mediaquery, zodat de telefoon niet in een half paneel belandt. */
+
+/* ---- hoogte van het paneel ----
+   Twee gevallen, en ze willen het tegenovergestelde. Het contactblok zet .vragen__kop op
+   display:grid met align-content:start en margin:-1.2rem 0; de kolom zelf wordt door
+   .vragen{align-items:stretch} tot de hoogte van de vragenlijst gerekt. Dat is prima op /contact/,
+   waar vier vragen korter zijn dan het paneel. Op de home zijn het er zes en werd het paneel
+   322 px inhoud in 554 px hoogte: tweederde leeg blauw. Op /werkwijze/ moet het juist wel
+   meerekken, want daar is om uitlijning met de eerste en de laatste vraag gevraagd en de
+   verhuizer vult de ruimte.
+
+   Dus: zonder foto is het paneel zo hoog als zijn inhoud, met foto loopt het door tot onderaan.
+   En in dat tweede geval gaat de negatieve marge eruit, anders steekt het paneel er 19 px boven
+   en onder uit en is het precies niet uitgelijnd. */
+@media (min-width: 900px) {
+  /* Sinds 23-09 alleen nog zonder foto EN zonder vulling (zie onderaan): een pagina die de vulling uitzet,
+     of een die nog niet opnieuw gebouwd is. */
+  .b-vragen--paneel .vragen__kop--kaart:not(:has(.vragen__figuur, .vragen__vul)) { align-self: start; }
+  .b-vragen--paneel .vragen__kop--kaart:has(.vragen__figuur) { margin: 0; align-content: stretch; }
+  .b-vragen--paneel .vragen__kop--kaart:has(.vragen__figuur) .vragen__bel--kop { height: 100%; }
+}
+
+/* ---- het paneel even hoog als de vragenlijst, en de vrije ruimte gevuld (23-09-2026) ----
+   Gevraagd: "make the blue block be the same height as the question block, which is different on each
+   page, and add image to the empty space to fill, something without background".
+   Gemeten voor deze wijziging (1366 t/m 1920, alle vragen dicht): home paneel 395 tegen lijst 554,
+   /kosten/ 592 tegen 554 met 127 px leeg blauw onder de belkaart, /contact/ 419 tegen 359, /werkwijze/
+   432 tegen 432. Drie regels maken dat gelijk, zonder een enkele maat in pixels:
+   1. De negatieve marge gaat eraf. Die liet het paneel 19 px boven de eerste en onder de laatste vraag
+      uitsteken, dus het kon nooit precies even hoog zijn.
+   2. Het raster rekt beide kolommen al tot de hoogste. Is het paneel het hoogst (/contact/, vier
+      vragen), dan verdelen de vragen zich over die hoogte in plaats van bovenaan te blijven staan.
+   3. Het paneel krijgt een vak met de 3D-vraagtekens (vragen.py, VULLING) dat met flex de vrije hoogte
+      neemt. Is de lijst het hoogst (home, /kosten/), dan vult het vak precies het gat. Tweede vraag van de
+      gebruiker, dezelfde dag: "use the question marks on all the pages", dus het vak heeft een minimum van
+      7rem en staat er ook waar geen gat was (/contact/, en op /werkwijze/ onder de tekst naast de
+      verhuizer). Wordt het paneel daardoor hoger dan de lijst, dan verdelen de vragen zich weer over die
+      hoogte (regel 2), dus gelijk blijven ze altijd. Het vak is een container: het beeld schikt zich naar
+      de ruimte en groeit mee als er een vraag opengaat, tot 12rem.
+   Onder 900px bestaat het paneel niet, dus dan blijft het vak weg. */
+.vragen__vul { display: none; }
+@media (min-width: 900px) {
+  :is(.p-contact, .b-vragen--paneel) .vragen__kop { margin: 0; }
+  :is(.p-contact, .b-vragen--paneel) .vragen__lijst { align-content: space-between; }
+  :is(.p-contact, .b-vragen--paneel) .vragen__kop:has(> .vragen__vul) { display: flex; flex-direction: column; }
+  /* De gap van het paneel (1.5rem) staat twee keer om het vak heen; de negatieve marge neemt er een terug.
+     De padding boven geeft het beeld lucht. */
+  :is(.p-contact, .b-vragen--paneel) .vragen__vul { display: block; position: relative; flex: 1 1 0; min-height: 7rem;
+    margin-top: -1.5rem; padding-top: 1.25rem; container-type: size; }
+  /* /werkwijze/: de kaart met de verhuizer vult het paneel al, dus het vak staat in de tekstkolom onder de
+     knoppen. Die kolom rekt dan mee tot de onderrand; de gap is daar .75rem. */
+  :is(.p-contact, .b-vragen--paneel) .vragen__beltekst:has(> .vragen__vul) { align-self: stretch; display: flex;
+    flex-direction: column; align-items: flex-start; }
+  :is(.p-contact, .b-vragen--paneel) .vragen__beltekst > .vragen__vul { align-self: stretch; margin-top: -.75rem; }
+  .vragen__vulbeeld { position: absolute; right: 0; bottom: 0; display: block; width: auto;
+    height: min(100cqh, 12rem); max-width: 100cqw; object-fit: contain; object-position: right bottom;
+    filter: drop-shadow(2px 3px 2px rgba(7, 24, 56, .35)) drop-shadow(8px 16px 14px rgba(7, 24, 56, .4)); }
 }

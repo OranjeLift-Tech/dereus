@@ -91,6 +91,18 @@ a.homecontact__waarde:hover{text-decoration-color:currentColor}
   .homecontact__plek{position:relative;grid-template-rows:1fr}
   .homecontact__bron{position:absolute;left:0;right:0;top:100%;margin:.45rem 0 0}
 }
+/* De kaart van Den Haag heeft onder zijn doos een donkerblauwe voet van 10 px (de harde schaduw
+   0 10px 0 in wereld.css). De berichtkaart eindigde op de doos en dus 10 px boven die voet.
+   Alleen de berichtkaart langer maken helpt niet: de kaart vult de kolom en groeit mee. Daarom
+   houdt de plek onderaan ruimte vrij voor de voet, en krijgt de berichtkaart dezelfde 10 px erbij.
+   De kaart van Den Haag blijft even hoog, de berichtkaart eindigt gelijk met de onderkant van de voet,
+   en het bijschrift hangt onder de voet in plaats van er 3 px in. Verandert de schaduw in wereld.css,
+   pas dan --wereld-voet mee aan. */
+@media(min-width:1080px){
+  .homecontact{--wereld-voet:10px}
+  .homecontact__plek{padding-bottom:var(--wereld-voet)}
+  .homecontact__bericht .b-formulier__kaart{padding-bottom:var(--wereld-voet)}
+}
 /* Onder 1080 px staat alles in één kolom en staan de gegevens naast elkaar in twee vakken.
    "De ruimte vullen" bestaat daar niet, dus de kaart houdt daar gewoon zijn eigen hoogte. */
 @media(max-width:1079.98px){

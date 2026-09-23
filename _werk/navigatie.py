@@ -252,7 +252,7 @@ def footer(ctx):
       <p>{inline(f.veld("contact-tekst", "Vertel ons waar u naartoe verhuist en welke hulp u nodig heeft. Uw vaste verhuisadviseur denkt met u mee."))}</p>
       <a class="footer__tel" href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{cfg.TEL}</span></a>
     </div>
-    <img class="footer__wagen" src="/img/footer-wagen.webp" alt="" width="1380" height="974" loading="lazy" decoding="async">
+    <img class="footer__wagen" src="/img/footer-wagen.webp" alt="" width="1200" height="847" loading="lazy" decoding="async">
   </div>
   <div class="wrap footer__top">
     <div class="footer__merk">
@@ -266,12 +266,12 @@ def footer(ctx):
       <div class="footer__blokken">
         <div class="footer__blok">
           <address><span class="footer__sub">{esc(f.veld("adres-label", "Hoofdkantoor"))}</span>{esc(cfg.STRAAT)}<br>{esc(cfg.POSTCODE)} {esc(cfg.PLAATS)}</address>
-          <ul><li><a href="{cfg.TELHREF}">{ctx.icoon("telefoon")}{cfg.TEL}</a></li><li><a href="mailto:{cfg.MAIL}">{ctx.icoon("mail")}{cfg.MAIL}</a></li><li><a href="{cfg.ROUTE}" rel="noopener">Route plannen{ctx.icoon("extern")}</a></li></ul>
+          <ul><li><a href="{cfg.TELHREF}">{ctx.icoon("telefoon")}{cfg.TEL}</a></li><li><a href="mailto:{cfg.MAIL}">{ctx.icoon("mail")}{cfg.MAIL}</a></li></ul>
         </div>
         <div class="footer__blok">
           <p class="footer__sub">{esc(f.veld("bereikbaar-kop", "Bereikbaar"))}</p>
           <ul class="footer__tijden">{tijden}</ul>
-          {bereikbaar_html(ctx, "bereikbaar bereikbaar--footer")}
+          <p class="footer__nu">{bereikbaar_html(ctx, "bereikbaar bereikbaar--footer")}<a href="{cfg.ROUTE}" rel="noopener">Route plannen{ctx.icoon("extern")}</a></p>
         </div>
       </div>
     </div>

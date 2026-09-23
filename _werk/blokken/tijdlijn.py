@@ -67,18 +67,44 @@ def _render(ctx, map_, naam, breedte, hoogte):
     return f'<span class="b-{NAAM}__ic" aria-hidden="true">{beeld}</span>'
 
 
+# Stappen waarvan het telefoonnummer geen WhatsApp-knop krijgt (data-geen-whatsapp; het nummer blijft
+# een tel-link). Gevraagd voor stap 1 "Offerte aanvragen" op 23-09-2026. Het nummer wordt hier zelf een
+# link, want kit.contactlinks() slaat alleen een tel-link met het attribuut over.
+GEEN_WHATSAPP = {"stap-1"}
+
+
 def _stap(ctx, k, it, nr):
     duo = ""
     for sleutel in ("u", "wij"):
         if it.veld(sleutel):
+            dd = ctx.inline(_kort(it, sleutel))
+            if it.id in GEEN_WHATSAPP:
+                dd = dd.replace(ctx.tel, f'<a href="{ctx.telhref}" data-geen-whatsapp>{ctx.tel}</a>', 1)
             duo += (f'<div class="b-{NAAM}__wie b-{NAAM}__wie--{sleutel}"><dt>{ctx.inline(k.veld(sleutel + "-label"))}</dt>'
-                    f'<dd>{ctx.inline(_kort(it, sleutel))}</dd></div>')
+                    f'<dd>{dd}</dd></div>')
     duo = f'<dl class="b-{NAAM}__duo">{duo}</dl>' if duo else ""
     # de stapknop vervalt als hij hetzelfde doet als de slotknop (A5)
     link = ""
     href = it.veld("link")
     if href and href != k.veld("einde-link") and ctx.live(href):
         link = f'<p class="b-{NAAM}__meer">{ctx.knop(it.veld("linktekst"), href, soort="link")}</p>'
+    if duo:
+        # Wat u doet, wat wij doen en de stapknop staan achter een native details: bij het openen van
+        # de pagina leest de bezoeker vijf titels met een regel, niet vijftien regels tegelijk. Geen
+        # JS nodig, geen beweging, en de tekst blijft in de HTML staan voor zoekmachines en
+        # voorleessoftware.
+        #
+        # Het paneel hangt in de CSS los onder de plaat (absoluut), dus openen en sluiten verandert
+        # geen enkele hoogte: de sectie blijft even hoog en er schuift niets mee. Het paneel legt zich
+        # zolang het openstaat over wat eronder staat, als een kaartje dat erboven ligt.
+        # name= maakt er een uitklap van waarvan er maar een tegelijk openstaat, zonder JavaScript;
+        # een browser die dat attribuut niet kent laat er meer tegelijk open en dat is ook goed.
+        opschrift = f'{k.veld("u-label")} en {k.veld("wij-label")[0].lower()}{k.veld("wij-label")[1:]}'
+        duo = (f'<details class="b-{NAAM}__uitklap" name="{ctx.esc(k.id or NAAM)}-uitklap">'
+               f'<summary><span>{ctx.inline(opschrift)}</span>'
+               f'<span class="b-{NAAM}__plus" aria-hidden="true">{ctx.icoon("plus")}</span></summary>'
+               f'<div class="b-{NAAM}__paneel">{duo}{link}</div></details>')
+        link = ""
     map_, naam, breedte, hoogte = VOORWERPEN[(nr - 1) % len(VOORWERPEN)]
     return f'''<li class="b-{NAAM}__stap" id="{ctx.esc(it.id)}">
             {_render(ctx, map_, naam, breedte, hoogte)}

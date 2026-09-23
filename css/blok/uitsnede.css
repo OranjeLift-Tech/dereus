@@ -1,0 +1,68 @@
+/* ---- Uitsnede op een plaat: achtergrond, plaat, figuur ----
+
+   Een uitgesneden foto voor een effen plaat, waarbij de figuur over de randen van die plaat heen
+   valt. Dat uitsteken IS het effect; ligt de figuur netjes binnen de plaat, dan is het weer een
+   plaatje in een vak. Overgenomen van de opslagsectie van De Kievit ("Even geen plek? Wij slaan
+   uw inboedel op").
+
+   Gebruikt door .kwbeeld (kernwaarden, "Zo werken wij") en .cband__figuur (contactband,
+   "Kennismaken?"), zodat die twee secties een systeem blijven en niet twee losse trucjes.
+   Een pagina laadt dit bestand via extra_css=("uitsnede",) op de Pagina; het staat los van een
+   blok omdat twee blokken het delen.
+
+   EEN UITSNEDE INPASSEN. De uitsneden in img/ hebben een brede doorzichtige rand, en soms staat
+   er meer op dan je wilt tonen. Zet daarom zes getallen: het formaat van het BESTAND, en het deel
+   daarvan dat zichtbaar moet zijn. De rand wordt weggerekend, .uitsnede sluit precies om dat deel
+   en alle procenten hieronder gaan dus over de FIGUUR en niet over het bestand.
+
+     --uit-breed / --uit-hoog   het bestand in pixels
+     --uit-x / --uit-y          linkerbovenhoek van het deel dat je wilt zien
+     --uit-w / --uit-h          formaat van dat deel
+
+   Meet die met de alfa-bbox van het bestand (scan op alpha > 16), niet op het oog. Wissel je de
+   uitsnede, werk dan deze zes bij; dat is de hele ingreep.
+
+   Bijregelen mag met --uit-plaat-* en --uit-motief-*; de standaarden hieronder zijn die van
+   "Zo werken wij". De prefix --uit- is er met opzet: style.css gebruikt --motief-alfa al voor de
+   randmotieven van een sectie, en dat is iets anders. */
+.uitsnede {
+  position: relative; isolation: isolate;
+  aspect-ratio: var(--uit-w) / var(--uit-h);
+  /* De uitvergrote img steekt buiten dit vak uit. Dat zijn alleen doorzichtige pixels, maar ze
+     tellen wel mee in scrollWidth en gaven de pagina een horizontale schuifbalk. Bewust zonder
+     overflow-clip-margin: die marge valt aan de rechterkant precies in de buitenmarge van .wrap
+     en dan loopt de pagina alsnog over (1102 bij venster 1100, 336 bij 320). De slagschaduw van
+     de figuur wordt dus mee afgeknipt; dat is de prijs. */
+  overflow: clip;
+}
+.uitsnede__beeld {
+  /* max-width: none is hier geen detail: img{max-width:100%} in style.css knipt de uitvergroting
+     anders terug naar 100% en dan staat de figuur te klein en te hoog. Geen foutmelding, alleen
+     een verkeerd plaatje. */
+  position: absolute; display: block; height: auto; max-width: none;
+  width: calc(var(--uit-breed) / var(--uit-w) * 100%);
+  left: calc(var(--uit-x) / var(--uit-w) * -100%);
+  top: calc(var(--uit-y) / var(--uit-h) * -100%);
+  filter: drop-shadow(var(--uit-schaduw, 0 14px 20px rgb(6 22 55 / .5)));
+}
+
+/* de plaat: de figuur komt er boven en onder uit */
+.uitsnede::before {
+  content: ""; position: absolute; z-index: -1;
+  left: var(--uit-plaat-links, 4%); right: var(--uit-plaat-rechts, 6%);
+  top: var(--uit-plaat-boven, 46%); bottom: var(--uit-plaat-onder, 9%);
+  background: var(--uit-plaat-vulling,
+    linear-gradient(158deg, color-mix(in srgb, var(--brand-secondary) 85%, transparent),
+                            color-mix(in srgb, var(--brand-secondary) 55%, transparent)));
+  box-shadow: inset 0 0 0 1px var(--uit-plaat-rand, rgb(255 255 255 / .14));
+  border-radius: clamp(.75rem, 1.5vw, 1.25rem);
+  transform: skewY(var(--uit-plaat-hoek, -3.5deg));
+}
+/* het huis uit het merk, nog een laag dieper */
+.uitsnede::after {
+  content: ""; position: absolute; z-index: -2;
+  right: var(--uit-motief-rechts, 3%); top: var(--uit-motief-boven, 0);
+  width: var(--uit-motief-breed, 26%); aspect-ratio: 535.3/509.8;
+  background: var(--uit-motief-kleur, var(--brand-accent)); opacity: var(--uit-motief-alfa, .32);
+  -webkit-mask: var(--huisvlak) center/contain no-repeat; mask: var(--huisvlak) center/contain no-repeat;
+}

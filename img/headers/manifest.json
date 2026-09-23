@@ -7,8 +7,8 @@
   },
   "/diensten/": {
     "src": "/img/headers/diensten.webp",
-    "width": 1448,
-    "height": 815,
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/kosten/": {
@@ -18,27 +18,27 @@
     "position": "50% 30%"
   },
   "/offerte/": {
-    "src": "/img/headers/offerte.webp",
-    "width": 560,
-    "height": 315,
+    "src": "/img/headers/offerte-bedankt.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/over-ons/": {
     "src": "/img/headers/over-ons.webp",
-    "width": 1448,
-    "height": 815,
-    "position": "50% 50%"
+    "width": 1600,
+    "height": 900,
+    "position": "50% 28%"
   },
   "/werkwijze/": {
     "src": "/img/headers/werkwijze.webp",
-    "width": 1448,
-    "height": 815,
-    "position": "50% 50%"
+    "width": 1600,
+    "height": 900,
+    "position": "50% 34%"
   },
   "/contact/": {
-    "src": "/img/headers/contact.webp",
-    "width": 1200,
-    "height": 675,
+    "src": "/img/headers/contact-telefoon.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/privacyverklaring/": {
@@ -54,9 +54,9 @@
     "position": "50% 50%"
   },
   "/contact/bedankt/": {
-    "src": "/img/headers/contact-bedankt.webp",
-    "width": 560,
-    "height": 315,
+    "src": "/img/headers/contact-telefoon.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/offerte/bedankt/": {
@@ -72,45 +72,45 @@
     "position": "50% 50%"
   },
   "/diensten/particuliere-verhuizingen/": {
-    "src": "/img/headers/particulier.webp",
-    "width": 1448,
-    "height": 815,
+    "src": "/img/headers/diensten.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/diensten/zakelijke-verhuizingen/": {
-    "src": "/img/headers/zakelijk.webp",
-    "width": 1448,
-    "height": 815,
+    "src": "/img/headers/diensten.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/diensten/tijdelijke-opslag/": {
-    "src": "/img/headers/opslag.webp",
-    "width": 1448,
-    "height": 815,
+    "src": "/img/headers/diensten.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/diensten/internationale-verhuizingen/": {
-    "src": "/img/headers/internationaal.webp",
-    "width": 1448,
-    "height": 815,
+    "src": "/img/headers/diensten.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/diensten/studentenverhuizing/": {
-    "src": "/img/headers/studenten.webp",
-    "width": 720,
-    "height": 405,
+    "src": "/img/headers/diensten.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/diensten/seniorenverhuizing/": {
-    "src": "/img/headers/senioren.webp",
-    "width": 720,
-    "height": 405,
+    "src": "/img/headers/diensten.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/diensten/spoedverhuizing/": {
-    "src": "/img/headers/spoed.webp",
-    "width": 720,
-    "height": 405,
+    "src": "/img/headers/diensten.webp",
+    "width": 1600,
+    "height": 900,
     "position": "50% 50%"
   },
   "/werkgebied/": {

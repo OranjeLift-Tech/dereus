@@ -14,9 +14,13 @@ JS = False
 # eronder: een los meubel bij de studio, een bank bij de eengezinswoning, een stapel dozen bij het grote
 # huis. Alle figuren lopen naar rechts (wens van de gebruiker) en hebben hun voeten compleet in beeld,
 # want ze staan op een traprand. Vormgeving onderaan css/blok/kosten-diepte.css.
+# Trede 1 was de verhuizer met de bureaustoel (treden/stoel-rechts.webp); die zette hij op 23-09-2026
+# in zijn beeldinventaris op "delete". In de plaats staat de verhuizer met twee dozen uit de uitsnede-
+# ronde van die dag. Let op: hij loopt naar de kijker toe en niet naar rechts; geen van de bestaande
+# losse verhuizers loopt naar rechts.
 # Naam, bron, breedte, hoogte.
 FIGUREN = [
-    ("stoel", "/img/treden/stoel-rechts.webp", 216, 420),
+    ("twee-dozen", "/img/verhuizer-twee-dozen-uit.webp", 407, 1200),
     ("bank", "/img/treden/bank.webp", 640, 477),
     ("merk", "/img/logo/dereus-beeldmerk-negatief.svg", 1000, 509),
 ]

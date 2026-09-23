@@ -1,11 +1,19 @@
-/* Kernwaarden als gedrag: genummerde kaarten op de blauwe band, de laatste rij gecentreerd */
-.kwlijst { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(.75rem, .5rem + .8vw, 1.25rem); margin: 0; padding: 0; list-style: none; }
+/* Kernwaarden als gedrag: genummerde kaarten op de blauwe band, de laatste rij gecentreerd.
+
+   De maten die de hoogte van dit blok bepalen staan als knoppen bovenaan, niet verspreid door
+   het bestand. Een compactheidsniveau is daardoor een blok waarden en geen zoektocht. */
+.b-kernwaarden {
+  --kw-gap: clamp(.75rem, .5rem + .8vw, 1.25rem);   /* tussen de kaarten */
+  --kw-pad: clamp(1.4rem, 1.1rem + 1vw, 2rem);      /* in een kaart */
+  --kw-kop-rij: 1.1rem;                             /* onder de nummer/icoon-rij */
+}
+.kwlijst { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--kw-gap); margin: 0; padding: 0; list-style: none; }
 .kw {
-  flex: 0 1 calc((100% - 2 * clamp(.75rem, .5rem + .8vw, 1.25rem)) / 3); display: flex; flex-direction: column;
-  padding: clamp(1.4rem, 1.1rem + 1vw, 2rem); border-radius: var(--radius-card);
+  flex: 0 1 calc((100% - 2 * var(--kw-gap)) / 3); display: flex; flex-direction: column;
+  padding: var(--kw-pad); border-radius: var(--radius-card);
   background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
 }
-.kw__kop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem; }
+.kw__kop { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--kw-kop-rij); }
 .kw__nr { font: var(--weight-display) 2.4rem/1 var(--font-display); font-stretch: var(--font-display-stretch); color: var(--brand-accent); }
 .kw__icoon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--brand-accent); color: var(--brand-secondary); }
 .kw__icoon .ic { width: 22px; height: 22px; }
@@ -13,8 +21,73 @@
 .b-kernwaarden .kw p { margin: 0; font-size: var(--text-small); line-height: 1.55; color: rgba(255, 255, 255, .86); }
 .b-kernwaarden .kw a { color: var(--white); text-decoration-color: var(--brand-accent); }
 
-@media (max-width: 999.98px) { .kw { flex-basis: calc((100% - clamp(.75rem, .5rem + .8vw, 1.25rem)) / 2); } }
+@media (max-width: 999.98px) { .kw { flex-basis: calc((100% - var(--kw-gap)) / 2); } }
 @media (max-width: 599.98px) {
   .kw { flex-basis: 100%; }
   .kw__nr { font-size: 2rem; }
+}
+
+/* ---- Kop met uitsnede (optie beeld): achtergrond, plaat, figuur ----
+   Zelfde opbouw als de opslagsectie van De Kievit ("Even geen plek? Wij slaan uw inboedel op"):
+   een gekantelde plaat achter de verhuizers, en de verhuizers die over de randen van die plaat
+   heen vallen. Dat verschil tussen achter- en voorgrond is het hele effect; ligt de figuur netjes
+   binnen de plaat, dan is het weer een plaatje in een vak.
+
+   De uitsnede img/dienst-particulier-uit.webp is 1080x810 met een brede doorzichtige rand: de
+   zichtbare verhuizers staan op x 215-887 en y 273-774. Die rand is hier weggerekend, zodat
+   .kwbeeld precies om de figuur sluit en de percentages eronder over de FIGUUR gaan en niet over
+   het bestand. Wissel je de uitsnede, meet de alfa-bbox opnieuw en werk deze vier getallen bij. */
+.b-kernwaarden--beeld {
+  /* Compactheid. Alles wat hoogte kost staat hier bij elkaar; zie ook --kw-gap/--kw-pad boven.
+     De overlap van de plaat blijft bij elk niveau staan: die staat in procenten van .kwbeeld
+     en schaalt dus mee met het beeld. */
+  --kw-band: 1;                                  /* aandeel van --ruimte boven en onder de band */
+  --kw-kolommen: minmax(0, 1fr) minmax(0, .75fr);/* tekstkolom | beeldkolom */
+  --kw-kop-marge: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  --kw-beeld-max: 20rem;                         /* breedte van het beeld op smal scherm */
+
+  padding-block: calc(var(--ruimte) * var(--kw-band) + var(--dak)) calc(var(--ruimte) * var(--kw-band));
+}
+/* ---- Twee compactheidsniveaus (optie compact) ----
+   Zelfde beeld, zelfde plaat, zelfde overlap: alleen strakker gezet. Ze staan na
+   .b-kernwaarden--beeld, dus bij gelijke specificiteit winnen deze waarden. */
+.b-kernwaarden--gematigd {
+  --kw-band: .72;
+  --kw-kolommen: minmax(0, 1fr) minmax(0, .55fr);
+  --kw-kop-marge: clamp(1rem, .7rem + 1vw, 1.5rem);
+  --kw-beeld-max: 17rem;
+  --kw-gap: clamp(.6rem, .45rem + .55vw, 1rem);
+  --kw-pad: clamp(1.1rem, .9rem + .7vw, 1.5rem);
+  --kw-kop-rij: .7rem;
+}
+.b-kernwaarden--krap {
+  --kw-band: .58;
+  --kw-kolommen: minmax(0, 1fr) minmax(0, .42fr);
+  --kw-kop-marge: clamp(.75rem, .5rem + .7vw, 1.1rem);
+  --kw-beeld-max: 14rem;
+  --kw-gap: clamp(.5rem, .4rem + .4vw, .8rem);
+  --kw-pad: clamp(.95rem, .8rem + .5vw, 1.25rem);
+  --kw-kop-rij: .55rem;
+}
+
+.kwhoofd {
+  display: grid; grid-template-columns: var(--kw-kolommen); align-items: center;
+  gap: clamp(1rem, .5rem + 2vw, 3rem); margin-bottom: var(--kw-kop-marge);
+}
+/* de kop staat hier links, niet in het midden zoals de basis .kopgroep doet */
+.kwhoofd__tekst { max-width: 34rem; margin: 0; text-align: left; }
+.kwhoofd__tekst .label { justify-content: flex-start; }
+.kwhoofd__tekst .intro { margin-inline: 0; }
+
+/* .kwbeeld is de gedeelde uitsnede-plaat uit css/blok/uitsnede.css; hier staan alleen de
+   waarden. De pagina laadt dat bestand via extra_css=("uitsnede",). De plaatstand hieronder is
+   de standaard van dat bestand, dus expliciet houden we alleen wat afwijkt: niets. */
+
+/* smal scherm: kop weer gecentreerd zoals op de rest van de pagina, de figuur eronder en kleiner */
+@media (max-width: 899.98px) {
+  .kwhoofd { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .kwhoofd__tekst { margin-inline: auto; text-align: center; }
+  .kwhoofd__tekst .label { justify-content: center; }
+  .kwhoofd__tekst .intro { margin-inline: auto; }
+  .kwbeeld { width: min(100%, var(--kw-beeld-max)); }
 }
