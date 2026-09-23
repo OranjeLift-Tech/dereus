@@ -81,15 +81,15 @@ intro: Op de verhuisdag doen wij het zware werk. U houdt het overzicht.
 slot: Betalen doet u op de verhuisdag, tenzij we samen iets anders hebben afgesproken. Ziet u schade aan uw spullen? Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze [algemene voorwaarden](/algemene-voorwaarden/).
 
 ### Aankomst
-beeld: verhuisdag-aankomst
+beeld: dienst-particulier
 Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.
 
 ### Inladen
-beeld: verhuisdag-dragen
+beeld: dienst-internationaal
 Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.
 
 ### Uitladen en opbouwen
-beeld: verhuisdag-uitladen
+beeld: stap-5-bank-voordeur
 In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.
 
 ## Na de verhuizing {#na-de-verhuizing}

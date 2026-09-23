@@ -1,7 +1,7 @@
 {
   "/": {
     "datum": "2026-09-23",
-    "hash": "d653144371d18909"
+    "hash": "7986080af99f0f85"
   },
   "/algemene-voorwaarden/": {
     "datum": "2026-09-21",
@@ -9,23 +9,23 @@
   },
   "/contact/": {
     "datum": "2026-09-23",
-    "hash": "9f9bfe003eef9161"
+    "hash": "57a6286dd5d35a55"
   },
   "/diensten/": {
     "datum": "2026-09-23",
-    "hash": "20fb1fefa4416713"
+    "hash": "0af218435b56b22c"
   },
   "/kosten/": {
     "datum": "2026-09-23",
-    "hash": "a06b5c665e73db8e"
+    "hash": "e50fe9f3a1dd9a9b"
   },
   "/offerte/": {
     "datum": "2026-09-23",
-    "hash": "b995d0814cd5b348"
+    "hash": "562993b3a3a74bdb"
   },
   "/over-ons/": {
     "datum": "2026-09-23",
-    "hash": "e73fd422a26d3796"
+    "hash": "976afc056ffec147"
   },
   "/privacyverklaring/": {
     "datum": "2026-09-21",
@@ -33,6 +33,6 @@
   },
   "/werkwijze/": {
     "datum": "2026-09-23",
-    "hash": "04e1f33db0140021"
+    "hash": "ff018ad99eddc993"
   }
 }

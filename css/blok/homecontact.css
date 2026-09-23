@@ -112,3 +112,38 @@ a.homecontact__waarde:hover{text-decoration-color:currentColor}
 @media(max-width:767.98px){
   .homecontact__gegevens{grid-template-columns:minmax(0,1fr)}
 }
+/* ---- De 3D-envelop rechtsboven op de naad met het offerteformulier ----
+   "3D object on the top right - in between sections instead of in the section": de envelop
+   (img/contact-3d/envelop.webp, 347x400, zonder doorzichtige rand) hing eerst op de hoek van de
+   berichtkaart en ligt nu op de schuine rand waar het Mist van het offerteformulier overgaat in het wit
+   van deze sectie, een deel erboven en de rest eronder. Zelfde middel als de tape met de schroevendraaier
+   op de naad van /werkwijze/ (css/blok/lijstplaat.css, keuze A daar) en op de naad b-over/werkgebied
+   (css/blok/werkgebied.css): een ::before op de wrap, die niet gepositioneerd is, dus hij rekent vanaf
+   de sectie. De sectie gebruikt ::after al voor het motief.
+   De schuine rand is de achtergrond van deze sectie (css/style.css, .sectie--mist + .sectie--wit): hij
+   loopt van links op de bovenrand naar rechts op --overgang-hoogte eronder, dus rechts, waar de envelop
+   ligt, is dat ongeveer 90 procent daarvan. Alleen waar een Mist-sectie direct voor deze staat; zonder
+   die kleurwissel is er geen naad.
+   Keuze B uit website/review/homecontact-3d-naad-20260923/ ("B: half in the margin"): hij staat
+   midden op de rand van de kolom, half in de marge, en houdt minstens 16 px van de schermrand. Waar
+   die marge smal is, scheelt dat met keuze A (de kolomrand plus 4 px) weinig: gelijk tot 600, 6 px op
+   899, 65 op 1440. Het verschil is alleen --naad-over; bij A was dat .25rem.
+   Gemeten van 320 tot 1920: vrij van het label en de kop, 97 px onder de offertekaart op 1440 en 37 op
+   390, geen horizontale overloop, en de sectie wordt nergens hoger. */
+.sectie--mist + .sectie.b-homecontact:not(.sectie *) > .wrap::before{
+  --env-hoog:clamp(6rem,11vw,10rem);--env-breed:calc(var(--env-hoog) * 347 / 400);
+  --naad-rand:calc(max((100% - var(--maxw)) / 2,0px) + var(--pad));
+  --naad-over:max(.25rem,min(var(--env-breed)/2,var(--naad-rand) - 1rem));
+  content:"";position:absolute;z-index:1;pointer-events:none;
+  right:calc(var(--naad-rand) - var(--naad-over));
+  top:calc(var(--overgang-hoogte) * .9 - var(--env-hoog) * .5);
+  height:var(--env-hoog);aspect-ratio:347/400;
+  background:url(/img/contact-3d/envelop.webp) center/contain no-repeat;
+  filter:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 30%,transparent))
+         drop-shadow(8px 16px 12px color-mix(in srgb,var(--brand-secondary) 28%,transparent))}
+/* Onder 900 px staat de kop midden over bijna de hele breedte. Half om half over de naad kwam de
+   envelop daar 8 tot 10 px boven de eerste regel uit; kleiner en hoger over de naad is dat 22 tot 25. */
+@media(max-width:899.98px){
+  .sectie--mist + .sectie.b-homecontact:not(.sectie *) > .wrap::before{
+    --env-hoog:5.5rem;top:calc(var(--overgang-hoogte) * .9 - var(--env-hoog) * .62)}
+}

@@ -1,4 +1,4 @@
-"""Waarom De Reus: vier afspraken naast een foto van twee verhuizers die samen een fauteuil dragen."""
+"""Waarom De Reus: vier afspraken naast een foto van twee verhuizers die samen een bank dragen."""
 NAAM = "waarom"
 CSS = True
 JS = False
@@ -39,7 +39,7 @@ def html(ctx, kopij, **opties):
     </div>
     <div class="waarom__inhoud">
       <figure class="waarom__beeld" data-reveal>
-        {ctx.beeld("/img/verhuisdag-dragen.webp", "Twee verhuizers dragen samen een fauteuil, ingepakt in een deken en folie", 1400, 1050)}
+        {ctx.beeld("/img/verhuisdag-dragen-stoep.webp", "Twee verhuizers dragen samen een bank, ingepakt in een deken met spanbanden, naast een open witte bus in een straat met bakstenen huizen", 1400, 1050)}
       </figure>
       <ul class="wkaarten" role="list" data-reveal-groep>{"".join(kaarten)}</ul>
     </div>

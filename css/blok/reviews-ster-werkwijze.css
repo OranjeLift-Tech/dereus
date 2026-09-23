@@ -1,0 +1,29 @@
+/* Verhuisbedrijf De Reus · de gouden 3D-ster in "Zo gaat het in de praktijk" (alleen /werkwijze/)
+   Geladen via extra_css in _werk/paginas/werkwijze.py. .rraster--compact staat ook op /diensten/, dus
+   een regel in reviews.css zou daar de ster ook neerzetten; via dit bestand blijven de reviews op de
+   home, /diensten/ en /over-ons/ byte voor byte zoals ze waren.
+
+   Voorwerp: img/kaart-3d/ster.webp, dezelfde ster als op de home (reviews-ster.css). Transparante rand van
+   5% (bbox 12,5 tot 222,215 op 240x240), zichtbaar is de ster dus iets kleiner dan de doos.
+
+   Plaatsing: op de rechterbovenhoek van het reviewraster, het spiegelbeeld van het ploegbeeld dat links
+   boven de eerste kaart staat. Vanaf 640 px staat de ster in de lege strook boven de laatste kaart en
+   zakt ze 1rem over de kaartrand, boven de aanhalingstekens. Onder 640 px is die hoek de eerste kaart,
+   met de aanhalingstekens vlak onder de rand; daar staat de ster er helemaal boven, naast het ploegbeeld.
+   Het raster begint daar niet bij de kaart: de eerste kaart krijgt de ruimte voor de ploeg als marge
+   (reviews.css, ploeg-hoogte min ploeg-achter), dus die marge telt mee, anders zit de ster op de
+   Google-pil. Maximaal 14vw breed, zodat hij op 320 px niet tegen het ploegbeeld aan komt.
+   right: -.75rem is de grens uit reviews-ster.css: de wrap houdt op elke breedte 16 px marge. */
+.b-reviews .rraster--compact { position: relative; }
+.b-reviews .rraster--compact::before {
+  --h: clamp(4.5rem, 2.5rem + 3.75vw, 7.5rem);
+  content: ""; position: absolute; z-index: 2; top: calc(1rem - var(--h)); right: -.75rem;
+  width: var(--h); aspect-ratio: 1; pointer-events: none;
+  background: url(/img/kaart-3d/ster.webp) center / contain no-repeat;
+  filter: drop-shadow(2px 3px 2px color-mix(in srgb, var(--brand-secondary) 30%, transparent))
+          drop-shadow(8px 16px 12px color-mix(in srgb, var(--brand-secondary) 28%, transparent));
+}
+@media (max-width: 639.98px) {
+  .b-reviews .rraster--compact::before { --h: min(3.5rem, 14vw); top: calc(.25rem - var(--h)); right: -.5rem; }
+  .b-reviews .rraster--compact:has(.rkaart__klant--ploeg)::before { top: calc(var(--ploeg-hoogte) - var(--ploeg-achter) + .25rem - var(--h)); }
+}

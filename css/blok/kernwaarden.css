@@ -33,8 +33,8 @@
    heen vallen. Dat verschil tussen achter- en voorgrond is het hele effect; ligt de figuur netjes
    binnen de plaat, dan is het weer een plaatje in een vak.
 
-   De uitsnede img/dienst-particulier-uit.webp is 1080x810 met een brede doorzichtige rand: de
-   zichtbare verhuizers staan op x 215-887 en y 273-774. Die rand is hier weggerekend, zodat
+   De uitsnede img/dienst-particulier-v2-uit.webp is 1080x810 met een brede doorzichtige rand: de
+   zichtbare verhuizers staan op x 231-849 en y 178-760. Die rand is hier weggerekend, zodat
    .kwbeeld precies om de figuur sluit en de percentages eronder over de FIGUUR gaan en niet over
    het bestand. Wissel je de uitsnede, meet de alfa-bbox opnieuw en werk deze vier getallen bij. */
 .b-kernwaarden--beeld {

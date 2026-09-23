@@ -151,7 +151,7 @@ Notitie: of "bezemschoon opleveren" en het afvoeren van spullen erbij horen (ope
 ## Wat klanten zeggen {#reviews}
 label: Reviews
 intro: Netjes, voorzichtig en respectvol: zo omschrijven klanten ons op Google.
-beeld: /img/review-verhuizers-lachend.webp
+beeld: /img/review-verhuizers-lachend-breed.webp
 beeld-bij: 1
 Notitie: de review-items komen uit home.md.
 

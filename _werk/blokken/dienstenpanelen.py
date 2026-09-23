@@ -18,16 +18,16 @@ DIENSTEN = ["particulier", "zakelijk", "nationaal", "internationaal",
             "verhuislift", "opslag", "montage", "woningontruiming"]
 
 # Welke dienstfoto in het huis komt. Dezelfde kaart als in blok diensten (home).
-FOTOS = {"particulier": "particulier", "zakelijk": "zakelijk", "nationaal": "nationaal",
-         "internationaal": "internationaal", "verhuislift": "verhuislift", "opslag": "opslag-v2",
-         "montage": "montage", "woningontruiming": "woningontruiming"}
+FOTOS = {"particulier": "particulier-v2", "zakelijk": "zakelijk-v2", "nationaal": "nationaal-v2",
+         "internationaal": "internationaal-v2b", "verhuislift": "verhuislift", "opslag": "opslag-v2",
+         "montage": "montage-v2", "woningontruiming": "woningontruiming-v2"}
 
 # Van welke dienstfoto een uitsnede zonder achtergrond bestaat (/img/dienst-<naam>-uit.webp, uit
 # _ai-beelden/diensten-uitsnede.mjs + diensten-uit-export.cjs). Die laag komt over de foto heen
-# zonder in de huisvorm geknipt te worden, dus de verhuizer stapt uit het huis. Bij montage is het
-# geen persoon maar de 3D-boor die voor het huis staat (_ai-beelden/dienst-montage-3d.py).
-UITSNEDEN = {"particulier", "zakelijk", "nationaal", "internationaal", "verhuislift", "opslag", "opslag-v2",
-             "montage", "woningontruiming"}
+# zonder in de huisvorm geknipt te worden, dus de verhuizer stapt uit het huis. De uitsnede van
+# montage-v2 komt uit website/review/dienst-montage-v2-20260923/werk/ (rembg en dezelfde export).
+UITSNEDEN = {"particulier", "particulier-v2", "zakelijk", "zakelijk-v2", "nationaal", "nationaal-v2", "internationaal", "internationaal-v2b", "verhuislift",
+             "opslag", "opslag-v2", "montage", "montage-v2", "woningontruiming", "woningontruiming-v2"}
 
 
 def _met_tel(ctx, tekst):

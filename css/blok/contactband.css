@@ -9,8 +9,12 @@
   --cb-paneel-pad: clamp(1.75rem, 1.2rem + 2vw, 3rem);     /* in het blauwe paneel */
   --cb-paneel-gap: 1rem;                                   /* tussen de regels in dat paneel */
   --cb-kop-marge: 1.25rem;                                 /* onder de kopgroep */
-  --cb-figuur: clamp(5rem, 9.2vw, 7.3rem);                 /* breedte van de uitsnede */
-  --cb-figuur-smal: 6.4rem;                                /* en op smal scherm */
+  --cb-figuur-smal: 6.4rem;                                /* breedte van de uitsnede op smal scherm */
+  /* het vak van de uitsnede rechts in de tekstkolom, vanaf 720 px; zie onderaan */
+  --cb-slot: clamp(8rem, 12vw, 11rem);                     /* breedte van het vak */
+  --cb-slot-rand: clamp(1rem, 2vw, 2rem);                  /* tussen het vak en het paneel */
+  --cb-slot-gap: clamp(1.25rem, 2vw, 2rem);                /* tussen de tekst en het vak */
+  --cb-figuur-uit: clamp(1.5rem, 2.6vw, 2.25rem);          /* zover steekt het hoofd boven de kaart uit */
   padding-block: calc(var(--ruimte) * var(--cb-band));
 }
 /* Twee niveaus, zoals bij kernwaarden. Ze staan na .b-contactband, dus bij gelijke
@@ -22,7 +26,6 @@
   --cb-paneel-pad: clamp(1.4rem, 1rem + 1.6vw, 2.4rem);
   --cb-paneel-gap: .8rem;
   --cb-kop-marge: 1rem;
-  --cb-figuur: clamp(4.8rem, 8.6vw, 6.9rem);
   --cb-figuur-smal: 6rem;
 }
 .b-contactband--krap {
@@ -31,10 +34,13 @@
   --cb-paneel-pad: clamp(1.15rem, .85rem + 1.25vw, 2rem);
   --cb-paneel-gap: .65rem;
   --cb-kop-marge: .8rem;
-  --cb-figuur: clamp(4.6rem, 8.2vw, 6.5rem);
-  --cb-figuur-smal: 5.5rem;
+  --cb-figuur-smal: 6rem;          /* 5.5rem tot keuze B; de vrijstaande figuur is gemeten en gekozen op 6rem */
 }
-.cband {display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); overflow: hidden;
+/* De kaart knipt niet: het hoofd van de uitsnede steekt er bovenuit (keuze B, zie onderaan). Het paneel
+   knipt daarom zelf, met zijn eigen hoeken, en dat haalt meteen een fout weg die al live stond: het huis
+   in het paneel (::after, 75% van de paneelbreedte) stak gestapeld boven het paneel uit, de witte kaart
+   in, want alleen de kaart knipte het. Gemeten 41 px op 600, 119 op 720, 150 op 768, 235 op 899; nu 0. */
+.cband {display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
   background: var(--white); border-radius: var(--r-paneel); box-shadow: var(--schaduw)}
 .cband__tekst { padding: var(--cb-pad); }
 .cband__tekst .kopgroep { margin-bottom: var(--cb-kop-marge); }
@@ -43,6 +49,7 @@
 .cband__tekst .knoppen .belregel { margin: 0; }
 .cband__paneel {
   position: relative; isolation: isolate; display: grid; align-content: center; gap: var(--cb-paneel-gap); padding: var(--cb-paneel-pad);
+  overflow: hidden; border-radius: 0 var(--r-paneel) var(--r-paneel) 0;
   background: var(--brand-secondary); color: rgba(255, 255, 255, .88); font-size: var(--text-small);
 }
 .cband__paneel::after {
@@ -60,44 +67,51 @@
 .cband__mail .ic, .cband__adres .ic, .cband__tijden .ic { margin-top: .2em; }
 .cband__tijden ul { margin: 0; padding: 0; list-style: none; color: rgba(255, 255, 255, .8); }
 
-@media (max-width: 899.98px) { .cband { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 899.98px) {
+  .cband { grid-template-columns: minmax(0, 1fr); }
+  .cband__paneel { border-radius: 0 0 var(--r-paneel) var(--r-paneel); }   /* gestapeld: het paneel is de onderkant */
+}
 
 /* ---- optionele uitsnede in de tekstkolom (optie beeld) ----
-   De figuur staat rechtsonder in de witte kaart, met de voeten op de onderrand. Absoluut
-   geplaatst en niet als extra kolom: zo blijft de tekst staan waar hij stond en wordt de kaart
-   geen stuk hoger. De tekstkolom houdt rechts ruimte vrij, anders loopt de tekst eronder door.
+   Keuze B uit website/review/kennismaken-beeld-20260923/ ("B: free-standing, section 500 px (+29)"):
+   de figuur staat vrij in de witte kaart, zonder plaat en zonder huis erachter. Voeten op de
+   onderrand, het hoofd --cb-figuur-uit boven de kaart uit; de hoogte van de kaart bepaalt dus de maat
+   van de figuur, niet een breedte. Absoluut geplaatst en niet als extra kolom, zodat de kaart niet
+   hoger wordt dan de tekst vraagt. De tekstkolom houdt rechts een vast vak vrij (--cb-slot en
+   buren bovenaan), anders loopt de tekst eronder door; de figuur staat midden in dat vak. Dat vak is
+   breder dan het oude, en dat kost een regel tekst: 471 naar 500 px sectie op 1440, 1109 naar 1114
+   op 390. Onder 720 px staat de figuur gecentreerd onder de tekst, met de voeten op het paneel.
 
-   Het vak zelf is .uitsnede uit css/blok/uitsnede.css, hetzelfde mechanisme als "Zo werken wij":
-   een effen plaat erachter en de figuur die er boven- en onderlangs overheen valt. Daar staan
-   ook de zes getallen uitgelegd die het blok als inline stijl meegeeft. Hier staan alleen de
-   waarden die afwijken van de standaard, want die standaard is gemaakt voor de Koningsblauwe
-   band en deze kaart is wit. Niets beweegt. */
+   Het vak zelf is nog steeds .uitsnede uit css/blok/uitsnede.css (daar staan de zes getallen die het
+   blok als inline stijl meegeeft), alleen zonder de plaat en het huis. Die staan in dat gedeelde
+   bestand voor "Zo werken wij" en blijven daar; hier gaan ze uit met content: none.
+   De dozen zijn wit op wit. Tot keuze B hield de lichtblauwe plaat hun rand leesbaar; nu doen hun
+   eigen rand en schaduw dat, en de gebruiker koos het zo op de schermafdrukken. Niets beweegt. */
 /* Let op de dubbele klasse in deze selectors. css/blok/uitsnede.css wordt via extra_css NA de
-   CSS van de blokken geladen en zet daar .uitsnede{position:relative}. Met alleen .cband__figuur
-   (even zwaar, maar eerder in de stapel) wint die relative, valt de figuur terug in de flow en
-   wordt de kaart 350px hoger. Met .cband--beeld ervoor wint deze regel, ongeacht de volgorde. */
+   CSS van de blokken geladen en zet daar .uitsnede{position:relative}, overflow: clip en de
+   ::before en ::after. Met alleen .cband__figuur (even zwaar, maar eerder in de stapel) winnen die,
+   valt de figuur terug in de flow en wordt de kaart 350px hoger. Met .cband--beeld ervoor wint
+   deze regel, ongeacht de volgorde. */
 @media (min-width: 720px) {
-  .cband--beeld .cband__tekst { position: relative; padding-right: clamp(6.5rem, 12vw, 9rem); }
+  .cband--beeld .cband__tekst { position: relative; padding-right: calc(var(--cb-slot) + var(--cb-slot-rand) + var(--cb-slot-gap)); }
   .cband--beeld .cband__figuur {
-    position: absolute; right: clamp(.5rem, 1.5vw, 1.75rem); bottom: 0;
-    width: var(--cb-figuur);
+    position: absolute; top: calc(var(--cb-figuur-uit) * -1); bottom: 0; width: auto;
+    right: calc(var(--cb-slot-rand) + var(--cb-slot) / 2); transform: translateX(50%);
   }
 }
-/* smal scherm: de figuur staat onder de tekst en blijft klein, anders wordt de kaart te hoog */
+/* smal scherm: de figuur staat onder de tekst en blijft klein, anders wordt de kaart te hoog; de
+   negatieve ondermarge zet de voeten op de bovenrand van het paneel */
 @media (max-width: 719.98px) {
-  .cband--beeld .cband__figuur { position: relative; width: var(--cb-figuur-smal); margin: 1.5rem 0 0; }
+  .cband--beeld .cband__figuur { position: relative; width: var(--cb-figuur-smal); margin: 1.5rem auto calc(var(--cb-pad) * -1); }
 }
-.cband__figuur {
-  /* plaat: lichtblauw op wit in plaats van diepblauw op de blauwe band */
-  /* Dieper dan op de andere twee secties, en met opzet: de uitsnede draagt een witte doos en
-     die verliest zijn rand volledig tegen primary-100. Een plaat is hier dus geen smaakkwestie
-     maar wat de doos leesbaar houdt. Gecontroleerd door de figuur over beide platen te leggen. */
-  --uit-plaat-vulling: linear-gradient(158deg, var(--primary-300), var(--primary-200));
-  --uit-plaat-rand: rgb(23 70 162 / .14);
-  --uit-plaat-links: 5%; --uit-plaat-rechts: 3%;
-  --uit-plaat-boven: 14%; --uit-plaat-onder: 11%;
-  /* de figuur is staand, dus het huis erachter mag groter en moet zachter op wit */
-  --uit-motief-kleur: var(--brand-primary); --uit-motief-alfa: .12;
-  --uit-motief-breed: 58%; --uit-motief-boven: 2%; --uit-motief-rechts: -4%;
-  --uit-schaduw: 0 12px 18px rgb(14 26 51 / .26);
+/* overflow: visible omdat er geen plaat meer achter staat. De clip van .uitsnede sneed de slagschaduw
+   af op de rand van het vak, en op wit gaf dat twee harde verticale streepjes naast de figuur (255
+   tegen 245). Hier kan het: de zes getallen tonen het hele bestand, dus het beeld is precies zo groot
+   als het vak en er steekt niets uit dan de schaduw, en een schaduw telt niet mee in scrollWidth.
+   De zachte ovaal onderaan is de grond waar hij op staat. */
+.cband--beeld .cband__figuur {
+  overflow: visible;
+  --uit-schaduw: 0 10px 14px rgb(14 26 51 / .22);
+  background: radial-gradient(closest-side, rgb(14 26 51 / .30), rgb(14 26 51 / 0)) 52% 100% / 70% 3.2% no-repeat;
 }
+.cband--beeld .cband__figuur::before, .cband--beeld .cband__figuur::after { content: none; }

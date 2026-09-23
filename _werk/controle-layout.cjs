@@ -268,41 +268,65 @@ async function draai({ browser, basis, snel = false } = {}) {
                 && foto.top < lijst.bottom - 1 && foto.bottom > lijst.top + 1) fout.push('foto ligt over de lijst');
               return fout;
             }), [], `${width}: klembord boven de plaatrand, foto en tekst vrij van elkaar`);
-            /* Na de verhuizing (blok naplaten, sinds ronde 6) verving de laatste checklistkaart. Daarmee is
-               de checklist van deze pagina weg; blijft er ergens een halve staan, dan staan er twee vormen
-               van hetzelfde lijstje onder elkaar zonder dat er iets stuk lijkt. */
-            await page.locator('#na-de-verhuizing').scrollIntoViewIfNeeded();
-            assert.equal(await page.locator('.b-checklist').count(), 0, `${width}: er staat nog een checklist op de werkwijze`);
-            assert.equal(await page.locator('.b-naplaten__plaat').count(), 2, `${width}: de twee slotplaten`);
-            /* Zelfde val als bij de tijdlijn en het lijstje: de render staat voor het gele huis en komt boven
-               de plaatrand uit, en mag de titel eronder niet afdekken. */
-            assert.deepEqual(await page.locator('.b-naplaten__plaat').evaluateAll(items => items.flatMap(el => {
-              const titelEl = el.querySelector('.b-naplaten__titel');
-              const naam = titelEl.textContent.trim();
-              const obj = el.querySelector('.b-naplaten__obj').getBoundingClientRect();
-              const plaat = el.getBoundingClientRect();
-              const titel = titelEl.getBoundingClientRect();
+            /* Het gereedschap op de naad met de tijdlijn (optie A, 23-09-2026) is een ::before op de wrap
+               en rekent vanaf de sectie. Op de telefoon loopt de kop over de volle breedte en staat het
+               voorwerp er rechts boven; het mag de letters van de label en de kop niet raken. Gemeten op
+               de tekst zelf (Range), niet op het blok, want dat loopt altijd door tot de rechterrand. */
+            assert.deepEqual(await page.evaluate(() => {
+              const sectie = document.querySelector('#voorbereiding');
+              const s = getComputedStyle(sectie.querySelector(':scope > .wrap'), '::before');
+              if (s.content === 'none') return ['geen gereedschap op de naad'];
+              const r = sectie.getBoundingClientRect();
+              const obj = { top: r.top + parseFloat(s.top), right: r.right - parseFloat(s.right) };
+              obj.left = obj.right - parseFloat(s.width);
+              obj.bottom = obj.top + parseFloat(s.height);
               const fout = [];
-              if (obj.top >= plaat.top - 4) fout.push(`${naam}: voorwerp steekt niet boven de plaat uit`);
-              if (obj.right > titel.left && obj.left < titel.right && obj.top < titel.bottom && obj.bottom > titel.top) {
-                fout.push(`${naam}: voorwerp ligt over de titel`);
+              for (const kies of ['.b-lijstplaat__kop .label', '.b-lijstplaat__kop h2', '.b-lijstplaat__kop .intro']) {
+                const el = sectie.querySelector(kies);
+                if (!el) continue;
+                const bereik = document.createRange();
+                bereik.selectNodeContents(el);
+                if ([...bereik.getClientRects()].some(t => obj.right > t.left && obj.left < t.right
+                  && obj.top < t.bottom && obj.bottom > t.top)) fout.push(`gereedschap ligt over ${kies}`);
               }
               return fout;
-            })), [], `${width}: renders boven de plaatrand en vrij van de titel`);
-            /* De renders moeten er ook echt zijn: een pad dat verschuift laat een leeg huis achter, en dat
-               valt bij twee platen naast elkaar niet op. */
-            await beeldenKlaar('.b-naplaten__obj');
-            assert.deepEqual(await page.locator('.b-naplaten__obj').evaluateAll(items =>
+            }), [], `${width}: gereedschap op de naad vrij van de kop`);
+            /* Na de verhuizing (blok namozaiek, versie 3 uit ronde 7, 23-09-2026) verving het blok naplaten,
+               dat zelf de laatste checklistkaart verving. Blijft er ergens een halve checklist staan, dan
+               staan er twee vormen van hetzelfde lijstje onder elkaar zonder dat er iets stuk lijkt. */
+            await page.locator('#na-de-verhuizing').scrollIntoViewIfNeeded();
+            assert.equal(await page.locator('.b-checklist').count(), 0, `${width}: er staat nog een checklist op de werkwijze`);
+            assert.equal(await page.locator('.b-namozaiek__punten > li').count(), 2, `${width}: de twee tegels met een punt`);
+            /* De foto en de twee voorwerpen moeten er ook echt zijn: een pad dat verschuift laat een lege
+               lichtblauwe tegel achter, en die leest als een bedoeld vlak. */
+            await beeldenKlaar('.b-namozaiek__foto, .b-namozaiek__ding');
+            assert.deepEqual(await page.locator('.b-namozaiek__foto, .b-namozaiek__ding').evaluateAll(items =>
               items.filter(el => !(el.complete && el.naturalWidth > 0)).map(el => el.getAttribute('src'))),
-              [], `${width}: de renders in de slotplaten zijn geladen`);
-            const slotplaten = await page.locator('.b-naplaten__plaat').evaluateAll(items =>
+              [], `${width}: foto en voorwerpen in het mozaiek zijn geladen`);
+            assert.equal(await page.locator('.b-namozaiek__foto').count(), 1, `${width}: de foto in de hoge tegel`);
+            /* De telefoon en de ster staan rechts in hun tegel en mogen de titel niet afdekken; de tegel
+               houdt er rechts ruimte voor vrij. Ook hier op de tekst gemeten. */
+            assert.deepEqual(await page.locator('.b-namozaiek__punten > li').evaluateAll(items => items.flatMap(el => {
+              const titelEl = el.querySelector('.b-namozaiek__titel');
+              const naam = titelEl.textContent.trim();
+              const obj = el.querySelector('.b-namozaiek__ding').getBoundingClientRect();
+              const fout = [];
+              for (const tekst of [titelEl, el.querySelector('p')]) {
+                const bereik = document.createRange();
+                bereik.selectNodeContents(tekst);
+                if ([...bereik.getClientRects()].some(t => obj.right > t.left && obj.left < t.right
+                  && obj.top < t.bottom && obj.bottom > t.top)) fout.push(`${naam}: voorwerp ligt over de ${tekst.tagName.toLowerCase()}`);
+              }
+              return fout;
+            })), [], `${width}: voorwerpen in het mozaiek vrij van de tekst`);
+            const tegels = await page.locator('.b-namozaiek__punten > li').evaluateAll(items =>
               items.map(el => Math.round(el.getBoundingClientRect().top)));
-            if (width > 700) {
-              assert.ok(Math.abs(slotplaten[0] - slotplaten[1]) <= 2,
-                `${width}: de twee slotplaten horen naast elkaar (tops ${slotplaten.join(', ')})`);
+            if (width >= 660) {
+              assert.ok(Math.abs(tegels[0] - tegels[1]) <= 2,
+                `${width}: de twee tegels horen naast elkaar (tops ${tegels.join(', ')})`);
             } else {
-              assert.ok(slotplaten[1] > slotplaten[0],
-                `${width}: de slotplaten horen onder elkaar (tops ${slotplaten.join(', ')})`);
+              assert.ok(tegels[1] > tegels[0],
+                `${width}: de tegels horen onder elkaar (tops ${tegels.join(', ')})`);
             }
           }
           const heading = route === '/' ? '.hero__tekst' : '.pk__tekst';

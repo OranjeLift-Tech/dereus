@@ -6,27 +6,45 @@ CSS = True
 JS = False
 
 FOTOS = {
-    "particulier": "particulier", "zakelijk": "zakelijk", "nationaal": "nationaal",
-    "internationaal": "internationaal", "verhuislift": "verhuislift", "opslag": "opslag-v2",
-    "montage": "montage", "woningontruiming": "woningontruiming",
+    "particulier": "particulier-v2", "zakelijk": "zakelijk-v2", "nationaal": "nationaal-v2",
+    "internationaal": "internationaal-v2b", "verhuislift": "verhuislift", "opslag": "opslag-v2",
+    "montage": "montage-v2", "woningontruiming": "woningontruiming-v2",
 }
 
 # Uitstap-effect: hoe ver de fotolaag boven het kader uitsteekt (pop) en waar het kader
 # begint, gemeten over die laag (knip). De uitsnede zonder achtergrond wordt niet afgeknipt, dus
 # alles wat boven de kaderlijn zit komt boven de kaart uit. Berekend uit het alfamasker door
-# _ai-beelden/diensten-uit-export.cjs; niet met de hand aanpassen. Montage staat er bewust niet
-# bij: dat beeld is een 3D-boor op een achtergrond, zonder persoon om uit te laten stappen.
+# _ai-beelden/diensten-uit-export.cjs; niet met de hand aanpassen. De oude montage (de 3D-boor)
+# staat er bewust niet bij: daar was geen persoon om uit te laten stappen.
 UITSTAP = {
     "particulier": ("67.4%", "40.27%"),
+    # particulier-v2 (23-09-2026, variant A uit website/review/dienst-particulier-v1-20260923/): de alfa begint op
+    # 21,98% van de hoogte (drempel 45, zoals de export), dus pop (0,2198 + 0,11) / (1 - 0,2198) en knip pop / (1 + pop).
+    "particulier-v2": ("42.3%", "29.71%"),
     "zakelijk": ("36.9%", "26.93%"),
+    # zakelijk-v2 (23-09-2026, versie 2 uit website/review/dienst-zakelijk-wit-r3-20260923/): de alfa begint net als bij
+    # zakelijk op 18,89% van de hoogte en het masker valt voor 99,6% samen, dus dezelfde pop en knip als zakelijk.
+    "zakelijk-v2": ("36.9%", "26.93%"),
     "nationaal": ("14.2%", "12.47%"),
+    # nationaal-v2 (23-09-2026, versie 2 uit website/review/dienst-nationaal-r4-20260923/): de alfa begint op
+    # 26,42% van de hoogte (drempel 45), dus pop (0,2642 + 0,11) / (1 - 0,2642) en knip pop / (1 + pop).
+    "nationaal-v2": ("50.9%", "33.71%"),
     "internationaal": ("40.9%", "29.04%"),
+    # internationaal-v2b (23-09-2026, variant B uit website/review/dienst-internationaal-v1-20260923/): de alfa begint
+    # op 7,28% van de hoogte (drempel 45), dus pop (0,0728 + 0,11) / (1 - 0,0728) en knip pop / (1 + pop).
+    "internationaal-v2b": ("19.7%", "16.47%"),
     "verhuislift": ("43.2%", "30.15%"),
     "opslag": ("50.1%", "33.38%"),
     # opslag-v2 (23-09-2026, ander gezicht, zelfde uitsnede): de bovenkant van de persoon zakt van 26,05% naar
     # 26,54% (korter haar), verder is de alfa gelijk, dus dezelfde pop en knip als opslag.
     "opslag-v2": ("50.1%", "33.38%"),
+    # montage-v2 (23-09-2026, versie 3 uit website/review/handyman-ronde-r7-20260923/): de alfa begint op 3,33% van
+    # de hoogte (drempel 45), dus pop (0,0333 + 0,11) / (1 - 0,0333) en knip pop / (1 + pop).
+    "montage-v2": ("14.8%", "12.91%"),
     "woningontruiming": ("22.2%", "18.14%"),
+    # woningontruiming-v2 (23-09-2026, versie 1 uit website/review/dienst-woningontruiming-wit-r2-20260923/): het
+    # alfamasker is gelijk aan dat van woningontruiming, dus dezelfde pop en knip.
+    "woningontruiming-v2": ("22.2%", "18.14%"),
 }
 
 

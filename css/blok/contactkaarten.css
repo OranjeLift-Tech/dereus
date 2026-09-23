@@ -9,7 +9,11 @@
 
 /* De belkaart: Koningsblauw, met de bereikbaarheidsstatus, het nummer groot en de tijden */
 .b-contactkaarten__belkaart{position:relative;overflow:visible;isolation:isolate;padding:clamp(1.75rem,1.2rem + 2vw,2.75rem);border-radius:24px;background:var(--brand-primary);color:var(--white);box-shadow:0 30px 60px -30px color-mix(in srgb,var(--brand-primary) 75%,transparent)}
-.b-contactkaarten__belkaart::after{content:"";position:absolute;z-index:-1;right:-2.5rem;bottom:-2rem;clip-path:inset(0 2.5rem 2rem 0);width:13rem;aspect-ratio:535.3/509.8;background:color-mix(in srgb,var(--white) 8%,transparent);-webkit-mask:var(--huisje) center/contain no-repeat;mask:var(--huisje) center/contain no-repeat}
+/* Het huisje (13rem breed) loopt 2,5rem rechts en 2rem onder de kaart door en wordt op de kaartrand
+   afgesneden. Het vlak is alleen het zichtbare stuk; het masker staat op volle maat linksboven en loopt
+   eruit. Eerst hing het vlak zelf buiten de kaart, verborgen met clip-path: dat verbergt de verf maar
+   niet de overloop, en waar de kaart de schermrand raakt maakte het de pagina 10 tot 24 px te breed. */
+.b-contactkaarten__belkaart::after{content:"";position:absolute;z-index:-1;right:0;bottom:0;width:10.5rem;height:calc(13rem * 509.8 / 535.3 - 2rem);background:color-mix(in srgb,var(--white) 8%,transparent);-webkit-mask:var(--huisje) left top/13rem auto no-repeat;mask:var(--huisje) left top/13rem auto no-repeat}
 /* Een echt toestel in plaats van een getekend beliconentje. Het staat rechtsboven half buiten de kaart,
    met een diepe schaduw eronder, zodat het er uit springt. Het staat stil; de hoek zit in het beeld zelf. */
 .b-contactkaarten__beltoestel{position:absolute;z-index:2;right:clamp(-2rem,-1.2vw,-1.1rem);top:clamp(-2.6rem,-2vw,-1.6rem);

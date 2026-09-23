@@ -55,6 +55,16 @@
   .wg__kaart { align-self: end; }
   .wg__kaartvlak { height: auto; aspect-ratio: .65; }
 }
+/* De kaart begint op de regel van de kop, niet op het label erboven ("the top should align with the
+   Vanuit Den Haag, door heel Nederland text instead of Werkgebied in height", keuze A uit
+   website/review/werkgebied-bovenkant-20260923/). 2.25rem is de regel van het label: 6 px ruimte
+   boven het label van 14 px en zijn 1rem ondermarge; alles in rem, dus op elke breedte hetzelfde.
+   De kaart rekt nog steeds, dus de onderkant blijft gelijk met het tekstblok; hij wordt alleen
+   bovenaan 36 px korter. Onder 1060 px verandert er niets: daar staat de kaart al lager dan de kop
+   of onder de tekst. Wordt het label groter of krijgt het een andere ondermarge, meet dan opnieuw. */
+@media (min-width: 1060.02px) {
+  .wg__kaart { margin-top: 2.25rem; }
+}
 
 @media (max-width: 899.98px) {
   .wg { grid-template-columns: minmax(0, 1fr); }

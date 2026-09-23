@@ -24,8 +24,11 @@
   filter:drop-shadow(0 2px 8px rgba(9,25,56,.5)) drop-shadow(0 16px 20px rgba(9,25,56,.55)) drop-shadow(0 36px 46px rgba(9,25,56,.42))}
 /* /contact/ (het kantoor, img/helpen-kantoor.webp): iets hoger, met de voet vrij van de onderrand van de
    kaart. Die render loopt door tot de onderkant van het bestand, dus de 4% omlaag hierboven sneed de voet
-   en de stoep eraf (17 van de 422 px). Alleen de contactvariant; de home gebruikt dit beeld niet. */
-.b-formulier--contact .b-formulier__team{--team-diep:-6%}
+   en de stoep eraf (17 van de 422 px). Alleen de contactvariant; de home gebruikt dit beeld niet.
+   De schaduw is hier half zo donker, zelfde vorm (gebruiker 23-09: "make the shadow on the image weaker"):
+   de volle schaduw lag als een donkere waas om het pand. De basisregel hierboven blijft voor andere varianten. */
+.b-formulier--contact .b-formulier__team{--team-diep:-6%;
+  filter:drop-shadow(0 2px 8px rgba(9,25,56,.25)) drop-shadow(0 16px 20px rgba(9,25,56,.275)) drop-shadow(0 36px 46px rgba(9,25,56,.21))}
 .b-formulier__zijkop{margin:0;color:var(--brand-primary);font:var(--weight-display) var(--text-h2)/var(--leading-heading) var(--font-display);
   font-stretch:var(--font-display-stretch);text-wrap:balance}
 .b-formulier__vinkjes{list-style:none;margin:0;padding:0;display:grid;gap:.8rem}

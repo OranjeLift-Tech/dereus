@@ -7,14 +7,16 @@ PAGINA = Pagina(
     kopij="werkwijze",
     header="transparant",
     body_klasse="p-werkwijze",
-    extra_css=("uitsnede",),                  # de gedeelde uitsnede-plaat, zie css/blok/uitsnede.css
+    extra_css=("reviews-ster-werkwijze",),  # de 3D-ster op de reviews
     blokken=[
         ("kop", {}),
         ("tijdlijn", {"kopij_id": "stappen"}),
         ("lijstplaat", {"kopij_id": "voorbereiding", "grond": "wit"}),    # wit, zodat de dakrand erboven schoon aansluit
         ("verhuisdag", {}),
-        ("naplaten", {"kopij_id": "na-de-verhuizing", "grond": "mist",
-                      "beeld": ("/img/dienst-nationaal-uit.webp", 1080, 810, 470, 100, 394, 710)}),  # slotplaten + foto
+        # mozaiek van vier tegels, versie 3 uit ronde 7 (23-09-2026); de foto is nationaal r4 versie 2
+        ("namozaiek", {"kopij_id": "na-de-verhuizing",
+                       "foto": ("/img/dienst-nationaal-v2-groot.webp", 1440, 1080),
+                       "foto_srcset": "/img/dienst-nationaal-v2.webp 720w, /img/dienst-nationaal-v2-groot.webp 1440w"}),
         ("reviews", {"variant": "compact"}),                              # wit, tussen twee Mist-secties
         # kopkaart: de sectiekop hoort hier in de belkaart, niet erboven. foto: de verhuizer
         # rechts in die kaart. Beide opties staan alleen op deze pagina aan.

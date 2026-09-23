@@ -83,11 +83,15 @@
 .b-dienstenpanelen__slot{margin:0 0 var(--space-5);padding:.85rem 1.1rem;border-radius:var(--radius-card);
   border-left:5px solid var(--brand-accent);background:var(--accent-50);color:var(--color-text)}
 .b-dienstenpanelen__slot a{color:var(--color-link);font-weight:var(--weight-semibold);white-space:nowrap}
-/* de WhatsApp-link achter het nummer blijft in de regel staan, als klein groen knopje */
-.b-dienstenpanelen__slot .wa-link{min-height:0;margin-inline-start:.5rem;padding:.2rem .6rem;border-radius:var(--radius-button);
-  background:var(--success);color:var(--white);font-size:var(--text-small);vertical-align:baseline}
+/* de WhatsApp-link achter het nummer blijft in de regel staan, als rond groen knopje met alleen het logo
+   (de gebruiker, 23-09-2026: "make the whatsapp into smaller button with only the logo so it fits in one
+   line"). Het woord verdwijnt alleen uit beeld: de naam komt uit aria-label en title, zoals in de header.
+   25x25, dus boven de 24 px van WCAG 2.5.8. Middle zet hem op het midden van het onderstreepte nummer. */
+.b-dienstenpanelen__slot .wa-link{min-width:0;min-height:0;margin-inline-start:.5rem;padding:.25rem;border-radius:var(--radius-button);
+  background:var(--success);color:var(--white);vertical-align:middle}
 .b-dienstenpanelen__slot .wa-link:hover{background:color-mix(in srgb,var(--success) 88%,black);color:var(--white)}
 .b-dienstenpanelen__slot .wa-link .ic{width:17px;height:17px}
+.b-dienstenpanelen__slot .wa-link .wa-link__tekst{display:none}
 .b-dienstenpanelen__doelgroepen{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 var(--space-5);padding:0;list-style:none}
 .b-dienstenpanelen__doelgroepen a{display:inline-flex;align-items:center;min-height:40px;padding:.3rem .95rem;border-radius:var(--radius-button);background:var(--white);
   box-shadow:0 0 0 1px var(--color-border-strong);color:var(--brand-primary);font:var(--weight-semibold) var(--text-small)/1.25 var(--font-sans);text-decoration:none}
@@ -250,16 +254,20 @@
 .b-dienstenpanelen__paneel--particulier{--uit-schaal:1.2}
 .b-dienstenpanelen__paneel--nationaal{--uit-schaal:1.12}
 .b-dienstenpanelen__paneel--internationaal{--uit-schaal:1.22}
-.b-dienstenpanelen__paneel--internationaal .b-dienstenpanelen__uit img{clip-path:polygon(30% 0,72% 0,72% 60%,61% 60%,61% 100%,30% 100%)}
+/* internationaal-v2b (23-09-2026): een rechte strook over beide mannen. De oude knik op 61% knipte de benen van
+   de staande man en de spanband weg in de onscherpe laag; het einde van de band rechts van 74% blijft daar. */
+.b-dienstenpanelen__paneel--internationaal .b-dienstenpanelen__uit img{clip-path:polygon(30% 0,74% 0,74% 100%,30% 100%)}
 .b-dienstenpanelen__paneel--verhuislift{--uit-schaal:1.1}
 .b-dienstenpanelen__paneel--opslag{--uit-schaal:1.36;--uit-x:-2%}
 .b-dienstenpanelen__paneel--woningontruiming{--uit-schaal:1.08;--uit-x:-14.5%}
 .b-dienstenpanelen__paneel--woningontruiming .b-dienstenpanelen__uit img{-webkit-mask-image:linear-gradient(90deg,#000 95%,transparent);mask-image:linear-gradient(90deg,#000 95%,transparent)}
-/* 07 montage: sinds 23-09-2026 de 3D-boor uit de kosten-3d-reeks op een achtergrond in merkblauw
-   (img/dienst-montage.webp en -uit, gemaakt door _ai-beelden/dienst-montage-3d.py), in plaats van de foto van een
-   hand met een boor (dienst-handyman, door de gebruiker op "delete" gezet). Foto en uitsnede liggen op dezelfde
-   plek, zoals bij de andere panelen: de boor staat scherp voor het huis en steekt met zijn bovenhoeken over het dak. */
-.b-dienstenpanelen__paneel--montage{--uit-schaal:1.08}
+/* 07 montage: sinds 23-09-2026 de handyman met de boor (img/dienst-montage-v2.webp en -uit, versie 3 uit
+   website/review/handyman-ronde-r7-20260923/), in plaats van de 3D-boor. Hij zit rechts in de foto en de boor
+   steekt links omhoog. Zonder verschuiving bleef de boor in het huis en viel zijn rug recht afgesneden buiten de
+   rechtermuur; 22% naar links zet de boor en zijn hoofd buiten het huis en zijn rug erbinnen. Het laatste stuk van
+   de rug loopt zacht uit, zoals bij 08. Varianten: website/review/dienst-montage-v2-20260923/werk/proef/. */
+.b-dienstenpanelen__paneel--montage{--uit-schaal:1.16;--uit-x:-22%}
+.b-dienstenpanelen__paneel--montage .b-dienstenpanelen__uit img{-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
 
 /* ==== schuine naden: de banden als planken ====
    Wens van de gebruiker (23-09-2026): de kleurwissels tussen de panelen schuin, als planken met schaduw, "but

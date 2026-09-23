@@ -48,8 +48,24 @@ def ploegbeeld(k, i):
         bij = 1
     if i + 1 != bij:
         return ""
+    b, h = _maat(pad, (760, 504))
     return (f'<img class="rkaart__klant rkaart__klant--ploeg" src="{pad}" alt="" '
-            f'width="760" height="504" loading="lazy" decoding="async">')
+            f'width="{b}" height="{h}" loading="lazy" decoding="async">')
+
+
+def _maat(pad, terugval):
+    """Werkelijke afmetingen van het ploegbeeld, met een terugval als het niet te lezen is.
+
+    De ploegbeelden verschillen in breedte (/diensten/ 914x504 sinds de schouders erbij kwamen,
+    /werkwijze/ 760x504), dus een vaste maat geeft de browser vooraf de verkeerde verhouding.
+    PIL is geen harde afhankelijkheid van de build, vandaar de import hier en de terugval.
+    """
+    try:
+        from PIL import Image
+        with Image.open(kit.WORTEL / pad.lstrip("/")) as im:
+            return im.size
+    except Exception:
+        return terugval
 
 
 def initialen(naam):
