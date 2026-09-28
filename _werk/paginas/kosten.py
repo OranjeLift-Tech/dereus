@@ -19,6 +19,7 @@ PAGINA = Pagina(
         ("extradiensten", {"kopij_ids": EXTRA}),
         ("annuleren", {}),
         ("vragen", {"kopij_id": "vragen", "beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),   # hetzelfde blauwe paneel als op de home, /werkwijze/ en /contact/ (23-09-2026)
-        ("offertepil", {"variant": "los"}),
+        # de twee-dozen-verhuizer staat hier al op de treden, dus in de offertekaart een andere uitsnede
+        ("offertepil", {"variant": "los", "beeld": ("/img/verhuizer-doos-zijgreep-uit.webp", 489, 1200)}),
     ],
 )

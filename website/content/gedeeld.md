@@ -14,8 +14,8 @@ score-link: /#reviews
 knop: Offerte aanvragen
 groep-verhuizen: Verhuizen
 groep-extra: Extra hulp
-- [Over ons](/over-ons/)
 - [Diensten](/diensten/)
+- [Over ons](/over-ons/)
 - [Werkwijze](/werkwijze/)
 - [Contact](/contact/)
 Notitie: Diensten houdt zijn uitklap met de 8 ankers op /diensten/ (SITEMAP 6). De volgorde van deze lijst is de volgorde in het menu.

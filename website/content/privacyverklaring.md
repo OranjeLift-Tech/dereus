@@ -94,6 +94,8 @@ Deze website gebruikt geen cookies voor statistieken, advertenties of het volgen
 
 Lettertypen en de kaart staan op onze eigen server. Wij laden niets van Google Fonts of Google Maps.
 
+De iconen staan ook op onze eigen server. Ze komen uit [Solar](https://www.figma.com/community/file/1166831539721848736) van 480 Design en vallen onder de licentie [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.nl).
+
 ## Wijzigingen {#wijzigingen}
 kort: Wijzigingen
 Wij passen deze privacyverklaring aan als dat nodig is, bijvoorbeeld als de website verandert. De nieuwste versie staat altijd op deze pagina.

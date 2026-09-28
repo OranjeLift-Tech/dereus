@@ -1,12 +1,13 @@
-/* Alle paginakoppen delen de gecentreerde fotokop met compacte offertekaart. */
-/* --kop-h moet gelijk blijven aan dezelfde variabele in hero.css. De oude clamp(490px,68vh,610px)
-   hing aan de kijkhoogte terwijl de hero uit zijn inhoud volgde, en dat liep bij elke maat uiteen. */
-.pk{--kop-h:673px;position:relative;isolation:isolate;overflow:hidden;background:var(--brand-secondary);color:var(--white);padding:calc(var(--header-h) + 2.4rem) 0 7rem;min-height:var(--kop-h);display:flex;align-items:center}
+/* Alle paginakoppen delen de gecentreerde fotokop met compacte offertekaart. Sinds 28-09-2026 is dat op
+   elke subpagina precies dezelfde kop, op de foto na; alleen de home heeft een eigen, grotere opening
+   (hero.css). Voeg hier dus geen pagina-uitzonderingen aan de kop zelf toe. De hoogte staat onderaan,
+   bij "De foto loopt door achter de offertekaart". */
+.pk{position:relative;isolation:isolate;overflow:hidden;background:var(--brand-secondary);color:var(--white);padding:calc(var(--header-h) + 2.4rem) 0 7rem;display:flex;align-items:center}
 .pk__grond{position:absolute;inset:0;z-index:-1;pointer-events:none}.pk__foto{width:100%;height:100%;object-fit:cover}.pk__waas{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,22,25,.56),rgba(20,22,25,.2) 36%,rgba(20,22,25,.2) 68%,rgba(20,22,25,.48))}
 .pk__tekst{position:relative;isolation:isolate;text-shadow:0 1px 2px rgba(0,0,0,.32)}
 /* Zelfde maatvoering als de hero, zodat de verdonkering overal op nul eindigt in plaats van af te knippen. */
 .pk__tekst::before{content:"";position:absolute;z-index:-1;inset:-4rem -8rem;background:radial-gradient(ellipse closest-side at 50% 50%,rgba(12,14,18,.58),rgba(12,14,18,.56) 55%,rgba(12,14,18,.34) 78%,rgba(12,14,18,.12) 90%,transparent 100%);pointer-events:none}
-.pk__wrap{width:100%}.pk__tekst{max-width:53rem;margin-inline:auto;text-align:center}.pk__label{margin-bottom:.7rem;font-size:.75rem;justify-content:center}.pk__h1{margin:0;color:var(--white);font-size:clamp(2.3rem,3.8vw,3.4rem);line-height:1.06;text-shadow:0 3px 18px rgba(0,0,0,.2)}.pk__streep{display:block;width:3rem;height:4px;margin:.9rem auto 0;border-radius:4px;background:var(--brand-accent)}.pk__intro{margin:.85rem auto 0;max-width:46rem;font-size:1.0625rem;line-height:1.5;color:var(--white)}.pk__bel{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem .6rem;margin:1rem 0 0}.pk__bel>a{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:44px;margin:0;padding:.45rem 1.15rem;border-radius:var(--radius-button);background:var(--brand-secondary);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);color:var(--white);font:var(--weight-bold) .95rem/1.2 var(--font-sans);text-decoration:none;white-space:nowrap}.pk__bel>a:hover{background:var(--brand-primary);color:var(--white);text-decoration:none}.pk__bel>.wa-link{background:var(--success)}.pk__bel>.wa-link:hover{background:color-mix(in srgb,var(--success) 80%,black);color:var(--white)}.pk__bel .ic{flex:none;width:19px;height:19px;margin:0;color:inherit}
+.pk__wrap{width:100%}.pk__tekst{max-width:53rem;margin-inline:auto;text-align:center}.pk__label{margin-bottom:.7rem;font-size:.75rem;justify-content:center}.pk__h1{margin:0;color:var(--white);font-size:clamp(2.3rem,3.8vw,3.4rem);line-height:1.06;text-shadow:0 3px 18px rgba(0,0,0,.2)}.pk__intro{margin:.85rem auto 0;max-width:46rem;font-size:1.0625rem;line-height:1.5;color:var(--white)}.pk__bel{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem .6rem;margin:1rem 0 0}.pk__bel>a{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:44px;margin:0;padding:.45rem 1.15rem;border-radius:var(--radius-button);background:var(--brand-secondary);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);color:var(--white);font:var(--weight-bold) .95rem/1.2 var(--font-sans);text-decoration:none;white-space:nowrap}.pk__bel>a:hover{background:var(--brand-primary);color:var(--white);text-decoration:none}.pk__bel>.wa-link{background:var(--success)}.pk__bel>.wa-link:hover{background:color-mix(in srgb,var(--success) 80%,black);color:var(--white)}.pk__bel .ic{flex:none;width:19px;height:19px;margin:0;color:inherit}
 .pk-pil{position:relative;z-index:5;margin-top:-4rem;padding-bottom:1rem}.pk__chips{margin:1.5rem 0 0}.pk__chips ul{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin:0;padding:0;list-style:none}.pk__chip{display:inline-flex;align-items:center;min-height:44px;padding:.5rem 1rem;border-radius:999px;background:var(--white);border:1px solid var(--color-border);color:var(--brand-primary);font-size:var(--text-xs);font-weight:var(--weight-semibold);text-decoration:none;text-align:center}.pk__chip:hover{background:var(--primary-50);color:var(--brand-primary)}.pk__ankers{padding-bottom:1rem}
 /* Dezelfde afgesneden beeldboog als op de homepage, alleen in de vrije buitenmarge. */
 @media(min-width:1280px){.pk__grond::after{content:"";position:absolute;right:0;top:calc(var(--header-h) + 1rem);width:8rem;height:15rem;background:var(--beeldboog) right center/100% 100% no-repeat;pointer-events:none}}
@@ -22,7 +23,29 @@
 .pk__chip::before{content:"";flex:none;width:1.05rem;aspect-ratio:535.3/509.8;background:var(--brand-accent);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
 .pk__chip:hover{background:var(--brand-primary);color:var(--white);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 0 0 1px var(--brand-primary),0 4px 0 var(--brand-secondary),0 14px 18px -12px rgba(11,35,82,.55)}
 .pk__chip:focus-visible{outline:3px solid var(--brand-accent);outline-offset:3px}
-@media(max-width:767.98px){.pk__chips{margin-top:1.25rem}.pk__chip{padding-inline:.75rem .95rem}}
+@media(max-width:767.98px){
+  .pk__chips{margin:1.25rem calc(var(--gutter) * -1) 0}
+  .pk__chips ul{justify-content:flex-start;flex-wrap:nowrap;gap:.6rem;overflow-x:auto;scroll-snap-type:x proximity;
+    padding:.25rem calc(var(--gutter) + 1.5rem) .75rem var(--gutter);scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 1.5rem),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 1.5rem),transparent)}
+  .pk__chips ul::-webkit-scrollbar{display:none}
+  .pk__chips li{flex:none;scroll-snap-align:start}
+  .pk__chip{min-height:44px;gap:0;padding:.4rem 1.1rem;font-weight:var(--weight-semibold);white-space:nowrap;
+    box-shadow:inset 0 1px 0 var(--white),0 0 0 1px rgba(14,26,51,.08),0 3px 0 #C9D9F5,0 9px 14px -11px rgba(11,35,82,.35)}
+  .pk__chip::before{display:none}
+  .pk__chip:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 0 0 1px var(--brand-primary),0 3px 0 var(--brand-secondary),0 9px 14px -11px rgba(11,35,82,.45)}
+}
+/* ---- Een eigen dienstikoon per chip (28-09-2026) ----
+   De gebruiker: "nav in diensten, use different icons for each section, use the small icons, not the clay ones." Het
+   Solar-ikoon van de dienst (kit.DIENST_SOLAR, via blok kop) vervangt het huisje; chips zonder ikoon houden het huisje.
+   Ikoon, tussenruimte en linkerpadding zijn samen even breed als huisje, tussenruimte en padding
+   (.6 + 1.4 + .4 = .85 + 1.05 + .5), dus de chip blijft even groot. Bij hover wordt de chip Koningsblauw; het ikoon wordt dan goudgeel. Op de telefoon, waar het huisje
+   wegvalt, blijft het ikoon staan: de chip wordt breder, de rij niet hoger. */
+.pk__chip--icoon{gap:.4rem;padding-left:.6rem}
+.pk__chip--icoon::before{display:none}
+.pk__chip-ic{flex:none;width:1.4rem;height:1.4rem}
+.pk__chip--icoon:hover{--icoon-hoofd:var(--brand-accent)}
+@media(max-width:767.98px){.pk__chip--icoon{gap:.35rem;padding-left:.75rem}.pk__chip-ic{width:1.25rem;height:1.25rem}}
 
 /* ---- De foto loopt door achter de offertekaart ----
    De grens tussen foto en achtergrond viel samen met de onderkant van de blauwe kopband van de kaart. Nu ligt hij
@@ -41,3 +64,21 @@
 /* ---- Over ons: geen extra lucht onder de kaart ---- */
 /* Daar sluit de tekstkolom nu bovenaan aan (zie over-ons.css) en is de gewone sectieruimte genoeg. */
 .p-over-ons .pk-pil{padding-bottom:0}
+
+/* ---- Donkerder foto, minder schaduw achter de tekst (28-09-2026) ----
+   Gevraagd: "make all header images darker so that the shadow under the text is not so visible or maybe
+   unneeded anymore." De foto krijgt boven de waas een egale verdonkering van 40% (--foto-donker, als
+   achtergrondkleur van de waas, dus onder zijn verloop), het ovaal achter de tekst gaat naar 55% van zijn
+   sterkte en de tekstschaduw vervalt. Gemeten op de slechtste pixel in de regelvakken, tekst en schaduw
+   onzichtbaar, twaalf pagina's op vijf maten: H1 minstens 5,5:1, intro 5,0:1, label 4,7:1 (voorheen 3,5:1, 3,95:1
+   en 4,2:1, en /over-ons/, /algemene-voorwaarden/ en /404.html haalden 4,5:1 niet). Het ovaal helemaal weg haalt
+   het niet: dan zakt de intro op elf pagina's onder 4,5:1, ook bij 40% verdonkering. Dezelfde waarden staan in
+   hero.css voor de home. */
+.pk{--foto-donker:.4}
+.pk__waas{background-color:rgba(12,14,18,var(--foto-donker))}
+.pk__tekst::before{opacity:.55}
+.pk__tekst,.pk__h1{text-shadow:none}
+/* Een link in de intro kreeg de gewone linkkleur, Koningsblauw op de donkere foto: 1,0:1 op /contact/bedankt/
+   ("offerte aanvragen"). Wit met een gouden onderstreping, zoals de rest van de kop. */
+.pk__intro a{color:var(--white);text-decoration-color:var(--brand-accent)}
+.pk__intro a:hover{color:var(--brand-accent)}

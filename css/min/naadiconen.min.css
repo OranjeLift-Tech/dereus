@@ -1,0 +1,1 @@
+.naadicoon{display:none}@media (min-width:1100px){.naadicoon{--ni-rand:max(0px,(100% - 1440px) / 2);display:block;position:absolute;z-index:5;top:var(--ni-y);width:120px;height:auto;pointer-events:none}.naadicoon--links{left:calc(var(--ni-rand) + var(--ni-x))}.naadicoon--rechts{right:calc(var(--ni-rand) + var(--ni-x))}}

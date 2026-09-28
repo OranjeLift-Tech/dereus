@@ -39,9 +39,9 @@
 .b-namozaiek__tegel--tevreden p{color:var(--graphite)}
 
 .b-namozaiek__ding{position:absolute;height:auto;pointer-events:none}
-/* de telefoon staat schuin en valt onder de tegel weg */
-.b-namozaiek__ding--telefoon{right:clamp(.5rem,1.2vw,1.1rem);bottom:-2.75rem;width:clamp(4.25rem,6vw,5.5rem);transform:rotate(9deg);
-  filter:drop-shadow(0 10px 14px color-mix(in srgb,var(--ink) 35%,transparent))}
+/* de telefoon staat schuin rechtsboven, op dezelfde hoogte als de ster ernaast (klei-icoon sinds 28-09-2026) */
+.b-namozaiek__ding--telefoon{right:clamp(.5rem,1.2vw,1.1rem);top:clamp(.6rem,1.2vw,1.1rem);width:clamp(4.5rem,6.4vw,6rem);transform:rotate(8deg);
+  filter:drop-shadow(0 10px 14px color-mix(in srgb,var(--ink) 45%,transparent))}
 .b-namozaiek__ding--ster{right:clamp(.75rem,1.4vw,1.3rem);top:clamp(.9rem,1.5vw,1.3rem);width:clamp(3.75rem,5.2vw,4.75rem);transform:rotate(-11deg);
   filter:drop-shadow(0 8px 10px color-mix(in srgb,var(--accent-700) 30%,transparent))}
 
@@ -55,6 +55,6 @@
   .b-namozaiek__raster{grid-template-columns:minmax(0,1fr);grid-template-areas:"kop" "foto" "vragen" "tevreden"}
   .b-namozaiek__tegel--foto{min-height:0;aspect-ratio:4/3}
   .b-namozaiek__tegel--vragen,.b-namozaiek__tegel--tevreden{min-height:0;padding-right:5.75rem}
-  .b-namozaiek__ding--telefoon{width:4.25rem;bottom:-2.25rem}
+  .b-namozaiek__ding--telefoon{width:4.5rem}
   .b-namozaiek__ding--ster{width:3.5rem}
 }

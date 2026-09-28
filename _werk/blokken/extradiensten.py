@@ -13,10 +13,11 @@ JS = False
 
 STANDAARD = ["opslag", "verhuislift", "montage", "woningontruiming"]
 
-# Het 3D-voorwerp dat op elke kaart staat en er bovenuit steekt (img/kosten-3d/, alle 420 px hoog):
-# naam en breedte. Vormgeving: css/blok/extradiensten.css en css/blok/kosten-diepte.css.
-VOORWERP = {"opslag": ("opslagopen", 569), "verhuislift": ("lift", 210), "montage": ("boor", 509),
-            "woningontruiming": ("huis", 425)}
+# Het voorwerp dat op elke kaart staat en er bovenuit steekt: sinds 28-09-2026 het klei-icoon van die dienst
+# (img/clay/<naam>-240/480.webp, vierkant; website/review/clay-iconen-20260928/). Het vak is 12 rem hoog met
+# object-fit contain. Vormgeving: css/blok/extradiensten.css en css/blok/kosten-diepte.css.
+VOORWERP = {"opslag": "opslag", "verhuislift": "verhuislift", "montage": "montage",
+            "woningontruiming": "woningontruiming"}
 
 
 def html(ctx, kopij, **opties) -> str:
@@ -26,7 +27,7 @@ def html(ctx, kopij, **opties) -> str:
         # "Meer over deze dienst": het anker op /diensten/, of de eigen dienstpagina zodra die live is
         meer = ctx.knop(k.veld("linktekst"), _b4.schakel(ctx, k.veld("link")), soort="link") if k.veld("link") else ""
         kaarten += f'''<article class="b-{NAAM}__kaart" id="{k.id}" aria-labelledby="{k.id}-kop">
-          <img class="b-{NAAM}__obj" src="/img/kosten-3d/{VOORWERP[k.id][0]}.webp" alt="" width="{VOORWERP[k.id][1]}" height="420" loading="lazy" decoding="async">
+          <img class="b-{NAAM}__obj" src="/img/clay/{VOORWERP[k.id]}-240.webp" srcset="/img/clay/{VOORWERP[k.id]}-240.webp 240w, /img/clay/{VOORWERP[k.id]}-480.webp 480w" sizes="12rem" alt="" width="240" height="240" loading="lazy" decoding="async">
           <h2 class="b-{NAAM}__kop" id="{k.id}-kop">{ctx.inline(k.kop)}</h2>
           {ctx.alineas(k.tekst)}
           <p class="b-{NAAM}__acties">{meer}</p>

@@ -1,4 +1,9 @@
-/* Gecentreerde fotokop en team, volgens de richting van Brocken en De Kievit. */
+/* Gecentreerde fotokop en team, volgens de richting van Brocken en De Kievit.
+   Sinds 28-09-2026 is dit de enige opening die afwijkt: groter en met meer beeld dan de paginakop (kop.css),
+   die op elke andere pagina gelijk is. Groter mag alleen binnen de regel voor desktop: de hele offertekaart,
+   knop inbegrepen, staat bij het laden in het eerste scherm (website/review/vouw-1366x650-offertekaart.md).
+   Daarom volgt de zichtbare hoogte van het team de schermhoogte (--team-zicht) en groeit de hero pas waar
+   ruimte is: op 1440x900 en 1920x1080 groter dan de kop, op 1366x768 en 1366x650 net passend. */
 .hero{--hero-onder:5rem;position:relative;isolation:isolate;overflow:hidden;color:var(--white);background:var(--brand-secondary);padding-top:calc(var(--header-h) + 1.1rem);padding-bottom:var(--hero-onder)}
 .hero__grond,.hero__foto,.hero__waas{position:absolute;inset:0;pointer-events:none}.hero__grond{z-index:-1}.hero__foto img{width:100%;height:100%;object-fit:cover}.hero__waas{background:linear-gradient(180deg,rgba(20,22,25,.54),rgba(20,22,25,.1) 32%,rgba(20,22,25,.08) 67%,rgba(20,22,25,.4))}
 .hero__textuur,.hero__korrel{display:none}
@@ -9,16 +14,23 @@
    bereikbaar" (.bereikbaar__tijden, z-index 30) kon daardoor niet boven de uitsnede van de drie
    verhuizers uitkomen, want hero__figuur is de volgende in hero__grid en tekent er dus overheen.
    Een hogere z-index op het paneel helpt niet: die telt alleen binnen deze context. */
-.hero__tekst{position:relative;width:100%;max-width:58rem;text-align:center}.hero__tekst::before{content:"";position:absolute;z-index:-1;inset:-2rem -3rem;background:radial-gradient(ellipse,rgba(16,19,24,.63),rgba(16,19,24,.36) 52%,transparent 74%);pointer-events:none}.hero__label{justify-content:center;margin-bottom:.7rem;font-size:.75rem}
-.hero__h1{margin:0;color:var(--white);font:var(--weight-display) clamp(2.3rem,3.8vw,3.4rem)/1.06 var(--font-display);font-stretch:var(--font-display-stretch);text-shadow:0 3px 18px rgba(0,0,0,.2)}
+.hero__tekst{position:relative;width:100%;max-width:58rem;text-align:center}.hero__tekst::before{content:"";position:absolute;z-index:-1;inset:-3rem -7rem;background:radial-gradient(ellipse closest-side,rgba(16,19,24,.68),rgba(16,19,24,.62) 58%,rgba(16,19,24,.32) 82%,transparent 100%);pointer-events:none}.hero__label{justify-content:center;margin-bottom:.7rem;font-size:.75rem}
+.hero__h1{margin:0;color:var(--white);font:var(--weight-display) clamp(2.5rem,min(4.6vw,7.4svh),4.25rem)/1.06 var(--font-display);font-stretch:var(--font-display-stretch);text-shadow:0 3px 18px rgba(0,0,0,.2)}
 .hero__intro{margin:.7rem auto 0;max-width:46rem;font-size:1.0625rem;line-height:1.5;color:rgba(255,255,255,.92);text-wrap:pretty}.hero__bel{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem .6rem;margin:.75rem 0 0;font-size:.9rem;font-weight:var(--weight-semibold)}.hero__bel>a{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:44px;margin:0;padding:.45rem 1.15rem;border-radius:var(--radius-button);background:var(--brand-secondary);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);color:var(--white);font:var(--weight-bold) .95rem/1.2 var(--font-sans);text-decoration:none;white-space:nowrap}.hero__bel>a:hover{background:var(--brand-primary);color:var(--white);text-decoration:none}.hero__bel>.wa-link{background:var(--success)}.hero__bel>.wa-link:hover{background:color-mix(in srgb,var(--success) 80%,black);color:var(--white)}.hero__bel>a .ic{flex:none;width:19px;height:19px;margin:0;color:inherit}.hero__status{min-height:44px;padding:.35rem .9rem;border-radius:999px;background:rgba(11,35,82,.55);font-size:.95rem}
-.hero__figuur{position:relative;width:400px;height:260px}.hero__figuur--team{width:400px;height:260px}.hero__team{position:absolute;z-index:2;top:0;left:50%;translate:-50% 0;width:100%}.hero__team img{width:100%;height:auto;filter:drop-shadow(0 10px 22px rgba(9,25,56,.3))}
+.hero__figuur{position:relative;width:400px;height:260px}
+/* Het team: --team-zicht is wat er boven de offertekaart uitkomt. 565px is al het andere tot de onderkant van de
+   kaart (kopbalk, tekst, bel, de kaart zelf) plus lucht; de rest van de uitsnede valt achter de kaart. De breedte
+   groeit mee, zodat het team op een hoog scherm groter staat en op een laag scherm alleen de bovenkant toont. */
+.hero{--team-zicht:clamp(110px,calc(100svh - 565px),420px)}.hero__figuur--team{width:clamp(280px,calc(var(--team-zicht) * 1.65),620px);height:var(--team-zicht)}.hero__team{position:absolute;z-index:2;top:0;left:50%;translate:-50% 0;width:100%}.hero__team img{width:100%;height:auto;filter:drop-shadow(0 10px 22px rgba(9,25,56,.3))}
 .hero__huis{position:absolute;inset:0;background:var(--primary-100);-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}.hero__mascotte{position:absolute;height:260px;width:auto;left:50%;transform:translateX(-50%);bottom:-45px}.hero__beeldmerk{position:absolute;width:200px;left:50%;transform:translateX(-50%);bottom:0}.doos{display:none}
 .hero-pil{position:relative;z-index:5;margin-top:-4rem;padding-bottom:.75rem}
 /* De boog is afgesneden door de buitenste beeldrand, ruim buiten tekst en offerte. */
 @media(min-width:1280px){.hero__grond::after{content:"";position:absolute;right:0;top:calc(var(--header-h) + 1rem);width:8rem;height:15rem;background:var(--beeldboog) right center/100% 100% no-repeat;pointer-events:none}}
-@media(min-width:768px) and (min-height:850px){.hero__figuur--team{width:440px;height:290px}}
-@media(min-width:1000px) and (max-height:740px){.hero{padding-top:calc(var(--header-h) + .65rem)}.hero__grid{gap:.65rem}.hero__h1{font-size:3rem}.hero__figuur--team{height:220px}}
+/* De grotere H1 reikte tot in de lichte rand van de verdonkering: op 1440x900 viel het wit naar 3,7:1 en het
+   goudgeel van ==Den Haag== naar 2,5:1. Met dit bredere, iets diepere vlak is het slechtste punt op de vijf
+   vouwmaten 6,2:1 voor wit en 4,1:1 voor goudgeel (was 5,8:1 wit voor de vergroting). */
+@media(min-width:768px){.hero__intro{font-size:1.125rem}}
+@media(min-width:1000px) and (max-height:740px){.hero{--team-zicht:clamp(110px,calc(100svh - 530px),420px);padding-top:calc(var(--header-h) + .65rem)}.hero__grid{gap:.65rem}}
 @media(max-width:767.98px){.hero{--hero-onder:3rem;padding-top:calc(var(--header-h) + 1.15rem)}.hero__intro{font-size:1rem;max-width:35rem}.hero__grid{gap:1.1rem}.hero__figuur--team{width:min(88vw,390px);height:auto;aspect-ratio:1.5}.hero__bel{font-size:.85rem}.hero-pil{margin-top:-2rem}}
 
 /* ---- De foto loopt door achter de offertekaart ----
@@ -28,3 +40,55 @@
 .hero{--hero-onder:calc(5rem + 3.25rem)}
 .hero-pil{margin-top:calc(-4rem - 3.25rem)}
 @media(max-width:767.98px){.hero{--hero-onder:calc(3rem + 5.25rem)}.hero-pil{margin-top:calc(-2rem - 5.25rem)}}
+
+/* ---- Slogan met wisselend woord (28-09-2026, naar Solar Green en Brocken) ----
+   De H1 heeft twee regels: klein wie en waar ("Verhuisbedrijf in Den Haag"), groot de belofte uit de
+   merkregel ("Sterk in verhuizen"), waarin het laatste woord wisselt (js/blok/hero.js). Het label erboven
+   is vervallen, deze kleine regel neemt zijn plaats in.
+   Het woordvak is zo breed als het eerste woord, dat altijd in de flow blijft. De andere woorden liggen
+   er absoluut overheen, links uitgelijnd, en mogen iets voorbij de rand tekenen (opbouwen is 0,27em
+   breder dan verhuizen). Zo verandert er bij het wisselen geen maat en verschuift er niets, ook niet als
+   het script de woorden opbouwt. Het oude woord zakt weg naar boven, het nieuwe komt van onder, na
+   elkaar en niet over elkaar heen. */
+.hero__boven{display:block;margin:0 0 .35rem;font-size:.44em;line-height:1.15;font-weight:var(--weight-bold)}
+.hero__slogan{display:block}
+.hero__wissel{display:inline-block;font-style:normal;color:var(--brand-accent);white-space:nowrap;text-align:left}
+.hero__woorden{position:relative;display:inline-block}
+.hero__woord{display:inline-block;transition:opacity .25s var(--ease),translate .25s var(--ease)}
+.hero__woord:not(:first-child){position:absolute;left:0;top:0}
+.hero__woord:not(.is-actief){opacity:0;translate:0 .3em}
+.hero__woord.is-weg{translate:0 -.3em}
+.hero__woord.is-actief{transition-delay:.25s}
+@media(max-width:767.98px){.hero__boven{font-size:.5em}}
+@media(prefers-reduced-motion:reduce){.hero__woord{transition:none}}
+
+/* ---- Team 20% groter en lager (28-09-2026) ----
+   Het vak (.hero__figuur--team) houdt zijn maat, dus de offertekaart blijft staan en de vouwregel verandert
+   niet. Alleen het beeld erin groeit: 120% van het vak, gecentreerd, en het zakt --team-zak omlaag. Zo komen de
+   hoofden verder van de belknoppen en valt er meer van het team (ook de dozen) achter de kaart. Op de telefoon
+   houdt de schermbreedte het beeld tegen: daar blijft het 1rem van elke rand, even breed als de kaart
+   (op 390 is dat 4% groter in plaats van 20%). De sizes van het beeld (kit.HERO_SIZES) zijn niet mee
+   vergroot: op DPR 1 wordt het 700w-bestand zo tot 6% opgerekt, onzichtbaar, en er komt geen 83 kB bij. */
+.hero{--team-zak:1.5rem}
+.hero__team{top:var(--team-zak);width:120%}
+@media(min-width:1000px) and (max-height:740px){.hero{--team-zak:1rem}}
+@media(max-width:767.98px){.hero{--team-zak:1rem}.hero__team{width:min(120%,100vw - 2rem)}}
+
+/* "Nu bereikbaar" staat in de html op hidden en site.js zet hem pas aan na de eerste tekening. Op de telefoon
+   staat de chip op een eigen regel, dus dan zakten de knoppen, het team en de kaart 52px (CLS 0,12 in twee van
+   de drie Lighthouse-metingen mobiel, 28-09-2026). Met .js, dat de head inline zet, houdt de chip vooraf zijn
+   plaats: onzichtbaar, met de open-tekst uit data-open als maat. De -.5rem haalt de flexgap weg die de lege
+   tekstspan in de knop nog krijgt, zodat de chip op de pixel even breed is als open (170,44px); anders schoof de
+   belknop naast hem op 412 breed nog 4px opzij (CLS 0,014). Buiten openingstijden is de tekst langer en
+   schuift de rij nog wel. Zonder script blijft hij weg zoals voorheen. */
+.js .hero__status[hidden]{display:inline-flex;visibility:hidden}
+.js .hero__status[hidden]::before{content:attr(data-open);margin-right:-.5rem}
+
+/* ---- Donkerder foto, minder schaduw achter de tekst (28-09-2026) ----
+   Zelfde stap als in kop.css: 40% egale verdonkering onder het verloop van de waas, het ovaal achter de tekst
+   op 55% en geen tekstschaduw. Slechtste pixel op de vijf vouwmaten: wit 8,2:1, goudgeel 5,9:1, intro 5,6:1
+   (met het wisselwoord tot de breedte van "opbouwen" gemeten). */
+.hero{--foto-donker:.4}
+.hero__waas{background-color:rgba(12,14,18,var(--foto-donker))}
+.hero__tekst::before{opacity:.55}
+.hero__h1{text-shadow:none}

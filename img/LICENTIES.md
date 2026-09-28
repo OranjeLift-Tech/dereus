@@ -55,6 +55,76 @@ vervangen van twee stapfoto's in "Zo werkt het" (home). De header-achtergronden 
 - Merk op de gevel: VERHUISBEDRIJF over DE REUS, zonder naamregel, op 4x nagekeken.
 - Licentie: eigen render.
 
+## img/footer-wagen.webp
+
+- Footer op elke pagina, de foto achter de intro (`.footer__wagen`, `_werk/navigatie.py`). Sinds 28-09-2026
+  in plaats van de vorige foto van de bestelwagen; die staat als `voor-footer-wagen.webp`
+  (md5 13f6e9c282a50f253d1e3d1218c43227) in `website/review/footer-truck-20260928/`.
+- Bron: repo debresser, origin/main d432b94,
+  `assets\img\ai-beelden\debresser-beeldbank\02-verhuizen\verhuisbedrijf-europa-2.jpg` (2752x1536,
+  md5 470619fa27397867ef45a6e4555c5c93). Een AI-beeld uit de beeldbank van De Bresser, geen foto van hun
+  echte wagenpark. Hetzelfde beeld staat in hun eigen footer (`assets\img\footer\vrachtwagen-snelweg-*.webp`).
+  Paden in de debresser-repo staan hier met backslashes: met slashes leest de beeldcontrole
+  (`_werk/controle-beelden.py --vangnet`) ze als sitepad `/img/...` van deze site.
+- Bewerkt op 28-09-2026 met nano banana pro (gemini-3-pro-image-preview), twee rondes met een geometrieslot
+  (uitvoer valt pixel voor pixel op de bron):
+  1. het hele beeld: embleem, DE BRESSER, de groene blokken en het labeltje van de opbouwer van de bak
+     gehaald, belettering uit `brandbook/assets/mockups/preview/verhuiswagen.png` erop (logo
+     `brandbook/assets/logo/dereus-logo.png`, 085 000 5647, gouden streep en blauwe band met
+     verhuisbedrijfdereus.nl);
+  2. alleen de cabine: spoiler, paneel onder de voorruit en portier wit.
+- Composiet (`website/review/footer-truck-20260928/werk/samenstel.py`): de bron, met ronde 1 alleen binnen
+  de omtrek van de bak en ronde 2 alleen waar de oude letters op de cabine zaten; de cijfers op het kenteken
+  zijn met kentekengeel dichtgezet. Daarbuiten is elke pixel de bron. Geen naam, nummer, adres of embleem van
+  De Bresser meer in beeld, op 3x nagekeken (`controle/versie-1-merk-3x.png`).
+- Uitsnede x 490-2590, y 54-1536 (`versie-1-klaar.png`, 2100x1482, md5 b300ebd4a26a119cf04a16b08b4d9ff8),
+  naar 1200x847, WebP q78, md5 f26a9436617c9e43efab6d6968e41446 (`na-footer-wagen.webp`).
+- Goedgekeurd op 28-09-2026 in de ronde `website/review/footer-truck-20260928/`, versie 1.
+- Licentie: niet vastgelegd. Het bronbeeld is gegenereerd voor De Bresser, een andere klant. Hoe het daar
+  gemaakt is, is niet nagekeken.
+
+## img/clay/: klei-iconen
+
+- Negentien vierkante, transparante WebP-iconen in kleistijl, elk in 144, 176, 240 en 480 px:
+  particulier, zakelijk, nationaal, internationaal, verhuislift, opslag, montage, woningontruiming, headset,
+  schild, trap, ster, vraagtekens, formulier, klembord, klok, telefoon, envelop en dozen. Geen mensen, geen
+  tekst, geen merk.
+- Sinds 28-09-2026 in de grote icoonvakken, in plaats van de 3D-renders uit `img/contact-3d/`, `img/kaart-3d/`
+  en `img/kosten-3d/`: `waarom.py` (home), `vragen.py`, `css/blok/reviews-ster.css`, `opbouw.py` en
+  `extradiensten.py` (/kosten/), `lijstplaat.py` en `lijstplaat.css`, `namozaiek.py` (/werkwijze/) en
+  `contactkaarten.py` (/contact/).
+- Bron: zelf gegenereerd op 28-09-2026 met nano banana pro (gemini-3-pro-image-preview), ronde
+  `website/review/clay-iconen-20260928/` (rondebestand `website/review/clay-iconen.json`, de prompts in
+  `prompts.md` van die ronde). Als stijlvoorbeeld kreeg het model drie iconen uit de repo solargreen-www mee
+  (`assets\img\3d\bel-176.webp`, `kalender-144.webp` en `schild-144.webp`), alleen voor materiaal, licht en
+  camerahoek; onderwerp en kleur staan in de prompt.
+- Vrijstaand gemaakt: het model levert JPEG op een magenta achtergrond; die is eruit gehaald met
+  `werk/uitsnijden.py` in de rondemap (magenta weg, randpixels ontmengd, roze strooilicht eraf), bijgesneden
+  op de alfarand en vierkant gemaakt met 2 procent marge aan elke kant. De bronnen op 512 px (PNG) staan in `bron/` van de
+  ronde, niet in `img/`. 144, 176 en 240 komen uit `iconen/` van de ronde, 480 is uit de 512-bron verkleind;
+  alles WebP q90.
+- Goedgekeurd op 28-09-2026, alle negentien: "keep them all, use them when you need to use a large icon."
+- Licentie: eigen beeld. Nog niet in git: moet mee in dezelfde commit als de blokken hierboven.
+
+## Iconen: Solar, Bold Duotone
+
+- Alle iconen van de site sinds 28-09-2026: de sprite in `_werk/kit.py` (`SOLAR`, de ster in `VOL`), de
+  diensticonen (`DIENST_SOLAR`, inline via `ctx.dienst_icoon`), de telefoon in `_werk/blokken/formulier.py`
+  en de iconen als CSS-masker in `css/blok/formulier.css`, `offertepil.css`, `vertrouwensrij.css`,
+  `kosten-diepte.css`, `checklist.css` en `watwijdoen.css`. Geen losse bestanden in `img/`: de vormen staan
+  als pad in de code. Gekozen door de gebruiker in `website/review/iconen-20260928/` (versie 2).
+- Bron: Solar icon set door 480 Design, https://www.figma.com/community/file/1166831539721848736, via het
+  npm-pakket `@iconify-json/solar` 1.2.13 (cdn.jsdelivr.net, opgehaald 28-09-2026). De vormen zijn niet
+  bewerkt; de naam van het Solar-icoon staat per regel in `kit.py`.
+- Licentie: **CC BY 4.0**, https://creativecommons.org/licenses/by/4.0/. Naamsvermelding verplicht: die
+  staat op `/privacyverklaring/`, sectie Cookies (`website/content/privacyverklaring.md`).
+- Uitzondering: de verhuislift (`DIENST_SOLAR["verhuislift"]`). Solar heeft er geen; zelf getekend op
+  28-09-2026 in dezelfde stijl (24-raster, ladder in de tweede toon, onderstel, wielen en doos in de
+  hoofdtoon). Eigen tekening, geen vorm uit een andere set.
+- Niet van Solar: het Google-logo, het WhatsApp-glyph en het huisje uit het logo (`VOL` in `kit.py`).
+- De vorige set: `img/iconen/icoon-*.svg` (iconenset v1, eigen tekening) wordt nergens meer gebruikt, maar
+  `build.py` kopieert hem nog uit `brandbook/assets/imagery/`.
+
 ## Vervangen
 
 `img/stap-2-bellen.webp` en `img/stap-5-verhuisdag.webp` staan niet meer in "Zo werkt het". Ze hebben

@@ -7,6 +7,8 @@ Varianten:
         Opties dienst="opslag" (selecteert de soort), van="Rijswijk", naar="Rijswijk" (vullen vooraf in).
         Met over_kop=True staat hij direct onder de paginakop en valt hij over de onderrand ervan
         (zoals de pil op de home en op de contactpagina van De Kievit).
+        In de blauwe kopband staat een verhuizer die er bovenaan uitsteekt (keuze van de gebruiker,
+        28-09-2026). Optie beeld=(pad, breedte, hoogte) kiest een andere uitsnede, beeld=None laat hem weg.
 Veldlabels en placeholders komen uit offerte.md #formulier (items van, naar, datum, dienst).
 """
 import navigatie
@@ -14,6 +16,8 @@ import navigatie
 NAAM = "offertepil"
 CSS = True
 JS = False
+
+FIGUUR = ("/img/verhuizer-twee-dozen-uit.webp", 407, 1200)
 
 
 def _veld(ctx, naam, label_std, placeholder_std=""):
@@ -55,6 +59,18 @@ def google(ctx, klasse="of-google"):
             f'<span>{ctx.sterren()}<small>uit 5 op Google</small></span></a>')
 
 
+# Het schild naast de Google-pil in de headerkaart (gebruiker, 28-09-2026: "yes" op "add the Standaard
+# verzekerd shield next to Google"). De tekst staat zo op /contact/ (#vertrouwen). Geen bedrag: dat hoort
+# bij het eigen risico en staat samen in de FAQ.
+SCHILD = ("Standaard verzekerd", "Uw inboedel, tijdens de verhuizing")
+
+
+def schild(ctx):
+    kop, onder = SCHILD
+    return (f'<span class="of-schild">{ctx.icoon("schild")}'
+            f'<span><b>{ctx.esc(kop)}</b><small>{ctx.esc(onder)}</small></span></span>')
+
+
 def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="", **opties):
     if over_kop:
         # Alle paginakoppen bevatten nu zelf dezelfde compacte offertekaart.
@@ -68,11 +84,13 @@ def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="
         knop = k.veld("pil-knop", "Offerte aanvragen")
         vinken = ctx.lijst(k.lijst, "of-vinken vinklijst")
         prefix = "header-of" if variant == "header" else "of"
+        # schild en Google als één groep, zodat ze samen onder de titel vallen als de kop te smal wordt
+        merken = f'<div class="of-merken">{schild(ctx)}{google(ctx)}</div>' if variant == "header" else google(ctx)
         return f'''<div class="of-wrap" id="{prefix}-kaart">
     <div class="of-box of-box--hero{" of-box--header" if variant == "header" else ""}">
       <div class="of-kop">
         <h2 class="of-titel">{ctx.inline(titel)}</h2>
-        {google(ctx)}
+        {merken}
       </div>
       {pil(ctx, knop, prefix, **vooraf)}
       <div class="of-voet">
@@ -99,10 +117,14 @@ def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="
         belhtml = f'<p class="of-bel"><a href="{ctx.telhref}">{ctx.icoon("telefoon")}{tekst}</a></p>'
     klasse = "sectie sectie--mist b-offertepil" + (" b-offertepil--over" if over_kop else "")
     onthul = "" if over_kop else " data-reveal"      # boven de vouw niet laten invliegen
+    beeld = opties.get("beeld", FIGUUR)
+    figuur = (f'<span class="of-figuur" aria-hidden="true"><img src="{ctx.esc(beeld[0])}" alt="" '
+              f'width="{beeld[1]}" height="{beeld[2]}" loading="lazy" decoding="async"></span>') if beeld else ""
+    boxklasse = "of-box of-box--los" + (" of-box--figuur" if beeld else "")
     return f'''<section class="{klasse}" id="{ctx.esc(k.id or "offertepil")}" aria-labelledby="of-los-kop">
   <div class="wrap">
-    <div class="of-box of-box--los"{onthul}>
-      <div class="of-kop">
+    <div class="{boxklasse}"{onthul}>
+      <div class="of-kop">{figuur}
         <div>
           {ctx.label(k.veld("label"))}
           <h2 class="of-titel" id="of-los-kop">{ctx.inline(titel)}</h2>

@@ -1,4 +1,4 @@
-/* Browsercontrole van kaartladen, terugval en toetsenbordfocus, met lokale CDN/API-mocks.
+/* Browsercontrole van kaartladen, terugval en toetsenbordfocus, met lokale CDN/API-mocks, op /contact/.
 
    node _werk/controle-wereld.cjs [pad-naar-playwright] [basis-url]
    Beide argumenten mogen weg: dan zoekt controle-kit.cjs Playwright zelf en start het een
@@ -61,7 +61,7 @@ async function draai({ browser, basis } = {}) {
         const css = route.request().url().endsWith('.css');
         return route.fulfill({ contentType: css ? 'text/css' : 'application/javascript', body: css ? '/* local map test */' : `(${bibliotheekMock.toString()})();` });
       });
-      await page.goto(basis, { waitUntil: 'networkidle' });
+      await page.goto(basis + '/contact/', { waitUntil: 'networkidle' });   // de kaart staat sinds 28-09-2026 alleen nog op /contact/
       assert.equal(requests.length, 0, `${scenario}: no CDN requests before consent`);
       if (scenario.includes('timeout')) await page.clock.install();
       const start = page.locator('[data-wereld-start]');

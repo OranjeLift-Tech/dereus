@@ -28,6 +28,7 @@ const CHECKS = {
   headers: './controle-headers.cjs',
   wereld: './controle-wereld.cjs',
   werkwijze: './controle-werkwijze.cjs',
+  over: './controle-over.cjs',
 };
 /* streng: de afsluitcode van de python telt mee in die van de runner. */
 const PYTHON_CHECKS = {

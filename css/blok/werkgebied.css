@@ -1,8 +1,22 @@
-/* Werkgebied: Diepblauwe band met dakrand, drie regels links en een lichte kaart rechts */
-/* Even brede kolommen: de kaart is precies zo breed als het tekstblok ernaast. Dat tekstblok is
-   even breed met als zonder de kopgroep, want die vult de kolom ook; gemeten op 1440 waren kop,
-   h2 en de drie regels alle drie 538 px terwijl de kaart 595 was. Het verschil zat dus alleen in
-   de kolomverhouding, en die stond op .95 tegen 1.05. */
+/* Werkgebied: Diepblauwe band met dakrand, links de kop en drie regels, rechts de kaart in lagen.
+   Sinds 28-09-2026 overal deze vorm (keuze A voor "Map and service area" uit
+   website/review/sectiestijlen-20260928/), met de kaart volgens het patroon area-rows-map-mover uit
+   ../section-library: "Make the place for the image more interesting using the section skill, add a worker
+   cutout and the rectangles that other sections have". Van achter naar voor: de goudgele plaat links boven
+   de kaart (dezelfde plaat als bij "Sterk waar het zwaar is"), de kaart, de verhuizer die over de
+   rechterrand van de kaart stapt, en de Koningsblauwe voetplaat met de bronvermelding. */
+.b-werkgebied {
+  --wg-offset: 1.68rem;                             /* zover staat de gouden plaat links boven de kaart uit */
+  --wg-reikwijdte: 1.68rem;                         /* zover steekt de voetplaat rechts uit de kaart */
+  --wg-over: 1.1rem;                                /* zover stapt de verhuizer over de rechterrand; nooit meer dan de reikwijdte */
+  --wg-man: .48;                                    /* breedte van de verhuizer, als deel van de breedte van de kaart */
+  --wg-man-verhouding: .5817;                       /* breedte gedeeld door hoogte van het beeld (698 / 1200) */
+  --wg-voet: .1;                                    /* hoogte van de voetplaat, als deel van de verhuizer: het logo op zijn doos eindigt op 88 procent */
+  --wg-plaat: linear-gradient(210deg, var(--brand-accent), var(--accent-600));
+  --wg-kaart-x: 56%;                                /* uitsnede van de kaart: de pin links van de verhuizer, "Transvaalkwartier" heel */
+  --wg-ease: cubic-bezier(.22, .61, .36, 1);
+}
+/* Even brede kolommen: de figuur is precies zo breed als het tekstblok ernaast. */
 .wg { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
 .wg .kopgroep { margin-bottom: 2rem; }
 .wg__regels { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, .16); }
@@ -16,81 +30,91 @@
 .wg__link .ic { width: 16px; height: 16px; transition: transform .3s var(--ease); }
 .wg__link:hover .ic { transform: translateX(3px); }
 
-.wg__alinea { max-width: 60ch; }
+/* een alinea staat onder de regels (alleen /over-ons/ heeft er een) */
+.wg__alinea { max-width: 60ch; margin: 1.5rem 0 0; }
 .wg .knoppen { margin-top: 1.5rem; }
-.wg__kaart { margin: 0; }
-.wg__kaartvlak { position: relative; overflow: hidden; border-radius: var(--r-paneel); background: var(--off-white); box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .6); }
-.wg__beeld { width: 100%; height: auto; }
-.wg__pil {
-  position: absolute; left: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: .7rem; padding: .6rem 1rem .6rem .7rem;
-  border-radius: 999px; background: var(--white); color: var(--ink); box-shadow: var(--schaduw);
-}
-.wg__pil .ic { width: 2.1rem; height: 2rem; padding: .35rem; border-radius: 50%; background: var(--brand-primary); color: var(--brand-accent); }
-.wg__pil b { display: block; font: var(--weight-display) 1.1rem/1 var(--font-display); font-stretch: var(--font-display-stretch); color: var(--brand-primary); }
-.wg__pil small { display: block; font-size: .8rem; color: var(--grey-600); }
-.wg__bron { margin-top: .75rem; font-size: .8rem; color: rgba(255, 255, 255, .7); text-align: right; }
-.b-werkgebied .wg__bron a { color: rgba(255, 255, 255, .85); }
 
-/* De kaart vult de kolom, zodat er rechtsonder geen lege band meer overblijft. De tekstkolom is
-   ruim tweemaal zo hoog als een kaart van 3:2, dus gecentreerd bleef er boven en onder bijna 190 px
-   Diepblauw over. Rekken vult dat helemaal; de uitsnede loopt via object-fit, dus de kaart verschuift
-   niet, hij laat links en rechts minder zien. Dit is nadrukkelijk niet align-self: start uit H1 van
-   de review: dat laat de vulling gelijk en duwt de hele lege band naar onderen, precies waar de
-   klacht over ging. Gemeten op 1440: van 52 procent vulling met een lege band van 187 px naar 100
-   procent en nul. */
-/* De onderrand van het kaartvlak is de onderrand van de kolom, dus die lijnt uit met het tekstblok
-   links. Het bijschrift hing daar eerst tussen en kostte 32 px; nu hangt het eronder, lager dan de
-   uitlijning. Het staat absoluut, telt dus niet mee in de hoogte en valt in de onderruimte van de
-   band. Zelfde behandeling als het contactblok op de home. */
+/* ---- de figuur: plaat, kaart, verhuizer, voetplaat ----
+   De padding maakt ruimte voor de gouden plaat links en boven en voor de voetplaat rechts, zodat elke laag
+   binnen de kolom blijft. isolation: de lagen stapelen alleen binnen de figuur. De figuur is een container,
+   zodat de verhuizer en de voetplaat met de breedte van de kaart meeschalen en niet met zijn hoogte: die
+   hangt af van de tekst ernaast, en een hoge kaart gaf een grotere man die de pin bedekte. */
+.wg__kaart { position: relative; isolation: isolate; container-type: inline-size; display: grid; grid-template-rows: minmax(0, 1fr); min-width: 0; margin: 0;
+  padding: var(--wg-offset) var(--wg-reikwijdte) 0 var(--wg-offset);
+  --wg-man-breedte: calc((100cqw - var(--wg-offset) - var(--wg-reikwijdte)) * var(--wg-man)); }
+.wg__plaat { position: absolute; z-index: 0; top: 0; left: 0; right: calc(var(--wg-reikwijdte) + var(--wg-offset)); bottom: var(--wg-offset);
+  border-radius: var(--r-paneel); background: var(--wg-plaat); box-shadow: 0 18px 34px -20px rgba(0, 0, 0, .5); }
+.wg__kaartvlak { position: relative; z-index: 1; overflow: hidden; border-radius: var(--r-paneel); background: var(--off-white); box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .6); }
+.wg__beeld { display: block; width: 100%; height: auto; }
+/* De verhuizer staat met zijn schoenen op de onderrand van de kaart; de voetplaat ligt eroverheen. Er is dus
+   geen snede: het beeld eindigt op die rand. Hij stapt --wg-over over de rechterrand, de witte doos komt daar
+   op het Diepblauw. */
+.wg__man { position: absolute; z-index: 2; right: calc(var(--wg-reikwijdte) - var(--wg-over)); bottom: 0;
+  width: var(--wg-man-breedte); height: auto; aspect-ratio: 698 / 1200; pointer-events: none; filter: drop-shadow(0 12px 14px rgb(5 14 35 / .35)); }
+/* De voetplaat: onder de verhuizer, links op de hoek van de kaart, rechts met eigen hoeken waar hij uitsteekt.
+   Zijn hoogte is een deel van die van de verhuizer (--wg-voet), zodat hij op elke breedte alleen schoenen en de
+   onderkant van de doos bedekt en nooit het logo. */
+.wg__bron { position: absolute; z-index: 3; left: var(--wg-offset); right: 0; bottom: 0; display: flex; align-items: center;
+  min-height: calc(var(--wg-man-breedte) / var(--wg-man-verhouding) * var(--wg-voet)); margin: 0; padding: .3rem 1rem; border-radius: 0 12px 12px var(--r-paneel);
+  background: var(--brand-primary); color: rgba(255, 255, 255, .88); font-size: .8rem; line-height: 1.25; box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .7); }
+.b-werkgebied .wg__bron a { color: var(--white); }
+
+/* Breed: de figuur rekt tot de hoogte van de tekstkolom en de kaart vult hem via object-fit, zodat er
+   rechtsonder geen lege band overblijft (gemeten 23-09-2026: van 52 procent vulling naar 100). De bovenrand van
+   de gouden plaat is de bovenrand van de tekstkolom, en de kaart begint --wg-offset lager, op de regel van de kop
+   ("the top should align with the Vanuit Den Haag, door heel Nederland text instead of Werkgebied in height",
+   keuze A uit website/review/werkgebied-bovenkant-20260923/). 2.25rem is de regel van het label: 6 px ruimte
+   boven het label van 14 px en zijn 1rem ondermarge. De onderrand van de voetplaat is die van het tekstblok. */
 @media (min-width: 900px) {
-  .wg__kaart { align-self: stretch; position: relative; }
-  .wg__kaartvlak { height: 100%; }
-  .wg__beeld { height: 100%; object-fit: cover; }
-  .wg__bron { position: absolute; left: 0; right: 0; top: 100%; margin: .45rem 0 0; }
+  .wg__kaart { align-self: stretch; }
+  .wg__beeld { position: absolute; inset: 0; height: 100%; object-fit: cover; object-position: var(--wg-kaart-x) 50%; }
 }
-/* Smalle kolom, net boven het breekpunt: daar wordt de kolom zo hoog en smal dat een volle uitsnede
-   de wijknamen doormidden snijdt ("ransvaalkwartier"). Hier dus een zachtere uitsnede en de kaart
-   gecentreerd, wat de lege band op 900 van 290 naar 116 px brengt in plaats van hem te verplaatsen. */
-@media (min-width: 900px) and (max-width: 1060px) {
-  .wg__kaart { align-self: end; }
-  .wg__kaartvlak { height: auto; aspect-ratio: .65; }
-}
-/* De kaart begint op de regel van de kop, niet op het label erboven ("the top should align with the
-   Vanuit Den Haag, door heel Nederland text instead of Werkgebied in height", keuze A uit
-   website/review/werkgebied-bovenkant-20260923/). 2.25rem is de regel van het label: 6 px ruimte
-   boven het label van 14 px en zijn 1rem ondermarge; alles in rem, dus op elke breedte hetzelfde.
-   De kaart rekt nog steeds, dus de onderkant blijft gelijk met het tekstblok; hij wordt alleen
-   bovenaan 36 px korter. Onder 1060 px verandert er niets: daar staat de kaart al lager dan de kop
-   of onder de tekst. Wordt het label groter of krijgt het een andere ondermarge, meet dan opnieuw. */
 @media (min-width: 1060.02px) {
-  .wg__kaart { margin-top: 2.25rem; }
+  .b-werkgebied { --wg-offset: 2.25rem; --wg-man: .54; }
+}
+/* Tot 1250 is de kaart bijna twee keer zo hoog als breed; met 56 procent viel "Transvaalkwartier" links buiten
+   beeld (gemeten 28-09-2026 op /over-ons/ bij 1100: 50 px). De pin staat daar boven het hoofd van de verhuizer,
+   dus de uitsnede mag naar links. Vanaf 1200 staat hij naast zijn hoofd, en schuift de uitsnede halverwege terug. */
+@media (min-width: 1060.02px) and (max-width: 1199.98px) {
+  .b-werkgebied { --wg-kaart-x: 46%; }
+}
+@media (min-width: 1200px) and (max-width: 1249.98px) {
+  .b-werkgebied { --wg-kaart-x: 51%; }
+}
+/* Smalle kolom, net boven het breekpunt: de kolom wordt daar zo hoog en smal dat een volle uitsnede de wijknamen
+   doormidden snijdt ("ransvaalkwartier"). Hier dus een vaste verhouding, onderaan uitgelijnd met de tekst. */
+@media (min-width: 900px) and (max-width: 1060px) {
+  .wg__kaart { align-self: end; grid-template-rows: auto; }
+  .wg__kaartvlak { aspect-ratio: .65; }
 }
 
+/* Gestapeld: eerst de tekst, dan de figuur over de volle kolombreedte. De kaart houdt zijn eigen 3:2 tot 560 en
+   is dan liggend, dus de verhuizer smaller; daaronder wordt de kaart hoger (4:5), anders staat hij over bijna
+   de hele kaart. */
 @media (max-width: 899.98px) {
-  .wg { grid-template-columns: minmax(0, 1fr); }
-  .wg__pil { left: .6rem; bottom: .6rem; padding: .45rem .8rem .45rem .5rem; }
-  .wg__bron { text-align: left; }
+  .b-werkgebied { --wg-man: .25; }
+  .wg { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  .wg__kaart { grid-template-rows: auto; }
+}
+@media (max-width: 560px) {
+  .b-werkgebied { --wg-offset: 1.19rem; --wg-reikwijdte: .9rem; --wg-over: .6rem; --wg-man: .48; --wg-kaart-x: 67%; }
+  .wg__kaartvlak { aspect-ratio: 4 / 5; }
+  .wg__beeld { position: absolute; inset: 0; height: 100%; object-fit: cover; object-position: var(--wg-kaart-x) 50%; }
+  .wg__bron { padding: .2rem .7rem; font-size: .72rem; }
 }
 
-/* ---- Tape en schroevendraaier op de naad met "Sterk waar het zwaar is" (alleen home) ----
-   Keuze van de gebruiker uit website/review/naad-3d-home-r2-20260923/ (optie D). Het voorwerp
-   (img/kosten-3d/gereedschap.webp, 477x420, zonder doorzichtige rand) ligt links op de dakrand: een
-   stukje in het wit erboven, de rest in het Diepblauw. Het hangt aan de wrap van deze sectie, want de
-   sectie zelf gebruikt ::before en ::after al voor het dak en het motief; de wrap staat niet
-   gepositioneerd, dus het rekent vanaf de sectie. Zelfde techniek als de doos van dereus-66 op de naad
-   "Zo werkt het"/reviews in css/style.css.
-   Alleen waar b-over direct voor deze sectie staat, en dat is alleen op de home.
-   Laag gehouden: hoogstens 37% van de breedte boven de naad (64 px op 1440). De sectie erboven laat
-   links maar 101 tot 108 px vrij (56 op 390), en 81 tot 88 als de twee knoppen terugkomen.
-   Wordt die sectie lager of komt er links meer inhoud onderaan, meet dan opnieuw. */
-.sectie.b-over + .sectie.b-werkgebied:not(.sectie *) > .wrap::before {
-  --naad-breed: clamp(6rem, 12vw, 11.5rem);
-  --naad-rand: calc(max((100vw - 1280px) / 2, 0px) + clamp(1rem, .5rem + 2vw, 2.5rem));
-  content: ""; position: absolute; z-index: 1; pointer-events: none;
-  left: calc(var(--naad-rand) - .25rem);
-  top: calc(var(--naad-breed) * -.37);
-  width: var(--naad-breed); aspect-ratio: 477 / 420;
-  background: url("/img/kosten-3d/gereedschap.webp") center / contain no-repeat;
-  filter: drop-shadow(2px 3px 2px color-mix(in srgb, var(--brand-secondary) 28%, transparent))
-          drop-shadow(10px 18px 14px color-mix(in srgb, var(--brand-secondary) 26%, transparent));
+/* hover: de gouden plaat schuift 4 px verder en de kaart zoomt in binnen zijn vlak, dat hem afknipt. Alleen
+   transform, dus er verschuift niets; de verhuizer beweegt nooit los van de kaart. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wg__plaat { transition: transform .5s var(--wg-ease); }
+  .wg__kaart:hover .wg__plaat { transform: translate(-4px, -4px); }
+  .wg__beeld { transition: transform .6s var(--wg-ease); }
+  .wg__kaart:hover .wg__beeld { transform: scale(1.04); }
 }
+
+/* ---- Geen voorwerp meer op de naad met "Sterk waar het zwaar is" (sinds 28-09-2026) ----
+   Hier lag tot 28-09-2026 de tape met schroevendraaier (img/kosten-3d/gereedschap.webp, optie D uit
+   website/review/naad-3d-home-r2-20260923/). Dat werkte omdat de tekst erboven links 101 tot 108 px
+   vrijliet. Sinds die sectie het patroon about-address-team is, staat daar het podium met de platen
+   tot onderaan; het voorwerp kwam er 20 px onder te hangen (website/review/sterk-waar-built-20260928/).
+   De 3D-voorwerpen staan bovendien op de lijst om te verdwijnen; het beeldbestand blijft staan. */

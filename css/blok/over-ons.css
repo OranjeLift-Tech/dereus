@@ -1,94 +1,115 @@
-/* Over De Reus: tekst naast een groot huisvenster met het beeldmerk en het motto */
-/* De maten die de hoogte van dit blok bepalen staan als knoppen bij elkaar, niet verspreid door het
-   bestand. De standaarden hieronder zijn exact wat er stond voor de refactor van 23-09-2026, en dat
-   is nagemeten: een spiegel met alleen de refactor gaf op alle vier de breedtes dezelfde hoogte.
-   Op deze pagina is de fotokolom hoger dan de tekst, dus die kolom bepaalt de hoogte. De tekst blijft
-   zoals hij is (opdracht 23-09-2026), dus de knoppen die de sectie korter maken zitten allemaal aan
-   de foto: --over-foto-breedte, --over-vorm en --over-masker. Zodra de fotokolom onder de hoogte van
-   de tekstkolom komt, bepaalt de tekst de hoogte en levert verder verkleinen niets meer op. */
+/* "Sterk waar het zwaar is" (home #over-ons en /over-ons/ #verhaal): het patroon about-address-team uit
+   ../section-library, de hergebruikskandidaat die de gebruiker op 28-09-2026 hield (Reuse 2 in
+   website/review/sterk-waar-het-zwaar-is-20260928/, oorspronkelijk solargreen-www section.sgoo-team).
+   Sinds de tweede ronde van 28-09-2026 een rij van twee kolommen: links bovenaan drie verhuizers als
+   uitsnede op twee platen, daaronder de kop, de twee alinea's en de adresregel; rechts de feitenkaarten,
+   die samen precies zo hoog zijn als beeld en tekst ("make the image be at the top, icons to the right
+   side, but long enough or add more to cover the length of the image and the text. the text should be
+   below the image"). In de eerste ronde stond de kop er los boven, met 481 px leeg rechts van de tekst.
+   De achterste plaat is goud en staat --over-offset links boven de voorste, lichtblauwe plaat. Beide
+   beginnen op --over-plaat-top van de hoogte van de uitsnede, zodat de hoofden erboven uitkomen; de
+   rechte snede door de heupen valt op de onderrand van de platen. */
 .b-over {
-  --over-band: 1;                                   /* aandeel van --ruimte boven en onder de sectie */
-  --over-kolommen: minmax(0, 1.05fr) minmax(0, .95fr);  /* tekstkolom | beeldkolom */
-  --over-gap: clamp(2rem, 1rem + 5vw, 6rem);        /* tussen de twee kolommen */
-  --over-rij: clamp(2rem, 1rem + 5vw, 6rem);        /* onder de 900 px: tussen tekst en beeld */
-  --over-kop-marge: 1.5rem;                         /* onder de kopgroep */
-  --over-adres: 1rem;                               /* boven de adresregel onder de foto */
-  --over-beeld-max: 80%;                            /* breedte van het beeld op smal scherm */
-  --over-foto-breedte: 100%;                        /* breedte van de foto binnen zijn kolom */
-  --over-vorm: 535.3/509.8;                         /* verhouding van het fotovlak: het huis uit het logo */
-  --over-masker: var(--huisvlak);                   /* none maakt er een gewone plaat van */
-  --over-foto-radius: 0;                            /* alleen zichtbaar als het masker uit staat */
+  --over-offset: 1.68rem;                           /* hoe ver de achterste plaat links boven de voorste uitsteekt */
+  --over-offset-hover: 2.17rem;                     /* zover schuift hij bij hover */
+  --over-plaat-top: 23%;                            /* bovenrand van de platen, van de hoogte van de uitsnede */
+  --over-plaat-achter: linear-gradient(210deg, var(--brand-accent), var(--accent-600));
+  --over-plaat-voor: var(--primary-50);
+  --over-kaart: var(--off-white);
+  --over-rand: var(--brand-primary);                /* de rand van een feitenkaart bij hover */
+  --over-ease: cubic-bezier(.22, .61, .36, 1);
 }
 
-/* Twee manieren om de sectie korter te maken zonder de tekst aan te raken. Allebei halen ze de
-   fotokolom onder de hoogte van de tekstkolom, en daar houdt het op: lager dan de tekst kan de rij
-   niet worden. Gemeten op website/review/verhaal-compact-r2-20260923/vergelijking.html.
-   kleiner = hetzelfde huisvenster, kleiner gezet in zijn kolom.
-   breed   = dezelfde breedte, maar een brede plaat in plaats van het huis. */
-/* De selector verhuist, de waarden blijven op een plek: naar .b-over--kleiner verplaatsen geeft het
-   kleinere huisvenster terug, weghalen geeft de oude maten. Hij koos op 23-09-2026 breed. */
-.b-over--kleiner {
-  --over-foto-breedte: 62%;
-}
-/* De home is sinds 23-09-2026 een kopie van de /over-ons/-sectie, dus ook daar de brede plaat. */
-.b-over--breed,
-.p-over-ons .b-over,
-.p-home .b-over {
-  --over-vorm: 16/9;
-  --over-masker: none;
-  --over-foto-radius: var(--radius-card);
-}
-/* De band staat in style.css op .sectie; hier alleen op de over-ons-pagina, zodat de home niet
-   meebeweegt en de regel .sectie--wit + .sectie--wit daar blijft gelden. */
-.p-over-ons .b-over { padding-block: calc(var(--ruimte) * var(--over-band)); }
-.over { display: grid; grid-template-columns: var(--over-kolommen); column-gap: var(--over-gap); row-gap: var(--over-rij); align-items: center; }
-.over__tekst .kopgroep { margin-bottom: var(--over-kop-marge); }
-.over__alineas p { max-width: 62ch; color: var(--graphite); }
+/* ---- de rij: links beeld en tekst, rechts de kaarten die over die hele hoogte rekken ---- */
+.over__rij { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(1.25rem, 3vw, 2.4rem); }
+.over__links { min-width: 0; display: grid; align-content: start; row-gap: clamp(1.75rem, 3vw, 2.5rem); }
+
+/* ---- kop, alinea's en adresregel onder het beeld, links uitgelijnd zoals in het patroon ---- */
+.b-over .over__kop .kopgroep { max-width: none; margin: 0 0 1.25rem; text-align: left; }
+.b-over .over__kop .kopgroep .label { justify-content: flex-start; }
+.over__alineas p { max-width: 62ch; color: var(--graphite); text-wrap: pretty; }
 .over__alineas p:first-child { font-size: var(--text-lead); line-height: var(--leading-text); color: var(--ink); }
-.over__beeld { margin: 0; }
-.over__compositie { position: relative; width: min(100%, 25rem); margin-inline: auto; aspect-ratio: 640 / 954; }
-.over__compositie > * { position: absolute; inset: 0; width: 100%; height: 100%; }
-.over__compositie .over__fotoplaat { inset: 27% 0 0 0; width: auto; height: auto; border-radius: var(--radius-card); background: var(--brand-accent); }
-.over__achtergrond { object-fit: cover; clip-path: inset(27% 5% 0 0 round var(--radius-card)); }
-.over__uitsnede { object-fit: contain; }
-.over__huis {
-  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 1rem;
-  aspect-ratio: 535.3/509.8; padding: 34% 14% 11%;
-  background: linear-gradient(160deg, var(--brand-primary) 0%, var(--primary-600) 55%, var(--brand-secondary) 100%);
-  -webkit-mask: var(--huisvlak) center/contain no-repeat; mask: var(--huisvlak) center/contain no-repeat;
-}
-.over__merk { width: 78%; height: auto; }
-.over__motto {
-  margin: 0; color: var(--brand-accent); text-align: center; text-transform: uppercase; letter-spacing: .02em; text-wrap: balance;
-  font: var(--weight-display) clamp(1.35rem, .9rem + 1.6vw, 2.2rem)/1 var(--font-display); font-stretch: var(--font-display-stretch);
-}
+.over__alineas p:last-child { margin-bottom: 0; }
+.over__adres { display: flex; align-items: center; gap: .5rem; margin: 1.1rem 0 0; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--grey-600); }
+.over__adres .ic { flex: none; width: 1rem; height: 1rem; color: var(--brand-primary); }
+.over__kop .knoppen { margin-top: 1.5rem; }
+/* de bevestigde feiten uit config.FEITEN (oprichtingsjaar, eigenaar ...); nu allemaal onbekend, dus leeg */
 .over__feiten { display: grid; gap: 0; margin: 1.5rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--color-border); max-width: 34rem; }
 .over__feiten li { display: grid; grid-template-columns: auto 9rem minmax(0, 1fr); align-items: center; gap: .75rem; padding: .7rem 0; border-bottom: 1px solid var(--color-border); }
 .over__feiten .ic { width: 1.1rem; height: 1.1rem; color: var(--brand-primary); }
 .over__feiten span { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--grey-600); }
 .over__feiten b { color: var(--ink); }
-/* De foto: breedte, verhouding en vorm zijn knoppen, zodat de sectie korter kan zonder dat de
-   tekstkolom van breedte verandert. Het masker komt uit .huisvenster in style.css; --over-masker
-   op none haalt het huis eraf en dan doet de radius het werk. */
-.over__foto { width: var(--over-foto-breedte); margin-inline: auto; aspect-ratio: var(--over-vorm);
-  -webkit-mask-image: var(--over-masker); mask-image: var(--over-masker); border-radius: var(--over-foto-radius); overflow: hidden; }
-.over__adres { display: flex; align-items: center; justify-content: center; gap: .5rem; margin-top: var(--over-adres); font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--grey-600); }
-.over__adres .ic { width: 1rem; height: 1rem; color: var(--brand-primary); }
 
+/* ---- het podium: de uitsnede op twee platen ---- */
+.over__podium { position: relative; min-width: 0; padding-left: var(--over-offset); isolation: isolate; }
+.over__platen { --over-shift: var(--over-offset); position: absolute; z-index: 0; left: var(--over-offset); right: 0; top: var(--over-plaat-top); bottom: 0; }
+.over__platen::before, .over__platen::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-card); }
+.over__platen::before { background: var(--over-plaat-achter); transform: translate(calc(-1 * var(--over-shift)), calc(-1 * var(--over-shift)));
+  box-shadow: 0 18px 34px -20px color-mix(in srgb, var(--brand-secondary) 50%, transparent); }
+.over__platen::after { background: var(--over-plaat-voor);
+  box-shadow: 0 1px 2px rgb(14 26 51 / .06), 0 16px 30px -18px color-mix(in srgb, var(--brand-secondary) 40%, transparent); }
+/* transform-origin onderaan: bij hover groeit het beeld omhoog en opzij, de snede blijft op de plaatrand */
+.over__team { position: relative; z-index: 1; display: block; width: 98%; height: auto; margin-inline: auto; transform-origin: 50% 100%;
+  filter: drop-shadow(0 12px 14px rgb(14 26 51 / .3)); }
+
+/* ---- de kaarten: gelijke rijen die samen de hoogte van beeld plus tekst vullen ----
+   minmax(min-content, ...) en niet 0: worden de kaarten ooit hoger dan die kolom, dan groeit de rij mee
+   in plaats van dat de tekst uit de kaart loopt (controle-over.cjs meet dat de onderranden gelijk staan) */
+.over__kaarten { min-width: 0; display: grid; grid-auto-rows: minmax(min-content, 1fr); gap: .75rem; margin: 0; padding: 0; list-style: none; }
+.over__kaart { position: relative; display: grid; grid-template-columns: 56px minmax(0, 1fr); column-gap: 1rem; align-items: center; padding: .9rem 1.2rem; border-radius: var(--radius-card); background: var(--over-kaart); }
+/* de rand die bij hover verschijnt: een eigen laag, want de kaart zelf is een reveal-element en de
+   transition van [data-reveal-groep] > * (opacity en transform) zou een overgang op de kaart overschrijven */
+.over__kaart::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 2px var(--over-rand); opacity: 0; pointer-events: none; }
+.over__icoon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 14px; background: var(--brand-primary); color: var(--white); }
+.over__icoon .ic { width: 1.75rem; height: 1.75rem; }
+/* Het klei-icoon (sinds 28-09-2026): de tegel blijft als lichtblauwe plaat, want Koningsblauwe klei op een
+   Koningsblauwe tegel valt weg. Het icoon is groter dan de tegel en steekt er boven en opzij een stukje
+   uit, in de kolomafstand; de kolom en dus de kaart blijven even groot. */
+.over__icoon--klei { position: relative; background: var(--primary-100); }
+.over__klei { position: absolute; left: 50%; bottom: -3px; width: 4.25rem; max-width: none; height: auto; translate: -50% 0;
+  filter: drop-shadow(0 4px 5px rgb(10 25 60 / .16)); }
+.over__kaart h3 { margin: 0; color: var(--brand-secondary); font-size: var(--text-h4); line-height: var(--leading-snug); }
+.over__kaart p { margin: .25rem 0 0; color: var(--grey-600); font-size: .95rem; line-height: 1.5; }
+
+/* Net boven het stapelpunt is de kaartkolom maar 330 px breed. De rijen zijn gelijk, elk zo hoog als de
+   hoogste kaart, dus één kaart die op drie regels uitkomt maakt ze alle vijf hoger: op 901 px werden ze
+   samen 713 px naast beeld en tekst van 706 (gemeten 28-09-2026). Compactere kaarten geven de tekst
+   ruim 17 px meer breedte. */
+@media (min-width: 900px) and (max-width: 1000px) {
+  .over__kaarten { gap: .6rem; }
+  .over__kaart { grid-template-columns: 48px minmax(0, 1fr); column-gap: .85rem; padding: .8rem 1rem; }
+  .over__icoon { width: 48px; height: 48px; border-radius: 12px; }
+  .over__icoon .ic { width: 1.5rem; height: 1.5rem; }
+  .over__klei { width: 3.6rem; }
+}
+/* gestapeld: beeld, tekst en kaarten onder elkaar in een kolom van 36rem in het midden */
 @media (max-width: 899.98px) {
-  .over { grid-template-columns: minmax(0, 1fr); }
-  .over__beeld { width: min(20rem, var(--over-beeld-max)); margin-inline: auto; }
-  /* Gestapeld is de figuur al smaller dan de tekst; zou --over-foto-breedte daar bovenop komen, dan
-     krimpt de foto twee keer en blijft er een postzegel over (124 px gemeten). Een knop, niet twee. */
-  .b-over--kleiner { --over-foto-breedte: 100%; --over-beeld-max: 62%; }
+  .b-over { --over-offset: 1.19rem; --over-offset-hover: 1.55rem; }
+  .over__rij { width: min(100%, 36rem); margin-inline: auto; grid-template-columns: minmax(0, 1fr); row-gap: clamp(1.75rem, 3vw, 2.5rem); }
+}
+@media (max-width: 560px) {
+  .over__kaarten { gap: .6rem; }
+  .over__kaart { grid-template-columns: 44px minmax(0, 1fr); column-gap: .85rem; padding: .8rem 1rem; }
+  .over__icoon { width: 44px; height: 44px; border-radius: 12px; }
+  .over__icoon .ic { width: 1.4rem; height: 1.4rem; }
+  .over__klei { width: 3.4rem; }
 }
 
-/* ---- De tekstkolom begint bovenaan in plaats van in het midden ----
-   De fotokolom is hoger dan de tekst, en align-items:center duwde de kop daardoor omlaag: 123px op
-   /over-ons/ (23-09-2026) en gemeten 118 tot 123px op de home, waar het de grootste post is in de
-   lege ruimte boven "Sterk waar het zwaar is". Sinds 23-09-2026 geldt dit voor allebei; het blok
-   staat alleen op die twee pagina's, dus er verschuift niets anders. */
-.over { align-items: start; }
+/* hover: de achterste plaat schuift verder en het beeld groeit vanaf de snede (het podium is het
+   reveal-element, het beeld niet, maar scale is een losse eigenschap en botst dus nooit met transform);
+   op een kaart verschijnt de rand en gaat het icoon 3px omhoog en kantelt. De rand is een inset
+   box-shadow van vaste dikte op ::after die alleen in opacity verandert: er verandert geen maat, dus er
+   verschuift niets. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .over__platen::before { transition: transform .6s var(--over-ease); }
+  .over__team { transition: scale .6s var(--over-ease); }
+  .over__podium:hover .over__platen { --over-shift: var(--over-offset-hover); }
+  .over__podium:hover .over__team { scale: 1.02; }
+  .over__kaart::after { transition: opacity .25s var(--over-ease); }
+  .over__kaart:hover::after { opacity: 1; }
+  .over__icoon { transition: transform .25s var(--over-ease); }
+  .over__kaart:hover .over__icoon { transform: translateY(-3px) rotate(-4deg); }
+}
 
 /* De schuine overgang tussen de grijze reviewband en deze witte sectie reserveert op de home
    2 x --dak (104px) plus 1rem als padding-top, waar de gewone bandruimte 83px is. Hier de helft,
@@ -96,26 +117,11 @@
    staat er geen grijze band boven deze sectie. */
 .p-home .b-over { --overgang-hoek: .5; }
 
-/* ---- de foto tot onderaan de tekst (/over-ons/, 23-09-2026) ----
-   Gevraagd: "make the image larger by having its bottom be even with the end of the text". De foto
-   eindigde op 624 terwijl de tekstkolom tot 679 loopt, dus 55 px te kort, en de adresregel eronder
-   sloot de beeldkolom al op 662.
-
-   Niet oplossen met een andere --over-vorm of een hoogte in pixels: die kloppen alleen bij deze
-   twee alinea's en schuiven zodra de copy verandert. In plaats daarvan rekt de beeldkolom mee met
-   de rij (align-self, niet align-items, zodat de regel van dereus-28 op .p-over-ons .over gewoon
-   blijft staan en alleen deze ene kolom zich anders gedraagt) en vult de foto wat de adresregel
-   overlaat. aspect-ratio gaat daarvoor uit; het beeld eronder staat al op object-fit:cover, dus de
-   uitsnede volgt de nieuwe hoogte zonder te vervormen.
-
-   Alleen vanaf 900px: gestapeld staat de foto boven de tekst en is "even met het einde van de
-   tekst" betekenisloos, dus daar verandert er niets. */
+/* Op /over-ons/ houden beide overgangen hun dakrand, met minder ruimte aan weerszijden. */
+.p-over-ons .b-over { padding-top: var(--ruimte); padding-bottom: calc(var(--ruimte) * .5); }
+.p-over-ons .b-kernwaarden--krap { padding-top: calc(var(--ruimte) * .5 + var(--dak)); }
+.p-over-ons .b-reviews { padding-bottom: calc(var(--ruimte) * .5); }
+.p-over-ons .b-werkgebied { padding-top: calc(var(--ruimte) * .5 + var(--dak)); }
 @media (min-width: 900px) {
-  :is(.p-over-ons, .p-home) .over__beeld { align-self: stretch; display: flex; flex-direction: column; }
-  /* flex-basis 0, niet auto. Met auto telt de eigen hoogte van de foto mee voor de intrinsieke
-     hoogte van de kolom, en dan bepaalt de foto de rijhoogte in plaats van andersom: de sectie
-     sprong van 521 naar 709 px en de foto werd 505 hoog. Met basis 0 draagt de foto niets bij,
-     is de kolomhoogte dus die van de tekst, en vult de foto wat de adresregel overlaat. */
-  :is(.p-over-ons, .p-home) .over__foto { flex: 1 1 0; aspect-ratio: auto; min-height: 0; }
-  :is(.p-over-ons, .p-home) .over__foto > img { width: 100%; height: 100%; object-fit: cover; }
+  .p-over-ons .b-kernwaarden--krap .kwhoofd { align-items: start; }
 }

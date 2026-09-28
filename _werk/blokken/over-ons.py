@@ -1,20 +1,31 @@
-"""Over De Reus: tekst links, rechts een huisvenster in Koningsblauw met het negatieve beeldmerk en het motto
-"Geen verhuizing te groot!" (config.MOTTO). Het motto staat nooit in hetzelfde blok als de pay-off.
+"""Over De Reus, "Sterk waar het zwaar is": het patroon about-address-team uit ../section-library, de
+hergebruikskandidaat die de gebruiker op 28-09-2026 hield (Reuse 2 in
+website/review/sterk-waar-het-zwaar-is-20260928/, oorspronkelijk solargreen-www section.sgoo-team).
+
+Sinds de tweede ronde van 28-09-2026 twee kolommen. Links bovenaan drie verhuizers als uitsnede op twee
+platen (TEAM), daaronder de kop, de alinea's en de adresregel "Hoofdkantoor: ...". Rechts een feitenkaart
+per ### item van het blok, met een icoon uit het veld "icoon"; de kaarten rekken over de hoogte van beeld
+plus tekst. Ze dragen alleen feiten die al op de site staan (zie de notities in over-ons.md). Sinds
+28-09-2026 is het icoon een klei-icoon ("Sterk waar het zwaar is - add clay icons to this"), zie KLEI. Gestapeld
+(onder 900 px) volgen beeld, tekst en kaarten elkaar in die volgorde op.
 
 Twee plekken:
-  home #over-ons     korte teaser met knop en de link "Meer over De Reus" (velden knop, linktekst, link)
-  /over-ons/ #verhaal  het verhaal; met optie feiten=True komen de bevestigde feiten eronder
+  /over-ons/ #verhaal  het verhaal; met optie feiten=True komen de bevestigde feiten onder de adresregel
                        (OPRICHTINGSJAAR, EIGENAAR, TEAM, RECHTSVORM, KVK uit config.FEITEN; onbekend = geen rij)
-Huisvenster: staat FEITEN["TEAM_BEELD"] op een pad, dan toont het venster dat beeld, met
-FEITEN["TEAM_BEELD_ALT"] als alt-tekst. Die twee horen bij elkaar en moeten samen vervangen worden:
-het bijschrift beschrijft wat er in beeld is en claimt niet wie het zijn. Er staat nu een gegenereerd
-beeld van fictieve verhuizers, geen foto van de echte ploeg.
-De home gebruikt anders de bestaande illustratieve uitsnede, zonder een teamidentiteit te claimen.
-Opties: feiten (False), motto (True), sectie ("wit").
+  home #over-ons       sinds 23-09-2026 letterlijk dezelfde sectie, via kopij_van=("over-ons", "verhaal")
+Knoppen alleen als het blok de velden knop of linktekst (met link) heeft; #verhaal heeft ze nu niet.
+
+Het beeld: dezelfde uitsnede als op de reviewkaart van /diensten/, drie verhuizers met een rechte snede
+door de heupen, precies wat het patroon verwacht. Gegenereerd, geen foto van de echte ploeg, dus alt leeg:
+het beeld claimt niet wie het zijn. config.FEITEN["TEAM_BEELD"] (het oude huisvenster) leest dit blok niet
+meer; een echte teamfoto hoort hier pas als hij ook als uitsnede bestaat.
+Opties: feiten (False), sectie ("wit").
 """
 NAAM = "over-ons"
 CSS = True
 JS = False
+
+TEAM = ("/img/review-verhuizers-lachend-breed.webp", 914, 504)
 
 FEITRIJEN = [
     ("OPRICHTINGSJAAR", "Opgericht in", "kalender"),
@@ -25,6 +36,23 @@ FEITRIJEN = [
 ]
 
 
+# Het klei-icoon bij het veld icoon: van de 19 goedgekeurde (img/clay/<naam>-144/240.webp, vierkant;
+# website/review/clay-iconen-20260928/). Bij de vakmensen de vakman met de doos en bij geen voorrijkosten de
+# munten, goedgekeurd op 28-09-2026 (website/review/clay-munt-persoon-20260928/, "icoon 2 en 4"); daarvoor
+# stonden daar het gereedschap (montage) en de verhuiswagen (nationaal). Een icoon zonder klei-tweeling houdt
+# het lijnicoon.
+KLEI = {"persoon": "vakman", "schild": "schild", "telefoon": "telefoon", "euro": "munten", "klok": "klok"}
+
+
+def _icoon(ctx, naam):
+    klei = KLEI.get(naam)
+    if not klei:
+        return f'<span class="over__icoon">{ctx.icoon(naam)}</span>'
+    return (f'<span class="over__icoon over__icoon--klei"><img class="over__klei" src="/img/clay/{klei}-144.webp" '
+            f'srcset="/img/clay/{klei}-144.webp 144w, /img/clay/{klei}-240.webp 240w" sizes="4.25rem" alt="" '
+            f'width="144" height="144" loading="lazy" decoding="async"></span>')
+
+
 def feitenlijst(ctx):
     rijen = [(label, ctx.feit(naam), icoon) for naam, label, icoon in FEITRIJEN if ctx.feit(naam) is not None]
     if not rijen:
@@ -33,7 +61,15 @@ def feitenlijst(ctx):
     return f'<ul class="over__feiten" role="list">{li}</ul>'
 
 
-def html(ctx, kopij, feiten=False, motto=True, sectie="wit", kopij_van=None, **opties):
+def kaarten(ctx, k):
+    if not k.items:
+        return ""
+    li = "".join(f'''<li class="over__kaart">{_icoon(ctx, it.eis("icoon"))}
+          <div><h3>{ctx.inline(it.titel)}</h3><p>{ctx.inline(it.eis("tekst"))}</p></div></li>''' for it in k.items)
+    return f'<ul class="over__kaarten" role="list" data-reveal-groep>{li}</ul>'
+
+
+def html(ctx, kopij, feiten=False, sectie="wit", kopij_van=None, team=TEAM, **opties):
     k = kopij
     anker = k.id
     if kopij_van:
@@ -44,7 +80,6 @@ def html(ctx, kopij, feiten=False, motto=True, sectie="wit", kopij_van=None, **o
         pagina, kid = kopij_van
         k = ctx.kopij_van(pagina).blok(kid)
     cfg = ctx.cfg
-    b, h = cfg.LOGO_MATEN["beeldmerk"]
     knoppen = []
     if k.veld("knop"):
         knoppen.append(ctx.knop(k.veld("knop"), "/offerte/"))
@@ -52,28 +87,24 @@ def html(ctx, kopij, feiten=False, motto=True, sectie="wit", kopij_van=None, **o
         knoppen.append(ctx.knop(k.veld("linktekst"), k.veld("link", "/over-ons/"), soort="licht"))
     elif knoppen:
         knoppen.append(ctx.belknop("licht"))
-    tekst_motto = getattr(cfg, "MOTTO", "") if motto else ""
-    foto = ctx.feit("TEAM_BEELD")
-    if foto:
-        # De alt-tekst komt uit de config, naast het beeld zelf, want alleen daar is bekend wat er te zien is.
-        # Zonder alt-tekst laten we hem leeg: liever niets zeggen dan iets beweren wat het beeld niet waarmaakt.
-        venster = (f'<div class="huisvenster over__foto">{ctx.beeld(foto, ctx.feit("TEAM_BEELD_ALT") or "", 1200, 1140)}</div>')
-    else:
-        venster = f'''<div class="over__huis">
-        <img class="over__merk" src="{ctx.logo("beeldmerk-negatief")}" alt="Het beeldmerk van De Reus: een huis met twee sterke armen" width="{b}" height="{h}" loading="lazy" decoding="async">
-        {f'<p class="over__motto">{ctx.esc(tekst_motto)}</p>' if tekst_motto else ""}
-      </div>'''
+    src, b, h = team
     return f'''<section class="sectie sectie--{sectie} b-over" id="{ctx.esc(anker)}" aria-labelledby="{ctx.esc(k.id)}-kop">
-  <div class="wrap over">
-    <div class="over__tekst" data-reveal>
-      {ctx.kopgroep(k)}
-      <div class="over__alineas">{ctx.alineas(k.tekst)}</div>
-      {feitenlijst(ctx) if feiten else ""}
-      {f'<div class="knoppen">{"".join(knoppen)}</div>' if knoppen else ""}
+  <div class="wrap">
+    <div class="over__rij">
+      <div class="over__links">
+        <div class="over__podium" data-reveal>
+          <span class="over__platen" aria-hidden="true"></span>
+          {ctx.beeld(src, "", b, h, klasse="over__team")}
+        </div>
+        <div class="over__kop" data-reveal>
+          {ctx.kopgroep(k)}
+          <div class="over__alineas">{ctx.alineas(k.tekst)}</div>
+          <p class="over__adres">{ctx.icoon("pin")}<span>Hoofdkantoor: {ctx.esc(cfg.STRAAT)}, {ctx.esc(cfg.PLAATS)}</span></p>
+          {feitenlijst(ctx) if feiten else ""}
+          {f'<div class="knoppen">{"".join(knoppen)}</div>' if knoppen else ""}
+        </div>
+      </div>
+      {kaarten(ctx, k)}
     </div>
-    <figure class="over__beeld" data-reveal>
-      {venster}
-      <figcaption class="over__adres">{ctx.icoon("pin")}<span>Hoofdkantoor: {ctx.esc(cfg.STRAAT)}, {ctx.esc(cfg.PLAATS)}</span></figcaption>
-    </figure>
   </div>
 </section>'''

@@ -1,6 +1,7 @@
 """Menu, topbalk, header, drawer, footer en mobiele belbalk. Eén bron voor alle pagina's.
 
-Hoofdmenu (besluit gebruiker): Over ons, Diensten, Werkwijze, Contact, plus de CTA-knop. Kosten staat niet
+Hoofdmenu (besluit gebruiker): Diensten, Over ons, Werkwijze, Contact, plus de CTA-knop. Diensten staat
+sinds 28-09-2026 vooraan ("shift the navigation diensten to the left"). Kosten staat niet
 in het menu maar wel in de footer. Volgorde en labels komen uit website/content/gedeeld.md (#menu, de lijst
 van #footer); de standaard hieronder geldt als die ontbreken. Conceptpagina's (BOUWPLAN 12) verschijnen
 vanzelf in megamenu, lade en footer zodra ze in config.PUBLICEER aan staan.
@@ -34,8 +35,8 @@ DIENST_PAGINA = {
 
 # Standaardmenu: label, href. Diensten krijgt het megamenu.
 MENU = [
-    ("Over ons", "/over-ons/"),
     ("Diensten", "/diensten/"),
+    ("Over ons", "/over-ons/"),
     ("Werkwijze", "/werkwijze/"),
     ("Contact", "/contact/"),
 ]

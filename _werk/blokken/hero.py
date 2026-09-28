@@ -5,13 +5,17 @@ Onder de tekst staat, in deze volgorde van voorrang:
   config.HERO_TEAM         de vrijstaande teamfoto (besluit gebruiker), de onderrand valt achter de offertekaart;
   anders                   het negatieve beeldmerk.
 Het teambeeld is het grootste element boven de vouw (LCP): geen lazy, fetchpriority high, en de home
-preloadt de juiste maat (kit.HERO_SIZES).
+preloadt de juiste maat (kit.HERO_SIZES). Op de telefoon is toch de achtergrondfoto het LCP-element (Lighthouse
+28-09-2026, LCP 4,6 s), maar fetchpriority high op die foto maakt het erger: 4,89 s tegen 4,60 s, drie runs
+elk, omdat hij dan met het teambeeld om de bandbreedte vecht. Hij blijft op low.
+Met een veld slogan: krijgt de H1 twee regels: de kop klein erboven (wie en waar), de slogan groot, en met
+wissel: (woorden met komma's) wisselt het laatste woord van de slogan (js/blok/hero.js, sinds 28-09-2026).
 """
 import kit
 
 NAAM = "hero"
 CSS = True
-JS = False
+JS = True
 AFHANKELIJK = ["offertepil"]
 
 
@@ -57,6 +61,14 @@ def html(ctx, kopij, **opties):
     b, h = cfg.LOGO_MATEN["beeldmerk"]
     textuur = f'<img class="hero__textuur" src="{ctx.logo("beeldmerk-negatief")}" alt="" width="{b}" height="{h}" decoding="async">'
     intro = k.veld("intro")
+    h1 = ctx.inline(k.kop)
+    slogan = k.veld("slogan")
+    if slogan:
+        woorden = [w.strip() for w in k.veld("wissel").split(",") if w.strip()]
+        wissel = (f' <em class="hero__wissel" data-woorden="{ctx.esc("|".join(woorden))}">{ctx.esc(woorden[0])}</em>'
+                  if woorden else "")
+        h1 = (f'<span class="hero__boven">{h1}</span><span class="vh">. </span>'
+              f'<span class="hero__slogan">{ctx.inline(slogan)}{wissel}</span>')
     bel = (f'<p class="hero__bel">{ctx.bereikbaar("bereikbaar hero__status", tijden_id="hero-tijden")}'
            f'<a href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>Bel {ctx.tel}</span></a></p>')
     return f'''<section class="hero{" hero--foto" if foto else ""}" id="{ctx.esc(k.id or "offerte")}" aria-labelledby="hero-h1">
@@ -64,7 +76,7 @@ def html(ctx, kopij, **opties):
   <div class="wrap hero__grid">
     <div class="hero__tekst">
       {ctx.label(k.veld("label"), "hero__label")}
-      <h1 class="hero__h1" id="hero-h1">{ctx.inline(k.kop)}</h1>
+      <h1 class="hero__h1" id="hero-h1">{h1}</h1>
       {f'<p class="hero__intro">{ctx.inline(intro)}</p>' if intro else ""}
       {bel}
     </div>

@@ -24,6 +24,11 @@ PAGINA = Pagina(
     beschrijving=_B.velden.get("beschrijving") or _kort(_B.veld("intro", "")),
     blokken=[
         ("kop", {"kopij_id": "offerte-bedankt"}),
-        ("bedankt", {"kopij_id": "offerte-bedankt", "beeld": ("/img/kosten-kalender/wand.webp", 363, 720)}),
+        # Sinds 28-09-2026 de Diepblauwe band met foto van /contact/ ("5. What happens next: A: Navy band with
+        # photo"), als plaat in de mist-sectie zodat er een lichte band voor de footer blijft. Hiervoor stond hier
+        # ("bedankt", {"kopij_id": "offerte-bedankt", "beeld": ("/img/kosten-kalender/wand.webp", 363, 720)});
+        # dat blok bestaat nog. Eén WhatsApp-knop per kaart: zie knoppen "bedankt" in na-bericht.py.
+        ("na-bericht", {"kopij_id": "offerte-bedankt", "paneel": True, "grond": "mist", "kop": False,
+                        "vink": True, "knoppen": "bedankt"}),
     ],
 )

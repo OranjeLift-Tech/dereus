@@ -5,8 +5,10 @@ leest hetzelfde blok, dus wat hier staat, staat ook daar.
 Antwoorden mogen als tekst:-veld of als losse alinea's onder de ###-vraag staan.
 Opties: sectie ("mist" standaard, of "wit"), open (nummer van de vraag die open staat, standaard geen),
 kopkaart (zet de kop IN de belkaart in plaats van erboven), foto (een vrijstaande verhuizer rechts in
-die kaart), stijl ("paneel" voor de blauwe paneelopmaak van /contact/) en vulling (standaard aan: de
-3D-vraagtekens in het blauwe paneel, zie VULLING; zonder paneel blijft het vak onzichtbaar).
+die kaart), stijl ("paneel" voor de blauwe paneelopmaak van /contact/), vulling (standaard aan: de
+vraagtekens (klei-icoon) in het blauwe paneel, zie VULLING; zonder paneel blijft het vak onzichtbaar) en
+werker (standaard aan in het paneel met kopkaart en zonder foto: een verhuizer rechtsonder in het paneel,
+zie WERKER; False zet hem uit, een naam uit WERKER kiest een andere uitsnede).
 Er staat hoogstens een vraag tegelijk open: de <details> van een blok delen een name, dus de browser klapt
 de vorige dicht zodra er een andere opengaat. Geen JS; een browser zonder die name laat ze gewoon openstaan. Die laatste twee horen bij elkaar: zonder kopkaart staat de foto in een kaart die er te laag
 voor is. Standaard staan ze uit, dus de pagina's die ze niet vragen veranderen geen byte.
@@ -22,11 +24,20 @@ JS = False
 #     hoogte tussen de kop en de belkaart. Die plek in de markup is hier wél de plek op het scherm, dus het
 #     staat tussen de kopgroep en de belkaart in.
 # Vormgeving: onderaan css/blok/vragen.css.
+# Sinds 28-09-2026 het klei-icoon (img/clay/, vierkant, 240 en 480 via srcset) in plaats van de 3D-render.
 BEELDEN = {
-    "headset": ("/img/contact-3d/headset.webp", 287, 320, "steekt-uit"),
-    "headset-huis": ("/img/contact-3d/headset.webp", 287, 320, "vult-gat"),
-    "headset-hoek": ("/img/contact-3d/headset.webp", 287, 320, "hoek"),
+    "headset": ("/img/clay/headset-240.webp", 240, 240, "steekt-uit"),
+    "headset-huis": ("/img/clay/headset-240.webp", 240, 240, "vult-gat"),
+    "headset-hoek": ("/img/clay/headset-240.webp", 240, 240, "hoek"),
 }
+
+
+def _srcset(src, sizes):
+    """Voor een klei-icoon (img/clay/<naam>-240.webp) de 480 ernaast; andere beelden krijgen niets."""
+    if not src.startswith("/img/clay/") or not src.endswith("-240.webp"):
+        return ""
+    return f' srcset="{src} 240w, {src[:-9]}-480.webp 480w" sizes="{sizes}"'
+
 #   "hoek" (home, met kopkaart): het voorwerp hangt op de rechterbovenhoek van de belkaart en steekt
 #     er een stukje uit. Het hoort dan IN die kaart te staan, want het is daar absoluut geplaatst.
 #     Deze behandeling heeft kopkaart nodig; zonder kopkaart is de kaart te laag en hangt het
@@ -57,7 +68,21 @@ FOTOS = {
 # het beeld staat in een vak dat precies die hoogte krijgt en zich erin schikt; is er te weinig ruimte,
 # dan blijft het weg (css/blok/vragen.css, "hoogte van het paneel"). Zonder kopkaart staat het vak
 # tussen de kop en de belkaart, met kopkaart onder de kaart: dat is waar de ruimte vrijkomt.
-VULLING = ("/img/kaart-3d/vraagtekens.webp", 780, 456)
+VULLING = ("/img/clay/vraagtekens-240.webp", 240, 240)
+
+# Optie werker (28-09-2026): gevraagd "Veelgestelde vragen - add worker cutout image te question clay icon and move
+# the question icon to the left". Een vrijstaande verhuizer rechtsonder in het blauwe paneel, boven de knie
+# afgesneden door de onderrand; de vraagtekens schuiven dan naar links (css/blok/vragen.css, onderaan).
+# Naam -> bron, breedte, hoogte. Per pagina de uitsnede die er niet vlak naast staat: op /werkwijze/ komt
+# twee-dozen direct na de vragen in #offertepil, dus daar de zijgreep. doos-schouder is dezelfde man met
+# dezelfde doos als de zijgreep, en de steekwagen is te breed voor de ruimte naast de knoppen.
+WERKER = {
+    "twee-dozen": ("/img/verhuizer-twee-dozen-uit.webp", 407, 1200),
+    "doos-zijgreep": ("/img/verhuizer-doos-zijgreep-uit.webp", 489, 1200),
+}
+WERKER_PAGINA = {"/werkwijze/": "doos-zijgreep"}    # de andere pagina's twee-dozen
+# Het deel van de uitsnede dat boven de onderrand uitkomt: tot boven de knie, bij beide onder de dozen.
+WERKER_ZICHTBAAR = .62
 
 
 def html(ctx, kopij, sectie="mist", open=None, stijl=None, **opties):
@@ -66,7 +91,7 @@ def html(ctx, kopij, sectie="mist", open=None, stijl=None, **opties):
     beeld = beeld_tussen = beeld_hoek = ""
     if opties.get("beeld") in BEELDEN:
         src, bb, bh, behandeling = BEELDEN[opties["beeld"]]
-        img = (f'<img class="vragen__beeld" src="{src}" alt="" width="{bb}" height="{bh}" '
+        img = (f'<img class="vragen__beeld" src="{src}"{_srcset(src, "(max-width: 899.98px) 7rem, 11rem")} alt="" width="{bb}" height="{bh}" '
                f'loading="lazy" decoding="async">')
         if behandeling == "vult-gat":
             beeld_tussen = (f'<span class="vragen__vulling" aria-hidden="true">'
@@ -99,8 +124,8 @@ def html(ctx, kopij, sectie="mist", open=None, stijl=None, **opties):
     vul = ""
     if opties.get("vulling", True):
         src, vb, vh = VULLING
-        vul = (f'<span class="vragen__vul" aria-hidden="true"><img class="vragen__vulbeeld" src="{src}" alt="" '
-               f'width="{vb}" height="{vh}" loading="lazy" decoding="async"></span>')
+        vul = (f'<span class="vragen__vul" aria-hidden="true"><img class="vragen__vulbeeld" src="{src}"{_srcset(src, "12rem")} '
+               f'alt="" width="{vb}" height="{vh}" loading="lazy" decoding="async"></span>')
     met_foto = opties.get("foto") in FOTOS
     vul_voor = "" if kopkaart else vul
     vul_na = vul if kopkaart and not met_foto else ""
@@ -127,11 +152,20 @@ def html(ctx, kopij, sectie="mist", open=None, stijl=None, **opties):
         {binnen}
       </div>'''
     paneel = " b-vragen--paneel" if stijl == "paneel" else ""
+    # De verhuizer (WERKER) hangt absoluut aan het paneel en staat daarom als laatste in de kop; zonder paneel of
+    # naast een foto is er geen plek voor hem.
+    werker = ""
+    keuze = opties.get("werker", WERKER_PAGINA.get(ctx.pagina.pad, "twee-dozen"))
+    if keuze and paneel and kopkaart and not met_foto:
+        src, wb, wh = WERKER[keuze]
+        werker = (f'<span class="vragen__werker" aria-hidden="true" style="--werker-b:{wb};--werker-h:{round(wh * WERKER_ZICHTBAAR)}">'
+                  f'<img class="vragen__werkerbeeld" src="{src}" alt="" width="{wb}" height="{wh}" '
+                  f'loading="lazy" decoding="async"></span>')
     return f'''<section class="sectie sectie--{sectie} b-vragen{paneel}" id="{kid}" aria-labelledby="{kid}-kop">
   <div class="wrap vragen">
     <div class="vragen__kop{" vragen__kop--kaart" if kopkaart else ""}">
       {beeld}{kopgroep}{beeld_tussen}{vul_voor}
-      {kaart}{vul_na}
+      {kaart}{vul_na}{werker}
     </div>
     <div class="vragen__lijst" data-reveal>
       {"".join(vragen)}

@@ -23,8 +23,8 @@ JS = False
 # Voor "tevreden" de gouden ster en niet de reviewkaart img/contact-3d/score.webp: die draagt het logo van
 # Google (zie naplaten.py).
 TEGELS = [
-    ("vragen", ("vraag",), ("contact-3d", "telefoon", 208, 400)),
-    ("tevreden", ("tevreden", "review"), ("kaart-3d", "ster", 240, 240)),
+    ("vragen", ("vraag",), ("clay", "telefoon-240", 240, 240)),       # klei-iconen sinds 28-09-2026
+    ("tevreden", ("tevreden", "review"), ("clay", "ster-176", 176, 176)),
 ]
 
 # Hoe breed de foto getekend wordt. Hij vult de tegel met object-fit: cover, dus vanaf 1024 (drie kolommen,
@@ -62,7 +62,7 @@ def html(ctx, kopij, **opties) -> str:
         kop, uitleg = _deel(regel)
         naam, _, (map_, ding, b, h) = _tegel(kop, plek)
         titel = f'<h3 class="b-{NAAM}__titel">{ctx.inline(kop)}</h3>' if kop else ""
-        voorwerp = ctx.beeld(f"/img/{map_}/{ding}.webp", "", b, h, klasse=f"b-{NAAM}__ding b-{NAAM}__ding--{ding}")
+        voorwerp = ctx.beeld(f"/img/{map_}/{ding}.webp", "", b, h, klasse=f"b-{NAAM}__ding b-{NAAM}__ding--{ding.split('-')[0]}")
         punten.append(f'''<li class="b-{NAAM}__tegel b-{NAAM}__tegel--{naam}">
               {titel}
               <p>{ctx.inline(uitleg)}</p>

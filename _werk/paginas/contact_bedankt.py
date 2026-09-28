@@ -24,6 +24,9 @@ PAGINA = Pagina(
     beschrijving=_B.velden.get("beschrijving") or _kort(_B.veld("intro", "")),
     blokken=[
         ("kop", {"kopij_id": "contact-bedankt"}),
-        ("bedankt", {"kopij_id": "contact-bedankt"}),
+        # Sinds 28-09-2026 de Diepblauwe band met foto van /contact/, zoals op /offerte/bedankt/ (zie daar).
+        # Hiervoor stond hier ("bedankt", {"kopij_id": "contact-bedankt"}); dat blok bestaat nog.
+        ("na-bericht", {"kopij_id": "contact-bedankt", "paneel": True, "grond": "mist", "kop": False,
+                        "vink": True, "knoppen": "bedankt"}),
     ],
 )

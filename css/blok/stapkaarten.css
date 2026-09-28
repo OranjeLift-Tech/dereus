@@ -1,0 +1,116 @@
+/* Verhuisbedrijf De Reus · blok stapkaarten ("Zo werkt het")
+   Naar het patroon steps-four-green uit ../section-library (Solar Green), optie A uit
+   website/review/zowerkthet-bibliotheek-20260928/, gekozen op 28-09-2026.
+
+   Per stap een witte kaart. Het paneel bovenin is de achtergrond; de uitsnede staat op de onderrand van
+   het paneel en komt met het hoofd --sk-uit boven de kaart uit; waar het witte deel van de kaart begint,
+   is de figuur afgesneden, dus de snijlijn valt samen met de rand van het paneel. De schaduw van de
+   figuur wordt onderaan meegeknipt (clip-path), anders tekent hij de snijlijn alsnog op het wit.
+   Het vak van de figuur krijgt zijn verhouding en de plaats van het beeld uit stapkaarten.py
+   (--fig-ar, --fig-b, --fig-l, --fig-t): zo kiest het blok welk deel van het bestand in beeld komt.
+   Op 28-09-2026 de figuur groter ("Zo werkt het - make the worker cutout be larger, add clay icons
+   somewhere"): een hoger paneel en een hoofd dat verder uitkomt. De hoogte volgt uit de breedte van het
+   paneel (container, cqw), en een brede figuur wordt nooit breder dan 94% van de kaart. Linksonder staat
+   een klei-icoon op de paneelrand, als voorgrond over de voet van de figuur.
+   "Stap n" stond tot 28-09-2026 als pil linksboven in het paneel, over de brede figuren heen; nu staat het
+   als bovenregel op het wit, boven de titel ("Zo werkt het - the stap 1 - 5 should be replaced with
+   something that does not cover the images"). */
+.b-stapkaarten {
+  --sk-uit: 3.4rem;                                      /* zo ver komt het hoofd boven de kaart uit */
+  --sk-paneel: 1.35;                                     /* verhouding van het paneel */
+  --sk-klei: 4.25rem;                                    /* het klei-icoon op de paneelrand */
+  --sk-kolommen: 5;
+  --sk-van: var(--primary-50);                           /* het paneel: lichtblauw naar goud, tegen de blauwe polo's */
+  --sk-naar: color-mix(in srgb, var(--brand-accent) 38%, var(--primary-50));
+  --sk-schaduw: 0 0 0 1px rgb(15 35 80 / .06), 0 16px 32px -24px rgb(15 35 80 / .5);
+  --sk-schaduw-op: 0 0 0 1px rgb(15 35 80 / .07), 0 24px 38px -24px rgb(15 35 80 / .55);
+}
+.b-stapkaarten .kopgroep { margin-bottom: 0; }
+.b-stapkaarten__lijst {
+  display: grid; grid-template-columns: repeat(var(--sk-kolommen), minmax(0, 1fr)); gap: calc(var(--sk-uit) + 1rem) 1rem;
+  margin: calc(2rem + var(--sk-uit)) 0 0; padding: 0; list-style: none;
+}
+.b-stapkaarten__stap { min-width: 0; scroll-margin-top: 7rem; }
+/* de kaart is een eigen laag binnen de li: de li is het element van de reveal, en diens transition zou
+   een hover op de li zelf overschrijven */
+.b-stapkaarten__kaart {
+  position: relative; display: flex; flex-direction: column; height: 100%; padding: 0 1.15rem 1.3rem;
+  border-radius: var(--radius-card); background: var(--white); box-shadow: var(--sk-schaduw);
+}
+.b-stapkaarten__paneel {
+  position: relative; aspect-ratio: var(--sk-paneel); margin: 0 -1.15rem;
+  border-radius: var(--radius-card) var(--radius-card) 0 0; background: linear-gradient(165deg, var(--sk-van) 30%, var(--sk-naar));
+  container-type: inline-size;
+}
+.b-stapkaarten__fig {
+  position: absolute; right: 7%; bottom: 0; aspect-ratio: var(--fig-ar);
+  height: min(100cqw / var(--sk-paneel) + var(--sk-uit), 94cqw / var(--fig-ar));
+  overflow: hidden; clip-path: inset(-3rem -3rem 0 -3rem);
+  filter: drop-shadow(0 10px 12px rgb(10 25 60 / .22)) drop-shadow(0 2px 3px rgb(10 25 60 / .16));
+}
+.b-stapkaarten__foto { position: absolute; top: var(--fig-t); left: var(--fig-l); width: var(--fig-b); max-width: none; height: auto; }
+/* de brede figuren (de klantenservice aan haar bureau, de ploeg) in het midden van het paneel */
+.b-stapkaarten__fig--klantenservice, .b-stapkaarten__fig--ploeg { right: 50%; translate: 50% 0; }
+/* het klei-icoon staat linksonder op de paneelrand en hangt er een stukje onder, voor de figuur langs */
+.b-stapkaarten__klei {
+  position: absolute; z-index: 1; left: .55rem; bottom: -.55rem; width: var(--sk-klei); height: auto;
+  filter: drop-shadow(0 6px 6px rgb(10 25 60 / .18));
+}
+/* de bovenregel "Stap n": op het wit onder de paneelrand, met een gouden streep ervoor; de h3 draagt
+   "Stap n:" zelf voor schermlezers, deze regel is aria-hidden */
+.b-stapkaarten__nr {
+  display: flex; align-items: center; gap: .45rem; width: fit-content; margin: 1.15rem 0 0;
+  color: var(--brand-primary); font: var(--weight-bold) .76rem/1 var(--font-sans); letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase; white-space: nowrap;
+}
+.b-stapkaarten__nr::before { content: ""; flex: none; width: 1.1rem; height: 3px; border-radius: 2px; background: var(--brand-accent); }
+/* de band kan Koningsblauw zijn; de kaart blijft licht, dus kop en tekst hier altijd donker */
+.b-stapkaarten .b-stapkaarten__titel { margin: .45rem 0 0; color: var(--color-heading); font-size: clamp(1.15rem, 1rem + .25vw, 1.25rem); line-height: 1.2; }
+.b-stapkaarten .b-stapkaarten__kaart p { margin: .4rem 0 0; color: var(--color-text); font-size: var(--text-small); line-height: 1.55; }
+.b-stapkaarten__knoppen { justify-content: center; margin-top: 2.2rem; }
+
+/* ---- /werkwijze/: wat u doet en wat wij doen, de stapknop en de slotbalk ----
+   De twee regels staan open onder de tekst, gescheiden door een dunne lijn; het label in Koningsblauw. */
+.b-stapkaarten__duo { display: grid; gap: .55rem; margin: .85rem 0 0; padding-top: .8rem; border-top: 1px solid var(--color-border); }
+.b-stapkaarten__wie dt { color: var(--brand-primary); font: var(--weight-bold) .72rem/1.3 var(--font-sans); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; }
+.b-stapkaarten__wie dd { margin: .1rem 0 0; color: var(--color-text); font-size: var(--text-small); line-height: 1.5; }
+/* de stapknop onderaan de kaart, zodat hij in een rij kaarten op dezelfde hoogte staat */
+.b-stapkaarten__meer { margin: auto 0 0; padding-top: .8rem; }
+.b-stapkaarten__slot {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; margin-top: 2rem;
+  padding: 1.25rem 1.5rem 1.25rem 1.6rem; border-left: 4px solid var(--brand-accent);
+  border-radius: var(--radius-card); background: var(--white); box-shadow: var(--sk-schaduw);
+}
+/* de vrije ruimte na de tekst: het huis staat tegen de tekst, de knop rechts */
+.b-stapkaarten .b-stapkaarten__slottekst { max-width: 46rem; margin: 0 auto 0 0; color: var(--color-text); }
+.b-stapkaarten__slottekst b { color: var(--color-heading); font-family: var(--font-display); font-stretch: var(--font-display-stretch); font-size: 1.2rem; }
+.b-stapkaarten__cta { flex: none; }
+.b-stapkaarten__slotbeeld { flex: none; display: flex; margin: -.4rem -.6rem -.4rem -.4rem; }
+.b-stapkaarten__slotbeeld img { width: 4.25rem; height: auto; }
+
+/* ---- Tot 1100: drie en twee, de onderste twee in het midden (een raster van zes, elke kaart twee breed) ---- */
+@media (max-width: 1100px) {
+  .b-stapkaarten { --sk-kolommen: 6; --sk-paneel: 1.7; --sk-klei: 4.5rem; }
+  .b-stapkaarten__stap { grid-column: span 2; }
+  .b-stapkaarten__stap:nth-child(4):nth-last-child(2) { grid-column: 2 / span 2; }
+}
+/* ---- Tot 700: een kaart per rij, niet breder dan 28rem. Het paneel lager dan in het patroon (2:1): de figuur
+   staat rechts, links het klei-icoon, groter dan in de rij. ---- */
+@media (max-width: 700px) {
+  .b-stapkaarten { --sk-kolommen: 1; --sk-paneel: 2.2; --sk-klei: 5.5rem; }
+  .b-stapkaarten__lijst { max-width: 28rem; margin-inline: auto; }
+  .b-stapkaarten__stap, .b-stapkaarten__stap:nth-child(4):nth-last-child(2) { grid-column: auto; }
+  /* de brede figuren rechts, zodat het klei-icoon links vrij staat */
+  .b-stapkaarten__fig--klantenservice, .b-stapkaarten__fig--ploeg { right: 5%; translate: none; }
+  .b-stapkaarten__slotbeeld { align-self: flex-start; }
+  .b-stapkaarten__slot { flex-direction: column; align-items: stretch; max-width: 28rem; margin-inline: auto; padding: 1.1rem 1.2rem; }
+}
+
+/* hover van het patroon (steps-four-green, hover:start tot hover:end): de kaart gaat 4px omhoog met een
+   diepere schaduw, de pil schuift 3px op. De figuur beweegt alleen met de hele kaart. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .b-stapkaarten__kaart { transition: translate .25s ease, box-shadow .25s ease; }
+  .b-stapkaarten__stap:hover .b-stapkaarten__kaart { translate: 0 -4px; box-shadow: var(--sk-schaduw-op); }
+  .b-stapkaarten__nr { transition: translate .25s ease; }
+  .b-stapkaarten__stap:hover .b-stapkaarten__nr { translate: 3px 0; }
+}

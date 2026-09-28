@@ -1,0 +1,99 @@
+/* Actielijn (home #cijfers, /contact/ #vertrouwen): een schuine blauwe streep over de volle breedte met vier
+   korte feiten, elk met een klei-icoon. Wens van de gebruiker (28-09-2026): "make
+   this section into an action line, like a stripe that is slanted and has icons by each line", en voor /contact/
+   "slanted", "a more interesting background color", "a small section that gives a quick overview". Later die dag:
+   "make this section blue instead of yellow, remove the small understripe, make it a bit larger like 20%."
+   Alle tekst staat licht op de blauwe streep (een tekstpolariteit per sectie).
+   Daarna: "add the r3 action line, but use the clay icons instead". De Solar-iconen in het goudgele logohuis zijn
+   klei-iconen geworden (img/clay/, website/review/clay-iconen-20260928/), zonder het huis: in een huis van 4 rem
+   wordt een klei-icoon 2,5 rem en dat leest niet, los op 4 rem wel.
+   Bron: section-library/slanted-action-line (/section), hier met de huisstijl.
+
+   Een getal stuurt alles: --al-helling, de stijging per breedte-eenheid. De streep en de kanteling van de vier
+   feiten komen er allebei uit, dus ze blijven evenwijdig op elke breedte. 0,036 is de helling van de overgangen
+   op de home (--dak over de volle breedte, --overgang-hoek .5), geen nieuwe diagonaal.
+   De sectie is wit: de hoeken naast de nok van de blauwe band eronder worden dan wit via style.css. */
+.b-actielijn{
+  --al-streep:var(--brand-primary);
+  --al-streep-diep:var(--primary-600);
+  --al-inkt:var(--white);
+  --al-inkt-zacht:var(--primary-100);
+  /* schaduw onder het klei-icoon: het blauw van de klei (klok, telefoon, wagen) komt zo los van de blauwe streep */
+  --al-schaduw:color-mix(in srgb,var(--brand-secondary) 45%,transparent);
+  --al-deler:color-mix(in srgb,var(--white) 40%,transparent);
+  --al-helling:.036;
+  /* maten 20% groter dan de eerste gele streep: lucht, gat, icoon en letters */
+  --al-lucht:clamp(1.2rem,.72rem + 1.32vw,1.8rem);
+  --al-gat:clamp(1.2rem,.3rem + 2.64vw,3rem);
+  --al-stijging:calc(var(--al-helling) * 100cqw);   /* opgelost in de streep, tegen de breedte van deze sectie */
+  container-type:inline-size;
+  overflow-x:clip;
+  background:var(--white);
+  color:var(--al-inkt);
+}
+/* De sectieruimte van style.css is voor grote blokken; deze streep is klein. Op /contact/ is het blok een .sectie
+   (daar was de vertrouwensrij er ook een, zo blijven de motieftellers van style.css gelijk), op de home niet. */
+.b-actielijn,.sectie.b-actielijn.sectie--wit{padding-block:clamp(.75rem,.4rem + 1vw,1.5rem)}
+/* het motief uit style.css zou hier alleen met een punt boven de streep uitsteken; (0,4,1) wint van de (0,3,1)-regel */
+.sectie.b-actielijn.sectie--wit:not(.sectie *)::after{content:none}
+/* de hoeken naast de nok van een blauwe band eronder: wit, net als deze sectie */
+.b-actielijn + :is(.sectie--blauw,.sectie--diep){background:var(--white)}
+/* een lichtblauwe band eronder (/contact/, het formulier): de grond wisselt achter de streep van wit naar lucht, anders
+   blijft onder de schuine rand een witte wig van 21 tot 73px staan (1440). De streep bedekt het midden op elke breedte. */
+.b-actielijn:has(+ .sectie--lucht){background:linear-gradient(var(--white) 50%,var(--primary-50) 50%)}
+
+/* De streep. De feiten kantelen met dezelfde helling, dus met de halve stijging boven en onder de gecentreerde
+   lijst blijft de afstand tot beide schuine randen overal gelijk. */
+.b-actielijn__streep{position:relative;isolation:isolate;padding-block:calc(var(--al-stijging) / 2 + var(--al-lucht))}
+.b-actielijn__streep::after{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,var(--al-streep) 40%,var(--al-streep-diep));
+  clip-path:polygon(0 var(--al-stijging),100% 0,100% calc(100% - var(--al-stijging)),0 100%)}
+
+/* De hele lijst kantelt mee met de streep: tekst en iconen volgen de helling ("make the text and icons also follow
+   the slight tilt", 28-09-2026). atan(0,036) = 2,06 graden, om het midden van de lijst; dat midden valt op het midden
+   van de streep, dus elk feit houdt dezelfde afstand tot beide schuine randen. De eigen rotate-eigenschap op de ul,
+   niet transform op de li: de scroll-reveal zet transform op de li's op none. De eerste rotate is de terugval
+   voor een browser zonder atan(). */
+.b-actielijn__lijst{--al-kol:4;display:grid;grid-template-columns:repeat(var(--al-kol),minmax(0,1fr));gap:1.5rem var(--al-gat);margin:0;padding:0;list-style:none;
+  rotate:-2.06deg;rotate:calc(atan(var(--al-helling)) * -1)}
+.b-actielijn__feit{position:relative;display:flex;align-items:center;gap:1.08rem;min-width:0}
+/* de schuine streep tussen twee feiten, als verloop getekend: een gedraaid vlak van 2px rafelt */
+.b-actielijn__feit + .b-actielijn__feit::before{content:"";position:absolute;top:50%;left:calc(var(--al-gat) / -2);width:1.2rem;height:3.3rem;translate:-50% -50%;
+  background:linear-gradient(to bottom right,transparent calc(50% - 1.5px),var(--al-deler) calc(50% - 1px) calc(50% + 1px),transparent calc(50% + 1.5px))}
+
+/* het klei-icoon, vierkant, even breed als het huis dat er eerst stond: de streep blijft even hoog */
+.b-actielijn__ic{display:block;flex:none;width:4rem;aspect-ratio:1}
+.b-actielijn__ic img{display:block;width:100%;height:100%;filter:drop-shadow(0 .3rem .35rem var(--al-schaduw))}
+
+.b-actielijn__feit p{display:grid;gap:.1rem;min-width:0;margin:0;line-height:1.3}
+.b-actielijn__feit b{font:var(--weight-display) clamp(1.5rem,1.2rem + .9vw,1.95rem)/1.08 var(--font-display);font-stretch:var(--font-display-stretch);text-wrap:balance}
+/* een kop met een zacht afbreekstreepje (actielijn.py, AFBREEK) loopt gewoon door: balance zet anders "Eén" alleen
+   op de eerste regel, gewoon doorlopen geeft "Eén vaste / verhuis- / adviseur" */
+.b-actielijn__feit b[data-afbreek]{text-wrap:wrap}
+/* p span, niet feit span: het icoon staat ook in een span */
+.b-actielijn__feit p span{color:var(--al-inkt-zacht);font-size:1.125rem;line-height:1.35}
+
+@media(max-width:900px){
+  .b-actielijn__lijst{--al-kol:2}
+  .b-actielijn__feit + .b-actielijn__feit::before{content:none}
+}
+@media(max-width:560px){
+  .b-actielijn{--al-gat:1.05rem;--al-lucht:1.2rem}
+  /* 20% groter vanaf 390px; daaronder krimpen icoon en letters mee tot de oude maat op 320px, anders loopt
+     "voorrijkosten" naast het icoon over de kolomrand */
+  .b-actielijn__feit{gap:clamp(.6rem,.05rem + 2.7vw,.72rem);align-items:flex-start}
+  .b-actielijn__ic{width:clamp(2.6rem,.5rem + 10.7vw,3.12rem)}
+  .b-actielijn__feit b{font-size:clamp(1.1875rem,.275rem + 4.71vw,1.425rem)}
+  .b-actielijn__feit p span{font-size:clamp(.8125rem,.07rem + 3.71vw,.975rem)}
+}
+
+/* hover: het icoon komt 3px omhoog en kantelt iets, alleen het icoon beweegt */
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .b-actielijn__ic{transition:transform .25s var(--ease)}
+  .b-actielijn__feit:hover .b-actielijn__ic{transform:translateY(-3px) rotate(-8deg)}
+}
+
+/* hoog contrast: geen gekleurde vlakken, de tekst blijft in systeemkleuren */
+@media(forced-colors:active){
+  .b-actielijn__streep::after,.b-actielijn__feit + .b-actielijn__feit::before{content:none}
+}

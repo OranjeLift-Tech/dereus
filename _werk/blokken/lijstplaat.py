@@ -21,7 +21,8 @@ JS = False
 
 # Het 3D-klembord met de pen, over de bovenrand van de plaat: hetzelfde voorwerp en dezelfde opzet als de
 # kanaalkaarten op /contact/ (img/contact-3d/). Het staat stil, de hoek zit in het beeld zelf.
-VOORWERP = ("/img/contact-3d/formulier.webp", 346, 400)
+# Sinds 28-09-2026 het klei-icoon formulier (img/clay/, vierkant) in plaats van de 3D-render; hoogte vast in de css.
+VOORWERP = ("/img/clay/formulier-240.webp", 240, 240)
 
 # De foto in de huisvorm. Wat hier hoort is sinds 23-09-2026 veranderd, dus lees dit voor je hem
 # vervangt.
@@ -133,7 +134,8 @@ def html(ctx, kopij, **opties) -> str:
                  f'<span class="b-{NAAM}__huis">{foto}</span></span>')
     voorwerp = ""
     if opties.get("voorwerp", True):
-        voorwerp = ctx.beeld(VOORWERP[0], "", VOORWERP[1], VOORWERP[2], klasse=f"b-{NAAM}__klembord")
+        voorwerp = ctx.beeld(VOORWERP[0], "", VOORWERP[1], VOORWERP[2], klasse=f"b-{NAAM}__klembord", sizes="7.6rem",
+                             srcset="/img/clay/formulier-144.webp 144w, /img/clay/formulier-240.webp 240w")
     return f'''<section class="b-{NAAM} sectie sectie--{grond}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
       <div class="wrap">
         {ctx.kopgroep(k, klasse=f"b-{NAAM}__kop")}

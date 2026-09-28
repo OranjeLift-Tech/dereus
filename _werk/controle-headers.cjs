@@ -102,10 +102,12 @@ async function draai({ browser, basis, snel = false } = {}) {
             await page.screenshot({ path: path.join(UIT, `${name}-${width}.png`) });
           }
           if (route === '/' && width === 1440) {
-            for (const id of ['diensten', 'waarom', 'cijfers', 'werkwijze', 'reviews', 'over-ons', 'werkgebied', 'vragen', 'aanvraag', 'contact']) {
+            // #contact (homecontact) is sinds 28-09-2026 van de home af; het formulier #aanvraag is nu de laatste sectie.
+            for (const id of ['diensten', 'waarom', 'cijfers', 'werkwijze', 'reviews', 'over-ons', 'werkgebied', 'vragen', 'aanvraag']) {
               assert.equal(await page.locator(`#${id}`).count(), 1, `Preserved homepage section ${id}`);
             }
-            assert.equal(await page.locator('.werkwijze__stap').count(), 5, 'Five preserved moving-process steps');
+            // sinds 28-09-2026 is Zo werkt het het blok routeband; de stappen zijn de li's van zijn ol
+            assert.equal(await page.locator('#werkwijze ol > li').count(), 5, 'Five preserved moving-process steps');
             const process = await page.locator('#werkwijze').textContent();
             for (const phrase of ['U laat uw gegevens en uw verhuisdatum achter.', 'Binnen 24 uur belt uw verhuisadviseur u.', 'Duidelijk, vrijblijvend en op maat.', 'Na uw akkoord zetten wij de datum vast.', 'Wij doen het zware werk, u wijst aan waar alles moet komen.']) {
               assert.ok(process.includes(phrase), `Preserved process copy: ${phrase}`);

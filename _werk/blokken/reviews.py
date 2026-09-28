@@ -2,8 +2,9 @@
 Namen letterlijk, avatars als initialen (geen foto's). Nooit een aantal reviews noemen (open vraag 1.4).
 
 Varianten:
-  volledig  (home)  scorepaneel in Diepblauw, de uitgelichte review groot, daaronder de andere drie
-  compact   (/diensten/)  drie reviews in een rij met de score erboven
+  volledig  (home, /diensten/, /werkwijze/, /over-ons/)  scorepaneel in Diepblauw met de ploeg erachter,
+            de uitgelichte review groot, daaronder de andere
+  compact   (nu nergens)  drie reviews in een rij met de score erboven
 Optie sectie: "mist" of "wit" (standaard mist bij volledig, wit bij compact).
 """
 import re
@@ -53,6 +54,21 @@ def ploegbeeld(k, i):
             f'width="{b}" height="{h}" loading="lazy" decoding="async">')
 
 
+PLOEG = "/img/review-verhuizers.webp"
+
+
+def paneelploeg(k):
+    """De ploeg achter het scorepaneel van variant A (keuze van de gebruiker, 28-09-2026).
+
+    beeld: in het eigen {#reviews}-blok gaat voor; anders de ploeg met de doos en de steekwagen. Die staat
+    niet elders op de home en /over-ons/, waar de lachende ploeg al in "over ons" staat.
+    """
+    pad = k.veld("beeld") or PLOEG
+    b, h = _maat(pad, (760, 504))
+    return (f'<img class="rkaart__klant rkaart__klant--ploeg" src="{pad}" alt="" '
+            f'width="{b}" height="{h}" loading="lazy" decoding="async">')
+
+
 def _maat(pad, terugval):
     """Werkelijke afmetingen van het ploegbeeld, met een terugval als het niet te lezen is.
 
@@ -77,13 +93,22 @@ def initialen(naam):
     return (delen[0][0] + delen[-1][0]).upper()
 
 
+# Klei-iconen sinds 28-09-2026 (goedgekeurd in website/review/clay-google-quote-20260928/, icoon 2 en 3): de kleimunt
+# met de echte G op het scorepaneel en het klei-aanhalingsteken rechtsboven in elke kaart. Vierkant, maat in reviews.css.
+KLEI_GOOGLE = ('<img src="/img/clay/google-144.webp" srcset="/img/clay/google-144.webp 144w, /img/clay/google-240.webp 240w" '
+               'sizes="4rem" alt="" width="240" height="240" loading="lazy" decoding="async">')
+KLEI_QUOTE = ('<img class="rkaart__quote rkaart__quote--klei" src="/img/clay/quote-144.webp" '
+              'srcset="/img/clay/quote-144.webp 144w, /img/clay/quote-240.webp 240w" sizes="3.25rem" alt="" '
+              'width="240" height="240" loading="lazy" decoding="async">')
+
+
 def kaart(ctx, it, i, groot=False, klant=""):
     naam = it.titel
     tekst = it.veld("tekst")
     klasse = "rkaart rkaart--groot" if groot else "rkaart"
     return f'''<li class="{klasse}">{klant}
         <figure>
-          <div class="rkaart__kop">{ctx.sterren(5)}<span class="vh">5 van 5 sterren</span>{ctx.icoon("quote", "ic rkaart__quote")}</div>
+          <div class="rkaart__kop">{ctx.sterren(5)}<span class="vh">5 van 5 sterren</span>{KLEI_QUOTE}</div>
           <blockquote><p>{ctx.esc(tekst)}</p></blockquote>
           <figcaption class="rkaart__wie">
             <span class="avatar avatar--{AVATAR[i % len(AVATAR)]}" aria-hidden="true">{ctx.esc(initialen(naam))}</span>
@@ -96,13 +121,14 @@ def kaart(ctx, it, i, groot=False, klant=""):
 def paneel(ctx, home_blok, eigen):
     score_tekst = eigen.veld("score-tekst") or home_blok.veld("score-tekst") or ctx.score
     link = eigen.veld("profiel-linktekst") or home_blok.veld("profiel-linktekst", "Bekijk alle reviews op Google")
-    return f'''<li class="rpaneel">
-        <span class="rpaneel__g">{ctx.icoon("google", "ic ic--google")}</span>
+    # het paneel heeft overflow:hidden voor zijn huis, dus de ploeg staat ernaast in .rplek en niet erin
+    return f'''<li class="rplek">{paneelploeg(eigen)}<div class="rpaneel">
+        <span class="rpaneel__g rpaneel__g--klei">{KLEI_GOOGLE}</span>
         <p class="rpaneel__score"><b>{ctx.cfg.GOOGLE_SCORE}</b><span>uit 5<small>op Google</small></span></p>
         {ctx.sterren(klasse="sterren rpaneel__sterren")}
         {"" if ctx.cfg.GOOGLE_SCORE in score_tekst else f'<p class="rpaneel__tekst">{ctx.inline(score_tekst)}</p>'}
         <a class="knop knop--licht rpaneel__link" href="{ctx.esc(ctx.cfg.GOOGLE_PROFIEL)}" rel="noopener" target="_blank"><span>{ctx.inline(link)}</span>{ctx.icoon("extern")}<span class="vh"> (opent Google in een nieuw tabblad)</span></a>
-      </li>'''
+      </div></li>'''
 
 
 def html(ctx, kopij, variant="volledig", sectie=None, **opties):

@@ -19,8 +19,15 @@
 .b-reviews .rkaart--groot::after {
   content: ""; position: absolute; z-index: 2; top: -1.5rem; right: -.75rem;
   width: clamp(5rem, 11vw, 7rem); aspect-ratio: 1; pointer-events: none;
-  background: url(/img/kaart-3d/ster.webp) center / contain no-repeat;
+  background: url(/img/clay/ster-240.webp) center / contain no-repeat;   /* klei-icoon sinds 28-09-2026 */
   filter: drop-shadow(2px 3px 2px color-mix(in srgb, var(--brand-secondary) 30%, transparent))
           drop-shadow(8px 16px 12px color-mix(in srgb, var(--brand-secondary) 28%, transparent));
 }
 .b-reviews .rkaart--groot .rkaart__quote { visibility: hidden; }
+
+/* In de compacte opbouw van reviews.css (vanaf 1000 px, 28-09-2026) staat de kop recht boven deze kaart, en de ster
+   steekt 1,5rem boven de kaart uit, tot 8 px onder de intro. De kop blijft daarom uit de kolom van de ster: rechts
+   zoveel ruimte als de ster de kaart in steekt (zijn breedte min de 0,75rem die hij naast de kaart hangt) plus 1rem. */
+@media (min-width:1000px){
+  .b-reviews:has(.rkaart__klant--ploeg):has(.rkaart--groot) .kopgroep{padding-right:calc(clamp(5rem,11vw,7rem) + .25rem)}
+}

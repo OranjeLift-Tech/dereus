@@ -35,7 +35,7 @@
 .b-formulier__vinkjes li{position:relative;padding-left:2.2rem;font-weight:var(--weight-semibold);line-height:var(--leading-text)}
 .b-formulier__vinkjes li::before,.b-formulier__vinkjes li::after{content:"";position:absolute;left:0;top:.1em;width:1.5rem;height:1.5rem;border-radius:50%}
 .b-formulier__vinkjes li::before{background:var(--brand-primary)}
-.b-formulier__vinkjes li::after{background:var(--white);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/.9rem no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/.9rem no-repeat}
+.b-formulier__vinkjes li::after{background:var(--white);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1.565 1.565 20.87 20.87' fill='black'%3E%3Cpath d='M18.4697 6.46967C18.7626 6.17678 19.2373 6.17678 19.5302 6.46967C19.8231 6.76256 19.8231 7.23732 19.5302 7.53022L9.53022 17.5302C9.23732 17.8231 8.76256 17.8231 8.46967 17.5302C8.17678 17.2373 8.17678 16.7626 8.46967 16.4697L18.4697 6.46967Z' opacity='.5'/%3E%3Cpath d='M4.46967 12.4697C4.76256 12.1768 5.23732 12.1768 5.53022 12.4697L9.53022 16.4697C9.82311 16.7626 9.82311 17.2373 9.53022 17.5302C9.23732 17.8231 8.76256 17.8231 8.46967 17.5302L4.46967 13.5302C4.17678 13.2373 4.17678 12.7626 4.46967 12.4697Z'/%3E%3C/svg%3E") center/.9rem no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1.565 1.565 20.87 20.87' fill='black'%3E%3Cpath d='M18.4697 6.46967C18.7626 6.17678 19.2373 6.17678 19.5302 6.46967C19.8231 6.76256 19.8231 7.23732 19.5302 7.53022L9.53022 17.5302C9.23732 17.8231 8.76256 17.8231 8.46967 17.5302C8.17678 17.2373 8.17678 16.7626 8.46967 16.4697L18.4697 6.46967Z' opacity='.5'/%3E%3Cpath d='M4.46967 12.4697C4.76256 12.1768 5.23732 12.1768 5.53022 12.4697L9.53022 16.4697C9.82311 16.7626 9.82311 17.2373 9.53022 17.5302C9.23732 17.8231 8.76256 17.8231 8.46967 17.5302L4.46967 13.5302C4.17678 13.2373 4.17678 12.7626 4.46967 12.4697Z'/%3E%3C/svg%3E") center/.9rem no-repeat}
 .b-formulier__tel{display:inline-flex;align-items:center;gap:.75rem;align-self:flex-start;min-height:48px;padding:.5rem 1.25rem .5rem .55rem;
   border:2px solid var(--brand-primary);border-radius:var(--radius-button);background:var(--white);color:var(--brand-secondary);
   font:var(--weight-display) clamp(1.4rem,1.15rem + .8vw,1.75rem)/1.1 var(--font-display);font-stretch:var(--font-display-stretch);
@@ -79,7 +79,7 @@
 .b-formulier__adres+.b-formulier__adres::before,.b-formulier__adres+.b-formulier__adres::after{content:"";position:absolute;left:-1.25rem;top:.95rem;
   width:2.5rem;height:2.5rem;margin-left:-1px;border-radius:50%;pointer-events:none}
 .b-formulier__adres+.b-formulier__adres::before{background:var(--brand-accent);box-shadow:0 0 0 4px var(--white)}
-.b-formulier__adres+.b-formulier__adres::after{background:var(--brand-secondary);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h15m-6-6l6 6-6 6' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/1.15rem no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h15m-6-6l6 6-6 6' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/1.15rem no-repeat}
+.b-formulier__adres+.b-formulier__adres::after{background:var(--brand-secondary);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1.565 1.565 20.87 20.87' fill='black'%3E%3Cpath fill-rule='evenodd' d='M3.25 12C3.25 11.5858 3.58579 11.25 4 11.25H13.25V12.75H4C3.58579 12.75 3.25 12.4142 3.25 12Z' clip-rule='evenodd' opacity='.5'/%3E%3Cpath d='M13.25 12.75V18C13.25 18.3034 13.4327 18.5768 13.713 18.6929C13.9932 18.809 14.3158 18.7449 14.5303 18.5304L20.5303 12.5304C20.671 12.3897 20.75 12.1989 20.75 12C20.75 11.8011 20.671 11.6103 20.5303 11.4697L14.5303 5.46969C14.3158 5.25519 13.9932 5.19103 13.713 5.30711C13.4327 5.4232 13.25 5.69668 13.25 6.00002V11.25V12.75Z'/%3E%3C/svg%3E") center/1.15rem no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1.565 1.565 20.87 20.87' fill='black'%3E%3Cpath fill-rule='evenodd' d='M3.25 12C3.25 11.5858 3.58579 11.25 4 11.25H13.25V12.75H4C3.58579 12.75 3.25 12.4142 3.25 12Z' clip-rule='evenodd' opacity='.5'/%3E%3Cpath d='M13.25 12.75V18C13.25 18.3034 13.4327 18.5768 13.713 18.6929C13.9932 18.809 14.3158 18.7449 14.5303 18.5304L20.5303 12.5304C20.671 12.3897 20.75 12.1989 20.75 12C20.75 11.8011 20.671 11.6103 20.5303 11.4697L14.5303 5.46969C14.3158 5.25519 13.9932 5.19103 13.713 5.30711C13.4327 5.4232 13.25 5.69668 13.25 6.00002V11.25V12.75Z'/%3E%3C/svg%3E") center/1.15rem no-repeat}
 .b-formulier__adres{position:relative;display:flex;flex-direction:column;gap:.35rem;min-width:0;padding:1rem 1.2rem 1.1rem}
 .b-formulier__adres+.b-formulier__adres{border-left:2px dashed var(--color-border);padding-left:2rem}
 .b-formulier__adres>label[for]{color:var(--brand-primary);font:var(--weight-display) clamp(1.5rem,1.2rem + 1vw,2rem)/1 var(--font-display);font-stretch:var(--font-display-stretch)}
@@ -118,12 +118,22 @@
    min-width query, zodat de kaart onder 900px gewoon één kolom blijft. /offerte/ verandert hier niet van. */
 @media (min-width:900px){
   .b-formulier--contact .b-formulier__kaart:not(.b-formulier__kaart--smal){grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);max-width:62rem;margin-inline:auto}
+  /* met de verhuizer (sinds 28-09-2026) de kolomverdeling van de home: met .9fr werd de zijkolom hoger
+     dan het korte formulier en bleef er onder de verstuurknop 90 px leeg */
+  .b-formulier--contact .b-formulier__kaart--beeld:not(.b-formulier__kaart--smal){grid-template-columns:minmax(0,.74fr) minmax(0,1.26fr)}
+  /* en een kleinere verhuizer: het podium houdt minstens schouderhoogte vrij, en bij volle breedte was dat
+     hoger dan wat het korte formulier overlaat */
+  .b-formulier.b-formulier--contact .b-formulier__kaart--beeld .b-formulier__zij{--figuur-b:min(100cqw - 2 * var(--zij-pad),15rem)}
   /* de kaart is hier korter dan het scherm, dus meelopen heeft geen zin: de kolom staat gecentreerd */
   .b-formulier--contact .b-formulier__zij{display:flex}
   .b-formulier--contact .b-formulier__zijin{position:static;justify-content:center;flex:1 1 auto}
 }
 
-/* ---- de instantie op de homepagina (aanvraag.py, id="aanvraag") ----
+/* ---- het offerteformulier: de opmaak van de home is de standaard ----
+   Sinds 28-09-2026 geldt dit voor elke b-formulier--offerte, niet alleen voor #aanvraag op de home. De gebruiker:
+   "Zo regelt u het in een paar minuten from homepage - make this the default styling for this form in all pages."
+   Dat zijn de home (aanvraag.py) en /offerte/ (paginas/offerte.py geeft dezelfde uitsnede mee). Het
+   contactformulier (b-formulier--contact) is een ander formulier en doet hier niet aan mee.
    De zijkolom is zo hoog als het formulier ernaast (956 px op 1440), en de inhoud is maar 680 px.
    Die 207 px stond als twee dode banden van ruim 100 px boven en onder de inhoud, want justify-content
    verdeelde de rest over beide uiteinden. Nu gaat die ruimte naar het beeld: de tekst staat bovenaan en
@@ -131,26 +141,50 @@
    waar de harde rechthoekrand van de uitsnede verdwijnt: die valt nu buiten de kaart in plaats van los
    in het blauw te hangen. De kaart knipt zelf af (overflow:clip op __kaart).
    De vaste hoogte van 19rem op het beeld is eraf: die doos was hoger dan de liggende foto zelf.
-   Alleen deze instantie: /offerte/ deelt de variant maar is niet genoemd. Zie het rapport. */
+   Zonder uitsnede (optie beeld) blijft onder de belknop lege ruimte staan: geef het offerteformulier dus
+   altijd een beeld mee. */
 @media (min-width:900px){
-  /* eigen maat: iets minder lucht dan op /offerte/, zodat de kaart korter is en het formulier niet krap
-     wordt. Het staat in --zij-pad, want de negatieve marges van het beeld moeten dezelfde maat volgen. */
-  #aanvraag{--zij-pad:clamp(1.5rem,2.4vw,2.25rem)}
-  #aanvraag .b-formulier__zij{display:flex;padding:var(--zij-pad)}
-  #aanvraag .b-formulier__hoofd{padding:var(--zij-pad)}
-  #aanvraag .b-formulier__form{gap:1.05rem}
-  #aanvraag .b-formulier__zijin{position:static;justify-content:flex-start;flex:1 1 auto}
-  /* order:1 zet de uitsnede onderaan zonder de bronvolgorde te wijzigen; hij is sier (alt="") dus een
-     schermlezer merkt er niets van. flex:1 1 auto laat hem de rest van de kolom opnemen, de negatieve
-     marges trekken hem tot de drie randen van de kolom, en cover snijdt dan links en rechts bij in
-     plaats van een lege doos over te houden. Boven uitlijnen, zodat het hoofd nooit wegvalt.
-     flex-basis 0 en height 0: het beeld vult alleen wat het formulier overlaat. Met height:auto bepaalde
-     de verhouding van het bestand de hoogte, en maakte een staande uitsnede (489x1200) de kaart 400 px hoger. */
-  #aanvraag .b-formulier__beeld{order:1;flex:1 1 0;
-    width:100%;height:0;min-height:12rem;
-    margin:0 0 calc(var(--zij-pad) * -1);
-    object-fit:cover;object-position:center top}
+  /* eigen maat: iets minder lucht dan de basis, zodat de kaart korter is en het formulier niet krap
+     wordt. Sinds 28-09-2026 ook op /contact/ ("9. Form: A: Light panel with mover"). */
+  :is(.b-formulier--offerte,.b-formulier--contact){--zij-pad:clamp(1.5rem,2.4vw,2.25rem)}
+  :is(.b-formulier--offerte,.b-formulier--contact) .b-formulier__hoofd{padding:var(--zij-pad)}
+  :is(.b-formulier--offerte,.b-formulier--contact) .b-formulier__form{gap:1.05rem}
+  .b-formulier--offerte .b-formulier__zij{display:flex;padding:var(--zij-pad)}
+  .b-formulier--offerte .b-formulier__zijin{position:static;justify-content:flex-start;flex:1 1 auto}
 }
+
+/* ---- de verhuizer steekt boven de kaart uit (28-09-2026) ----
+   De gebruiker: "move the image of worker to the top of the header, the image of the worker should stick
+   out on top like in the section-library version". Patroon: section-library/quote-block-form. De uitsnede
+   staat bovenin de zijkolom op het wit van de kaart en steekt --rijs boven de bovenrand uit; de kaart
+   zakt even ver, zodat de ruimte boven de verhuizer gelijk blijft. Daaronder het lichtblauwe paneel met de
+   kop, de vinkjes en de belknop. De schuine bovenkant van dat paneel valt over zijn benen. Het paneel is
+   blauw 200 (#CDDFFF, 1,35:1 tegen het wit van de kaart). Eerst blauw 100 (1,16:1); de gebruiker 28-09-2026:
+   "make the left text section higher contrast color compared to the white", "but not too much contrast as
+   i prefer all text to be bright on dark background or vice versa in one section". Dus licht met donkere
+   tekst, net als het formulier ernaast. Blauw 300 (1,88:1) stond eerst live; daarna koos hij deze
+   optie: "do the other option". Gemeten op blauw 200: kop Koningsblauw 6,41:1, vinkjestekst 12,84:1,
+   vinkschijf en belknoprand 6,41:1, de rand van de WhatsApp-knop 3,99:1.
+   Lagen: de kaart, dan de verhuizer, dan het paneel (z-index 1). De kaart knipt niet meer (overflow),
+   anders valt de bovenkant van de doos weg; de ronde hoek linksonder zit nu op het paneel.
+   De maat van de verhuizer volgt de kolombreedte (--figuur-b, in cqw van de zijkolom). Het podium neemt
+   wat het formulier overlaat, maar nooit meer dan 1,65 figuurbreedte: dan zie je tot boven de knie.
+   Wat er dan nog over is (900 tot 1100 px), gaat naar het paneel en de inhoud daarvan staat in het midden.
+   Het beeld is sier (alt=""). object-fit:cover met de breedte als maat: de doos wordt nooit bijgesneden,
+   en het beeld houdt op bij de bovenrand van het paneel: niets ervan ligt onder de kop of de vinkjes. */
+.b-formulier__kaart--beeld{--rijs:clamp(2.5rem,.75rem + 3.75vw,4rem);--schuin:3.75rem;margin-top:var(--rijs);overflow:visible}
+.b-formulier .b-formulier__kaart--beeld .b-formulier__zij{container-type:inline-size;display:flex;flex-direction:column;padding:0;background:none;
+  --figuur-b:calc(100cqw - 2 * var(--zij-pad))}
+.b-formulier .b-formulier__kaart--beeld .b-formulier__zijin{position:static;display:flex;flex-direction:column;flex:1 1 auto;gap:0}
+.b-formulier__podium{position:relative;flex:1000 1 auto;
+  min-height:calc(var(--figuur-b) * .65 - var(--rijs));max-height:calc(var(--figuur-b) * 1.65 - var(--rijs))}
+.b-formulier .b-formulier__kaart--beeld .b-formulier__beeld{position:absolute;left:var(--zij-pad);top:calc(var(--rijs) * -1);
+  width:var(--figuur-b);height:calc(100% + var(--rijs) + 2px);max-width:none;margin:0;
+  object-fit:cover;object-position:50% 0;pointer-events:none}
+.b-formulier__paneel{position:relative;z-index:1;flex:1 0 auto;display:flex;flex-direction:column;justify-content:center;
+  gap:var(--space-6);padding:var(--zij-pad)}
+.b-formulier__paneel::before{content:"";position:absolute;z-index:-1;inset:calc(var(--schuin) * -1) 0 0;background:var(--primary-200);
+  border-radius:0 0 0 24px;clip-path:polygon(0 var(--schuin),58% var(--schuin),100% 0,100% 100%,0 100%)}
 
 @media (hover:hover){.b-formulier__tel:hover svg{transform:rotate(-12deg) scale(1.06)}}
 
@@ -159,6 +193,13 @@
   .b-formulier__zij{order:2}
   .b-formulier__zijin{position:static;gap:var(--space-5)}
   .b-formulier__zijkop{font-size:var(--text-h3)}
+  /* met de verhuizer staat de zijkolom bovenaan, net als in de bibliotheek: hij steekt boven de kaart
+     uit en de kop van het paneel leidt het formulier in. Het podium heeft hier een vaste maat. */
+  .b-formulier .b-formulier__kaart--beeld .b-formulier__zij{order:0;--figuur-b:min(100cqw - 2 * var(--zij-pad),16rem)}
+  .b-formulier__podium{flex:none;height:calc(var(--figuur-b) * .95 - var(--rijs));min-height:0;max-height:none}
+  .b-formulier .b-formulier__kaart--beeld .b-formulier__beeld{left:50%;translate:-50% 0}
+  .b-formulier__paneel{gap:var(--space-5)}
+  .b-formulier__paneel::before{border-radius:0}
 }
 @media (max-width:599px){
   .b-formulier__rij{grid-template-columns:minmax(0,1fr)}

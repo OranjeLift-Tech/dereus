@@ -52,7 +52,7 @@
 /* Drie reviews (/over-ons/): het scorepaneel loopt over twee rijen links */
 @media (min-width: 1000px) {
   .rraster--drie { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .rraster--drie .rpaneel { grid-column: span 2; }
+  .rraster--drie .rplek { grid-column: span 2; }   /* het paneel staat sinds 28-09-2026 in .rplek, met de ploeg */
   .rraster--drie .rkaart { grid-column: span 3; }
   .rraster--drie .rkaart--groot { grid-column: span 4; }
 }
@@ -107,26 +107,23 @@
   .rpaneel__tekst { margin: 1rem 0; }
 }
 
-/* ---- /diensten/: vijf gouden sterren boven de kop ----
-   Keuze van de gebruiker uit _ontwerpen/reviews-varianten.html (variant 07). De sterren staan in een boog:
-   de buitenste twee paren een halve regel lager, de middelste groter en hoger. Ze staan stil; de diepte
-   komt uit de render zelf en uit de slagschaduw. Alleen op de dienstenpagina. */
+/* ---- /diensten/: de reviews lopen uit in de lichtblauwe grond van de offertekaart eronder ----
+   De gouden sterrenrij en de dikke witte platen van hier zijn weg: sinds 28-09-2026 staat op /diensten/
+   dezelfde variant A als op de home. De gloed zelf staat nu in offertepil.css, voor elke losse offertekaart. */
 .p-diensten .b-reviews{background:linear-gradient(180deg,var(--white),var(--primary-50))}
-/* Het offerteblok eronder had Mist (#F6F7F9), bijna dezelfde tint als waar dit verloop eindigt: de twee secties liepen
-   in elkaar over. Nu krijgt het een eigen lichtblauwe grond met de dakrand van het merk, zodat de grens zichtbaar is. */
-.p-diensten .b-reviews + .b-offertepil{isolation:isolate;background:var(--primary-50);padding-top:calc(var(--ruimte) + var(--dak))}
-.p-diensten .b-reviews + .b-offertepil::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--primary-200),var(--primary-100) 70%);clip-path:polygon(0 var(--dak),50% 0,100% var(--dak),100% 100%,0 100%)}
-.p-diensten .b-reviews__sterren{display:flex;justify-content:center;align-items:flex-end;gap:clamp(.2rem,1vw,1rem);margin-bottom:1rem}
-.p-diensten .b-reviews__sterren img{width:clamp(4rem,9vw,8rem);height:auto;
-  filter:drop-shadow(3px 4px 2px rgba(11,35,82,.28)) drop-shadow(14px 22px 16px rgba(11,35,82,.34))}
-.p-diensten .b-reviews__sterren img:nth-child(odd){translate:0 .6rem}
-.p-diensten .b-reviews__sterren img:nth-child(3){width:clamp(5rem,11vw,10rem);translate:0 0}
-/* de reviews worden witte platen met een echte dikte, zodat ze onder de sterren blijven staan */
-.p-diensten .b-reviews .rkaart{border-radius:22px;background:var(--white);
-  box-shadow:inset 0 1px 0 var(--white),0 0 0 1px rgba(14,26,51,.05),0 7px 0 #D5E2F8,0 8px 0 rgba(14,26,51,.08),
-    0 14px 26px -14px rgba(14,26,51,.30),0 46px 80px -46px rgba(11,35,82,.5)}
-@media (max-width:599px){.p-diensten .b-reviews__sterren{gap:.1rem}.p-diensten .b-reviews__sterren img{width:3.4rem}
-  .p-diensten .b-reviews__sterren img:nth-child(3){width:4.2rem}}
+
+/* ---- Variant A met de ploeg achter het scorepaneel ----
+   Keuze van de gebruiker (28-09-2026): variant A, met de verhuizers zoals bij C erbij. Zelfde recept als de
+   ploeg in de compacte rij: de ploeg staat achter de bovenrand van het Diepblauwe paneel, de onderkant van de
+   uitsnede valt weg achter die rand, en het paneel legt een contactschaduw omhoog op de mannen. Het paneel
+   heeft overflow:hidden voor zijn huis-watermerk, dus het beeld staat ernaast in een omhulsel (.rplek) en
+   niet erin. Het raster houdt bovenaan ruimte vrij, alleen als er echt een ploeg staat. */
+/* op de sectie en niet op het raster, zodat ook de kop (compacte opbouw hieronder) de maat van de ploeg kent */
+.b-reviews{--ploeg-hoogte:clamp(8rem,14vw,13rem);--ploeg-achter:clamp(3.5rem,7vw,6.5rem);--ploeg-lucht:clamp(.75rem,1.5vw,1.25rem)}
+.rplek{position:relative;display:flex}
+.rplek>.rpaneel{z-index:1;width:100%}
+.rraster:has(>.rplek>.rkaart__klant--ploeg){margin-top:calc(var(--ploeg-hoogte) - var(--ploeg-achter) + var(--ploeg-lucht))}
+.rplek:has(>.rkaart__klant--ploeg)>.rpaneel{box-shadow:0 -5px 10px -4px rgba(14,26,51,.32)}
 
 /* Een ploeg van drie in plaats van een klantportret (alleen /werkwijze/, zie ploegbeeld() in het blok).
    Groter en dieper achter de kaart dan een portret: de uitsnede is bij de handen afgesneden en die rand
@@ -172,4 +169,50 @@
    mobiele regel hierboven overschrijven (staat later in het bestand) */
 @media (min-width:640px){
   .rraster--compact:has(.rkaart__klant--ploeg){margin-top:calc(var(--ploeg-hoogte) - var(--ploeg-achter) - var(--kop-zak,0px))}
+}
+
+/* De reviews sluiten op /diensten/ en /werkwijze/ dichter aan op de vorige sectie. */
+.p-diensten .b-dienstenpanelen + .b-reviews,
+.p-werkwijze .b-namozaiek + .b-reviews {
+  --overgang-hoek: .5;
+  padding-top: max(calc(var(--ruimte) * .8), calc(var(--overgang-hoogte) + 1rem));
+}
+.p-werkwijze .b-namozaiek { padding-bottom: calc(var(--ruimte) * .5); }
+
+/* Minder witruimte onder de reviews: de offertekaart eronder begint met haar eigen dakrand. */
+.p-diensten .b-reviews { padding-bottom: calc(var(--ruimte) * .5); }
+
+/* ---- Compacter, en de ploeg van de tekst af (28-09-2026) ----
+   De gebruiker: "make it more compact by moving the header closer to other content, make sure the workers dont
+   cover the text". De kop stond gecentreerd boven het raster, met daaronder een strook van 84 tot 124 px die
+   alleen voor de ploeg bestond; de koppen van de mannen stonden 12 tot 21 px onder de intro.
+   Vanaf 1000 px staat de kop daarom naast de ploeg: links uitgelijnd boven de uitgelichte review (kolom 2 en 3),
+   de ploeg in kolom 1 op het paneel. De strook voor de ploeg valt samen met de hoogte van de kop, en tussen de
+   kop en de kaarten blijft 2 rem. De eerste rij is minstens zo hoog als de ploeg boven het paneel uitsteekt.
+   Onder 1000 px staat de kop gecentreerd boven de ploeg (daar is geen kolom naast vrij); de ploeg zakt daar iets
+   dieper achter het paneel en de strook krijgt meer lucht, zodat de koppen 20 px van de tekst blijven. */
+@media (min-width:1000px){
+  .b-reviews:has(.rkaart__klant--ploeg)>.wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-rows:minmax(calc(var(--ploeg-hoogte) - var(--ploeg-achter) + var(--ploeg-lucht)),auto) auto;
+    column-gap:clamp(.75rem,.5rem + .8vw,1.25rem)}
+  .b-reviews:has(.rkaart__klant--ploeg) .kopgroep{grid-column:2/-1;align-self:end;max-width:none;margin:0 0 2rem;text-align:left}
+  .b-reviews:has(.rkaart__klant--ploeg) .kopgroep .label{justify-content:flex-start}
+  .b-reviews:has(.rkaart__klant--ploeg) .kopgroep .intro{margin-inline:0}
+  .b-reviews:has(.rkaart__klant--ploeg) .rraster{grid-column:1/-1;margin-top:0}
+}
+@media (max-width:999.98px){
+  .b-reviews{--ploeg-achter:4.25rem;--ploeg-lucht:1.25rem}
+}
+
+/* Klei-iconen (28-09-2026, goedgekeurd in website/review/clay-google-quote-20260928/: icoon 2 en 3).
+   De Google G op het scorepaneel is een kleimunt met de echte G erop (img/clay/google-*.webp), in plaats van het witte
+   rondje van 48 px. Het aanhalingsteken rechtsboven in de kaart is een klei-icoon van 52 px (img/clay/quote-*.webp); de
+   negatieve marge houdt de kopregel van de kaart op zijn 32 px. Op de uitgelichte kaart blijft het 3rem en onzichtbaar
+   (reviews-ster.css), zodat die kopregel 48 px blijft. */
+.rpaneel__g--klei { width: 4rem; height: 4rem; background: none; border-radius: 0; margin-bottom: 1rem; }
+.rpaneel__g--klei img { display: block; width: 100%; height: 100%; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .28)); }
+.rkaart__quote--klei { display: block; flex: none; width: 3.25rem; height: 3.25rem; margin: -.625rem 0; filter: drop-shadow(0 5px 6px rgba(11, 35, 82, .18)); }
+.rkaart--groot .rkaart__quote--klei { width: 3rem; height: 3rem; margin: 0; }
+@media (max-width: 639.98px) {
+  .rpaneel__g--klei { width: 3.5rem; height: 3.5rem; margin: 0; }
 }

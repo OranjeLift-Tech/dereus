@@ -9,12 +9,74 @@
 .waarom__kop { max-width: 52rem; margin-inline: auto; text-align: center; }
 .waarom__kop .label, .waarom__knoppen { justify-content: center; }
 .waarom__kop .intro { margin-inline: auto; }
-.waarom__inhoud { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(1.5rem, 1rem + 3vw, 3rem); align-items: stretch; }
-.waarom__beeld { margin: 0; min-height: 20rem; overflow: hidden; border-radius: var(--radius-card); background: var(--primary-50); }
-.waarom__beeld img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.waarom__knoppen { margin-top: 2rem; }
+.waarom__inhoud { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(1.5rem, 1rem + 3vw, 3rem); align-items: stretch;
+  /* de hoofden staan boven het fotokader, dus boven de kaarten: extra ruimte onder de intro. Padding en geen
+     marge: een marge valt samen met de marge onder de kopgroep en telt dan niet. Onder 1160 worden de kaarten
+     smal en hoog, het kader dus ook, en de hoofden groeien mee (op 900 73px boven het kader): daar groeit de
+     ruimte mee, anders raakt de kruin bijna de intro (7px op 900, nu 28). */
+  padding-top: max(2.5rem, 2.5rem + (1160px - 100vw) * .08); }
+/* De verhuizers stappen uit de foto, zoals op de dienstentegels (diensten.css, .dtegel__laag).
+ * Sinds 28-09-2026 (tweede ronde) is het fotokader precies zo hoog als de vier kaarten: bovenrand op de bovenkant
+ * van de eerste kaart, onderrand op de onderkant van de laatste. Alleen de hoofden komen erboven uit. Zijn woorden:
+ * "fix the big image to be in line width the the 4 block height, excluding the out of border heads".
+ * De foto en de uitsnede zonder achtergrond (verhuisdag-dragen-stoep-uit.webp, zelfde maat en kader) liggen
+ * pixel voor pixel over elkaar. Rij --lijn van de foto (net onder de kragen) valt op de bovenrand van het kader,
+ * rij --boven (de kruin) staat --koppen daarboven.
+ * De uitsnede ligt over het hele kader, niet alleen erboven: de bovenrand van het kader, de ronde hoeken en de
+ * schaduwstrook eronder lopen zo achter de verhuizers langs in plaats van door hun hals en kaak ("the border can
+ * be seen in the faces"). Daarom ook geen drop-shadow meer op de uitsnede: die viel binnen het kader als een
+ * waas om de mensen heen, en boven het kader als een grijze vlek naast de hoofden.
+ * --hi is de beeldhoogte: hoog genoeg om het kader vanaf rij --lijn tot onder te vullen, en minstens zo breed als
+ * het kader (4:3). cqh en cqw rekenen op de figure, dus --hi alleen gebruiken in wat erin zit.
+ * --anker is het punt van de foto dat in het midden van het kader valt: tussen de twee hoofden. In een smal
+ * staand kader passen ze niet samen, dan staat alleen de linker verhuizer in beeld; een half hoofd tegen de rand
+ * zou er afgehakt uitzien. Maatvoering: rij 213 kruin, rij 313 kraag, hoofden van x 366 tot 968 van 1400.
+ * Beide hoofden passen met het anker in het midden zolang breedte / hoogte van het kader >= .817; .86 houdt daar
+ * minstens 8px rand naast de hoofden over, ook bij de hoverschaal (op 1100 is het kader .79 en viel het
+ * rechterhoofd half buiten beeld). */
+.waarom__beeld {
+  --boven: .203; --lijn: .298; --anker: .476;
+  --hi: max(100cqh / (1 - var(--lijn)), 75cqw);
+  --koppen: calc((var(--lijn) - var(--boven)) * var(--hi));   /* hoe ver de kruin boven het kader staat */
+  --kop-lucht: 1rem;                                           /* ruimte boven de kruin in de uitsnedelaag */
+  /* twee platen achter het kader, elk een stap links onder de vorige ("add rectangles behind the image"):
+     lichtblauw en daarachter goud, het verloop van de achterste plaat in "Sterk waar het zwaar is". Links onder
+     en niet links boven zoals daar: een bovenrand achter de hoofden zou weer een lijn door de halzen trekken. */
+  --plaat-stap: var(--plaat);
+  /* het kader wijkt twee stappen naar rechts, zodat de goudplaat op de inhoudsrand eindigt en niet in de goot
+     van de pagina (op 1100 is die 30px, de platen 32px) */
+  position: relative; isolation: isolate; container-type: size; margin: 0 0 0 calc(2 * var(--plaat)); min-height: 20rem;
+}
+.waarom__beeld::before, .waarom__beeld::after { content: ""; position: absolute; inset: 0; z-index: 0; border-radius: var(--radius-card); pointer-events: none; }
+.waarom__beeld::before { background: linear-gradient(210deg, var(--brand-accent), var(--accent-600)); translate: calc(-2 * var(--plaat-stap)) calc(2 * var(--plaat-stap));
+  box-shadow: 0 18px 34px -20px color-mix(in srgb, var(--brand-secondary) 50%, transparent); }
+.waarom__beeld::after { background: var(--primary-100); translate: calc(-1 * var(--plaat-stap)) var(--plaat-stap); }
+.waarom__kader { position: absolute; inset: 0; z-index: 1; overflow: hidden; border-radius: var(--radius-card); background: var(--primary-50); }
+/* de uitsnedelaag: van --kop-lucht boven de kruin tot de onderrand van het kader, met de ronde onderhoeken van
+   het kader. De zijkanten knippen op de breedte van het kader, net als de foto. overflow en niet alleen clip-path:
+   clip-path knipt wat je ziet, niet de overloop, en het beeld is breder dan het kader (op 390 39px buiten beeld). */
+.waarom__uit { position: absolute; z-index: 2; inset: calc(-1 * (var(--koppen) + var(--kop-lucht))) 0 0; overflow: hidden; pointer-events: none;
+  clip-path: inset(0 round 0 0 var(--radius-card) var(--radius-card)); }
+/* beide beelden hebben hetzelfde vak op de pagina, dus dezelfde transform-origin (de bovenrand van het kader)
+   en bij hover dezelfde schaal: ze blijven pixel voor pixel over elkaar liggen */
+.waarom__beeld img {
+  position: absolute; left: clamp(100cqw - var(--hi) * 4 / 3, 50cqw - var(--anker) * var(--hi) * 4 / 3, 0px);
+  display: block; width: calc(var(--hi) * 4 / 3); max-width: none; height: var(--hi); object-fit: cover;
+  transform-origin: 50% calc(var(--lijn) * 100%);
+}
+.waarom__foto { top: calc(var(--lijn) * var(--hi) * -1); }
+.waarom__uit img { top: calc(var(--kop-lucht) - var(--boven) * var(--hi)); }
+/* de zachte schaduw net onder de kaderlijn, over de foto en onder de mensen, zoals .dtegel__laag::after */
+.waarom__kader::after { content: ""; position: absolute; inset: 0 0 auto; height: 14px; pointer-events: none; background: linear-gradient(rgba(14, 26, 51, .24), rgba(14, 26, 51, 0)); }
+@container (aspect-ratio < .86) { .waarom__beeld img { --anker: .3; } }
+/* de platen steken twee stappen onder de kaarten uit: de knop staat daar een gewone 2rem onder */
+.waarom__knoppen { margin-top: calc(2rem + 2 * var(--plaat)); }
 
-.wkaarten { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(.75rem, .5rem + .8vw, 1.25rem); margin: 0; padding: 0; list-style: none; }
+/* --klei-uit: zo ver steekt het klei-icoon boven de kaart uit ("the clay icons should be sligtly out of border").
+   De rijafstand is dat plus lucht, anders raakt het icoon van de tweede rij de kaart erboven. */
+.b-waarom { --klei-uit: clamp(.7rem, .55rem + .45vw, 1rem); --kaart-pad: clamp(1.1rem, .95rem + .45vw, 1.45rem);
+  --plaat: clamp(.75rem, .5rem + .7vw, 1.1rem); }   /* de stap van elke plaat achter het fotokader */
+.wkaarten { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--klei-uit) + .75rem) clamp(.75rem, .5rem + .8vw, 1.25rem); margin: 0; padding: 0; list-style: none; }
 /* Vier kaarten, vier ondergronden die net van elkaar verschillen: blauw, crème, mint en Mist, alle
    vier de lichtste stap van hun kleur in het palet. Vier verschillende tinten koppelen geen kaarten
    aan elkaar, wat de oude afwisseling van twee kleuren (1 en 4 tegen 2 en 3) wel deed.
@@ -23,7 +85,8 @@
    11,05:1, dus ruim boven de 4,5:1 van WCAG 1.4.3. */
 .wkaart {
   --kaart-vlak: var(--primary-50);
-  padding: clamp(1.4rem, 1.1rem + 1vw, 2rem); border-radius: var(--radius-card);
+  /* minder lege ruimte ("the 4 blocks should have less empty space inside them"): was clamp(1.4rem, 1.1rem + 1vw, 2rem) */
+  padding: var(--kaart-pad); border-radius: var(--radius-card);
   background: var(--kaart-vlak); border: 1px solid color-mix(in srgb, var(--kaart-vlak) 92%, var(--brand-secondary));
 }
 .wkaart--blauw { --kaart-vlak: var(--primary-50); }
@@ -31,11 +94,12 @@
 .wkaart--mint  { --kaart-vlak: var(--success-50); }
 .wkaart--mist  { --kaart-vlak: var(--off-white); }
 
-/* Het pictogram is een 3D-voorwerp uit dezelfde reeks als de contactkaarten. Elk staat in hetzelfde
-   vak en op dezelfde grondlijn linksonder, zodat een brede wagen en een smal schild even zwaar wegen. */
-.wkaart__voorwerp { display: block; margin-bottom: 1rem; }
+/* Het klei-icoon. Elk staat in hetzelfde vak en op dezelfde grondlijn linksonder, zodat een brede wagen en een
+   smal schild even zwaar wegen. Het vak schuift --kaart-pad plus --klei-uit omhoog: de bovenkant van het icoon
+   steekt boven de kaartrand uit, de rest staat erin. */
+.wkaart__voorwerp { display: block; margin: calc(-1 * (var(--kaart-pad) + var(--klei-uit))) 0 .7rem; }
 .wkaart__obj {
-  display: block; width: 5.4rem; height: 4.6rem; max-width: none; object-fit: contain; object-position: left bottom;
+  display: block; width: 5rem; height: 4.3rem; max-width: none; object-fit: contain; object-position: left bottom;
   filter: drop-shadow(1px 2px 1.5px color-mix(in srgb, var(--brand-secondary) 26%, transparent))
           drop-shadow(5px 9px 8px color-mix(in srgb, var(--brand-secondary) 22%, transparent));
 }
@@ -43,12 +107,29 @@
 .wkaart p { margin: 0; font-size: var(--text-small); line-height: 1.55; color: var(--graphite); }
 
 @media (max-width: 899.98px) {
-  .waarom__inhoud { grid-template-columns: minmax(0, 1fr); }
-  .waarom__beeld { aspect-ratio: 16 / 9; min-height: 0; }
+  .waarom__inhoud { grid-template-columns: minmax(0, 1fr); padding-top: 0; }
+  /* Het kader is 3:2 en de hoofden staan erboven: --koppen is dan 9,02% van de breedte (0,095 x 3:2 / 0,702),
+     dus een marge in procenten van de breedte houdt ze van de intro af. De platen staan links onder: het kader
+     wijkt zo ver naar rechts, anders steken ze buiten de kolom. */
+  .waarom__beeld { aspect-ratio: 3 / 2; min-height: 0; width: calc(100% - 2 * var(--plaat)); margin: calc(9.1% + .5rem) 0 calc(2 * var(--plaat)) auto; }
 }
 @media (max-width: 559.98px) {
+  .b-waarom { --klei-uit: .6rem; }
   .wkaarten { grid-template-columns: minmax(0, 1fr); }
   .wkaart { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 1rem; align-items: start; }
-  .wkaart__voorwerp { grid-row: 1 / span 2; margin: 0; }
+  .wkaart__voorwerp { grid-row: 1 / span 2; margin: calc(-1 * (var(--kaart-pad) + var(--klei-uit))) 0 0; }
   .wkaart__obj { width: 3.8rem; height: 3.4rem; }
+}
+
+/* Hover, zoals "Sterk waar het zwaar is" (over-ons.css): op het beeld groeien foto en uitsnede samen 2%
+   vanaf de kaderrand en schuiven de platen een stap verder; op een kaart gaat het klei-icoon 3px omhoog en
+   kantelt. Alles met scale, translate en rotate: er verandert geen maat, dus er verschuift niets. De kaart is
+   het reveal-element (de transition van [data-reveal-groep] > * zou winnen), het icoon en de platen niet. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .waarom__beeld img { transition: scale .6s cubic-bezier(.22, .61, .36, 1); }
+  .waarom__beeld::before, .waarom__beeld::after { transition: translate .6s cubic-bezier(.22, .61, .36, 1); }
+  .waarom__beeld:hover img { scale: 1.02; }
+  .waarom__beeld:hover { --plaat-stap: calc(var(--plaat) * 1.3); }
+  .wkaart__obj { transition: translate .25s cubic-bezier(.22, .61, .36, 1), rotate .25s cubic-bezier(.22, .61, .36, 1); }
+  .wkaart:hover .wkaart__obj { translate: 0 -3px; rotate: -4deg; }
 }

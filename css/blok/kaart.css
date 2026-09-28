@@ -1,132 +1,52 @@
-/* Adres en kaart (/contact/ #kaart): kaart links (rekt mee met de tekst), adres en vier gegevenskaarten rechts */
-.b-kaart__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(2rem,1rem + 3.5vw,4.5rem);align-items:stretch}
+/* Adres en kaart (/contact/ #kaart). Sinds 28-09-2026 in de vorm van het werkgebied op de home (keuze A voor "Map and
+   service area" uit website/review/sectiestijlen-20260928/). De kolommen, de regels en de lagen van de kaart komen
+   uit css/blok/werkgebied.css (AFHANKELIJK in kaart.py); hier staat alleen wat /contact/ anders heeft: een andere
+   verhuizer, de openingstijden in een regel en het paneel van de wereldbol in het kaartvlak. werkgebied.css laadt na
+   dit bestand, dus elke selector hier weegt zwaarder dan de regel die hij vervangt (.b-kaart.b-werkgebied, .b-kaart .x).
+   Hiervoor: de kaart links in een eigen bord, het adres en de tijden in een witte plaat met een 3D-kantoortje
+   (img/kaart-3d/kantoor.webp) op de Koningsblauwe band. */
 
-/* De kaart: een afgeronde kaart met de adrespil linksboven en de bronvermelding onderaan */
-.b-kaart__beeld{position:relative;display:flex;flex-direction:column;min-height:26rem;margin:0;overflow:hidden;border-radius:var(--radius-media);background:var(--off-white);box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 5%,transparent),0 26px 54px -34px color-mix(in srgb,var(--brand-secondary) 50%,transparent)}
-.b-kaart__venster{position:relative;flex:1 1 auto;min-height:0;overflow:hidden}
-.b-kaart__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
-/* het papier ligt verzonken in het bord: een haarlijn rondom en schaduw langs de bovenrand */
-.b-kaart__venster::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  box-shadow:inset 0 0 0 1px rgba(11,35,82,.12),inset 0 12px 20px -14px rgba(11,35,82,.85)}
-.b-kaart__pil{position:absolute;left:.9rem;top:.9rem;z-index:2;display:inline-flex;align-items:center;gap:.45rem;max-width:calc(100% - 1.8rem);margin:0;padding:.5rem .95rem;border-radius:var(--radius-round);background:color-mix(in srgb,var(--white) 94%,transparent);color:var(--ink);font:var(--weight-bold) var(--text-xs)/1.2 var(--font-sans);box-shadow:0 8px 20px -10px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
-.b-kaart__pil .ic{flex:none;width:1rem;height:1rem;color:var(--brand-primary)}
-.b-kaart__bron{flex:none;padding:.45rem .9rem;border-top:1px solid var(--color-border);background:var(--white);color:var(--grey-600);font-size:var(--text-xs);text-align:right}
-.b-kaart__bron a{color:inherit}
+/* ---- de verhuizer met de twee dozen ----
+   Smaller dan de man met de deken (407 bij 1200 tegen 698 bij 1200). Hij krijgt hier dus een kleiner deel van de
+   breedte, zodat hij op elke breedte even lang is als de man op de home. De voetplaat rekent met zijn verhouding en
+   bedekt de onderste tien procent: zijn schoenen. De logo's op de dozen lopen tot 52 procent van zijn hoogte. */
+.b-kaart.b-werkgebied { --wg-man: .28; --wg-man-verhouding: .3392; }
+.b-kaart .wg__man { aspect-ratio: 407 / 1200; }
+@media (min-width: 1060.02px) { .b-kaart.b-werkgebied { --wg-man: .315; } }
+@media (max-width: 899.98px) { .b-kaart.b-werkgebied { --wg-man: .146; } }
+@media (max-width: 560px) { .b-kaart.b-werkgebied { --wg-man: .28; } }
 
-/* Tekstkolom */
-.b-kaart__tekst{display:flex;flex-direction:column;justify-content:center;min-width:0}
-.b-kaart__kop{max-width:none;margin-inline:0;margin-bottom:clamp(1.5rem,1.1rem + 1.4vw,2.25rem);text-align:left}
-.b-kaart__kop .label{justify-content:flex-start}
-.b-kaart__kop .intro{margin-inline:0}
-/* Twee gegevenskaarten naast elkaar: adres en openingstijden */
-.b-kaart__gegevens{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:0;padding:0}
-.b-kaart__gegeven{display:flex;align-items:flex-start;gap:.8rem;min-width:0;padding:1rem 1.1rem;border:1px solid var(--color-border);border-radius:var(--radius-card);background:var(--white)}
-.b-kaart__ic{display:grid;flex:none;place-items:center;width:2.4rem;height:2.4rem;border-radius:var(--radius-round);background:var(--primary-50);color:var(--brand-primary)}
-.b-kaart__ic .ic{width:1.15rem;height:1.15rem}
-.b-kaart__gegeven>div{min-width:0}
-.b-kaart__lbl{margin:0 0 .2rem;color:var(--ink);font-weight:var(--weight-bold)}
-.b-kaart__waarde{display:block;margin:0;color:var(--graphite);font-style:normal;line-height:1.45;overflow-wrap:break-word}
-a.b-kaart__waarde{color:var(--brand-primary);text-decoration:underline;text-decoration-color:var(--primary-200);text-underline-offset:4px}
-a.b-kaart__waarde:hover{text-decoration-color:currentColor}
-.b-kaart__status{margin:.6rem 0 0;font-size:var(--text-xs)}
-.b-kaart__tijden{display:grid;gap:.4rem;margin:0}
-.b-kaart__tijd{display:grid;gap:0;padding-left:.6rem;border-left:3px solid var(--color-border)}
-.b-kaart__tijd dt{color:var(--graphite);font-size:var(--text-small);line-height:1.35}
-.b-kaart__tijd dd{margin:0;color:var(--grey-600);font-size:var(--text-small);font-variant-numeric:tabular-nums}
-.b-kaart__tijd.is-vandaag{border-left-color:var(--brand-primary)}
-.b-kaart__tijd.is-vandaag dd{color:var(--ink)}
-.b-kaart__tekst .knoppen{align-items:center}
+/* ---- de regels: adres en openingstijden ---- */
+.b-kaart__waarde { display: block; margin: 0; color: rgba(255, 255, 255, .88); font-size: var(--text-small); font-style: normal; line-height: 1.55; }
+.b-kaart__tijden { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem 1.5rem; margin: .15rem 0 0; }
+.b-kaart__tijd { display: grid; gap: 0; padding-left: .6rem; border-left: 3px solid rgba(255, 255, 255, .22); }
+.b-kaart__tijd dt { color: rgba(255, 255, 255, .88); font-size: var(--text-small); line-height: 1.35; }
+.b-kaart__tijd dd { margin: 0; color: rgba(255, 255, 255, .72); font-size: var(--text-small); font-variant-numeric: tabular-nums; }
+.b-kaart__tijd.is-vandaag { border-left-color: var(--brand-accent); }
+.b-kaart__tijd.is-vandaag dd { color: var(--white); }
+.b-kaart .b-kaart__status { margin: .7rem 0 0; font-size: var(--text-xs); }
+@media (max-width: 560px) { .b-kaart__tijden { grid-template-columns: minmax(0, 1fr); } }
 
-/* ---- op de Koningsblauwe band ----
-   De sectie kleurt alle koppen en alinea's wit; in de witte kaarten moet de tekst donker blijven. */
-.b-kaart.sectie--blauw .b-kaart__kop{max-width:none;margin-inline:0;text-align:left}
-.b-kaart.sectie--blauw .b-kaart__kop .label{justify-content:flex-start}
-.b-kaart.sectie--blauw .b-kaart__kop .intro{margin-inline:0}
-/* Het kaartbord ligt als een echt bord op de band: een massieve onderkant geeft de dikte,
-   het licht komt van linksboven en daaronder valt één diepe schaduw. Zelfde idioom als .wereld. */
-.b-kaart.sectie--blauw .b-kaart__beeld{border-color:transparent;
-  background:linear-gradient(160deg,var(--white) 0 62%,var(--off-white) 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),
-    0 12px 0 color-mix(in srgb,var(--brand-primary) 22%,var(--white)),
-    0 15px 0 color-mix(in srgb,var(--brand-secondary) 30%,var(--white)),
-    0 42px 66px -26px rgba(5,14,35,.8)}
-.b-kaart.sectie--blauw .b-kaart__pil{color:var(--ink);border-color:transparent;
-  box-shadow:0 2px 0 color-mix(in srgb,var(--brand-secondary) 18%,var(--white)),0 14px 24px -10px rgba(5,14,35,.65)}
-.b-kaart.sectie--blauw .b-kaart__bron{color:var(--grey-600)}
-.b-kaart.sectie--blauw .b-kaart__bron a{color:inherit}   /* de bronvermelding moet leesbaar blijven (ODbL) */
-.b-kaart.sectie--blauw .b-kaart__gegeven{border-color:transparent;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),
-    0 5px 0 color-mix(in srgb,var(--brand-primary) 20%,var(--white)),
-    0 26px 38px -24px rgba(5,14,35,.78)}
-.b-kaart.sectie--blauw .b-kaart__lbl{color:var(--ink)}
-.b-kaart.sectie--blauw .b-kaart__tijd dt{color:var(--graphite)}
-.b-kaart.sectie--blauw .b-kaart__tijd dd{color:var(--grey-600)}
-.b-kaart.sectie--blauw .b-kaart__status .bereikbaar{color:var(--graphite)}
-/* knoppen: gevuld wit voor de route, wit met goud onderstreept voor de tekstlink */
-.b-kaart.sectie--blauw .knop--blauw{background:var(--white);color:var(--brand-primary)}
-.b-kaart.sectie--blauw .knop--blauw:hover{background:var(--primary-50);color:var(--primary-600)}
-.b-kaart.sectie--blauw .knop--link{color:var(--white)}
-.b-kaart.sectie--blauw .knop--link span{text-decoration-color:var(--brand-accent)}
+/* knoppen: de route als lichte knop zoals op /over-ons/, de offerte als witte tekstlink met gouden streep */
+.b-kaart .wg .knoppen { align-items: center; }
+.b-kaart .knop--link { color: var(--white); }
+.b-kaart .knop--link span { text-decoration-color: var(--brand-accent); }
 
-/* De bovenrand volgt de adreskop, niet het kleinere label erboven. */
-@media(min-width:961px){
-  .b-kaart__tekst{justify-content:flex-start}
-  .b-kaart__kop .label{display:flex}
-  .b-kaart__beeld{margin-top:calc(var(--text-h6) + 1rem)}
-  /* De onderkant van het bord valt gelijk met de onderkant van "Route plannen". Op de blauwe band heeft
-     het bord een massieve rand van 15px (de box-shadow 0 15px 0 hierboven); zonder deze marge eindigde
-     het vak gelijk met de knop en het zichtbare bord 15px lager. Past die rand, pas dan dit getal mee aan. */
-  .b-kaart.sectie--blauw .b-kaart__beeld{margin-bottom:15px}
-}
-
-@media(max-width:960px){
-  .b-kaart__in{grid-template-columns:1fr}
-  .b-kaart__beeld{min-height:0}
-  .b-kaart__venster{aspect-ratio:16/10}
-}
-@media(max-width:560px){
-  .b-kaart__venster{aspect-ratio:1/1}
-  .b-kaart__img{left:50%;top:50%;width:190%;height:auto;max-width:none;transform:translate(-50%,-50%)}
-  .b-kaart__gegevens{grid-template-columns:1fr}
-}
-
-/* ---- de echte kaart: wereldbol in het venster ----
-   Het venster bevat het paneel van blok wereld. De getekende kaart is de terugval; een klik laadt de echte kaart,
-   een bol die naar Den Haag vliegt. Het paneel vult het venster en neemt de vorm van het bord over: geen eigen
-   radius of schaduw. De inset-schaduw van het venster (::after, pointer-events:none) blijft erboven liggen. */
-.b-kaart__venster .wereld{position:absolute;inset:0;height:auto;border-radius:0;box-shadow:none}
-/* op de blauwe band kleurt de sectie knoppen en links wit; in het lichte kaartpaneel moeten ze donker blijven */
-.b-kaart .wereld .wereld__start{border-color:transparent;background:var(--white);color:var(--brand-primary);box-shadow:0 10px 22px -8px rgba(5,14,35,.55)}
-.b-kaart .wereld .wereld__start:hover{background:var(--accent-100);color:var(--brand-secondary)}
-.b-kaart.sectie--blauw .wereld__route{color:var(--brand-primary)}
-.b-kaart.sectie--blauw .wereld__melding{color:var(--ink)}
-.b-kaart__venster .wereld:not(.is-kaart) .wereld__terugval{transition:filter .3s var(--ease)}
-.b-kaart__venster .wereld:not(.is-kaart):hover .wereld__terugval{filter:brightness(.94)}
-@media(max-width:960px){.b-kaart__venster{aspect-ratio:4/3}}
-@media(max-width:560px){.b-kaart__venster{aspect-ratio:4/5}}
-
-/* ---- Adres en openingstijden: één plaat, twee kolommen ----
-   (de naam van dit blok is gebleven; het zijn nu twee rijen.) Twee losse kaarten van ongelijke hoogte stonden als
-   vreemden naast elkaar, en even hoog gaf een lege adreskaart. Nu is het één witte plaat met een dikte: bovenaan het
-   adres, daaronder de tijden, met een dunne lijn ertussen. De twee tijden staan naast elkaar, zodat de plaat laag
-   blijft en er nergens lege ruimte overblijft. Op de telefoon staan de tijden onder elkaar. */
-.b-kaart__gegevens{grid-template-columns:minmax(0,1fr);gap:0;border-radius:18px;background:var(--white);overflow:hidden;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 0 color-mix(in srgb,var(--brand-primary) 20%,var(--white)),0 26px 38px -24px rgba(5,14,35,.78)}
-.b-kaart .b-kaart__gegevens .b-kaart__gegeven{border:0;border-radius:0;background:none;box-shadow:none;padding:1.1rem 1.3rem}
-.b-kaart .b-kaart__gegevens .b-kaart__gegeven+.b-kaart__gegeven{border-top:1px solid var(--grey-300)}
-.b-kaart__gegeven>div{flex:1 1 auto}
-.b-kaart__gegeven--adres .b-kaart__waarde{color:var(--ink)}
-.b-kaart__tijden{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem 1.5rem}
-@media(max-width:560px){.b-kaart__tijden{grid-template-columns:minmax(0,1fr)}}
-
-/* ---- Het hoofdkantoor rechts in de adresrij ----
-   Vraag van de gebruiker: de rechterkant van de adresrij stond leeg. Er is geen foto van het echte pand, en een nagemaakte
-   foto naast het echte adres zou misleiden. Daarom een 3D-render van een kantoortje in de huisstijl met het logo op de gevel
-   (img/kaart-3d/kantoor.webp, bron _ai-beelden/kaart-3d/scene.html, functie kantoor). Puur versiering, dus zonder markup: een
-   ::after van de adresrij, op een lichte studiovloer. Komt er een echte foto van het pand, vervang dan alleen de url en zet
-   background-size op cover. */
-.b-kaart .b-kaart__gegevens .b-kaart__gegeven--adres{align-items:center;padding-right:0;overflow:hidden}
-.b-kaart__gegeven--adres::after{content:"";flex:none;align-self:stretch;width:clamp(9rem,36%,13rem);margin:-1.1rem 0 -1.1rem .5rem;min-height:7.6rem;
-  background:url(/img/kaart-3d/kantoor.webp) 50% 56%/100% auto no-repeat,linear-gradient(180deg,#EEF3FD 0 70%,#DCE6F8 70%);
-  border-left:1px solid var(--grey-300)}
-@media(max-width:560px){.b-kaart__gegeven--adres::after{width:5.8rem;min-height:6.2rem;margin-left:.25rem;background-size:116% auto,auto}}
+/* ---- de echte kaart: het paneel van blok wereld in het kaartvlak ----
+   Het paneel vult het vlak en neemt zijn vorm over: geen eigen radius of schaduw. De getekende kaart is de terugval;
+   een klik laadt de echte kaart. Omdat het paneel absoluut staat, geeft het vlak zelf de maat waar werkgebied.css
+   die aan het beeld overlaat: 3:2 tot 900, 4:5 op de telefoon. De uitsnede van de getekende kaart volgt die van het
+   werkgebied (--wg-kaart-x). */
+.b-kaart .wg__kaartvlak .wereld { position: absolute; inset: 0; height: auto; border-radius: 0; box-shadow: none; }
+.b-kaart .wereld__terugval { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--wg-kaart-x) 50%; }
+@media (max-width: 899.98px) { .b-kaart .wg__kaartvlak { aspect-ratio: 3 / 2; } }
+@media (max-width: 560px) { .b-kaart .wg__kaartvlak { aspect-ratio: 4 / 5; } }
+/* Het adreskaartje van het paneel valt weg: de regels ernaast tonen hetzelfde adres en dezelfde route, en onderin
+   staan de verhuizer en de voetplaat. Het blijft in de HTML, want wereld.js haalt er de routelink voor de pin uit;
+   zonder kaartje houdt de kaart onderin 12 px vrij en staat de pin in het midden, links van de verhuizer. */
+.b-kaart .wereld__info { display: none; }
+/* De band kleurt knoppen, alinea's en links wit of lichtblauw; in het lichte kaartpaneel moeten ze donker blijven. */
+.b-kaart .wereld .wereld__start { border-color: transparent; background: var(--white); color: var(--brand-primary); box-shadow: 0 10px 22px -8px rgba(5, 14, 35, .55); }
+.b-kaart .wereld .wereld__start:hover { background: var(--accent-100); color: var(--brand-secondary); }
+.b-kaart .wereld__melding { color: var(--ink); }
+.b-kaart :is(.maplibregl-ctrl-attrib, .leaflet-control-attribution) a { color: var(--brand-primary); }

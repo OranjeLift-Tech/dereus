@@ -181,59 +181,87 @@ async function draai({ browser, basis, snel = false } = {}) {
           if (route === '/diensten/') {
             assert.equal(await page.locator('.b-dienstenpanelen__index').count(), 0);
             assert.equal(await page.locator('.b-dienstenpanelen__paneel').count(), 8);
-            assert.ok(await page.locator('.b-dienstenpanelen__panelen').evaluate(el => {
-              const box = el.getBoundingClientRect(); return Math.abs((box.left + box.right) / 2 - innerWidth / 2) < 2;
-            }), `${width}: service panels centered without an empty sidebar`);
+            /* Sinds 28-09-2026 is elke dienst een eigen sectie direct in <main>, met het dienst-id als anker
+               en de h2 als naam (acht regio's). De oude vorm, acht <article>-panelen in een sectie, mag niet
+               half blijven staan. */
+            assert.deepEqual(await page.locator('main > section.b-dienstenpanelen').evaluateAll(els => els.map(el => {
+              const kop = document.getElementById(el.getAttribute('aria-labelledby'));
+              return `${el.id}:${kop && el.contains(kop) && kop.tagName === 'H2' ? 'h2' : 'geen naam'}`;
+            })), ['particulier', 'zakelijk', 'nationaal', 'internationaal', 'verhuislift', 'opslag', 'montage', 'woningontruiming'].map(id => `${id}:h2`),
+            `${width}: eight service sections with their own anchor and name`);
+            assert.equal(await page.locator('main article').count(), 0, `${width}: no article panels left`);
+            assert.deepEqual(await page.locator('.b-dienstenpanelen__paneel').evaluateAll(els => els.filter(el => {
+              const box = el.getBoundingClientRect(); return Math.abs((box.left + box.right) / 2 - innerWidth / 2) >= 2;
+            }).length), 0, `${width}: service panels centered without an empty sidebar`);
+            /* Sinds 28-09-2026 heeft elke dienst een eigen patroon uit ../section-library (VORMEN in
+               blokken/dienstenpanelen.py), als data-vorm op de sectie: acht secties, acht verschillende vormen. */
+            const vormen = await page.locator('main > section.b-dienstenpanelen').evaluateAll(els => els.map(el => el.dataset.vorm || ''));
+            assert.ok(vormen.every(Boolean) && new Set(vormen).size === 8, `${width}: eight service sections, eight different patterns (${vormen.join(', ')})`);
           }
-          if (route === '/contact/' && width > 960) {
-            assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.b-kaart__beeld').getBoundingClientRect().top
+          /* Sinds 28-09-2026 heeft #kaart de vorm van het werkgebied: de kaart (.wg__kaartvlak) begint op de regel
+             van de kop, de gouden plaat erachter op die van het label. Onder 1060 staat de figuur onderaan. */
+          if (route === '/contact/' && width > 1060) {
+            assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.b-kaart .wg__kaartvlak').getBoundingClientRect().top
               - document.querySelector('#kaart-kop').getBoundingClientRect().top) < 2), `${width}: map top aligns address heading`);
           }
           if (route === '/werkwijze/') {
-            /* De tijdlijn (blok tijdlijn, sinds ronde 6) verving de stappenrail. De ankers stap-1 tot
-               stap-5 blijven, want daar kan van buiten naar gelinkt worden. De vorige vorm mag niet
+            /* Sinds 28-09-2026 staan de stappen als kaarten met een verhuizer (blok stapkaarten, optie A
+               steps-four-green); daarvoor de tijdlijn en nog eerder de stappenrail. De ankers stap-1 tot
+               stap-5 blijven, want daar kan van buiten naar gelinkt worden. De vorige vormen mogen niet
                half blijven staan: dat is de manier waarop zo'n vervanging stilletjes misgaat. */
             await page.locator('#stappen').scrollIntoViewIfNeeded();
-            assert.equal(await page.locator('.b-stappenlang').count(), 0, `${width}: de oude stappenrail staat er nog`);
-            assert.deepEqual(await page.locator('.b-tijdlijn__stap').evaluateAll(items => items.map(el => el.id)),
-              ['stap-1', 'stap-2', 'stap-3', 'stap-4', 'stap-5'], `${width}: de vijf stations en hun ankers`);
+            assert.equal(await page.locator('.b-stappenlang, .b-tijdlijn').count(), 0, `${width}: de stappenrail of de tijdlijn staat er nog`);
+            assert.deepEqual(await page.locator('#stappen .b-stapkaarten__stap').evaluateAll(items => items.map(el => el.id)),
+              ['stap-1', 'stap-2', 'stap-3', 'stap-4', 'stap-5'], `${width}: de vijf kaarten en hun ankers`);
             assert.equal(await page.locator('#stappen .knop--cta').count(), 1, `${width}: een primaire knop in de sectie`);
-            /* Het 3D-voorwerp staat voor het gele huis en komt boven de plaat uit; zakt het terug
-               achter de kaartrand, dan is de hele vorm weg zonder dat er iets stuk lijkt. */
-            assert.deepEqual(await page.locator('.b-tijdlijn__stap').evaluateAll(items => items.flatMap(el => {
-              const obj = el.querySelector('.b-tijdlijn__obj').getBoundingClientRect();
-              const plaat = el.querySelector('.b-tijdlijn__plaat').getBoundingClientRect();
+            /* Wat u doet en wat wij doen staan open op de kaart: geen uitklap meer, dus openen en sluiten
+               kan niets verschuiven. */
+            assert.equal(await page.locator('#stappen details').count(), 0, `${width}: geen uitklap in de stappen`);
+            assert.deepEqual(await page.locator('#stappen .b-stapkaarten__duo').evaluateAll(dls => dls.map(dl => dl.querySelectorAll('dt').length)),
+              [2, 2, 2, 2, 2], `${width}: elke kaart heeft wat u doet en wat wij doen`);
+            /* Stap 1 noemt het nummer zonder WhatsApp-knop ernaast (23-09-2026, data-geen-whatsapp). */
+            assert.deepEqual(await page.evaluate(() => [document.querySelectorAll('#stap-1 a[href^="tel:"][data-geen-whatsapp]').length,
+              document.querySelectorAll('#stap-1 .wa-link').length]), [1, 0], `${width}: stap 1 heeft het nummer zonder WhatsApp-knop`);
+            // de kaarten onder de vouw zijn lui; laad ze nu, anders telt een beeld dat nog niet gevraagd is als kapot
+            await page.locator('#stappen .b-stapkaarten__foto, #stappen .b-stapkaarten__klei').evaluateAll(els => els.forEach(el => { el.loading = 'eager'; }));
+            await beeldenKlaar('#stappen .b-stapkaarten__foto, #stappen .b-stapkaarten__klei');
+            /* De figuur staat op de onderrand van het paneel (daar is hij afgesneden) en komt met het hoofd
+               boven de kaart uit; zakt hij terug of schuift hij onder de rand door, dan is de snijlijn te zien
+               of de vorm weg zonder dat er iets stuk lijkt. En het beeld moet er echt zijn. Het klei-icoon
+               (sinds 28-09-2026) hangt onder de paneelrand, maar mag de tekst eronder niet raken. */
+            assert.deepEqual(await page.locator('#stappen .b-stapkaarten__stap').evaluateAll(items => items.flatMap(el => {
+              const fig = el.querySelector('.b-stapkaarten__fig').getBoundingClientRect();
+              const paneel = el.querySelector('.b-stapkaarten__paneel').getBoundingClientRect();
+              const kaart = el.querySelector('.b-stapkaarten__kaart').getBoundingClientRect();
+              const foto = el.querySelector('.b-stapkaarten__foto');
               const fout = [];
-              if (obj.top >= plaat.top - 4) fout.push(`${el.id}: voorwerp steekt niet boven de plaat uit`);
-              /* en het mag de tekst niet afdekken: de wagen is de breedste render en schoof op smal
-                 scherm over het volgnummer heen. */
-              for (const naam of ['nr', 'titel']) {
-                const t = el.querySelector(`.b-tijdlijn__${naam}`).getBoundingClientRect();
-                if (obj.right > t.left && obj.left < t.right && obj.top < t.bottom && obj.bottom > t.top) {
-                  fout.push(`${el.id}: voorwerp ligt over ${naam}`);
-                }
-              }
+              if (fig.top > kaart.top - 24) fout.push(`${el.id}: figuur komt niet boven de kaart uit`);
+              if (Math.abs(fig.bottom - paneel.bottom) > 1) fout.push(`${el.id}: figuur staat niet op de rand van het paneel`);
+              if (fig.left < kaart.left - 1 || fig.right > kaart.right + 1) fout.push(`${el.id}: figuur steekt buiten de kaart`);
+              if (!foto.complete || !foto.naturalWidth) fout.push(`${el.id}: beeld niet geladen`);
+              const klei = el.querySelector('.b-stapkaarten__klei');
+              if (!klei || !klei.complete || !klei.naturalWidth) fout.push(`${el.id}: klei-icoon niet geladen`);
+              else if (klei.getBoundingClientRect().bottom > el.querySelector('.b-stapkaarten__nr').getBoundingClientRect().top)
+                fout.push(`${el.id}: klei-icoon raakt de tekst`);
+              /* "Stap n" staat sinds 28-09-2026 op het wit tussen paneel en titel, niet meer als pil over de figuur */
+              const nr = el.querySelector('.b-stapkaarten__nr').getBoundingClientRect(), titel = el.querySelector('.b-stapkaarten__titel').getBoundingClientRect();
+              const over = (a, b) => Math.min(a.right, b.right) > Math.max(a.left, b.left) && Math.min(a.bottom, b.bottom) > Math.max(a.top, b.top);
+              if (!nr.width || nr.top < paneel.bottom || nr.bottom > titel.top || over(nr, fig) || over(nr, klei.getBoundingClientRect()))
+                fout.push(`${el.id}: "Stap n" ligt niet vrij tussen paneel en titel`);
               return fout;
-            })), [], `${width}: renders boven de kaartrand en vrij van de tekst`);
-            /* De WhatsApp-knop komt van ctx.contactlinks en landt in "Wat u doet". Die kolom is op
-               breed scherm maar 100 px en de pil 133, dus zonder de eigen regel onderaan de plaat
-               valt hij over de kolom ernaast heen. Dat zag er op 1440 net goed uit en botste toch. */
-            assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('.b-tijdlijn__duo .wa-link')].flatMap(wa => {
-              const box = wa.getBoundingClientRect();
-              const buur = wa.closest('.b-tijdlijn__wie').nextElementSibling?.querySelector('dd');
-              if (!buur) return [];
-              const t = buur.getBoundingClientRect();
-              return box.right > t.left && box.left < t.right && box.top < t.bottom && box.bottom > t.top
-                ? [`WhatsApp-knop overlapt "${buur.textContent.slice(0, 30)}..."`] : [];
-            })), [], `${width}: WhatsApp-knop vrij van de kolom ernaast`);
-            const stations = await page.locator('.b-tijdlijn__stap').evaluateAll(items =>
-              items.map(el => Math.round(el.getBoundingClientRect().top)));
-            if (width > 1180) {
-              assert.ok(Math.max(...stations) - Math.min(...stations) <= 2,
-                `${width}: de vijf stations horen naast elkaar op een rij (tops ${stations.join(', ')})`);
+            })), [], `${width}: figuren op de paneelrand, boven de kaart uit en geladen`);
+            // tops tegen de lijst: beelden boven de sectie die nog laden verschuiven de pagina, niet de rijen
+            const kaarten = await page.locator('#stappen .b-stapkaarten__stap').evaluateAll(items =>
+              items.map(el => Math.round(el.getBoundingClientRect().top - el.parentElement.getBoundingClientRect().top)));
+            const rijen = [...new Set(kaarten)].length;
+            if (width > 1100) {
+              assert.equal(rijen, 1, `${width}: de vijf kaarten horen op een rij (tops ${kaarten.join(', ')})`);
+            } else if (width > 700) {
+              assert.ok(rijen === 2 && kaarten[2] === kaarten[0] && kaarten[3] > kaarten[0],
+                `${width}: drie en twee kaarten (tops ${kaarten.join(', ')})`);
             } else {
-              assert.ok(stations.every((top, i) => i === 0 || top > stations[i - 1]),
-                `${width}: de tijdlijn hoort een kolom te zijn (tops ${stations.join(', ')})`);
+              assert.ok(kaarten.every((top, i) => i === 0 || top > kaarten[i - 1]),
+                `${width}: de kaarten horen onder elkaar (tops ${kaarten.join(', ')})`);
             }
             /* De voorbereiding (blok lijstplaat, sinds ronde 6) verving de witte checklistkaart. Het blok
                checklist bestaat nog, voor de dienst- en landpagina's, maar staat sinds ronde 6 niet meer op
@@ -426,8 +454,10 @@ async function draai({ browser, basis, snel = false } = {}) {
       assert.equal(await page.locator('#f-naar').inputValue(), 'Delft');
       assert.equal(await page.locator('#f-dienst').inputValue(), 'particulier');
 
-      await page.goto(basis, { waitUntil: 'load' });
-      for (const [id, field] of [['aanvraag', 'aanvraag-van'], ['contact-formulier', 'bericht-naam']]) {
+      // Het berichtformulier stond ook op de home (homecontact, #contact-formulier) tot 28-09-2026;
+      // sindsdien staat het alleen nog op /contact/.
+      for (const [route, id, field] of [['/', 'aanvraag', 'aanvraag-van'], ['/contact/', 'formulier', 'f-naam']]) {
+        await page.goto(basis + route, { waitUntil: 'load' });
         const form = page.locator(`#${id} form`);
         await form.locator('button[type=submit]').click();
         assert.equal(await page.locator(`#${field}`).getAttribute('aria-invalid'), 'true');
@@ -435,7 +465,8 @@ async function draai({ browser, basis, snel = false } = {}) {
       }
     });
     await omhul('interacties secties en kaart', async () => {
-      for (const id of ['diensten', 'waarom', 'cijfers', 'werkwijze', 'over-ons', 'aanvraag', 'contact']) {
+      await page.goto(basis, { waitUntil: 'load' });
+      for (const id of ['diensten', 'waarom', 'cijfers', 'werkwijze', 'over-ons', 'aanvraag']) {
         const section = page.locator(`#${id}`);
         assert.equal(await section.count(), 1, `Missing restored section: ${id}`);
         await section.scrollIntoViewIfNeeded();
@@ -456,8 +487,10 @@ async function draai({ browser, basis, snel = false } = {}) {
         }
         return failures;
       })), [], 'Photo accents remain inside images and clear of text');
+      // De interactieve kaart staat sinds 28-09-2026 alleen nog op /contact/ (blok kaart).
       await page.route('https://cdn.jsdelivr.net/**', route => route.abort());
       await page.route('https://cdnjs.cloudflare.com/**', route => route.abort());
+      await page.goto(basis + '/contact/', { waitUntil: 'load' });
       await page.locator('[data-wereld-start]').click();
       await page.waitForFunction(() => !document.querySelector('[data-wereld-melding]').classList.contains('vh'));
       assert.equal(await page.locator('.wereld__terugval').isVisible(), true);
@@ -465,11 +498,11 @@ async function draai({ browser, basis, snel = false } = {}) {
 
       await page.setViewportSize({ width: 1440, height: 900 });
       await page.goto(basis + '/diensten/', { waitUntil: 'load' });
-      await page.locator('.b-dienstenpanelen').scrollIntoViewIfNeeded();
+      await page.locator('.b-dienstenpanelen').first().scrollIntoViewIfNeeded();
       await page.screenshot({ path: path.join(UIT, 'diensten-desktop.png') });
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(basis + '/diensten/', { waitUntil: 'load' });
-      await page.locator('.b-dienstenpanelen').scrollIntoViewIfNeeded();
+      await page.locator('.b-dienstenpanelen').first().scrollIntoViewIfNeeded();
       await page.screenshot({ path: path.join(UIT, 'diensten-mobile.png') });
       assert.deepEqual(errors, [], 'Browser errors');
       meld('navigatie, focus, afbeeldingen en browserconsole: gecontroleerd');

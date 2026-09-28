@@ -5,8 +5,9 @@ og-titel: Verhuisbedrijf De Reus: sterk in verhuizen, vanuit Den Haag
 ---
 <!-- Kopij home, dereus-4e. Formaat volgens BOUWPLAN hoofdstuk 7. Veldlabels van de pil staan in offerte.md. -->
 
-# Verhuisbedrijf in Den Haag {#offerte}
-label: Verhuisbedrijf De Reus
+# Verhuisbedrijf in ==Den Haag== {#offerte}
+slogan: Sterk in
+wissel: verhuizen, inpakken, sjouwen, opbouwen, ontruimen
 intro: Ervaren verhuizers, één vaste verhuisadviseur en een heldere offerte vooraf.
 score: 4,9 uit 5 op Google
 pil-titel: Binnen 24 uur uw offerte

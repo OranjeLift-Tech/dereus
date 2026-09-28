@@ -51,7 +51,7 @@
 @media (min-width:1100px){
   /* een plusteken tussen de stenen: samen vormen ze de prijs */
   .p-kosten .b-opbouw__factor:not(:last-child)::after{content:"";position:absolute;z-index:2;right:calc(clamp(1rem,1.6vw,1.5rem) / -2 - .8rem);top:50%;width:1.6rem;height:1.6rem;margin-top:-.8rem;border-radius:50%;
-    background:var(--brand-primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 6v12M6 12h12' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center/.95rem no-repeat;
+    background:var(--brand-primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1.565 1.565 20.87 20.87' fill='white'%3E%3Cpath d='M20 11.25C20.4142 11.25 20.75 11.5858 20.75 12C20.75 12.4142 20.4142 12.75 20 12.75L4 12.75C3.58579 12.75 3.25 12.4142 3.25 12C3.25 11.5858 3.58579 11.25 4 11.25L20 11.25Z'/%3E%3Cpath d='M12.7705 20C12.7705 20.4142 12.4347 20.75 12.0205 20.75C11.6063 20.75 11.2705 20.4142 11.2705 20L11.2705 4C11.2705 3.58579 11.6063 3.25 12.0205 3.25C12.4347 3.25005 12.7705 3.58582 12.7705 4L12.7705 20Z' opacity='.5'/%3E%3C/svg%3E") center/.95rem no-repeat;
     box-shadow:0 0 0 3px var(--off-white),0 3px 0 3px var(--plaat-rand),0 10px 12px -4px rgba(11,35,82,.45)}
 }
 .p-kosten .b-opbouw__duo{gap:clamp(1.25rem,2.4vw,2.25rem)}
@@ -193,8 +193,7 @@
 /* annuleren: geen eigen ondergrond (wens van de gebruiker). De sectie houdt het wit van sectie--wit;
    het Creme vak met de gouden onderkant staat daar sterk genoeg op. */
 .p-kosten .b-annuleren__vak{background:linear-gradient(160deg,var(--white),#FFFDF5 60%,#FFF8E6)}
-/* de offertekaart sluit af op wit */
-.p-kosten .b-offertepil{background:var(--white)}
+/* de offertekaart staat sinds 28-09-2026 op de lichtblauwe gloed van variant B (offertepil.css) */
 
 /* ---- All-in prijs of Regieprijs als twee betaalpassen ----
    Keuze van de gebruiker (variant 8 uit _ontwerpen/allin-regie-varianten.html): het blok gaat over geld, dus de twee

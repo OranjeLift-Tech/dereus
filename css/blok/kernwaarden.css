@@ -1,93 +1,149 @@
-/* Kernwaarden als gedrag: genummerde kaarten op de blauwe band, de laatste rij gecentreerd.
+/* Kernwaarden als gedrag (/over-ons/ #zo-werken-wij): een uitgelichte waarde met foto naast de
+   overige waarden als rijen, op de Koningsblauwe band.
 
-   De maten die de hoogte van dit blok bepalen staan als knoppen bovenaan, niet verspreid door
-   het bestand. Een compactheidsniveau is daardoor een blok waarden en geen zoektocht. */
+   Naar het patroon business-feature-rows uit ../section-library: een grote kaart en een stapel
+   rijen die hun boven- en onderlijn delen, de kaart op een gekantelde Diepblauwe plaat, de
+   verhuizers die boven de foto uitstappen en het tekstvlak eronder dat de onderrand afdekt.
+   De maten die de hoogte bepalen staan als knoppen bovenaan. */
 .b-kernwaarden {
-  --kw-gap: clamp(.75rem, .5rem + .8vw, 1.25rem);   /* tussen de kaarten */
-  --kw-pad: clamp(1.4rem, 1.1rem + 1vw, 2rem);      /* in een kaart */
-  --kw-kop-rij: 1.1rem;                             /* onder de nummer/icoon-rij */
+  --kw-band: 1;                                        /* aandeel van --ruimte boven en onder de band */
+  --kw-kolommen: minmax(0, 1.08fr) minmax(0, 1fr);     /* uitgelicht | rijen */
+  --kw-kolomgap: clamp(1.5rem, .5rem + 2.2vw, 2.5rem);
+  --kw-rijgap: .75rem;
+  --kw-kop-marge: clamp(2.25rem, 1.4rem + 2vw, 3.5rem); /* ruimte tussen kop en kaarten: de hoofden stappen erin en houden 16 px vrij */
+  --kw-pad: clamp(1rem, .8rem + .5vw, 1.35rem);        /* in een rij */
+  padding-block: calc(var(--ruimte) * var(--kw-band) + var(--dak)) calc(var(--ruimte) * var(--kw-band));
 }
-.kwlijst { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--kw-gap); margin: 0; padding: 0; list-style: none; }
-.kw {
-  flex: 0 1 calc((100% - 2 * var(--kw-gap)) / 3); display: flex; flex-direction: column;
+.b-kernwaarden--gematigd { --kw-band: .72; }
+.b-kernwaarden--krap { --kw-band: .58; }
+
+/* ---- Kopregel: de kopstapel links, de ene actie rechts op de onderlijn ---- */
+.kwkop { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem 2rem; margin-bottom: var(--kw-kop-marge); }
+.kwkop .kopgroep { max-width: 40rem; margin: 0; text-align: left; }
+.kwkop .kopgroep .label { justify-content: flex-start; }
+.kwkop .kopgroep .intro { margin-inline: 0; }
+.kwkop__actie { flex: none; }
+
+/* ---- Raster: de uitgelichte kaart beslaat alle rijen, dus boven- en onderlijn vallen samen ---- */
+.kwlijst {
+  display: grid; grid-template-columns: var(--kw-kolommen);
+  grid-template-rows: repeat(var(--kw-rijen, 4), auto);
+  column-gap: var(--kw-kolomgap); row-gap: var(--kw-rijgap);
+  margin: 0; padding: 0; list-style: none;
+}
+.kw { grid-column: 2; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 1rem;
   padding: var(--kw-pad); border-radius: var(--radius-card);
-  background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
-}
-.kw__kop { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--kw-kop-rij); }
-.kw__nr { font: var(--weight-display) 2.4rem/1 var(--font-display); font-stretch: var(--font-display-stretch); color: var(--brand-accent); }
+  background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18); }
 .kw__icoon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--brand-accent); color: var(--brand-secondary); }
 .kw__icoon .ic { width: 22px; height: 22px; }
-.kw__titel { margin: 0 0 .5rem; font-size: var(--text-h4); line-height: 1.15; }
+.kw__titel { margin: .55rem 0 .4rem; font-size: var(--text-h4); line-height: 1.15; }
 .b-kernwaarden .kw p { margin: 0; font-size: var(--text-small); line-height: 1.55; color: rgba(255, 255, 255, .86); }
 .b-kernwaarden .kw a { color: var(--white); text-decoration-color: var(--brand-accent); }
 
-@media (max-width: 999.98px) { .kw { flex-basis: calc((100% - var(--kw-gap)) / 2); } }
-@media (max-width: 599.98px) {
-  .kw { flex-basis: 100%; }
-  .kw__nr { font-size: 2rem; }
+/* ---- De uitgelichte waarde: achtergrond, uitstap, voorgrond ----
+   Achtergrond: een Diepblauwe plaat achter de kaart, verschoven en een paar graden gedraaid; hij
+   komt links en onder onder de kaart uit. Uitstap: de foto en de uitsnede zonder achtergrond van
+   dezelfde opname liggen pixel voor pixel over elkaar in een laag die --pop boven het kader
+   uitsteekt. De foto wordt op de kaderlijn afgeknipt (--knip, gemeten over de laag), de uitsnede
+   niet, dus de hoofden komen boven de kaart uit. Voorgrond: het witte tekstvlak met de gele rand
+   eronder. Hetzelfde principe als .dtegel op de home (css/blok/diensten.css), met een kleinere
+   uitstap: bij dienst-particulier-v2 begint de alfa op 21,98% van de hoogte, dus met pop 37,2%
+   en knip pop / (1 + pop) = 27,11% steken de hoofden ongeveer 7% van de kaderhoogte uit
+   (2 rem op 1440, 1,2 rem op 390). --pop en --knip staan op de li in de HTML.
+   Het kader is minstens 4:3 en rekt mee met de rijen, maar nooit hoger dan 88% van zijn breedte:
+   daarboven snijdt object-fit: cover de verhuizers aan de zijkanten af. Wat de rijen dan nog
+   hoger zijn, gaat naar het tekstvlak. */
+.kw--uitgelicht { grid-column: 1; grid-row: 1 / -1; position: relative; isolation: isolate; display: flex; align-items: stretch;
+  padding: 0; background: none; box-shadow: none; }
+.kw--uitgelicht::before { content: ""; position: absolute; z-index: -1; top: 2.4rem; right: 1.8rem; bottom: -1.1rem; left: -1.1rem;
+  border-radius: var(--radius-card); background: var(--brand-secondary); transform: rotate(-2.2deg); }
+.kwkaart { container-type: inline-size; flex: 1; display: flex; flex-direction: column; min-width: 0;
+  border-radius: var(--radius-card); background: var(--white); box-shadow: var(--schaduw-lg); }
+.kwkaart__beeld { position: relative; flex: 1 1 auto; min-height: 75cqw; max-height: 88cqw; }
+.kwkaart__laag { position: absolute; right: 0; bottom: 0; left: 0; top: calc(var(--pop, 0%) * -1); }
+.kwkaart__foto { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; background: var(--primary-50);
+  clip-path: inset(var(--knip, 0%) 0 0 0 round var(--radius-card) var(--radius-card) 0 0); }
+.kwkaart__uit { position: absolute; inset: 0; clip-path: inset(-100% 0 0 0); pointer-events: none; }
+.kwkaart__uit img { display: block; width: 100%; height: 100%; object-fit: cover; filter: drop-shadow(0 12px 14px rgba(14, 26, 51, .3)); }
+.kwkaart__tekst { position: relative; z-index: 1; flex: .001 0 auto; padding: 1.2rem 1.5rem 1.4rem;
+  border-top: 4px solid var(--brand-accent); border-radius: 0 0 var(--radius-card) var(--radius-card); background: var(--white); }
+.kwkaart__titelrij { display: flex; align-items: center; gap: .85rem; margin-bottom: .55rem; }
+.b-kernwaarden .kwkaart .kw__titel { margin: 0; color: var(--brand-primary); }
+.b-kernwaarden .kwkaart p { margin: 0; font-size: var(--text-body); line-height: 1.55; color: var(--color-text); }
+
+/* ---- Tablet (768 tot 1200): de kaart over de volle breedte en liggend, foto links en tekst rechts,
+   de rijen twee aan twee eronder. Staand over de volle breedte werd de foto 590 px hoog op 1000; naast
+   elkaar onder 1200 werden de rijen zo hoog dat het kader aan zijn grens van 88% zat en de kaart
+   onderaan 100 px leeg wit hield. */
+@media (max-width: 1199.98px) {
+  .kwlijst { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; row-gap: var(--kw-rijgap); }
+  .kw { grid-column: auto; }
+  .kw--uitgelicht { grid-column: 1 / -1; grid-row: auto; margin-bottom: calc(var(--kw-kolomgap) * .8); }
+  .kw--uitgelicht::before { transform: rotate(-1.2deg); }
+  .kwkaart { flex-direction: row; }
+  /* min-width: 0, anders rekt de aspect-ratio het kader vanuit de hoogte van de tekst breder dan zijn basis.
+     16:10 en niet 4:3: met 4:3 op 52% stond de tekst op 1199 in een vlak dat 315 px hoger was dan zijzelf.
+     De laag blijft hoger dan 3:4 van de breedte (0,625 x 1,372), dus de uitsnede klopt nog. */
+  .kwkaart__beeld { flex: 0 0 46%; min-width: 0; min-height: 0; max-height: none; aspect-ratio: 16 / 10; }
+  .kwkaart__foto { clip-path: inset(var(--knip, 0%) 0 0 0 round var(--radius-card) 0 0 var(--radius-card)); }
+  .kwkaart__tekst { flex: 1 1 0; display: flex; flex-direction: column; justify-content: center; padding: 1.4rem 1.6rem;
+    border-top: 0; border-left: 4px solid var(--brand-accent); border-radius: 0 var(--radius-card) var(--radius-card) 0; }
 }
-
-/* ---- Kop met uitsnede (optie beeld): achtergrond, plaat, figuur ----
-   Zelfde opbouw als de opslagsectie van De Kievit ("Even geen plek? Wij slaan uw inboedel op"):
-   een gekantelde plaat achter de verhuizers, en de verhuizers die over de randen van die plaat
-   heen vallen. Dat verschil tussen achter- en voorgrond is het hele effect; ligt de figuur netjes
-   binnen de plaat, dan is het weer een plaatje in een vak.
-
-   De uitsnede img/dienst-particulier-v2-uit.webp is 1080x810 met een brede doorzichtige rand: de
-   zichtbare verhuizers staan op x 231-849 en y 178-760. Die rand is hier weggerekend, zodat
-   .kwbeeld precies om de figuur sluit en de percentages eronder over de FIGUUR gaan en niet over
-   het bestand. Wissel je de uitsnede, meet de alfa-bbox opnieuw en werk deze vier getallen bij. */
-.b-kernwaarden--beeld {
-  /* Compactheid. Alles wat hoogte kost staat hier bij elkaar; zie ook --kw-gap/--kw-pad boven.
-     De overlap van de plaat blijft bij elk niveau staan: die staat in procenten van .kwbeeld
-     en schaalt dus mee met het beeld. */
-  --kw-band: 1;                                  /* aandeel van --ruimte boven en onder de band */
-  --kw-kolommen: minmax(0, 1fr) minmax(0, .75fr);/* tekstkolom | beeldkolom */
-  --kw-kop-marge: clamp(1.5rem, 1rem + 2vw, 2.75rem);
-  --kw-beeld-max: 20rem;                         /* breedte van het beeld op smal scherm */
-
-  padding-block: calc(var(--ruimte) * var(--kw-band) + var(--dak)) calc(var(--ruimte) * var(--kw-band));
-}
-/* ---- Twee compactheidsniveaus (optie compact) ----
-   Zelfde beeld, zelfde plaat, zelfde overlap: alleen strakker gezet. Ze staan na
-   .b-kernwaarden--beeld, dus bij gelijke specificiteit winnen deze waarden. */
-.b-kernwaarden--gematigd {
-  --kw-band: .72;
-  --kw-kolommen: minmax(0, 1fr) minmax(0, .55fr);
-  --kw-kop-marge: clamp(1rem, .7rem + 1vw, 1.5rem);
-  --kw-beeld-max: 17rem;
-  --kw-gap: clamp(.6rem, .45rem + .55vw, 1rem);
-  --kw-pad: clamp(1.1rem, .9rem + .7vw, 1.5rem);
-  --kw-kop-rij: .7rem;
-}
-.b-kernwaarden--krap {
-  --kw-band: .58;
-  --kw-kolommen: minmax(0, 1fr) minmax(0, .42fr);
-  --kw-kop-marge: clamp(.75rem, .5rem + .7vw, 1.1rem);
-  --kw-beeld-max: 14rem;
-  --kw-gap: clamp(.5rem, .4rem + .4vw, .8rem);
-  --kw-pad: clamp(.95rem, .8rem + .5vw, 1.25rem);
-  --kw-kop-rij: .55rem;
-}
-
-.kwhoofd {
-  display: grid; grid-template-columns: var(--kw-kolommen); align-items: center;
-  gap: clamp(1rem, .5rem + 2vw, 3rem); margin-bottom: var(--kw-kop-marge);
-}
-/* de kop staat hier links, niet in het midden zoals de basis .kopgroep doet */
-.kwhoofd__tekst { max-width: 34rem; margin: 0; text-align: left; }
-.kwhoofd__tekst .label { justify-content: flex-start; }
-.kwhoofd__tekst .intro { margin-inline: 0; }
-
-/* .kwbeeld is de gedeelde uitsnede-plaat uit css/blok/uitsnede.css; hier staan alleen de
-   waarden. De pagina laadt dat bestand via extra_css=("uitsnede",). De plaatstand hieronder is
-   de standaard van dat bestand, dus expliciet houden we alleen wat afwijkt: niets. */
-
-/* smal scherm: kop weer gecentreerd zoals op de rest van de pagina, de figuur eronder en kleiner */
 @media (max-width: 899.98px) {
-  .kwhoofd { grid-template-columns: minmax(0, 1fr); justify-items: center; }
-  .kwhoofd__tekst { margin-inline: auto; text-align: center; }
-  .kwhoofd__tekst .label { justify-content: center; }
-  .kwhoofd__tekst .intro { margin-inline: auto; }
-  .kwbeeld { width: min(100%, var(--kw-beeld-max)); }
+  .kwkop { flex-direction: column; align-items: center; text-align: center; }
+  .kwkop .kopgroep { margin-inline: auto; text-align: center; }
+  .kwkop .kopgroep .label { justify-content: center; }
+  .kwkop .kopgroep .intro { margin-inline: auto; }
+}
+/* ---- Telefoon en smalle tablet: alles in een kolom, de rijen worden een kaart met scheidingslijnen,
+   zonder iconen. Onder 768 is een rij in het 2x2-raster te smal voor de langste waarde (7 regels). ---- */
+@media (max-width: 767.98px) {
+  .b-kernwaarden { --kw-kop-marge: clamp(1.75rem, 1rem + 4vw, 3rem); }   /* de uitstap groeit met de breedte, deze marge ook */
+  .kwkop { align-items: stretch; }
+  .kwkop__actie { justify-content: center; }
+  .kwlijst { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  .kw--uitgelicht { margin-bottom: 1.6rem; }
+  .kw--uitgelicht::before { top: 1.4rem; right: 1rem; bottom: -.6rem; left: -.45rem; transform: rotate(-1.8deg); }
+  .kwkaart { flex-direction: column; }
+  .kwkaart__beeld { flex: none; aspect-ratio: 4 / 3; }
+  .kwkaart__foto { clip-path: inset(var(--knip, 0%) 0 0 0 round var(--radius-card) var(--radius-card) 0 0); }
+  .kwkaart__tekst { display: block; padding: 1rem 1.1rem 1.15rem; border-left: 0; border-top: 4px solid var(--brand-accent);
+    border-radius: 0 0 var(--radius-card) var(--radius-card); }
+  /* de rand van de ene kaart: links en rechts op elke rij, boven op de eerste, onder op de laatste */
+  .kw:not(.kw--uitgelicht) { --kw-lijn: rgba(255, 255, 255, .18); grid-template-columns: minmax(0, 1fr); padding: 1rem 1.1rem; border-radius: 0;
+    box-shadow: inset 1px 0 var(--kw-lijn), inset -1px 0 var(--kw-lijn); }
+  .kw--uitgelicht + .kw { border-radius: var(--radius-card) var(--radius-card) 0 0;
+    box-shadow: inset 1px 0 var(--kw-lijn), inset -1px 0 var(--kw-lijn), inset 0 1px var(--kw-lijn); }
+  .kw:not(.kw--uitgelicht) + .kw { border-top: 1px solid var(--kw-lijn); }
+  .kw:not(.kw--uitgelicht):last-child { border-radius: 0 0 var(--radius-card) var(--radius-card);
+    box-shadow: inset 1px 0 var(--kw-lijn), inset -1px 0 var(--kw-lijn), inset 0 -1px var(--kw-lijn); }
+  .kw:not(.kw--uitgelicht) .kw__icoon { display: none; }
+  .kw:not(.kw--uitgelicht) .kw__titel { margin-top: 0; }
+}
+@media (min-width: 480px) and (max-width: 767.98px) { .kwkaart__beeld { aspect-ratio: 16 / 10; } }
+
+/* hover: op een rij verschijnt een gele rand en het icoon gaat 3px omhoog en kantelt, zoals op de kaarten
+   van "Sterk waar het zwaar is" (css/blok/over-ons.css). De rij is een reveal-element, en de transition
+   van [data-reveal-groep] > * (opacity en transform) zou een overgang op de rij zelf overschrijven. Daarom
+   staat de rand op ::after, een inset box-shadow van vaste dikte die alleen in opacity verandert, en beweegt
+   het icoon met translate en rotate, losse eigenschappen die niet met transform botsen. Er verandert geen
+   maat, dus er verschuift niets.
+   Op de uitgelichte kaart groeien de foto en de uitsnede samen 2% vanaf de onderrand, dus ze blijven pixel
+   voor pixel op elkaar en de hoofden boven de kaart groeien mee. Het kader blijft staan: de clip-paths
+   schuiven even ver terug als het beeld groeit, boven naar 100% - (100% - knip) / 1,02 en opzij naar
+   (1 - 1 / 1,02) / 2 = 0,98%. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .kw:not(.kw--uitgelicht) { position: relative; }
+  .kw:not(.kw--uitgelicht)::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 2px var(--brand-accent);
+    opacity: 0; pointer-events: none; transition: opacity .25s var(--ease); }
+  .kw:not(.kw--uitgelicht):hover::after { opacity: 1; }
+  .kw__icoon { transition: translate .25s var(--ease), rotate .25s var(--ease); }
+  .kw:hover .kw__icoon { translate: 0 -3px; rotate: -4deg; }
+  .kwkaart__foto, .kwkaart__uit { transform-origin: 50% 100%; transition: scale .6s var(--ease), clip-path .6s var(--ease); }
+  .kwkaart:hover :is(.kwkaart__foto, .kwkaart__uit) { scale: 1.02; }
+  .kwkaart:hover .kwkaart__foto { clip-path: inset(calc(100% - (100% - var(--knip, 0%)) / 1.02) .98% 0 .98% round var(--radius-card) var(--radius-card) 0 0); }
+  .kwkaart:hover .kwkaart__uit { clip-path: inset(-100% .98% 0 .98%); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) and (min-width: 768px) and (max-width: 1199.98px) {
+  .kwkaart:hover .kwkaart__foto { clip-path: inset(calc(100% - (100% - var(--knip, 0%)) / 1.02) .98% 0 .98% round var(--radius-card) 0 0 var(--radius-card)); }
 }

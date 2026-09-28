@@ -360,9 +360,10 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 }
 .knop .ic { width: 16px; height: 16px; transition: transform .35s var(--ease); }
 .knop--icoon-voor .ic { order: -1; }
-.knop--cta { background: var(--color-cta); color: var(--color-cta-text); border-color: transparent; border-radius: 12px; box-shadow: 0 3px 9px rgba(11, 35, 82, .12); }
-.knop--cta:hover { background: var(--color-cta-hover); color: var(--color-cta-text); box-shadow: 0 5px 12px rgba(11, 35, 82, .17); }
-.knop--cta:active { background: var(--color-cta-active, var(--color-cta-hover)); box-shadow: 0 1px 3px rgba(11, 35, 82, .12); }
+/* vlak, zoals de rest van de site: geen harde onderrand en geen slagschaduw, alleen de kleur verandert */
+.knop--cta { background: var(--color-cta); color: var(--color-cta-text); border-color: transparent; border-radius: 12px; }
+.knop--cta:hover { background: var(--color-cta-hover); color: var(--color-cta-text); }
+.knop--cta:active { background: var(--color-cta-active, var(--color-cta-hover)); }
 .knop--cta:focus-visible { outline: 3px solid var(--brand-accent); outline-offset: 4px; }
 .knop--blauw { background: var(--color-button); color: var(--white); }
 .knop--blauw:hover { background: var(--color-button-hover); color: var(--white); }

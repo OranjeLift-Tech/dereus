@@ -14,6 +14,8 @@ adres (?van=&naar=&datum=&dienst=), adressuggesties van PDOK, een foutoverzicht 
 bedanktpagina. Zie js/blok/formulier.js.
 """
 
+from kit import SOLAR, SOLAR_VIEWBOX
+
 NAAM = "formulier"
 CSS = True
 JS = True
@@ -31,10 +33,10 @@ MAILNAAM = {"van": "Verhuizen van", "naar": "Verhuizen naar", "datum": "Gewenste
             "naam": "Naam", "telefoon": "Telefoon", "email": "E-mail", "opmerkingen": "Opmerkingen",
             "bericht": "Bericht", "naar-onbekend": "Bestemming nog onbekend", "datum-onbekend": "Datum nog onbekend"}
 
-TELEFOON_SVG = ('<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" '
-                'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 '
-                '2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 '
-                '1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>')
+# De telefoon in de gele cirkel van de zijkolom: het Solar-icoon uit kit (28-09-2026), met eigen maat en
+# hetzelfde ingezoomde tekenvlak als de sprite.
+TELEFOON_SVG = (f'<svg viewBox="{SOLAR_VIEWBOX}" width="24" height="24" overflow="visible" fill="currentColor" aria-hidden="true" focusable="false">'
+                + SOLAR["telefoon"] + '</svg>')
 
 
 def _is_placeholder(sleutel):
@@ -173,12 +175,17 @@ def _zijkolom(ctx, k, beeld=None, merk=False, team=None):
         return ""
     vinkjes = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
     variant = f" b-{NAAM}__zij--team" if team else ""
-    return f'''<aside class="b-{NAAM}__zij{variant}"><div class="b-{NAAM}__zijin">
-      {_bovenaan(ctx, beeld)}
-      <p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
+    tekst = f'''<p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
       <ul class="b-{NAAM}__vinkjes">{vinkjes}</ul>
       <a class="b-{NAAM}__tel" href="{ctx.telhref}">{TELEFOON_SVG}<span>{ctx.esc(ctx.tel)}</span></a>
-      {MERK if merk else ""}
+      {MERK if merk else ""}'''
+    if beeld:
+        # Sinds 28-09-2026 steekt de uitsnede boven de kaart uit (section-library quote-block-form): het
+        # podium draagt het beeld, het paneel de tekst en valt met zijn schuine bovenkant over de benen.
+        tekst = (f'<div class="b-{NAAM}__podium">{_bovenaan(ctx, beeld)}</div>\n'
+                 f'      <div class="b-{NAAM}__paneel">{tekst}</div>')
+    return f'''<aside class="b-{NAAM}__zij{variant}"><div class="b-{NAAM}__zijin">
+      {tekst}
     </div>{_onderaan(ctx, team)}</aside>'''
 
 
@@ -197,7 +204,7 @@ def html(ctx, kopij, **opties) -> str:
               f'<a href="mailto:{ctx.esc(ctx.mail)}">{ctx.esc(ctx.mail)}</a>')
     html = f'''<section class="b-{NAAM} b-{NAAM}--{variant} sectie sectie--{grond}" id="{sid}" aria-labelledby="{sid}-kop" data-b="{NAAM}">
       <div class="wrap">
-        <div class="b-{NAAM}__kaart{"" if zij else " b-" + NAAM + "__kaart--smal"}">
+        <div class="b-{NAAM}__kaart{"" if zij else " b-" + NAAM + "__kaart--smal"}{" b-" + NAAM + "__kaart--beeld" if zij and opties.get("beeld") else ""}">
           {zij}
           <div class="b-{NAAM}__hoofd">
             <h2 class="b-{NAAM}__kop" id="{sid}-kop">{ctx.inline(k.kop)}</h2>

@@ -7,7 +7,23 @@
 .dtegels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: clamp(.75rem, .5rem + .8vw, 1.25rem); row-gap: clamp(2.5rem, 1.6rem + 2.4vw, 3.5rem); margin: 1.5rem 0 0; padding: 0; list-style: none; }
 .dtegel {position: relative; display: flex; flex-direction: column;
   background: var(--white); border-radius: var(--radius-card); box-shadow: var(--schaduw-kaart);
-  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease)}
+  transition: translate .3s var(--ease), box-shadow .3s var(--ease)}
+/* De kaart is ook een kind van [data-reveal-groep]. style.css zet daar transform en transition, en site.js een
+   transition-delay tot 490 ms per kaart, inline. Daarom deed de hover niets: transform: none van de onthulling won
+   van de kaart en de schaduw sprong zonder overgang. Nu tilt de hover met translate, een eigen eigenschap die de
+   onthulling niet raakt, en heeft de kaart een transition met beide. De onthulling houdt de vertraging van site.js
+   (regel 205: 70 ms per plek, hoogstens 560), hier per plek nagebouwd omdat die inline waarde anders ook de hover
+   vertraagt; de hover zelf heeft geen vertraging. */
+.js .dtegels > .dtegel { transition: opacity .55s var(--ease), transform .55s var(--ease), translate .3s var(--ease), box-shadow .3s var(--ease);
+  transition-delay: var(--onthul, 0ms), var(--onthul, 0ms), 0ms, 0ms !important; }
+.dtegels > .dtegel:nth-child(2) { --onthul: 70ms; }
+.dtegels > .dtegel:nth-child(3) { --onthul: 140ms; }
+.dtegels > .dtegel:nth-child(4) { --onthul: 210ms; }
+.dtegels > .dtegel:nth-child(5) { --onthul: 280ms; }
+.dtegels > .dtegel:nth-child(6) { --onthul: 350ms; }
+.dtegels > .dtegel:nth-child(7) { --onthul: 420ms; }
+.dtegels > .dtegel:nth-child(8) { --onthul: 490ms; }
+.dtegels > .dtegel:nth-child(n+9) { --onthul: 560ms; }
 
 /* De verhuizers stappen uit de foto.
  * De foto zit in een laag die --pop boven het kader uitsteekt. Beide lagen vullen die laag op
@@ -22,29 +38,55 @@
 .dtegel__beeld { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius-card) var(--radius-card) 0 0; }
 .dtegel__laag { position: absolute; right: 0; bottom: 0; left: 0; top: calc(var(--pop, 0%) * -1); }
 .dtegel__foto { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; background: var(--primary-50); clip-path: inset(var(--knip, 0%) 0 0 0 round var(--radius-card) var(--radius-card) 0 0); }
-.dtegel__uit { position: absolute; inset: 0; clip-path: inset(-100% 0 0 0); pointer-events: none; }
+.dtegel__uit { position: absolute; z-index: 2; inset: 0; clip-path: inset(-100% 0 0 0); pointer-events: none; }
+/* Diepte zoals de fotoramen van De Bresser (debresser origin/main css/home-diensten-3d.css, .sb-dienst__raam::after):
+   een zachte schaduw net onder de kaderlijn, alsof de verhuizers uit een sleuf in de kaart stappen. Hij ligt tussen
+   de foto en de uitsnede, dus over de foto en onder de mensen. top rekent in procenten van de laag, net als --knip. */
+.dtegel__laag::after { content: ""; position: absolute; z-index: 1; top: var(--knip, 0%); right: 0; left: 0; height: 14px; pointer-events: none;
+  border-radius: var(--radius-card) var(--radius-card) 0 0; background: linear-gradient(rgba(14, 26, 51, .24), rgba(14, 26, 51, 0)); }
 .dtegel__uit img { display: block; width: 100%; height: 100%; object-fit: cover; filter: drop-shadow(0 12px 14px rgba(14, 26, 51, .3)); }
 
-/* Koningsblauw vlak met de hoofdvorm in wit en het goud als accent. Op wit haalde het goud maar 1,51:1
-   en dat leest als een vlek naast een sterke vorm; op blauw is het 5,73:1 en de hoofdvorm 8,63:1.
-   Het icoon staat op 48 px, de maat waarop de set getekend is: de tussenruimtes van 2 eenheden zijn daar
-   2 px en blijven dus zichtbaar. Op 38 px viel dat terug naar 1,58 px en verdwenen de ramen, de meridianen,
-   de laddersporten en de scheiding tussen hamer en schroevendraaier. */
-.dtegel__icoon { position: absolute; right: .8rem; bottom: .8rem; display: grid; place-items: center; width: 4rem; height: 4rem;
-  border-radius: var(--radius-card); background: var(--brand-primary); --icoon-hoofd: var(--white); --icoon-accent: var(--brand-accent); }
-.dtegel__icoon .dicoon { width: 48px; height: 48px; }
-.dtegel__inhoud { display: flex; flex: 1; flex-direction: column; gap: .65rem; padding: 1.3rem; }
+/* Het icoon over de onderrand van de foto, zoals de dienstkaarten van De Bresser (.sb-dienst__ico in
+   css/home-diensten-3d.css) en Solar Green (.sgd1-ico in assets/css/blokken/diensten.css): het staat op de foto en op
+   de kaart, dus het hoort bij allebei. Zonder icoon (een dienst zonder klei-bestand) valt het lege vak weg.
+   Eerder op 28-09-2026 was het tegeltje Koningsblauw met een wit Solar-icoon (versie 2 uit
+   website/review/diensten-iconen-20260928/). Sinds later die dag staat er een klei-icoon van 88 px zonder tegeltje
+   (img/clay/, zie img/LICENTIES.md; de gebruiker: "clay at 88px without the tile? clay"). Op 34 px in het tegeltje las
+   de klei niet. Het icoon staat voor twee derde op de foto en steekt 1,35rem de kaart in, minder dan de 1,55rem
+   bovenruimte van de tekst, dus de titel houdt zijn plek en er verschuift niets. */
+.dtegel__icoon { position: absolute; z-index: 3; right: .8rem; bottom: -1.35rem; display: block; width: 88px; height: 88px;
+  pointer-events: none; transform-origin: 50% 100%; transition: rotate .35s var(--ease), scale .35s var(--ease); }
+.dtegel__icoon:empty { display: none; }
+/* Bij hover groeit het icoon een beetje (de gebruiker: "make the icons get bigger a bit when hovering") en kantelt het
+   wat (bij de tegeltjes: "make a hover effect with a bit of tilt for the icon blocks"), zie de hoverregels verderop.
+   Met de eigen eigenschappen scale en rotate, vanuit de onderkant, zodat het niet dieper de kaart in groeit; ze raken
+   de onthulling van de kaart niet, die op transform loopt. */
+.dtegel__icoon > img { display: block; width: 100%; height: 100%; filter: drop-shadow(0 8px 10px rgba(11, 35, 82, .3)); }
+/* de pijl staat rechtsonder in de kaart (zoals .sb-dienst__pijl en .sgd1-pijl), niet meer op een eigen regel
+   onder de tekst; alleen de tekst houdt er ruimte voor vrij, de titel loopt door tot de rand */
+.dtegel__inhoud { display: flex; flex: 1; flex-direction: column; gap: .5rem; padding: 1.55rem 1.3rem 1.3rem; }
 .dtegel__titel { margin: 0; font-size: var(--text-h4); line-height: 1.15; }
 .dtegel__titel a { color: var(--brand-primary); text-decoration: none; }
 .dtegel__titel a::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-card); z-index: 1; }
-.dtegel__tekst { margin: 0 0 .75rem; font-size: var(--text-small); line-height: 1.5; color: var(--color-text-muted); }
-.dtegel__pijl { display: grid; place-items: center; width: 40px; height: 40px; margin-top: auto; border-radius: 50%; background: var(--primary-50); color: var(--brand-primary); transition: background-color .3s var(--ease), color .3s var(--ease), transform .3s var(--ease); }
-.dtegel__pijl .ic { width: 18px; height: 18px; }
+.dtegel__tekst { margin: 0; padding-right: 2.6rem; font-size: var(--text-small); line-height: 1.5; color: var(--color-text-muted); }
+.dtegel__pijl { position: absolute; right: .9rem; bottom: .9rem; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--primary-50); color: var(--brand-primary); transition: background-color .3s var(--ease), color .3s var(--ease); }
+.dtegel__pijl .ic { width: 18px; height: 18px; transition: translate .3s var(--ease); }
 .dtegel:focus-within { outline: var(--focus-ring); outline-offset: 3px; }
 .dtegel:focus-within a:focus-visible { outline: none; }
+/* Hover zoals op de homes van De Bresser en Solar Green: de kaart komt 4 px los met een diepere schaduw, de pijl
+   vult zich. Daarbij kantelt hier het klei-icoon en schuift het pijltje binnen zijn rondje. Alles is transform
+   of kleur, dus niets in de layout verschuift; de uitsnede beweegt mee met de kaart en staat nooit los van de foto.
+   Een toetsenbordfocus krijgt dezelfde kleuren, zonder de beweging. */
+.dtegel:focus-within .dtegel__pijl { background: var(--brand-primary); color: var(--white); }
 @media (hover: hover) {
-  .dtegel:hover { transform: translateY(-4px); border-color: var(--primary-200); box-shadow: var(--schaduw); }
-  .dtegel:hover .dtegel__pijl { background: var(--brand-primary); color: var(--white); transform: translateX(3px); }
+  .dtegel:hover { box-shadow: 0 1px 2px rgba(14, 26, 51, .08), 0 26px 40px -20px rgba(14, 26, 51, .45); }
+  .dtegel:hover .dtegel__pijl { background: var(--brand-primary); color: var(--white); }
+}
+/* het klei-icoon kantelt 6 graden en groeit van 88 naar 95 px, vanuit de onderkant */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .dtegel:hover { translate: 0 -4px; }
+  .dtegel:hover .dtegel__icoon { rotate: -6deg; scale: 1.08; }
+  .dtegel:hover .dtegel__pijl .ic { translate: 3px 0; }
 }
 
 /* Hulp onderaan: de vraag, daarnaast twee blokken (bellen en WhatsApp). */
@@ -63,10 +105,10 @@
   /* smal scherm: platte tegel, geen uitstap-effect (de 16/9-uitsnede zou het hoofd afsnijden) */
   .dtegels { grid-template-columns: minmax(0, 1fr); column-gap: 1rem; row-gap: 1rem; margin-top: 1rem; }
   .dtegel__beeld { --pop: 0% !important; --knip: 0% !important; aspect-ratio: 16 / 9; }
-  .dtegel__uit { display: none; }
+  .dtegel__uit, .dtegel__laag::after { display: none; }
   .dtegel__inhoud { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .4rem 1rem; }
-  .dtegel__tekst { grid-column: 1; margin: 0; }
-  .dtegel__pijl { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+  .dtegel__tekst { grid-column: 1; margin: 0; padding-right: 0; }
+  .dtegel__pijl { position: static; grid-column: 2; grid-row: 1 / span 2; margin: 0; }
   .dhulp { gap: .6rem; }
   .dhulp__vraag { flex: 1 0 100%; text-align: center; }
   .dhulp__blok { flex: 1 1 auto; justify-content: center; }

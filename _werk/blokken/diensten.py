@@ -47,6 +47,19 @@ UITSTAP = {
     "woningontruiming-v2": ("22.2%", "18.14%"),
 }
 
+# Sinds 28-09-2026 per tegel het klei-icoon van de dienst in plaats van het Solar-icoon op het blauwe tegeltje
+# (img/clay/<id>-144/176/240.webp, vierkant, 88 px; goedgekeurd in website/review/clay-iconen-20260928/).
+# Een dienst zonder klei-bestand houdt een leeg vak, en dat valt weg (.dtegel__icoon:empty).
+KLEI = {"particulier", "zakelijk", "nationaal", "internationaal", "verhuislift", "opslag", "montage", "woningontruiming"}
+
+
+def klei(sleutel):
+    if sleutel not in KLEI:
+        return ""
+    return (f'<img src="/img/clay/{sleutel}-176.webp" srcset="/img/clay/{sleutel}-144.webp 144w, '
+            f'/img/clay/{sleutel}-176.webp 176w, /img/clay/{sleutel}-240.webp 240w" sizes="88px" alt="" '
+            f'width="176" height="176" loading="lazy" decoding="async">')
+
 
 def hulp(ctx, tekst):
     """De regel onder de tegels als twee blokken: bellen en WhatsApp naast de vraag."""
@@ -77,7 +90,7 @@ def html(ctx, kopij, **opties):
                 stijl = f' style="--pop:{pop};--knip:{knip}"'
                 uit = f'<span class="dtegel__uit">{ctx.beeld(f"/img/dienst-{foto}-uit.webp", "", 1080, 810)}</span>'
         tegels.append(f'''<li class="dtegel"{stijl}>
-        <div class="dtegel__beeld"><span class="dtegel__laag">{beeld}{uit}</span><span class="dtegel__icoon">{ctx.dienst_icoon(sleutel, inline=True)}</span></div>
+        <div class="dtegel__beeld"><span class="dtegel__laag">{beeld}{uit}</span><span class="dtegel__icoon">{klei(sleutel)}</span></div>
         <div class="dtegel__inhoud">
         <h3 class="dtegel__titel"><a href="{ctx.esc(link)}">{titel}</a></h3>
         <p class="dtegel__tekst">{ctx.inline(it.veld("tekst"))}</p>

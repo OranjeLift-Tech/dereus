@@ -23,10 +23,33 @@ Verhuizen is zwaar werk. Dat gaat over kasten, bedden en dozen die de trap af mo
 Maar een goede reus is niet alleen sterk. Hij weet ook wat hij vastheeft. In het Nederlands heet dat een zachte reus: groot en sterk, en toch voorzichtig met alles wat hij optilt. Zo willen wij werken.
 
 Notitie: de echte herkomst van de naam, het oprichtingsjaar en de eigenaar zijn onbekend (open vraag 1.2). Voeg ze hier toe als De Reus ze aanlevert. Tot die tijd niets over de geschiedenis verzinnen.
+Notitie: de drie feitenkaarten naast de verhuizers (28-09-2026, patroon about-address-team). Alleen feiten die al op de site staan, letterlijk: de eerste uit home.md #waarom, de andere twee uit contact.md #vertrouwen. Een feit dat De Reus nog bevestigt (oprichtingsjaar, aantal verhuizingen) kan er een vervangen.
+Notitie: sinds de tweede ronde (28-09-2026) vijf kaarten, want ze lopen nu naast beeld en tekst samen ("icons to the right side, but long enough or add more"). De vierde komt letterlijk uit diensten-particulier.md #waarom, de vijfde uit contact.md #vertrouwen.
+
+### Vakmensen, geen studenten {#vakmensen}
+icoon: persoon
+tekst: Onze verhuizers hebben jaren ervaring.
+
+### Standaard verzekerd {#verzekerd}
+icoon: schild
+tekst: Uw inboedel, tijdens de verhuizing.
+
+### Eén vaste verhuisadviseur {#verhuisadviseur}
+icoon: telefoon
+tekst: Van aanvraag tot verhuisdag.
+
+### Geen voorrijkosten {#voorrijkosten}
+icoon: euro
+tekst: U betaalt voor de verhuizing, niet voor de rit.
+
+### 7 dagen per week bereikbaar {#bereikbaar}
+icoon: klok
+tekst: Ook voor een spoedklus.
 
 ## Zo werken wij {#zo-werken-wij}
 label: Wat u van ons mag verwachten
 intro: Wij zeggen liever wat wij doen dan dat wij de beste zijn.
+knop: Offerte aanvragen
 
 ### Wij doen het zware werk {#sterk}
 Tillen, sjouwen, een kast de trap af: dat laat u aan ons over. U bepaalt zelf hoeveel u aan ons overlaat, van alleen het zware werk tot inpakken en uitpakken.
@@ -62,8 +85,8 @@ tekst: Goede en duidelijke communicatie, hele fijne samenwerking. Gaat zorgvuldi
 ## Vanuit Den Haag {#den-haag}
 label: Waar wij zitten
 knop: Route plannen
-
-Ons hoofdkantoor staat aan de Lau Mazirellaan 336 in Den Haag. Van daaruit verhuizen wij binnen de stad, door heel Nederland en van en naar het buitenland, over de weg.
+intro: Ons hoofdkantoor staat aan de Lau Mazirellaan 336 in Den Haag. Van daaruit verhuizen wij binnen de stad, door heel Nederland en van en naar het buitenland, over de weg.
+Notitie: sinds 28-09-2026 heeft dit blok de vorm van het werkgebied op de home (keuze A voor "Map and service area"): de eerste alinea is de intro onder de kop, de drie regels (Den Haag, Nederland, buitenland) komen uit home.md #werkgebied. De alinea hieronder staat daarom niet meer op de pagina (optie alineas in _werk/paginas/over_ons.py); met alineas True komt hij onder de regels, maar dan wordt de kaart 913 px hoog en valt "Transvaalkwartier" uit de uitsnede.
 
 Wij verhuizen particulieren en kleine bedrijven. Ook helpen wij met een verhuislift, tijdelijke opslag, montage van meubels en woningontruiming. Welke dienst u ook kiest, u heeft één aanspreekpunt.
 
@@ -72,7 +95,7 @@ Notitie: wijken en plaatsen in de regio pas noemen als De Reus ze bevestigt (ope
 ## Kennismaken? {#contact}
 label: Contact
 knop: Offerte aanvragen
-belregel: Liever eerst even bellen? 085 000 5647.
+belregel: Liever eerst even bellen? 085 000 5647
 
 Wilt u weten wat wij voor uw verhuizing kunnen doen? Vraag een offerte aan, dan belt uw verhuisadviseur u binnen 24 uur. U kunt ons ook bellen of mailen: wij zijn 7 dagen per week bereikbaar.
 

@@ -11,9 +11,10 @@ JS = False
 
 _FACTOR = re.compile(r"^\*\*(.+?)\*\*\s*(.*)$")
 
-# Optie voorwerpen (/kosten/): per factor een 3D-voorwerp op een gele schijf, bestand in img/kosten-3d/ met breedte bij
-# 420 px hoogte. Renders uit _ai-beelden/kosten-3d (three.js, het echte logo); vormgeving in css/blok/opbouw-3d.css.
-VOORWERPEN = [("dozen", 437), ("wagen", 594), ("trap", 371), ("gereedschap", 477), ("opslag", 589)]
+# Optie voorwerpen (/kosten/): per factor een voorwerp op een gele schijf. Sinds 28-09-2026 de klei-iconen
+# (img/clay/<naam>-240/480.webp, vierkant; website/review/clay-iconen-20260928/) in plaats van de 3D-renders uit
+# img/kosten-3d/. Het vak is 11.6 rem hoog met object-fit contain; vormgeving in css/blok/opbouw-3d.css.
+VOORWERPEN = ["dozen", "nationaal", "trap", "montage", "opslag"]
 
 
 def _factor(ctx, regel, nr, voorwerp=None):
@@ -21,8 +22,10 @@ def _factor(ctx, regel, nr, voorwerp=None):
     kop, uitleg = (m.group(1).rstrip("."), m.group(2)) if m else (regel, "")
     podium = ""
     if voorwerp:
-        podium = (f'<span class="b-{NAAM}__podium" aria-hidden="true"><img class="b-{NAAM}__obj" src="/img/kosten-3d/{voorwerp[0]}.webp" alt="" '
-                  f'width="{voorwerp[1]}" height="420" loading="lazy" decoding="async"></span>')
+        podium = (f'<span class="b-{NAAM}__podium" aria-hidden="true"><img class="b-{NAAM}__obj" src="/img/clay/{voorwerp}-240.webp" '
+                  f'srcset="/img/clay/{voorwerp}-240.webp 240w, /img/clay/{voorwerp}-480.webp 480w" '
+                  f'sizes="(max-width:479px) 6.8rem, (max-width:799px) 9.8rem, 11.6rem" alt="" '   # de hoogte van het vak in opbouw-3d.css
+                  f'width="240" height="240" loading="lazy" decoding="async"></span>')
     return (f'<li class="b-{NAAM}__factor">{podium}<span class="b-{NAAM}__nr" aria-hidden="true">{nr:02d}</span>'
             f'<h3 class="b-{NAAM}__factorkop">{ctx.inline(kop)}</h3><p>{ctx.inline(uitleg)}</p></li>')
 
