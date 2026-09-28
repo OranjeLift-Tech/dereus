@@ -1,11 +1,11 @@
-"""Een afvinklijst op één grote Koningsblauwe plaat, met een foto in de huisvorm ernaast. Voor #voorbereiding.
+"""Een afvinklijst op één grote Koningsblauwe plaat, met een foto ernaast waar de verhuizer uit stapt. Voor #voorbereiding.
 
 Pagina: /werkwijze/. Ronde 6, versie 3 (website/review/werkwijze-ronde-6/notitie-3.md).
 De plaat is hetzelfde middel als de belkaart op /contact/: Koningsblauw dat naar Diepblauw zakt, een
 zichtbare dikte onder de onderrand, een goudgeel tabje op de bovenrand en het huisje uit het logo in de
-hoek. Het 3D-klembord hangt over de bovenrand. De foto in de lijst is in de huisvorm uit het logo geknipt
-met een goudgeel huis er net iets omheen, hetzelfde diepte-idee als de panelen op /diensten/, maar met
-één laag: er stapt hier geen uitsnede uit het huis. Alles staat stil.
+hoek. Het 3D-klembord hangt over de bovenrand. Sinds 28-09-2026 zit de foto verzonken in een dikke
+Diepblauwe plaat en leunt de verhuizer eruit naar voren: zijn hoofd en zijn hand aan de kast komen boven
+de rand uit (ontwerp 09 "Diepe plaat" uit _ontwerpen/lijstplaat-uit-de-foto.html). Alles staat stil.
 
 Alle klassen staan onder b-lijstplaat, zodat dit blok geen naam deelt met een ander blok op dezelfde pagina.
 
@@ -102,6 +102,15 @@ VOORWERP = ("/img/contact-3d/formulier.webp", 346, 400)
 # node _werk/export-lijstplaat-kast.cjs
 FOTO = ("/img/voorbereiding-kast.webp", 1200, 1030)
 
+# RONDE 5 (28-09-2026): "de man op de foto moet realistischer, alsof hij eruit komt". De gebruiker koos
+# ontwerp 09 "Diepe plaat" uit _ontwerpen/lijstplaat-uit-de-foto.html (vijftien ontwerpen, 00 = hoe het
+# was). De verhuizer is met achtergrondverwijdering uit FOTO geknipt. Het bestand heeft PRECIES hetzelfde
+# formaat als FOTO en de verhuizer staat op dezelfde pixels, zodat de twee beelden op elkaar vallen:
+# binnen het kader zie je de foto, erbuiten alleen de verhuizer. Vervang je FOTO, maak dan ook deze
+# uitsnede opnieuw op hetzelfde formaat, anders schuift hij los van zijn eigen foto.
+# Bij de vingers van de opgeheven hand is de donkere rand van de kast met de hand weggehaald.
+UITSNEDE = "/img/voorbereiding-kast-man.webp"
+
 _VET = re.compile(r"^\*\*(.+?)\*\*\s*(.*)$")
 
 
@@ -125,12 +134,17 @@ def html(ctx, kopij, **opties) -> str:
     if k.veld("link"):
         link = (f'<p class="b-{NAAM}__acties">'
                 f'{ctx.knop(k.veld("linktekst"), k.veld("link"), soort="link", klasse=f"b-{NAAM}__link")}</p>')
-    # alt blijft leeg: de lijst ernaast zegt alles wat de foto laat zien, en het goudgele huis eromheen is sier
+    # alt blijft leeg: de lijst ernaast zegt alles wat de foto laat zien, en de verhuizer is dezelfde foto.
+    # De volgorde in het podium is de stapelvolgorde: de verhuizer met zijn slagschaduw onder de foto, de
+    # foto op het kader geknipt, het glas (de schaduw van de verdieping) op de foto, en de verhuizer nog
+    # een keer schoon bovenop, zodat hij voor de verdieping staat en niet erin.
     beeld = ""
     if opties.get("foto", True):
+        uit = ctx.beeld(UITSNEDE, "", FOTO[1], FOTO[2], klasse=f"b-{NAAM}__uit")
         foto = ctx.beeld(FOTO[0], "", FOTO[1], FOTO[2], klasse=f"b-{NAAM}__foto")
-        beeld = (f'<span class="b-{NAAM}__beeld" aria-hidden="true">'
-                 f'<span class="b-{NAAM}__huis">{foto}</span></span>')
+        voor = ctx.beeld(UITSNEDE, "", FOTO[1], FOTO[2], klasse=f"b-{NAAM}__voor")
+        beeld = (f'<span class="b-{NAAM}__beeld" aria-hidden="true"><span class="b-{NAAM}__kader"></span>'
+                 f'<span class="b-{NAAM}__podium">{uit}{foto}<span class="b-{NAAM}__glas"></span>{voor}</span></span>')
     voorwerp = ""
     if opties.get("voorwerp", True):
         voorwerp = ctx.beeld(VOORWERP[0], "", VOORWERP[1], VOORWERP[2], klasse=f"b-{NAAM}__klembord")

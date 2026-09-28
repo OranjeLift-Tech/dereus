@@ -1,5 +1,12 @@
-"""De vijf stappen als compacte tijdlijn: vijf stations op een goudgele lijn, elk met een 3D-render die
-op het huis uit het logo staat en boven de kaartrand uitkomt.
+"""De vijf stappen als trap naar de voordeur: vijf treden die van links naar rechts oplopen, elk met een
+witte plaat en een 3D-render die boven de plaat uitkomt; het cijfer staat op het blauwe stootbord.
+De zesde, gele trede is het slot: de echte voordeur in het huis uit het logo, de belofte en de knop,
+met het team met de verhuisdozen erbovenop. De kop staat linksboven naast de trap.
+
+Gekozen op 28-09-2026: ontwerp 03 uit _ontwerpen/werkwijze-stappen-varianten-2.html (de trap uit ronde 1
+met de opzet van de werkwijzekop van referentie A: kop links, figuur rechts). Wat hieronder staat over
+de stations en de lijn is de geschiedenis van de vorige vorm; de uitklap, het knippen en de renders
+per stap zijn gebleven.
 
 Pagina: /werkwijze/. Kopij: ## ... {#stappen} met label, intro, u-label en wij-label, en per stap een
 ###-item (stap-1 tot stap-5) met tekst, u en wij. Het slot onderaan komt uit einde-titel, einde-tekst,
@@ -42,8 +49,10 @@ VOORWERPEN = [
     ("kosten-3d", "wagen", 594, 420),
 ]
 
-# Het slot: het huis met de dozen ervoor, in plaats van de foto van een voordeur
-SLOTBEELD = ("kosten-3d", "huis", 425, 420)
+# Het slot: de echte voordeur (dezelfde foto als het eind van de weg op de home) in het huis uit het logo,
+# en het team met de verhuisdozen dat bovenop de gele trede staat.
+SLOTBEELD = ("/img/nieuw-huis.webp", 400, 450)
+TEAM = ("/img/team/team-hero-dozen-700.webp", 700, 761)
 
 _ZIN = re.compile(r"(.+?[.?!])(\s|$)")
 
@@ -106,15 +115,15 @@ def _stap(ctx, k, it, nr):
                f'<div class="b-{NAAM}__paneel">{duo}{link}</div></details>')
         link = ""
     map_, naam, breedte, hoogte = VOORWERPEN[(nr - 1) % len(VOORWERPEN)]
-    return f'''<li class="b-{NAAM}__stap" id="{ctx.esc(it.id)}">
-            {_render(ctx, map_, naam, breedte, hoogte)}
+    return f'''<li class="b-{NAAM}__stap" id="{ctx.esc(it.id)}" style="--i:{nr - 1}">
             <div class="b-{NAAM}__plaat">
-              <p class="b-{NAAM}__nr" aria-hidden="true">{nr:02d}</p>
+              {_render(ctx, map_, naam, breedte, hoogte)}
               <h3 class="b-{NAAM}__titel"><span class="vh">{ctx.esc(k.veld("stap-woord", "Stap"))} {nr}: </span>{ctx.inline(it.titel)}</h3>
               <p class="b-{NAAM}__regel">{ctx.inline(_kort(it, "tekst"))}</p>
               {duo}
               {link}
             </div>
+            <div class="b-{NAAM}__stoot" aria-hidden="true"><span class="b-{NAAM}__nr">{nr:02d}</span></div>
           </li>'''
 
 
@@ -125,12 +134,18 @@ def _slot(ctx, k):
         return ""
     tekst = k.veld("einde-tekst")
     knop = ctx.knop(k.veld("einde-linktekst"), k.veld("einde-link"), klasse=f"b-{NAAM}__cta") if k.veld("einde-link") else ""
-    map_, naam, breedte, hoogte = SLOTBEELD
-    beeld = ctx.beeld(f"/img/{map_}/{naam}.webp", "", breedte, hoogte, klasse=f"b-{NAAM}__obj b-{NAAM}__obj--{naam}")
-    return f'''<div class="b-{NAAM}__slot" data-reveal>
-          <span class="b-{NAAM}__ic b-{NAAM}__ic--slot" aria-hidden="true">{beeld}</span>
-          <div class="b-{NAAM}__slottekst"><b>{ctx.inline(titel)}</b>{f"<p>{ctx.inline(tekst)}</p>" if tekst else ""}</div>
-          {knop}
+    src, breedte, hoogte = SLOTBEELD
+    deur = ctx.beeld(src, "", breedte, hoogte)
+    tsrc, tbreedte, thoogte = TEAM
+    team = ctx.beeld(tsrc, "", tbreedte, thoogte, klasse=f"b-{NAAM}__team")
+    return f'''<div class="b-{NAAM}__slot" style="--i:5">
+          {team}
+          <div class="b-{NAAM}__plaat">
+            <span class="b-{NAAM}__deur" aria-hidden="true">{deur}</span>
+            <div class="b-{NAAM}__slottekst"><b>{ctx.inline(titel)}</b>{f"<p>{ctx.inline(tekst)}</p>" if tekst else ""}</div>
+            {knop}
+          </div>
+          <div class="b-{NAAM}__stoot" aria-hidden="true"></div>
         </div>'''
 
 
@@ -138,10 +153,15 @@ def html(ctx, kopij, **opties) -> str:
     k = kopij
     grond = "mist" if opties.get("grond", "mist") == "mist" else "wit"
     stappen = "".join(_stap(ctx, k, it, i) for i, it in enumerate(k.items, 1))
+    # data-reveal-groep staat op de trap en niet op de lijst: de lijst heeft display:contents en dus geen
+    # eigen vak, waardoor de IntersectionObserver in site.js hem nooit in beeld zag komen en de vijf treden
+    # onzichtbaar bleven (28-09-2026). De treden zelf verschijnen nu zonder onthulling.
     return f'''<section class="b-{NAAM} sectie sectie--{grond}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
       <div class="wrap">
-        {ctx.kopgroep(k, "kopgroep--midden")}
-        <ol class="b-{NAAM}__lijst" role="list" data-reveal-groep>{stappen}</ol>
-        {_slot(ctx, k)}
+        <div class="b-{NAAM}__trap" data-reveal-groep>
+          {ctx.kopgroep(k, f"b-{NAAM}__kop")}
+          <ol class="b-{NAAM}__lijst" role="list">{stappen}</ol>
+          {_slot(ctx, k)}
+        </div>
       </div>
     </section>'''

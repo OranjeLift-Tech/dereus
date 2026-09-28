@@ -242,11 +242,15 @@ async function draai({ browser, basis, snel = false } = {}) {
             assert.equal(await page.locator('#voorbereiding .b-checklist__kaart').count(), 0,
               `${width}: de oude checklistkaart staat nog in de voorbereiding`);
             assert.equal(await page.locator('.b-lijstplaat__lijst > li').count(), 6, `${width}: de zes punten van het lijstje`);
-            /* De foto hoort er ook echt te zijn: een pad dat verschuift laat een leeg geel huis achter,
-               en dat valt op een blauwe plaat niet op. */
-            await beeldenKlaar('.b-lijstplaat__foto');
-            assert.ok(await page.locator('.b-lijstplaat__foto').evaluate(el => el.complete && el.naturalWidth > 0),
-              `${width}: de foto in de huisvorm is geladen`);
+            /* De foto hoort er ook echt te zijn, en sinds 28-09-2026 ook de uitsnede van de verhuizer die
+               eruit leunt: een pad dat verschuift laat een lege plaat of een verhuizer zonder hoofd achter,
+               en dat valt op een blauwe plaat niet op. Foto en uitsnede moeten even groot zijn, anders
+               liggen ze niet op elkaar (zie UITSNEDE in lijstplaat.py). */
+            await beeldenKlaar('.b-lijstplaat__podium img');
+            assert.deepEqual(await page.locator('.b-lijstplaat__podium img').evaluateAll(els => els.map(el =>
+              el.complete && el.naturalWidth > 0 ? `${el.className} ${el.naturalWidth}x${el.naturalHeight}` : `${el.className} niet geladen`)),
+              ['b-lijstplaat__uit 1200x1030', 'b-lijstplaat__foto 1200x1030', 'b-lijstplaat__voor 1200x1030'],
+              `${width}: foto en uitsnede van de verhuizer zijn geladen en even groot`);
             /* Zelfde val als bij de tijdlijn: het klembord steekt boven de plaatrand uit en mag de lijstkop
                en de eerste regel niet afdekken. Het staat rechtsboven, de lijstkop links, en die twee
                kwamen op smal scherm tegen elkaar aan. */
@@ -291,42 +295,35 @@ async function draai({ browser, basis, snel = false } = {}) {
               }
               return fout;
             }), [], `${width}: gereedschap op de naad vrij van de kop`);
-            /* Na de verhuizing (blok namozaiek, versie 3 uit ronde 7, 23-09-2026) verving het blok naplaten,
-               dat zelf de laatste checklistkaart verving. Blijft er ergens een halve checklist staan, dan
-               staan er twee vormen van hetzelfde lijstje onder elkaar zonder dat er iets stuk lijkt. */
+            /* Na de verhuizing (blok naband, nummer 03 "Gele schuine band", 28-09-2026) verving het mozaiek
+               (namozaiek), dat zelf naplaten en de laatste checklistkaart verving. Blijft er ergens een halve
+               checklist staan, dan staan er twee vormen van hetzelfde lijstje onder elkaar zonder dat er iets
+               stuk lijkt. */
             await page.locator('#na-de-verhuizing').scrollIntoViewIfNeeded();
             assert.equal(await page.locator('.b-checklist').count(), 0, `${width}: er staat nog een checklist op de werkwijze`);
-            assert.equal(await page.locator('.b-namozaiek__punten > li').count(), 2, `${width}: de twee tegels met een punt`);
-            /* De foto en de twee voorwerpen moeten er ook echt zijn: een pad dat verschuift laat een lege
-               lichtblauwe tegel achter, en die leest als een bedoeld vlak. */
-            await beeldenKlaar('.b-namozaiek__foto, .b-namozaiek__ding');
-            assert.deepEqual(await page.locator('.b-namozaiek__foto, .b-namozaiek__ding').evaluateAll(items =>
-              items.filter(el => !(el.complete && el.naturalWidth > 0)).map(el => el.getAttribute('src'))),
-              [], `${width}: foto en voorwerpen in het mozaiek zijn geladen`);
-            assert.equal(await page.locator('.b-namozaiek__foto').count(), 1, `${width}: de foto in de hoge tegel`);
-            /* De telefoon en de ster staan rechts in hun tegel en mogen de titel niet afdekken; de tegel
-               houdt er rechts ruimte voor vrij. Ook hier op de tekst gemeten. */
-            assert.deepEqual(await page.locator('.b-namozaiek__punten > li').evaluateAll(items => items.flatMap(el => {
-              const titelEl = el.querySelector('.b-namozaiek__titel');
-              const naam = titelEl.textContent.trim();
-              const obj = el.querySelector('.b-namozaiek__ding').getBoundingClientRect();
-              const fout = [];
-              for (const tekst of [titelEl, el.querySelector('p')]) {
-                const bereik = document.createRange();
-                bereik.selectNodeContents(tekst);
-                if ([...bereik.getClientRects()].some(t => obj.right > t.left && obj.left < t.right
-                  && obj.top < t.bottom && obj.bottom > t.top)) fout.push(`${naam}: voorwerp ligt over de ${tekst.tagName.toLowerCase()}`);
-              }
-              return fout;
-            })), [], `${width}: voorwerpen in het mozaiek vrij van de tekst`);
-            const tegels = await page.locator('.b-namozaiek__punten > li').evaluateAll(items =>
-              items.map(el => Math.round(el.getBoundingClientRect().top)));
-            if (width >= 660) {
-              assert.ok(Math.abs(tegels[0] - tegels[1]) <= 2,
-                `${width}: de twee tegels horen naast elkaar (tops ${tegels.join(', ')})`);
+            assert.equal(await page.locator('.b-namozaiek').count(), 0, `${width}: het oude mozaiek staat er nog`);
+            assert.equal(await page.locator('.b-naband__punten > li').count(), 2, `${width}: de twee punten in de kaart`);
+            /* De ploeg moet er ook echt staan: een pad dat verschuift laat een lege gele band achter, en die
+               leest als een bedoeld vlak. */
+            await beeldenKlaar('.b-naband__ploeg');
+            assert.ok(await page.locator('.b-naband__ploeg').evaluate(el => el.complete && el.naturalWidth > 0),
+              `${width}: de ploeg op de band is geladen`);
+            /* De telefoon en de ster staan als echt voorwerp op een gele schijf (28-09-2026). Laadt er een niet,
+               dan staat er een lege gele schijf, en die leest als een knop. */
+            assert.equal(await page.locator('.b-naband__obj').count(), 2, `${width}: twee voorwerpen in de punten`);
+            await beeldenKlaar('.b-naband__obj');
+            assert.ok((await page.locator('.b-naband__obj').evaluateAll(els => els.every(el => el.complete && el.naturalWidth > 0))),
+              `${width}: de voorwerpen in de punten zijn geladen`);
+            /* Breed staat de ploeg naast de kaart, smal eronder; nooit over de kaart heen. */
+            const naband = await page.evaluate(() => {
+              const k = document.querySelector('.b-naband__kaart').getBoundingClientRect();
+              const p = document.querySelector('.b-naband__ploeg').getBoundingClientRect();
+              return { naast: p.left >= k.right - 1, onder: p.top >= k.bottom - 1 };
+            });
+            if (width >= 960) {
+              assert.ok(naband.naast, `${width}: de ploeg hoort rechts naast de kaart`);
             } else {
-              assert.ok(tegels[1] > tegels[0],
-                `${width}: de tegels horen onder elkaar (tops ${tegels.join(', ')})`);
+              assert.ok(naband.onder, `${width}: de ploeg hoort onder de kaart`);
             }
           }
           const heading = route === '/' ? '.hero__tekst' : '.pk__tekst';

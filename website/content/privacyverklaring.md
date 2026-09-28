@@ -4,7 +4,7 @@ beschrijving: Hoe Verhuisbedrijf De Reus omgaat met de gegevens die u via de off
 ---
 <!--
 Kopij /privacyverklaring/, dereus-4e. Ontwerp in gewone taal; laat De Reus (en zo nodig een jurist) de tekst goedkeuren voor livegang.
-Secties en ids volgens dereus-e7 (structuur De Kievit): verantwoordelijke, gegevens, doelen, delen, bewaren, rechten, beveiliging, cookies, wijzigingen.
+Secties en ids volgens dereus-e7 (structuur referentie A): verantwoordelijke, gegevens, doelen, delen, bewaren, rechten, beveiliging, cookies, wijzigingen.
 Technische feiten van dereus-e7: Web3Forms voor de formulieren, PDOK voor adressen, hosting bij Vercel, lettertypen en kaart zelf gehost, geen analytics en geen tracking.
 -->
 

@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.className+=' js'</script>
+<title>Vragen over contact · ronde 2 · referentie A + referentie B</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="/css/min/site.min.css?v=1f29f8b059">
+<link rel="stylesheet" href="/css/min/vragen.min.css?v=f57966c993">
+<style>
+/* ===== pagina ===== */
+:root{
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px color-mix(in srgb,var(--ink) 6%,transparent),0 6px 0 var(--primary-200),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 24px -16px color-mix(in srgb,var(--ink) 26%,transparent),0 40px 60px -42px color-mix(in srgb,var(--brand-secondary) 50%,transparent);
+  --obj-schaduw:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 30%,transparent)) drop-shadow(8px 15px 11px color-mix(in srgb,var(--brand-secondary) 34%,transparent));
+  --rand-diep:#071838;
+}
+html{scroll-padding-top:4.5rem}
+.vnav{position:sticky;top:0;z-index:60;background:var(--brand-secondary);color:#fff;font-size:.875rem}
+.vnav .wrap{display:flex;align-items:center;gap:1rem;min-height:3.4rem;flex-wrap:wrap}
+.vnav b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.1rem;letter-spacing:.01em}
+.vnav__links{display:flex;flex-wrap:wrap;gap:.3rem;margin-left:auto}
+.vnav a{display:grid;place-items:center;min-width:2.3rem;height:2rem;padding:0 .4rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-weight:700;text-decoration:none}
+.vnav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.vkap{background:#fff;border-top:3px solid var(--brand-secondary);padding:1.1rem 0;position:relative;z-index:3}
+.vkap .wrap{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start}
+.vkap .wrap>div{flex:1 1 18rem;min-width:0}
+.vkap small,.vkap p{overflow-wrap:anywhere}
+.vkap__nr{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.35rem/1 var(--font-display);font-stretch:75%;box-shadow:2px 2px 0 var(--accent-700)}
+.vkap b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.35rem;color:var(--brand-primary)}
+.vkap small{display:block;margin:.1rem 0 .15rem;color:var(--grey-600);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.vkap p{margin:.2rem 0 0;max-width:92ch;color:var(--graphite);font-size:.9375rem}
+.vkap--eind{padding:2rem 0}
+.vkap__maat{flex:none;margin-left:auto;align-self:center;padding:.35rem .7rem;border-radius:999px;background:var(--success-50);color:var(--success);font-size:.8rem;font-weight:700;white-space:nowrap}
+.vkap__maat.is-hoog{background:var(--accent-100);color:#8A5A00}
+.vctx{background:var(--brand-secondary);color:rgba(255,255,255,.5);font:600 .72rem/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;padding:.85rem 0 .8rem}
+
+/* ===== gedeeld ===== */
+.v.sectie{position:relative;padding-block:2.75rem 3rem;overflow-x:clip}
+.v .kopgroep{max-width:none;margin:0 0 1rem;text-align:left}
+.v .kopgroep .label{justify-content:flex-start;margin-bottom:.55rem}
+.v .kopgroep h2{max-width:none;font-size:clamp(2rem,1.6rem + 1.2vw,2.6rem);line-height:1.05;text-wrap:balance}
+.v .accent{background:linear-gradient(var(--brand-accent),var(--brand-accent)) 0 96%/100% .19em no-repeat}
+.v h3{letter-spacing:-.01em}
+
+.q summary{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1rem;list-style:none;cursor:pointer;color:var(--ink)}
+.q summary::-webkit-details-marker{display:none}
+.q summary:focus-visible{outline:3px solid var(--brand-primary);outline-offset:2px;border-radius:10px}
+.q__nr{font:800 1.05rem/1 var(--font-display);font-stretch:75%;font-variant-numeric:tabular-nums;color:var(--brand-primary);min-width:1.5rem}
+.q__tekst{font:700 1.0625rem/1.3 var(--font-sans);letter-spacing:-.01em;text-wrap:balance}
+.q summary:hover .q__tekst{color:var(--brand-primary)}
+.q__plus{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:50%;background:var(--primary-100);color:var(--brand-primary)}
+.q__plus .ic{width:15px;height:15px;stroke-width:2.4}
+.q[open] .q__plus{rotate:45deg;background:var(--brand-accent);color:var(--brand-secondary)}
+.q__antwoord{color:var(--graphite);font-size:.975rem;line-height:1.6}
+.q__antwoord p,.v dd p,.y05__tl p,.y08__usps p,.y13__tekst p,.y02__tekst p{margin:0}
+.v :is(.q__antwoord,dd,.y05__tl,.y08__usps,.y13__tekst,.y02__tekst,blockquote) a:not(.wa-link):not(.knop){color:var(--brand-primary);font-weight:700;text-decoration-color:var(--brand-accent);text-decoration-thickness:2px;text-underline-offset:3px;white-space:nowrap}
+.v :is(.q__antwoord,dd,.y05__tl,.y08__usps,.y13__tekst,.y02__tekst) .wa-link{min-height:30px;padding:.2rem .75rem;margin-inline-start:.45rem;font-size:.8rem;vertical-align:baseline}
+.v :is(.q__antwoord,dd,.y05__tl,.y08__usps,.y13__tekst,.y02__tekst) .wa-link .ic{width:15px;height:15px}
+
+/* bellen */
+.q-zin{margin:0;font-weight:700;color:var(--ink);font-size:1.05rem}
+.q-knoppen{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem}
+.q-bel{display:inline-flex;align-items:center;gap:.55rem;min-height:48px;padding:.55rem 1.3rem;border-radius:999px;background:var(--brand-accent);color:var(--brand-secondary);font:700 1rem/1.2 var(--font-sans);text-decoration:none;white-space:nowrap;box-shadow:0 4px 0 var(--accent-700),0 12px 18px -10px rgba(11,35,82,.45)}
+.q-bel:hover{background:var(--accent-200);color:var(--brand-secondary)}
+.q-bel .ic{width:18px;height:18px}
+.q-knoppen .wa-link{margin:0;min-height:48px;padding:.55rem 1.2rem;font-size:1rem;box-shadow:0 4px 0 #14552B,0 12px 18px -10px rgba(11,35,82,.45)}
+.q-knoppen .wa-link .ic{width:20px;height:20px}
+.q-status{font-size:.875rem}
+.q-status--pil{padding:.3rem .85rem .3rem .6rem;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--primary-200);color:var(--ink);font-weight:700}
+.q-status--donker{padding:.3rem .85rem .3rem .6rem;border-radius:999px;background:rgba(255,255,255,.12);color:#fff;font-weight:700}
+.q-status--donker .bereikbaar__stip{background:#4ADE80;box-shadow:0 0 0 3px rgba(74,222,128,.25)}
+
+/* ===== 01 referentie A .zeker ===== */
+.y01__kaart{position:relative;overflow:hidden;background:var(--brand-secondary);color:#fff;border-radius:18px;padding:clamp(1.6rem,3vw,2.5rem) clamp(1.6rem,3.4vw,2.8rem);box-shadow:0 8px 0 var(--rand-diep),0 40px 70px -36px rgba(11,35,82,.75)}
+.y01__kaart::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,var(--brand-primary) 0 30%,var(--brand-accent) 30% 72%,var(--primary-300) 72%)}
+.y01__kop{display:flex;flex-wrap:wrap;gap:clamp(1.2rem,2.5vw,2.2rem);align-items:center}
+.y01__logo{flex:none;display:block;width:clamp(110px,9vw,138px)}
+.y01__logo img{display:block;width:100%;height:auto}
+.y01__intro{flex:1 1 26ch;min-width:0;padding-left:clamp(1.2rem,2.5vw,2.2rem);border-left:1px solid rgba(255,255,255,.15)}
+.y01 .kopgroep{margin:0 0 .8rem}
+.y01 .kopgroep .label{color:var(--primary-300)}
+.y01 .kopgroep h2{color:#fff}
+.y01__merk{flex:none;align-self:center;margin-left:auto;width:auto;height:clamp(104px,9.5vw,132px);filter:drop-shadow(0 14px 16px rgba(0,0,0,.35))}
+.y01__lijst{list-style:none;margin:clamp(1.3rem,2.4vw,1.9rem) 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(1.4rem,3vw,2.6rem);align-items:start}
+.y01__lijst li{border-top:1px solid rgba(255,255,255,.15)}
+.y01 .q summary{grid-template-columns:1.9rem minmax(0,1fr) auto;gap:.85rem;padding:.95rem 0 .9rem;color:#fff}
+.y01 .q summary:hover .q__tekst{color:var(--brand-accent)}
+.y01__ok{display:grid;place-items:center;width:1.9rem;height:1.9rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 .85rem/1 var(--font-display);font-stretch:75%;box-shadow:0 3px 0 var(--accent-700)}
+.y01 .q__tekst{font-size:1rem}
+.y01 .q__plus{width:28px;height:28px;background:rgba(255,255,255,.1);color:#fff}
+.y01 .q__antwoord{padding:0 0 1rem 2.75rem;color:rgba(255,255,255,.84);font-size:.94rem}
+.y01 .q__antwoord a:not(.wa-link){color:#fff}
+.y01__cta{display:flex;flex-wrap:wrap;gap:.8rem 1.4rem;align-items:center;margin-top:clamp(1.3rem,2.4vw,1.8rem);padding-top:clamp(1.1rem,2vw,1.4rem);border-top:1px solid rgba(255,255,255,.15)}
+.y01__cta .q-zin{color:#fff}
+
+/* ===== 02 referentie A .reviews ===== */
+.y02__hoofd{display:grid;grid-template-columns:minmax(0,1fr) 21rem;gap:1.6rem;align-items:stretch}
+.y02__links{display:flex;flex-direction:column}
+.y02__uitgelicht{flex:1;display:flex;flex-direction:column;margin:0;background:#fff;border:1px solid var(--grey-200);border-radius:16px;padding:clamp(1.3rem,2.4vw,1.9rem) clamp(1.4rem,3vw,2.2rem);box-shadow:0 6px 0 var(--primary-100),0 20px 34px -26px rgba(11,35,82,.4)}
+.y02__rate{display:flex;align-items:center;gap:.6rem;margin:0}
+.y02__nr{display:grid;place-items:center;min-width:2.1rem;height:1.75rem;padding:0 .45rem;border-radius:6px;background:var(--brand-accent);color:var(--brand-secondary);font:800 .95rem/1 var(--font-display);font-stretch:75%}
+.y02__vraag{font:700 1rem/1.3 var(--font-sans);color:var(--ink)}
+.y02__uitgelicht blockquote{margin:1rem 0 1.2rem}
+.y02__uitgelicht blockquote p{margin:0;font:800 clamp(1.5rem,1rem + 1.4vw,2.2rem)/1.22 var(--font-display);font-stretch:75%;color:var(--brand-secondary);text-wrap:pretty}
+.y02__uitgelicht blockquote p::before{content:"\201C"}
+.y02__uitgelicht blockquote p::after{content:"\201D"}
+.y02__uitgelicht figcaption{margin-top:auto;display:flex;align-items:center;gap:.7rem;padding-top:1rem;border-top:1px solid var(--grey-200);font-size:.9rem;color:var(--grey-600)}
+.y02__av{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--primary-50);box-shadow:inset 0 0 0 1px var(--primary-200)}
+.y02__av img{width:22px;height:auto}
+.y02__wie{display:flex;flex-wrap:wrap;align-items:center;gap:.2rem .9rem;line-height:1.35}
+.y02__wie b{color:var(--ink);font-weight:700;font-size:.95rem}
+.y02__score{display:flex;flex-direction:column;background:var(--brand-secondary);color:#fff;border-radius:16px;padding:1.4rem;box-shadow:0 6px 0 var(--rand-diep),0 26px 40px -26px rgba(11,35,82,.7)}
+.y02__cijfer{margin:0 0 .5rem;display:flex;flex-direction:column}
+.y02__cijfer b{font:800 3.6rem/1 var(--font-display);font-stretch:75%;color:var(--brand-accent)}
+.y02__cijfer span{margin-top:.3rem;color:rgba(255,255,255,.72);font-size:.9rem}
+.y02__feiten{list-style:none;margin:.9rem 0;padding:.9rem 0 0;border-top:1px solid rgba(255,255,255,.18)}
+.y02__feiten li{padding:.3rem 0;color:#fff;font-weight:700;font-size:.95rem}
+.y02__acties{display:grid;gap:.6rem;margin-top:auto;padding-top:1rem;border-top:1px solid rgba(255,255,255,.18)}
+.y02__acties .q-zin{color:#fff;font-size:1rem}
+.y02__acties .q-bel,.y02__acties .wa-link{justify-content:center;margin:0;min-height:46px}
+.y02__acties .wa-link{font-size:1rem}
+.y02__rgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem;list-style:none;margin:1.1rem 0 0;padding:0}
+.y02__kaart{display:flex;flex-direction:column;background:#fff;border:1px solid var(--grey-200);border-radius:12px;padding:1.1rem 1.2rem;box-shadow:0 5px 0 var(--primary-100),0 16px 26px -22px rgba(11,35,82,.4)}
+.y02__kaart .y02__rate{margin-bottom:.55rem}
+.y02__kaart h3{margin:0 0 .4rem;font:700 1rem/1.35 var(--font-sans);color:var(--ink)}
+.y02__tekst{color:var(--graphite);font-size:.93rem;line-height:1.6}
+
+/* ===== 03 referentie A .vierkant ===== */
+.y03{overflow:hidden}
+.y03__hoek{position:absolute;right:-120px;top:-120px;width:320px;height:320px;background:var(--brand-secondary);border-radius:50%;z-index:0}
+.y03__hoek img{position:absolute;left:52px;top:150px;width:92px;height:auto;opacity:.9}
+.y03 .wrap{position:relative;z-index:1}
+.y03__in{display:grid;grid-template-columns:1.16fr .84fr;gap:clamp(1.5rem,4vw,4rem);align-items:stretch}
+.y03__tekst{display:flex;flex-direction:column;justify-content:center}
+.y03__vinkjes{display:grid;gap:.35rem;margin:.4rem 0 1.3rem}
+.y03 .q summary{grid-template-columns:26px minmax(0,1fr) auto;gap:.8rem;padding:.55rem 0}
+.y03__vink{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 3px 0 var(--accent-700)}
+.y03__vink .ic{width:14px;height:14px;stroke-width:3}
+.y03 .q__antwoord{padding:0 0 .6rem calc(26px + .8rem);font-size:.94rem;color:var(--grey-600)}
+.y03 .q[open] .y03__vink{background:var(--brand-primary);color:#fff;box-shadow:0 3px 0 var(--brand-secondary)}
+.y03__knoprij{display:grid;gap:.7rem;justify-items:start;padding-top:1.1rem;border-top:1px solid var(--grey-200)}
+.y03__fig{position:relative;min-height:440px;margin:0}
+.y03__vorm{position:absolute;left:46%;top:50%;width:min(62%,400px);height:92%;transform:translate(-50%,-50%) rotate(8deg);background:var(--primary-100);border-radius:72px;z-index:1}
+.y03__vorm::after{content:"";position:absolute;inset:-16px;border:2px solid var(--accent-600);border-radius:88px;opacity:.75}
+.y03__foto{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(74%,400px);height:88%;max-width:none;object-fit:cover;object-position:50% 30%;border-radius:56px;box-shadow:0 24px 44px -22px rgba(11,35,82,.45);z-index:2}
+
+/* ===== 04 referentie A .opslag ===== */
+.y04{--bb:84px;--bh:clamp(250px,17vw,320px);overflow:hidden}
+.y04.sectie{padding-bottom:0}
+.y04__band{position:absolute;left:0;right:0;bottom:var(--bb);height:var(--bh);background:linear-gradient(90deg,var(--brand-primary),var(--brand-secondary));transform:skewY(-5deg);z-index:1;overflow:hidden;backface-visibility:hidden}
+.y04__mark{position:absolute;left:2%;top:50%;transform:translateY(-50%);height:34%;width:auto;opacity:.95}
+.y04__script{position:absolute;right:2.5%;top:50%;transform:translateY(-50%);height:40%;width:auto;opacity:.95}
+.y04__lijn{position:absolute;left:0;right:0;bottom:calc(var(--bb) - 15px);height:18px;background:var(--brand-accent);transform:skewY(-5deg);z-index:3;backface-visibility:hidden}
+.y04 .wrap{position:relative}
+.y04__in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,4rem);align-items:end}
+.y04__kaart{position:relative;z-index:4;background:#fff;border-radius:18px;padding:clamp(1.3rem,2.6vw,1.9rem) clamp(1.4rem,2.8vw,2.2rem);margin-bottom:calc(var(--bb) + 44px);box-shadow:var(--plaat)}
+.y04__lijst .q{border-top:1px solid var(--grey-200)}
+.y04__lijst .q:last-child{border-bottom:1px solid var(--grey-200)}
+.y04__lijst summary{padding:.7rem 0}
+.y04__lijst .q__antwoord{padding:0 0 .8rem 2.6rem}
+.y04__bel{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem;margin-top:1.1rem}
+.y04__fig{position:relative;height:590px;z-index:2}
+/* staat op de band: onderrand langs de schuine lijn (5 graden = 8,75% van de breedte) */
+.y04__persoon{position:absolute;bottom:calc(var(--bb) + 12px);left:50%;transform:translateX(-50%);height:500px;width:auto;max-width:none;clip-path:polygon(0 0,100% 0,100% calc(100% - 25px),0 100%)}
+
+/* ===== 05 referentie A .hist5 + .pol ===== */
+.y05__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.y05__tl{list-style:none;margin:.3rem 0 1.3rem;padding:0;position:relative;display:grid;gap:.85rem}
+.y05__tl::before{content:"";position:absolute;left:calc(3.2rem + 4px);top:.6rem;bottom:.6rem;width:1px;background:color-mix(in srgb,var(--ink) 16%,transparent)}
+.y05__tl li{position:relative;display:grid;grid-template-columns:3.2rem minmax(0,1fr);gap:1.2rem;align-items:start}
+.y05__tl li::before{content:"";position:absolute;left:3.2rem;top:.45rem;width:9px;height:9px;border-radius:50%;background:var(--brand-primary)}
+.y05__nr{font:800 1.4rem/1 var(--font-display);font-stretch:75%;color:var(--brand-primary);padding-top:.05rem}
+.y05__tl h3{font:700 1rem/1.3 var(--font-sans);color:var(--ink);margin:0 0 .15rem}
+.y05__tl p{font-size:.93rem;line-height:1.5;color:var(--graphite)}
+.y05__bel{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem}
+.y05__stapel{position:relative;height:0;padding-bottom:84%}
+.y05__pol{position:absolute;margin:0;background:#fff;padding:12px 12px 44px;border-radius:2px;box-shadow:0 18px 40px -16px rgba(11,35,82,.38),0 6px 14px -6px rgba(11,35,82,.3)}
+.y05__pol img{display:block;width:100%;height:auto}
+.y05__pol figcaption{position:absolute;left:12px;right:12px;bottom:11px;text-align:center;font:800 1.05rem/1.2 var(--font-display);font-stretch:75%;color:var(--brand-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.y05__pol--a{top:0;left:0;width:80%;transform:rotate(-2.5deg);z-index:1}
+.y05__pol--a figcaption{text-align:left;padding-left:4px}
+.y05__pol--b{top:24%;right:0;width:46%;transform:rotate(6deg);z-index:2}
+.y05__pol--c{bottom:0;left:22%;width:42%;transform:rotate(-3deg);z-index:3}
+
+/* ===== 06 referentie A .dozen ===== */
+.y06__kaart{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:1.18fr .82fr;background:var(--brand-primary);color:#fff;border-radius:28px;box-shadow:0 8px 0 var(--brand-secondary),0 40px 60px -36px rgba(11,35,82,.6)}
+.y06__kaart::before{content:"";position:absolute;z-index:0;pointer-events:none;right:36%;top:50%;transform:translateY(-50%);width:min(300px,24%);aspect-ratio:1;opacity:.12;background:url("/img/logo/dereus-beeldmerk-negatief.svg") center/contain no-repeat}
+.y06__body{position:relative;z-index:1;padding:clamp(1.6rem,2.8vw,2.3rem) clamp(1.6rem,3vw,2.6rem)}
+.y06 .kopgroep .label,.y06 .kopgroep h2{color:#fff}
+.y06__lijst .q{border-top:1px solid rgba(255,255,255,.22)}
+.y06__lijst .q:last-child{border-bottom:1px solid rgba(255,255,255,.22)}
+.y06__lijst summary{padding:.7rem 0;color:#fff}
+.y06 .q__nr{color:var(--brand-accent)}
+.y06 .q summary:hover .q__tekst{color:var(--brand-accent)}
+.y06 .q__plus{background:rgba(255,255,255,.14);color:#fff}
+.y06 .q__antwoord{padding:0 0 .8rem 2.6rem;color:rgba(255,255,255,.9)}
+.y06 .q__antwoord a:not(.wa-link){color:#fff}
+.y06__bel{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem;margin-top:1.2rem}
+.y06__bel .q-zin{color:#fff}
+.y06__media{position:relative;min-height:100%}
+.y06__foto{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:38% 35%}
+.y06__badge{position:absolute;right:16px;bottom:16px;z-index:2;display:grid;gap:.45rem;background:var(--brand-secondary);color:#fff;border-radius:16px;padding:.95rem 1.15rem;box-shadow:0 18px 40px -18px rgba(0,0,0,.6)}
+.y06__ab{font:800 1.3rem/1 var(--font-display);font-stretch:75%;color:#fff}
+.y06__ab .bereikbaar__stip{background:#4ADE80;box-shadow:0 0 0 3px rgba(74,222,128,.25)}
+.y06__abk{font:700 .66rem/1.2 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+
+/* ===== 07 referentie A .blok--paneel + .d4 + .blok--vlak ===== */
+.y07__rij{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(2rem,5vw,5rem);align-items:stretch}
+.y07__tekst{background:var(--primary-50);border-left:6px solid var(--brand-primary);border-radius:24px;padding:clamp(1.5rem,2.8vw,2.3rem);box-shadow:0 6px 0 var(--primary-200)}
+.y07 .kopgroep h2{font-size:clamp(1.8rem,2.7vw,2.3rem)}
+.y07__d4{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1.1rem 0 1.2rem;align-items:start}
+.y07__d4 .q{background:#fff;border:1px solid var(--primary-200);border-radius:12px;box-shadow:0 3px 0 var(--primary-100)}
+.y07__d4 .q[open]{border-color:var(--brand-primary);background:var(--primary-100);box-shadow:0 3px 0 var(--primary-200)}
+.y07__d4 summary{grid-template-columns:34px minmax(0,1fr) auto;gap:.6rem;padding:.6rem .7rem .6rem .6rem}
+.y07__ic{width:34px;height:34px;object-fit:contain;filter:drop-shadow(1px 2px 2px rgba(11,35,82,.3))}
+.y07__d4 .q__tekst{font-size:.9rem;line-height:1.3}
+.y07__d4 .q__plus{width:26px;height:26px}
+.y07__d4 .q__antwoord{padding:0 .8rem .75rem;font-size:.86rem;line-height:1.55}
+.y07__bel{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem}
+.y07__foto{position:relative;margin:0;align-self:stretch;min-height:19rem}
+.y07__foto::before{content:"";position:absolute;right:-1.5rem;bottom:-1.5rem;width:62%;height:56%;background:var(--brand-accent);border-radius:18px;z-index:0;box-shadow:0 6px 0 var(--accent-700)}
+.y07__raam{position:absolute;inset:0;z-index:1;overflow:hidden;border-radius:18px;background:radial-gradient(120% 90% at 50% 20%,#fff 0,var(--primary-100) 55%,var(--primary-200) 100%);box-shadow:0 24px 44px -26px rgba(11,35,82,.5)}
+.y07__mens{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:112%;height:auto;max-width:none;filter:drop-shadow(0 14px 16px rgba(11,35,82,.25))}
+
+/* ===== 08 referentie A #contact-intro ===== */
+.y08__boven{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:stretch}
+.y08__tekst{align-self:center;display:grid;justify-items:start;gap:.8rem}
+.y08 .kopgroep{margin-bottom:.2rem}
+.y08__foto{position:relative;margin:0;min-height:16rem;border-radius:20px;overflow:hidden;background:var(--primary-100);box-shadow:0 6px 0 var(--primary-200),0 24px 40px -26px rgba(11,35,82,.45)}
+.y08__foto img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:30% 30%}
+.y08__foto figcaption{position:absolute;left:1rem;right:auto;bottom:1rem;background:rgba(11,35,82,.72);color:#fff;font:700 .78rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;padding:.55rem .9rem;border-radius:10px;backdrop-filter:blur(4px)}
+.y08__usps{list-style:none;padding:0;margin:clamp(1.6rem,3vw,2.3rem) 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6rem 1.8rem}
+.y08__usps li{display:grid;grid-template-columns:1fr;gap:.75rem;align-content:start}
+.y08__ico{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--primary-100);box-shadow:inset 0 0 0 1px var(--primary-200)}
+.y08__ico img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(1px 2px 2px rgba(11,35,82,.3))}
+.y08__usps h3{margin:0 0 .3rem;font:700 1.08rem/1.25 var(--font-sans);color:var(--ink);min-height:2.5em;text-wrap:balance}
+.y08__usps p{font-size:.95rem;line-height:1.55;color:var(--graphite)}
+
+/* ===== 09 referentie B .sgdp-calc ===== */
+.y09__kaart{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);grid-template-areas:"intro uit" "lijst uit";gap:1rem clamp(1.4rem,4vw,2.8rem);padding:clamp(1.3rem,3vw,2.2rem);background:#fff;border-radius:18px;box-shadow:var(--plaat)}
+.y09__intro{grid-area:intro}
+.y09 .kopgroep{margin:0}
+.y09__lijst{grid-area:lijst;display:grid;gap:.45rem;align-content:start}
+.y09__lijst .q{border-radius:12px;background:var(--off-white);box-shadow:inset 0 0 0 1px var(--grey-200)}
+.y09__lijst .q[open]{background:var(--primary-50);box-shadow:inset 0 0 0 1.5px var(--brand-primary)}
+.y09__lijst summary{padding:.75rem 1rem .75rem 1.1rem}
+.y09__lijst .q__antwoord{padding:0 1.1rem .9rem 3.6rem}
+.y09__uit{grid-area:uit;position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.45rem;padding:clamp(1.3rem,3vw,1.9rem);border-radius:18px;background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 6px 0 var(--accent-700),0 24px 36px -24px rgba(11,35,82,.5)}
+.y09__3d{position:absolute;right:1.4rem;top:-2.6rem;height:9.5rem;width:auto;max-width:none;filter:var(--obj-schaduw)}
+.y09__label{font:700 .8rem/1.3 var(--font-sans);letter-spacing:.06em;text-transform:uppercase;color:var(--brand-secondary);max-width:13rem}
+.y09__getal{font:800 clamp(2.2rem,1.4rem + 2.2vw,3rem)/1 var(--font-display);font-stretch:75%;color:var(--brand-secondary);background:#fff;padding:.12em .3em;border-radius:.2em;text-decoration:none;box-shadow:0 4px 0 var(--accent-700);white-space:nowrap}
+.y09__getal:hover{background:var(--accent-50)}
+.y09__bereik{margin-top:.4rem;font-size:1rem;font-weight:700}
+.y09__detail{font-size:.9rem;color:var(--graphite);margin-bottom:.6rem}
+.y09__uit .wa-link{margin:auto 0 0;min-height:48px;padding:.55rem 1.2rem;font-size:1rem;box-shadow:0 4px 0 #14552B}
+.y09__uit .wa-link .ic{width:20px;height:20px}
+
+/* ===== 10 referentie B .sgdp-voorraad ===== */
+.y10__kaart{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);margin-top:clamp(4rem,5vw,4.75rem);background:var(--brand-primary);color:#fff;border-radius:18px;box-shadow:0 8px 0 var(--brand-secondary),0 24px 48px -28px rgba(11,35,82,.6)}
+.y10__body{padding:clamp(1.5rem,3vw,2.4rem)}
+.y10 .kopgroep .label,.y10 .kopgroep h2{color:#fff}
+.y10__lijst .q{border-top:1px solid rgba(255,255,255,.22)}
+.y10__lijst .q:last-child{border-bottom:1px solid rgba(255,255,255,.22)}
+.y10__lijst summary{padding:.7rem 0;color:#fff}
+.y10 .q__nr{color:var(--brand-accent)}
+.y10 .q summary:hover .q__tekst{color:var(--brand-accent)}
+.y10 .q__plus{background:rgba(255,255,255,.14);color:#fff}
+.y10 .q__antwoord{padding:0 0 .8rem 2.6rem;color:rgba(255,255,255,.9)}
+.y10 .q__antwoord a:not(.wa-link){color:#fff}
+.y10__bel{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem;margin-top:1.2rem}
+.y10__bel .q-zin{color:#fff}
+.y10__media{position:relative;min-height:17rem}
+/* vaste hoogte: gaat een vraag open, dan wordt de kaart hoger maar de medewerker niet groter; ze blijft op de onderrand staan */
+.y10__figuur{position:absolute;bottom:0;left:60%;transform:translateX(-50%);height:clamp(26rem,24rem + 11vw,35rem);width:auto;max-width:none;pointer-events:none;filter:drop-shadow(0 14px 18px rgba(0,0,0,.25))}
+.y10__badge{position:absolute;left:0;bottom:1.4rem;z-index:3;display:inline-flex;align-items:center;gap:.55rem;padding:.55rem 1rem .55rem .55rem;border-radius:999px;background:var(--brand-accent);color:var(--brand-secondary);font-weight:700;font-size:.95rem;box-shadow:0 4px 0 var(--accent-700),0 12px 26px -12px rgba(0,0,0,.5)}
+.y10__badge-ic{display:grid;place-items:center;width:1.9rem;height:1.9rem;border-radius:50%;background:var(--brand-secondary);color:var(--brand-accent)}
+.y10__badge-ic .ic{width:15px;height:15px}
+.y10__st{font-size:.95rem}
+.y10__st .bereikbaar__stip{display:none}
+
+/* ===== 11 referentie B .kerncijfers + .sgdp-kaart--breed ===== */
+.y11__kop{margin-bottom:1.3rem}
+.y11__rij{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 1px 2px rgba(11,35,82,.05),0 6px 0 var(--primary-200),0 18px 40px -24px rgba(11,35,82,.32)}
+.y11__cel+.y11__cel{border-left:1px solid var(--grey-200)}
+.y11__cel summary{grid-template-columns:52px minmax(0,1fr) auto;gap:.8rem;padding:1.15rem 1.1rem 1.15rem 1.2rem}
+.y11__ic{width:52px;height:52px;max-width:none;margin:-6px 0;object-fit:contain;filter:drop-shadow(1px 3px 3px rgba(11,35,82,.28))}
+.y11__cel .q__tekst{font-size:.98rem;line-height:1.28}
+.y11__cel .q__plus{width:26px;height:26px}
+.y11__cel .q__antwoord{padding:0 1.2rem 1.2rem;font-size:.93rem}
+.y11__cel[open]{background:var(--primary-50)}
+.y11__breed{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:clamp(1.2rem,3vw,2.4rem);margin-top:1.4rem;padding:1.1rem 1.6rem;border-radius:18px;background:var(--brand-accent);box-shadow:0 6px 0 var(--accent-700),0 22px 34px -24px rgba(11,35,82,.45)}
+.y11__3d{width:auto;height:92px;margin:-1.9rem 0 -.6rem;filter:var(--obj-schaduw)}
+.y11__tekst{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem}
+.y11__tekst h3{margin:0;font:800 1.6rem/1.1 var(--font-display);font-stretch:75%;color:var(--brand-secondary)}
+.y11__knoppen .q-bel{background:var(--brand-secondary);color:#fff;box-shadow:0 4px 0 var(--rand-diep),0 12px 18px -10px rgba(11,35,82,.45)}
+.y11__knoppen .q-bel:hover{background:var(--primary-600);color:#fff}
+
+/* ===== 12 referentie B .scanvak ===== */
+.y12__kaart{padding:clamp(18px,2vw,28px) clamp(18px,3vw,40px) 30px;border:2px solid var(--brand-primary);border-radius:28px;background:var(--accent-50);box-shadow:0 6px 0 var(--primary-200),0 24px 56px -28px rgba(11,35,82,.35)}
+.y12__kop{display:flex;flex-wrap:wrap-reverse;align-items:flex-end;justify-content:space-between;gap:14px 24px;margin-bottom:12px}
+.y12__tekst{flex:1 1 360px;min-width:0}
+.y12 .kopgroep{margin:0}
+.y12__logos{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;margin-left:auto}
+.y12__logo{display:flex;align-items:center;gap:10px;height:54px;padding:0 14px;border:1px solid rgba(14,26,51,.08);border-radius:12px;background:#fff;color:var(--ink);box-shadow:0 6px 14px -8px rgba(11,35,82,.25);font-size:.85rem;font-weight:600;white-space:nowrap}
+.y12__logo b{font:800 1.2rem/1 var(--font-display);font-stretch:75%}
+.y12__logo>.ic{width:24px;height:24px}
+.y12__logo .bereikbaar{font-size:.9rem}
+.y12__3d{width:auto;height:40px}
+.y12__keuze{min-width:0;margin:6px 0 12px;padding:0;border:0}
+.y12__chips{display:flex;flex-wrap:wrap;gap:6px}
+.y12__chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 14px 6px 10px;border:1px solid rgba(14,26,51,.3);border-radius:999px;background:rgba(255,255,255,.6);color:var(--ink);font:500 .95rem/1.25 var(--font-sans);cursor:pointer}
+.y12__chip:hover{border-color:var(--brand-primary)}
+.y12__chip input{flex:none;width:16px;height:16px;margin:0;accent-color:var(--brand-primary)}
+.y12__chip:has(input:focus-visible){outline:3px solid var(--ink);outline-offset:2px}
+.y12__chip:has(input:checked){border-color:var(--brand-primary);background:#fff;color:var(--brand-primary);font-weight:700;box-shadow:inset 0 0 0 1px var(--brand-primary)}
+.y12__pil{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px;padding:8px;border-radius:30px;background:var(--brand-accent);box-shadow:0 5px 0 var(--accent-700),0 14px 28px -14px rgba(11,35,82,.45)}
+.y12__veld{min-width:0;min-height:58px;display:flex;align-items:center;padding:10px 24px;border:1px solid #6B7488;border-radius:22px;background:#fff;color:var(--ink);font-size:1rem;line-height:1.5}
+.y12__antw{display:none}
+.y12__antw p{margin:0}
+.y12:has(input[value="1"]:checked) .y12__antw--1,
+.y12:has(input[value="2"]:checked) .y12__antw--2,
+.y12:has(input[value="3"]:checked) .y12__antw--3,
+.y12:has(input[value="4"]:checked) .y12__antw--4{display:block}
+.y12__knop{background:var(--brand-secondary);color:#fff;box-shadow:0 4px 0 var(--rand-diep),0 8px 16px -6px rgba(11,35,82,.55)}
+.y12__knop:hover{background:var(--primary-600);color:#fff}
+.y12__pil .wa-link{margin:0;min-height:48px;padding:.55rem 1.2rem;font-size:1rem;box-shadow:0 4px 0 #14552B}
+.y12__pil .wa-link .ic{width:20px;height:20px}
+
+/* ===== 13 referentie B .sgd1 ===== */
+.y13{--v:clamp(12px,2.2vw,30px);padding-block:calc(2.4rem + var(--v)) calc(2.6rem + var(--v))}
+.y13.sectie{padding-block:calc(2.2rem + var(--v)) calc(2.4rem + var(--v))}
+.y13__band{position:absolute;inset:0;background:var(--accent-50);clip-path:polygon(0 0,50% var(--v),100% 0,100% calc(100% - var(--v)),40% 100%,0 calc(100% - var(--v)))}
+.y13 .wrap{position:relative}
+.y13__kop{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.6rem 2rem}
+.y13__kop .kopgroep{margin:0}
+.y13__grid{list-style:none;margin:calc(40px + .6rem) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.9rem}
+.y13__kaart{position:relative;display:flex;flex-direction:column;min-width:0;background:#fff;border-radius:4px;box-shadow:0 0 0 1px rgba(14,26,51,.07),0 1px 2px rgba(14,26,51,.08),0 16px 32px -20px rgba(14,26,51,.4)}
+.y13__beeld{position:relative;aspect-ratio:2.2;border-radius:4px 4px 0 0}
+.y13__raam{position:absolute;inset:0;overflow:hidden;border-radius:inherit;background:linear-gradient(165deg,var(--primary-50) 20%,var(--primary-200))}
+.y13__obj{position:absolute;left:50%;bottom:10%;transform:translateX(-50%);height:calc(100% + 40px);width:auto;max-width:none;filter:var(--obj-schaduw)}
+.y13__ico{position:absolute;right:.7rem;bottom:-1.1rem;display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1rem/1 var(--font-display);font-stretch:75%;box-shadow:0 3px 0 var(--accent-700),0 6px 10px -4px rgba(11,35,82,.3);z-index:2}
+.y13__tekst{padding:.85rem 1.1rem 1rem}
+.y13__tekst h3{margin:0 0 .35rem;font:700 1.02rem/1.28 var(--font-sans);color:var(--ink);padding-right:1.6rem}
+.y13__tekst p{font-size:.88rem;line-height:1.5;color:var(--grey-600)}
+.y13__meer{margin:1.5rem 0 0;font-size:1rem;font-weight:600;color:var(--ink)}
+.y13__meer a:not(.wa-link){color:var(--brand-primary);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
+/* ===== 14 referentie B .sgct-plek ===== */
+.y14__in{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:center}
+.y14__beeld{position:relative;margin:0;height:clamp(300px,32vw,450px);overflow:hidden;border:1.5px solid var(--grey-200);border-radius:20px;box-shadow:0 6px 0 var(--primary-200),0 24px 50px -24px rgba(11,35,82,.4);background:var(--primary-50)}
+.y14__foto{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:55% 50%}
+.y14__pin{position:absolute;left:1rem;top:1rem;box-shadow:0 8px 18px -8px rgba(11,35,82,.45)}
+.y14__route{position:absolute;left:1rem;bottom:1rem}
+.y14__bron{position:absolute;top:0;right:0;padding:.45rem .55rem;border-bottom-left-radius:14px;background:rgba(255,255,255,.9)}
+.y14__bron .wa-link{margin:0}
+.y14__gegevens .kopgroep{margin-bottom:.6rem}
+.y14__gegevens dl{display:grid;margin:0}
+.y14__gegevens dl div{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:1.2rem;padding:.8rem 0;border-top:1px solid var(--grey-200)}
+.y14__gegevens dl div:last-child{border-bottom:1px solid var(--grey-200)}
+.y14__gegevens dt{display:grid;grid-template-columns:2rem minmax(0,1fr);font-weight:700;color:var(--ink);line-height:1.35}
+.y14__nr{font:800 1.05rem/1.3 var(--font-display);font-stretch:75%;color:var(--brand-primary)}
+.y14__gegevens dd{margin:0;color:var(--graphite);font-size:.93rem;line-height:1.5}
+
+/* ===== 15 referentie B .sgz ===== */
+.y15__kaart{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(1.4rem,3vw,2.6rem);align-items:center;padding:clamp(1.5rem,3.2vw,2.6rem);border-radius:18px;background:var(--primary-50);box-shadow:inset 0 0 0 1px var(--primary-100),0 6px 0 var(--primary-200)}
+.y15__tekst{display:grid;justify-items:start;gap:.7rem}
+.y15 .kopgroep{margin:0}
+.y15__zin{margin:.3rem 0 0;font-weight:700;color:var(--ink)}
+.y15__link{display:inline-flex;align-items:center;gap:.4rem;font-weight:800;font-size:1.05rem;color:var(--brand-primary);text-decoration:none;border-bottom:2px solid var(--brand-accent)}
+.y15__link:hover{border-bottom-color:var(--brand-primary)}
+.y15__link .ic{width:18px;height:18px}
+.y15__tekst .wa-link{margin:0}
+.y15__tegels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;align-items:stretch}
+.y15__tegel{position:relative;background:#fff;border-radius:14px;box-shadow:0 4px 0 var(--primary-200),0 14px 24px -18px rgba(11,35,82,.4)}
+.y15__tegel summary{display:grid;grid-template-columns:1fr;justify-items:center;gap:.1rem;padding:1rem .9rem 1rem;text-align:center}
+.y15__3d{display:block;width:auto;height:64px;margin:-.2rem auto .3rem;filter:drop-shadow(1px 3px 3px rgba(11,35,82,.3))}
+.y15__tegel b{display:block;font:800 clamp(1.3rem,1rem + .9vw,1.7rem)/1.1 var(--font-display);font-stretch:75%;color:var(--brand-primary)}
+.y15__tegel small{display:block;margin-top:.25rem;font-size:.84rem;line-height:1.35;color:var(--grey-600);text-wrap:balance}
+.y15__tegel .q__plus{position:absolute;right:.6rem;top:.6rem;width:26px;height:26px}
+.y15__tegel[open]{box-shadow:inset 0 0 0 2px var(--brand-primary),0 4px 0 var(--primary-200),0 14px 24px -18px rgba(11,35,82,.4)}
+.y15__tegel .q__antwoord{padding:0 1rem 1rem;font-size:.9rem;text-align:center}
+
+/* ===== smal ===== */
+@media (max-width:980px){
+  .y02__hoofd,.y03__in,.y04__in,.y05__in,.y07__rij,.y08__boven,.y14__in,.y15__kaart{grid-template-columns:1fr}
+  .y06__kaart,.y10__kaart{grid-template-columns:1fr}
+  .y06__media{min-height:16rem}
+  .y02__rgrid,.y08__usps,.y11__rij,.y13__grid{grid-template-columns:1fr 1fr}
+  .y09__kaart{grid-template-columns:1fr;grid-template-areas:"intro" "lijst" "uit"}
+  .y04__fig{height:420px}.y04__persoon{height:360px}
+  .y01__lijst{grid-template-columns:1fr}
+}
+
+</style>
+<script src="/js/site.js?v=0aa1a00f3c" defer></script>
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol><symbol id="i-extern" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol><symbol id="i-google" viewBox="0 0 24 24" fill="currentColor"><g transform="translate(2.64 2.64) scale(.78)"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.6l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></g></symbol><symbol id="i-klok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-pijl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></symbol><symbol id="i-sluit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol><symbol id="i-ster" viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></symbol><symbol id="i-telefoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol><symbol id="i-wereld" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol><symbol id="i-whatsapp" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#25D366" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#25D366" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol><symbol id="i-whatsapp-wit" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#fff" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#fff" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol></svg>
+<nav class="vnav" aria-label="Ontwerpen"><div class="wrap"><b>/contact/ #vragen · ronde 2 · 15 ontwerpen</b><div class="vnav__links"><a href="#v00">00</a><a href="#v01">01</a><a href="#v02">02</a><a href="#v03">03</a><a href="#v04">04</a><a href="#v05">05</a><a href="#v06">06</a><a href="#v07">07</a><a href="#v08">08</a><a href="#v09">09</a><a href="#v10">10</a><a href="#v11">11</a><a href="#v12">12</a><a href="#v13">13</a><a href="#v14">14</a><a href="#v15">15</a></div></div></nav>
+<div class="vkap" id="v00"><div class="wrap"><span class="vkap__nr">00</span><div><b>Nu live</b><small>Ter vergelijking</small><p>Het huidige blok op /contact/, ongewijzigd. Ronde 1 (15 andere ontwerpen) staat nog in vragen-referentie-ronde1.html; deze ronde gebruikt geen enkele bron daaruit opnieuw.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit b-vragen b-vragen--paneel" id="vragen-live" aria-labelledby="vragen-kop-live">
+  <div class="wrap vragen">
+    <div class="vragen__kop vragen__kop--kaart">
+
+      <div class="vragen__bel vragen__bel--kop">
+        <img class="vragen__beeld" src="/img/contact-3d/headset.webp" alt="" width="287" height="320" loading="lazy" decoding="async"><div class="vragen__beltekst">
+          <div class="kopgroep"><p class="label">Veelgestelde vragen</p><h2 id="vragen-kop-live">Vragen over contact</h2></div>
+          <span class="bereikbaar vragen__status" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span>
+        <p>Staat uw vraag er niet bij?</p>
+        <a class="knop knop--blauw knop--icoon-voor" href="tel:+31850005647"><span>Bel 085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+        </div>
+      </div><span class="vragen__vul" aria-hidden="true"><img class="vragen__vulbeeld" src="/img/kaart-3d/vraagtekens.webp" alt="" width="780" height="456" loading="lazy" decoding="async"></span>
+    </div>
+    <div class="vragen__lijst" data-reveal>
+      <details class="vraag" id="vragen-live-1" name="vragen-live">
+        <summary><span class="vraag__nr" aria-hidden="true">01</span><span class="vraag__tekst">Hoe snel krijg ik antwoord?</span><span class="vraag__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+        <div class="vraag__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div>
+      </details><details class="vraag" id="vragen-live-2" name="vragen-live">
+        <summary><span class="vraag__nr" aria-hidden="true">02</span><span class="vraag__tekst">Kan ik ook &#x27;s avonds of in het weekend bellen?</span><span class="vraag__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+        <div class="vraag__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div>
+      </details><details class="vraag" id="vragen-live-3" name="vragen-live">
+        <summary><span class="vraag__nr" aria-hidden="true">03</span><span class="vraag__tekst">Wat zet ik in mijn bericht?</span><span class="vraag__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+        <div class="vraag__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div>
+      </details><details class="vraag" id="vragen-live-4" name="vragen-live">
+        <summary><span class="vraag__nr" aria-hidden="true">04</span><span class="vraag__tekst">Gebruik ik het contactformulier of het offerteformulier?</span><span class="vraag__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+        <div class="vraag__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+<div class="vkap" id="v01"><div class="wrap"><span class="vkap__nr">01</span><div><b>Diepblauwe kaart met de driekleurige streep</b><small>Referentie A, blok Erkende Verhuizer (.zeker__card, .zeker__head, .zeker__list, .zeker__ok, .zeker__cta)</small><p>Het keurmerkblok van referentie A: een donkere kaart met een streep in drie kleuren bovenaan, links het logo, in het midden de kop en rechts een beeldmerk (hier de 3D-vraagtekens). De vragen staan in twee kolommen met een dunne lijn erboven en een gele schijf met het nummer, zoals de vinkschijven van referentie A. Onderaan de knoppenrij.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y01 " aria-labelledby="kop-y01">
+<div class="wrap">
+<div class="y01__kaart">
+<div class="y01__kop"><span class="y01__logo"><img class="" src="/img/logo/dereus-logo-negatief.svg" alt="" loading="lazy" decoding="async"></span><div class="y01__intro"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y01">Vragen over contact</h2></div><span class="bereikbaar q-status q-status--donker" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></div><img class="y01__merk" src="/img/kaart-3d/vraagtekens.webp" alt="" width="780" height="456" loading="lazy" decoding="async"></div>
+<ul class="y01__lijst" role="list"><li><details class="q " name="y01">
+<summary><span class="y01__ok" aria-hidden="true">01</span><span class="q__tekst">Hoe snel krijg ik antwoord?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div>
+</details></li><li><details class="q " name="y01">
+<summary><span class="y01__ok" aria-hidden="true">02</span><span class="q__tekst">Kan ik ook &#x27;s avonds of in het weekend bellen?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div>
+</details></li><li><details class="q " name="y01">
+<summary><span class="y01__ok" aria-hidden="true">03</span><span class="q__tekst">Wat zet ik in mijn bericht?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div>
+</details></li><li><details class="q " name="y01">
+<summary><span class="y01__ok" aria-hidden="true">04</span><span class="q__tekst">Gebruik ik het contactformulier of het offerteformulier?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div>
+</details></li></ul>
+<div class="y01__cta"><p class="q-zin ">Staat uw vraag er niet bij?</p><div class="q-knoppen "><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div>
+</div>
+</div>
+</section>
+<div class="vkap" id="v02"><div class="wrap"><span class="vkap__nr">02</span><div><b>Uitgelichte vraag naast een scorepaneel</b><small>Referentie A homepage #reviews (.reviews__hoofd, .uitgelicht, .scorepaneel, .rgrid, .review)</small><p>De reviewopzet van referentie A: links één uitgelichte review met een groot citaat, rechts een donker cijferpaneel, daaronder compacte kaarten. Hier is vraag 01 de uitgelichte, met het antwoord als citaat van De Reus. Het paneel toont 4,9 uit 5 op Google en twee regels uit de vertrouwensrij van dezelfde pagina, met de knoppen. De andere drie vragen staan als kaarten eronder. Alle antwoorden zijn meteen te lezen, zonder klikken.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y02 " aria-labelledby="kop-y02">
+<div class="wrap">
+<div class="y02__hoofd"><div class="y02__links"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y02">Vragen over contact</h2></div>
+<figure class="y02__uitgelicht"><p class="y02__rate"><span class="y02__nr">01</span><span class="y02__vraag">Hoe snel krijg ik antwoord?</span></p>
+<blockquote><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.</p></blockquote>
+<figcaption><span class="y02__av" aria-hidden="true"><img class="" src="/img/logo/dereus-beeldmerk.svg" alt="" loading="lazy" decoding="async"></span><span class="y02__wie"><b>Verhuisbedrijf De Reus</b><span class="bereikbaar q-status" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></span></figcaption></figure></div>
+<aside class="y02__score" aria-label="Bereikbaarheid"><p class="y02__cijfer"><b>4,9</b><span>uit 5 op Google</span></p>
+<ul class="y02__feiten" role="list"><li>7 dagen per week bereikbaar</li><li>Eén vaste verhuisadviseur</li></ul>
+<div class="y02__acties"><p class="q-zin ">Staat uw vraag er niet bij?</p><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></aside></div>
+<ul class="y02__rgrid" role="list"><li class="y02__kaart"><p class="y02__rate"><span class="y02__nr">02</span></p><h3>Kan ik ook &#x27;s avonds of in het weekend bellen?</h3><div class="y02__tekst"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div></li><li class="y02__kaart"><p class="y02__rate"><span class="y02__nr">03</span></p><h3>Wat zet ik in mijn bericht?</h3><div class="y02__tekst"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div></li><li class="y02__kaart"><p class="y02__rate"><span class="y02__nr">04</span></p><h3>Gebruik ik het contactformulier of het offerteformulier?</h3><div class="y02__tekst"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div></li></ul>
+</div>
+</section>
+<div class="vkap" id="v03"><div class="wrap"><span class="vkap__nr">03</span><div><b>Gedraaid vlak achter de foto</b><small>Referentie A, vierkant-blok "Goed voorbereid verhuizen" (.vierkant__hoek, .vierkant__vinkjes, .vierkant__vorm, .vierkant__duo)</small><p>Het vierkant-blok van referentie A in zijn laatste vorm: links de kop en de punten als vinkjeslijst, rechts een foto in een afgeronde rechthoek met een gedraaid lichtblauw vlak en een gouden lijn erachter. Rechtsboven de Diepblauwe cirkel met het beeldmerk. De vinkjes zijn hier de vragen; het antwoord klapt eronder open. Foto: de verhuizer met dozen (nog niet op /contact/).</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y03 " aria-labelledby="kop-y03">
+<span class="y03__hoek" aria-hidden="true"><img class="" src="/img/logo/dereus-beeldmerk-negatief.svg" alt="" loading="lazy" decoding="async"></span>
+<div class="wrap">
+<div class="y03__in"><div class="y03__tekst"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y03">Vragen over contact</h2></div>
+<div class="y03__vinkjes"><details class="q " name="y03">
+<summary><span class="y03__vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="q__tekst">Hoe snel krijg ik antwoord?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div>
+</details><details class="q " name="y03">
+<summary><span class="y03__vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="q__tekst">Kan ik ook &#x27;s avonds of in het weekend bellen?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div>
+</details><details class="q " name="y03">
+<summary><span class="y03__vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="q__tekst">Wat zet ik in mijn bericht?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div>
+</details><details class="q " name="y03">
+<summary><span class="y03__vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="q__tekst">Gebruik ik het contactformulier of het offerteformulier?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div>
+</details></div>
+<div class="y03__knoprij"><p class="q-zin ">Staat uw vraag er niet bij?</p><div class="q-knoppen "><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div></div>
+<div class="y03__fig" aria-hidden="true"><span class="y03__vorm"></span><img class="y03__foto" src="/img/over-verhuizer.webp" alt="" width="640" height="800" loading="lazy" decoding="async"></div></div>
+</div>
+</section>
+<div class="vkap" id="v04"><div class="wrap"><span class="vkap__nr">04</span><div><b>Schuine band, de verhuizer staat erop</b><small>Referentie A homepage #opslag (.opslag__band, .opslag__mark, .opslag__script, .opslag__lijn, .opslag__kaart, .opslag__persoon)</small><p>Het opslagblok van referentie A: onderin een schuine band (hier Koningsblauw naar Diepblauw) met links het beeldmerk en rechts het woordmerk, met een gele lijn eronder. Links een kaart met de kop, de vragen en de knoppen, die over de band valt; rechts staat de verhuizer met baard op de band, schuin afgesneden zodat hij op de lijn lijkt te staan.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y04 " aria-labelledby="kop-y04">
+<span class="y04__band" aria-hidden="true"><img class="y04__mark" src="/img/logo/dereus-beeldmerk-negatief.svg" alt="" loading="lazy" decoding="async"><img class="y04__script" src="/img/logo/dereus-logo-zonder-tagline-negatief.svg" alt="" loading="lazy" decoding="async"></span><span class="y04__lijn" aria-hidden="true"></span>
+<div class="wrap">
+<div class="y04__in"><div class="y04__kaart"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y04">Vragen over contact</h2></div><div class="q-lijst y04__lijst"><details class="q " name="y04">
+<summary><span class="q__nr" aria-hidden="true">01</span><span class="q__tekst">Hoe snel krijg ik antwoord?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div>
+</details><details class="q " name="y04">
+<summary><span class="q__nr" aria-hidden="true">02</span><span class="q__tekst">Kan ik ook &#x27;s avonds of in het weekend bellen?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div>
+</details><details class="q " name="y04">
+<summary><span class="q__nr" aria-hidden="true">03</span><span class="q__tekst">Wat zet ik in mijn bericht?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div>
+</details><details class="q " name="y04">
+<summary><span class="q__nr" aria-hidden="true">04</span><span class="q__tekst">Gebruik ik het contactformulier of het offerteformulier?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div>
+</details></div><div class="y04__bel"><span class="bereikbaar q-status q-status--pil" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span><div class="q-knoppen "><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div></div>
+<div class="y04__fig" aria-hidden="true"><img class="y04__persoon" src="/img/offerte-figuur-uit.webp" alt="" width="435" height="752" loading="lazy" decoding="async"></div></div>
+</div>
+</section>
+<div class="vkap" id="v05"><div class="wrap"><span class="vkap__nr">05</span><div><b>Tijdlijn met een fotostapel</b><small>Referentie A homepage #historie (.hist5__in, .hist5__tl, .hist5__jaar, .hist5__stapel, .pol, .pol--trucks/--kar/--ad)</small><p>Het historieblok van referentie A: links een tijdlijn met een lijn, een stip en een groot getal per regel, rechts drie foto's als polaroids over elkaar (verhoudingen letterlijk van referentie A). Hier is elke regel een vraag met het antwoord eronder, meteen leesbaar. De onderschriften zijn woorden uit de antwoorden. Geen beweging bij hover (Referentie A kantelt de foto recht).</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y05 " aria-labelledby="kop-y05">
+<div class="wrap">
+<div class="y05__in"><div class="y05__tekst"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y05">Vragen over contact</h2></div>
+<ol class="y05__tl"><li><span class="y05__nr">01</span><div><h3>Hoe snel krijg ik antwoord?</h3><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div></li><li><span class="y05__nr">02</span><div><h3>Kan ik ook &#x27;s avonds of in het weekend bellen?</h3><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div></li><li><span class="y05__nr">03</span><div><h3>Wat zet ik in mijn bericht?</h3><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div></li><li><span class="y05__nr">04</span><div><h3>Gebruik ik het contactformulier of het offerteformulier?</h3><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div></li></ol>
+<div class="y05__bel"><p class="q-zin ">Staat uw vraag er niet bij?</p><div class="q-knoppen "><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div></div>
+<div class="y05__stapel" aria-hidden="true">
+<figure class="y05__pol y05__pol--a"><img class="" src="/img/stap-2-bellen.webp" alt="" width="560" height="380" loading="lazy" decoding="async"><figcaption>085 000 5647</figcaption></figure>
+<figure class="y05__pol y05__pol--b"><img class="" src="/img/stap-1-formulier.webp" alt="" width="560" height="380" loading="lazy" decoding="async"><figcaption>Contactformulier</figcaption></figure>
+<figure class="y05__pol y05__pol--c"><img class="" src="/img/stap-3-offerte.webp" alt="" width="560" height="380" loading="lazy" decoding="async"><figcaption>Offerteformulier</figcaption></figure>
+</div></div>
+</div>
+</section>
+<div class="vkap" id="v06"><div class="wrap"><span class="vkap__nr">06</span><div><b>Blauwe kaart met foto en badge</b><small>Referentie A homepage #dozen (.dozen__card, .dozen__card::before, .dozen__body, .dozen__media, .badge)</small><p>De dozenkaart van referentie A: één kaart met ronde hoeken, links een gekleurd vlak met een zacht beeldmerk als watermerk, rechts een foto over de volle hoogte met een donkere badge in de hoek. Hier Koningsblauw met de kop en de vragen als lichte regels; de badge toont of we nu bereikbaar zijn en "7 dagen per week bereikbaar" uit de vertrouwensrij.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y06 " aria-labelledby="kop-y06">
+<div class="wrap">
+<div class="y06__kaart"><div class="y06__body"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y06">Vragen over contact</h2></div><div class="q-lijst y06__lijst"><details class="q " name="y06">
+<summary><span class="q__nr" aria-hidden="true">01</span><span class="q__tekst">Hoe snel krijg ik antwoord?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div>
+</details><details class="q " name="y06">
+<summary><span class="q__nr" aria-hidden="true">02</span><span class="q__tekst">Kan ik ook &#x27;s avonds of in het weekend bellen?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div>
+</details><details class="q " name="y06">
+<summary><span class="q__nr" aria-hidden="true">03</span><span class="q__tekst">Wat zet ik in mijn bericht?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div>
+</details><details class="q " name="y06">
+<summary><span class="q__nr" aria-hidden="true">04</span><span class="q__tekst">Gebruik ik het contactformulier of het offerteformulier?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div>
+</details></div><div class="y06__bel"><p class="q-zin ">Staat uw vraag er niet bij?</p><div class="q-knoppen "><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div></div>
+<div class="y06__media"><img class="y06__foto" src="/img/stap-2-bellen.webp" alt="" width="560" height="380" loading="lazy" decoding="async"><span class="y06__badge"><span class="bereikbaar q-status y06__ab" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span><span class="y06__abk">7 dagen per week bereikbaar</span></span></div></div>
+</div>
+</section>
+<div class="vkap" id="v07"><div class="wrap"><span class="vkap__nr">07</span><div><b>Lichtblauw paneel met tegeltjes, foto op een geel vlak</b><small>Referentie A #wonen en #team (.blok--paneel .blok__tekst, .d4, .d4--actief, .blok--vlak .blok__foto::before)</small><p>Twee referentie A-regels samen: het tekstpaneel van #wonen (lichte kleur, dikke rand links, witte tegeltjes met een klein icoon) en de foto van #team met een gekleurd vlak dat rechtsonder achter de foto uitsteekt. De tegeltjes zijn de vragen met een klein 3D-voorwerp; open wordt de tegel lichtblauw met een blauwe rand (.d4--actief). De foto: drie verhuizers die nog nergens op de site staan.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y07 " aria-labelledby="kop-y07">
+<div class="wrap">
+<div class="y07__rij"><div class="y07__tekst"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y07">Vragen over contact</h2></div>
+<div class="y07__d4"><details class="q " name="y07">
+<summary><img class="y07__ic" src="/img/contact-3d/klok.webp" alt="" width="279" height="320" loading="lazy" decoding="async"><span class="q__tekst">Hoe snel krijg ik antwoord?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div>
+</details><details class="q " name="y07">
+<summary><img class="y07__ic" src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720" loading="lazy" decoding="async"><span class="q__tekst">Kan ik ook &#x27;s avonds of in het weekend bellen?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div>
+</details><details class="q " name="y07">
+<summary><img class="y07__ic" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"><span class="q__tekst">Wat zet ik in mijn bericht?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div>
+</details><details class="q " name="y07">
+<summary><img class="y07__ic" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"><span class="q__tekst">Gebruik ik het contactformulier of het offerteformulier?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div>
+</details></div>
+<div class="y07__bel"><span class="bereikbaar q-status q-status--pil" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span><div class="q-knoppen "><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div></div>
+<figure class="y07__foto" aria-hidden="true"><span class="y07__raam"><img class="y07__mens" src="/img/helpen-wij-u-snel.webp" alt="" width="900" height="462" loading="lazy" decoding="async"></span></figure></div>
+</div>
+</section>
+<div class="vkap" id="v08"><div class="wrap"><span class="vkap__nr">08</span><div><b>Tekst en foto boven, vier vragen op een rij</b><small>Referentie A /contact/ #contact-intro (.blok--stapel, .blok__boven, .blok__foto figcaption, .usps--rij)</small><p>Het eerste contactblok van referentie A zelf: boven de tekst met de knoppen naast een foto met een donker glazen label (hier de klantenservicemedewerker met headset, een foto die nog nergens op de site staat), daaronder vier punten over de volle breedte, elk met een rond icoon, een kop en een alinea. De vier punten zijn hier de vier vragen, met het antwoord er direct onder.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y08 " aria-labelledby="kop-y08">
+<div class="wrap">
+<div class="y08__boven"><div class="y08__tekst"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y08">Vragen over contact</h2></div><span class="bereikbaar q-status q-status--pil" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span><p class="q-zin ">Staat uw vraag er niet bij?</p><div class="q-knoppen "><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div>
+<figure class="y08__foto"><img class="" src="/img/headers/contact.webp" alt="" width="1200" height="675" loading="lazy" decoding="async"><figcaption>7 dagen per week bereikbaar</figcaption></figure></div>
+<ul class="y08__usps" role="list"><li><span class="y08__ico" aria-hidden="true"><img class="" src="/img/contact-3d/klok.webp" alt="" width="279" height="320" loading="lazy" decoding="async"></span><div><h3>Hoe snel krijg ik antwoord?</h3><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div></li><li><span class="y08__ico" aria-hidden="true"><img class="" src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720" loading="lazy" decoding="async"></span><div><h3>Kan ik ook &#x27;s avonds of in het weekend bellen?</h3><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div></li><li><span class="y08__ico" aria-hidden="true"><img class="" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span><div><h3>Wat zet ik in mijn bericht?</h3><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div></li><li><span class="y08__ico" aria-hidden="true"><img class="" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span><div><h3>Gebruik ik het contactformulier of het offerteformulier?</h3><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div></li></ul>
+</div>
+</section>
+<div class="vkap" id="v09"><div class="wrap"><span class="vkap__nr">09</span><div><b>Witte kaart met een geel uitkomstvak</b><small>Referentie B /zonnepanelen-kopen/ #berekenen (.sgdp-calc__kaart, .sgdp-calc__uit, .sgdp-calc__label, .sgdp-calc__getal, .sgdp-calc__bel)</small><p>De rekenkaart van referentie B: links de invoer, rechts een zongeel vak met een klein label, een groot getal in een vlakje, een regel eronder en de knop. Hier staan links de vragen als rijen (zoals de staffelrijen), en in het gele vak "Staat uw vraag er niet bij?", het telefoonnummer als groot getal (klikbaar), de bereikbaarheid en WhatsApp. De 3D-telefoon steekt boven het vak uit.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y09 " aria-labelledby="kop-y09">
+<div class="wrap">
+<div class="y09__kaart"><div class="y09__intro"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y09">Vragen over contact</h2></div></div><div class="q-lijst y09__lijst"><details class="q " name="y09">
+<summary><span class="q__nr" aria-hidden="true">01</span><span class="q__tekst">Hoe snel krijg ik antwoord?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div>
+</details><details class="q " name="y09">
+<summary><span class="q__nr" aria-hidden="true">02</span><span class="q__tekst">Kan ik ook &#x27;s avonds of in het weekend bellen?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div>
+</details><details class="q " name="y09">
+<summary><span class="q__nr" aria-hidden="true">03</span><span class="q__tekst">Wat zet ik in mijn bericht?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div>
+</details><details class="q " name="y09">
+<summary><span class="q__nr" aria-hidden="true">04</span><span class="q__tekst">Gebruik ik het contactformulier of het offerteformulier?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div>
+</details></div>
+<div class="y09__uit"><img class="y09__3d" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async" aria-hidden="true"><span class="y09__label">Staat uw vraag er niet bij?</span><a class="y09__getal" href="tel:+31850005647">085 000 5647</a><span class="bereikbaar q-status y09__bereik" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span><span class="y09__detail">7 dagen per week bereikbaar</span><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div>
+</div>
+</section>
+<div class="vkap" id="v10"><div class="wrap"><span class="vkap__nr">10</span><div><b>Blauwe kaart, de medewerker komt erboven uit</b><small>Referentie B /zonnepanelen-kopen/ voorraad (.sgdp-voorraad__kaart, .sgdp-voorraad__media, .sgdp-figuur, .sgdp-badge)</small><p>Het voorraadblok van referentie B: een groene kaart met links de tekst en rechts een uitgeknipte figuur die op de onderrand staat en met hoofd en schouders boven de kaart uitkomt, met een lime badge linksonder. Hier Koningsblauw, de vragen als lichte regels, de klantenservicemedewerker met headset (nog nergens op de site) en een gele badge met de bereikbaarheid.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y10 " aria-labelledby="kop-y10">
+<div class="wrap">
+<div class="y10__kaart"><div class="y10__body"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y10">Vragen over contact</h2></div><div class="q-lijst y10__lijst"><details class="q " name="y10">
+<summary><span class="q__nr" aria-hidden="true">01</span><span class="q__tekst">Hoe snel krijg ik antwoord?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div>
+</details><details class="q " name="y10">
+<summary><span class="q__nr" aria-hidden="true">02</span><span class="q__tekst">Kan ik ook &#x27;s avonds of in het weekend bellen?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div>
+</details><details class="q " name="y10">
+<summary><span class="q__nr" aria-hidden="true">03</span><span class="q__tekst">Wat zet ik in mijn bericht?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div>
+</details><details class="q " name="y10">
+<summary><span class="q__nr" aria-hidden="true">04</span><span class="q__tekst">Gebruik ik het contactformulier of het offerteformulier?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div>
+</details></div><div class="y10__bel"><p class="q-zin ">Staat uw vraag er niet bij?</p><div class="q-knoppen "><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div></div>
+<div class="y10__media"><img class="y10__figuur" src="/img/contact-uit.webp" alt="" width="1200" height="800" loading="lazy" decoding="async" aria-hidden="true"><span class="y10__badge"><span class="y10__badge-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><span class="bereikbaar q-status y10__st" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></span></div></div>
+</div>
+</section>
+<div class="vkap" id="v11"><div class="wrap"><span class="vkap__nr">11</span><div><b>Witte balk met vier vragen en een brede belkaart</b><small>Referentie B kerncijferbalk (.kerncijfers__rij, .kerncijfer, .kerncijfer__ic) + /warmtepomp-kopen/ (.sgdp-kaart--breed)</small><p>De kerncijferbalk die referentie B op elke pagina heeft: één witte balk met vier vakken, gescheiden door een dunne lijn, elk met een 3D-voorwerp en een vetgedrukte regel. Elk vak is een vraag; open valt het antwoord in hetzelfde vak. Daaronder de brede kaart van referentie B (voorwerp links, tekst, knoppen rechts) voor "Staat uw vraag er niet bij?".</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--lucht v y11 " aria-labelledby="kop-y11">
+<div class="wrap">
+<div class="kopgroep y11__kop"><p class="label">Veelgestelde vragen</p><h2 id="kop-y11">Vragen over contact</h2></div>
+<div class="y11__rij"><details class="q y11__cel" name="y11">
+<summary><img class="y11__ic" src="/img/contact-3d/klok.webp" alt="" width="279" height="320" loading="lazy" decoding="async"><span class="q__tekst">Hoe snel krijg ik antwoord?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div>
+</details><details class="q y11__cel" name="y11">
+<summary><img class="y11__ic" src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720" loading="lazy" decoding="async"><span class="q__tekst">Kan ik ook &#x27;s avonds of in het weekend bellen?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div>
+</details><details class="q y11__cel" name="y11">
+<summary><img class="y11__ic" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"><span class="q__tekst">Wat zet ik in mijn bericht?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div>
+</details><details class="q y11__cel" name="y11">
+<summary><img class="y11__ic" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"><span class="q__tekst">Gebruik ik het contactformulier of het offerteformulier?</span><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary>
+<div class="q__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div>
+</details></div>
+<div class="y11__breed"><img class="y11__3d" src="/img/contact-3d/headset.webp" alt="" width="287" height="320" loading="lazy" decoding="async" aria-hidden="true"><div class="y11__tekst"><h3>Staat uw vraag er niet bij?</h3><span class="bereikbaar q-status q-status--pil" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></div><div class="q-knoppen y11__knoppen"><a class="q-bel " href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div>
+</div>
+</section>
+<div class="vkap" id="v12"><div class="wrap"><span class="vkap__nr">12</span><div><b>Vraag kiezen, antwoord in de gele pil</b><small>Referentie B scanvak onder elke paginakop (.sv-kaart, .sv-kop, .sv-logos, .sv-logo, .sv-keuze, .sv-chip:has(input:checked), .sv-pil, .sv-veld, .sv-knop)</small><p>Het scanvak van referentie B: een lichte kaart met een blauwe rand, de kop links en kleine witte tegels rechtsboven, daaronder keuzechips en een brede pil met een wit veld en een knop. Hier zijn de chips de vier vragen (echte keuzerondjes, zonder JavaScript): het antwoord van de gekozen vraag staat in het witte veld van de gele pil, met de belknop ernaast. De tegels: Google-score, bereikbaarheid en de vaste verhuisadviseur.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y12 " aria-labelledby="kop-y12">
+<div class="wrap">
+<div class="y12__kaart"><div class="y12__kop"><div class="y12__tekst"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y12">Vragen over contact</h2></div></div>
+<div class="y12__logos"><span class="y12__logo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg><span><b>4,9</b> uit 5 op Google</span></span><span class="y12__logo"><span class="bereikbaar q-status" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></span><span class="y12__logo"><img class="y12__3d" src="/img/contact-3d/headset.webp" alt="" width="287" height="320" loading="lazy" decoding="async" aria-hidden="true"><span>Eén vaste verhuisadviseur</span></span></div></div>
+<fieldset class="y12__keuze"><legend class="vh">Vragen over contact</legend><div class="y12__chips"><label class="y12__chip"><input type="radio" name="y12" value="1" checked><span>Hoe snel krijg ik antwoord?</span></label><label class="y12__chip"><input type="radio" name="y12" value="2"><span>Kan ik ook &#x27;s avonds of in het weekend bellen?</span></label><label class="y12__chip"><input type="radio" name="y12" value="3"><span>Wat zet ik in mijn bericht?</span></label><label class="y12__chip"><input type="radio" name="y12" value="4"><span>Gebruik ik het contactformulier of het offerteformulier?</span></label></div></fieldset>
+<div class="y12__pil"><div class="y12__veld" aria-live="polite"><div class="y12__antw y12__antw--1"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.</p></div><div class="y12__antw y12__antw--2"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div><div class="y12__antw y12__antw--3"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div><div class="y12__antw y12__antw--4"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div></div><a class="q-bel y12__knop" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div></div>
+</div>
+</section>
+<div class="vkap" id="v13"><div class="wrap"><span class="vkap__nr">13</span><div><b>Zachte band met V-rand, voorwerpen steken uit de kaart</b><small>Referentie B homepage #diensten (.sgd1 ::before/::after, .sgd1-grid, .sgd1-kaart, .sgd1-pop, .sgd1-ico, .sgd1-meer) + .sgdp-pop--raam</small><p>Het dienstenblok van referentie B: een lichte band met een V aan de bovenkant en een schuine punt onderaan, witte kaarten met een kleine hoek, bovenin een beeldvak waar het onderwerp bovenuit steekt en een rond icoon op de onderrand. Hier staat in elk vak een 3D-voorwerp op een lichtblauw vlak (de --raam-variant van referentie B), het nummer als gele schijf op de rand, de vraag en het antwoord in de kaart. Onder het raster de verwijzende zin.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y13 " aria-labelledby="kop-y13">
+<span class="y13__band" aria-hidden="true"></span>
+<div class="wrap">
+<div class="y13__kop"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y13">Vragen over contact</h2></div><span class="bereikbaar q-status q-status--pil" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></div>
+<ul class="y13__grid" role="list"><li class="y13__kaart"><div class="y13__beeld"><span class="y13__raam"></span><img class="y13__obj y13__obj--1" src="/img/contact-3d/klok.webp" alt="" width="279" height="320" loading="lazy" decoding="async" aria-hidden="true"><span class="y13__ico" aria-hidden="true">01</span></div><div class="y13__tekst"><h3>Hoe snel krijg ik antwoord?</h3><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div></li><li class="y13__kaart"><div class="y13__beeld"><span class="y13__raam"></span><img class="y13__obj y13__obj--2" src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720" loading="lazy" decoding="async" aria-hidden="true"><span class="y13__ico" aria-hidden="true">02</span></div><div class="y13__tekst"><h3>Kan ik ook &#x27;s avonds of in het weekend bellen?</h3><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div></li><li class="y13__kaart"><div class="y13__beeld"><span class="y13__raam"></span><img class="y13__obj y13__obj--3" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async" aria-hidden="true"><span class="y13__ico" aria-hidden="true">03</span></div><div class="y13__tekst"><h3>Wat zet ik in mijn bericht?</h3><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div></li><li class="y13__kaart"><div class="y13__beeld"><span class="y13__raam"></span><img class="y13__obj y13__obj--4" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async" aria-hidden="true"><span class="y13__ico" aria-hidden="true">04</span></div><div class="y13__tekst"><h3>Gebruik ik het contactformulier of het offerteformulier?</h3><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div></li></ul>
+<p class="y13__meer">Staat uw vraag er niet bij? <a href="tel:+31850005647">Bel 085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p>
+</div>
+</section>
+<div class="vkap" id="v14"><div class="wrap"><span class="vkap__nr">14</span><div><b>Grote foto links, vragen als gegevensrijen</b><small>Referentie B /contact/ (.sgct-plek__in, .sgct-kaartbeeld, .sgct-kaartbeeld__pin, .sgct-route, .sgct-bron, .sgct-gegevens dl)</small><p>Het adresblok van referentie B: links een groot beeld met een lijn en schaduw, met een markering, een knop linksonder en een klein label rechtsboven; rechts een kop en een lijst met rijen tussen dunne lijnen (links vet, rechts de waarde). Hier is het beeld een foto van iemand die een bericht typt, de markering de bereikbaarheid, de knop "Bel" en het label WhatsApp; rechts elke vraag met het antwoord ernaast, zonder klikken.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y14 " aria-labelledby="kop-y14">
+<div class="wrap">
+<div class="y14__in"><figure class="y14__beeld"><img class="y14__foto" src="/img/stap-1-formulier.webp" alt="" width="560" height="380" loading="lazy" decoding="async"><span class="bereikbaar q-status q-status--pil y14__pin" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span><a class="q-bel y14__route" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg><span>Bel 085 000 5647</span></a><span class="y14__bron"><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></span></figure>
+<div class="y14__gegevens"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y14">Vragen over contact</h2></div><dl><div><dt><span class="y14__nr">01</span>Hoe snel krijg ik antwoord?</dt><dd><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></dd></div><div><dt><span class="y14__nr">02</span>Kan ik ook &#x27;s avonds of in het weekend bellen?</dt><dd><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></dd></div><div><dt><span class="y14__nr">03</span>Wat zet ik in mijn bericht?</dt><dd><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></dd></div><div><dt><span class="y14__nr">04</span>Gebruik ik het contactformulier of het offerteformulier?</dt><dd><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></dd></div></dl></div></div>
+</div>
+</section>
+<div class="vkap" id="v15"><div class="wrap"><span class="vkap__nr">15</span><div><b>Lichte kaart met vier tegels</b><small>Referentie B homepage #duurzaam (.sgz__kaart, .sgz__tekst, .sgz__link, .sgz__tegels, .sgz__tegel, .sgz__3d, .sgz__tegel--woord)</small><p>Het duurzaamblok van referentie B: een lichte kaart, links de kop en een tekstlink met pijl, rechts witte tegels met een 3D-voorwerp, een groot woord en een klein onderschrift. Hier is het grote woord een stukje uit het antwoord (Binnen 24 uur, 08.00 tot 20.00 uur, Vertel kort, Offerteformulier) en het onderschrift de vraag; open staat het hele antwoord in de tegel.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: Diepblauwe band "Wat er gebeurt na uw bericht"</div></div>
+<section class="sectie sectie--wit v y15 " aria-labelledby="kop-y15">
+<div class="wrap">
+<div class="y15__kaart"><div class="y15__tekst"><div class="kopgroep "><p class="label">Veelgestelde vragen</p><h2 id="kop-y15">Vragen over contact</h2></div><span class="bereikbaar q-status q-status--pil" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span><p class="y15__zin">Staat uw vraag er niet bij?</p><a class="y15__link" href="tel:+31850005647"><span>Bel 085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></div>
+<div class="y15__tegels"><details class="q y15__tegel" name="y15"><summary><img class="y15__3d" src="/img/contact-3d/klok.webp" alt="" width="279" height="320" loading="lazy" decoding="async"><b>Binnen 24 uur</b><small>Hoe snel krijg ik antwoord?</small><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary><div class="q__antwoord"><p>Binnen 24 uur, telefonisch of per mail. Heeft u haast? Bel ons dan op <a href="tel:+31850005647">085 000 5647</a>.<a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></p></div></details><details class="q y15__tegel" name="y15"><summary><img class="y15__3d" src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720" loading="lazy" decoding="async"><b>08.00 tot 20.00 uur</b><small>Kan ik ook &#x27;s avonds of in het weekend bellen?</small><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary><div class="q__antwoord"><p>Ja. Wij zijn bereikbaar van maandag tot en met zaterdag van 08.00 tot 20.00 uur, en op zondag van 09.00 tot 17.00 uur.</p></div></details><details class="q y15__tegel" name="y15"><summary><img class="y15__3d" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"><b>Vertel kort</b><small>Wat zet ik in mijn bericht?</small><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary><div class="q__antwoord"><p>Vertel kort waar uw vraag over gaat. Gaat het om een verhuizing, noem dan ook waar u vandaan komt, waar u naartoe gaat en wanneer. Dan kunnen wij u meteen goed helpen.</p></div></details><details class="q y15__tegel" name="y15"><summary><img class="y15__3d" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"><b>Offerteformulier</b><small>Gebruik ik het contactformulier of het offerteformulier?</small><span class="q__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></span></summary><div class="q__antwoord"><p>Wilt u weten wat uw verhuizing kost? Gebruik dan het <a href="/offerte/">offerteformulier</a>. Voor alle andere vragen is het contactformulier op deze pagina handig.</p></div></details></div></div>
+</div>
+</section>
+<div class="vkap vkap--eind"><div class="wrap"><p>Alle teksten zijn letterlijk die van /contact/ (het vragenblok, plus "4,9 uit 5 op Google", "7 dagen per week bereikbaar" en "Eén vaste verhuisadviseur" uit de vertrouwensrij van dezelfde pagina). Beelden zijn bestaande De Reus-foto's, uitsnedes en 3D-renders uit /img, en geen mensen die al op /contact/ staan. Elke bronklasse hierboven bestaat echt in de code van referentie A of referentie B; in de De Reus-code komen die namen niet terug. Kies een nummer.</p></div></div>
+<script>
+(function(){
+function meet(){document.querySelectorAll('[data-maat]').forEach(function(m){var s=m.closest('.vkap').nextElementSibling;while(s&&s.tagName!=='SECTION')s=s.nextElementSibling;if(!s)return;var h=Math.round(s.getBoundingClientRect().height);m.textContent='Blokhoogte '+h+' px';m.classList.toggle('is-hoog',h>730);});}
+addEventListener('load',meet);addEventListener('resize',meet);document.addEventListener('toggle',meet,true);document.addEventListener('change',meet);
+})();
+</script>
+</body>
+</html>

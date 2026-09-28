@@ -252,7 +252,7 @@ def footer(ctx):
       <p>{inline(f.veld("contact-tekst", "Vertel ons waar u naartoe verhuist en welke hulp u nodig heeft. Uw vaste verhuisadviseur denkt met u mee."))}</p>
       <a class="footer__tel" href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{cfg.TEL}</span></a>
     </div>
-    <img class="footer__wagen" src="/img/footer-wagen.webp" alt="" width="1200" height="847" loading="lazy" decoding="async">
+    <img class="footer__wagen" src="/img/footer-wagen-breed.webp" alt="" width="2000" height="847" loading="lazy" decoding="async">
   </div>
   <div class="wrap footer__top">
     <div class="footer__merk">

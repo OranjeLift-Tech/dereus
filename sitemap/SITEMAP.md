@@ -60,7 +60,7 @@ De huidige site is één Wix-pagina.
 
 ## 3. Conventies
 
-We volgen `brocken/site/`, bevestigd door `website-kieviet/site/`:
+We volgen `brocken/site/`, bevestigd door referentie A:
 - **Adresvorm:** map met `index.html`, adressen met een schuine streep aan het eind, geen `.html`, `trailingSlash: true` in `vercel.json`.
 - **Robots:** `robots.txt` met `Allow: /`, `Disallow: /_werk/` en een sitemapregel.
 - **Bedanktpagina's:** `noindex`.
@@ -228,14 +228,14 @@ Resultaat:
 | Oud | Nieuw | Hoe |
 |---|---|---|
 | `https://www.verhuisbedrijfdereus.nl` | `https://www.verhuisbedrijfdereus.nl/` | Dezelfde pagina, canonical met `/` |
-| `https://verhuisbedrijfdereus.nl/…` | `https://www.verhuisbedrijfdereus.nl/…` | 301 op host, zoals De Kievit |
+| `https://verhuisbedrijfdereus.nl/…` | `https://www.verhuisbedrijfdereus.nl/…` | 301 op host, zoals referentie A |
 | `/_files/ugd/03c52e_6264876606274b28a8cfdeb6721704cb.pdf` | `/algemene-voorwaarden/` | 301; het pdf-adres kan in oude offertes en mails staan |
 | `/pages-sitemap.xml` | `/sitemap.xml` | 301 |
 
 - **Na de lancering:**
   - Google Bedrijfsprofiel naar `/` laten linken.
   - `sitemap.xml` indienen in Search Console.
-  - Staging en preview `noindex`, zoals Brocken en De Kievit.
+  - Staging en preview `noindex`, zoals Brocken en referentie A.
 
 ---
 

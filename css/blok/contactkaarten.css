@@ -69,6 +69,20 @@
   filter:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 35%,transparent)) drop-shadow(10px 20px 14px color-mix(in srgb,var(--brand-secondary) 38%,transparent))}
 .b-contactkaarten__obj--telefoon{left:2.9rem;height:10.2rem}
 .b-contactkaarten__obj--doos{left:1.7rem;height:9.2rem}
+/* Muis op de kaart (ontwerp 06 "Groene 3D-zijkant", _ontwerpen/contactkaarten-hover-varianten.html): de kaart
+   schuift 5 px naar linksboven en groeit 2%; rechts en onder komt een groene zijkant tevoorschijn, als een blok,
+   in de kleur van de knop Offerte aanvragen (--color-cta, naar achteren donkerder). Rust en hover hebben evenveel
+   schaduwen in dezelfde volgorde, zodat de overgang vloeiend is. Schuiven en groeien met `translate` en `scale`,
+   want `transform` is van de reveal (.js [data-reveal-groep]>*.in). De dubbele klasse wint van de reveal-regel
+   in site.css, dus die overgangen staan hier ook in de lijst.
+   28-09-2026: daarbij een neongloed in hetzelfde groen, net als de treden op /werkwijze/ (een zachte gloed
+   binnen de rand en twee erbuiten), en een rustiger overgang: 450 ms in plaats van 200 ms, want 200 ms was
+   "te snel". Via --duration-base, zodat het bij verminderde beweging op 0 blijft. */
+.b-contactkaarten__kanalen>.b-contactkaarten__kanaal{
+  box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px transparent,0 0 0 2px transparent,0 6px 0 0 #D5E2F8,0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent),0 0 12px 2px transparent,4px 4px 34px 8px transparent;
+  transition:opacity .55s var(--ease),transform .55s var(--ease),translate calc(var(--duration-base) * 2.25) var(--ease-out),scale calc(var(--duration-base) * 2.25) var(--ease-out),box-shadow calc(var(--duration-base) * 2.25) var(--ease-out)}
+@media(hover:hover){.b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover{translate:-5px -5px;scale:1.02;
+  box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px color-mix(in srgb,var(--color-cta) 22%,transparent),0 0 0 2px var(--color-cta),3px 3px 0 2px var(--color-cta),6px 6px 0 2px var(--color-cta-hover),9px 9px 0 2px var(--color-cta-active),16px 22px 30px -10px color-mix(in srgb,var(--ink) 30%,transparent),0 0 12px 2px color-mix(in srgb,var(--color-cta) 85%,transparent),4px 4px 34px 8px color-mix(in srgb,var(--color-cta) 45%,transparent)}}
 /* de groene WhatsApp-knop onder het nummer: eigen breedte en lucht, niet tegen de link aan */
 .b-contactkaarten__kanaal>.wa-link{align-self:flex-start;margin:.7rem 0 0;margin-inline-start:0}
 @media(max-width:1080px){.b-contactkaarten__kanalen{row-gap:4.6rem}}
@@ -95,8 +109,11 @@
 }
 /* overflow:visible in plaats van de clip van .uitsnede: de verhuizer raakt zijn vak aan alle kanten,
    dus de clip sneed de slagschaduw recht af, en de dozen staan er bewust half buiten. Veilig hier: de
-   figuur staat in de middelste kolom, ver van de paginarand, en onder 1024 px staat hij uit. */
-.b-contactkaarten__boven .b-contactkaarten__figuur{align-self:end;height:clamp(15rem,21vw,19.5rem);width:auto;overflow:visible;pointer-events:none;
+   figuur staat in de middelste kolom, ver van de paginarand, en onder 1024 px staat hij uit.
+   Hoogte 28-09-2026 van 21vw/19.5rem naar 24vw/23rem ("stond te klein"): op een laptop (1536) 368 in
+   plaats van 312 px, zodat hij boven de belkaart uitsteekt; bij 1024 maar 246 px (was 240), want daar
+   heeft het nummer in de belkaart de breedte nodig. */
+.b-contactkaarten__boven .b-contactkaarten__figuur{align-self:end;height:clamp(15rem,24vw,23rem);width:auto;overflow:visible;pointer-events:none;
   --uit-schaduw:0 10px 14px rgb(14 26 51 / .24);
   --uit-plaat-vulling:linear-gradient(158deg,var(--primary-300),var(--primary-200));
   --uit-plaat-rand:rgb(23 70 162 / .14);
@@ -107,3 +124,9 @@
 .b-contactkaarten__boven .b-contactkaarten__voorgrond{position:absolute;z-index:2;left:-22%;bottom:-5%;width:80%;height:auto;max-width:none;translate:0 15.7%;
   filter:drop-shadow(4px 8px 8px rgb(14 26 51 / .28))}
 @media(max-width:1023.98px){.b-contactkaarten__boven .b-contactkaarten__figuur{display:none}}
+/* 28-09-2026, vraag van de gebruiker: onder de muis wordt de verhuizer groter (net als in #reviews en "Uw
+   lijstje" op /werkwijze/ en op /offerte/). Het vak laat de muis door (pointer-events hierboven), dus alleen de
+   verhuizer zelf vangt hem; de dozen ervoor blijven staan. Hij groeit vanaf zijn voeten (39 % van de breedte). */
+.b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld{pointer-events:auto;transform-origin:39% 100%;transition:scale .35s var(--ease)}
+@media(hover:hover){.b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld:hover{scale:1.08}}
+@media(prefers-reduced-motion:reduce){.b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld{transition:none}}

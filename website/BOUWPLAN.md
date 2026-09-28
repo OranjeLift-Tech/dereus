@@ -141,7 +141,7 @@ def html(ctx, kopij, **opties) -> str:
 
 ## 4. Naamgeving en conventies
 
-- **Taal:** Nederlands in bestandsnamen, classes, variabelen en commentaar (zoals Brocken en De Kievit).
+- **Taal:** Nederlands in bestandsnamen, classes, variabelen en commentaar (zoals Brocken en referentie A).
 - **Classes:** kernlaag zonder voorvoegsel (`.wrap`, `.sectie`, `.knop`, `.label`, `.kaart`, `.h2`); blokken met `b-<naam>` en BEM: `.b-reviews`, `.b-reviews__kaart`, `.b-reviews__kaart--uitgelicht`. Paginaclasses op `<body>`: `p-<naam>`. Toestanden: `.is-open`, `.is-vast`, `.is-actief`.
 - **Kleuren alleen via tokens** (`var(--brand-primary)`, `var(--color-cta)`, ...). Geen losse hex-waarden in blok-CSS; de bewaker waarschuwt.
 - **Ondergrond per sectie:** `.sectie--wit`, `.sectie--mist`, `.sectie--blauw` (Koningsblauw), `.sectie--diep` (Diepblauw). Per pagina hoogstens één blauwe en één diepblauwe band met `.dakrand`, en die grenzen nooit aan elkaar.

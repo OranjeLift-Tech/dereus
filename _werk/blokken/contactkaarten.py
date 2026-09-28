@@ -1,4 +1,4 @@
-"""Persoonlijk contact (/contact/, #contactkaarten), opgezet zoals "Even persoonlijk contact" bij De Kievit:
+"""Persoonlijk contact (/contact/, #contactkaarten), opgezet zoals "Even persoonlijk contact" bij referentie A:
 boven links de kop, de tekst en twee knoppen; rechts in plaats van een foto een Koningsblauwe belkaart met
 de bereikbaarheidsstatus. Daaronder vier kanaalkaarten: bellen, mailen, een bericht sturen, een offerte.
 

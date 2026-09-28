@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uw lijstje: de verhuizer stapt uit de foto (15 ontwerpen)</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="/fonts/archivo-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/min/site.min.css">
+<link rel="stylesheet" href="/css/min/lijstplaat.min.css">
+<style>
+/* Ontwerppagina: 15 ontwerpen voor het beeld in "Uw lijstje" (/werkwijze/ #voorbereiding).
+   De verhuizer is uit img/voorbereiding-kast.webp geknipt (img/voorbereiding-kast-man.webp, zelfde
+   formaat 1200x1030, zelfde plek). Foto en uitsnede liggen precies op elkaar; de foto wordt op het
+   kader geknipt, de uitsnede niet, dus alles wat buiten het kader valt is de verhuizer zelf.
+   Alles staat stil. */
+html{scroll-padding-top:4.5rem}
+*,*::before,*::after{animation:none!important;transition:none!important}
+body{background:var(--white)}
+
+/* ---- paginakop, navigatie en de kop per ontwerp ---- */
+.otitel{background:var(--brand-secondary);color:var(--white);padding:clamp(2rem,4vw,3.5rem) 0 clamp(1.5rem,3vw,2.5rem)}
+.otitel .label{color:var(--brand-accent)}
+.otitel h1{margin:.5rem 0 .75rem;color:var(--white);font:var(--weight-display) clamp(2rem,1.4rem + 2vw,3.1rem)/1.04 var(--font-display);font-stretch:var(--font-display-stretch)}
+.otitel p:not(.label){max-width:72ch;margin:0;color:color-mix(in srgb,var(--white) 80%,transparent);line-height:1.6}
+.onav{position:sticky;top:0;z-index:50;background:var(--brand-secondary);border-top:1px solid color-mix(in srgb,var(--white) 10%,transparent);box-shadow:0 6px 18px -8px rgb(5 14 35 / .6)}
+.onav .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .45rem;padding-block:.6rem}
+.onav strong{margin-right:auto;color:var(--white);font:var(--weight-display) 1.1rem/1 var(--font-display);font-stretch:var(--font-display-stretch)}
+.onav a{display:grid;place-items:center;min-width:2.35rem;height:2.35rem;border-radius:999px;background:color-mix(in srgb,var(--white) 10%,transparent);color:var(--white);font:700 .88rem/1 var(--font-sans);text-decoration:none}
+.onav a:hover,.onav a:focus-visible{background:var(--brand-accent);color:var(--brand-secondary)}
+.okop{padding-block:1.1rem;background:var(--off-white);border-block:1px solid #E3E8F0}
+.okop .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem}
+.okop b{display:grid;place-items:center;width:2.7rem;height:2.7rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:var(--weight-display) 1.2rem/1 var(--font-display);font-stretch:var(--font-display-stretch);box-shadow:0 3px 0 var(--accent-700)}
+.okop span{color:var(--brand-primary);font:var(--weight-display) 1.5rem/1.1 var(--font-display);font-stretch:var(--font-display-stretch)}
+.okop small{flex:1 1 32rem;color:var(--graphite);font-size:.95rem;line-height:1.5}
+
+/* ==== De verhuizer stapt uit de foto: gedeeld door alle ontwerpen ====
+   .b-lijstplaat__beeld  het kadervak in de kolom (even hoog als de lijst ernaast)
+   .b-lijstplaat__kader  de lijst of plaat onder de foto
+   .b-lijstplaat__podium het vak waarin foto en uitsnede liggen: het kadervak plus de ruimte erboven
+                         (--a) en eronder (--b), als deel van de kaderhoogte
+   In het podium: __uit (de verhuizer met slagschaduw, onder de foto), __foto (op het kader geknipt),
+   eventueel lagen op de foto, en __voor (de verhuizer nog eens, schoon, boven die lagen).
+   Het beeld hangt aan zijn rug: bronpixel --xa staat op --ma van de rechterrand. Zo blijft hij op elke
+   breedte heel in beeld, ook als de kolom smaller wordt. */
+.b-lijstplaat--uit{
+  --a:.45; --b:0;
+  --xa:966; --ma:22px;
+  --rand:0px; --kl:0px; --kr:0px;
+  --kader-r:14px; --foto-r:14px; --kader-vlak:var(--primary-600);
+  --kader-val:0 16px 22px -10px rgb(6 22 55 / .6), 0 40px 60px -30px rgb(6 22 55 / .55);
+  --man-val:drop-shadow(3px 6px 4px rgb(6 22 55 / .45)) drop-shadow(14px 24px 20px rgb(6 22 55 / .4));
+  --uit-l:0px; --uit-r:0px;
+}
+.b-lijstplaat--uit .b-lijstplaat__beeld{position:relative;display:block;flex:1 1 auto;min-height:16rem;filter:none;isolation:isolate}
+.b-lijstplaat--uit .b-lijstplaat__kader{position:absolute;z-index:0;top:0;bottom:0;left:var(--kl);right:var(--kr);border-radius:var(--kader-r);background:var(--kader-vlak);box-shadow:var(--kader-val)}
+.b-lijstplaat--uit .b-lijstplaat__podium{position:absolute;left:0;right:0;top:calc(-100% * var(--a));bottom:calc(-100% * var(--b));container-type:size;pointer-events:none}
+.b-lijstplaat--uit .b-lijstplaat__podium > *{
+  --f:calc(100cqh / (1 + var(--a) + var(--b)));                 /* de kaderhoogte */
+  /* linkerrand van het beeld; nooit rechts van het kader, anders blijft er links een lege strook */
+  --l:min(var(--kl),calc(100cqw - var(--ma) - var(--xa) * 100cqh / 1030));
+}
+.b-lijstplaat--uit .b-lijstplaat__podium > img{position:absolute;top:0;left:var(--l);display:block;width:auto;height:100cqh;max-width:none;object-fit:fill}
+/* de uitsnede mag alleen BOVEN het kader uit (en links of rechts als een ontwerp dat vraagt); onder de
+   onderrand wordt hij geknipt, anders valt de schaduw van zijn benen onder het kader */
+.b-lijstplaat--uit :is(.b-lijstplaat__uit,.b-lijstplaat__voor){
+  clip-path:var(--uit-knip,inset(0 calc(100% + var(--l) - 100cqw + var(--kr) - var(--uit-r)) calc(var(--f) * var(--b) + var(--rand)) calc(var(--kl) - var(--l) - var(--uit-l))));
+}
+.b-lijstplaat--uit .b-lijstplaat__uit{z-index:1;filter:var(--man-val)}
+.b-lijstplaat--uit .b-lijstplaat__foto{z-index:2;
+  clip-path:var(--foto-knip,inset(calc(var(--f) * var(--a) + var(--rand)) calc(100% + var(--l) - 100cqw + var(--kr) + var(--rand)) calc(var(--f) * var(--b) + var(--rand)) calc(var(--kl) - var(--l) + var(--rand)) round var(--foto-r)))}
+.b-lijstplaat--uit .b-lijstplaat__voor{z-index:4}
+/* lagen op de foto liggen in het podium, op het fotovlak */
+.b-lijstplaat--uit :is(.b-lijstplaat__lijn,.b-lijstplaat__glas){position:absolute;z-index:3;
+  top:calc(var(--f) * var(--a) + var(--rand));bottom:calc(var(--f) * var(--b) + var(--rand));
+  left:calc(var(--kl) + var(--rand));right:calc(var(--kr) + var(--rand));border-radius:var(--foto-r)}
+
+/* tussen 1000 en 1280 is de kolom smaller en de lijst hoger: dan komt zijn hand anders tegen
+   "Uw lijstje" aan. Minder ruimte boven het kader houdt hem eronder. */
+@media (min-width:1001px) and (max-width:1279px){
+  .b-lijstplaat--uit:not(.v10,.v11,.v15){--a:.38}
+  .b-lijstplaat--uit.v15{--a:.33}
+}
+@media (max-width:1000px){
+  .b-lijstplaat--uit .b-lijstplaat__beeld{aspect-ratio:16/10;height:auto;min-height:0;margin-top:clamp(2.5rem,8vw,4rem)}
+}
+
+/* ---- 01 Over de rand: de standaard hierboven ---- */
+
+/* ---- 02 Witte afdruk ---- */
+.v02{--rand:10px;--kader-vlak:var(--white);--kader-r:12px;--foto-r:4px;
+  --kader-val:inset 0 -1px 0 #D5E2F8,0 5px 0 #C9D8F2,0 6px 0 rgb(6 22 55 / .3),0 20px 26px -10px rgb(6 22 55 / .6),0 46px 60px -30px rgb(6 22 55 / .5)}
+
+/* ---- 03 Gedraaid vlak ---- */
+.v03 .b-lijstplaat__beeld::before{content:"";position:absolute;z-index:-1;width:58%;aspect-ratio:1;right:5%;top:0;translate:0 -22%;rotate:12deg;
+  border-radius:36px;background:color-mix(in srgb,var(--primary-300) 32%,transparent);
+  outline:2px solid color-mix(in srgb,var(--brand-accent) 75%,transparent);outline-offset:11px}
+
+/* ---- 04 Boog ---- */
+.v04{--rand:8px;--bv:.36;--kader-vlak:var(--white);--foto-r:6px;
+  --kader-r:50% 50% 14px 14px / calc(var(--bv) * 100%) calc(var(--bv) * 100%) 14px 14px;
+  --kader-val:0 5px 0 #C9D8F2,0 20px 26px -10px rgb(6 22 55 / .6),0 46px 60px -30px rgb(6 22 55 / .5)}
+.v04 .b-lijstplaat__podium > *{--bh:calc((100cqw - var(--kl) - var(--kr)) / 2);--bvp:calc(var(--bv) * var(--f))}
+.v04 .b-lijstplaat__foto{--foto-knip:inset(calc(var(--f) * var(--a) + var(--rand)) calc(100% + var(--l) - 100cqw + var(--kr) + var(--rand)) var(--rand) calc(var(--kl) - var(--l) + var(--rand))
+  round calc(var(--bh) - var(--rand)) calc(var(--bh) - var(--rand)) 6px 6px / calc(var(--bvp) - var(--rand)) calc(var(--bvp) - var(--rand)) 6px 6px)}
+.v04 .b-lijstplaat__lijn{inset:auto;top:calc(var(--f) * var(--a) + var(--rand) + 11px);bottom:calc(var(--rand) + 11px);left:calc(var(--kl) + var(--rand) + 11px);right:calc(var(--kr) + var(--rand) + 11px);
+  border:2px solid color-mix(in srgb,var(--brand-accent) 90%,transparent);
+  border-radius:calc(var(--bh) - var(--rand) - 11px) calc(var(--bh) - var(--rand) - 11px) 3px 3px / calc(var(--bvp) - var(--rand) - 11px) calc(var(--bvp) - var(--rand) - 11px) 3px 3px}
+.v04 .b-lijstplaat__voor{filter:none}
+
+/* ---- 05 Gouden cirkel ---- */
+.v05 .b-lijstplaat__beeld::before{content:"";position:absolute;z-index:-1;width:50%;aspect-ratio:1;left:40%;top:0;translate:0 -40%;border-radius:50%;
+  background:var(--brand-accent);box-shadow:inset -9px -12px 0 color-mix(in srgb,var(--accent-700) 45%,transparent),0 18px 30px -14px rgb(6 22 55 / .6)}
+
+/* ---- 06 Dakrand ---- */
+.v06{--rand:8px;--dak:.17;--kader-vlak:var(--white);--kader-val:none;--kader-r:0}
+/* de dikte van het witte dak: dezelfde vorm in lichtblauw, 5 px lager, achter het kader */
+.v06 .b-lijstplaat__kader,.v06 .b-lijstplaat__beeld::before{clip-path:polygon(0 calc(var(--dak) * 100%),50% 0,100% calc(var(--dak) * 100%),100% 100%,0 100%)}
+.v06 .b-lijstplaat__beeld::before{content:"";position:absolute;z-index:-1;inset:5px 0 -5px;background:#C9D8F2}
+.v06 .b-lijstplaat__beeld::after{content:"";position:absolute;z-index:-2;inset:18px 6% -22px;border-radius:40%;background:rgb(6 22 55 / .5);filter:blur(22px)}
+.v06 .b-lijstplaat__foto{--foto-knip:polygon(
+  calc(var(--kl) - var(--l) + var(--rand)) calc(var(--f) * (var(--a) + var(--dak)) + var(--rand)),
+  calc((100cqw + var(--kl) - var(--kr)) / 2 - var(--l)) calc(var(--f) * var(--a) + var(--rand) * 1.3),
+  calc(100cqw - var(--l) - var(--kr) - var(--rand)) calc(var(--f) * (var(--a) + var(--dak)) + var(--rand)),
+  calc(100cqw - var(--l) - var(--kr) - var(--rand)) calc(var(--f) * (1 + var(--a)) - var(--rand)),
+  calc(var(--kl) - var(--l) + var(--rand)) calc(var(--f) * (1 + var(--a)) - var(--rand)))}
+
+/* ---- 07 Huis erachter ---- */
+.v07 .b-lijstplaat__beeld::before{content:"";position:absolute;z-index:-1;width:62%;aspect-ratio:535.3/509.8;left:34%;top:0;translate:0 -33%;
+  background:var(--brand-accent);-webkit-mask:var(--huisje) center/contain no-repeat;mask:var(--huisje) center/contain no-repeat}
+
+/* ---- 08 Schuine voet ---- */
+.v08{--sv:.1;--kader-val:none}
+.v08 .b-lijstplaat__beeld{filter:drop-shadow(0 18px 18px rgb(6 22 55 / .5))}
+.v08 .b-lijstplaat__kader{border-radius:0;clip-path:polygon(0 0,100% 0,100% calc(100% - var(--sv) * 100%),0 100%)}
+.v08 .b-lijstplaat__foto{--foto-knip:polygon(
+  calc(var(--kl) - var(--l)) calc(var(--f) * var(--a)), calc(100cqw - var(--l) - var(--kr)) calc(var(--f) * var(--a)),
+  calc(100cqw - var(--l) - var(--kr)) calc(var(--f) * (1 + var(--a) - var(--sv))), calc(var(--kl) - var(--l)) calc(var(--f) * (1 + var(--a))))}
+.v08 .b-lijstplaat__uit{--uit-knip:polygon(
+  calc(var(--kl) - var(--l)) 0, calc(100cqw - var(--l) - var(--kr)) 0,
+  calc(100cqw - var(--l) - var(--kr)) calc(var(--f) * (1 + var(--a) - var(--sv))), calc(var(--kl) - var(--l)) calc(var(--f) * (1 + var(--a))))}
+.v08 .b-lijstplaat__baan{position:absolute;z-index:3;left:calc(var(--kl) - 12px);right:calc(var(--kr) - 12px);
+  top:calc(var(--f) * (1 + var(--a) - var(--sv)) - 3px);height:calc(var(--f) * var(--sv) + 18px);background:var(--brand-accent);
+  clip-path:polygon(0 calc(100% - 15px),100% 0,100% 13px,0 calc(100% - 2px))}
+
+/* ---- 09 Diepe plaat ---- */
+.v09{--rand:12px;--kader-r:18px;--foto-r:8px;--kader-vlak:linear-gradient(160deg,#16357A,var(--brand-secondary));
+  --kader-val:inset 0 1px 0 rgb(255 255 255 / .16),0 4px 0 #0A1F4A,0 8px 0 #081A3F,0 12px 0 #061433,0 26px 30px -12px rgb(3 10 30 / .75),0 56px 70px -34px rgb(3 10 30 / .6)}
+.v09 .b-lijstplaat__glas{box-shadow:inset 0 16px 18px -12px rgb(0 0 0 / .62),inset 14px 0 16px -14px rgb(0 0 0 / .45),inset -8px 0 14px -12px rgb(0 0 0 / .35),inset 0 0 0 1px rgb(255 255 255 / .06)}
+.v09 .b-lijstplaat__voor{filter:none}
+
+/* ---- 10 Hand over de rand ---- */
+.v10{--kl:24px;--ma:14px;--a:.48;--b:.288;--uit-l:140px}
+.v10 .b-lijstplaat__beeld{margin-top:2.6rem}
+.v10 .b-lijstplaat__rechts{min-width:0}
+.v10 .b-lijstplaat__rechts .b-lijstplaat__lijstkop{margin-bottom:clamp(.4rem,.8vw,.7rem)}
+
+/* ---- 11 Uit de plaat ---- */
+.v11{--a:.56}
+.v11 .b-lijstplaat__plaat{margin-top:clamp(6rem,9vw,8rem)}
+.v11 .b-lijstplaat__rechts{min-width:0}
+.v11 .b-lijstplaat__rechts .b-lijstplaat__lijstkop{margin-bottom:clamp(.4rem,.8vw,.7rem)}
+
+/* ---- 12 Scherp op zacht ---- */
+.v12 .b-lijstplaat__foto{filter:blur(3px) saturate(.88) brightness(.93)}
+.v12 .b-lijstplaat__voor{filter:drop-shadow(0 3px 6px rgb(6 22 55 / .32))}
+
+/* ---- 13 Foto rechts ---- */
+.v13 .b-lijstplaat__in{grid-template-columns:minmax(0,1fr) clamp(14rem,30vw,28rem)}
+.v13 .b-lijstplaat__zij{order:2}
+.v13 .b-lijstplaat__klembord{right:auto;left:clamp(.6rem,2.2vw,2rem)}
+.v13 .b-lijstplaat__plaat::after{left:auto;right:var(--plaat-pad)}
+@media (max-width:1000px){.v13 .b-lijstplaat__in{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- 14 Nachtblauwe lijst ---- */
+.v14{--rand:13px;--kader-r:16px;--foto-r:5px;--kader-vlak:var(--brand-secondary);
+  --kader-val:inset 0 1px 0 rgb(255 255 255 / .14),0 5px 0 #061433,0 20px 28px -10px rgb(3 10 30 / .7),0 46px 60px -30px rgb(3 10 30 / .6)}
+.v14 .b-lijstplaat__kader::after{content:"";position:absolute;inset:5px;border:1.5px solid color-mix(in srgb,var(--brand-accent) 85%,transparent);border-radius:12px}
+
+/* ---- 15 Witte kaart ----
+   De kolom zelf is een witte kaart met dikte. Hij komt uit de foto, over de kaart heen, en met zijn
+   hoofd nog boven de kaart uit op de blauwe plaat. */
+.v15{--a:.6;--kader-vlak:var(--primary-50);--kader-val:none;--foto-r:10px;--kader-r:10px}
+.v15 .b-lijstplaat__zij{padding:clamp(1rem,1.6vw,1.35rem);border-radius:18px;background:var(--white);
+  box-shadow:inset 0 -1px 0 #D5E2F8,0 6px 0 #C9D8F2,0 7px 0 rgb(6 22 55 / .28),0 24px 32px -12px rgb(6 22 55 / .6),0 52px 70px -34px rgb(6 22 55 / .5)}
+.v15 .b-lijstplaat__lijstkop{color:var(--brand-primary)}
+
+</style>
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol></svg>
+<header class="otitel"><div class="wrap">
+  <p class="label">/werkwijze/ · Wat u vooraf kunt regelen</p>
+  <h1>Uw lijstje: de verhuizer stapt uit de foto</h1>
+  <p>Vijftien ontwerpen voor het beeld in de blauwe plaat. Het is steeds dezelfde foto. De verhuizer is eruit geknipt en ligt precies op zijn eigen plek in de foto, alleen komt hij buiten het kader verder. Alles staat stil. Kleuren, letters en tekst zijn die van de site. Ontwerp 00 is hoe het nu staat.</p>
+</div></header>
+<nav class="onav" aria-label="Ontwerpen"><div class="wrap"><strong>Uw lijstje</strong><a href="#v00">00</a><a href="#v01">01</a><a href="#v02">02</a><a href="#v03">03</a><a href="#v04">04</a><a href="#v05">05</a><a href="#v06">06</a><a href="#v07">07</a><a href="#v08">08</a><a href="#v09">09</a><a href="#v10">10</a><a href="#v11">11</a><a href="#v12">12</a><a href="#v13">13</a><a href="#v14">14</a><a href="#v15">15</a></div></nav>
+<main>
+
+<div class="okop" id="v00"><div class="wrap"><b>00</b><span>Zo staat het nu</span><small>Ter vergelijking: de foto als rechthoek in de kolom, de verhuizer blijft binnen het kader.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit v00" id="voorbereiding-00" aria-labelledby="voorbereiding-00-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-00-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__huis"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v01"><div class="wrap"><b>01</b><span>Over de rand</span><small>Het kader blijft zoals het is. Zijn hoofd en de hand aan de kast komen boven de bovenrand uit, met een eigen slagschaduw op de plaat.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v01" id="voorbereiding-01" aria-labelledby="voorbereiding-01-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-01-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v02"><div class="wrap"><b>02</b><span>Witte afdruk</span><small>De foto als dikke afdruk met een witte rand. Hij buigt over die rand heen en zijn schaduw valt op het wit.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v02" id="voorbereiding-02" aria-labelledby="voorbereiding-02-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-02-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v03"><div class="wrap"><b>03</b><span>Gedraaid vlak</span><small>Een licht gedraaid vlak met een goudgele omlijning achter het kader. Zijn hoofd staat ervoor.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v03" id="voorbereiding-03" aria-labelledby="voorbereiding-03-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-03-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v04"><div class="wrap"><b>04</b><span>Boog</span><small>De foto in een boog met een witte rand en een goudgele binnenlijn. Hij stapt door de boog naar voren, voor de lijn langs.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v04" id="voorbereiding-04" aria-labelledby="voorbereiding-04-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-04-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"><span class="b-lijstplaat__lijn"></span><img class="b-lijstplaat__voor" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v05"><div class="wrap"><b>05</b><span>Gouden cirkel</span><small>Een Goudgele schijf achter zijn hoofd, half achter het kader. Het meeste contrast: donker hoofd op geel.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v05" id="voorbereiding-05" aria-labelledby="voorbereiding-05-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-05-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v06"><div class="wrap"><b>06</b><span>Dakrand</span><small>De bovenkant van de foto is de dakrand uit de huisstijl. Hij komt door het dak omhoog.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v06" id="voorbereiding-06" aria-labelledby="voorbereiding-06-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-06-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v07"><div class="wrap"><b>07</b><span>Huis erachter</span><small>Het huisje uit het logo in Goudgeel achter het kader. Hij staat voor het huis, de schoorsteen steekt erboven uit.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v07" id="voorbereiding-07" aria-labelledby="voorbereiding-07-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-07-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v08"><div class="wrap"><b>08</b><span>Schuine voet</span><small>De foto met een schuine onderkant en een Goudgele baan eronder. Boven stapt hij eruit.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v08" id="voorbereiding-08" aria-labelledby="voorbereiding-08-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-08-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"><span class="b-lijstplaat__baan"></span></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v09"><div class="wrap"><b>09</b><span>Diepe plaat</span><small>Een dikke Diepblauwe plaat met de foto verzonken erin. Hij leunt uit die verdieping naar voren.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v09" id="voorbereiding-09" aria-labelledby="voorbereiding-09-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-09-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"><span class="b-lijstplaat__glas"></span><img class="b-lijstplaat__voor" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v10"><div class="wrap"><b>10</b><span>Hand over de rand</span><small>Groter in beeld. Zijn hand aan de kast komt links uit het kader en zijn hoofd boven. Hij lijkt het kader vast te pakken. "Uw lijstje" staat boven de lijst.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v10" id="voorbereiding-10" aria-labelledby="voorbereiding-10-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-10-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <div class="b-lijstplaat__rechts"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul></div>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v11"><div class="wrap"><b>11</b><span>Uit de plaat</span><small>De foto vult de hele kolom en hij komt boven de blauwe plaat uit, tot in de witte sectie. "Uw lijstje" staat boven de lijst.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v11" id="voorbereiding-11" aria-labelledby="voorbereiding-11-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-11-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <div class="b-lijstplaat__rechts"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul></div>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v12"><div class="wrap"><b>12</b><span>Scherp op zacht</span><small>De ruimte achter hem is iets vervaagd en hij is scherp. Zo komt hij los van de foto, ook binnen het kader.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v12" id="voorbereiding-12" aria-labelledby="voorbereiding-12-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-12-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__voor" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v13"><div class="wrap"><b>13</b><span>Foto rechts</span><small>Lijst links en foto rechts: hij kijkt nu naar de lijst. Het klembord verhuist naar links.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v13" id="voorbereiding-13" aria-labelledby="voorbereiding-13-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-13-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v14"><div class="wrap"><b>14</b><span>Nachtblauwe lijst</span><small>Een Diepblauwe lijst met een dunne goudgele lijn, zoals een ingelijste foto. Hij komt voor de lijst langs naar buiten.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v14" id="voorbereiding-14" aria-labelledby="voorbereiding-14-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-14-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+
+<div class="okop" id="v15"><div class="wrap"><b>15</b><span>Witte kaart</span><small>De kolom is een witte kaart met dikte. Hij stapt uit de foto over de kaart heen, en zijn hoofd komt nog boven de kaart uit.</small></div></div>
+<section class="b-lijstplaat sectie sectie--wit b-lijstplaat--uit v15" id="voorbereiding-15" aria-labelledby="voorbereiding-15-kop" data-b="lijstplaat">
+  <div class="wrap">
+    <div class="kopgroep b-lijstplaat__kop"><p class="label">Voor de verhuisdag</p><h2 id="voorbereiding-15-kop">Wat u vooraf kunt regelen</h2><p class="intro">Een goede voorbereiding maakt de verhuisdag rustiger. Uw verhuisadviseur neemt dit met u door, maar dit kunt u alvast doen.</p></div>
+    <div class="b-lijstplaat__plaat">
+      <img class="b-lijstplaat__klembord" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" decoding="async">
+      <div class="b-lijstplaat__in">
+        <div class="b-lijstplaat__zij"><h3 class="b-lijstplaat__lijstkop">Uw lijstje</h3><span class="b-lijstplaat__beeld" aria-hidden="true"><span class="b-lijstplaat__kader"></span><span class="b-lijstplaat__podium"><img class="b-lijstplaat__uit" src="/img/voorbereiding-kast-man.webp" alt="" width="1200" height="1030" decoding="async"><img class="b-lijstplaat__foto" src="/img/voorbereiding-kast.webp" alt="" width="1200" height="1030" decoding="async"></span></span></div>
+        <ul class="b-lijstplaat__lijst"><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Meld alles wat belangrijk is.</b> Een smalle trap, geen lift of een kast die niet uit elkaar kan: hoe meer wij vooraf weten, hoe beter de offerte en de planning kloppen.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gevaarlijke stoffen vooraf melden.</b> Denk aan gasflessen, verf of brandbare vloeistoffen. Stoffen die niet gemeld zijn, nemen wij niet mee.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Gas laten afkoppelen.</b> Gasleidingen sluiten wij niet af of aan. Laat dat doen door een installateur.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Opvang voor uw huisdieren.</b> Dieren verhuizen wij niet. Regel voor de verhuisdag een plek voor ze.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Dozen met een kamernaam.</b> Pakt u zelf in? Zet op elke doos in welke kamer hij hoort, dan zetten wij hem meteen op de goede plek.</span></li><li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span><b>Belangrijke spullen bij u.</b> Houd paspoorten, sleutels en andere waardevolle spullen zelf bij de hand.</span></li></ul>
+      </div>
+      <p class="b-lijstplaat__slot">Twijfelt u over iets? Bel uw verhuisadviseur. Liever een vraag te veel dan een verrassing op de dag zelf.</p>
+    </div>
+  </div>
+</section>
+</main>
+</body>
+</html>

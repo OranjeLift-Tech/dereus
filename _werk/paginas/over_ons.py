@@ -1,4 +1,4 @@
-"""/over-ons/: kop met de offertepil over de onderrand (zoals Brocken en De Kievit), het verhaal met het
+"""/over-ons/: kop met de offertepil over de onderrand (zoals Brocken en referentie A), het verhaal met het
 huisvenster en de bevestigde feiten, de kernwaarden als gedrag (Koningsblauw met dakrand), reviews,
 Den Haag met de kaart (Diepblauw met dakrand) en de contactband (licht, boven de footer).
 

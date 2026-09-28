@@ -55,8 +55,42 @@ vervangen van twee stapfoto's in "Zo werkt het" (home). De header-achtergronden 
 - Merk op de gevel: VERHUISBEDRIJF over DE REUS, zonder naamregel, op 4x nagekeken.
 - Licentie: eigen render.
 
-## Vervangen
+## img/helpen-drie-uit.webp
 
+- /contact/, "Zo helpen wij u snel" (`_werk/paginas/contact.py`, formulier figuur=), sinds 28-09-2026.
+- Samengesteld uit twee beelden die al in de repo stonden, geen nieuwe generatie: de adviseur uit
+  `img/contact-adviseur-uit.webp` (commit f394ee1, teamgenoot) vooraan, en de man met de dozen en de blonde
+  man met de deken uit `img/team/team-hero-1600.webp` erachter.
+- Borstmerk van de adviseur: de door AI getekende print (geel, met verzonnen tekst) is weggehaald en vervangen
+  door het echte `dereus-beeldmerk-negatief.svg`, volgens `_ai-beelden/gereedschap/MERK-OP-KLEDING.md`.
+- Scripts en werkwijze: `_ai-beelden/helpen-drie/`. Licentie: zoals de twee bronbeelden.
+
+## img/voorbereiding-kast-man.webp
+
+- /werkwijze/ #voorbereiding ("Uw lijstje"): de verhuizer die uit de foto leunt (ontwerp 09 "Diepe plaat",
+  28-09-2026). Wordt precies op `img/voorbereiding-kast.webp` gelegd, zie UITSNEDE in `_werk/blokken/lijstplaat.py`.
+- Bron: `img/voorbereiding-kast.webp` zelf (versie 5 uit de ideeenronde van 23-09-2026, door ons gemaakt,
+  zie `_werk/export-lijstplaat-kast.cjs`). Geen ander beeld, dus dezelfde herkomst.
+- Bewerkt: achtergrond verwijderd met @imgly/background-removal-node (model medium), alfa hard gemaakt
+  (onder 120 weg, boven 200 vol), de donkere kastrand naast de vingers van de opgeheven hand weggehaald.
+  Zelfde formaat 1200x1030, WebP q88, alfa q92.
+
+## img/offerte-figuur-uit.webp
+
+- /offerte/, "Zo regelt u het in een paar minuten" (`_werk/paginas/offerte.py`, formulier figuur=), sinds 28-09-2026.
+  Bewust niet een van de `verhuizer-*-uit.webp`: dat is steeds dezelfde man, ook die met de steekwagen bij
+  "Zo gaat het verder" direct eronder.
+- Bron: `img/over-verhuizer.webp` (in de repo sinds commit 5e39059; stockfoto waarvan het petrolgroene shirt
+  koningsblauw is gemaakt en het borstzakje het logo kreeg, `_ai-beelden/kleding-logo.mjs`). De herkomst en
+  licentie van de oorspronkelijke foto staan nergens vastgelegd: nog uitzoeken.
+- Bewerkt: achtergrond en de doos linksonder verwijderd met @imgly/background-removal-node (model medium), alfa
+  hard gemaakt (onder 120 weg, boven 200 vol), bijgesneden op de persoon: kruin tot y 800, de onderkant van het
+  shirt op 78,7% van de hoogte. 435x752, WebP q90.
+
+## Vervangen
 `img/stap-2-bellen.webp` en `img/stap-5-verhuisdag.webp` staan niet meer in "Zo werkt het". Ze hebben
 geen licentiespoor; stap-5 is een uitsnede van de hero van de oude Wix-site van de klant.
 `stap-2-bellen.webp` is nog wel de bron van `img/headers/contact-bedankt.webp` (zie `bronnen.json`).
+
+`img/helpen-kantoor.webp` staat sinds 28-09-2026 niet meer op /contact/: "Zo helpen wij u snel" gebruikt nu
+`img/helpen-drie-uit.webp` (optie figuur in `_werk/blokken/formulier.py`, zie hierboven).

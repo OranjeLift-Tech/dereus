@@ -458,7 +458,7 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .bereikbaar__regel { display: block; white-space: nowrap; }
 @keyframes puls { 50% { box-shadow: 0 0 0 6px rgba(30, 122, 60, 0); } }
 
-/* ---- Header: een rij zoals De Kievit en Brocken, licht zodra vast ---- */
+/* ---- Header: een rij zoals referentie A en Brocken, licht zodra vast ---- */
 .header { position: fixed; inset: 0 0 auto; z-index: 50; color: var(--white); transition: background-color .35s var(--ease), box-shadow .35s var(--ease), color .35s var(--ease); }
 .header__balk .wrap { display: flex; align-items: center; gap: clamp(.75rem, 1.4vw, 1.25rem); min-height: var(--header-h); padding-block: .9rem; transition: min-height .35s var(--ease), padding .35s var(--ease); }
 .header__logo { position: relative; display: block; flex: none; line-height: 0; }
@@ -553,6 +553,19 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 }
 @media (max-width: 559.98px) { .header__acties { display: none; } .header__menu { margin-left: auto; } }
 @media (max-width: 359.98px) { .header__logo img, .header.is-vast .header__logo img { height: 30px; } }
+/* Staand logo naar het voorbeeld van referentie A (28-09-2026, "even groot als op referentie A"). Referentie A staat op
+   115 px vanaf 1200 px, 101 px daaronder en 67 px tot 620 px (gescrold 67, 62, 58), en dat was hier op dezelfde
+   hoogtes veel te groot: hun logo is dunne lijn, het onze vol en vet. Op 115 px geeft referentie A 2214 gekleurde pixels
+   en De Reus 7672. Daarom ongeveer 78 % van hun hoogte: 90 px vanaf 1200 px, 80 px daaronder, en 58 px op de
+   telefoon en gescrold. Onder 58 px wordt "VERHUISBEDRIJF" in het staande logo onleesbaar.
+   Het logo hangt, net als bij referentie A, onder de balk uit: de negatieve marge onderaan laat het voor de balkhoogte
+   als 46 px tellen, dus menu en knoppen blijven op dezelfde hoogte en de hero schuift niet op. Gescrold staat het
+   weer midden in de balk. :is() houdt deze regels boven .header.is-vast .header__logo img. */
+.header__logo--staand { --logo-h: 80px; align-self: flex-start; margin-bottom: calc(46px - var(--logo-h)); }
+:is(.header, .header.is-vast) .header__logo--staand img { height: var(--logo-h); }
+.header.is-vast .header__logo--staand { --logo-h: 58px; align-self: center; margin-bottom: 0; }
+@media (min-width: 1200px) { .header__logo--staand { --logo-h: 90px; } }
+@media (max-width: 620px) { .header__logo--staand { --logo-h: 58px; } }
 
 /* ---- Lade (mobiel menu) ---- */
 .lade { position: fixed; inset: 0; z-index: 80; }
@@ -605,22 +618,31 @@ body.lade-open { overflow: hidden; }
 .footer__uitnodiging { position: relative; z-index: 1; max-width: 36rem; }
 .footer__uitnodiging h2 { max-width: 23ch; color: var(--white); font-size: clamp(2rem, 1.5rem + 1.5vw, 2.75rem); }
 .footer__uitnodiging > p:not(.label) { max-width: 48ch; line-height: 1.65; }
-/* De verhuiswagen als achtergrond van de band (De Kievit-stijl): rechts vrij zichtbaar, naar links weg in
+/* De verhuiswagen als achtergrond van de band (stijl van referentie A): rechts vrij zichtbaar, naar links weg in
    het Diepblauw zodat de tekst leesbaar blijft. De foto staat buiten de tekststroom, dus de band wordt er
    niet hoger van. Het verloop ligt erover heen; de uitnodiging staat er met z-index 1 bovenop. */
 .footer__wagen { position: absolute; z-index: 0; top: 0; bottom: 0; right: calc(50% - 50vw); left: auto;
   width: min(76%, 72rem); max-width: none; height: 100%; object-fit: cover; object-position: 50% 42%;
-  /* de linkerkant van de foto zelf vervaagt, anders tekent de rand van het beeld zich af tegen het Diepblauw */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); }
+  /* de linkerkant van de foto zelf vervaagt, anders tekent de rand van het beeld zich af tegen het Diepblauw.
+     Dat vervagen gebeurt op de aangevulde strook links van de wagen (x 0-800 van 2000, zie hieronder): op 41%
+     is het beeld dekkend en de bumper staat op 40%, dus de wagen zelf vervaagt niet meer mee. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .5) 23%, #000 41%);
+  mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .5) 23%, #000 41%); }
+/* 28-09-2026 lichter aan de linkerkant (effen tot 24% in plaats van 30%), anders viel de langere straat links van
+   de wagen weg onder het Diepblauw. Schermafdrukken op 1024, 1280, 1536 en 1920: de tekst blijft goed leesbaar. */
 .footer__intro::after { content: ""; position: absolute; z-index: 0; inset: 0 calc(50% - 50vw); pointer-events: none;
-  background: linear-gradient(90deg, var(--brand-secondary) 0 30%, rgba(11, 35, 82, .9) 44%, rgba(11, 35, 82, .52) 64%, rgba(11, 35, 82, .22) 100%),
+  background: linear-gradient(90deg, var(--brand-secondary) 0 24%, rgba(11, 35, 82, .88) 36%, rgba(11, 35, 82, .5) 56%, rgba(11, 35, 82, .22) 100%),
     linear-gradient(0deg, rgba(11, 35, 82, .55), rgba(11, 35, 82, 0) 55%); }
 /* Gevraagd op 23-09-2026: "option B, but without adding more height to the footer". De band houdt zijn hoogte;
    de hele wagen, van het dak tot onder de wielen, past er alleen in als hij kleiner wordt.
    Het vak is even hoog als de band en 732 van de 847 fotorijen breed-op-hoog (aspect-ratio 1200/732), zodat
-   cover precies rij 64 tot 796 laat zien, op elke breedte. Rechts uitgelijnd en het masker blijven zoals ze waren. */
+   cover precies rij 64 tot 796 laat zien, op elke breedte. Rechts uitgelijnd en het masker blijven zoals ze waren.
+   28-09-2026: de bumper stond op de linkerrand van de foto, dus de voorkant van de wagen viel in het masker en
+   zag er afgesneden uit ("sola doğru uzasın"). footer-wagen-breed.webp is dezelfde foto met links 800 px straat
+   erbij (gevel, stoep en klinkers uit de eigen linkerstrook, verder van de wagen zachter; _werk/footer-wagen-breder.cjs).
+   Het vak wordt daarom 2000/732 breed: de wagen blijft even groot en op dezelfde plek, de foto loopt verder door. */
 @media (min-width: 768px) {
-  .footer__wagen { width: auto; aspect-ratio: 1200 / 732; object-position: 50% 55.7%; }
+  .footer__wagen { width: auto; aspect-ratio: 2000 / 732; object-position: 50% 55.7%; }
 }
 /* Vier kolommen op één rij: merk, Diensten (zelf twee kolommen breed), De Reus, Contact. Elke kolom is precies
    zo breed als zijn inhoud en de ruimte die overblijft gaat naar de tussenruimtes (space-between), zodat de rij

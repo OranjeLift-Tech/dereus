@@ -1,4 +1,4 @@
-"""Adres en kaart (/contact/, #kaart), opgezet zoals "Waar u ons vindt" op de contactpagina van De Kievit:
+"""Adres en kaart (/contact/, #kaart), opgezet zoals "Waar u ons vindt" op de contactpagina van referentie A:
 links de kaart in een afgeronde kaart met een adrespil, rechts het adres als kop, een korte tekst, twee
 gegevenskaarten (adres en openingstijden met de bereikbaarheidsstatus) en de knoppen. Telefoon en e-mail staan niet
 hier maar in de kanaalkaarten van contactkaarten (design review 1.7, C1: het nummer niet op elke plek).

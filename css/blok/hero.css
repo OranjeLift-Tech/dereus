@@ -1,4 +1,4 @@
-/* Gecentreerde fotokop en team, volgens de richting van Brocken en De Kievit. */
+/* Gecentreerde fotokop en team, volgens de richting van Brocken en referentie A. */
 .hero{--hero-onder:5rem;position:relative;isolation:isolate;overflow:hidden;color:var(--white);background:var(--brand-secondary);padding-top:calc(var(--header-h) + 1.1rem);padding-bottom:var(--hero-onder)}
 .hero__grond,.hero__foto,.hero__waas{position:absolute;inset:0;pointer-events:none}.hero__grond{z-index:-1}.hero__foto img{width:100%;height:100%;object-fit:cover}.hero__waas{background:linear-gradient(180deg,rgba(20,22,25,.54),rgba(20,22,25,.1) 32%,rgba(20,22,25,.08) 67%,rgba(20,22,25,.4))}
 .hero__textuur,.hero__korrel{display:none}

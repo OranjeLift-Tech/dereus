@@ -18,6 +18,11 @@ een los beeldmerk in een vierde kolom. De stations met een voorwerp op het huis 
 De voorwerpen staan hier vast, zoals in het blok tijdlijn: telefoon bij "wij bellen u", klembord bij het
 gesprek, formulier bij de offerte. De figuur is een uitsnede van dereus-79 (23-09-2026, gegenereerd met
 gemini-3-pro-image-preview, merk uit brandbook/assets/logo/ er later op gezet, geen stockfoto).
+
+Achtergrond: sectie--blauw, de ene Koningsblauwe band van /offerte/ (vraag van de gebruiker, later op
+28-09-2026: met sectie--mist, net als het formulier erboven, leken de twee blokken een; eerder stond de
+witte sectie te leeg). Niet Diepblauw, want de footer eronder is Diepblauw. De tekstkleuren op de witte
+platen en de voetbalk en de grond naast de nok staan in offerte-diepte.css.
 """
 
 NAAM = "stappen-na-aanvraag"
@@ -56,7 +61,7 @@ def html(ctx, kopij, **opties) -> str:
     src, breedte, hoogte = FIGUUR
     figuur = ctx.beeld(src, "", breedte, hoogte)
     belregel = k.veld("belregel")
-    return f'''<section class="b-{NAAM} sectie sectie--wit" id="{sid}" aria-labelledby="{sid}-kop">
+    return f'''<section class="b-{NAAM} sectie sectie--blauw" id="{sid}" aria-labelledby="{sid}-kop">
       <div class="wrap">
         {ctx.kopgroep(k, klasse=f"b-{NAAM}__kop")}
         <div class="b-{NAAM}__raam">

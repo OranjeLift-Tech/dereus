@@ -1,0 +1,412 @@
+/* ===== pagina ===== */
+:root{
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px color-mix(in srgb,var(--ink) 6%,transparent),0 6px 0 var(--primary-200),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 24px -16px color-mix(in srgb,var(--ink) 26%,transparent),0 40px 60px -42px color-mix(in srgb,var(--brand-secondary) 50%,transparent);
+  --obj-schaduw:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 30%,transparent)) drop-shadow(8px 15px 11px color-mix(in srgb,var(--brand-secondary) 34%,transparent));
+  --zij-geel:0 0 0 1px color-mix(in srgb,var(--ink) 6%,transparent),2px 2px 0 var(--accent-600),4px 4px 0 var(--accent-600),6px 6px 0 var(--accent-700),16px 22px 30px -6px rgba(0,0,0,.4);
+  --zij-blauw:0 0 0 1px color-mix(in srgb,var(--ink) 6%,transparent),2px 2px 0 var(--primary-200),4px 4px 0 var(--primary-200),6px 6px 0 var(--primary-300),16px 22px 30px -10px rgba(11,35,82,.3);
+}
+html{scroll-padding-top:4.5rem}
+.vnav{position:sticky;top:0;z-index:60;background:var(--brand-secondary);color:#fff;font-size:.875rem}
+.vnav .wrap{display:flex;align-items:center;gap:1rem;min-height:3.4rem;flex-wrap:wrap}
+.vnav b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.1rem;letter-spacing:.01em}
+.vnav__links{display:flex;flex-wrap:wrap;gap:.3rem;margin-left:auto}
+.vnav a{display:grid;place-items:center;min-width:2.3rem;height:2rem;padding:0 .4rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-weight:700;text-decoration:none}
+.vnav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.vkap{background:#fff;border-top:3px solid var(--brand-secondary);padding:1.1rem 0;position:relative;z-index:3}
+.vkap .wrap{display:flex;gap:1rem;align-items:flex-start}
+.vkap__nr{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.35rem/1 var(--font-display);font-stretch:75%;box-shadow:2px 2px 0 var(--accent-700)}
+.vkap b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.35rem;color:var(--brand-primary)}
+.vkap small{margin-left:.7rem;color:var(--grey-600);font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.vkap p{margin:.2rem 0 0;max-width:80ch;color:var(--graphite);font-size:.9375rem}
+.vkap--eind{padding:2rem 0}
+
+.vkap__maat{flex:none;margin-left:auto;align-self:center;padding:.35rem .7rem;border-radius:999px;background:var(--success-50);color:var(--success);font-size:.8rem;font-weight:700;white-space:nowrap}
+.vkap__maat.is-hoog{background:var(--accent-100);color:#8A5A00}
+
+/* ===== gedeeld ===== */
+/* compact: elk blok moet op een laptop (1536x730) in één keer in beeld staan */
+.v.sectie{padding-block:2.6rem 3rem}
+.v.sectie--diep{padding-top:calc(2.4rem + var(--dak))}
+.v .kopgroep{max-width:64rem;margin-bottom:1.5rem}
+.v .kopgroep .label{margin-bottom:.55rem}
+.v .kopgroep h2{font-size:clamp(2rem,1.6rem + 1.2vw,2.6rem)}
+.v .kopgroep .intro{max-width:none;margin-top:.55rem;font-size:1.08rem}
+.v .nr{display:block}
+.v .obj{display:block;width:auto;max-width:none;height:calc(var(--h,5rem) * var(--f,1));filter:var(--obj-schaduw)}
+.v h3{margin:0;font-family:var(--font-display);font-stretch:var(--font-display-stretch,75%);font-weight:800;line-height:1.12;color:var(--brand-primary);text-wrap:balance}
+.v p{text-wrap:pretty}
+.slot__kop{display:block;font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.45rem;line-height:1.1;color:var(--brand-primary)}
+.slot__tekst{margin:.3rem 0 0;color:var(--graphite);font-size:.975rem;line-height:1.55}
+.huisfoto{display:block;aspect-ratio:535.3/509.8;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 5px 0 var(--accent-600)) drop-shadow(6px 14px 12px rgba(11,35,82,.35))}
+.huisfoto img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 70%;-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.v .knop--cta{white-space:nowrap}
+
+/* uitklap */
+.uk{margin-top:auto;text-align:left}
+.uk summary{display:flex;align-items:center;justify-content:space-between;gap:.5rem;list-style:none;cursor:pointer;padding:.42rem .42rem .42rem .85rem;border:1px solid var(--primary-200);border-radius:999px;background:var(--primary-50);color:var(--brand-primary);font-weight:700;font-size:.8125rem;line-height:1.25}
+.uk summary::-webkit-details-marker{display:none}
+.uk summary:hover{background:var(--primary-100)}
+.uk__plus{flex:none;display:grid;place-items:center;width:1.75rem;height:1.75rem;border-radius:50%;background:#fff;border:1px solid var(--primary-200);color:var(--brand-primary)}
+.uk__plus .ic{width:1rem;height:1rem;margin:0;color:currentColor}
+.uk[open] .uk__plus .ic{rotate:45deg}
+.uk[open] summary{background:var(--primary-100)}
+.uk__duo{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.75rem 0 0}
+.uk__wie{min-width:0;padding-top:.5rem;border-top:3px solid var(--brand-accent)}
+.uk__wie--wij{border-top-color:var(--primary-300)}
+.uk dt{margin:0 0 .15rem;color:var(--brand-primary);font-weight:700;font-size:.8125rem;line-height:1.25}
+.uk dd{margin:0;color:var(--grey-600);font-size:.8125rem;line-height:1.45}
+.uk dd a{color:var(--brand-primary);font-weight:700;white-space:nowrap;text-decoration-color:var(--brand-accent);text-decoration-thickness:2px;text-underline-offset:3px}
+.uk__meer{margin:.6rem 0 0}
+.uk__meer .knop--link{font-size:.8125rem}
+.uk--donker summary{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.3);color:#fff}
+.uk--donker summary:hover,.uk--donker[open] summary{background:rgba(255,255,255,.16)}
+.uk--donker .uk__plus{background:var(--brand-accent);border-color:var(--brand-accent);color:var(--brand-secondary)}
+.uk--donker dt{color:var(--brand-accent)}
+.uk--donker dd{color:rgba(255,255,255,.88)}
+.uk--donker dd a,.uk--donker .uk__meer .knop--link{color:#fff}
+.uk--donker .uk__wie--wij{border-top-color:rgba(255,255,255,.5)}
+.uk--geel summary{background:var(--brand-accent);border-color:var(--accent-600);color:var(--brand-secondary)}
+.uk--geel summary:hover,.uk--geel[open] summary{background:var(--accent-200)}
+.uk--geel .uk__plus{border-color:var(--accent-600)}
+.uk--geel dt{color:var(--brand-accent)}
+.uk--geel dd{color:rgba(255,255,255,.88)}
+.uk--geel dd a,.uk--geel .uk__meer .knop--link{color:#fff}
+
+/* ===== 01 referentie A-plaat ===== */
+.v01__top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,16.5rem);gap:2rem;align-items:end}
+.v01 .kopgroep{text-align:left;margin:0 0 2.2rem;max-width:40rem}
+.v01 .kopgroep .label{justify-content:flex-start}
+.v01 .kopgroep .intro{margin-inline:0}
+.v01__team{position:relative;z-index:2;margin:0 1rem -1.6rem 0}
+.v01__team img{display:block;width:100%;height:auto;filter:drop-shadow(0 24px 22px rgba(11,35,82,.25))}
+.v01__plaat{position:relative;z-index:1;padding:2rem 1.2rem 1.2rem;border-radius:24px;background:#fff;box-shadow:var(--plaat)}
+.v01__lijst{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:0;padding:0;list-style:none}
+.v01__stap{display:flex;flex-direction:column;min-width:0;padding:0 1.1rem}
+.v01__stap+.v01__stap{border-left:1px solid var(--primary-200)}
+.v01__nrrij{display:flex;align-items:flex-end;justify-content:space-between;gap:.4rem;height:4rem;margin-bottom:.8rem}
+.v01__nr{margin:0;font:800 3.6rem/.8 var(--font-display);font-stretch:75%;color:var(--brand-primary);text-shadow:1px 1px 0 var(--brand-accent),2px 2px 0 var(--brand-accent),3px 3px 0 var(--accent-600),4px 4px 0 var(--accent-700)}
+.v01 .obj{--h:4.4rem}
+.v01 h3{display:flex;align-items:flex-end;min-height:2.3em;margin-bottom:.45rem;font-size:1.35rem}
+.v01__regel{flex:1;margin:0 0 1rem;color:var(--graphite);font-size:.9375rem;line-height:1.55}
+.v01__slot{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1.5rem;margin:1.2rem 1.1rem 0;padding-top:1.1rem;border-top:1px solid var(--primary-200)}
+.v01__huis{width:4.6rem}
+
+/* ===== 02 Dienstkaarten ===== */
+.v02__lijst{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.1rem;align-items:start;margin:2.9rem 0 0;padding:0;list-style:none}
+.v02__kaart{position:relative;display:flex;flex-direction:column;min-width:0;border-radius:16px;background:var(--brand-primary);color:#fff;
+  box-shadow:0 6px 0 var(--brand-secondary),0 7px 0 rgba(0,0,0,.18),0 24px 30px -18px rgba(11,35,82,.6);transition:background-color .2s var(--ease),translate .2s var(--ease)}
+.v02__kaart:hover{background:var(--primary-600);translate:0 -3px}
+.v02__nis{position:relative;height:6.8rem;border-radius:16px 16px 0 0;background:radial-gradient(120% 100% at 30% 15%,#fff,var(--primary-100) 50%,var(--primary-200))}
+.v02 .obj{--h:7.6rem;position:absolute;left:50%;bottom:.8rem;translate:-50% 0}
+.v02__nr{position:absolute;left:0;bottom:0;z-index:1;margin:0;padding:.55rem .85rem;border-radius:0 10px 0 0;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.3rem/1 var(--font-display);font-stretch:75%;letter-spacing:.03em}
+.v02__tekst{display:flex;flex:1;flex-direction:column;padding:1.1rem 1rem 1.1rem}
+.v02 h3{margin-bottom:.4rem;color:#fff;font-size:1.3rem}
+.v02__tekst p{min-height:5.6em;margin:0 0 1rem;color:rgba(255,255,255,.9);font-size:.9rem;line-height:1.5}
+.v02__slot{display:grid;grid-template-columns:12rem minmax(0,1fr) auto;align-items:center;gap:1.8rem;margin-top:1.6rem;padding-right:1.8rem;overflow:hidden;border-radius:16px;background:var(--brand-secondary);color:#fff;box-shadow:0 6px 0 #061634,0 24px 30px -18px rgba(11,35,82,.6)}
+.v02__foto{height:7rem}
+.v02__foto img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+.v02__slot .slot__kop{color:#fff}
+.v02__slot .slot__tekst{color:rgba(255,255,255,.88)}
+
+/* ===== 03 Trap ===== */
+.v03 .wrap{max-width:1420px}
+.v03__trap{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,1.3fr);align-items:end;margin-top:3.6rem}
+.v03__trap::after{content:"";position:absolute;left:1%;right:1%;bottom:-1.4rem;height:1.6rem;border-radius:50%;background:radial-gradient(closest-side,rgba(11,35,82,.28),transparent);z-index:-1}
+.v03__lijst{display:contents}
+.v03__trede{display:flex;flex-direction:column;min-width:0}
+.v03__kaart{position:relative;display:flex;flex-direction:column;min-height:15.2rem;margin:0 .35rem;padding:3.4rem .95rem 1rem;border-radius:14px 14px 0 0;background:#fff;box-shadow:0 0 0 1px rgba(14,26,51,.06),0 -12px 26px -20px rgba(11,35,82,.45)}
+.v03 .obj{--h:5.6rem;position:absolute;left:.9rem;top:0;translate:0 -58%}
+.v03 h3{margin-bottom:.35rem;font-size:1.25rem}
+.v03__kaart p{margin:0 0 .9rem;color:var(--graphite);font-size:.875rem;line-height:1.5}
+.v03__stoot{position:relative;height:calc(3.3rem + var(--i) * 1.75rem);background:linear-gradient(180deg,var(--brand-primary),var(--primary-600));box-shadow:inset 0 5px 0 var(--primary-300),inset -1px 0 0 rgba(255,255,255,.15)}
+.v03__trede:first-child .v03__stoot{border-bottom-left-radius:6px}
+.v03__nr{position:absolute;left:.95rem;top:.55rem;margin:0;color:var(--brand-accent);font:800 2.4rem/1 var(--font-display);font-stretch:75%;text-shadow:2px 2px 0 var(--brand-secondary)}
+.v03__trede--huis .v03__kaart{padding-top:1.2rem;min-height:0;background:linear-gradient(#fff,var(--accent-50))}
+.v03__trede--huis .v03__stoot{background:linear-gradient(180deg,var(--brand-accent),var(--accent-600));box-shadow:inset 0 5px 0 var(--accent-200),8px 0 0 var(--accent-700);border-bottom-right-radius:6px}
+.v03__huis{width:6.2rem;margin:-4.6rem 0 .8rem}
+.v03__trede--huis .knop--cta{margin-top:1rem}
+
+/* ===== 04 Diepblauwe band ===== */
+.v04__lijst{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.4rem;align-items:stretch;margin:5.9rem 0 0;padding:0;list-style:none}
+.v04__lijst::before{content:"";position:absolute;left:10%;right:10%;top:-.9rem;border-top:3px dashed color-mix(in srgb,var(--brand-accent) 55%,transparent)}
+.v04__kaart{position:relative;display:flex;flex-direction:column;min-width:0;padding:2.4rem 1rem 1rem;border-radius:14px;background:#fff;color:var(--ink);text-align:center;box-shadow:var(--zij-geel)}
+.v04__schijf{position:absolute;left:50%;top:0;translate:-50% -60%;width:6.6rem;height:2.1rem;border-radius:50%;background:radial-gradient(ellipse at 40% 35%,var(--accent-200),var(--brand-accent) 55%,var(--accent-600));box-shadow:0 .42rem 0 var(--accent-700),0 1rem 1.1rem rgba(0,0,0,.4)}
+.v04 .obj{--h:5.4rem;position:absolute;left:50%;bottom:1rem;translate:-50% 0}
+.v04__nr{margin:0 0 .2rem;color:var(--primary-300);font:800 1.3rem/1 var(--font-display);font-stretch:75%;letter-spacing:.04em}
+.v04 .v04__kaart h3{margin-bottom:.4rem;color:var(--brand-primary);font-size:1.3rem}
+.v04 .v04__kaart p{margin:0 0 1rem;color:var(--graphite);font-size:.9rem;line-height:1.5}
+.v04__slot{display:grid;grid-template-columns:7.5rem minmax(0,1fr) auto;align-items:center;gap:1.6rem;margin-top:2.4rem;padding:1rem 1.8rem;border-radius:16px;background:var(--brand-accent);color:var(--brand-secondary);box-shadow:2px 2px 0 var(--accent-700),4px 4px 0 var(--accent-700),6px 6px 0 #B77A08,18px 26px 34px -8px rgba(0,0,0,.45)}
+.v04 .v04__slot .obj{--h:7rem;position:static;translate:none;margin:-3.4rem 0 -.6rem}
+.v04 .v04__slot .slot__kop{color:var(--brand-secondary)}
+.v04 .v04__slot .slot__tekst{color:var(--brand-secondary)}
+
+/* ===== 05 Route naast het team ===== */
+.v05__raster{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,8fr);gap:clamp(2rem,4vw,4rem);align-items:center}
+.v05 .kopgroep{text-align:left;margin:0;max-width:none}
+.v05 .kopgroep .label{justify-content:flex-start}
+.v05 .kopgroep .intro{margin-inline:0}
+.v05__team{position:relative;width:min(100%,15.5rem);margin:1.2rem auto 0}
+.v05__team img{position:relative;z-index:1;display:block;width:100%;height:auto;filter:drop-shadow(0 18px 14px rgba(11,35,82,.22))}
+.v05__team::after{content:"";position:absolute;left:-12%;right:-12%;bottom:-.9rem;height:2.2rem;border-radius:50%;background:radial-gradient(ellipse at 40% 30%,var(--accent-200),var(--brand-accent) 55%,var(--accent-600));box-shadow:0 .45rem 0 var(--accent-700),0 1.1rem 1.3rem rgba(11,35,82,.3)}
+.v05__slot{display:grid;grid-template-columns:4.2rem minmax(0,1fr);gap:1rem;align-items:start;margin-top:2.2rem;padding:1rem 1.2rem;border-radius:16px;background:#fff;box-shadow:var(--plaat)}
+.v05__slot .slot__kop{font-size:1.3rem}
+.v05__slot .slot__tekst{font-size:.9rem}
+.v05__huis{width:4.2rem}
+.v05__slot .knop--cta{margin-top:.7rem}
+.v05__lijst{position:relative;display:grid;gap:.8rem;margin:0;padding:0;list-style:none}
+.v05__lijst::before{content:"";position:absolute;left:2.45rem;top:2rem;bottom:2rem;width:5px;border-radius:3px;background:var(--brand-accent);box-shadow:2px 0 0 var(--accent-700)}
+.v05__stap{display:grid;grid-template-columns:5.2rem minmax(0,1fr);gap:.9rem;align-items:center}
+.v05__badge{position:relative;height:5rem;filter:drop-shadow(3px 7px 6px rgba(11,35,82,.2))}
+.v05__badge::before,.v05__badge::after{content:"";position:absolute;bottom:0;left:50%;width:3.9rem;aspect-ratio:535.3/509.8;-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.v05__badge::before{background:var(--accent-700);transform:translate(calc(-50% + 3px),4px)}
+.v05__badge::after{background:linear-gradient(160deg,var(--accent-200),var(--brand-accent) 55%,var(--accent-600));transform:translateX(-50%)}
+.v05 .obj{--h:4.6rem;position:absolute;z-index:1;left:50%;bottom:.45rem;translate:-50% 0}
+.v05__kaart{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:.4rem 1.4rem;align-items:center;min-width:0;padding:.85rem 1rem .85rem 1.3rem;border-radius:16px;background:#fff;box-shadow:var(--plaat)}
+.v05__kopregel{display:flex;align-items:baseline;gap:.6rem}
+.v05__nr{margin:0;color:var(--brand-accent);font:800 1.55rem/1 var(--font-display);font-stretch:75%;text-shadow:1px 1px 0 var(--accent-700),2px 2px 0 var(--brand-primary)}
+.v05 h3{font-size:1.35rem}
+.v05__tekst p{margin:.15rem 0 0;color:var(--graphite);font-size:.925rem;line-height:1.45}
+.v05 .uk{margin:0;align-self:center}
+.v05 .uk__duo{grid-template-columns:1fr}
+
+/* ===== 06 Foto met overlap ===== */
+.v06__foto{position:relative;min-height:23rem;overflow:hidden;border-radius:24px;background:var(--brand-secondary);box-shadow:0 30px 60px -40px rgba(11,35,82,.8)}
+.v06__foto>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 45%}
+.v06__foto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,35,82,.95) 0%,rgba(11,35,82,.85) 32%,rgba(11,35,82,0) 66%)}
+.v06 .kopgroep{position:relative;z-index:1;max-width:31rem;margin:0;padding:2.6rem 3rem 8.4rem;text-align:left}
+.v06 .kopgroep .label{justify-content:flex-start;color:var(--brand-accent)}
+.v06 .kopgroep h2{color:#fff}
+.v06 .kopgroep .intro{margin-inline:0;color:rgba(255,255,255,.9)}
+.v06__lijst{position:relative;z-index:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem;align-items:stretch;margin:-6.6rem 1.6rem 0;padding:0;list-style:none}
+.v06__kaart{position:relative;display:flex;flex-direction:column;min-width:0;padding:1.1rem 1rem 1.05rem;border-radius:14px;background:#fff;box-shadow:var(--plaat)}
+.v06 .obj{--h:5.4rem;position:absolute;right:.7rem;top:0;translate:0 -46%}
+.v06__nr{margin:0 0 .7rem;color:var(--brand-primary);font:800 2.2rem/1 var(--font-display);font-stretch:75%;text-shadow:1px 1px 0 var(--brand-accent),2px 2px 0 var(--accent-600),3px 3px 0 var(--accent-700)}
+.v06 h3{min-height:2.3em;margin-bottom:.35rem;font-size:1.25rem}
+.v06__kaart p{margin:0 0 1rem;color:var(--graphite);font-size:.875rem;line-height:1.5}
+.v06__slot{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1.5rem;margin:1.3rem 1.6rem 0;padding:.9rem 1.6rem;border-radius:16px;background:#fff;box-shadow:var(--plaat)}
+.v06__huis{width:4.4rem}
+
+/* ===== 07 Weg ===== */
+.v07{overflow-x:clip}
+.v07__veld{--weg:5.4rem;position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,13.5rem);grid-template-rows:auto var(--weg);gap:1rem 1rem;margin-top:3.2rem}
+.v07__veld::before{content:"";grid-row:2;grid-column:1/-1;margin-left:calc(50% - 50vw);margin-right:3.6rem;border-radius:0 6px 6px 0;
+  background:
+    repeating-linear-gradient(90deg,rgba(246,244,236,.8) 0 2.4rem,transparent 2.4rem 4.2rem) 0 50%/100% 5px no-repeat,
+    linear-gradient(180deg,rgba(246,244,236,.55) 0 3px,transparent 3px calc(100% - 3px),rgba(246,244,236,.55) calc(100% - 3px)) 0 0/100% 100% no-repeat,
+    linear-gradient(180deg,rgba(0,0,0,.25),transparent 18%,transparent 82%,rgba(0,0,0,.3)),
+    linear-gradient(180deg,transparent 20%,rgba(0,0,0,.1) 26%,transparent 32%,transparent 66%,rgba(0,0,0,.1) 72%,transparent 78%),
+    url(/img/asfalt.webp) 0 0/128px 128px,#4a4d52;
+  box-shadow:0 14px 22px -12px rgba(11,35,82,.45)}
+.v07__lijst{display:contents}
+.v07__stap{position:relative;grid-row:1;display:flex;min-width:0}
+.v07__kaart{position:relative;display:flex;flex:1;flex-direction:column;padding:3rem 1rem 1rem;border-radius:14px;background:#fff;box-shadow:var(--plaat)}
+.v07 .obj{--h:5.2rem;position:absolute;left:.9rem;top:0;translate:0 -55%}
+.v07 h3{margin-bottom:.35rem;font-size:1.25rem}
+.v07__kaart p{margin:0 0 .9rem;color:var(--graphite);font-size:.875rem;line-height:1.5}
+.v07__halte{position:absolute;left:50%;bottom:calc(-1rem - var(--weg) / 2);translate:-50% 50%;z-index:2;display:grid;place-items:center;width:3.2rem;height:3.2rem;border-radius:50%;background:radial-gradient(circle at 38% 32%,var(--accent-200),var(--brand-accent) 60%,var(--accent-600));color:var(--brand-secondary);font:800 1.25rem/1 var(--font-display);font-stretch:75%;box-shadow:0 .3rem 0 var(--accent-700),0 .8rem 1rem rgba(0,0,0,.35)}
+.v07__stap::after{content:"";position:absolute;left:50%;bottom:-1rem;width:4px;height:1rem;translate:-50% 0;background:var(--brand-accent)}
+.v07__eind{grid-row:1/3;grid-column:6;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center}
+.v07__eindtekst{padding:.2rem .3rem 0}
+.v07__eindtekst .slot__kop{font-size:1.35rem}
+.v07__eindtekst .slot__tekst{font-size:.875rem}
+.v07__eindtekst .knop--cta{margin-top:.8rem}
+.v07__huis{width:8.4rem;margin-bottom:calc(var(--weg) * .35)}
+
+/* ===== 08 Zes tegels ===== */
+.v08__kop{text-align:left;margin-inline:0;max-width:40rem}
+.v08__kop .label{justify-content:flex-start}
+.v08__kop .intro{margin-inline:0}
+.v08__raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.9rem 1.6rem;margin-top:3.2rem}
+.v08__lijst{display:contents}
+.v08__tegel{position:relative;display:flex;flex-direction:column;min-width:0;padding:2.6rem 1.6rem 1.2rem;border-radius:18px;background:#fff;box-shadow:var(--plaat)}
+.v08__nr{position:absolute;left:1.3rem;top:0;translate:0 -52%;margin:0;color:var(--brand-primary);font:800 4.6rem/.8 var(--font-display);font-stretch:75%;text-shadow:2px 2px 0 var(--brand-accent),4px 4px 0 var(--accent-600),6px 6px 0 var(--accent-700),10px 14px 14px rgba(11,35,82,.2)}
+.v08 .obj{--h:6.4rem;position:absolute;right:1.4rem;top:0;translate:0 -42%}
+.v08 h3{margin-bottom:.45rem;font-size:1.6rem}
+.v08__tegel>p{margin:0 0 1.1rem;color:var(--graphite);font-size:1rem;line-height:1.55;max-width:32ch}
+.v08__tegel--slot{padding-top:1.4rem;background:linear-gradient(160deg,var(--brand-primary),var(--brand-secondary) 70%);box-shadow:0 6px 0 #061634,0 7px 0 rgba(0,0,0,.2),0 30px 40px -28px rgba(11,35,82,.7)}
+.v08__huis{position:absolute;right:1.4rem;top:0;translate:0 -40%;width:6.4rem}
+.v08__tegel--slot .slot__kop{margin-top:2.6rem;color:#fff;font-size:1.6rem}
+.v08__tegel--slot .slot__tekst{margin-bottom:1.2rem;color:rgba(255,255,255,.88)}
+.v08__tegel--slot .knop--cta{margin-top:auto;align-self:flex-start}
+
+/* ===== 09 Blauwverloop ===== */
+.v09__lijst{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.1rem;align-items:stretch;margin:4.6rem 0 0;padding:0;list-style:none}
+.v09__kaart{--bg:#fff;--rand:var(--primary-200);position:relative;display:flex;flex-direction:column;min-width:0;padding:3.8rem 1rem 1rem;border-radius:16px;background:var(--bg);text-align:center;box-shadow:0 0 0 1px rgba(14,26,51,.06),0 6px 0 var(--rand),0 7px 0 rgba(0,0,0,.1),0 24px 30px -18px rgba(11,35,82,.5)}
+.v09__kaart:nth-child(2){--bg:var(--primary-100);--rand:var(--primary-300)}
+.v09__kaart:nth-child(3){--bg:var(--primary-300);--rand:var(--brand-primary)}
+.v09__kaart:nth-child(4){--bg:var(--brand-primary);--rand:var(--primary-600)}
+.v09__kaart:nth-child(5){--bg:var(--brand-secondary);--rand:#061634}
+.v09 .obj{--h:6.6rem;position:absolute;left:50%;top:0;translate:-50% -52%}
+.v09__nr{margin:0 0 .25rem;color:var(--brand-primary);font:800 1.3rem/1 var(--font-display);font-stretch:75%;letter-spacing:.04em}
+.v09 h3{margin-bottom:.4rem;font-size:1.3rem}
+.v09__kaart>p{margin:0 0 1rem;color:var(--graphite);font-size:.9rem;line-height:1.5}
+.v09__kaart:nth-child(3) h3,.v09__kaart:nth-child(3) .v09__nr{color:var(--brand-secondary)}
+.v09__kaart:nth-child(3)>p{color:var(--ink)}
+.v09__kaart--donker h3{color:#fff}
+.v09__kaart--donker .v09__nr{color:var(--brand-accent)}
+.v09__kaart--donker>p{color:rgba(255,255,255,.88)}
+.v09__kaart:nth-child(3) .uk summary{background:rgba(255,255,255,.55);border-color:rgba(11,35,82,.2)}
+.v09__slot{display:grid;grid-template-columns:7rem minmax(0,1fr) auto;align-items:center;gap:1.6rem;margin-top:2.2rem;padding:.9rem 1.8rem;border-radius:16px;background:#fff;box-shadow:var(--zij-blauw)}
+.v09 .v09__slot .obj{--h:6.6rem;position:static;translate:none;margin:-3rem 0 -.4rem}
+
+/* ===== 10 Adviseur ===== */
+.v10__kop{text-align:left;margin-inline:0;max-width:40rem}
+.v10__kop .label{justify-content:flex-start}
+.v10__kop .intro{margin-inline:0}
+.v10__raster{display:grid;grid-template-columns:minmax(0,1fr) 22rem;gap:2rem;align-items:start;margin-top:1rem}
+.v10__plaat{margin:0;padding:.4rem 1.6rem;list-style:none;border-radius:20px;background:#fff;box-shadow:var(--plaat)}
+.v10__stap{display:grid;grid-template-columns:3.6rem 4.8rem minmax(0,1fr) 16.5rem;gap:1.1rem;align-items:center;padding:.85rem 0}
+.v10__stap+.v10__stap{border-top:1px solid var(--primary-100)}
+.v10__nr{margin:0;color:var(--brand-primary);font:800 2.8rem/.8 var(--font-display);font-stretch:75%;text-shadow:1px 1px 0 var(--brand-accent),2px 2px 0 var(--brand-accent),3px 3px 0 var(--accent-700)}
+.v10__obj{display:flex;justify-content:center}
+.v10 .obj{--h:4.4rem}
+.v10 h3{font-size:1.35rem}
+.v10__tekst p{margin:.25rem 0 0;color:var(--graphite);font-size:.95rem;line-height:1.5}
+.v10 .uk{margin:0}
+.v10 .uk__duo{grid-template-columns:1fr}
+.v10__adviseur{margin-top:5.6rem;border-radius:20px;background:var(--brand-primary);color:#fff;box-shadow:0 6px 0 var(--brand-secondary),0 7px 0 rgba(0,0,0,.2),0 30px 40px -24px rgba(11,35,82,.6)}
+.v10__beeld{position:relative;height:12.5rem;border-radius:20px 20px 0 0;background:radial-gradient(90% 80% at 50% 25%,var(--primary-300),var(--brand-primary) 75%)}
+.v10__clip{position:absolute;left:0;right:0;bottom:0;top:-7rem;overflow:hidden}
+.v10__clip img{position:absolute;left:50%;top:0;translate:-50% 0;height:30rem;width:auto;max-width:none;filter:drop-shadow(0 10px 14px rgba(11,35,82,.35))}
+.v10__slottekst{position:relative;padding:1.3rem 1.5rem 1.6rem;border-top:4px solid var(--brand-accent)}
+.v10__slottekst .slot__kop{color:#fff}
+.v10__slottekst .slot__tekst{color:rgba(255,255,255,.9)}
+.v10__slottekst .knop--cta{width:100%;margin-top:1.2rem}
+
+/* ===== 11 Gele schijven ===== */
+.v11__lijst{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.6rem;margin:2rem 0 0;padding:0;list-style:none}
+.v11__stap{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center}
+.v11__podium{position:relative;display:block;width:8.6rem;height:7.4rem;margin-bottom:.9rem}
+.v11__podium::before{content:"";position:absolute;left:0;right:0;bottom:.7rem;height:2.7rem;border-radius:50%;background:radial-gradient(ellipse at 40% 30%,var(--accent-200),var(--brand-accent) 55%,var(--accent-600));box-shadow:0 .6rem 0 var(--accent-700),0 1.3rem 1.3rem rgba(11,35,82,.25)}
+.v11 .obj{--h:6.2rem;position:absolute;z-index:1;left:50%;bottom:1.8rem;translate:-50% 0}
+.v11__stap+.v11__stap::before{content:"";position:absolute;left:-.8rem;top:5.4rem;translate:-50% -50%;width:2.5rem;height:2.5rem;border-radius:50%;
+  background:var(--brand-secondary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center/1.1rem no-repeat;
+  box-shadow:0 .28rem 0 #061634,0 .7rem .8rem rgba(11,35,82,.3)}
+.v11__nr{margin:0 0 .3rem;padding:.2rem .55rem;border-radius:6px;background:var(--primary-50);color:var(--brand-primary);font:800 1rem/1 var(--font-display);font-stretch:75%;letter-spacing:.06em}
+.v11 h3{margin-bottom:.3rem;font-size:1.35rem}
+.v11__stap>p{flex:1;margin:0 0 1rem;color:var(--graphite);font-size:.9rem;line-height:1.5}
+.v11 .uk{width:100%}
+.v11__accolade{display:block;width:100%;height:2.2rem;margin:.9rem 0 0;color:var(--primary-300)}
+.v11__slot{display:grid;grid-template-columns:8rem minmax(0,1fr) auto;align-items:center;gap:1.5rem;max-width:58rem;margin:.5rem auto 0;padding:.7rem 1.6rem .7rem 1.2rem;border-radius:18px;background:var(--primary-50);box-shadow:inset 0 0 0 1px var(--primary-200),0 6px 0 var(--primary-200),0 24px 30px -22px rgba(11,35,82,.45)}
+.v11__podium--klein{width:7.6rem;height:6.4rem;margin:0}
+.v11__podium--klein::before{height:2.2rem;bottom:.4rem}
+.v11__podium--klein .obj{--h:5.6rem;bottom:1.2rem}
+
+/* ===== 12 Koningsblauwe plaat ===== */
+.v12__top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem;align-items:end}
+.v12 .kopgroep{text-align:left;margin:0 0 2.2rem;max-width:40rem}
+.v12 .kopgroep .label{justify-content:flex-start}
+.v12 .kopgroep .intro{margin-inline:0}
+.v12__figuur{position:relative;z-index:2;margin:0 4rem -2rem 0}
+.v12__figuur img{display:block;height:17rem;width:auto;filter:drop-shadow(0 22px 18px rgba(11,35,82,.3))}
+.v12__plaat{position:relative;z-index:1;padding:2rem 1.2rem 1.2rem;border-radius:24px;background:linear-gradient(160deg,var(--brand-primary),var(--primary-600) 80%);color:#fff;box-shadow:0 8px 0 var(--brand-secondary),0 9px 0 rgba(0,0,0,.2),0 40px 60px -36px rgba(11,35,82,.75)}
+.v12__lijst{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:0;padding:0;list-style:none}
+.v12__stap{display:flex;flex-direction:column;min-width:0;padding:0 1.1rem}
+.v12__stap+.v12__stap{border-left:1px solid rgba(255,255,255,.2)}
+.v12__nrrij{display:flex;align-items:flex-end;justify-content:space-between;gap:.4rem;height:4rem;margin-bottom:.8rem}
+.v12__nr{margin:0;color:var(--brand-accent);font:800 3.6rem/.8 var(--font-display);font-stretch:75%;text-shadow:1px 1px 0 var(--accent-700),2px 2px 0 var(--accent-700),3px 3px 0 var(--brand-secondary),4px 4px 0 var(--brand-secondary)}
+.v12 .obj{--h:4.4rem}
+.v12 h3{display:flex;align-items:flex-end;min-height:2.3em;margin-bottom:.45rem;color:#fff;font-size:1.35rem}
+.v12__stap>p{flex:1;margin:0 0 1rem;color:rgba(255,255,255,.9);font-size:.9375rem;line-height:1.55}
+.v12__slot{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1.5rem;margin:1.2rem 1.1rem 0;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.2)}
+.v12__slot .slot__kop{color:var(--brand-accent)}
+.v12__slot .slot__tekst{color:rgba(255,255,255,.9)}
+.v12__huis{width:4.6rem}
+
+/* ===== 13 Rail ===== */
+.v13 .wrap{max-width:1420px}
+.v13__rail{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,1.25fr);gap:1rem;align-items:stretch;margin-top:2.6rem}
+.v13__rail::before{content:"";position:absolute;left:7%;right:9%;top:4.4rem;height:.7rem;border-radius:5px;background:linear-gradient(var(--accent-200),var(--brand-accent) 40%,var(--accent-600));box-shadow:0 4px 0 var(--accent-700),0 10px 12px rgba(11,35,82,.2)}
+.v13__lijst{display:contents}
+.v13__stap{position:relative;display:flex;flex-direction:column;min-width:0}
+.v13__ic{position:relative;z-index:2;display:block;height:6.4rem;filter:drop-shadow(3px 8px 7px rgba(11,35,82,.22))}
+.v13__ic::before,.v13__ic::after{content:"";position:absolute;bottom:0;left:50%;width:5rem;aspect-ratio:535.3/509.8;-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.v13__ic::before{background:var(--accent-700);transform:translate(calc(-50% + 4px),5px)}
+.v13__ic::after{background:linear-gradient(160deg,var(--accent-200),var(--brand-accent) 55%,var(--accent-600));transform:translateX(-50%)}
+.v13 .obj{--h:6.8rem;position:absolute;z-index:1;left:50%;bottom:.55rem;translate:-50% 0}
+.v13__ic--foto::before,.v13__ic--foto::after{content:none}
+.v13__huis{position:absolute;left:50%;bottom:-.6rem;translate:-50% 0;width:7.6rem}
+.v13__kaart{position:relative;z-index:1;display:flex;flex:1;flex-direction:column;margin-top:-1.3rem;padding:1.7rem 1rem 1.1rem;border-radius:14px;background:#fff;text-align:center;
+  box-shadow:0 0 0 1px rgba(14,26,51,.06),0 0 0 0 transparent,2px 2px 0 var(--primary-200),4px 4px 0 var(--primary-200),6px 6px 0 var(--primary-300),16px 22px 30px -10px rgba(11,35,82,.3);
+  transition:translate .2s var(--ease),box-shadow .2s var(--ease)}
+.v13__kaart:hover{translate:-4px -4px;box-shadow:0 0 0 1px transparent,0 0 0 2px var(--color-cta),3px 3px 0 var(--color-cta),6px 6px 0 var(--color-cta-hover),9px 9px 0 var(--color-cta-active),16px 22px 30px -8px rgba(11,35,82,.35)}
+.v13__nr{margin:0 0 .25rem;color:var(--primary-300);font:800 1.4rem/1 var(--font-display);font-stretch:75%}
+.v13 h3{margin-bottom:.4rem;font-size:1.3rem}
+.v13__kaart>p{margin:0 0 1rem;color:var(--graphite);font-size:.875rem;line-height:1.5}
+.v13__stap--eind .v13__kaart{padding-top:2.2rem;background:linear-gradient(#fff,var(--accent-50))}
+.v13__stap--eind .knop--cta{margin-top:auto;padding-inline:1rem}
+.v13__stap--eind .slot__tekst{margin-bottom:1rem;font-size:.9rem}
+
+/* ===== 14 Planken ===== */
+.v14__top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,17rem);gap:2rem;align-items:end}
+.v14 .kopgroep{text-align:left;margin:0 0 1.4rem;max-width:40rem}
+.v14 .kopgroep .label{justify-content:flex-start}
+.v14 .kopgroep .intro{margin-inline:0}
+.v14__figuur{margin:0 0 -.3rem;overflow:hidden}
+.v14__figuur img{display:block;width:100%;height:auto;filter:drop-shadow(0 10px 14px rgba(11,35,82,.2))}
+.v14__lijst{position:relative;z-index:1;display:grid;gap:.75rem;margin:0;padding:0;list-style:none}
+.v14__plank{display:grid;grid-template-columns:4.6rem 6rem minmax(0,1fr) minmax(0,20rem);gap:1.4rem;align-items:center;padding:.7rem 1.6rem .7rem 1.5rem;border-radius:16px;background:#fff;box-shadow:var(--plaat)}
+.v14__nr{margin:0;color:var(--brand-primary);font:800 3rem/.8 var(--font-display);font-stretch:75%;text-shadow:1px 1px 0 var(--brand-accent),2px 2px 0 var(--brand-accent),3px 3px 0 var(--accent-600),4px 4px 0 var(--accent-700)}
+.v14__obj{display:flex;justify-content:center;margin-top:-1.6rem}
+.v14 .obj{--h:4.8rem}
+.v14 h3{font-size:1.45rem}
+.v14__tekst p{margin:.15rem 0 0;color:var(--graphite);font-size:.975rem;line-height:1.55}
+.v14 .uk{margin:0}
+.v14__plank--slot{grid-template-columns:11.8rem minmax(0,1fr) auto;margin-top:.75rem;background:linear-gradient(90deg,var(--accent-50),var(--accent-100));box-shadow:inset 0 0 0 1px var(--accent-200),0 6px 0 var(--brand-accent),0 7px 0 var(--accent-700),0 30px 40px -30px rgba(11,35,82,.5)}
+.v14__huis{width:5rem;margin:-2rem 0 0 2.4rem}
+
+/* ===== 15 U en wij ===== */
+.v15__top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,33rem);gap:2rem;align-items:end;margin-bottom:3rem}
+.v15 .kopgroep{text-align:left;margin:0;max-width:none}
+.v15 .kopgroep .label{justify-content:flex-start}
+.v15 .kopgroep .intro{margin-inline:0}
+.v15__slot{display:grid;grid-template-columns:4.2rem minmax(0,1fr);gap:.2rem 1rem;align-items:center;padding:.9rem 1.2rem;border-radius:16px;background:#fff;box-shadow:var(--plaat)}
+.v15__slot .huisfoto{grid-row:1/3}
+.v15__slot .slot__kop{font-size:1.25rem}
+.v15__slot .slot__tekst{font-size:.875rem;line-height:1.45}
+.v15__slot .knop--cta{grid-column:2;justify-self:start;min-height:42px;padding:.55rem 1.1rem;margin-top:.4rem}
+.v15__huis{width:4.2rem}
+.v15__matrix{display:grid;grid-template-columns:7.6rem repeat(5,minmax(0,1fr));grid-template-rows:auto auto auto;gap:.6rem .8rem}
+.v15__labels{display:grid;grid-row:1/4;grid-template-rows:subgrid;font:800 1.2rem/1.05 var(--font-display);font-stretch:75%;color:var(--brand-primary)}
+.v15__labels span{display:flex;align-items:center;gap:.5rem}
+.v15__labels span:nth-child(2)::before,.v15__labels span:nth-child(3)::before{content:"";flex:none;width:.7rem;height:.7rem;border-radius:3px;background:var(--brand-accent);box-shadow:1px 1px 0 var(--accent-700)}
+.v15__labels span:nth-child(3)::before{background:var(--brand-primary);box-shadow:1px 1px 0 var(--brand-secondary)}
+.v15__lijst{display:contents}
+.v15__stap{display:grid;grid-row:1/4;grid-template-rows:subgrid;min-width:0}
+.v15__kopcel{position:relative;padding:.9rem 1rem 1rem;border-radius:14px;background:#fff;box-shadow:var(--plaat)}
+.v15__nrrij{display:flex;align-items:flex-end;justify-content:space-between;height:3rem;margin:-2.2rem 0 .5rem}
+.v15__nr{color:var(--brand-primary);font:800 2.2rem/.8 var(--font-display);font-stretch:75%;text-shadow:1px 1px 0 var(--brand-accent),2px 2px 0 var(--accent-600),3px 3px 0 var(--accent-700)}
+.v15 .obj{--h:4.8rem}
+.v15 h3{margin-bottom:.25rem;font-size:1.25rem}
+.v15__kopcel p{margin:0;color:var(--graphite);font-size:.85rem;line-height:1.45}
+.v15__duo{display:contents}
+.v15__wie{min-width:0;padding:.75rem .95rem;border-radius:12px;font-size:.85rem;line-height:1.45}
+.v15__wie dd{margin:0}
+.v15__wie--u{background:#fff;color:var(--graphite);box-shadow:inset 0 3px 0 var(--brand-accent),0 0 0 1px rgba(14,26,51,.06),0 4px 0 var(--primary-200)}
+.v15__wie--u a{color:var(--brand-primary);font-weight:700;white-space:nowrap}
+.v15__wie--wij{background:var(--brand-primary);color:#fff;box-shadow:0 4px 0 var(--brand-secondary),0 16px 22px -16px rgba(11,35,82,.55)}
+.v15__meer{margin:.35rem 0 0}
+.v15__meer a{color:var(--brand-accent);font-weight:700}
+
+/* ===== smal ===== */
+@media (max-width:1100px){
+  .v01__lijst,.v02__lijst,.v04__lijst,.v06__lijst,.v09__lijst,.v11__lijst,.v12__lijst{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:3.6rem}
+  .v01__stap+.v01__stap,.v12__stap+.v12__stap{border-left:0}
+  .v03__trap,.v13__rail{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:4rem}
+  .v03__stoot{height:2.4rem}
+  .v05__raster,.v10__raster{grid-template-columns:1fr}
+  .v05__links{position:static}
+  .v08__raster{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .v14__plank{grid-template-columns:3.6rem 5rem minmax(0,1fr)}
+  .v14__plank .uk{grid-column:1/-1}
+  .v15__top{grid-template-columns:1fr}
+  .v15__matrix{grid-template-columns:1fr}
+  .v15__labels{display:none}
+  .v15__stap{grid-row:auto;display:flex;flex-direction:column;gap:.5rem}
+  .v07__veld{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .v07__veld::before,.v07__halte,.v07__stap::after{display:none}
+  .v07__stap{grid-row:auto}
+  .v07__eind{grid-column:auto;grid-row:auto}
+  .v05__kaart{grid-template-columns:1fr}
+  .v11__stap+.v11__stap::before{display:none}
+}
