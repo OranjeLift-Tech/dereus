@@ -43,8 +43,9 @@ WEB3FORMS_KEY = "VUL-HIER-DE-WEB3FORMS-KEY-IN"
 # Logo: één regel om te wisselen. De build kopieert de bestanden naar img/logo/.
 # Logo v2 (goedgekeurd): grotere biceps, zonder tagline. Terug naar het oude logo: "brandbook/assets/logo".
 LOGO_BRON = "brandbook/assets/logo-v2"
-# Welk logo in de header: "horizontaal" (zoals De Kievit en Brocken, minimaal 28 px hoog) of "staand".
-HEADER_LOGO = "horizontaal"
+# Welk logo in de header: "horizontaal" (zoals Brocken, minimaal 28 px hoog) of "staand" (zoals referentie A).
+# Sinds 28-09-2026 staand, op de maat van referentie A; de hoogtes staan in css/style.css bij de header.
+HEADER_LOGO = "staand"
 # Afmetingen (viewBox) van de logo's, voor width en height op <img>
 LOGO_MATEN = {"horizontaal": (2444, 509), "staand": (1000, 828), "beeldmerk": (1000, 509)}
 # "Geen verhuizing te groot!" is sinds logo v2 een los motto: één keer op de home, nooit naast de pay-off.

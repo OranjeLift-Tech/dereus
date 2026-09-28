@@ -22,7 +22,8 @@ bezig: Bezig met versturen
 privacy: Door dit formulier te versturen gaat u akkoord met onze [privacyverklaring](/privacyverklaring/). Wij gebruiken uw gegevens alleen voor uw offerte en uw verhuizing.
 fout-kop: Nog niet alles is ingevuld
 fout-versturen: Het versturen is niet gelukt. Probeer het nog eens, of bel ons op 085 000 5647.
-zij-kop: Zo regelt u het in een paar minuten
+zij-kop: Zo regelt u het ==in een paar minuten==
+bel-zin: Heeft u haast? Bel ons dan op
 - Gratis en vrijblijvend
 - Binnen 24 uur contact
 - Geen voorrijkosten

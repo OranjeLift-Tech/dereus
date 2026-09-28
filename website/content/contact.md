@@ -4,7 +4,7 @@ beschrijving: Bel, mail of stuur een bericht aan Verhuisbedrijf De Reus in Den H
 og-titel: Contact met Verhuisbedrijf De Reus in Den Haag
 ---
 <!--
-Kopij /contact/, dereus-4e. Opbouw zoals de-kievit.nl/contact/, blokken en ids volgens dereus-e7:
+Kopij /contact/, dereus-4e. Opbouw zoals referentie A/contact/, blokken en ids volgens dereus-e7:
 kop, offertepil, vertrouwen, kaart, contactkaarten, formulier, na-bericht, vragen.
 Alleen bevestigde feiten: geen kantoorbezoek, WhatsApp, teamnamen, foto's of parkeren.
 Formulier volgens het veldcontract met dereus-b4. De bedanktpagina staat in systeem.md.
@@ -67,7 +67,8 @@ bezig: Bezig met versturen
 privacy: Door dit formulier te versturen gaat u akkoord met onze [privacyverklaring](/privacyverklaring/).
 fout-kop: Nog niet alles is ingevuld
 fout-versturen: Het versturen is niet gelukt. Probeer het nog eens, of bel ons op 085 000 5647.
-zij-kop: Zo helpen wij u snel
+zij-kop: Zo helpen wij ==u snel==
+bel-zin: Heeft u haast? Bel ons dan op
 - Reactie binnen 24 uur
 - 7 dagen per week bereikbaar
 - Antwoord per telefoon of mail

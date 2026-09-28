@@ -1,0 +1,71 @@
+/* Verhuisbedrijf De Reus · blok naband (/werkwijze/ #na-de-verhuizing)
+   Keuze van de gebruiker uit _ontwerpen/na-de-verhuizing-varianten.html, nummer 03 "Gele schuine band"
+   (28-09-2026), naar het opslagblok van referentie A. Een schuine Goudgele band met een Diepblauwe streep
+   eronder loopt door de Mist-sectie; links een Diepblauwe kaart met alles erin, rechts staat de ploeg met
+   dozen op de band. Vervangt het blok namozaiek op deze pagina. Alles staat stil. Alle klassen staan onder
+   b-naband. */
+.b-naband{overflow:clip}
+
+/* ---- de band: Diepblauw onder, Goudgeel erop, zodat onderaan een blauwe streep overblijft ---- */
+.b-naband__band{position:absolute;left:0;right:0;top:30%;height:62%;pointer-events:none;
+  background:var(--brand-secondary);clip-path:polygon(0 40%,100% 0,100% 76%,0 100%)}
+.b-naband__band::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,#FFD447,var(--brand-accent) 60%,var(--accent-600));clip-path:polygon(0 40%,100% 0,100% 67%,0 91%)}
+
+.b-naband .wrap{position:relative}
+.b-naband__raster{display:grid;grid-template-columns:minmax(0,31rem) minmax(0,1fr);gap:clamp(2rem,4vw,4rem);align-items:center}
+
+/* ---- de kaart ---- */
+.b-naband__kaart{padding:clamp(2rem,3vw,2.8rem);border-radius:20px;background:var(--brand-secondary);color:var(--white);
+  box-shadow:0 34px 60px -30px rgba(11,35,82,.8)}
+/* label met een lijn ervoor in plaats van het huisje, zoals bij referentie A */
+.b-naband__label{color:var(--brand-accent)}
+.b-naband__label::before{width:2rem;height:1px;-webkit-mask:none;mask:none}
+.b-naband__kaart h2{margin:0;color:var(--white)}
+.b-naband__kaart .intro{margin:1rem 0 0;color:rgba(255,255,255,.86);font-size:1.05rem}
+
+.b-naband__punten{margin:1.5rem 0 0;padding:0;list-style:none}
+.b-naband__punt{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1rem;margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.16)}
+.b-naband__icoon{display:grid;place-items:center;width:3.1rem;height:3.1rem;border-radius:50%;
+  background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);color:var(--brand-accent)}
+.b-naband__icoon .ic{width:1.35rem;height:1.35rem}
+.b-naband__titel{margin:0 0 .4rem;color:var(--white);font-size:1.4rem;line-height:1.1}
+.b-naband__punt p{margin:0;color:rgba(255,255,255,.82);font-size:.98rem;line-height:var(--leading-text)}
+
+/* ---- knoppen: bellen geel, de WhatsApp-knop van build.py erachter, de review als lijnpil ---- */
+.b-naband__knoppen{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;margin-top:1.6rem}
+.b-naband__knop{display:inline-flex;align-items:center;gap:.55rem;min-height:48px;padding:.75rem 1.35rem;border:1px solid transparent;border-radius:999px;
+  font:var(--weight-bold) .98rem/1.2 var(--font-sans);text-decoration:none;white-space:nowrap;transition:background-color .2s var(--ease),border-color .2s var(--ease)}
+.b-naband__knop .ic{width:18px;height:18px}
+.b-naband__knop--bel{background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 8px 16px -8px rgba(219,148,14,.8)}
+.b-naband__knop--bel:hover{background:#FFD95C;color:var(--brand-secondary)}
+.b-naband__knop--review{border-color:rgba(255,255,255,.55);color:var(--white)}
+.b-naband__knop--review:hover{background:rgba(255,255,255,.1);color:var(--white)}
+.b-naband__knoppen .wa-link{min-height:48px;margin:0;padding-inline:1.2rem}
+
+/* ---- de ploeg staat op de band ---- */
+.b-naband__beeld{align-self:end;margin-bottom:-1rem}
+.b-naband__ploeg{display:block;width:100%;max-width:600px;height:auto;margin-inline:auto;filter:drop-shadow(0 26px 30px rgba(11,35,82,.4))}
+
+/* ---- smal: kaart boven, de ploeg eronder op de band ---- */
+@media (max-width:959.98px){
+  .b-naband__raster{grid-template-columns:minmax(0,1fr)}
+  .b-naband__band{top:52%;height:40%}
+  .b-naband__beeld{margin-bottom:0}
+  .b-naband__ploeg{max-width:30rem}
+}
+
+/* ---- echte voorwerpen in plaats van de lijnicoontjes (28-09-2026) ----
+   De telefoon (img/contact-3d) en de gouden ster (img/kaart-3d) staan op een dikke gele schijf, zoals de
+   schijven op /kosten/ #opbouw. Licht linksboven, schaduw naar rechtsonder; de telefoon steekt boven de
+   rij uit. Stil, geen hover. */
+.b-naband__punt:has(.b-naband__icoon--3d){grid-template-columns:4.5rem minmax(0,1fr);align-items:center;gap:1rem}
+.b-naband__icoon--3d{position:relative;display:block;width:4.5rem;height:4.6rem;border-radius:0;background:none;box-shadow:none}
+.b-naband__icoon--3d::before{content:"";position:absolute;left:0;right:0;bottom:.35rem;height:1.4rem;border-radius:50%;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--brand-accent),var(--white) 40%),var(--brand-accent) 70%);
+  box-shadow:0 5px 0 var(--accent-700),0 16px 16px -6px rgba(0,0,0,.5)}
+.b-naband__obj{position:absolute;left:0;right:0;bottom:.9rem;width:auto;max-width:none;height:4rem;margin-inline:auto;pointer-events:none;
+  filter:drop-shadow(2px 3px 2px rgba(0,0,0,.3)) drop-shadow(8px 12px 10px rgba(0,0,0,.35))}
+.b-naband__obj--telefoon{height:6rem;bottom:.75rem}
+.b-naband__obj--ster{height:3.9rem}
+@media print{.b-naband__icoon--3d::before{box-shadow:none}.b-naband__obj{filter:none}}

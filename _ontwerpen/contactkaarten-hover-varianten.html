@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contactkaarten hover</title>
+<link rel="preload" href="/fonts/archivo-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/min/site.min.css?v=9b55a0dad6">
+<link rel="stylesheet" href="/css/min/contactkaarten.min.css?v=e8721509d6">
+<style>
+body{background:var(--white)}
+.balk{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.2rem;padding:.8rem clamp(1rem,3vw,2rem);background:var(--brand-secondary);color:var(--white);font-size:var(--text-small)}
+.balk strong{font-family:var(--font-display,inherit);font-size:1.15rem;letter-spacing:.01em}
+.balk nav{display:flex;flex-wrap:wrap;gap:.35rem}
+.balk nav a{display:inline-grid;place-items:center;min-width:2.2rem;height:2rem;padding:0 .5rem;border-radius:8px;background:color-mix(in srgb,var(--white) 12%,transparent);color:var(--white);font-weight:700;text-decoration:none}
+.balk nav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.balk label{display:inline-flex;align-items:center;gap:.45rem;margin-left:auto;cursor:pointer;font-weight:600}
+.balk input{width:1.1rem;height:1.1rem;accent-color:var(--color-cta)}
+.hv{padding-block:3rem 4rem;scroll-margin-top:4rem}
+.hv+.hv{border-top:1px solid var(--color-border,#E3E8F0)}
+.hv__kop{display:flex;align-items:center;gap:1rem}
+.hv__nr{display:grid;place-items:center;flex:none;width:3rem;height:3rem;border-radius:12px;background:var(--brand-accent);color:var(--brand-secondary);font-weight:800;font-size:1.2rem}
+.h00 .hv__nr{background:var(--primary-100);color:var(--graphite)}
+.hv__naam{margin:0;font-size:clamp(1.35rem,1.1rem + .8vw,1.8rem)}
+.hv__uitleg{margin:.2rem 0 0;color:var(--graphite);font-size:var(--text-small)}
+
+/* de live hover uit contactkaarten.css staat op deze pagina alleen in 00; de rest zet zijn eigen stand */
+.hv .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{transition:scale .22s var(--ease-out),translate .22s var(--ease-out),box-shadow .22s var(--ease-out),background-color .22s var(--ease-out)}
+.hv:not(.h00) .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover{scale:none;--rand:transparent;--plaatrand:#D5E2F8;--plaatrand-breed:0px}
+.alles-aan .h00 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{--rand:var(--color-cta);--plaatrand:var(--color-cta-active);--plaatrand-breed:2px;scale:1.03}
+.h01 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h01 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{translate:0 -6px;scale:1.02;box-shadow:inset 0 1px 0 var(--white),0 0 0 2px var(--color-cta),0 6px 0 0 transparent,0 22px 34px -18px color-mix(in srgb,var(--ink) 34%,transparent),0 50px 70px -40px color-mix(in srgb,var(--color-cta) 45%,transparent)}
+.h02 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h02 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{scale:1.03;box-shadow:inset 0 1px 0 var(--white),0 0 0 0 transparent,0 9px 0 0 var(--color-cta),0 10px 0 color-mix(in srgb,var(--ink) 10%,transparent),0 22px 30px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 50px 70px -40px color-mix(in srgb,var(--color-cta) 45%,transparent)}
+.h03 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h03 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{scale:1.03;box-shadow:inset 0 1px 0 var(--white),0 0 0 3px var(--color-cta),0 8px 0 3px var(--color-cta-hover),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
+.h04 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h04 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{scale:1.03;box-shadow:inset 0 1px 0 var(--white),0 0 0 4px var(--white),0 0 0 7px var(--color-cta),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
+.h05 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h05 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{scale:1.03;box-shadow:inset 0 1px 0 var(--white),0 0 0 2px var(--color-cta),0 0 0 9px color-mix(in srgb,var(--color-cta) 14%,transparent),0 26px 44px -20px color-mix(in srgb,var(--color-cta) 60%,transparent)}
+.h06 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h06 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{translate:-5px -5px;scale:1.02;box-shadow:inset 0 1px 0 var(--white),0 0 0 2px var(--color-cta),3px 3px 0 2px var(--color-cta),6px 6px 0 2px var(--color-cta-hover),9px 9px 0 2px var(--color-cta-active),16px 22px 30px -10px color-mix(in srgb,var(--ink) 30%,transparent)}
+.h07 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h07 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{scale:1.03;background-color:#F2FAF5;box-shadow:inset 0 1px 0 #F2FAF5,0 0 0 2px var(--color-cta),0 7px 0 2px var(--color-cta),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
+.h08 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h08 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{scale:1.04;box-shadow:inset 0 1px 0 var(--white),0 0 0 5px var(--color-cta),0 9px 0 5px var(--color-cta-active),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
+.h09 .b-contactkaarten__link{transition:background-color .22s var(--ease-out),color .22s var(--ease-out),padding .22s var(--ease-out)}
+.h09 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h09 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{scale:1.03;box-shadow:inset 0 1px 0 var(--white),0 0 0 3px var(--color-cta),0 8px 0 3px var(--color-cta-hover),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
+:is(.h09 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h09 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal) .b-contactkaarten__link{padding:.55rem .95rem;border-radius:12px;background:var(--color-cta);color:var(--white);align-self:flex-start;box-shadow:0 3px 9px rgba(11,35,82,.12)}
+:is(.h09 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h09 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal) .b-contactkaarten__link span{text-decoration:none}
+.h10 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{border:3px solid transparent;background:linear-gradient(var(--white),var(--white)) padding-box,linear-gradient(var(--white),var(--white)) border-box}
+.h10 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover,.alles-aan .h10 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{scale:1.03;background:linear-gradient(var(--white),var(--white)) padding-box,linear-gradient(135deg,var(--color-cta-active),var(--color-cta) 45%,#3FB26F) border-box;box-shadow:inset 0 1px 0 var(--white),0 0 0 0 transparent,0 7px 0 0 var(--color-cta-active),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
+</style>
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol><symbol id="i-extern" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol><symbol id="i-google" viewBox="0 0 24 24" fill="currentColor"><g transform="translate(2.64 2.64) scale(.78)"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.6l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></g></symbol><symbol id="i-klok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-pijl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></symbol><symbol id="i-sluit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol><symbol id="i-ster" viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></symbol><symbol id="i-telefoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol><symbol id="i-wereld" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol><symbol id="i-whatsapp" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#25D366" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#25D366" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol><symbol id="i-whatsapp-wit" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#fff" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#fff" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol></svg>
+<div class="balk"><strong>Zo bereikt u ons: kaarten bij de muis</strong>
+<nav aria-label="Varianten"><a href="#v00">00</a><a href="#v01">01</a><a href="#v02">02</a><a href="#v03">03</a><a href="#v04">04</a><a href="#v05">05</a><a href="#v06">06</a><a href="#v07">07</a><a href="#v08">08</a><a href="#v09">09</a><a href="#v10">10</a></nav>
+<label><input type="checkbox" id="allesAan"> Alle kaarten in hover-stand</label></div>
+<main>
+<section class="b-contactkaarten sectie sectie--wit hv h00" id="v00">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">00</span><div><h2 class="hv__naam">Nu op de site</h2><p class="hv__uitleg">Ter vergelijking: 2 px groene lijn, donkergroene plaatrand, 3% groter.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h01" id="v01">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">01</span><div><h2 class="hv__naam">Dunne lijn, kaart komt los</h2><p class="hv__uitleg">Fijne groene lijn; de kaart komt 6 px omhoog van zijn plaat en wordt 2% groter.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h02" id="v02">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">02</span><div><h2 class="hv__naam">Groene plaat</h2><p class="hv__uitleg">Geen lijn om de kaart: de dikke plaatrand eronder wordt groen, dus de zijkant van het blok is groen.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h03" id="v03">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">03</span><div><h2 class="hv__naam">Groen kader op groene plaat</h2><p class="hv__uitleg">3 px groene lijst rondom, de plaatrand in hetzelfde groen en even breed. Eén groen blok.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h04" id="v04">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">04</span><div><h2 class="hv__naam">Dubbele ring</h2><p class="hv__uitleg">Wit randje en daarbuiten een groene ring, zoals de focusring van een knop. 3% groter.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h05" id="v05">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">05</span><div><h2 class="hv__naam">Groene gloed</h2><p class="hv__uitleg">Groene lijn met een zachte groene waas eromheen en een groene schaduw eronder.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h06" id="v06">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">06</span><div><h2 class="hv__naam">Groene 3D-zijkant</h2><p class="hv__uitleg">De kaart schuift iets naar linksboven; rechts en onder komt een groene zijkant tevoorschijn, als een blok.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h07" id="v07">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">07</span><div><h2 class="hv__naam">Groene lijn, licht groen vlak</h2><p class="hv__uitleg">Groene lijn en plaatrand, en de kaart zelf kleurt heel licht groen.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h08" id="v08">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">08</span><div><h2 class="hv__naam">Dikke groene lijst</h2><p class="hv__uitleg">Stevige 5 px groene lijst met een donkergroene plaatrand. 4% groter.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h09" id="v09">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">09</span><div><h2 class="hv__naam">Groene lijst en groene knop</h2><p class="hv__uitleg">Groene lijst en plaat, en de link onderin wordt de groene Offerte-knop (witte tekst).</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+
+<section class="b-contactkaarten sectie sectie--wit hv h10" id="v10">
+  <div class="wrap">
+    <div class="hv__kop"><span class="hv__nr">10</span><div><h2 class="hv__naam">Groen verloop in de lijst</h2><p class="hv__uitleg">Een 3 px lijst die van donker- naar lichtgroen verloopt, de plaatrand in het donkere groen.</p></div></div>
+    <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-3d/envelop.webp" alt="" width="347" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--formulier" src="/img/contact-3d/formulier.webp" alt="" width="346" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--doos" src="/img/contact-3d/doos.webp" alt="" width="425" height="400" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+  </div>
+</section>
+</main>
+<script>document.getElementById('allesAan').addEventListener('change',function(e){document.body.classList.toggle('alles-aan',e.target.checked)});</script>
+</body>
+</html>

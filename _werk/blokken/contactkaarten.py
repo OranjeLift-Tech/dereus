@@ -1,4 +1,4 @@
-"""Persoonlijk contact (/contact/, #contactkaarten), opgezet zoals "Even persoonlijk contact" bij De Kievit:
+"""Persoonlijk contact (/contact/, #contactkaarten), opgezet zoals "Even persoonlijk contact" bij referentie A:
 boven links de kop, de tekst en twee knoppen; rechts in plaats van een foto een Koningsblauwe belkaart met
 de bereikbaarheidsstatus. Daaronder vier kanaalkaarten: bellen, mailen, een bericht sturen, een offerte.
 
@@ -89,7 +89,10 @@ def html(ctx, kopij, **opties) -> str:
             beeld += ctx.beeld(vsrc, "", vbreed, vhoog, klasse=f"b-{NAAM}__voorgrond")
         maten = f"--uit-breed:{breed};--uit-hoog:{hoog};--uit-x:{ux};--uit-y:{uy};--uit-w:{uw};--uit-h:{uh}"
         figuur = f'<div class="uitsnede b-{NAAM}__figuur" style="{maten}" aria-hidden="true">{beeld}</div>'
-    return f'''<section class="b-{NAAM} sectie sectie--wit" id="{sid}" aria-labelledby="{sid}-kop">
+    # stijl="groen": de versie van Tugche (origin/main 9dbb9a8, 28-09-2026), de groene zijkant onder de muis en een
+    # grotere verhuizer; zie css/blok/contactkaarten.css
+    stijl = " b-" + NAAM + "--groen" if opties.get("stijl") == "groen" else ""
+    return f'''<section class="b-{NAAM}{stijl} sectie sectie--wit" id="{sid}" aria-labelledby="{sid}-kop">
       <div class="wrap">
         <div class="b-{NAAM}__boven">
           <div class="b-{NAAM}__tekst" data-reveal>

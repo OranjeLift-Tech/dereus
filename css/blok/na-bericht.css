@@ -1,8 +1,8 @@
 /* Na uw bericht (/contact/ #na-bericht): de Diepblauwe band met dakrand; tekst links, foto rechts.
    De foto van de verhuisadviseur staat recht, met het huisvlak uit het logo als vorm erachter:
-   vorm achter, foto ervoor (STIJLANALYSE 2.5, diepte in lagen). Een huismasker óver een portret
+   vorm achter, foto ervoor (STIJLANALYSE 2.5, diepte in lagen). Een huismasker over een portret
    sneed de kop af, dus het huis blijft achtergrond. Zij komt met haar hoofd boven de lijst uit;
-   zie het blok "uit de lijst" onderaan. */
+   zie het blok "uit de lijst" hieronder. De versie van Tugche (beeld="bureau") staat onderaan. */
 .b-na-bericht__in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(2rem,1rem + 4vw,5rem);align-items:center}
 .b-na-bericht__kop{max-width:none;margin-inline:0;margin-bottom:1.25rem;text-align:left}
 .b-na-bericht__kop .label{justify-content:flex-start}
@@ -149,3 +149,33 @@
   .b-na-bericht--onder-beeld .b-na-bericht__acties{flex-direction:column;align-items:flex-start}
   .b-na-bericht .b-na-bericht__acties a.b-na-bericht__google{min-height:0;padding-inline:.75rem}
 }
+
+/* ---- Beeld bureau (optie beeld="bureau", de versie van Tugche, origin/main 9dbb9a8, 28-09-2026) ----
+   Het beeld is opgezet als de contactkop van referentie A: de adviseur aan haar bureau zonder kamer
+   erachter, dus zij staat vrij op de band. Het bureau en het scherm lopen tot de rand van het beeld
+   door en die rand heeft onderaan ronde hoeken; boven is geen lijst. Links naast haar hoofd een grote
+   egale duim in Goudgeel. De uitsnede zelf: _ai-beelden/na-bericht-bureau/.
+   Haar regels staan hier onder .b-na-bericht--bureau, zodat ze naast de foto met huisvlak kunnen bestaan;
+   wat die hierboven zet en zij niet (het huis, de containermaat, de positie van de foto) zet dit blok terug. */
+.b-na-bericht--bureau .b-na-bericht__beeld{container-type:normal}
+.b-na-bericht--bureau .b-na-bericht__beeld::before{content:none}
+.b-na-bericht--bureau .b-na-bericht__beeld{position:relative;isolation:isolate;margin:0;justify-self:end;width:min(100%,33rem)}
+/* alleen de onderhoeken rond: daar snijdt de rand door bureau en broek, zoals bij de referentie.
+   Het haar is bijna even donker als de band; een dunne lichte rand maakt het silhouet los. De filter
+   komt vóór de clip-path, dus die rand blijft binnen het beeld. */
+.b-na-bericht--bureau .b-na-bericht__foto{position:relative;top:auto;left:auto;z-index:1;display:block;width:100%;height:auto;
+  clip-path:inset(0 round 0 0 var(--radius-media) var(--radius-media));
+  filter:drop-shadow(0 0 1px rgba(255,255,255,.55)) drop-shadow(0 0 8px rgba(190,214,255,.22))}
+/* de duim: links boven, iets buiten het beeld, op kruinhoogte; hij raakt haar niet. De stapel harde
+   schaduwen geeft hem een dunne donkergele zijkant, de zachte schaduw legt hem op de band. */
+.b-na-bericht--bureau .b-na-bericht__duim{position:absolute;z-index:2;left:-16%;top:0;width:22%;height:auto;aspect-ratio:120/108;
+  fill:var(--brand-accent);
+  filter:drop-shadow(1px 1px 0 var(--accent-600)) drop-shadow(1px 1px 0 var(--accent-600)) drop-shadow(1px 1px 0 var(--accent-700))
+    drop-shadow(1px 1px 0 var(--accent-700)) drop-shadow(10px 14px 16px rgba(5,14,35,.5))}
+@media(max-width:1280px){.b-na-bericht--bureau .b-na-bericht__duim{left:-11%}}
+@media(max-width:860px){
+  .b-na-bericht--bureau .b-na-bericht__in{grid-template-columns:1fr}
+  .b-na-bericht--bureau .b-na-bericht__beeld{justify-self:center;width:min(86%,28rem);margin-top:.5rem}
+  .b-na-bericht--bureau .b-na-bericht__duim{left:-12%}
+}
+@media(max-width:560px){.b-na-bericht--bureau .b-na-bericht__beeld{width:min(84%,21rem)}.b-na-bericht--bureau .b-na-bericht__duim{left:-10%;width:20%}}

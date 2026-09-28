@@ -1,10 +1,13 @@
 """Het gedeelde formulier: offerteaanvraag (/offerte/) en contactbericht (/contact/).
 
 Opties: variant = "offerte" of "contact"; id (standaard "formulier"); beeld = uitsneefoto bovenin de
-zijkolom; team = groepsfoto onderaan de zijkolom, tegen de onderrand (/contact/); merk = het beeldmerk
-onderaan het meeschuivende blok (/offerte/). beeld en team sluiten elkaar in de praktijk uit.
+zijkolom; team = groepsfoto onderaan de zijkolom, tegen de onderrand; merk = het beeldmerk
+onderaan het meeschuivende blok (tot 28-09-2026 op /offerte/); figuur = uitsnede (pad, of (pad, breedte, hoogte)) boven
+een blauw paneel, de opzet van het offerteblok van referentie B (/contact/ en /offerte/, zie _paneel). beeld, team en figuur sluiten
+elkaar in de praktijk uit.
 Kopij: het blok {#formulier} van de pagina. Blokvelden: knop, privacy, fout-kop, fout-versturen, bezig,
-zij-kop en lijst (de drie vinkjes in de zijkolom; zonder zij-kop vervalt de zijkolom).
+zij-kop en lijst (de drie vinkjes in de zijkolom; zonder zij-kop vervalt de zijkolom), bel-zin (de regel
+boven de belknop, alleen met figuur).
 Per veld een ###-item met de veldnaam als id: de titel is het label, met hulp, placeholder, fout,
 fout-onjuist en onbekend (het vinkje naast Naar en Wanneer). Bij dienst is de lijst de keuzelijst,
 in de vorm "- particulier = Particuliere verhuizing".
@@ -106,17 +109,23 @@ def _veld(ctx, it, soort, verplicht, extra="", breed=False):
     return f'<div class="{klasse}"><label for="f-{it.id}">{ctx.esc(it.kop)}</label>{invoer}{_hulp(ctx, it)}{vinkje}</div>'
 
 
-def _velden(ctx, k, variant):
+def _velden(ctx, k, variant, drie=False):
     # haakjes en het streepje met een backslash: Chrome leest het patroon met de v-vlag en negeert het anders
     tel = ' autocomplete="tel" inputmode="tel" pattern="[0-9+ \\(\\)\\-]{8,}"'
-    persoon = (f'<div class="b-{NAAM}__rij">'
-               + _veld(ctx, k.item("naam"), "text", True, ' autocomplete="name"')
-               + _veld(ctx, k.item("telefoon"), "tel", True, tel) + "</div>"
-               + _veld(ctx, k.item("email"), "email", True, ' autocomplete="email"', breed=True))
+    naam = _veld(ctx, k.item("naam"), "text", True, ' autocomplete="name"')
+    telefoon = _veld(ctx, k.item("telefoon"), "tel", True, tel)
+    if drie:
+        # naam, telefoon en e-mail naast elkaar, zoals op referentie B; smal worden het er twee en een
+        email = _veld(ctx, k.item("email"), "email", True, ' autocomplete="email"')
+        persoon = f'<div class="b-{NAAM}__rij b-{NAAM}__rij--drie">{naam}{telefoon}{email}</div>'
+    else:
+        persoon = (f'<div class="b-{NAAM}__rij">{naam}{telefoon}</div>'
+                   + _veld(ctx, k.item("email"), "email", True, ' autocomplete="email"', breed=True))
     if variant == "contact":
         return persoon + _veld(ctx, k.item("bericht"), "textarea", True, breed=True)
     label = (f'<div class="b-{NAAM}__label">' + _adres(ctx, k.item("van"), True) + _adres(ctx, k.item("naar"), False) + "</div>")
-    wanneer = (f'<div class="b-{NAAM}__rij">' + _veld(ctx, k.item("datum"), "date", False)
+    # met het paneel staat Wanneer op een derde en Soort verhuizing op twee derde, gelijk met naam, telefoon en e-mail
+    wanneer = (f'<div class="b-{NAAM}__rij{f" b-{NAAM}__rij--wanneer" if drie else ""}">' + _veld(ctx, k.item("datum"), "date", False)
                + _veld(ctx, k.item("dienst"), "select", False) + "</div>")
     return label + wanneer + persoon + _veld(ctx, k.item("opmerkingen"), "textarea", False, breed=True)
 
@@ -164,15 +173,41 @@ def _bovenaan(ctx, beeld):
     return ctx.beeld(beeld, "", breed, hoog, klasse=f"b-{NAAM}__beeld")
 
 
-# Optie merk: het beeldmerk als laatste onderdeel van de zijkolom (/offerte/). Het staat binnen __zijin, zodat het
+# Optie merk: het beeldmerk als laatste onderdeel van de zijkolom (/offerte/ tot 28-09-2026, nu figuur). Het staat binnen __zijin, zodat het
 # meeloopt met het blok dat tijdens het invullen in beeld blijft. Vormgeving: css/blok/offerte-diepte.css.
 MERK = ('<img class="b-formulier__merk" src="/img/logo/dereus-beeldmerk-negatief.svg" alt="" width="1000" height="509" '
         'loading="lazy" decoding="async">')
 
 
-def _zijkolom(ctx, k, beeld=None, merk=False, team=None):
+def _paneel(ctx, k, figuur):
+    """Zijkolom met figuur (/contact/ en /offerte/, 28-09-2026): het offerteblok van referentie B in het merkboek.
+
+    Bovenin staat de uitgeknipte medewerker, die boven de kaart uitsteekt; daaronder een Koningsblauw
+    paneel met een schuine bovenkant dat over zijn onderlichaam valt, met de kop, de drie vinkjes en de
+    belknop. De WhatsApp-knop zet contactlinks() achter de bellink, dus binnen __bellen.
+    Vormgeving: het blok "Paneel met figuur" onderaan css/blok/formulier.css.
+    """
+    if isinstance(figuur, (tuple, list)):   # (pad, breedte, hoogte): de maat staat al vast
+        figuur, breed, hoog = figuur
+    else:
+        breed, hoog = _maat(figuur, (640, 954))
+    punten = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
+    belzin = f'\n        <p class="b-{NAAM}__belzin">{ctx.inline(k.veld("bel-zin"))}</p>' if k.veld("bel-zin") else ""
+    return f'''<aside class="b-{NAAM}__zij b-{NAAM}__zij--paneel">
+      <div class="b-{NAAM}__beeldvak">{ctx.beeld(figuur, "", breed, hoog, klasse=f"b-{NAAM}__figuur")}</div>
+      <div class="b-{NAAM}__paneel">
+        <p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
+        <ul class="b-{NAAM}__punten">{punten}</ul>{belzin}
+        <div class="b-{NAAM}__bellen"><a class="b-{NAAM}__tel" href="{ctx.telhref}"><span class="b-{NAAM}__telico">{TELEFOON_SVG}</span><span>{ctx.esc(ctx.tel)}</span></a></div>
+      </div>
+    </aside>'''
+
+
+def _zijkolom(ctx, k, beeld=None, merk=False, team=None, figuur=None):
     if not k.veld("zij-kop"):
         return ""
+    if figuur:
+        return _paneel(ctx, k, figuur)
     vinkjes = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
     variant = f" b-{NAAM}__zij--team" if team else ""
     tekst = f'''<p class="b-{NAAM}__zijkop">{ctx.inline(k.veld("zij-kop"))}</p>
@@ -197,12 +232,16 @@ def html(ctx, kopij, **opties) -> str:
     grond = opties.get("grond", "mist")
     sleutel = getattr(ctx.cfg, "WEB3FORMS_KEY", "")
     zonder_sleutel = _is_placeholder(sleutel)
-    zij = (_zijkolom(ctx, k, opties.get("beeld"), opties.get("merk", False), opties.get("team"))
+    figuur = opties.get("figuur")
+    zij = (_zijkolom(ctx, k, opties.get("beeld"), opties.get("merk", False), opties.get("team"), figuur)
            if opties.get("zijkolom", True) else "")
+    paneel = bool(figuur and zij)
+    # met het paneel: de knop met een pijl, zoals op referentie B
+    pijl = ctx.icoon("pijl") if paneel else ""
     prefix = ctx.esc(opties.get("prefix", "f"))
     bereik = (f'<a href="{ctx.telhref}">{ctx.esc(ctx.tel)}</a> <span aria-hidden="true">·</span> '
               f'<a href="mailto:{ctx.esc(ctx.mail)}">{ctx.esc(ctx.mail)}</a>')
-    html = f'''<section class="b-{NAAM} b-{NAAM}--{variant} sectie sectie--{grond}" id="{sid}" aria-labelledby="{sid}-kop" data-b="{NAAM}">
+    html = f'''<section class="b-{NAAM} b-{NAAM}--{variant}{f" b-{NAAM}--paneel" if paneel else ""} sectie sectie--{grond}" id="{sid}" aria-labelledby="{sid}-kop" data-b="{NAAM}">
       <div class="wrap">
         <div class="b-{NAAM}__kaart{"" if zij else " b-" + NAAM + "__kaart--smal"}{" b-" + NAAM + "__kaart--beeld" if zij and opties.get("beeld") else ""}">
           {zij}
@@ -215,14 +254,14 @@ def html(ctx, kopij, **opties) -> str:
               <input type="hidden" name="from_name" value="{v["afzender"]}">
               <input type="hidden" name="redirect" value="{ctx.cfg.DOMEIN}{v["bedankt"]}">
               <label class="b-{NAAM}__hp" aria-hidden="true"><input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"></label>
-              {_velden(ctx, k, variant)}
+              {_velden(ctx, k, variant, drie=paneel)}
               <div class="b-{NAAM}__foutlijst" role="alert" tabindex="-1" hidden>
                 <p>{ctx.inline(k.veld("fout-kop"))}</p>
                 <ul></ul>
               </div>
               <p class="b-{NAAM}__fout" role="alert" hidden>{ctx.inline(k.veld("fout-versturen"))} <span class="b-{NAAM}__bereik">{bereik}</span></p>
               <div class="b-{NAAM}__acties">
-                <button class="knop knop--cta" type="submit">{ctx.esc(k.veld("knop"))}</button>
+                <button class="knop knop--cta" type="submit">{ctx.esc(k.veld("knop"))}{pijl}</button>
                 <p class="b-{NAAM}__privacy">{ctx.inline(k.veld("privacy"))}</p>
               </div>
             </form>

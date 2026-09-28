@@ -236,7 +236,7 @@ const V = [
     html: () => LK + rij(basis) },
   { naam: 'Iconen', uitleg: 'Merkboek ikonları gömülü (verzonken) bir yuvada, numara küçük koyu etiket olarak. En sakin "ürün sayfası" görünümü.',
     html: () => LK + rij(f => `<span class="vak"><img src="/img/iconen/${f.i}.svg" alt=""></span>${basis(f)}`) },
-  { naam: 'Fotostrook', uitleg: 'Tek geniş gerçek fotoğraf, kartlar alt kenarından üstüne biniyor (De Kievit tarzı). Bölüme hava ve derinlik katıyor.',
+  { naam: 'Fotostrook', uitleg: 'Tek geniş gerçek fotoğraf, kartlar alt kenarından üstüne biniyor (Referentie A tarzı). Bölüme hava ve derinlik katıyor.',
     html: () => LK + `<div class="strook"><img src="/img/hero-bg-1920.webp" alt="" loading="lazy" decoding="async"></div>` + rij(basis) },
   { naam: 'Diepblauw paneel', uitleg: 'Mist zemin üstünde tek koyu levha (bant değil, kart): sarı rakamlar, ince çizgiler, köşede logo evi. Altındaki mavi All-in kartıyla bağ kuruyor.',
     html: () => `<div class="paneel">${LK}${rij(basis)}</div>` },

@@ -6,7 +6,7 @@ Varianten:
   los   als afsluiter op andere pagina's; kopij = ## ... {#offertepil} van die pagina.
         Opties dienst="opslag" (selecteert de soort), van="Rijswijk", naar="Rijswijk" (vullen vooraf in).
         Met over_kop=True staat hij direct onder de paginakop en valt hij over de onderrand ervan
-        (zoals de pil op de home en op de contactpagina van De Kievit).
+        (zoals de pil op de home en op de contactpagina van referentie A).
         In de blauwe kopband staat een verhuizer die er bovenaan uitsteekt (keuze van de gebruiker,
         28-09-2026). Optie beeld=(pad, breedte, hoogte) kiest een andere uitsnede, beeld=None laat hem weg.
 Veldlabels en placeholders komen uit offerte.md #formulier (items van, naar, datum, dienst).

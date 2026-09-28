@@ -1,7 +1,7 @@
-"""/contact/, opgezet zoals de contactpagina van De Kievit (website/referentie, de-kievit.nl/contact/):
+"""/contact/, opgezet zoals de contactpagina van referentie A (website/referentie):
 kop met offertepil over de rand, vertrouwensrij, adres met kaart, persoonlijk contact met kanaalkaarten,
 het contactformulier (dereus-b4) als tweekoloms kaart, de Diepblauwe band "na uw bericht" en de vragen.
-Weggelaten ten opzichte van De Kievit: bedrijfsgegevens (KvK en keurmerk onbekend, open vragen 1.1 en 1.5),
+Weggelaten ten opzichte van referentie A: bedrijfsgegevens (KvK en keurmerk onbekend, open vragen 1.1 en 1.5),
 WhatsApp en "kom langs" (niet bevestigd) en foto's van medewerkers (er zijn nog geen eigen foto's).
 """
 from kit import Pagina
@@ -11,7 +11,8 @@ PAGINA = Pagina(
     kopij="contact",
     header="transparant",
     body_klasse="p-contact",
-    extra_css=("uitsnede",),                  # het vak van de adviseur in "Zo bereikt u ons", zie css/blok/uitsnede.css
+    extra_css=("uitsnede",                    # het vak van de adviseur in "Zo bereikt u ons", zie css/blok/uitsnede.css
+               "logomotief"),                 # het logo in de zijmarge in plaats van de randmotieven (28-09-2026)
     blokken=[
         ("kop", {}),
         ("offertepil", {"variant": "los", "over_kop": True}),
@@ -23,6 +24,9 @@ PAGINA = Pagina(
         # doorzichtige rand (alfa-bbox is het hele bestand, 698x1200); bij een wissel opnieuw meten.
         ("contactkaarten", {"figuur": ("/img/verhuizer-doos-deken-uit.webp", 698, 1200, 0, 0, 698, 1200),
                             "voorgrond": ("/img/verhuisdozen-uit.webp", 562, 522)}),
+        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
+        # de kaarten met een groene zijkant en gloed onder de muis, de verhuizer groter (optie stijl in contactkaarten.py)
+        # ("contactkaarten", {"figuur": ("/img/verhuizer-doos-deken-uit.webp", 698, 1200, 0, 0, 698, 1200), "voorgrond": ("/img/verhuisdozen-uit.webp", 562, 522), "stijl": "groen"}),
         # Sinds 28-09-2026 de schuine actielijn, hetzelfde blok als #cijfers op de home: "make it slanted", "a more
         # interesting background color", "a quick overview like some sort of action line". Hiervoor stond direct onder
         # de kop ("vertrouwensrij", {"kopij_id": "vertrouwen", "grond": "wit"}); dat blok bestaat nog.
@@ -35,7 +39,19 @@ PAGINA = Pagina(
         # dezelfde verhuizer, die boven de kaart uitsteekt. Hiervoor stond hier het kantoor
         # (team: /img/helpen-kantoor.webp, commit 7fe41fb). grond: lucht komt van de bandenronde en blijft staan.
         ("formulier", {"variant": "contact", "beeld": "/img/verhuizer-doos-zijgreep-uit.webp", "grond": "lucht"}),
+        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
+        # de opzet van het offerteblok op de contactpagina van referentie B: drie verhuizers steken boven de kaart
+        # uit, een Koningsblauw paneel met schuine bovenkant valt over hun onderlichaam. helpen-drie-uit.webp: de
+        # adviseur met het echte borstmerk vooraan, twee mannen uit team-hero erachter (_ai-beelden/helpen-drie/).
+        # ("formulier", {"variant": "contact", "figuur": ("/img/helpen-drie-uit.webp", 685, 591), "grond": "lucht"}),
         ("na-bericht", {}),
+        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
+        # de adviseur aan haar bureau met de Goudgele duim (optie beeld in na-bericht.py)
+        # ("na-bericht", {"beeld": "bureau"}),
         ("vragen", {"sectie": "wit", "beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),   # hetzelfde blauwe paneel als op de home, /werkwijze/ en /kosten/ (23-09-2026)
+        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
+        # Goudgele band met foto-afdruk (ontwerp 07), net als /werkwijze/. Afdruk zakelijk: de klantenservice staat al
+        # in na-bericht en de adviseur in het formulier.
+        # ("vragen", {"stijl": "geel", "afdruk": "zakelijk"}),
     ],
 )

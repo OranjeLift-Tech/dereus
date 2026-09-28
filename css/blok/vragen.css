@@ -375,3 +375,81 @@
   /* de vraagtekens naar links, onder de knoppen; hun vak en hun maat blijven zoals ze waren */
   .b-vragen--paneel .vragen__kop:has(> .vragen__werker) .vragen__vulbeeld { left: 0; right: auto; object-position: left bottom; }
 }
+
+/* ---- Goudgele band (stijl="geel", /contact/ en /werkwijze/, 28-09-2026) ----
+   Ontwerp 07 uit _ontwerpen/vragen-referentie-ronde1.html, gekozen door de gebruiker, met een wijziging op
+   verzoek: het geel is geen plaat in een witte sectie maar de sectie zelf, van rand tot rand. Hetzelfde
+   geelverloop als de gele band op /werkwijze/ #na-de-verhuizing (naband.css).
+   Links een schuine foto-afdruk naar de contactpagina van referentie B (.sgt__foto, .sgt__uit): de foto zit in een raam en
+   dezelfde uitsnede ligt er precies overheen, alleen onderaan en opzij geknipt, zodat de hoofden boven de witte
+   rand uitkomen. Rechts de kop in Diepblauw, de vragen als witte kaarten met een donkergele onderkant, de belrij.
+   Dit blok staat met opzet onderaan: /contact/ draagt .p-contact, en de paneelregels hierboven grijpen daar ook
+   zonder b-vragen--paneel aan op .vragen__lijst en .vraag. Alles wat zij zetten, zet dit blok dus zelf opnieuw,
+   met dezelfde specificiteit en later in het bestand. Geen beweging; het openklappen van .vraag blijft zoals het was. */
+.b-vragen--geel { padding-block: clamp(3rem, 2rem + 3vw, 4.25rem) clamp(2.75rem, 2rem + 2.5vw, 3.75rem); color: var(--ink);
+  background: linear-gradient(100deg, #FFD447, var(--brand-accent) 60%, var(--accent-600)); }
+.vragen__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+.vragen__fotos { position: relative; width: min(100%, 30rem); margin: 1.5rem auto 0; }
+.vragen__afdruk { position: relative; display: block; padding: 12px 12px 46px; border-radius: 6px; background: var(--white);
+  rotate: -3deg; box-shadow: 0 2px 0 rgba(0, 0, 0, .05), 0 26px 40px -18px rgba(90, 60, 0, .55); }
+.vragen__afdruk::before { content: ""; display: block; aspect-ratio: 4/3.1; }
+.vragen__raam, .vragen__boven { position: absolute; inset: 12px 12px 46px; }
+.vragen__raam { overflow: hidden; border-radius: 3px; }
+/* clip-path knipt alleen wat je ziet; de uitsnede telt dan nog mee in de paginabreedte (op 390 px 52 px te
+   breed). overflow-x:clip knipt opzij echt, en laat de hoofden boven de rand staan. */
+.vragen__boven { clip-path: inset(-80% 0 0 0); overflow-x: clip; pointer-events: none; }
+/* --k en --cx staan per foto in vragen.py (AFDRUK): hoe hoog de foto in het raam staat en waar de mensen staan. */
+.vragen__afdrukfoto, .vragen__afdrukuit { position: absolute; bottom: 0; left: 50%; display: block; width: auto; max-width: none;
+  height: calc(var(--k, 1.3) * 100%); translate: calc(-1 * var(--cx, 50%)) 0; }
+.vragen__afdrukuit { filter: drop-shadow(0 10px 12px rgba(11, 35, 82, .25)); }
+.vragen__headset { position: absolute; right: -1rem; bottom: -1.4rem; display: block; width: auto; max-width: none;
+  height: clamp(5rem, 9vw, 7.2rem); rotate: 8deg; pointer-events: none;
+  filter: drop-shadow(2px 3px 2px color-mix(in srgb, var(--brand-secondary) 30%, transparent))
+          drop-shadow(8px 15px 11px color-mix(in srgb, var(--brand-secondary) 34%, transparent)); }
+.b-vragen--geel .kopgroep { max-width: none; margin: 0 0 1rem; text-align: left; }
+.b-vragen--geel .kopgroep .label { justify-content: flex-start; color: var(--brand-secondary); }
+.b-vragen--geel .kopgroep h2 { color: var(--brand-secondary); }
+.b-vragen--geel .vragen__lijst { order: 0; display: grid; gap: .6rem; align-content: start; border-top: 0; }
+.b-vragen--geel .vraag { border-bottom: 0; border-radius: 14px; background: var(--white);
+  box-shadow: 0 4px 0 rgba(160, 105, 0, .45), 0 14px 20px -14px rgba(90, 60, 0, .5); }
+.b-vragen--geel .vraag summary { gap: 1rem; min-height: 54px; padding: .5rem .8rem .5rem 1.05rem; }
+.b-vragen--geel .vraag__tekst { font-size: clamp(1rem, .95rem + .2vw, 1.06rem); }
+.b-vragen--geel .vraag__plus { width: 32px; height: 32px; }
+.b-vragen--geel .vraag__antwoord { padding: 0 1.1rem 1rem 3.5rem; }
+.vragen__belrij { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-top: 1.2rem; }
+.vragen__bereikbaar { padding: .3rem .85rem .3rem .6rem; border-radius: 999px; background: var(--white); color: var(--ink);
+  font-size: var(--text-xs); font-weight: var(--weight-bold); }
+.vragen__zin { margin: 0; font-weight: var(--weight-bold); color: var(--ink); }
+/* Bellen in Diepblauw: een gele knop valt weg op de gele band. WhatsApp blijft de groene knop van style.css. */
+.vragen__knoppen { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+.vragen__knoppen .knop { background: var(--brand-secondary); color: var(--white);
+  box-shadow: 0 4px 0 #071838, 0 12px 18px -10px rgba(11, 35, 82, .45); }
+.vragen__knoppen .knop:hover { background: var(--brand-primary); color: var(--white); }
+.vragen__knoppen .wa-link { margin: 0; min-height: 48px; padding: .55rem 1.2rem; font-size: 1rem;
+  box-shadow: 0 4px 0 #14552B, 0 12px 18px -10px rgba(11, 35, 82, .45); }
+@media (min-width: 900px) {
+  .vragen__raster { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
+  .vragen__fotos { width: auto; margin: 0; }
+  /* /contact/ (afdruk zakelijk, k 1.52): de mensen komen ver boven de lijst uit, dus de afdruk staat lager.
+     Zonder die ruimte stak het hoofd van de linker man bij hover 17 px in de band erboven (1536 px). */
+  .p-contact .b-vragen--geel .vragen__fotos { margin-top: 2.25rem; }
+}
+@media (max-width: 559.98px) {
+  .b-vragen--geel .vraag__antwoord { padding: 0 1rem 1rem 1.05rem; }
+  .vragen__headset { right: -.4rem; }
+}
+
+/* ---- hover: de afdruk komt naar u toe (28-09-2026) ----
+   Zelfde als op /werkwijze/ #verhuisdag: de afdruk tilt een paar pixels op en de foto en de uitsnede groeien
+   samen een fractie vanaf de onderrand, bij de mensen (--cx), zodat de hoofden net iets verder boven de witte
+   rand uitkomen. Zelfde scale en oorsprong voor allebei, dus ze blijven precies op elkaar liggen; scale en
+   geen transform, want de plek komt uit translate. De hover zit op .vragen__fotos, dat niet beweegt, zodat de
+   muis niet onder de opgetilde afdruk uitvalt. Dit blok blijft onder de Goudgele band. Alleen met een muis. */
+@media (hover: hover) and (pointer: fine) {
+  .vragen__afdruk { transition: translate .4s var(--ease), box-shadow .4s var(--ease); }
+  .vragen__afdrukfoto, .vragen__afdrukuit { transform-origin: var(--cx, 50%) 100%; transition: scale .4s var(--ease), filter .4s var(--ease); }
+  .vragen__fotos:hover .vragen__afdruk { translate: 0 -4px;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, .05), 0 36px 50px -18px rgba(90, 60, 0, .6); }
+  .vragen__fotos:hover .vragen__afdrukfoto, .vragen__fotos:hover .vragen__afdrukuit { scale: 1.04; }
+  .vragen__fotos:hover .vragen__afdrukuit { filter: drop-shadow(0 16px 16px rgba(11, 35, 82, .32)); }
+}

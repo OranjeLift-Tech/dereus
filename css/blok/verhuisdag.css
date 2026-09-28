@@ -128,3 +128,85 @@
   .b-verhuisdag--kaders .b-verhuisdag__slot{margin-top:var(--space-6);padding-top:var(--space-4)}
   .b-verhuisdag--kaders .b-verhuisdag__slot::before{left:0;transform:none}
 }
+
+/* ---- uit de foto (28-09-2026, ontwerp 09 "Rondom uit het kader", _ontwerpen/verhuisdag-uit-de-foto.html) ----
+   Het kader is een venster in de foto. De foto (__foto-in) staat groter dan het venster en wordt
+   erop geknipt door __raam; de uitsnede (__uit, zelfde maat en plek als de foto) staat erover in
+   __buiten, maar die laat alleen zien wat BUITEN het venster valt (clip-path met een gat ter grootte
+   van het venster). Zo steken hoofden boven het kader uit, voeten eronder en armen en bank opzij, en
+   is dat wat uitsteekt echt de verhuizer of het meubel uit de foto. --s, --x en --y komen uit
+   verhuisdag.py (_venster), net als --ar, --u en --f hieronder (VENSTER, BOVEN, ONDER).
+   Boven het kader komt --kop ruimte bij, onder het kader --voet; de dakrandzakking (--zak) blijft. */
+/* overflow-x: de uitsnede van de buitenste kaders steekt opzij buiten het venster (1440: 135px). clip-path telt
+   voor de paginabreedte niet mee, dus de sectie knipt zelf af; alleen opzij, de dakrand en de voeten blijven. */
+.b-verhuisdag--uit{--ar:1.6;--u:.2;--f:.1;overflow-x:clip}
+.b-verhuisdag--uit .b-verhuisdag__dag{--kw:calc((var(--kaderrij) - 2 * var(--gat)) / 3)}
+.b-verhuisdag--uit .b-verhuisdag__moment{--H:calc(var(--kw) / var(--ar));--kop:calc(var(--H) * var(--u));--voet:calc(var(--H) * var(--f))}
+.b-verhuisdag--uit .b-verhuisdag__kader{position:relative;overflow:visible;aspect-ratio:var(--ar);border:0;border-radius:0;background:none;box-shadow:none;isolation:isolate;
+  margin-top:calc(var(--zak) * var(--dak) * 1.9 + var(--kop));margin-bottom:calc(var(--space-4) + var(--voet))}
+.b-verhuisdag--uit .b-verhuisdag__moment::after{top:calc(var(--zak) * var(--dak) * 1.9 + var(--kop) - 1.25rem);z-index:6}
+.b-verhuisdag__raam{position:absolute;inset:0;z-index:1;overflow:clip;border-radius:var(--radius-card);background:var(--primary-600);
+  box-shadow:0 0 0 1px rgba(255,255,255,.25),0 24px 44px -26px rgba(3,10,30,.8)}
+.b-verhuisdag--uit .b-verhuisdag__kader img{position:absolute;display:block;max-width:none;height:auto;object-fit:fill;
+  width:calc(var(--s) * 100%);left:calc(var(--x) * 100%);top:calc(var(--y) * 100%)}
+.b-verhuisdag__buiten{position:absolute;inset:0;z-index:3;pointer-events:none;
+  clip-path:polygon(evenodd,-150% -300%,250% -300%,250% 300%,-150% 300%,-150% -300%,0% 0%,0% 100%,100% 100%,100% 0%,0% 0%);
+  filter:drop-shadow(0 3px 2px rgba(3,10,30,.35)) drop-shadow(8px 16px 14px rgba(3,10,30,.38))}
+/* de schaduw op de grond onder de voeten die onder het kader uitkomen */
+.b-verhuisdag__vloer{position:absolute;z-index:2;height:10%;margin-inline:-3%;padding-inline:3%;box-sizing:content-box;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(3,10,30,.45),rgba(3,10,30,.18) 60%,transparent)}
+
+/* ---- de afspraken als blok ----
+   Wat hier staat telt: wanneer u betaalt en dat schade op de dag zelf gemeld wordt. Daarom een eigen
+   wit blok in plaats van een regel onder de sectie: elke afspraak een helft met een 3D-voorwerp dat
+   boven het blok uitkomt (kalender = op de dag, schild = schade), zoals de voorwerpen op /kosten/ en
+   /contact/, en de verwijzing naar de voorwaarden als voet. De tekst is die uit de kopij, alleen in
+   zinnen verdeeld; het begin van elke afspraak is vet. */
+.b-verhuisdag__afspraken{max-width:62rem;margin:clamp(3.25rem,2.5rem + 2vw,4.25rem) auto 0;border-radius:22px;background:var(--white);
+  box-shadow:0 26px 48px -26px rgba(3,10,30,.7)}
+.b-verhuisdag__afspraken-rij{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.b-verhuisdag__afspraak{position:relative;padding:1.6rem 1.8rem 1.5rem 7.6rem}
+.b-verhuisdag__afspraak + .b-verhuisdag__afspraak{border-left:1px solid var(--color-border)}
+.b-verhuisdag__afspraken .b-verhuisdag__voorwerp{position:absolute;left:1.6rem;top:-1.9rem;width:auto;height:7rem;max-width:none;filter:drop-shadow(0 12px 12px rgba(3,10,30,.28))}
+.b-verhuisdag__afspraken .b-verhuisdag__afspraak + .b-verhuisdag__afspraak .b-verhuisdag__voorwerp{top:-1.5rem;height:6.3rem}
+.b-verhuisdag__afspraken .b-verhuisdag__afspraak p{margin:0;color:var(--graphite);font-size:var(--text-small);line-height:var(--leading-text)}
+.b-verhuisdag__afspraken .b-verhuisdag__afspraak b{color:var(--brand-secondary)}
+.b-verhuisdag__afspraken .b-verhuisdag__voorwaarden{display:flex;align-items:center;justify-content:center;gap:.6rem;margin:0;padding:.95rem 1.5rem;
+  border-top:1px solid var(--color-border);border-radius:0 0 22px 22px;background:var(--primary-50);color:var(--graphite);font-size:var(--text-small)}
+.b-verhuisdag__voorwaarden .ic{flex:none;width:1.55rem;height:1.55rem;padding:.32rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary)}
+.b-verhuisdag__afspraken .b-verhuisdag__voorwaarden a{color:var(--brand-primary);font-weight:var(--weight-semibold)}
+
+@media (max-width:799px){
+  .b-verhuisdag--uit .b-verhuisdag__dag{--kw:min(100vw - 2 * var(--pad),34rem)}
+  .b-verhuisdag--uit .b-verhuisdag__moment{--zak:0!important}
+  .b-verhuisdag__afspraken-rij{grid-template-columns:minmax(0,1fr)}
+  .b-verhuisdag__afspraak{padding:1.4rem 1.3rem 1.3rem 6.2rem}
+  .b-verhuisdag__afspraak + .b-verhuisdag__afspraak{border-left:0;border-top:1px solid var(--color-border)}
+  .b-verhuisdag__afspraken .b-verhuisdag__voorwerp{left:1rem;top:-1.2rem;height:5.8rem}
+  .b-verhuisdag__afspraken .b-verhuisdag__afspraak + .b-verhuisdag__afspraak .b-verhuisdag__voorwerp{top:1.1rem;height:5rem}
+  .b-verhuisdag__afspraken .b-verhuisdag__voorwaarden{justify-content:flex-start;text-align:left}
+}
+
+/* ---- hover: wat in de foto staat komt naar u toe (28-09-2026) ----
+   Op verzoek een heel kleine zoom als de muis op een foto komt, alsof de verhuizers echt uit het kader
+   stappen. Het venster en de uitsnede tillen een paar pixels op; de foto en de uitsnede groeien daarbij
+   samen een fractie meer dan het venster. Zelfde scale en zelfde oorsprong voor allebei, dus ze blijven
+   precies op elkaar liggen en wat buiten het kader steekt komt net iets verder naar buiten. De oorsprong
+   is het midden van het venster (60 % van boven), omgerekend naar het beeld met --s/--x/--y uit
+   verhuisdag.py; 1.2 is --ar (1.6) maal de beeldverhouding .75.
+   Het kader zelf beweegt niet, zodat de muis er niet onderuit valt. scale/translate en geen transform:
+   de scrollanimatie verhuisdagKaderOp zet transform op het kader. Alleen met een echte muis. */
+@media (hover:hover) and (pointer:fine){
+  .b-verhuisdag--uit .b-verhuisdag__kader img{
+    transform-origin:calc((.5 - var(--x)) / var(--s) * 100%) calc((.6 - var(--y)) / (var(--s) * 1.2) * 100%);
+    transition:scale .4s var(--ease)}
+  .b-verhuisdag--uit .b-verhuisdag__raam,.b-verhuisdag--uit .b-verhuisdag__buiten{
+    transition:translate .4s var(--ease),box-shadow .4s var(--ease),filter .4s var(--ease)}
+  .b-verhuisdag--uit .b-verhuisdag__vloer{transition:scale .4s var(--ease),opacity .4s var(--ease)}
+  .b-verhuisdag--uit .b-verhuisdag__kader:hover img{scale:1.04}
+  .b-verhuisdag--uit .b-verhuisdag__kader:hover .b-verhuisdag__raam{translate:0 -4px;
+    box-shadow:0 0 0 1px rgba(255,255,255,.3),0 36px 56px -26px rgba(3,10,30,.85)}
+  .b-verhuisdag--uit .b-verhuisdag__kader:hover .b-verhuisdag__buiten{translate:0 -4px;
+    filter:drop-shadow(0 5px 3px rgba(3,10,30,.38)) drop-shadow(12px 26px 20px rgba(3,10,30,.42))}
+  .b-verhuisdag--uit .b-verhuisdag__kader:hover .b-verhuisdag__vloer{scale:1.08;opacity:.8}
+}

@@ -1,4 +1,4 @@
-# Concept robots.txt voor www.verhuisbedrijfdereus.nl (fase 1), volgens Brocken en De Kievit.
+# Concept robots.txt voor www.verhuisbedrijfdereus.nl (fase 1), volgens Brocken en referentie A.
 # Bedanktpagina's worden niet geblokkeerd: ze hebben een noindex-tag, en die moet Google kunnen lezen.
 User-agent: *
 Allow: /

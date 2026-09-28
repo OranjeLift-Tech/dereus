@@ -53,6 +53,12 @@ FOOTER_EXTRA = [
     ("Werkgebied", "/werkgebied/"),
 ]
 
+# De wagen in de footer: img/footer-wagen.webp, de wagen die de gebruiker op 28-09-2026 goedkeurde. De bredere
+# wagen van Tugche (origin/main 9dbb9a8, de oude wagen met links 800 px straat erbij) staat eronder: wissel de twee
+# regels. Het masker en het verloop voor die wagen hangen aan .footer__wagen--breed in css/style.css.
+WAGEN, WAGEN_KLASSE = ("/img/footer-wagen.webp", 1200, 847), ""
+# WAGEN, WAGEN_KLASSE = ("/img/footer-wagen-breed.webp", 2000, 847), " footer__wagen--breed"
+
 _LINK = re.compile(r"^\[([^\]]+)\]\(([^)\s]+)\)$")
 _CIJFER = re.compile(r"(\d+(?:[.,]\d+)?)")
 
@@ -253,7 +259,7 @@ def footer(ctx):
       <p>{inline(f.veld("contact-tekst", "Vertel ons waar u naartoe verhuist en welke hulp u nodig heeft. Uw vaste verhuisadviseur denkt met u mee."))}</p>
       <a class="footer__tel" href="{cfg.TELHREF}">{ctx.icoon("telefoon")}<span>{cfg.TEL}</span></a>
     </div>
-    <img class="footer__wagen" src="/img/footer-wagen.webp" alt="" width="1200" height="847" loading="lazy" decoding="async">
+    <img class="footer__wagen{WAGEN_KLASSE}" src="{WAGEN[0]}" alt="" width="{WAGEN[1]}" height="{WAGEN[2]}" loading="lazy" decoding="async">
   </div>
   <div class="wrap footer__top">
     <div class="footer__merk">

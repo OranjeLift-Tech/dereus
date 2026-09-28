@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Na de verhuizing: 15 ontwerpen | De Reus</title>
+<link rel="preload" href="/fonts/archivo-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/min/site.min.css?v=13726075ae">
+<style>
+/* ===== Varianten "Na de verhuizing" (/werkwijze/ #na-de-verhuizing) — alleen voor deze ontwerppagina ===== */
+body{background:#fff}
+.vnav{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;padding:.6rem max(1rem,calc((100vw - 1280px)/2 + 1rem));background:var(--brand-secondary);color:#fff;font:600 .9rem/1 var(--font-sans);box-shadow:0 6px 18px -8px rgba(11,35,82,.6)}
+.vnav__titel{margin-right:.8rem;font:var(--weight-display) 1.3rem/1 var(--font-display);font-stretch:condensed}
+.vnav a{display:grid;place-items:center;min-width:2.4rem;height:2.2rem;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none}
+.vnav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.vuitleg{margin:0;padding:1.1rem max(1rem,calc((100vw - 1280px)/2 + 1rem));background:var(--accent-50);border-bottom:1px solid var(--accent-200);color:var(--graphite);font-size:.95rem}
+.variant{scroll-margin-top:3.4rem}
+.vkop{display:flex;align-items:center;gap:1.1rem;padding:1.3rem max(1rem,calc((100vw - 1280px)/2 + 1rem));background:#fff;border-top:6px solid var(--brand-secondary)}
+.vkop__nr{font:var(--weight-display) 2.8rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-primary)}
+.vkop b{display:block;font:700 1.2rem/1.25 var(--font-sans);color:var(--ink)}
+.vkop small{display:block;margin-top:.2rem;color:var(--grey-600);font-size:.93rem}
+.ctx-boven{height:34px;background:repeating-linear-gradient(22deg,rgba(255,255,255,.07) 0 1px,transparent 1px 13px),var(--brand-primary)}
+.ctx-onder{height:64px;background:linear-gradient(to bottom left,var(--na,var(--off-white)) 50%,#fff 50%)}
+
+/* ---- gedeeld ---- */
+.vv{overflow-x:clip}
+.vv h2{margin:0}
+.vv h3{margin:0 0 .4rem;font-size:clamp(1.4rem,1.15rem + .7vw,1.75rem);line-height:1.1}
+.vv p{margin:0}
+.vv .intro{margin-top:1rem}
+.vv .kopgroep .intro{margin-inline:auto}
+.vv img[class*="__ding"],.vv img[class*="__mens"]{width:auto}
+.vv ul,.vv ol{list-style:none;margin:0;padding:0}
+.label--lijn::before{width:2rem;height:1px;-webkit-mask:none;mask:none}
+.label--pil{padding:.52rem .9rem .48rem;border-radius:999px;background:var(--primary-100);font-size:.74rem}
+.label--pil::before{width:.5rem;height:.5rem;border-radius:50%;-webkit-mask:none;mask:none;background:var(--brand-accent)}
+.label--donker{background:rgba(255,255,255,.1);color:var(--brand-accent)}
+.pillen{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.6rem}
+.pil{display:inline-flex;align-items:center;gap:.55rem;min-height:48px;padding:.75rem 1.35rem;border:1px solid transparent;border-radius:999px;font:700 .98rem/1.2 var(--font-sans);text-decoration:none;white-space:nowrap;transition:background-color .2s,color .2s,border-color .2s}
+.pil .ic{width:18px;height:18px}
+.pil--geel{background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 8px 16px -8px rgba(219,148,14,.8)}
+.pil--geel:hover{background:#FFD95C;color:var(--brand-secondary)}
+.pil--wit{background:#fff;border-color:var(--grey-200);color:var(--brand-secondary)}
+.pil--wit:hover{background:var(--primary-50);border-color:var(--primary-200);color:var(--brand-secondary)}
+.pil--lijn{border-color:rgba(255,255,255,.55);color:#fff}
+.pil--lijn:hover{background:rgba(255,255,255,.1);color:#fff}
+.pil--blauw{background:var(--brand-secondary);color:#fff}
+.pil--blauw:hover{background:var(--brand-primary);color:#fff}
+.rond{display:grid;place-items:center;flex:none;width:3.1rem;height:3.1rem;border-radius:50%;background:var(--primary-50);box-shadow:inset 0 0 0 1px var(--primary-200);color:var(--brand-primary)}
+.rond .ic{width:1.35rem;height:1.35rem}
+.rond--donker{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);color:var(--brand-accent)}
+.rond--geel{background:var(--brand-accent);box-shadow:none;color:var(--brand-secondary)}
+.streep{display:inline-flex;align-items:center;gap:.45rem;margin-top:.7rem;color:var(--brand-primary);font-weight:700;text-decoration:underline;text-decoration-color:var(--brand-accent);text-decoration-thickness:3px;text-underline-offset:6px}
+.streep .ic{width:1.05rem;height:1.05rem}
+.sterren5{display:inline-flex;gap:1px;color:var(--brand-accent)}
+.sterren5 .ic{width:1.05rem;height:1.05rem}
+.vv img{max-width:none}
+
+/* ===== 01 Huisvenster (Referentie A: venster) ===== */
+.v01__raster{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.v01 h2{font-size:clamp(2.5rem,1.6rem + 2.6vw,3.7rem)}
+.v01__punten{display:grid;gap:1.3rem;margin-top:2rem!important}
+.v01__punten li{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start}
+.v01__punten h3{margin:.2rem 0 .3rem;color:var(--brand-secondary);font-size:1.5rem}
+.v01__punten p{color:var(--grey-600)}
+.v01__beeld{position:relative;width:100%;max-width:580px;aspect-ratio:1/1;justify-self:center}
+.v01__huis,.v01__huisrand{position:absolute;left:9%;right:9%;bottom:0;aspect-ratio:535.3/509.8;-webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
+.v01__huisrand{background:var(--brand-accent);transform:translate(18px,16px)}
+.v01__huis{background:radial-gradient(circle at 30% 20%,#2a5cc0,var(--brand-primary) 45%,var(--brand-secondary))}
+.v01__mensen{position:absolute;left:6%;bottom:0;width:88%!important;filter:drop-shadow(0 20px 26px rgba(11,35,82,.32))}
+.v01__stempel{position:absolute;left:-.5rem;top:4%;display:grid;place-content:center;justify-items:center;gap:.25rem;width:8.6rem;height:8.6rem;border-radius:50%;background:#fff;transform:rotate(-9deg);box-shadow:inset 0 0 0 7px #fff,inset 0 0 0 8.5px var(--brand-accent),0 20px 40px -18px rgba(11,35,82,.5)}
+.v01__stempel b{font:var(--weight-display) 2.6rem/1 var(--font-display);font-stretch:condensed;color:var(--brand-secondary)}
+.v01__stempel small{display:flex;align-items:center;gap:.3rem;font:700 .72rem/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--graphite)}
+.v01__stempel small .ic{width:.9rem;height:.9rem}
+
+/* ===== 02 Wagen met paneel (Brocken: livrei) ===== */
+.v02{--uit:calc(max(0px,(100vw - var(--maxw)) / 2) + var(--pad))}
+.v02__raster{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,31rem);align-items:center}
+.v02__foto{position:relative;grid-area:1/1;height:clamp(28rem,40vw,38rem);margin:0 0 0 calc(-1 * var(--uit))}
+.v02__foto::before{content:"";position:absolute;z-index:-1;top:-1.6rem;right:-1.6rem;bottom:3.5rem;left:0;border-radius:0 26px 26px 0;background:var(--primary-100)}
+.v02__foto img{width:100%;height:100%;object-fit:cover;object-position:62% 50%;border-radius:0 24px 0 0;clip-path:polygon(0 0,100% 0,100% calc(100% - 3.5rem),0 100%)}
+.v02__paneel{position:relative;z-index:1;grid-area:1/2;margin-left:-7rem;padding:clamp(1.8rem,2.6vw,2.6rem);border-radius:24px;background:#fff;box-shadow:var(--schaduw),0 40px 80px -40px rgba(11,35,82,.45)}
+.v02__paneel .intro{font-size:1.05rem}
+.v02__punten{margin-top:1.6rem!important}
+.v02__punten li{display:grid;grid-template-columns:auto 1fr;gap:1rem;padding-top:1.15rem;margin-top:1.15rem;border-top:1px solid var(--color-border)}
+.v02__punten h3{color:var(--brand-secondary);font-size:1.4rem}
+.v02__punten p{color:var(--grey-600);font-size:.98rem}
+
+/* ===== 03 Gele schuine band (Referentie A: opslag) ===== */
+.v03{--na:var(--off-white);position:relative;overflow:clip}
+.v03__band{position:absolute;left:0;right:0;top:30%;height:62%;background:var(--brand-secondary);clip-path:polygon(0 40%,100% 0,100% 76%,0 100%)}
+.v03__band::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,#FFD447,var(--brand-accent) 60%,#F7B817);clip-path:polygon(0 40%,100% 0,100% 67%,0 91%)}
+.v03__merk{position:absolute;right:3%;top:22%;width:clamp(9rem,15vw,14rem);opacity:.22}
+.v03__raster{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,31rem) minmax(0,1fr);gap:clamp(2rem,4vw,4rem);align-items:center}
+.v03__kaart{padding:clamp(2rem,3vw,2.8rem);border-radius:20px;background:var(--brand-secondary);color:#fff;box-shadow:0 34px 60px -30px rgba(11,35,82,.8)}
+.v03__kaart .label{color:var(--brand-accent)}
+.v03__kaart h2{color:#fff}
+.v03__kaart .intro{color:rgba(255,255,255,.86);font-size:1.05rem}
+.v03__punten{margin-top:1.5rem!important}
+.v03__punten li{display:grid;grid-template-columns:auto 1fr;gap:1rem;padding-top:1.1rem;margin-top:1.1rem;border-top:1px solid rgba(255,255,255,.16)}
+.v03__punten h3{color:#fff;font-size:1.4rem}
+.v03__punten p{color:rgba(255,255,255,.82);font-size:.98rem}
+.v03__beeld{align-self:end;margin-bottom:-1rem}
+.v03__beeld img{display:block;width:100%;max-width:600px;margin-inline:auto;filter:drop-shadow(0 26px 30px rgba(11,35,82,.4))}
+
+/* ===== 04 Aanspreekpunt (Referentie A: aanspreekpunt) ===== */
+.v04{--na:var(--primary-50)}
+.v04__top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:end}
+.v04 h2{font-size:clamp(2.5rem,1.6rem + 2.6vw,3.7rem)}
+.v04__beeld{position:relative;aspect-ratio:3/2;filter:drop-shadow(0 30px 34px rgba(11,35,82,.22))}
+.v04__beeld img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v04__foto{clip-path:inset(30% 0 0 0 round 24px)}
+.v04__uit{clip-path:inset(-20% 0 0 0 round 0 0 24px 24px)}
+.v04__rij{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,5vw,5rem);margin-top:3.5rem!important;padding-top:2.5rem!important;border-top:1px solid var(--primary-200)}
+.v04__rij li{display:grid;grid-template-columns:5.5rem 1fr;gap:1.4rem;align-items:start}
+.v04__ding{display:flex;align-items:flex-end;justify-content:center;height:6.5rem}
+.v04__ding img{width:auto;height:100%;filter:drop-shadow(4px 8px 8px rgba(11,35,82,.3))}
+.v04__ding--ster img{height:76%}
+.v04__rij h3{color:var(--graphite);font:700 1.25rem/1.25 var(--font-sans);letter-spacing:-.01em;margin:.3rem 0 .6rem}
+.v04__rij p{color:var(--grey-600)}
+
+/* ===== 05 Afdrukken (Referentie A: historie) ===== */
+.v05__raster{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.v05__lijn{position:relative;margin-top:2rem!important}
+.v05__lijn li{position:relative;padding:0 0 1.5rem 3.6rem}
+.v05__lijn li:not(:last-child)::before{content:"";position:absolute;left:1.2rem;top:2.6rem;bottom:.2rem;border-left:2px dotted var(--primary-300)}
+.v05__mark{position:absolute;left:0;top:0;display:grid;place-items:center;width:2.45rem;height:2.45rem;border-radius:50%;background:var(--brand-primary);color:#fff;box-shadow:0 0 0 6px var(--off-white)}
+.v05__mark .ic{width:1.1rem;height:1.1rem}
+.v05__lijn h3{margin:.2rem 0 .3rem;color:var(--graphite);font:700 1.2rem/1.25 var(--font-sans)}
+.v05__lijn p{color:var(--grey-600)}
+.v05__afdrukken{position:relative;height:clamp(30rem,40vw,36rem)}
+.v05__afdruk{position:absolute;margin:0;padding:12px 12px 46px;background:#fff;box-shadow:0 2px 3px rgba(14,26,51,.14),0 30px 44px -20px rgba(14,26,51,.5)}
+.v05__afdruk img{display:block;width:100%;object-fit:cover}
+.v05__afdruk--1{left:0;top:0;width:70%;transform:rotate(2.2deg);z-index:1}
+.v05__afdruk--1 img{aspect-ratio:4/3;object-position:62% 50%}
+.v05__afdruk--2{left:5%;bottom:0;width:40%;transform:rotate(-4.5deg);z-index:3}
+.v05__afdruk--2 img{aspect-ratio:4/5}
+.v05__afdruk--3{right:0;top:24%;width:40%;transform:rotate(5deg);z-index:2}
+.v05__afdruk--3 img{aspect-ratio:400/450}
+
+/* ===== 06 Score in de ring (Brocken: score) ===== */
+.v06{--na:#fff;--uit:calc(max(0px,(100vw - var(--maxw)) / 2) + var(--pad))}
+.v06__raster{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.v06 h2 em{font-style:normal;color:var(--brand-secondary);background:linear-gradient(transparent 68%,var(--accent-200) 68%)}
+.v06__vraag{margin-top:2.2rem;padding-top:1.8rem;border-top:1px solid var(--color-border)}
+.v06__vraag h3{color:var(--brand-secondary)}
+.v06__vraag p{color:var(--grey-600)}
+.v06__nummer{display:inline-flex;align-items:center;gap:.9rem;margin-top:1.2rem;color:var(--brand-secondary);font:700 clamp(1.5rem,1.2rem + .8vw,1.9rem)/1 var(--font-sans);font-variant-numeric:tabular-nums;letter-spacing:-.01em;text-decoration:none}
+.v06__nummer span+span{background:linear-gradient(var(--brand-accent),var(--brand-accent)) 0 100%/100% 4px no-repeat;padding-bottom:.3rem}
+.v06__mail{display:block;margin-top:.8rem;color:var(--brand-primary);font-weight:600}
+.v06__beeld{position:relative;padding:2.5rem 0 4.5rem 2rem}
+.v06__band{position:absolute;top:12%;bottom:6%;left:14%;right:calc(-1 * var(--uit));border-radius:26px 0 0 26px;transform:skewY(-4deg);background:radial-gradient(rgba(255,255,255,.13) 1px,transparent 1.6px) 0 0/18px 18px,linear-gradient(90deg,var(--brand-secondary),var(--brand-primary) 60%,#123780)}
+.v06__foto{position:relative;display:block;width:90%;aspect-ratio:4/3;object-fit:cover;object-position:60% 50%;border-radius:24px;box-shadow:0 34px 60px -30px rgba(11,35,82,.7)}
+.v06__score{position:absolute;left:-.5rem;bottom:1.2rem;display:grid;place-content:center;justify-items:center;gap:.25rem;width:11rem;height:11rem;border-radius:50%;background:#fff;box-shadow:0 26px 50px -22px rgba(11,35,82,.6)}
+.v06__score svg.ring{position:absolute;inset:.55rem;width:calc(100% - 1.1rem);height:calc(100% - 1.1rem);transform:rotate(-62deg)}
+.v06__score b{font:var(--weight-display) 3.4rem/.9 var(--font-display);font-stretch:condensed;color:var(--brand-secondary);letter-spacing:-.02em}
+.v06__score small{display:flex;align-items:center;gap:.3rem;font:700 .72rem/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--graphite)}
+.v06__score small .ic{width:.9rem;height:.9rem}
+.v06__notitie{position:absolute;right:-1rem;bottom:0;width:19rem;padding:1.35rem 1.45rem;border:1px solid var(--accent-200);border-radius:14px;background:var(--accent-50);transform:rotate(-2.5deg);box-shadow:0 24px 40px -22px rgba(11,35,82,.55)}
+.v06__notitie h3{color:var(--brand-secondary);font-size:1.5rem}
+.v06__notitie p{color:var(--graphite);font-size:.98rem}
+
+/* ===== 07 Mensen uit de tegels ===== */
+.v07 .kopgroep{margin-bottom:0}
+.v07__tegels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;padding-top:7.5rem!important}
+.v07__tegel{position:relative;display:flex;align-items:flex-end;min-height:20rem;padding:clamp(1.8rem,2.6vw,2.6rem);border-radius:28px}
+.v07__tekst{position:relative;z-index:1;max-width:54%}
+.v07__tegel--vragen{background:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1.6px) 0 0/18px 18px,linear-gradient(150deg,var(--brand-primary),var(--brand-secondary) 72%);color:#fff;box-shadow:0 34px 60px -34px rgba(11,35,82,.8)}
+.v07__tegel--vragen h3{color:#fff}
+.v07__tegel--vragen p{color:rgba(255,255,255,.86)}
+.v07__tegel--tevreden{background:linear-gradient(160deg,#FFD84F,var(--brand-accent) 55%,#F7B817);box-shadow:0 34px 60px -34px rgba(219,148,14,.9)}
+.v07__tegel--tevreden h3{color:var(--brand-secondary)}
+.v07__tegel--tevreden p{color:var(--ink)}
+.v07__mens{position:absolute;bottom:0;pointer-events:none;filter:drop-shadow(0 18px 22px rgba(11,35,82,.35))}
+.v07__mens--adviseur{right:7%;height:128%;width:auto}
+.v07__mens--ploeg{right:9%;height:130%}
+
+/* ===== 08 Diepblauwe band, schuin (Brocken: dag) ===== */
+.v08{--na:var(--off-white);position:relative;isolation:isolate;padding-block:calc(var(--ruimte) + 4.5rem);background:var(--off-white)}
+.v08::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1.6px) 0 0/18px 18px,var(--brand-secondary);clip-path:polygon(0 4.5rem,100% 0,100% calc(100% - 4.5rem),0 100%)}
+.v08 h2{color:#fff}
+.v08 .intro{color:rgba(255,255,255,.86)}
+.v08__raster{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.v08__punten{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem;margin-top:2rem!important}
+.v08__punten li{padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.18)}
+.v08__punten h3{margin-top:.9rem;color:#fff;font-size:1.4rem}
+.v08__punten p{color:rgba(255,255,255,.8);font-size:.98rem}
+.v08__beeld{position:relative;aspect-ratio:4/3}
+.v08__beeld::before{content:"";position:absolute;inset:0;background:var(--brand-accent);clip-path:polygon(0 40%,100% 31%,100% 100%,0 100%);transform:translateY(-12px)}
+.v08__beeld img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v08__foto{clip-path:polygon(0 40%,100% 31%,100% 100%,0 100%)}
+.v08__uit{clip-path:inset(-20% 0 0 0);filter:drop-shadow(0 10px 12px rgba(0,0,0,.25))}
+
+/* ===== 09 Gele schijven (De Reus 3D, zoals /kosten/ #opbouw) ===== */
+.v09__raster{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-areas:"kop foto" "punten foto";gap:2.5rem clamp(2rem,5vw,5rem);align-items:start}
+.v09__kop{grid-area:kop}
+.v09__foto{grid-area:foto;align-self:stretch;margin:0;min-height:30rem;border-radius:26px;overflow:hidden;box-shadow:0 34px 60px -32px rgba(11,35,82,.6)}
+.v09__foto img{width:100%;height:100%;object-fit:cover;object-position:60% 50%}
+.v09__punten{grid-area:punten;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.8rem;text-align:center}
+.v09__podium{position:relative;display:grid;justify-items:center;align-items:end;height:11rem;margin-bottom:1.6rem}
+.v09__podium::before{content:"";position:absolute;left:50%;bottom:-.6rem;width:10.5rem;height:3.2rem;border-radius:50%;transform:translateX(-50%);background:linear-gradient(180deg,#FFDD6B,var(--brand-accent));box-shadow:0 9px 0 var(--accent-700),0 28px 26px -10px rgba(11,35,82,.4)}
+.v09__podium img{position:relative;height:9.6rem;width:auto;margin-bottom:.7rem;filter:drop-shadow(3px 4px 2px rgba(11,35,82,.28)) drop-shadow(14px 20px 16px rgba(11,35,82,.34))}
+.v09__podium--ster img{height:7rem;margin-bottom:1rem}
+.v09__punten h3{color:var(--brand-secondary)}
+.v09__punten p{color:var(--grey-600)}
+
+/* ===== 10 Fotoband (Referentie A-footer, wagen tot de rand) ===== */
+.v10{background:var(--off-white);padding-bottom:var(--ruimte)}
+.v10__band{position:relative;isolation:isolate;overflow:hidden;padding:clamp(4rem,7vw,6.5rem) 0 clamp(9rem,12vw,11rem);background:var(--brand-secondary)}
+.v10__foto{position:absolute;right:0;top:0;z-index:-2;width:64%;height:100%;object-fit:cover;object-position:62% 45%}
+.v10__band::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--brand-secondary) 36%,rgba(11,35,82,.82) 48%,rgba(11,35,82,.1) 72%,rgba(11,35,82,0))}
+.v10__tekst>*{max-width:32rem}
+.v10__tekst .label{color:var(--brand-accent)}
+.v10__tekst h2{color:#fff;font-size:clamp(2.6rem,1.6rem + 3vw,4rem)}
+.v10__tekst .intro{color:rgba(255,255,255,.88)}
+.v10__kaarten{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;max-width:64rem;margin-top:-6.5rem!important}
+.v10__kaarten li{position:relative;padding:2rem 8.5rem 2rem 2.2rem;border-radius:22px;background:#fff;box-shadow:0 1px 2px rgba(14,26,51,.06),0 40px 70px -36px rgba(14,26,51,.55)}
+.v10__kaarten h3{color:var(--brand-secondary)}
+.v10__kaarten p{color:var(--grey-600)}
+.v10__ding{position:absolute;right:1.8rem;top:-2.6rem;height:9rem;width:auto;filter:drop-shadow(6px 12px 12px rgba(11,35,82,.35))}
+.v10__ding--ster{height:6.2rem;top:-1.6rem;right:1.4rem;transform:rotate(-10deg)}
+
+/* ===== 11 Dikke plaat (De Reus diepte) ===== */
+.v11__plaat{position:relative;display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(2rem,4vw,3.5rem);padding:1.1rem;border-radius:30px;background:#fff;
+  box-shadow:1px 1px 0 #2a5cc0,2px 2px 0 #2654b4,3px 3px 0 #214ea9,4px 4px 0 #1d479d,5px 5px 0 #1a4292,6px 6px 0 #173c87,7px 7px 0 #14367b,8px 8px 0 #113070,9px 9px 0 #0f2a64,10px 10px 0 #0B2352,0 50px 80px -34px rgba(11,35,82,.55)}
+.v11__foto{margin:0;min-height:30rem;border-radius:22px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+.v11__foto img{width:100%;height:100%;object-fit:cover;object-position:62% 50%}
+.v11__inhoud{padding:clamp(1.5rem,3vw,2.6rem) clamp(1.5rem,3vw,2.6rem) clamp(1.5rem,3vw,2.6rem) 0}
+.v11__punten{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:2rem!important}
+.v11__punten li+li{padding-left:1.6rem;margin-left:1.6rem;border-left:2px solid var(--primary-100)}
+.v11__punten h3{color:var(--brand-secondary);font-size:1.45rem}
+.v11__punten p{color:var(--grey-600);font-size:.98rem}
+.v11__ding{position:absolute;pointer-events:none;filter:drop-shadow(6px 14px 14px rgba(11,35,82,.35))}
+.v11__ding--tel{right:3.5rem;top:-4.6rem;height:9rem;transform:rotate(9deg)}
+.v11__ding--ster{right:9rem;top:-2.4rem;height:5.2rem;transform:rotate(-12deg)}
+
+/* ===== 12 Gestapelde platen (Brocken: stemmen) ===== */
+.v12{--na:#fff}
+.v12__raster{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.v12__beeld{position:relative;height:clamp(30rem,40vw,35rem)}
+.v12__plaat{position:absolute;left:10%;right:10%;bottom:0;height:74%;border-radius:26px}
+.v12__plaat--blauw{background:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1.6px) 0 0/16px 16px,linear-gradient(150deg,var(--brand-primary),var(--brand-secondary));transform:translate(1.4rem,-1.4rem)}
+.v12__plaat--creme{background:var(--accent-100);box-shadow:0 30px 50px -30px rgba(11,35,82,.5)}
+.v12__mens{position:absolute;left:50%;bottom:0;height:104%;width:auto;transform:translateX(-50%);filter:drop-shadow(0 16px 18px rgba(11,35,82,.3))}
+.v12__kaarten{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.1rem;margin-top:2rem!important}
+.v12__kaart{position:relative;padding:1.6rem 1.5rem 1.5rem;border:1px solid var(--grey-200);border-radius:18px;background:#fff;box-shadow:var(--schaduw-kaart)}
+.v12__kaart h3{padding-right:3.2rem;color:var(--brand-secondary)}
+.v12__kaart p{color:var(--grey-600);font-size:.98rem}
+.v12__teken{position:absolute;right:1.1rem;top:.3rem;color:var(--brand-accent);font:var(--weight-display) 4.6rem/1 var(--font-display);font-stretch:condensed}
+.v12__score{position:absolute;right:1rem;top:1.1rem;display:inline-flex;align-items:center;gap:.3rem;padding:.4rem .6rem;border-radius:8px;background:var(--brand-secondary);color:#fff;font:700 .9rem/1 var(--font-sans);box-shadow:inset 4px 0 0 var(--brand-accent),inset -4px 0 0 var(--brand-accent)}
+.v12__score .ic{width:.95rem;height:.95rem;color:var(--brand-accent)}
+
+/* ===== 13 Gekanteld stippenpaneel (Brocken: vragen) ===== */
+.v13__raster{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.v13__bel{display:grid;grid-template-columns:3.6rem auto;align-items:center;gap:1rem;margin-top:2rem;text-decoration:none;color:var(--brand-secondary)}
+.v13__merk{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--primary-200),0 10px 20px -12px rgba(11,35,82,.5)}
+.v13__merk img{width:62%}
+.v13__bel small{display:block;margin-top:.55rem;color:var(--grey-600);font-size:.92rem;font-weight:600}
+.v13__bel b{display:inline-block;font:700 1.55rem/1 var(--font-sans);font-variant-numeric:tabular-nums;background:linear-gradient(var(--brand-accent),var(--brand-accent)) 0 100%/100% 4px no-repeat;padding-bottom:.3rem}
+.v13__paneel{position:relative;isolation:isolate;padding:3.2rem 13rem 3.2rem 2.8rem}
+.v13__paneel::before{content:"";position:absolute;inset:0;z-index:-2;border-radius:28px;transform:rotate(-1.6deg);background:radial-gradient(rgba(219,148,14,.3) 1px,transparent 1.6px) 0 0/16px 16px,var(--accent-100)}
+.v13__vraagteken{position:absolute;z-index:-1;left:-1.2rem;top:-6.5rem;color:transparent;-webkit-text-stroke:2px var(--accent-600);font:var(--weight-display) 17rem/1 var(--font-display);font-stretch:condensed;opacity:.55}
+.v13__kaarten{display:grid;gap:1rem}
+.v13__kaarten li{display:grid;grid-template-columns:auto 1fr;gap:1rem;padding:1.4rem 1.5rem;border-radius:16px;background:#fff;box-shadow:0 1px 2px rgba(14,26,51,.06),0 18px 34px -22px rgba(14,26,51,.45)}
+.v13__kaarten h3{color:var(--brand-secondary);font-size:1.4rem}
+.v13__kaarten p{color:var(--grey-600);font-size:.98rem}
+.v13__mens{position:absolute;right:-.5rem;bottom:-2rem;height:118%;width:auto;filter:drop-shadow(-10px 14px 18px rgba(11,35,82,.3))}
+
+/* ===== 14 Tegels onder de foto (Brocken: vinden) ===== */
+.v14{--na:#fff}
+.v14 .kopgroep{margin-bottom:2.4rem}
+.v14__beeld{position:relative}
+.v14__foto{display:block;width:100%;aspect-ratio:21/8;object-fit:cover;object-position:60% 60%;border-radius:26px 26px 0 0;clip-path:polygon(0 0,100% 0,100% calc(100% - 3.2rem),0 100%)}
+.v14__mens{position:absolute;right:3%;bottom:-13rem;height:31rem;width:auto;z-index:3;filter:drop-shadow(-10px 16px 18px rgba(11,35,82,.3))}
+.v14__tegels{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;max-width:56rem;margin:-5.5rem auto 0!important}
+.v14__tegels li{padding:1.8rem 1.9rem;border:1px solid var(--primary-200);border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(14,26,51,.06),0 30px 50px -30px rgba(14,26,51,.5)}
+.v14__icoon{display:grid;place-items:center;width:3.9rem;height:3.9rem;margin-bottom:1.1rem;border-radius:50%;background:var(--accent-50);box-shadow:inset 0 0 0 1px var(--accent-200);color:var(--brand-primary)}
+.v14__icoon .ic{width:1.55rem;height:1.55rem}
+.v14__tegels h3{color:var(--brand-secondary)}
+.v14__tegels p{color:var(--grey-600)}
+
+/* ===== 15 Panorama met overlapkaart (Referentie A: offerte-overlay) ===== */
+.v15__kop{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem clamp(2rem,5vw,5rem);align-items:end;margin-bottom:.5rem}
+.v15 h2{font-size:clamp(2.6rem,1.6rem + 3vw,4.1rem)}
+.v15 .intro{margin:0 0 .4rem}
+.v15__beeld{position:relative;aspect-ratio:2/1;margin-top:-4.5rem;filter:drop-shadow(0 30px 40px rgba(11,35,82,.25))}
+.v15__beeld img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.v15__foto{clip-path:inset(33% 0 0 0 round 28px)}
+.v15__uit{clip-path:inset(0 0 0 0 round 0 0 28px 28px)}
+.v15__kaart{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:min(100% - 3rem,62rem);margin:-6.5rem auto 0;padding:2rem 2.4rem;border-radius:24px;background:#fff;box-shadow:0 1px 2px rgba(14,26,51,.06),0 40px 70px -36px rgba(14,26,51,.6)}
+.v15__punt{display:grid;grid-template-columns:auto 1fr;gap:1rem}
+.v15__punt+.v15__punt{padding-left:2rem;margin-left:2rem;border-left:1px solid var(--color-border)}
+.v15__punt h3{color:var(--brand-secondary);font-size:1.45rem}
+.v15__punt p{color:var(--grey-600);font-size:.98rem}
+.v15__punt .pillen{margin-top:1.1rem}
+
+/* ===== smal scherm: alles onder elkaar ===== */
+@media (max-width:960px){
+  .v01__raster,.v02__raster,.v03__raster,.v04__top,.v05__raster,.v06__raster,.v08__raster,.v12__raster,.v13__raster,.v15__kop{grid-template-columns:minmax(0,1fr)}
+  .v09__raster{grid-template-columns:minmax(0,1fr);grid-template-areas:"kop" "foto" "punten"}
+  .v09__foto{min-height:18rem}
+  .v02__foto{grid-area:auto;margin-right:calc(-1 * var(--pad));height:20rem}
+  .v02__paneel{grid-area:auto;margin:-4rem 0 0}
+  .v03__band{top:52%;height:40%}
+  .v07__tegels,.v10__kaarten,.v14__tegels,.v12__kaarten,.v08__punten,.v04__rij{grid-template-columns:minmax(0,1fr)}
+  .v07__tegels{gap:8rem}
+  .v11__plaat{grid-template-columns:minmax(0,1fr)}
+  .v11__foto{min-height:16rem}
+  .v11__inhoud{padding:0 1rem 1.5rem}
+  .v13__paneel{padding:2rem 1.4rem 16rem}
+  .v13__mens{height:17rem;bottom:-1rem}
+  .v14__mens{display:none}
+  .v15__kaart{grid-template-columns:minmax(0,1fr);width:100%}
+  .v15__punt+.v15__punt{padding:1.5rem 0 0;margin:1.5rem 0 0;border-left:0;border-top:1px solid var(--color-border)}
+  .v06__notitie{position:relative;right:auto;margin-top:1rem}
+}
+@media (max-width:600px){
+  .v07__tekst{max-width:100%;padding-top:12.5rem}
+  .v07__mens--adviseur,.v07__mens--ploeg{top:-5rem;bottom:auto;right:auto;left:50%;height:19rem;transform:translateX(-50%)}
+  .v07__tegels{gap:7rem}
+  .v10__kaarten li{padding-right:2.2rem;padding-top:6rem}
+  .v11__punten{grid-template-columns:minmax(0,1fr)}
+  .v11__punten li+li{padding:1.4rem 0 0;margin:1.4rem 0 0;border-left:0;border-top:2px solid var(--primary-100)}
+}
+
+</style>
+</head>
+<body class="p p-werkwijze">
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol><symbol id="i-extern" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol><symbol id="i-google" viewBox="0 0 24 24" fill="currentColor"><g transform="translate(2.64 2.64) scale(.78)"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.6l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></g></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-pijl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-quote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></symbol><symbol id="i-sluit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol><symbol id="i-ster" viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></symbol><symbol id="i-telefoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol><symbol id="i-whatsapp" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#25D366" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#25D366" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol><symbol id="i-whatsapp-wit" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#fff" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#fff" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol></svg>
+<nav class="vnav" aria-label="Ontwerpen"><span class="vnav__titel">Na de verhuizing · 15 ontwerpen</span><a href="#v01" title="Huisvenster">01</a><a href="#v02" title="Wagen met paneel">02</a><a href="#v03" title="Gele schuine band">03</a><a href="#v04" title="Aanspreekpunt">04</a><a href="#v05" title="Afdrukken">05</a><a href="#v06" title="Score in de ring">06</a><a href="#v07" title="Mensen uit de tegels">07</a><a href="#v08" title="Diepblauwe band, schuin">08</a><a href="#v09" title="Gele schijven">09</a><a href="#v10" title="Fotoband">10</a><a href="#v11" title="Dikke plaat">11</a><a href="#v12" title="Gestapelde platen">12</a><a href="#v13" title="Gekanteld stippenpaneel">13</a><a href="#v14" title="Tegels onder de foto">14</a><a href="#v15" title="Panorama met overlapkaart">15</a></nav>
+<p class="vuitleg">/werkwijze/ #na-de-verhuizing. Alle teksten zijn letterlijk van de pagina. Nieuw zijn alleen de knoppen (bellen, mailen, review op Google) en de 4,9-score uit het reviewblok eronder; die kunnen weg. De blauwe strook boven elk ontwerp is het einde van “Op de verhuisdag”, de schuine witte rand eronder het begin van de reviews. Noem het nummer dat u wilt.</p>
+<div class="variant" id="v01">
+  <header class="vkop"><span class="vkop__nr">01</span><div><b>Huisvenster</b><small>Referentie: Referentie A · venster (“Benieuwd naar de kosten?”). Tekst links met label-lijn; rechts het huis uit het logo als venster met een gele dikte, de drie lachende verhuizers staan ervoor en steken buiten het huis uit. Rond stempel met de Google-score.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--mist vv v01"><div class="wrap v01__raster">
+      <div>
+        <p class="label label--lijn">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p>
+        <ul class="v01__punten" role="list">
+          <li><span class="rond"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><div><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p></div></li>
+          <li><span class="rond"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><div><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p></div></li>
+        </ul>
+        <div class="pillen"><a class="pil pil--geel" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a><a class="pil pil--wit" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Review op Google</a></div>
+      </div>
+      <div class="v01__beeld" aria-hidden="true">
+        <span class="v01__huisrand"></span><span class="v01__huis"></span>
+        <img class="v01__mensen" src="/img/review-verhuizers-lachend.webp" alt="" width="760" height="504" decoding="async">
+        <span class="v01__stempel"><b>4,9</b><span class="sterren5" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><small><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Google</small></span>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v02">
+  <header class="vkop"><span class="vkop__nr">02</span><div><b>Wagen met paneel</b><small>Referentie: Brocken · livrei (contactpagina). De wagenfoto loopt door tot de linker schermrand met een schuine onderkant en een lichtblauwe plaat erachter; een wit paneel schuift erover met label-pil, kop en de twee punten als rijen met een bovenlijn.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--mist vv v02"><div class="wrap v02__raster">
+      <figure class="v02__foto" aria-hidden="true"><img src="/img/dienst-nationaal-v2-groot.webp" alt="" width="1440" height="1080" decoding="async"></figure>
+      <div class="v02__paneel">
+        <p class="label label--pil">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p>
+        <ul class="v02__punten" role="list">
+          <li><span class="rond"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><div><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p><a class="streep" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a></div></li>
+          <li><span class="rond"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><div><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><a class="streep" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener">Review op Google<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li>
+        </ul>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v03">
+  <header class="vkop"><span class="vkop__nr">03</span><div><b>Gele schuine band</b><small>Referentie: Referentie A · opslag (“Even geen plek?”). Een schuine Goudgele band met een Diepblauwe streep eronder loopt door het blok; links een Diepblauwe kaart met alles erin, rechts staat de ploeg met dozen op de band.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--mist vv v03">
+      <div class="v03__band" aria-hidden="true"></div>
+      <div class="wrap v03__raster">
+        <div class="v03__kaart">
+          <p class="label label--lijn">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p>
+          <ul class="v03__punten" role="list">
+            <li><span class="rond rond--donker"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><div><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p></div></li>
+            <li><span class="rond rond--donker"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><div><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p></div></li>
+          </ul>
+          <div class="pillen"><a class="pil pil--geel" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a><a class="pil pil--lijn" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Review op Google</a></div>
+        </div>
+        <div class="v03__beeld" aria-hidden="true"><img src="/img/team/team-hero-dozen-1100.webp" alt="" width="1100" height="1195" decoding="async"></div>
+      </div>
+    </section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v04" style="--na:var(--primary-50)">
+  <header class="vkop"><span class="vkop__nr">04</span><div><b>Aanspreekpunt</b><small>Referentie: Referentie A · werkwijze “Een verhuizing, een aanspreekpunt”. Lichtblauwe band. Kop links, rechts de verhuisadviseur met headset die met hoofd en schouders boven haar foto uitkomt. Eronder de twee punten naast elkaar met een 3D-voorwerp, zoals referentie A-rij.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--lucht vv v04"><div class="wrap">
+      <div class="v04__top">
+        <div><p class="label label--lijn">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p><div class="pillen"><a class="pil pil--geel" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a><a class="pil pil--wit" href="mailto:info@verhuisbedrijfdereus.nl"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg>Mailen</a></div></div>
+        <div class="v04__beeld" aria-hidden="true"><img class="v04__foto" src="/img/contact-klantenservice-foto.webp" alt="" width="1200" height="800" decoding="async"><img class="v04__uit" src="/img/contact-klantenservice-uit.webp" alt="" width="1200" height="800" decoding="async"></div>
+      </div>
+      <ul class="v04__rij" role="list">
+        <li><span class="v04__ding" aria-hidden="true"><img src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" decoding="async"></span><div><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p><a class="streep" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a></div></li>
+        <li><span class="v04__ding v04__ding--ster" aria-hidden="true"><img src="/img/kaart-3d/ster.webp" alt="" width="240" height="240" decoding="async"></span><div><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><a class="streep" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener">Review op Google<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li>
+      </ul>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v05">
+  <header class="vkop"><span class="vkop__nr">05</span><div><b>Afdrukken</b><small>Referentie: Referentie A · historie (“Meer dan honderd jaar”). Links de kop en de twee punten als tijdlijn met stippellijn; rechts drie scheve foto-afdrukken met een witte rand: de wagen, de verhuizers en de voordeur van het nieuwe huis.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--mist vv v05"><div class="wrap v05__raster">
+      <div>
+        <p class="label label--lijn">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p>
+        <ol class="v05__lijn" role="list">
+          <li><span class="v05__mark"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p></li>
+          <li><span class="v05__mark"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p></li>
+        </ol>
+        <div class="pillen"><a class="pil pil--geel" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a><a class="pil pil--wit" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Review op Google</a></div>
+      </div>
+      <div class="v05__afdrukken" aria-hidden="true">
+        <figure class="v05__afdruk v05__afdruk--1"><img src="/img/dienst-nationaal-v2.webp" alt="" width="720" height="540" decoding="async"></figure>
+        <figure class="v05__afdruk v05__afdruk--3"><img src="/img/nieuw-huis.webp" alt="" width="400" height="450" decoding="async"></figure>
+        <figure class="v05__afdruk v05__afdruk--2"><img src="/img/verhuisdag-verhuizers.webp" alt="" width="709" height="787" decoding="async"></figure>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v06" style="--na:#fff">
+  <header class="vkop"><span class="vkop__nr">06</span><div><b>Score in de ring</b><small>Referentie: Brocken · score (reviewpagina). Witte band. Links “Vragen achteraf?” met het telefoonnummer groot en een gele onderstreep. Rechts de wagenfoto op een schuine blauwe band met stippen, een ronde 4,9-score met gele ring en een scheve crème notitie “Tevreden?”.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--wit vv v06"><div class="wrap v06__raster">
+      <div>
+        <p class="label label--pil">Daarna</p>
+        <h2>Na de <em>verhuizing</em></h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p>
+        <div class="v06__vraag"><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p>
+          <a class="v06__nummer" href="tel:+31850005647"><span class="rond rond--geel"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><span>085 000 5647</span></a>
+          <a class="v06__mail" href="mailto:info@verhuisbedrijfdereus.nl">info@verhuisbedrijfdereus.nl</a>
+        </div>
+      </div>
+      <div class="v06__beeld">
+        <span class="v06__band" aria-hidden="true"></span>
+        <img class="v06__foto" src="/img/dienst-nationaal-v2-groot.webp" alt="" width="1440" height="1080" decoding="async">
+        <div class="v06__score" aria-hidden="true"><svg class="ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="none" stroke="#E2E5EB" stroke-width="3"/><circle cx="60" cy="60" r="56" fill="none" stroke="#FFCC33" stroke-width="5" stroke-linecap="round" pathLength="100" stroke-dasharray="94 100"/></svg><b>4,9</b><span class="sterren5" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><small><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Google</small></div>
+        <div class="v06__notitie"><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><a class="streep" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener">Review op Google<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v07">
+  <header class="vkop"><span class="vkop__nr">07</span><div><b>Mensen uit de tegels</b><small>Referentie: Referentie A + Brocken · uitsnede die boven het kader uitstapt. Kop in het midden. Twee grote tegels: Diepblauw met de verhuisadviseur, Goudgeel met een verhuizer met dozen; de mensen staan in de tegel en komen er ver bovenuit.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--mist vv v07"><div class="wrap">
+      <div class="kopgroep"><p class="label">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p></div>
+      <ul class="v07__tegels" role="list">
+        <li class="v07__tegel v07__tegel--vragen"><div class="v07__tekst"><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p><div class="pillen"><a class="pil pil--geel" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a><a class="pil pil--lijn" href="mailto:info@verhuisbedrijfdereus.nl"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg>Mailen</a></div></div><img class="v07__mens v07__mens--adviseur" src="/img/contact-adviseur-uit.webp" alt="" width="640" height="954" decoding="async"></li>
+        <li class="v07__tegel v07__tegel--tevreden"><div class="v07__tekst"><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><div class="pillen"><a class="pil pil--blauw" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Review op Google</a></div></div><img class="v07__mens v07__mens--ploeg" src="/img/verhuizer-twee-dozen-uit.webp" alt="" width="407" height="1200" decoding="async"></li>
+      </ul>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v08">
+  <header class="vkop"><span class="vkop__nr">08</span><div><b>Diepblauwe band, schuin</b><small>Referentie: Brocken · dag (werkwijze, donkere band met schuine randen). Diepblauwe band met schuine boven- en onderrand en een stippenraster. De twee punten als kolommen met een dunne lijn erboven; de foto heeft een schuine bovenrand met een gele streep en de twee verhuizers stappen er bovenuit.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="vv v08"><div class="wrap v08__raster">
+      <div>
+        <p class="label label--pil label--donker">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p>
+        <ul class="v08__punten" role="list">
+          <li><span class="rond rond--donker"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p></li>
+          <li><span class="rond rond--donker"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p></li>
+        </ul>
+        <div class="pillen"><a class="pil pil--geel" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a><a class="pil pil--lijn" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Review op Google</a></div>
+      </div>
+      <div class="v08__beeld" aria-hidden="true"><img class="v08__foto" src="/img/dienst-particulier-v2.webp" alt="" width="720" height="540" decoding="async"><img class="v08__uit" src="/img/dienst-particulier-v2-uit.webp" alt="" width="1080" height="810" decoding="async"></div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v09">
+  <header class="vkop"><span class="vkop__nr">09</span><div><b>Gele schijven</b><small>Referentie: De Reus · zelfde idioom als /kosten/ #opbouw (door u gekozen). Kop links, de wagenfoto hoog rechts. De twee punten staan elk als 3D-voorwerp (telefoon, ster) op een dikke gele schijf, tekst eronder.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--mist vv v09"><div class="wrap v09__raster">
+      <div class="v09__kop"><p class="label">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p></div>
+      <figure class="v09__foto" aria-hidden="true"><img src="/img/dienst-nationaal-v2-groot.webp" alt="" width="1440" height="1080" decoding="async"></figure>
+      <ul class="v09__punten" role="list">
+        <li><span class="v09__podium" aria-hidden="true"><img src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" decoding="async"></span><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p><a class="streep" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a></li>
+        <li><span class="v09__podium v09__podium--ster" aria-hidden="true"><img src="/img/kaart-3d/ster.webp" alt="" width="240" height="240" decoding="async"></span><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><a class="streep" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener">Review op Google<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li>
+      </ul>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v10">
+  <header class="vkop"><span class="vkop__nr">10</span><div><b>Fotoband</b><small>Referentie: Referentie A · footer / De Reus-footer (foto tot de rand, verloop naar Diepblauw). Een Diepblauwe band met de wagenfoto tot de rechter schermrand die naar links dichtloopt. Kop in wit; de twee punten als witte kaarten die half over de onderrand vallen, met telefoon en ster erbovenop.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="vv v10">
+      <div class="v10__band"><img class="v10__foto" src="/img/dienst-nationaal-v2-groot.webp" alt="" width="1440" height="1080" decoding="async"><div class="wrap v10__tekst"><p class="label">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p></div></div>
+      <div class="wrap"><ul class="v10__kaarten" role="list">
+        <li><img class="v10__ding" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" decoding="async"><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p><div class="pillen"><a class="pil pil--geel" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a><a class="pil pil--wit" href="mailto:info@verhuisbedrijfdereus.nl"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg>Mailen</a></div></li>
+        <li><img class="v10__ding v10__ding--ster" src="/img/kaart-3d/ster.webp" alt="" width="240" height="240" decoding="async"><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><div class="pillen"><a class="pil pil--wit" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Review op Google</a></div></li>
+      </ul></div>
+    </section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v11">
+  <header class="vkop"><span class="vkop__nr">11</span><div><b>Dikke plaat</b><small>Referentie: De Reus · diepte (plaat met dikte, voorwerpen breken uit de rand). Alles op één witte plaat met een Koningsblauwe dikte naar rechtsonder; foto links in de plaat verzonken, rechts de tekst en twee kolommen. Telefoon en ster steken boven de plaat uit.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--mist vv v11"><div class="wrap">
+      <div class="v11__plaat">
+        <img class="v11__ding v11__ding--tel" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" decoding="async"><img class="v11__ding v11__ding--ster" src="/img/kaart-3d/ster.webp" alt="" width="240" height="240" decoding="async">
+        <figure class="v11__foto" aria-hidden="true"><img src="/img/dienst-nationaal-v2-groot.webp" alt="" width="1440" height="1080" decoding="async"></figure>
+        <div class="v11__inhoud">
+          <p class="label">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p>
+          <ul class="v11__punten" role="list">
+            <li><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p></li>
+            <li><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p></li>
+          </ul>
+          <div class="pillen"><a class="pil pil--geel" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a><a class="pil pil--wit" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Review op Google</a></div>
+        </div>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v12" style="--na:#fff">
+  <header class="vkop"><span class="vkop__nr">12</span><div><b>Gestapelde platen</b><small>Referentie: Brocken · stemmen (reviews: persoon voor twee verschoven platen). Witte band. Links de verhuisadviseur voor een crème en een verschoven blauwe plaat. Rechts de kop en twee witte kaarten: een groot geel vraagteken bij “Vragen achteraf?”, een 4,9-badge bij “Tevreden?”.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--wit vv v12"><div class="wrap v12__raster">
+      <div class="v12__beeld" aria-hidden="true"><span class="v12__plaat v12__plaat--blauw"></span><span class="v12__plaat v12__plaat--creme"></span><img class="v12__mens" src="/img/contact-adviseur-uit.webp" alt="" width="640" height="954" decoding="async"></div>
+      <div>
+        <p class="label label--pil">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p>
+        <ul class="v12__kaarten" role="list">
+          <li class="v12__kaart"><span class="v12__teken" aria-hidden="true">?</span><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p><a class="streep" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a></li>
+          <li class="v12__kaart"><span class="v12__score" aria-hidden="true">4,9<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><a class="streep" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener">Review op Google<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li>
+        </ul>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v13">
+  <header class="vkop"><span class="vkop__nr">13</span><div><b>Gekanteld stippenpaneel</b><small>Referentie: Brocken · vragen (belregel met monogram, scheef stippenpaneel). Links de kop en een belregel met het beeldmerk in een rondje en het nummer met gele onderstreep. Rechts een licht gekanteld crème paneel met stippen en een groot omlijnd vraagteken, de twee punten als witte kaarten en een verhuizer met doos ernaast.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--mist vv v13"><div class="wrap v13__raster">
+      <div>
+        <p class="label">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p>
+        <a class="v13__bel" href="tel:+31850005647"><span class="v13__merk"><img src="/img/logo/dereus-beeldmerk.svg" alt="" width="60" height="57"></span><span><b>085 000 5647</b><small>info@verhuisbedrijfdereus.nl</small></span></a>
+      </div>
+      <div class="v13__paneel">
+        <span class="v13__vraagteken" aria-hidden="true">?</span>
+        <ul class="v13__kaarten" role="list">
+          <li><span class="rond"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><div><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p></div></li>
+          <li><span class="rond"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><div><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><a class="streep" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener">Review op Google<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li>
+        </ul>
+        <img class="v13__mens" src="/img/verhuizer-doos-schouder-uit.webp" alt="" width="489" height="1200" decoding="async">
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v14" style="--na:#fff">
+  <header class="vkop"><span class="vkop__nr">14</span><div><b>Tegels onder de foto</b><small>Referentie: Brocken · vinden (contact: brede foto met schuine onderrand, tegels erover). Witte band, kop in het midden. Een brede wagenfoto met schuine onderrand; twee witte tegels met een rond icoon schuiven er half over. Een verhuizer met dozen staat rechts over de rand.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--wit vv v14"><div class="wrap">
+      <div class="kopgroep"><p class="label label--pil">Daarna</p>
+        <h2>Na de verhuizing</h2>
+        <p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p></div>
+      <div class="v14__beeld" aria-hidden="true"><img class="v14__foto" src="/img/dienst-nationaal-v2-groot.webp" alt="" width="1440" height="1080" decoding="async"><img class="v14__mens" src="/img/verhuizer-twee-dozen-uit.webp" alt="" width="407" height="1200" decoding="async"></div>
+      <ul class="v14__tegels" role="list">
+        <li><span class="v14__icoon"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p><a class="streep" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a></li>
+        <li><span class="v14__icoon"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><a class="streep" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener">Review op Google<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li>
+      </ul>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v15">
+  <header class="vkop"><span class="vkop__nr">15</span><div><b>Panorama met overlapkaart</b><small>Referentie: Referentie A · hero met offertekaart eroverheen. Grote kop links, intro rechts. Een brede foto waarvan de bovenkant wegvalt, zodat de verhuizer met de doos boven de lijst uitkomt. Eén witte kaart met de twee punten valt over de onderrand.</small></div></header>
+  <div class="ctx-boven" aria-hidden="true"></div>
+  <section class="sectie sectie--mist vv v15"><div class="wrap">
+      <div class="v15__kop"><div><p class="label label--lijn">Daarna</p><h2>Na de verhuizing</h2></div><p class="intro">Na de verhuisdag staat alles op zijn plek in uw nieuwe huis. Wat nu nog handig is:</p></div>
+      <div class="v15__beeld" aria-hidden="true"><img class="v15__foto" src="/img/dienst-nationaal-v2-groot.webp" alt="" width="1440" height="1080" decoding="async"><img class="v15__uit" src="/img/dienst-nationaal-v2-uit.webp" alt="" width="1080" height="810" decoding="async"></div>
+      <div class="v15__kaart">
+        <div class="v15__punt"><span class="rond"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg></span><div><h3>Vragen achteraf?</h3><p>Bel of mail gewoon uw verhuisadviseur. Die kent uw verhuizing van begin tot eind.</p><div class="pillen"><a class="pil pil--geel" href="tel:+31850005647"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telefoon"/></svg>085 000 5647</a><a class="pil pil--wit" href="mailto:info@verhuisbedrijfdereus.nl"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg>Mailen</a></div></div></div>
+        <div class="v15__punt"><span class="rond"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ster"/></svg></span><div><h3>Tevreden?</h3><p>Een review op Google helpt andere mensen die een verhuisbedrijf zoeken.</p><div class="pillen"><a class="pil pil--wit" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-google"/></svg>Review op Google</a></div></div></div>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+</body>
+</html>

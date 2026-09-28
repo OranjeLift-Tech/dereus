@@ -3,7 +3,7 @@ keuze: 7. Map and service area: A: Navy, three area rows and a tall map"): de Di
 intro, het adres en de openingstijden als regels en de knoppen, rechts de kaart in de lagen van blok werkgebied
 (gouden plaat, kaart, verhuizer, Koningsblauwe voetplaat met de bronvermelding). Die lagen staan in
 css/blok/werkgebied.css; kaart.css zet alleen wat hier anders is. Hiervoor stond de kaart links in een eigen bord,
-met het adres en de tijden in een witte plaat en een 3D-kantoortje ernaast (opzet De Kievit, "Waar u ons vindt").
+met het adres en de tijden in een witte plaat en een 3D-kantoortje ernaast (opzet referentie A, "Waar u ons vindt").
 Telefoon en e-mail staan niet hier maar in de kanaalkaarten van contactkaarten (design review 1.7, C1: het nummer
 niet op elke plek).
 

@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Op de verhuisdag: 15 ontwerpen op referentiecode | De Reus</title>
+<link rel="preload" href="/fonts/archivo-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/min/site.min.css?v=1f29f8b059">
+<link rel="stylesheet" href="/css/min/verhuisdag.min.css?v=fdff1bd374">
+<style>
+/* ===== "Op de verhuisdag" op referentiecode (/werkwijze/ #verhuisdag), alleen voor deze ontwerppagina =====
+   Elk blok hieronder is de CSS van een bestaand blok van een referentiesite, met de maten en de opbouw van daar
+   en de kleuren, fonts en tokens van De Reus. Bron per blok in de kop erboven en in gen.cjs. */
+body{background:#fff}
+.vnav{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;padding:.6rem max(1rem,calc((100vw - 1280px)/2 + 1rem));background:var(--brand-secondary);color:#fff;font:600 .9rem/1 var(--font-sans);box-shadow:0 6px 18px -8px rgba(11,35,82,.6)}
+.vnav__titel{margin-right:.8rem;font:var(--weight-display) 1.3rem/1 var(--font-display);font-stretch:var(--font-display-stretch)}
+.vnav a{display:grid;place-items:center;min-width:2.4rem;height:2.2rem;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none}
+.vnav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.vnav a.vnav__brock{box-shadow:inset 0 -3px 0 #FF5100}
+.vnav a.vnav__de-ki{box-shadow:inset 0 -3px 0 #C9A227}
+.vnav a.vnav__solar{box-shadow:inset 0 -3px 0 #3BA55C}
+.vnav__uitleg{display:flex;align-items:center;gap:.35rem;margin-left:auto;font-size:.8rem;font-weight:500;opacity:.9}
+.vnav__uitleg i{width:.75rem;height:.75rem;margin-left:.6rem;border-radius:3px}
+i.vnav__brock{background:#FF5100}i.vnav__de-ki{background:#C9A227}i.vnav__solar{background:#3BA55C}
+.vuitleg{margin:0;padding:1.1rem max(1rem,calc((100vw - 1280px)/2 + 1rem));background:var(--accent-50);border-bottom:1px solid var(--accent-200);color:var(--graphite);font-size:.95rem}
+.variant{scroll-margin-top:3.4rem}
+.vkop{display:flex;align-items:center;gap:1.1rem;padding:1.2rem max(1rem,calc((100vw - 1280px)/2 + 1rem));background:#fff;border-top:6px solid var(--brand-secondary)}
+.vkop__nr{font:var(--weight-display) 2.8rem/1 var(--font-display);font-stretch:var(--font-display-stretch);color:var(--brand-primary)}
+.vkop b{display:block;font:700 1.2rem/1.25 var(--font-sans);color:var(--ink)}
+.vkop small{display:block;margin-top:.2rem;color:var(--grey-600);font-size:.9rem;line-height:1.45}
+.vkop__site{display:inline-block;margin-right:.35rem;padding:.12rem .5rem;border-radius:99px;color:#fff;font-weight:700;font-size:.78rem}
+.vkop--brock .vkop__site{background:#C2410C}.vkop--de-ki .vkop__site{background:#8A6D12}.vkop--solar .vkop__site{background:#2F7D46}
+.vkop__h{flex:none;margin-left:auto;padding:.35rem .7rem;border-radius:8px;background:var(--off-white);color:var(--graphite);font:600 .85rem/1 var(--font-sans);white-space:nowrap}
+.ctx-onder{height:40px;background:var(--off-white)}
+
+/* ---- gedeeld ---- */
+.vv{overflow-x:clip}
+.vv.sectie--blauw{padding-block:calc(var(--ruimte) * .72 + var(--dak)) calc(var(--ruimte) * .8)}
+.vv h2,.vv h3,.vv p{margin:0}
+.vv ul,.vv ol{list-style:none;margin:0;padding:0}
+.vv figure{margin:0}
+.vv h2 em{font-style:normal;color:var(--brand-accent)}
+.vv .intro{margin-top:.9rem}
+.vv b{font-weight:var(--weight-semibold);color:var(--white)}
+.vv a{text-decoration:underline;text-underline-offset:3px}
+.vv .kopregel{display:block;margin-bottom:.3rem}
+/* label zoals de bron het tekent: Brocken een pil met stip, referentie A een lijntje, referentie B een streepje */
+.lab-b{padding:.46rem .82rem .42rem;border-radius:999px;background:rgba(255,255,255,.1);font-size:.74rem;letter-spacing:.1em;gap:.55rem}
+.lab-b::before{width:.45rem;height:.45rem;border-radius:50%;-webkit-mask:none;mask:none}
+.lab-k{font-size:.76rem;letter-spacing:.18em;gap:.75rem}
+.lab-k::before{width:2rem;height:1px;-webkit-mask:none;mask:none}
+.lab-s::before{width:26px;height:2px;border-radius:2px;-webkit-mask:none;mask:none}
+.vv .lab-donker{color:var(--brand-secondary)}
+/* uitsnede als losse figuur: de mensen uit img/verhuisdag-uit/, kruin boven in het vak; --snit = welk deel van
+   kruin tot voeten in het vak valt (1 = helemaal, .6 = tot de dijen, zoals de figuren bij referentie B) */
+.fig{position:absolute;display:block;container-type:size;pointer-events:none;--snit:1;--fx:50}
+.fig>img{position:absolute;max-width:none;width:auto;
+  height:calc(100cqh / ((var(--bot) - var(--top)) * var(--snit)));
+  top:calc(-100cqh * var(--top) / ((var(--bot) - var(--top)) * var(--snit)));
+  left:calc(var(--fx) * 1cqw - var(--cx) * var(--ar) * 100cqh / ((var(--bot) - var(--top)) * var(--snit)))}
+/* foto-pop: de rekensom van .sgd1-pop (Referentie B blokken/diensten.css) — foto op het kader geknipt, de uitsnede
+   (zelfde maat en plek) alleen in een strook erboven. --d0 kruin, --mid midden, --ar verhouding, --p uitsteek. */
+.pop{--fa:2;--p:40px;--d0:0;--mid:.5;--ar:1.5;position:relative;container-type:inline-size;aspect-ratio:var(--fa);
+  --ph:max((100cqw / var(--fa) + var(--p)) / (1 - var(--d0)),100cqw / var(--ar));
+  --pw:calc(var(--ph) * var(--ar));
+  --pt:calc(-1 * (var(--d0) * var(--ph) + var(--p)));
+  --pl:clamp(100cqw - var(--pw),50cqw - var(--mid) * var(--pw),0px)}
+.pop--cq{position:absolute;inset:0;aspect-ratio:auto;container-type:size;--ph:max((100cqh + var(--p)) / (1 - var(--d0)),100cqw / var(--ar))}
+.pop__raam{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
+.pop__boven{position:absolute;left:0;right:0;bottom:100%;height:calc(var(--p) + 40px);overflow:hidden;pointer-events:none}
+.pop__foto,.pop__boven>img{position:absolute;left:var(--pl);width:var(--pw);height:var(--ph);max-width:none;object-fit:fill}
+.pop__foto{top:var(--pt)}
+.pop__boven>img{top:calc(var(--pt) + var(--p) + 40px);filter:drop-shadow(0 10px 12px rgba(3,10,30,.3)) drop-shadow(0 2px 3px rgba(3,10,30,.22))}
+
+/* ===== 01 · Brocken .b-dag (dag.min.css) ===== */
+.v01 .b-dag__kop{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);column-gap:clamp(2rem,5vw,4.5rem);align-items:end;margin-bottom:clamp(1.6rem,2.8vw,2.3rem)}
+.v01 .b-dag__noot{max-width:48ch;font-size:var(--text-lead);line-height:1.6;color:rgba(255,255,255,.84)}
+.v01 .b-dag__mozaiek{display:grid;gap:12px;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-areas:"a a a a a b b b c c c c";grid-template-rows:clamp(240px,20vw,300px)}
+.v01 .b-dag__tegel{position:relative;overflow:hidden;border-radius:10px;background:var(--brand-secondary)}
+.v01 .b-dag__tegel--a{grid-area:a}.v01 .b-dag__tegel--b{grid-area:b}.v01 .b-dag__tegel--c{grid-area:c}
+.v01 .b-dag__tegel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v01 .b-dag__tegel figcaption{position:absolute;left:0;right:0;bottom:0;padding:.75rem .95rem .8rem;background:rgba(11,35,82,.92)}
+.v01 .b-dag__tegel h3{font:var(--weight-bold) 1.05rem/1.25 var(--font-sans)}
+.v01 .b-dag__tegel p{margin-top:.2rem;font-size:.84rem;line-height:1.45;color:rgba(255,255,255,.84)}
+.v01 .b-dag__feiten{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem 2rem;margin-top:clamp(1.5rem,2.6vw,2.2rem)}
+.v01 .b-dag__feit{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.9rem;align-items:start;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.16)}
+.v01 .b-dag__ic{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.08);color:var(--brand-accent)}
+.v01 .b-dag__ic img{width:auto;height:32px;max-width:none}
+.v01 .b-dag__ic .ic{width:20px;height:20px}
+.v01 .b-dag__feit p{font-size:.95rem;line-height:1.6;color:rgba(255,255,255,.8)}
+.v01 .b-dag__feit .kopregel{font-size:1.08rem;line-height:1.3;margin-top:.2rem}
+
+/* ===== 02 · Brocken .b-kanaal (kanaal.min.css) ===== */
+.v02 .b-kanaal__in{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:1.5rem}
+.v02 .b-kopgroep{grid-column:1/6;grid-row:1;align-self:start;padding-top:1.2rem}
+.v02 .b-kanaal__adviseur{grid-column:1/6;grid-row:1;align-self:end;justify-self:start;position:relative;z-index:1;width:auto;max-width:none;
+  height:clamp(10rem,-12rem + 29vw,14.5rem);margin:0 0 -4.5rem 1rem;filter:drop-shadow(0 14px 16px rgba(3,10,30,.35));clip-path:inset(-4rem -4rem 0 -4rem)}
+.v02 .b-kanaal__beeld{--kanaal-stap:clamp(.75rem,.4rem + 1.5vw,1.5rem);--kanaal-maat:16/7;grid-column:6/13;grid-row:1;position:relative;isolation:isolate;
+  margin:var(--kanaal-stap) calc((min(100vw,var(--maxw)) - 100vw) / 2 - var(--pad)) 0 var(--kanaal-stap)}
+.v02 .b-kanaal__beeld::before{content:"";position:absolute;z-index:-1;left:calc(-1 * var(--kanaal-stap));top:calc(-1 * var(--kanaal-stap));width:calc(100% + var(--kanaal-stap));
+  aspect-ratio:var(--kanaal-maat);border-radius:var(--radius-media) 0 0 var(--radius-media);background:rgba(255,255,255,.14)}
+.v02 .b-kanaal__foto{overflow:hidden;border-radius:var(--radius-media) 0 0 var(--radius-media);box-shadow:0 26px 44px -28px rgba(3,10,30,.6)}
+.v02 .b-kanaal__foto img{display:block;width:100%;height:auto;aspect-ratio:var(--kanaal-maat);object-fit:cover}
+.v02 .b-kanaal__blok{position:absolute;z-index:2;left:0;bottom:-3.75rem;width:min(450px,66%);padding:2.1rem 1.3rem 1rem 2.6rem;border-radius:4px 4px 12px 12px;background-color:#fff;
+  background-image:linear-gradient(90deg,transparent 1.75rem,var(--brand-primary) 1.75rem calc(1.75rem + 1.5px),transparent calc(1.75rem + 1.5px)),
+    repeating-linear-gradient(180deg,transparent 0 calc(1.9rem - 1px),var(--primary-100) calc(1.9rem - 1px) 1.9rem);
+  background-position:0 0,0 1.45rem;box-shadow:0 1px 2px rgba(3,10,30,.08),0 26px 44px -24px rgba(3,10,30,.55)}
+.v02 .b-kanaal__blok::before{content:"";position:absolute;left:14px;right:14px;top:-8px;height:18px;
+  background:radial-gradient(circle at 50% 60%,var(--brand-primary) 0 4px,var(--brand-secondary) 4.5px 6px,transparent 6.5px) 0 0/22px 18px repeat-x}
+.v02 .b-kanaal__agenda{padding-left:1.1rem;list-style:decimal;font-size:.92rem;line-height:1.9rem;color:var(--ink)}
+.v02 .b-kanaal__agenda li::marker{font-weight:700;color:var(--brand-primary)}
+.v02 .b-kanaal__blok b{color:var(--brand-secondary)}
+.v02 .b-kanaal__voet{font-size:.92rem;line-height:1.9rem;color:var(--graphite)}
+.v02 .b-kanaal__blok a{color:var(--brand-primary);font-weight:600}
+.v02 .b-kanaal__wegen{grid-column:1/13;grid-row:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:2.25rem;margin-top:4.5rem}
+.v02 .b-kanaal__weg{display:grid;grid-template-columns:44px minmax(0,1fr);gap:.95rem;align-content:start;padding-top:1.15rem;border-top:1px solid rgba(255,255,255,.22)}
+.v02 .b-kanaal__ic{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--primary-200)}
+.v02 .b-kanaal__ic img{width:auto;height:30px;max-width:none}
+.v02 .b-kanaal__weg h3{margin:.45rem 0 .3rem;font:var(--weight-semibold) 1.12rem/1.25 var(--font-sans)}
+.v02 .b-kanaal__weg p{font-size:.95rem;line-height:1.6;color:rgba(255,255,255,.84)}
+
+/* ===== 03 · Brocken .b-historie (historie.min.css) ===== */
+.v03 .b-kopgroep{max-width:46rem;margin-bottom:clamp(1.5rem,2.6vw,2.1rem)}
+.v03 .b-historie__tl{--plaat:11.5rem;position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.4rem,3vw,2.6rem)}
+.v03 .b-historie__tl::before{content:"";position:absolute;left:3%;right:3%;top:calc(var(--plaat) + 1.25rem);height:2px;border-radius:2px;
+  background:linear-gradient(to right,rgba(255,255,255,.18),rgba(255,255,255,.5) 55%,var(--brand-accent))}
+.v03 .b-historie__stap{position:relative}
+.v03 .b-historie__fig{position:relative;margin:0 0 2.9rem}
+.v03 .b-historie__plaat{height:var(--plaat);border-radius:14px;overflow:hidden;background:rgba(255,255,255,.06);box-shadow:0 18px 34px -22px rgba(3,10,30,.85)}
+.v03 .b-historie__plaat img{width:100%;height:100%;object-fit:cover}
+.v03 .b-historie__stap:nth-child(odd) .b-historie__plaat{transform:rotate(-1.2deg)}
+.v03 .b-historie__stap:nth-child(even) .b-historie__plaat{transform:rotate(1deg)}
+.v03 .b-historie__jaar{position:absolute;left:0;top:calc(100% + .35rem);display:inline-flex;align-items:center;gap:.5rem;
+  font:var(--weight-display) clamp(1.25rem,1rem + .9vw,1.8rem)/1 var(--font-display);font-stretch:var(--font-display-stretch);font-variant-numeric:tabular-nums;color:#fff}
+.v03 .b-historie__jaar::before{content:"";flex:none;width:.7rem;height:.7rem;border-radius:50%;background:var(--primary-200);box-shadow:0 0 0 .3rem var(--brand-primary)}
+.v03 .b-historie__stap--nu .b-historie__jaar::before{background:var(--brand-accent)}
+.v03 .b-historie__stap h3{margin:0 0 .4rem;font:var(--weight-bold) clamp(1.05rem,.95rem + .3vw,1.2rem)/1.25 var(--font-sans)}
+.v03 .b-historie__stap p{font-size:.95rem;line-height:1.58;color:rgba(255,255,255,.84)}
+.v03 .b-historie__voet{display:flex;align-items:center;justify-content:space-between;gap:1rem 2.5rem;margin-top:clamp(1.5rem,2.6vw,2.2rem);padding-top:clamp(1rem,1.8vw,1.4rem);border-top:1px solid rgba(255,255,255,.22)}
+.v03 .b-historie__cijfers{max-width:76ch;font-size:.96rem;line-height:1.6;color:rgba(255,255,255,.84)}
+.v03 .b-historie__link{display:inline-flex;align-items:center;gap:.5rem;flex:none;font-size:.96rem}
+.v03 .b-historie__link .ic{width:18px;height:18px;color:var(--brand-accent)}
+
+/* ===== 04 · Brocken .b-belofte (belofte.min.css) ===== */
+.v04{--bb-band:1.15rem;--bb-haak:2.3rem}
+.v04 .b-kopgroep--midden{max-width:46rem;margin:0 auto clamp(1.3rem,2.4vw,1.9rem);text-align:center}
+.v04 .b-kopgroep--midden .intro{margin-inline:auto}
+.v04 .b-belofte__baan{position:relative;isolation:isolate;padding-top:calc(var(--bb-band) / 2)}
+.v04 .b-belofte__baan::before{content:"";position:absolute;z-index:-2;left:0;right:0;top:45%;bottom:-2rem;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0));clip-path:polygon(0 12%,100% 0,100% 100%,0 100%)}
+.v04 .b-belofte__band{position:absolute;z-index:1;left:0;right:0;top:0;height:var(--bb-band);background:var(--brand-accent);box-shadow:0 6px 14px -8px rgba(3,10,30,.7)}
+.v04 .b-belofte__lijst{position:relative;z-index:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(.8rem,1.6vw,1.3rem);align-items:start}
+.v04 .b-belofte__kaart{--r:-1.6deg;position:relative;margin-top:var(--bb-haak);padding:1rem 1rem 1.15rem;border-radius:14px;background:#fff;
+  box-shadow:0 22px 40px -24px rgba(3,10,30,.75);rotate:var(--r);transform-origin:50% calc(-1 * var(--bb-haak))}
+.v04 .b-belofte__kaart:nth-child(even){--r:1.3deg}
+.v04 .b-belofte__kaart:nth-child(3n){--r:-.8deg}
+.v04 .b-belofte__haak{position:absolute;left:50%;bottom:100%;width:.9rem;height:calc(var(--bb-haak) + .4rem);translate:-50% 0;border:2px solid var(--white);border-bottom:0;border-radius:.45rem .45rem 0 0}
+.v04 .b-belofte__haak::after{content:"";position:absolute;left:50%;bottom:-.35rem;width:1.6rem;height:.55rem;translate:-50% 0;border-radius:.2rem;background:var(--brand-secondary)}
+.v04 .b-belofte__foto{display:block;aspect-ratio:4/3;margin:-.35rem -.35rem .8rem;border-radius:9px;overflow:hidden}
+.v04 .b-belofte__foto img{width:100%;height:100%;object-fit:cover}
+.v04 .b-belofte__ico{display:block;width:auto;height:4.4rem;max-width:none;margin:.1rem 0 .8rem}
+.v04 .b-belofte__kaart h3,.v04 .b-belofte__kaart .kopregel{font:var(--weight-bold) 1.02rem/1.3 var(--font-sans);color:var(--brand-secondary)}
+.v04 .b-belofte__kaart p{margin-top:.4rem;color:var(--grey-600);font-size:.88rem;line-height:1.5}
+.v04 .b-belofte__knoppen{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:clamp(1.5rem,2.6vw,2.1rem);font-size:.98rem}
+.v04 .b-belofte__knoppen .ic{width:18px;height:18px;color:var(--brand-accent)}
+
+/* ===== 05 · Brocken .b-bijzonder (bijzonder.min.css) ===== */
+.v05 .b-bijzonder__kop{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);column-gap:clamp(2rem,4vw,4rem);align-items:end;margin-bottom:clamp(1.8rem,3vw,2.5rem)}
+.v05 .b-bijzonder__noot{padding-left:1rem;border-left:3px solid var(--brand-accent);color:rgba(255,255,255,.84);font-size:.96rem;line-height:1.6;max-width:52ch}
+.v05 .b-bijzonder__helften{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(1.5rem,3vw,2.6rem);align-items:start}
+.v05 .b-bijzonder__helft:nth-child(2){padding-top:1.5rem}
+.v05 .b-bijzonder__foto{margin:0 .8rem 0 0;filter:drop-shadow(0 30px 40px rgba(3,10,30,.45))}
+.v05 .b-bijzonder__lijst{position:relative;display:block;overflow:hidden;border-radius:var(--radius-media);aspect-ratio:3/2}
+.v05 .b-bijzonder__lijst img{width:100%;height:100%;object-fit:cover}
+.v05 .b-bijzonder__lijst::after{content:"";position:absolute;inset:12px;border:1px solid rgba(255,255,255,.7);border-radius:12px;pointer-events:none}
+.v05 .b-bijzonder__kaart{position:relative;z-index:2;margin:-3.6rem 0 0 1.4rem;padding:1rem 1.2rem 1.15rem;background:#fff;border-radius:14px;box-shadow:0 26px 46px -28px rgba(3,10,30,.75)}
+.v05 .b-bijzonder__kaart h3{display:flex;align-items:center;gap:.6rem;font:var(--weight-display) clamp(1.3rem,1.15rem + .5vw,1.55rem)/1.15 var(--font-display);font-stretch:var(--font-display-stretch);color:var(--brand-secondary)}
+.v05 .b-bijzonder__icoon{flex:none;width:auto;height:2.3rem;max-width:none}
+.v05 .b-bijzonder__kaart p{margin-top:.5rem;color:var(--grey-600);font-size:.93rem;line-height:1.55}
+
+/* ===== 06 · referentie A .blok.blok--vlak + .d4 (assets/css/style.css) ===== */
+.v06 .blok{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:stretch}
+.v06 .blok__foto{position:relative;align-self:stretch;min-height:19rem;margin:0 1.5rem 1.5rem 0;border-radius:var(--radius-media)}
+.v06 .blok__foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-media)}
+.v06 .blok__foto::before{content:"";position:absolute;right:-1.5rem;bottom:-1.5rem;width:62%;height:56%;background:var(--brand-accent);border-radius:var(--radius-media);z-index:-1}
+.v06 .blok__tekst{align-self:center}
+.v06 .d4{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.4rem}
+.v06 .d4 li{display:flex;gap:.8rem;align-items:flex-start;padding:.85rem 1rem;border:1px solid var(--color-border);border-radius:12px;background:#fff}
+.v06 .d4 li img{flex:none;width:auto;height:30px;max-width:none;margin-top:.1rem}
+.v06 .d4 li b{display:block;font:var(--weight-bold) .95rem/1.25 var(--font-sans);color:var(--brand-secondary)}
+.v06 .d4 li span{display:block;margin-top:.2rem;color:var(--grey-600);font-size:.86rem;line-height:1.45}
+.v06 .d4 .d4--actief{border-color:var(--brand-accent);background:var(--accent-100)}
+.v06 .d4 .d4--actief span{color:var(--graphite)}
+.v06 .blok__slot{margin-top:1.1rem;font-size:.98rem;line-height:1.6}
+
+/* ===== 07 · referentie A .werkwijze__top + .stappen (assets/css/style.css) ===== */
+.v07 .werkwijze__top{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,3vw,2.5rem);align-items:end;margin-bottom:clamp(1.4rem,2.6vw,2rem)}
+.v07 .sectiekop{max-width:none}
+.v07 .werkwijze__wagen{align-self:end;justify-self:end}
+.v07 .werkwijze__wagen img{display:block;width:auto;height:clamp(13rem,17vw,16.5rem);max-width:none;filter:drop-shadow(0 26px 26px rgba(3,10,30,.35))}
+.v07 .stappen{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+.v07 .stap{padding-top:1.1rem;border-top:1px solid var(--brand-accent)}
+.v07 .stap__nr{display:block;height:3rem;margin-bottom:.7rem;font:var(--weight-display) 3rem/1 var(--font-display);font-stretch:var(--font-display-stretch);color:var(--brand-accent)}
+.v07 .stap__nr img{width:auto;height:3.3rem;max-width:none;margin-top:-.3rem}
+.v07 .stap h3{margin-bottom:.45rem;font-size:var(--text-h4)}
+.v07 .stap p{font-size:1rem;line-height:1.55;color:rgba(255,255,255,.84)}
+.v07 .stap--slot p{font-size:.92rem}
+
+/* ===== 08 · referentie A .blok--stapel.blok--navy + .usps--rij (assets/css/style.css) ===== */
+.v08 .blok--stapel{display:grid;grid-template-columns:1fr;gap:clamp(1.8rem,3vw,2.6rem)}
+.v08 .blok__boven{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,4rem);align-items:center;padding:clamp(1.6rem,3.2vw,2.8rem);border-radius:24px;background:var(--brand-secondary)}
+.v08 .blok__foto{position:relative;align-self:stretch;min-height:19rem;overflow:hidden;border-radius:var(--radius-media);border-bottom:6px solid var(--brand-accent);background:var(--brand-secondary)}
+.v08 .blok__foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v08 .blok__slot{margin-top:1rem;font-size:.95rem;line-height:1.6;color:rgba(255,255,255,.8)}
+.v08 .usps--rij{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem 1.8rem}
+.v08 .usps--rij li{display:grid;grid-template-columns:1fr;gap:.85rem;align-content:start}
+.v08 .ico{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--accent-100)}
+.v08 .ico img{width:auto;height:34px;max-width:none}
+.v08 .usps h3{margin:0 0 .3rem;font-size:1.35rem}
+.v08 .usps p{font-size:.98rem;line-height:1.55;color:rgba(255,255,255,.84)}
+
+/* ===== 09 · referentie A .hist5 + .pol (assets/css/style.css) ===== */
+.v09 .hist5__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.v09 .hist5__tl{position:relative;display:grid;gap:.85rem;margin:1.3rem 0 1.1rem}
+.v09 .hist5__tl::before{content:"";position:absolute;left:calc(3.4rem + 4px);top:.6rem;bottom:.6rem;width:1px;background:rgba(255,255,255,.22)}
+.v09 .hist5__tl li{position:relative;display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:1.2rem;align-items:start}
+.v09 .hist5__tl li::before{content:"";position:absolute;left:3.4rem;top:.5rem;width:9px;height:9px;border-radius:50%;background:var(--brand-accent)}
+.v09 .hist5__jaar{padding-top:.05rem;font:var(--weight-display) 1.5rem/1 var(--font-display);font-stretch:var(--font-display-stretch);color:var(--brand-accent)}
+.v09 .hist5__tl h3{margin:0 0 .15rem;font:var(--weight-bold) 1.05rem/1.3 var(--font-sans)}
+.v09 .hist5__tl p{max-width:48ch;font-size:.93rem;line-height:1.45;color:rgba(255,255,255,.84)}
+.v09 .hist5__slot{padding-top:.9rem;border-top:1px solid rgba(255,255,255,.18);font-size:.93rem;line-height:1.55;color:rgba(255,255,255,.84)}
+.v09 .hist5__stapel{position:relative;align-self:center;width:100%;height:0;padding-bottom:98%;perspective:1200px}
+.v09 .pol{position:absolute;margin:0;padding:14px 14px 50px;border-radius:2px;background:#fff;box-shadow:0 18px 40px -16px rgba(3,10,30,.55),0 6px 14px -6px rgba(3,10,30,.4)}
+.v09 .pol img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.v09 .pol figcaption{position:absolute;left:14px;right:14px;bottom:14px;text-align:center;font:var(--weight-display) 1.05rem/1.2 var(--font-display);font-stretch:var(--font-display-stretch);color:var(--brand-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v09 .pol--trucks{top:0;left:0;width:88%;transform:rotate(-2.5deg);z-index:1}
+.v09 .pol--trucks figcaption{text-align:left;padding-left:4px}
+.v09 .pol--kar{top:20%;right:0;width:46%;transform:rotate(6deg);z-index:2}
+.v09 .pol--ad{bottom:0;left:28%;width:36%;padding-bottom:62px;transform:rotate(-3deg);z-index:3}
+.v09 .pol--ad figcaption{white-space:normal;line-height:1.15;bottom:12px}
+
+/* ===== 10 · referentie A .dienst + .tips-grid (assets/css/style.css) ===== */
+.v10 .sectiekop{max-width:46rem;margin:0 auto clamp(1.4rem,2.6vw,2rem);text-align:center}
+.v10 .sectiekop .intro{margin-inline:auto}
+.v10 .diensten{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem}
+.v10 .dienst{overflow:hidden;background:var(--brand-secondary);color:#fff;transition:background-color .2s}
+.v10 .dienst:hover{background:var(--primary-600)}
+.v10 .dienst__nis{position:relative;aspect-ratio:5/2;overflow:hidden;background:var(--primary-600)}
+.v10 .dienst__nis img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v10 .dienst__nr{position:absolute;left:0;bottom:0;padding:.6rem .85rem;background:var(--brand-accent);color:var(--brand-secondary);font:var(--weight-display) 1.25rem/1 var(--font-display);font-stretch:var(--font-display-stretch);letter-spacing:.04em}
+.v10 .dienst__tekst{padding:1.1rem 1.4rem 1.3rem}
+.v10 .dienst h3{margin-bottom:.4rem;font-size:var(--text-h5)}
+.v10 .dienst p{font-size:.98rem;line-height:1.55}
+.v10 .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:1.3rem;counter-reset:tip}
+.v10 .tip{display:grid;grid-template-columns:36px 1fr;gap:12px;padding:14px 18px;border:1px solid var(--color-border);border-radius:14px;background:#fff;counter-increment:tip}
+.v10 .tip::before{content:counter(tip);display:grid;place-items:center;width:36px;height:36px;border-radius:999px;background:var(--accent-100);border:1px solid var(--brand-accent);font:var(--weight-bold) .95rem/1 var(--font-sans);color:var(--brand-secondary)}
+.v10 .tip strong{display:block;margin-bottom:3px;font-size:15.5px;color:var(--brand-secondary)}
+.v10 .tip span{display:block;font-size:15px;line-height:1.55;color:var(--graphite)}
+.v10 .tip a{color:var(--brand-primary);font-weight:600}
+
+/* ===== 11 · referentie B .sgd1 (blokken/diensten.css) ===== */
+.v11 .sgd1-head{max-width:46rem}
+.v11 .sgd1-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(40px + .6rem) .9rem;margin-top:calc(40px + 1.4rem)}
+.v11 .sgd1-kaart{position:relative;display:flex;flex-direction:column;min-width:0;border-radius:4px;background:#fff;
+  box-shadow:0 0 0 1px rgba(3,10,30,.07),0 1px 2px rgba(3,10,30,.08),0 16px 32px -20px rgba(3,10,30,.55)}
+.v11 .sgd1-beeld{--fa:2.3;--p:40px;border-radius:4px 4px 0 0}
+.v11 .sgd1-ico{position:absolute;right:.7rem;bottom:-1.6rem;z-index:2;display:grid;place-items:end center;width:3.8rem;height:3.8rem;filter:drop-shadow(0 6px 8px rgba(3,10,30,.22))}
+.v11 .sgd1-ico img{width:auto;height:3.8rem;max-width:none}
+.v11 .sgd1-tekst{display:flex;flex:1;flex-direction:column;padding:.8rem 1.1rem .95rem}
+.v11 .sgd1-kaart h3{margin:0 3.6rem .3rem 0;font:var(--weight-bold) 1.1rem/1.25 var(--font-sans);color:var(--brand-secondary)}
+.v11 .sgd1-kaart p{font-size:.92rem;line-height:1.5;color:var(--grey-600)}
+.v11 .sgd1-meer{margin-top:1.5rem;font-size:.98rem;line-height:1.6}
+
+/* ===== 12 · referentie B .sgdp-stap (blokken/dienst.css) ===== */
+.v12 .sgdp-kop{max-width:46rem}
+.v12 .sgdp-stappen{--uit:2.6rem;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--uit) + 1rem) 1rem;margin-top:calc(1.4rem + var(--uit))}
+.v12 .sgdp-kaart{display:flex;flex-direction:column;border-radius:14px;background:#fff;box-shadow:0 14px 30px -24px rgba(3,10,30,.6)}
+.v12 .sgdp-stap{position:relative;padding:0 1.3rem 1.3rem}
+.v12 .sgdp-stap__beeld{--fa:1.7;position:relative;aspect-ratio:var(--fa);margin:0 -1.3rem;border-radius:14px 14px 0 0;background:linear-gradient(165deg,var(--accent-50) 30%,var(--accent-200))}
+.v12 .sgdp-stap__figuur{left:0;right:0;bottom:0;height:calc(100% + var(--uit));--snit:1;--fx:50;clip-path:inset(-50% 0 0 0);
+  filter:drop-shadow(0 10px 12px rgba(3,10,30,.22)) drop-shadow(0 2px 3px rgba(3,10,30,.16))}
+.v12 .sgdp-stap__no{position:absolute;top:.9rem;left:.9rem;z-index:3;padding:.4rem .8rem;border-radius:999px;background:var(--brand-primary);color:#fff;font:var(--weight-bold) .78rem/1 var(--font-sans)}
+.v12 .sgdp-stap__ico{position:absolute;left:1.3rem;bottom:-.6rem;z-index:3;display:grid;place-items:end start;width:3.4rem;height:3.4rem;filter:drop-shadow(0 6px 8px rgba(3,10,30,.22))}
+.v12 .sgdp-stap__ico img{width:auto;height:3.4rem;max-width:none}
+.v12 .sgdp-kaart h3{margin-top:1.2rem;font:var(--weight-bold) 1.15rem/1.2 var(--font-sans);color:var(--brand-secondary)}
+.v12 .sgdp-kaart p{margin-top:.45rem;font-size:.94rem;line-height:1.55;color:var(--grey-600)}
+.v12 .sgdp-kaart--uitgelicht{padding:1.3rem 1.3rem 1.4rem;background:var(--brand-accent)}
+.v12 .sgdp-kaart__3d{display:block;align-self:flex-start;width:auto;height:5.4rem;max-width:none;margin:-3.8rem 0 .3rem -.2rem;filter:drop-shadow(0 10px 12px rgba(3,10,30,.25))}
+.v12 .sgdp-kaart--uitgelicht p{color:var(--brand-secondary)}
+.v12 .sgdp-kaart--uitgelicht b{color:inherit;font-weight:700}
+.v12 .sgdp-kaart--uitgelicht a{color:var(--brand-secondary);font-weight:600}
+
+/* ===== 13 · referentie B .sgm (blokken/manieren.css) ===== */
+.v13 .sgm__binnen{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.25fr);gap:clamp(2rem,4vw,3.5rem);align-items:center}
+.v13 .sgm__afspraken{display:grid;gap:.85rem;margin-top:1.4rem}
+.v13 .sgm__afspraken li{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.8rem;align-items:start}
+.v13 .sgm__afspraken img{justify-self:center;width:auto;height:2.8rem;max-width:none}
+.v13 .sgm__afspraken p{font-size:.96rem;line-height:1.55}
+.v13 .sgm__link{display:inline-flex;align-items:center;gap:.45rem;margin-top:1.1rem;font-size:.95rem;font-weight:600}
+.v13 .sgm__link .ic{width:18px;height:18px;color:var(--brand-accent)}
+.v13 .sgm__beeld{position:relative;padding-bottom:36px}
+.v13 .sgm__band{position:absolute;left:-8px;right:-8px;bottom:0;height:120px;border-radius:14px;background:var(--brand-accent)}
+.v13 .sgm__kaarten{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:end;padding:150px 0 0}
+.v13 .sgm__kaart{position:relative}
+.v13 .sgm__kaart:nth-child(2){margin-bottom:48px}
+.v13 .sgm__kaart:nth-child(3){margin-bottom:96px}
+.v13 .sgm__figuur{left:-12%;right:-12%;bottom:calc(100% - 26px);height:170px;--snit:.8}
+.v13 .sgm__doos{position:relative;z-index:1;padding:1.1rem 1.1rem 1.2rem;border-radius:14px;background:#fff;box-shadow:0 18px 40px -24px rgba(3,10,30,.55)}
+.v13 .sgm__boven{display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+.v13 .sgm__3d{width:auto;height:48px;max-width:none}
+.v13 .sgm__pil{padding:.3rem .65rem;border-radius:999px;background:var(--primary-100);color:var(--brand-primary);font-size:.76rem;font-weight:700;line-height:1.2}
+.v13 .sgm__doos h3{margin-top:.8rem;font:var(--weight-bold) 1.15rem/1.2 var(--font-sans);color:var(--brand-secondary)}
+.v13 .sgm__doos p{margin-top:.4rem;font-size:.94rem;line-height:1.55;color:var(--grey-600)}
+
+/* ===== 14 · referentie B .sgw (blokken/waarom.css) ===== */
+.v14 .sgw-kop{max-width:46rem;margin:0 auto clamp(2.6rem,4vw,3.3rem);text-align:center}
+.v14 .sgw-kop .intro{margin-inline:auto}
+.v14 .sgw-rij{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(1rem,2.4vw,1.8rem);align-items:end}
+.v14 .sgw-tegels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto auto;gap:1rem;align-self:stretch}
+.v14 .sgw-tegel{display:grid;grid-template-columns:auto 1fr;align-items:center;align-content:start;column-gap:.8rem;padding:clamp(1rem,1.6vw,1.25rem) clamp(1.1rem,1.8vw,1.4rem);border-radius:14px}
+.v14 .sgw-tegel__3d{width:52px;height:52px;padding:6px;box-sizing:border-box;border-radius:50%;background:rgba(255,255,255,.92);object-fit:contain;max-width:none}
+.v14 .sgw-tegel h3{font:var(--weight-bold) 1.2rem/1.15 var(--font-sans)}
+.v14 .sgw-tegel p{grid-column:1/-1;margin-top:.6rem;font-size:.93rem;line-height:1.5}
+.v14 .sgw-tegel__lead{grid-column:2!important;margin-top:0!important}
+.v14 .sgw-tegel--slot p{font-size:.88rem}
+.v14 .sgw-tegel--slot p:not(.sgw-tegel__lead){margin-top:.5rem}
+.v14 .sgw-tegel:nth-child(1){background:var(--brand-secondary)}
+.v14 .sgw-tegel:nth-child(2){background:#fff}
+.v14 .sgw-tegel:nth-child(3){background:var(--primary-100)}
+.v14 .sgw-tegel:nth-child(4){background:var(--brand-accent)}
+.v14 .sgw-tegel:nth-child(n+2) h3,.v14 .sgw-tegel:nth-child(n+2) b{color:var(--brand-secondary)}
+.v14 .sgw-tegel:nth-child(n+2) p{color:var(--graphite)}
+.v14 .sgw-tegel:nth-child(n+2) a{color:var(--brand-secondary);font-weight:600}
+.v14 .sgw-foto{position:relative;align-self:stretch;min-height:22rem}
+.v14 .sgw-foto::before{content:"";position:absolute;inset:0;z-index:3;border:1.5px solid var(--brand-accent);border-radius:14px;pointer-events:none}
+.v14 .sgw-foto .pop{border-radius:14px}
+
+/* ===== 15 · referentie B .sgt (blokken/toennu.css) ===== */
+.v15 .sgt__paneel{display:grid;grid-template-columns:minmax(0,3fr) minmax(22rem,2fr);gap:clamp(2rem,4vw,3.4rem);align-items:center;padding:clamp(1.4rem,4vw,3rem);border-radius:28px;background:var(--brand-accent);box-shadow:0 30px 60px -30px rgba(3,10,30,.7)}
+.v15 .sgt__links,.v15 .sgt__rechts{min-width:0}
+.v15 .sgt__links h2{color:var(--brand-secondary)}
+.v15 .sgt__fotos{position:relative;display:flex;align-items:flex-end;margin-top:calc(8% + 1rem);padding-bottom:.6rem}
+.v15 .sgt__fotos figure{position:relative;margin:0;padding:8px;border-radius:14px;background:#fff;box-shadow:0 18px 40px -18px rgba(0,0,0,.6)}
+.v15 .sgt__fotos img{display:block;border-radius:8px;object-fit:cover}
+.v15 .sgt__team,.v15 .sgt__derde{width:35.5%}
+.v15 .sgt__team{transform:rotate(-4deg);z-index:1}
+.v15 .sgt__derde{margin-left:-6%;transform:rotate(-2deg);z-index:2}
+.v15 :is(.sgt__team,.sgt__derde) img{width:100%;height:auto;aspect-ratio:4/4.6}
+.v15 .sgt__pand{width:43%;margin-left:-6%;transform:rotate(2deg);z-index:3}
+.v15 .sgt__beeld{position:relative}
+.v15 .sgt__raam{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:8px}
+.v15 .sgt__pand :is(.sgt__foto,.sgt__uit){position:absolute;left:var(--l);top:var(--t);width:var(--w);max-width:none;height:auto;border-radius:0}
+.v15 .sgt__uit{z-index:2;pointer-events:none;clip-path:inset(0 0 calc(var(--knip) - 2px) 0);filter:drop-shadow(8px 6px 7px rgba(0,0,0,.45)) drop-shadow(1px 1px 2px rgba(0,0,0,.3))}
+.v15 .sgt__fotos figcaption{position:absolute;z-index:3;left:1rem;bottom:1rem;padding:.25rem .7rem;border-radius:99px;background:var(--brand-secondary);color:#fff;font:700 .72rem/1.3 var(--font-sans);letter-spacing:.12em}
+.v15 .sgt__team figcaption{top:1rem;bottom:auto}
+.v15 .sgt__pand figcaption{background:var(--brand-primary)}
+.v15 .sgt__lead{font-size:1.08rem;font-weight:700;line-height:1.55;color:var(--brand-secondary)}
+.v15 .sgt__momenten{display:grid;gap:.7rem;margin-top:1rem}
+.v15 .sgt__momenten li{display:grid;grid-template-columns:2.1rem minmax(0,1fr);gap:.6rem;align-items:start}
+.v15 .sgt__nr{font:var(--weight-display) 1.3rem/1.25 var(--font-display);font-stretch:var(--font-display-stretch);color:var(--brand-primary)}
+.v15 .sgt__momenten h3{font:var(--weight-bold) 1.02rem/1.3 var(--font-sans);color:var(--brand-secondary)}
+.v15 .sgt__momenten p{margin-top:.15rem;font-size:.9rem;line-height:1.5;color:var(--graphite)}
+.v15 .sgt__slot{margin-top:.95rem;padding-top:.85rem;border-top:1px solid rgba(11,35,82,.2);font-size:.9rem;line-height:1.55;color:var(--graphite)}
+.v15 .sgt__slot b{color:var(--brand-secondary)}
+.v15 .sgt__slot a{color:var(--brand-secondary);font-weight:600}
+
+/* ===== smal: alles onder elkaar (de bronnen doen hetzelfde) ===== */
+@media (max-width:900px){
+  .v01 .b-dag__kop,.v05 .b-bijzonder__kop,.v06 .blok,.v07 .werkwijze__top,.v08 .blok__boven,.v09 .hist5__in,.v13 .sgm__binnen,.v14 .sgw-rij,.v15 .sgt__paneel{grid-template-columns:minmax(0,1fr);row-gap:1.6rem}
+  .v01 .b-dag__mozaiek{grid-template-columns:1fr;grid-template-areas:"a" "b" "c";grid-template-rows:repeat(3,260px)}
+  .v01 .b-dag__feiten,.v02 .b-kanaal__wegen,.v03 .b-historie__tl,.v05 .b-bijzonder__helften,.v07 .stappen,.v08 .usps--rij,.v10 .diensten,.v10 .tips-grid,.v11 .sgd1-grid,.v12 .sgdp-stappen,.v13 .sgm__kaarten,.v14 .sgw-tegels{grid-template-columns:minmax(0,1fr)}
+  .v02 .b-kanaal__in{grid-template-columns:minmax(0,1fr)}
+  .v02 .b-kopgroep,.v02 .b-kanaal__beeld,.v02 .b-kanaal__wegen{grid-column:1;grid-row:auto}
+  .v02 .b-kanaal__beeld{margin-right:0}.v02 .b-kanaal__adviseur{display:none}
+  .v03 .b-historie__tl::before,.v04 .b-belofte__haak{display:none}
+  .v03 .b-historie__voet{flex-direction:column;align-items:flex-start}
+  .v04 .b-belofte__lijst{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .v05 .b-bijzonder__helft:nth-child(2){padding-top:0}
+  .v09 .hist5__stapel{order:-1;max-width:480px;margin-inline:auto}
+  .v13 .sgm__kaart:nth-child(n){margin:150px 0 0}.v13 .sgm__kaarten{padding-top:0}.v13 .sgm__band{display:none}
+  .v14 .sgw-foto{order:-1;aspect-ratio:3/2;min-height:0}
+}
+
+</style>
+</head>
+<body class="p p-werkwijze">
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol><symbol id="i-extern" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol><symbol id="i-google" viewBox="0 0 24 24" fill="currentColor"><g transform="translate(2.64 2.64) scale(.78)"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.6l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></g></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-pijl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-sluit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol><symbol id="i-ster" viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></symbol><symbol id="i-telefoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol><symbol id="i-whatsapp" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#25D366" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#25D366" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol><symbol id="i-whatsapp-wit" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#fff" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#fff" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol></svg>
+<nav class="vnav" aria-label="Ontwerpen"><span class="vnav__titel">Op de verhuisdag · 15 ontwerpen</span><a href="#v00" title="Nu live">00</a><a href="#v01" title="Mozaïek met noot" class="vnav__brock">01</a><a href="#v02" title="Foto met notitieblok" class="vnav__brock">02</a><a href="#v03" title="Tijdlijn met platen" class="vnav__brock">03</a><a href="#v04" title="Kaarten aan de band" class="vnav__brock">04</a><a href="#v05" title="Foto’s met kaart erover" class="vnav__brock">05</a><a href="#v06" title="Foto met gouden vlak" class="vnav__de-ki">06</a><a href="#v07" title="Stappen onder de ploeg" class="vnav__de-ki">07</a><a href="#v08" title="Donker paneel met rij" class="vnav__de-ki">08</a><a href="#v09" title="Tijdlijn met polaroids" class="vnav__de-ki">09</a><a href="#v10" title="Dienstkaarten met nummer" class="vnav__de-ki">10</a><a href="#v11" title="Fotokaarten, mensen uit de foto" class="vnav__solar">11</a><a href="#v12" title="Stapkaarten met verhuizers erboven" class="vnav__solar">12</a><a href="#v13" title="Oplopende kaarten op een gele band" class="vnav__solar">13</a><a href="#v14" title="Gekleurde tegels naast de foto" class="vnav__solar">14</a><a href="#v15" title="Geel paneel met foto’s" class="vnav__solar">15</a><span class="vnav__uitleg"><i class="vnav__brock"></i>Brocken <i class="vnav__de-ki"></i>referentie A <i class="vnav__solar"></i>referentie B</span></nav>
+<p class="vuitleg">/werkwijze/ #verhuisdag. Elk ontwerp is gebouwd op de HTML en CSS van één bestaand blok van brockenverhuizingen.nl (01–05), referentie A (06–10) of referentie B (11–15). Welk blok, staat erbij met de klassen uit het bronbestand. Kleuren, lettertypes en tekst zijn van De Reus, en de tekst is letterlijk die van de pagina. De foto’s en uitsnedes zijn de drie van nu, de 3D-voorwerpen komen van /kosten/ en /contact/. Niets beweegt. Rechts in elke kop staat de hoogte op dit scherm (een laptop toont zo’n 730 px). 00 is het blok zoals het nu live staat. Noem het nummer dat u wilt.</p>
+<div class="variant" id="v00">
+  <header class="vkop"><span class="vkop__nr">00</span><div><b>Nu live</b><small>Ontwerp 09 “Rondom uit het kader” met het afsprakenblok, ter vergelijking.</small></div><span class="vkop__h"></span></header>
+  <section class="b-verhuisdag b-verhuisdag--kaders b-verhuisdag--uit sectie sectie--blauw" id="verhuisdag" aria-labelledby="verhuisdag-kop" data-b="verhuisdag" style="--detail-inhoud:1440px">
+      <div class="wrap">
+        <div class="kopgroep kopgroep--midden"><p class="label">De verhuisdag</p><h2 id="verhuisdag-kop">Op de verhuisdag</h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div>
+
+        <ol class="b-verhuisdag__dag" role="list" style="--aantal:3" data-reveal-groep><li class="b-verhuisdag__moment" style="--zak:0.6667;--i:0"><span class="b-verhuisdag__kader" aria-hidden="true" style="--s:1.7587;--x:-0.3969;--y:-0.9133"><span class="b-verhuisdag__raam"><img class="b-verhuisdag__foto-in" src="/img/dienst-particulier.webp" alt="" width="720" height="540" loading="lazy" decoding="async"></span><span class="b-verhuisdag__vloer" style="left:-4.52%;width:109.21%;top:105.00%"></span><span class="b-verhuisdag__buiten"><img class="b-verhuisdag__uit" src="/img/verhuisdag-uit/aankomst.webp" alt="" width="1080" height="810" loading="lazy" decoding="async"></span></span><h3 class="b-verhuisdag__titel">Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></li><li class="b-verhuisdag__moment" style="--zak:0.0000;--i:1"><span class="b-verhuisdag__kader" aria-hidden="true" style="--s:1.7034;--x:-0.4539;--y:-0.6374"><span class="b-verhuisdag__raam"><img class="b-verhuisdag__foto-in" src="/img/dienst-internationaal.webp" alt="" width="720" height="540" loading="lazy" decoding="async"></span><span class="b-verhuisdag__vloer" style="left:27.86%;width:45.99%;top:105.00%"></span><span class="b-verhuisdag__buiten"><img class="b-verhuisdag__uit" src="/img/verhuisdag-uit/inladen.webp" alt="" width="1080" height="810" loading="lazy" decoding="async"></span></span><h3 class="b-verhuisdag__titel">Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></li><li class="b-verhuisdag__moment" style="--zak:0.6667;--i:2"><span class="b-verhuisdag__kader" aria-hidden="true" style="--s:1.3939;--x:-0.0018;--y:-0.4028"><span class="b-verhuisdag__raam"><img class="b-verhuisdag__foto-in" src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760" loading="lazy" decoding="async"></span><span class="b-verhuisdag__vloer" style="left:15.71%;width:54.08%;top:105.00%"></span><span class="b-verhuisdag__buiten"><img class="b-verhuisdag__uit" src="/img/verhuisdag-uit/uitladen.webp" alt="" width="1120" height="760" loading="lazy" decoding="async"></span></span><h3 class="b-verhuisdag__titel">Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></li></ol>
+        <div class="b-verhuisdag__afspraken"><div class="b-verhuisdag__afspraken-rij"><div class="b-verhuisdag__afspraak"><img class="b-verhuisdag__voorwerp" src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720" loading="lazy" decoding="async"><p><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken.</p></div><div class="b-verhuisdag__afspraak"><img class="b-verhuisdag__voorwerp" src="/img/contact-3d/schild.webp" alt="" width="251" height="320" loading="lazy" decoding="async"><p><b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen.</p></div></div><p class="b-verhuisdag__voorwaarden"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</span></p></div>
+      </div>
+    </section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v01">
+  <header class="vkop vkop--brock"><span class="vkop__nr">01</span><div><b>Mozaïek met noot</b><small><span class="vkop__site">brockenverhuizingen.nl</span> /werkwijze/ “De verhuisdag, zoals afgesproken” · .b-dag, .b-dag__kop, .b-dag__mozaiek, .b-dag__feiten (dag.min.css)</small><small>Het verhuisdagblok van Brocken zelf. Kop links met een deel in Goudgeel, de intro als noot rechts. Daaronder het fotomozaïek op 12 kolommen (5/3/4) met een donkere onderschrift-balk per foto, en de afspraken als feitenrij met een bovenlijn en een rond icoon.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v01"><div class="wrap">
+      <div class="b-dag__kop"><div class="b-kopgroep"><p class="label lab-b">De verhuisdag</p><h2>Op de <em>verhuisdag</em></h2></div><p class="b-dag__noot">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div>
+      <div class="b-dag__mozaiek">
+        <figure class="b-dag__tegel b-dag__tegel--a"><img src="/img/dienst-particulier.webp" alt="" width="720" height="540" style="object-position:50% 62%"><figcaption><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></figcaption></figure>
+        <figure class="b-dag__tegel b-dag__tegel--b"><img src="/img/dienst-internationaal.webp" alt="" width="720" height="540" style="object-position:60% 50%"><figcaption><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></figcaption></figure>
+        <figure class="b-dag__tegel b-dag__tegel--c"><img src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760" style="object-position:32% 50%"><figcaption><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></figcaption></figure>
+      </div>
+      <ul class="b-dag__feiten">
+        <li class="b-dag__feit"><span class="b-dag__ic"><img src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720"></span><div><p><b class="kopregel">Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken.</p></div></li>
+        <li class="b-dag__feit"><span class="b-dag__ic"><img src="/img/contact-3d/schild.webp" alt="" width="251" height="320"></span><div><p><b class="kopregel">Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen.</p></div></li>
+        <li class="b-dag__feit"><span class="b-dag__ic b-dag__ic--lijn"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><p>Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p></div></li>
+      </ul>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v02">
+  <header class="vkop vkop--brock"><span class="vkop__nr">02</span><div><b>Foto met notitieblok</b><small><span class="vkop__site">brockenverhuizingen.nl</span> /werkwijze/ “Kennismaken zoals het u uitkomt” · .b-kanaal, .b-kanaal__adviseur, .b-kanaal__beeld, .b-kanaal__blok, .b-kanaal__wegen (kanaal.min.css)</small><small>Kop links, de foto loopt rechts door tot de schermrand met een plaat erachter. Over de onderrand ligt het gelinieerde notitieblok (ringetjes, kantlijn) met de twee afspraken: “dan noteren we het direct samen”. De verhuizers staan uitgesneden op de lijn van de drie momenten eronder.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v02"><div class="wrap b-kanaal__in">
+      <div class="b-kopgroep"><p class="label lab-b">De verhuisdag</p><h2>Op de <em>verhuisdag</em></h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div>
+      <img class="b-kanaal__adviseur" src="/img/verhuisdag-verhuizers.webp" alt="" width="709" height="787">
+      <figure class="b-kanaal__beeld">
+        <div class="b-kanaal__foto"><img src="/img/dienst-internationaal.webp" alt="" width="720" height="540" style="object-position:60% 50%"></div>
+        <figcaption class="b-kanaal__blok"><ol class="b-kanaal__agenda"><li><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken.</li><li><b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen.</li></ol><p class="b-kanaal__voet">Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p></figcaption>
+      </figure>
+      <ul class="b-kanaal__wegen">
+        <li class="b-kanaal__weg"><span class="b-kanaal__ic"><img src="/img/kosten-3d/huis.webp" alt="" width="425" height="420"></span><div><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></div></li>
+        <li class="b-kanaal__weg"><span class="b-kanaal__ic"><img src="/img/kosten-3d/dozen.webp" alt="" width="437" height="420"></span><div><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></div></li>
+        <li class="b-kanaal__weg"><span class="b-kanaal__ic"><img src="/img/kosten-3d/boor.webp" alt="" width="509" height="420"></span><div><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></div></li>
+      </ul>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v03">
+  <header class="vkop vkop--brock"><span class="vkop__nr">03</span><div><b>Tijdlijn met platen</b><small><span class="vkop__site">brockenverhuizingen.nl</span> home “Van paard en wagen in 1923 tot uw verhuizing van nu” · .b-historie__tl, .b-historie__plaat, .b-historie__jaar, .b-historie__voet (historie.min.css)</small><small>De dag als tijdlijn: drie licht gedraaide fotoplaten, een lijn die van zacht naar Goudgeel loopt en een nummer met stip onder elke plaat (de laatste stip geel, zoals “Nu” bij Brocken). De afspraken staan in de voet onder een dunne lijn.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v03"><div class="wrap">
+      <div class="b-kopgroep"><p class="label lab-b">De verhuisdag</p><h2>Op de <em>verhuisdag</em></h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div>
+      <ol class="b-historie__tl">
+        <li class="b-historie__stap"><figure class="b-historie__fig"><div class="b-historie__plaat"><img src="/img/dienst-particulier.webp" alt="" width="720" height="540" style="object-position:50% 62%"></div><figcaption class="b-historie__jaar">01</figcaption></figure><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></li>
+        <li class="b-historie__stap"><figure class="b-historie__fig"><div class="b-historie__plaat"><img src="/img/dienst-internationaal.webp" alt="" width="720" height="540" style="object-position:60% 50%"></div><figcaption class="b-historie__jaar">02</figcaption></figure><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></li>
+        <li class="b-historie__stap b-historie__stap--nu"><figure class="b-historie__fig"><div class="b-historie__plaat"><img src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760" style="object-position:32% 50%"></div><figcaption class="b-historie__jaar">03</figcaption></figure><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></li>
+      </ol>
+      <div class="b-historie__voet"><p class="b-historie__cijfers"><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken. <b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen.</p><p class="b-historie__link"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</span></p></div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v04">
+  <header class="vkop vkop--brock"><span class="vkop__nr">04</span><div><b>Kaarten aan de band</b><small><span class="vkop__site">brockenverhuizingen.nl</span> home “Waarom kiezen voor Brocken?” · .b-belofte__baan, .b-belofte__band, .b-belofte__kaart, .b-belofte__haak (belofte.min.css)</small><small>Een Goudgele band over de volle breedte; aan haakjes hangen vijf witte kaarten, elk een tikje scheef: de drie momenten met hun foto en de twee afspraken met hun 3D-voorwerp. De verwijzing naar de voorwaarden staat gecentreerd eronder.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v04">
+      <div class="wrap"><div class="b-kopgroep b-kopgroep--midden"><p class="label lab-b">De verhuisdag</p><h2>Op de <em>verhuisdag</em></h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div></div>
+      <div class="b-belofte__baan"><div class="b-belofte__band" aria-hidden="true"></div><div class="wrap">
+        <ul class="b-belofte__lijst">
+          <li class="b-belofte__kaart"><span class="b-belofte__haak" aria-hidden="true"></span><span class="b-belofte__foto"><img src="/img/dienst-particulier.webp" alt="" width="720" height="540" style="object-position:50% 62%"></span><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></li>
+          <li class="b-belofte__kaart"><span class="b-belofte__haak" aria-hidden="true"></span><span class="b-belofte__foto"><img src="/img/dienst-internationaal.webp" alt="" width="720" height="540" style="object-position:60% 50%"></span><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></li>
+          <li class="b-belofte__kaart"><span class="b-belofte__haak" aria-hidden="true"></span><span class="b-belofte__foto"><img src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760" style="object-position:32% 50%"></span><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></li>
+          <li class="b-belofte__kaart"><span class="b-belofte__haak" aria-hidden="true"></span><img class="b-belofte__ico" src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720"><p><b class="kopregel">Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken.</p></li>
+          <li class="b-belofte__kaart"><span class="b-belofte__haak" aria-hidden="true"></span><img class="b-belofte__ico" src="/img/contact-3d/schild.webp" alt="" width="251" height="320"><p><b class="kopregel">Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen.</p></li>
+        </ul></div></div>
+      <div class="wrap"><p class="b-belofte__knoppen"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</span></p></div>
+    </section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v05">
+  <header class="vkop vkop--brock"><span class="vkop__nr">05</span><div><b>Foto’s met kaart erover</b><small><span class="vkop__site">brockenverhuizingen.nl</span> /diensten/particulier-verhuizingen/ “Een piano, kunst, antiek of een kluis” · .b-bijzonder__kop, .b-bijzonder__noot, .b-bijzonder__lijst, .b-bijzonder__kaart (bijzonder.min.css)</small><small>Kop links, de afspraken als noot rechts achter een Goudgele streep. Drie foto’s in een lijst met een witte binnenlijn en een zware schaduw; over de onderrand van elke foto schuift een witte kaart met het 3D-voorwerp in de kop. De middelste zakt iets, zoals de rechterkolom bij Brocken.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v05"><div class="wrap">
+      <div class="b-bijzonder__kop"><div class="b-kopgroep"><p class="label lab-b">De verhuisdag</p><h2>Op de <em>verhuisdag</em></h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div><p class="b-bijzonder__noot"><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken. <b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p></div>
+      <div class="b-bijzonder__helften">
+        <article class="b-bijzonder__helft"><figure class="b-bijzonder__foto"><span class="b-bijzonder__lijst"><img src="/img/dienst-particulier.webp" alt="" width="720" height="540" style="object-position:50% 62%"></span></figure>
+          <div class="b-bijzonder__kaart"><h3><img class="b-bijzonder__icoon" src="/img/kosten-3d/huis.webp" alt="" width="425" height="420">Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></div></article>
+        <article class="b-bijzonder__helft"><figure class="b-bijzonder__foto"><span class="b-bijzonder__lijst"><img src="/img/dienst-internationaal.webp" alt="" width="720" height="540" style="object-position:60% 50%"></span></figure>
+          <div class="b-bijzonder__kaart"><h3><img class="b-bijzonder__icoon" src="/img/kosten-3d/dozen.webp" alt="" width="437" height="420">Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></div></article>
+        <article class="b-bijzonder__helft"><figure class="b-bijzonder__foto"><span class="b-bijzonder__lijst"><img src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760" style="object-position:32% 50%"></span></figure>
+          <div class="b-bijzonder__kaart"><h3><img class="b-bijzonder__icoon" src="/img/kosten-3d/boor.webp" alt="" width="509" height="420">Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></div></article>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v06">
+  <header class="vkop vkop--de-ki"><span class="vkop__nr">06</span><div><b>Foto met gouden vlak</b><small><span class="vkop__site">referentie A</span> /werkwijze/ #verhuisdag “Hoe uw spullen de wagen in gaan” · .blok.blok--vlak, .blok__foto, .blok__tekst, .d4, .d4--actief (assets/css/style.css)</small><small>Het verhuisdagblok van referentie A. Links de foto met een Goudgeel vlak dat rechtsonder achter de foto uitsteekt, rechts label met lijntje, kop en intro. De momenten staan als witte kaartjes in het 2x2-raster (.d4); het vierde, gemarkeerde kaartje is de betaalafspraak. De rest van het slot is de slotalinea.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v06"><div class="wrap"><div class="blok blok--vlak">
+      <figure class="blok__foto"><img src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760" style="object-position:32% 50%"></figure>
+      <div class="blok__tekst"><p class="label lab-k">De verhuisdag</p><h2>Op de verhuisdag</h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p>
+        <ul class="d4">
+          <li><img src="/img/kosten-3d/huis.webp" alt="" width="425" height="420"><div><b>Aankomst</b><span>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</span></div></li>
+          <li><img src="/img/kosten-3d/dozen.webp" alt="" width="437" height="420"><div><b>Inladen</b><span>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</span></div></li>
+          <li><img src="/img/kosten-3d/boor.webp" alt="" width="509" height="420"><div><b>Uitladen en opbouwen</b><span>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</span></div></li>
+          <li class="d4--actief"><img src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720"><div><b>Betalen doet u op de verhuisdag,</b><span>tenzij we samen iets anders hebben afgesproken.</span></div></li>
+        </ul>
+        <p class="blok__slot"><b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p>
+      </div>
+    </div></div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v07">
+  <header class="vkop vkop--de-ki"><span class="vkop__nr">07</span><div><b>Stappen onder de ploeg</b><small><span class="vkop__site">referentie A</span> /werkwijze/ “Wat gebeurt er nu eigenlijk op zo’n verhuisdag?” · .werkwijze__top, .werkwijze__wagen, .stappen, .stap, .stap__nr (assets/css/style.css)</small><small>Kop links, rechts de uitgesneden verhuizers op de onderlijn. Eronder vier kolommen met een Goudgele bovenlijn en grote nummers, zoals bij referentie A waar stap 04 ook over het betalen gaat: hier is de vierde kolom het slot, met de kalender in plaats van een nummer.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v07"><div class="wrap">
+      <div class="werkwijze__top"><div class="sectiekop"><p class="label lab-k">De verhuisdag</p><h2>Op de verhuisdag</h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div>
+        <figure class="werkwijze__wagen" aria-hidden="true"><img src="/img/verhuisdag-verhuizers.webp" alt="" width="709" height="787"></figure></div>
+      <ol class="stappen">
+        <li class="stap"><span class="stap__nr" aria-hidden="true">01</span><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></li>
+        <li class="stap"><span class="stap__nr" aria-hidden="true">02</span><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></li>
+        <li class="stap"><span class="stap__nr" aria-hidden="true">03</span><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></li>
+        <li class="stap stap--slot"><span class="stap__nr" aria-hidden="true"><img src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720"></span><p><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken. <b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p></li>
+      </ol>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v08">
+  <header class="vkop vkop--de-ki"><span class="vkop__nr">08</span><div><b>Donker paneel met rij</b><small><span class="vkop__site">referentie A</span> /antiek-en-kunst-verhuizen/ en /dozencalculator/ · .blok.blok--stapel.blok--navy, .blok__boven, .usps.usps--rij, .ico (assets/css/style.css)</small><small>Bovenin een Diepblauw paneel met afgeronde hoeken: tekst en afspraken links, de foto rechts met een Goudgele onderrand van 6 px. Onder het paneel de drie momenten als rij, elk met een rond vlak met het 3D-voorwerp.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v08"><div class="wrap"><div class="blok blok--stapel blok--navy">
+      <div class="blok__boven">
+        <div class="blok__tekst"><p class="label lab-k">De verhuisdag</p><h2>Op de verhuisdag</h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p><p class="blok__slot"><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken. <b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p></div>
+        <figure class="blok__foto"><img src="/img/dienst-particulier.webp" alt="" width="720" height="540" style="object-position:50% 62%"></figure>
+      </div>
+      <ul class="usps usps--rij">
+        <li><span class="ico"><img src="/img/kosten-3d/huis.webp" alt="" width="425" height="420"></span><div><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></div></li>
+        <li><span class="ico"><img src="/img/kosten-3d/dozen.webp" alt="" width="437" height="420"></span><div><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></div></li>
+        <li><span class="ico"><img src="/img/kosten-3d/boor.webp" alt="" width="509" height="420"></span><div><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></div></li>
+      </ul>
+    </div></div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v09">
+  <header class="vkop vkop--de-ki"><span class="vkop__nr">09</span><div><b>Tijdlijn met polaroids</b><small><span class="vkop__site">referentie A</span> home “Meer dan honderd jaar verhuizen vanuit Venlo” · .hist5__in, .hist5__tl, .hist5__jaar, .hist5__stapel, .pol, .pol--trucks/--kar/--ad (assets/css/style.css)</small><small>Links de kop en de momenten als tijdlijn met nummer, stip en lijn; het slot eronder. Rechts de polaroidstapel van referentie A met exact dezelfde verhoudingen (88 %, 46 %, 36 %, gedraaid en overlappend), maar in kleur: dit is vandaag, geen geschiedenis.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v09"><div class="wrap hist5__in">
+      <div class="hist5__tekst"><p class="label lab-k">De verhuisdag</p><h2>Op de verhuisdag</h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p>
+        <ol class="hist5__tl">
+          <li><span class="hist5__jaar">01</span><div><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></div></li>
+          <li><span class="hist5__jaar">02</span><div><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></div></li>
+          <li><span class="hist5__jaar">03</span><div><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></div></li>
+        </ol>
+        <p class="hist5__slot"><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken. <b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p>
+      </div>
+      <div class="hist5__stapel" aria-hidden="true">
+        <figure class="pol pol--trucks"><img src="/img/dienst-particulier.webp" alt="" width="720" height="540" style="object-position:50% 62%"><figcaption>Aankomst</figcaption></figure>
+        <figure class="pol pol--kar"><img src="/img/dienst-internationaal.webp" alt="" width="720" height="540" style="object-position:60% 50%"><figcaption>Inladen</figcaption></figure>
+        <figure class="pol pol--ad"><img src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760" style="object-position:32% 50%"><figcaption>Uitladen en opbouwen</figcaption></figure>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v10">
+  <header class="vkop vkop--de-ki"><span class="vkop__nr">10</span><div><b>Dienstkaarten met nummer</b><small><span class="vkop__site">referentie A</span> /diensten/ · .diensten, .dienst, .dienst__nis, .dienst__nr + /werkwijze/ .tips-grid, .tip (assets/css/style.css)</small><small>Kop in het midden. Drie Diepblauwe kaarten zoals de dienstkaarten van referentie A: foto bovenin met een Goudgeel nummerblok op de onderrand, daaronder kop en tekst (hover: alleen de kleur). De afspraken staan als twee witte, genummerde tegels uit referentie A-werkwijze eronder.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v10"><div class="wrap">
+      <div class="sectiekop sectiekop--midden"><p class="label lab-k">De verhuisdag</p><h2>Op de verhuisdag</h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div>
+      <div class="diensten">
+        <article class="dienst"><div class="dienst__nis"><img src="/img/dienst-particulier.webp" alt="" width="720" height="540" style="object-position:50% 62%"><span class="dienst__nr">01</span></div><div class="dienst__tekst"><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></div></article>
+        <article class="dienst"><div class="dienst__nis"><img src="/img/dienst-internationaal.webp" alt="" width="720" height="540" style="object-position:60% 50%"><span class="dienst__nr">02</span></div><div class="dienst__tekst"><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></div></article>
+        <article class="dienst"><div class="dienst__nis"><img src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760" style="object-position:32% 50%"><span class="dienst__nr">03</span></div><div class="dienst__tekst"><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></div></article>
+      </div>
+      <div class="tips-grid">
+        <div class="tip"><div><strong>Betalen doet u op de verhuisdag,</strong><span>tenzij we samen iets anders hebben afgesproken.</span></div></div>
+        <div class="tip"><div><strong>Ziet u schade aan uw spullen?</strong><span>Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</span></div></div>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v11">
+  <header class="vkop vkop--solar"><span class="vkop__nr">11</span><div><b>Fotokaarten, mensen uit de foto</b><small><span class="vkop__site">referentie B (127.0.0.1:4760)</span> home “Waarmee wij je helpen” · .sgd1-grid, .sgd1-kaart, .sgd1-pop (__raam + __boven), .sgd1-ico, .sgd1-meer (blokken/diensten.css)</small><small>Het dienstenblok van de referentie B-home. Witte kaarten met een smalle hoek; de foto wordt op het kader geknipt en de uitsnede staat alleen in een strook erboven, dus de verhuizers komen met hoofd en schouders boven de kaart uit. Het 3D-voorwerp hangt over de onderrand van de foto. Het slot is de verwijzende zin onder het raster.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v11"><div class="wrap">
+      <div class="sgd1-head"><p class="label lab-s">De verhuisdag</p><h2>Op de verhuisdag</h2><p class="intro sgd1-intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div>
+      <ul class="sgd1-grid">
+        <li class="sgd1-kaart">
+          <div class="pop sgd1-beeld" style="--d0:0.338;--mid:0.51;--ar:1.3333">
+          <span class="pop__raam"><img class="pop__foto" src="/img/dienst-particulier.webp" alt="" width="720" height="540"></span>
+          <span class="pop__boven" aria-hidden="true"><img src="/img/verhuisdag-uit/aankomst.webp" alt="" width="1080" height="810"></span><span class="sgd1-ico"><img src="/img/kosten-3d/huis.webp" alt="" width="425" height="420"></span></div>
+          <div class="sgd1-tekst"><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></div>
+        </li>
+        <li class="sgd1-kaart">
+          <div class="pop sgd1-beeld" style="--d0:0.209;--mid:0.56;--ar:1.3333">
+          <span class="pop__raam"><img class="pop__foto" src="/img/dienst-internationaal.webp" alt="" width="720" height="540"></span>
+          <span class="pop__boven" aria-hidden="true"><img src="/img/verhuisdag-uit/inladen.webp" alt="" width="1080" height="810"></span><span class="sgd1-ico"><img src="/img/kosten-3d/dozen.webp" alt="" width="437" height="420"></span></div>
+          <div class="sgd1-tekst"><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></div>
+        </li>
+        <li class="sgd1-kaart">
+          <div class="pop sgd1-beeld" style="--d0:0.134;--mid:0.36;--ar:1.4737">
+          <span class="pop__raam"><img class="pop__foto" src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760"></span>
+          <span class="pop__boven" aria-hidden="true"><img src="/img/verhuisdag-uit/uitladen.webp" alt="" width="1120" height="760"></span><span class="sgd1-ico"><img src="/img/kosten-3d/boor.webp" alt="" width="509" height="420"></span></div>
+          <div class="sgd1-tekst"><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></div>
+        </li>
+      </ul>
+      <p class="sgd1-meer"><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken. <b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v12">
+  <header class="vkop vkop--solar"><span class="vkop__nr">12</span><div><b>Stapkaarten met verhuizers erboven</b><small><span class="vkop__site">referentie B (127.0.0.1:4760)</span> /onze-werkwijze/ “In 4 stappen geregeld” · .sgdp-stappen, .sgdp-stap, .sgdp-stap__beeld, __figuur, __no, __ico + .sgdp-kaart--uitgelicht (blokken/dienst.css)</small><small>Vier kaarten zoals de stappen van referentie B. Bovenin een warm geel vlak waarop de uitgesneden verhuizers staan, met hun hoofd boven de kaart; een nummerpil linksboven en het 3D-voorwerp op de onderrand. De vierde, Goudgele kaart (uitgelicht) draagt de afspraken.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v12"><div class="wrap">
+      <div class="sgdp-kop"><p class="label lab-s">De verhuisdag</p><h2>Op de verhuisdag</h2><p class="intro sgdp-kop__sub">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div>
+      <ol class="sgdp-stappen">
+        <li class="sgdp-kaart sgdp-stap"><div class="sgdp-stap__beeld"><span class="fig sgdp-stap__figuur" style="--top:0.338;--bot:0.954;--cx:0.51;--ar:1.3333"><img src="/img/verhuisdag-uit/aankomst.webp" alt="" width="1080" height="810"></span><span class="sgdp-stap__ico"><img src="/img/kosten-3d/huis.webp" alt="" width="425" height="420"></span></div><span class="sgdp-stap__no">01</span><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></li>
+        <li class="sgdp-kaart sgdp-stap"><div class="sgdp-stap__beeld"><span class="fig sgdp-stap__figuur" style="--top:0.209;--bot:0.85;--cx:0.56;--ar:1.3333"><img src="/img/verhuisdag-uit/inladen.webp" alt="" width="1080" height="810"></span><span class="sgdp-stap__ico"><img src="/img/kosten-3d/dozen.webp" alt="" width="437" height="420"></span></div><span class="sgdp-stap__no">02</span><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></li>
+        <li class="sgdp-kaart sgdp-stap"><div class="sgdp-stap__beeld"><span class="fig sgdp-stap__figuur" style="--top:0.134;--bot:0.993;--cx:0.36;--ar:1.4737"><img src="/img/verhuisdag-uit/uitladen.webp" alt="" width="1120" height="760"></span><span class="sgdp-stap__ico"><img src="/img/kosten-3d/boor.webp" alt="" width="509" height="420"></span></div><span class="sgdp-stap__no">03</span><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></li>
+        <li class="sgdp-kaart sgdp-kaart--uitgelicht"><img class="sgdp-kaart__3d" src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720"><p><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken.</p><p><b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen.</p><p>Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p></li>
+      </ol>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v13">
+  <header class="vkop vkop--solar"><span class="vkop__nr">13</span><div><b>Oplopende kaarten op een gele band</b><small><span class="vkop__site">referentie B (127.0.0.1:4760)</span> /onze-werkwijze/ “Bel ons, videobel ons of kom langs” · .sgm__binnen, .sgm__beeld, .sgm__band, .sgm__kaart, .sgm__figuur, .sgm__doos (blokken/manieren.css)</small><small>Tekst en afspraken links. Rechts drie witte kaarten die als een trap oplopen (48 px per kaart) boven een Goudgele band; achter de bovenrand van elke kaart staan de verhuizers van dat moment, uitgesneden uit de eigen foto. In de kaart het 3D-voorwerp en een nummerpil.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v13"><div class="wrap sgm__binnen">
+      <div class="sgm__tekst"><p class="label lab-s">De verhuisdag</p><h2>Op de verhuisdag</h2><p class="intro sgm__intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p>
+        <ul class="sgm__afspraken"><li><img src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720"><p><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken.</p></li><li><img src="/img/contact-3d/schild.webp" alt="" width="251" height="320"><p><b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen.</p></li></ul>
+        <p class="sgm__link"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</span></p>
+      </div>
+      <div class="sgm__beeld"><div class="sgm__band" aria-hidden="true"></div>
+        <ul class="sgm__kaarten">
+          <li class="sgm__kaart"><span class="fig sgm__figuur" style="--top:0.338;--bot:0.954;--cx:0.51;--ar:1.3333"><img src="/img/verhuisdag-uit/aankomst.webp" alt="" width="1080" height="810"></span><div class="sgm__doos"><div class="sgm__boven"><img class="sgm__3d" src="/img/kosten-3d/huis.webp" alt="" width="425" height="420"><span class="sgm__pil">01</span></div><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></div></li>
+          <li class="sgm__kaart"><span class="fig sgm__figuur" style="--top:0.209;--bot:0.85;--cx:0.56;--ar:1.3333"><img src="/img/verhuisdag-uit/inladen.webp" alt="" width="1080" height="810"></span><div class="sgm__doos"><div class="sgm__boven"><img class="sgm__3d" src="/img/kosten-3d/dozen.webp" alt="" width="437" height="420"><span class="sgm__pil">02</span></div><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></div></li>
+          <li class="sgm__kaart"><span class="fig sgm__figuur" style="--top:0.134;--bot:0.993;--cx:0.36;--ar:1.4737"><img src="/img/verhuisdag-uit/uitladen.webp" alt="" width="1120" height="760"></span><div class="sgm__doos"><div class="sgm__boven"><img class="sgm__3d" src="/img/kosten-3d/boor.webp" alt="" width="509" height="420"><span class="sgm__pil">03</span></div><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></div></li>
+        </ul>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v14">
+  <header class="vkop vkop--solar"><span class="vkop__nr">14</span><div><b>Gekleurde tegels naast de foto</b><small><span class="vkop__site">referentie B (127.0.0.1:4760)</span> /onze-werkwijze/ en home “Jouw regionale partner…” · .sgw-kop, .sgw-rij, .sgw-tegels, .sgw-tegel, .sgw-tegel__3d, .sgw-foto (foto + uitsnede boven de lijst) (blokken/waarom.css)</small><small>Kop in het midden. Links vier tegels in vier kleuren (Diepblauw, wit, Lucht, Goudgeel) met het 3D-voorwerp in een wit rondje; de Goudgele tegel is die met de afspraken. Rechts de foto van het uitladen in een Goudgele lijn, waarbij verhuizer en bank boven de lijst uitkomen.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v14"><div class="wrap">
+      <div class="sgw-kop"><p class="label lab-s">De verhuisdag</p><h2>Op de verhuisdag</h2><p class="intro">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p></div>
+      <div class="sgw-rij">
+        <ul class="sgw-tegels">
+          <li class="sgw-tegel"><img class="sgw-tegel__3d" src="/img/kosten-3d/huis.webp" alt="" width="425" height="420"><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></li>
+          <li class="sgw-tegel"><img class="sgw-tegel__3d" src="/img/kosten-3d/dozen.webp" alt="" width="437" height="420"><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></li>
+          <li class="sgw-tegel"><img class="sgw-tegel__3d" src="/img/kosten-3d/boor.webp" alt="" width="509" height="420"><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></li>
+          <li class="sgw-tegel sgw-tegel--slot"><img class="sgw-tegel__3d" src="/img/kosten-kalender/blok.webp" alt="" width="449" height="720"><p class="sgw-tegel__lead"><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken.</p><p><b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p></li>
+        </ul>
+        <figure class="sgw-foto">
+          <div class="pop pop--cq" style="--d0:0.134;--mid:0.36;--ar:1.4737;--p:52px">
+          <span class="pop__raam"><img class="pop__foto" src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760"></span>
+          <span class="pop__boven" aria-hidden="true"><img src="/img/verhuisdag-uit/uitladen.webp" alt="" width="1120" height="760"></span></div>
+        </figure>
+      </div>
+    </div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<div class="variant" id="v15">
+  <header class="vkop vkop--solar"><span class="vkop__nr">15</span><div><b>Geel paneel met foto’s</b><small><span class="vkop__site">referentie B (127.0.0.1:4760)</span> home “Het team en het pand achter referentie B” · .sgt__paneel, .sgt__links/__rechts, .sgt__fotos, .sgt__raam + .sgt__uit, .sgt__lead (blokken/toennu.css)</small><small>Een Goudgeel paneel met ronde hoeken op de blauwe band. Links de kop en drie gekantelde foto’s met een witte rand en een nummerpil; bij de middelste (Inladen) komen de verhuizer en de dozen boven de lijst uit, zoals het pand bij referentie B. Rechts de intro als vetgedrukte lead, de momenten en de afspraken.</small></div><span class="vkop__h"></span></header>
+  <section class="sectie sectie--blauw vv v15"><div class="wrap"><div class="sgt__paneel">
+      <div class="sgt__links"><p class="label lab-s lab-donker">De verhuisdag</p><h2>Op de verhuisdag</h2>
+        <div class="sgt__fotos" aria-hidden="true">
+          <figure class="sgt__team"><img src="/img/dienst-particulier.webp" alt="" width="720" height="540" style="object-position:50% 62%"><figcaption>01</figcaption></figure>
+          <figure class="sgt__pand"><div class="sgt__beeld" style="--l:-26.6962%;--t:-64.3489%;--w:136.9574%;--knip:60.8462%"><div class="sgt__raam"><img class="sgt__foto" src="/img/dienst-internationaal.webp" alt="" width="720" height="540"></div><img class="sgt__uit" src="/img/verhuisdag-uit/inladen.webp" alt="" width="1080" height="810"></div><figcaption>02</figcaption></figure>
+          <figure class="sgt__derde"><img src="/img/stap-5-bank-voordeur.webp" alt="" width="1120" height="760" style="object-position:32% 50%"><figcaption>03</figcaption></figure>
+        </div>
+      </div>
+      <div class="sgt__rechts">
+        <p class="sgt__lead">Op de verhuisdag doen wij het zware werk. U houdt het overzicht.</p>
+        <ol class="sgt__momenten"><li><span class="sgt__nr">01</span><div><h3>Aankomst</h3><p>Onze verhuizers staan op het afgesproken tijdstip voor de deur. U laat zien wat er mee moet.</p></div></li><li><span class="sgt__nr">02</span><div><h3>Inladen</h3><p>Wij beschermen uw spullen en dragen alles zorgvuldig naar buiten. Moet er iets uit elkaar, dan doen wij dat als het zo is afgesproken.</p></div></li><li><span class="sgt__nr">03</span><div><h3>Uitladen en opbouwen</h3><p>In uw nieuwe huis zetten wij alles op de plek die u aanwijst. Is montage afgesproken, dan bouwen wij uw meubels weer op.</p></div></li></ol>
+        <p class="sgt__slot"><b>Betalen doet u op de verhuisdag,</b> tenzij we samen iets anders hebben afgesproken. <b>Ziet u schade aan uw spullen?</b> Meld het dan meteen op de dag zelf aan onze verhuizers, dan bekijken en noteren we het direct samen. Zo staat het ook in onze <a href="/algemene-voorwaarden/">algemene voorwaarden</a>.</p>
+      </div>
+    </div></div></section>
+  <div class="ctx-onder" aria-hidden="true"></div>
+</div>
+<script>
+// hoogte van elk blok op dit scherm, rechts in de kop
+function meet(){document.querySelectorAll('.variant').forEach(function(v){var s=v.querySelector('section');var h=v.querySelector('.vkop__h');if(s&&h)h.textContent=Math.round(s.getBoundingClientRect().height)+' px hoog'})}
+addEventListener('load',meet);addEventListener('resize',meet);
+</script>
+</body>
+</html>

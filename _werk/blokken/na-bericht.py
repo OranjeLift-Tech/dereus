@@ -1,4 +1,4 @@
-"""Na uw bericht (/contact/, #na-bericht): de Diepblauwe band met dakrand, zoals "Na uw aanvraag" bij De Kievit.
+"""Na uw bericht (/contact/, #na-bericht): de Diepblauwe band met dakrand, zoals "Na uw aanvraag" bij referentie A.
 Links de kop, de tekst en twee knoppen; rechts de foto van de verhuisadviseur die terugbelt, met het huisvlak
 uit het logo als vorm erachter (css/blok/na-bericht.css).
 
@@ -17,6 +17,10 @@ de bedanktpagina's (systeem.md {#offerte-bedankt} en {#contact-bedankt}: stappen
            image"). De plek per breedte staat in css/blok/na-bericht.css
   knoppen  "contact" (standaard: offerte aanvragen en mail ons), "bedankt" (bellen en terug) of None
   titel_h  het kopniveau van de stappen: h3 onder de kopgroep, h2 als er geen kopgroep is
+  beeld    "bureau": de versie van Tugche (origin/main 9dbb9a8, 28-09-2026) voor /contact/. De adviseur aan
+           haar bureau, zonder kamer erachter en met een grote Goudgele duim ernaast, zoals de contactkop van
+           referentie A (BUREAU en DUIM hieronder, blok "Beeld bureau" in css/blok/na-bericht.css). Zonder
+           deze optie de foto met het huisvlak en de uitsnede (FOTO en UITSNEDE).
 Items van het kopijblok worden genummerde stappen.
 """
 
@@ -30,6 +34,17 @@ FOTO = ("/img/contact-klantenservice-foto.webp", 1200, 800)
 # en wordt aan de bovenkant niet afgesneden, dus zij komt met haar hoofd uit de lijst; de maten
 # staan in css/blok/na-bericht.css. Zelfde paar als homecontact op de home.
 UITSNEDE = ("/img/contact-klantenservice-uit.webp", 1200, 800)
+
+# Optie beeld="bureau": de verhuisadviseur met bureau, kop, toetsenbord, telefoon en scherm; de kamer is weg
+# (bron en werkwijze: _ai-beelden/na-bericht-bureau/). Onderaan loopt het bureau tot de rand door,
+# die rand krijgt in de css ronde hoeken; boven is alles vrij.
+BUREAU = ("/img/contact-klantenservice-bureau-uit.webp", 1060, 690)
+
+# duim omhoog bij beeld="bureau": manchet links, hand met duim; egaal, de kleur komt uit de css
+DUIM = ('<svg class="b-na-bericht__duim" viewBox="0 0 120 108" aria-hidden="true" focusable="false">'
+        '<rect x="0" y="46" width="22" height="62" rx="2.5"/>'
+        '<path d="M30 102V51L53 12C57 5 62 2 68 3C76 4 80 11 78 20L72 40H109C116 40 121 46 119.5 53'
+        'L108.5 101C107.5 105.5 104 108 99.5 108H36C32.7 108 30 105.3 30 102Z"/></svg>')
 
 
 def _stappen(ctx, k, h):
@@ -90,19 +105,25 @@ def html(ctx, kopij, **opties) -> str:
              voet,
              f'<div class="knoppen">{knoppen}</div>' if knoppen else ""]
     inhoud = "\n          ".join(d for d in delen if d)
+    bureau = opties.get("beeld") == "bureau"
+    if bureau:
+        figuur = f'''{DUIM}
+          {ctx.beeld(BUREAU[0], "", BUREAU[1], BUREAU[2], klasse=f"b-{NAAM}__foto")}'''
+    else:
+        figuur = f'''<div class="b-{NAAM}__kader">
+            {ctx.beeld(FOTO[0], "", FOTO[1], FOTO[2], klasse=f"b-{NAAM}__foto")}
+          </div>
+          <span class="b-{NAAM}__uit">{ctx.beeld(UITSNEDE[0], "", UITSNEDE[1], UITSNEDE[2])}</span>'''
     tekst = f'''<div class="b-{NAAM}__tekst" data-reveal>
           {inhoud}
         </div>
         <figure class="b-{NAAM}__beeld" data-reveal>
-          <div class="b-{NAAM}__kader">
-            {ctx.beeld(FOTO[0], "", FOTO[1], FOTO[2], klasse=f"b-{NAAM}__foto")}
-          </div>
-          <span class="b-{NAAM}__uit">{ctx.beeld(UITSNEDE[0], "", UITSNEDE[1], UITSNEDE[2])}</span>
+          {figuur}
         </figure>{na_beeld}'''
     # met kop wijst de sectie naar die kop; zonder kop (bedankt) krijgt zij een eigen naam en geen id,
     # want het kopijblok deelt zijn id met de paginakop
     naam = f' id="{sid}" aria-labelledby="{sid}-kop"' if met_kop else ' aria-label="Wat er nu gebeurt"'
-    extra = f" b-{NAAM}--onder-beeld" if onder else ""
+    extra = (f" b-{NAAM}--onder-beeld" if onder else "") + (f" b-{NAAM}--bureau" if bureau else "")
     if paneel:
         return f'''<section class="b-{NAAM} b-{NAAM}--paneel{extra} sectie sectie--{opties.get("grond", "wit")}"{naam}>
       <div class="wrap">

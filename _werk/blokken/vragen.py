@@ -5,10 +5,13 @@ leest hetzelfde blok, dus wat hier staat, staat ook daar.
 Antwoorden mogen als tekst:-veld of als losse alinea's onder de ###-vraag staan.
 Opties: sectie ("mist" standaard, of "wit"), open (nummer van de vraag die open staat, standaard geen),
 kopkaart (zet de kop IN de belkaart in plaats van erboven), foto (een vrijstaande verhuizer rechts in
-die kaart), stijl ("paneel" voor de blauwe paneelopmaak van /contact/), vulling (standaard aan: de
+die kaart), stijl ("paneel" voor de blauwe paneelopmaak, "geel" voor de Goudgele band met foto-afdruk, met
+afdruk= uit AFDRUK; sectie, beeld, kopkaart, vulling en werker doen dan niets), vulling (standaard aan: de
 vraagtekens (klei-icoon) in het blauwe paneel, zie VULLING; zonder paneel blijft het vak onzichtbaar) en
 werker (standaard aan in het paneel met kopkaart en zonder foto: een verhuizer rechtsonder in het paneel,
 zie WERKER; False zet hem uit, een naam uit WERKER kiest een andere uitsnede).
+Live staat het paneel met de verhuizer (/, /werkwijze/, /kosten/, /contact/). "geel" is de versie van Tugche
+(origin/main 9dbb9a8, 28-09-2026) voor /contact/ en /werkwijze/; die staat als regel in de paginabestanden.
 Er staat hoogstens een vraag tegelijk open: de <details> van een blok delen een name, dus de browser klapt
 de vorige dicht zodra er een andere opengaat. Geen JS; een browser zonder die name laat ze gewoon openstaan. Die laatste twee horen bij elkaar: zonder kopkaart staat de foto in een kaart die er te laag
 voor is. Standaard staan ze uit, dus de pagina's die ze niet vragen veranderen geen byte.
@@ -84,6 +87,49 @@ WERKER_PAGINA = {"/werkwijze/": "doos-zijgreep"}    # de andere pagina's twee-do
 # Het deel van de uitsnede dat boven de onderrand uitkomt: tot boven de knie, bij beide onder de dozen.
 WERKER_ZICHTBAAR = .62
 
+# Optie stijl="geel" (28-09-2026, /contact/ en /werkwijze/): ontwerp 07 uit _ontwerpen/vragen-referentie-ronde1.html,
+# met op verzoek het geel over de hele sectie in plaats van als plaat in een witte sectie. Links een schuine foto-afdruk
+# (naar de contactpagina van referentie B, .sgt__foto) waar de mensen bovenuit stappen, met de 3D-headset tegen de hoek; rechts de
+# kop, de vragen als witte kaarten en de belrij. Vormgeving: onderaan css/blok/vragen.css, "Goudgele band".
+# afdruk: naam -> foto, uitsnede (zelfde verhouding), maten, k = hoogte van de foto in afdrukhoogtes (hoe ver de
+# mensen boven de lijst uitkomen), cx = waar ze horizontaal staan. Kies een foto met mensen die nog niet op de
+# pagina staan: /contact/ heeft de klantenservice en de adviseur al, /werkwijze/ twee bankscènes.
+# zakelijk: k 1.52 (was 1.4, gebruiker 28-09-2026: "de rechter man steekt niet echt uit"). Bij 1.4 stond zijn hoofd
+# precies op de bovenrand, nu komt het er ~29 px boven; de linker man gaat mee omhoog, daarom staat de afdruk op
+# /contact/ vanaf 900 px 2.25rem lager (vragen.css), anders raakt hij bij hover de band erboven.
+AFDRUK = {
+    "zakelijk": ("/img/dienst-zakelijk-v2.webp", "/img/dienst-zakelijk-v2-uit.webp", 720, 540, 1080, 810, "1.52", "50%"),
+    "woningontruiming": ("/img/dienst-woningontruiming-v2.webp", "/img/dienst-woningontruiming-v2-uit.webp",
+                         720, 540, 1080, 810, "1.26", "56%"),
+}
+
+
+def _geel(ctx, kid, kopgroep, vragen, bel, afdruk):
+    """De Goudgele band. Eigen klassen voor alles buiten de vragen zelf: op /contact/ hangen er aan .p-contact
+    paneelregels op .vragen__kop, .vragen__bel en .vragen__beeld die hier niets te zoeken hebben."""
+    if afdruk not in AFDRUK:
+        raise ValueError(f'vragen: onbekende afdruk "{afdruk}", kies uit {", ".join(AFDRUK)}')
+    foto, uit, fb, fh, ub, uh, k, cx = AFDRUK[afdruk]
+    return f'''<section class="sectie b-vragen b-vragen--geel" id="{kid}" aria-labelledby="{kid}-kop">
+  <div class="wrap vragen__raster">
+    <div class="vragen__fotos" aria-hidden="true">
+      <span class="vragen__afdruk" style="--k:{k};--cx:{cx}"><span class="vragen__raam"><img class="vragen__afdrukfoto" src="{foto}" alt="" width="{fb}" height="{fh}" loading="lazy" decoding="async"></span><span class="vragen__boven"><img class="vragen__afdrukuit" src="{uit}" alt="" width="{ub}" height="{uh}" loading="lazy" decoding="async"></span></span>
+      <img class="vragen__headset" src="/img/contact-3d/headset.webp" alt="" width="287" height="320" loading="lazy" decoding="async">
+    </div>
+    <div class="vragen__tekst">
+      {kopgroep}
+      <div class="vragen__lijst" data-reveal>
+      {"".join(vragen)}
+      </div>
+      <div class="vragen__belrij">
+        {ctx.bereikbaar("bereikbaar vragen__bereikbaar")}
+        <p class="vragen__zin">{ctx.inline(bel) if bel else "Staat uw vraag er niet bij?"}</p>
+        <div class="vragen__knoppen">{ctx.belknop("blauw")}</div>
+      </div>
+    </div>
+  </div>
+</section>'''
+
 
 def html(ctx, kopij, sectie="mist", open=None, stijl=None, **opties):
     k = kopij
@@ -114,7 +160,9 @@ def html(ctx, kopij, sectie="mist", open=None, stijl=None, **opties):
     if bel and ctx.tel in bel:
         # "Staat uw vraag er niet bij? Bel 085 000 5647." -> de vraag blijft, het nummer staat op de knop
         bel = bel.replace(f"Bel {ctx.tel}.", "").replace(f"Bel {ctx.tel}", "").replace(ctx.tel, "").strip()
-    binnen = f'''{ctx.bereikbaar("bereikbaar vragen__status")}
+    if stijl == "geel":
+        return _geel(ctx, kid, ctx.kopgroep(k), vragen, bel, opties.get("afdruk", "zakelijk"))
+    binnen =f'''{ctx.bereikbaar("bereikbaar vragen__status")}
         <p>{ctx.inline(bel) if bel else "Staat uw vraag er niet bij?"}</p>
         {ctx.belknop("blauw")}'''
     kopgroep = ctx.kopgroep(k)

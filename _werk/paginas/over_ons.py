@@ -1,4 +1,4 @@
-"""/over-ons/: kop met de offertepil over de onderrand (zoals Brocken en De Kievit), het verhaal met de
+"""/over-ons/: kop met de offertepil over de onderrand (zoals Brocken en referentie A), het verhaal met de
 verhuizers op twee platen en drie feitenkaarten (about-address-team, sinds 28-09-2026), de kernwaarden als
 gedrag (Koningsblauw met dakrand: een uitgelichte waarde met de verhuizers die uit de foto stappen, de
 overige als rijen ernaast), reviews, Den Haag met de kaart (Diepblauw met dakrand) en het grote offerteformulier

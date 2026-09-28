@@ -1,20 +1,50 @@
-/* Verhuisbedrijf De Reus · /offerte/ in lagen (alleen body.p-offerte)
-   Sinds 28-09-2026 alleen nog "Zo gaat het verder" (de stappen onder het formulier). Het formulier zelf had
-   hier een eigen opmaak in lagen: een grond van Mist naar blauw 50, een witte plaat met dikte, een Diepblauw
-   paneel ervoor met het beeldmerk, verzonken velden en een knopstrook. Die is eraf, want de gebruiker vroeg:
-   "Zo regelt u het in een paar minuten from homepage - make this the default styling for this form in all
-   pages." Het offerteformulier volgt nu overal de opmaak van de home, uit css/blok/formulier.css.
-   Alles staat stil: diepte komt uit schaduw en rand, niet uit beweging. Teksten blijven ongemoeid. */
+/* Verhuisbedrijf De Reus · /offerte/: Zo gaat het verder op de Koningsblauwe band (alleen body.p-offerte)
+   Laadt mee met het blok stappen-na-aanvraag (AFHANKELIJK in stappen-na-aanvraag.py), de versie van Tugche
+   (origin/main 9dbb9a8). Live staat op /offerte/ sinds 28-09-2026 na-bericht als plaat.
+   Tot 28-09-2026 stond hier ook het formulier in lagen: een witte plaat met dikte, het Diepblauwe paneel ervoor
+   met het beeldmerk, verzonken velden en het verzendlabel als etiket. Sindsdien heeft /offerte/ de opzet van het
+   offerteblok van referentie B, net als /contact/ (optie figuur, blok "Paneel met figuur" in css/blok/formulier.css).
+   De oude laag staat in _ontwerpen/_bron-offerte-lagen/offerte-diepte-voor-paneel.css; terug is die laag hier plus
+   ("formulier", {"variant": "offerte", "merk": True}) in _werk/paginas/offerte.py.
+   Alles staat stil: diepte komt uit schaduw en rand, niet uit beweging. */
 .p-offerte{
   --plaat-rand:#D5E2F8;                                  /* de zijkant van een witte plaat, tussen blauw 100 en 200 */
   --val-midden:0 14px 26px -14px rgba(14,26,51,.30);
   --verzonken:inset 0 2px 3px rgba(14,26,51,.09),inset 0 0 0 1px rgba(255,255,255,.6);
 }
 
+/* ---- de grond onder het formulier ----
+   Staat sinds de samenvoeging (28-09-2026) onderaan css/blok/formulier.css, onder .b-formulier--paneel: dit
+   bestand laadt alleen met stappen-na-aanvraag (AFHANKELIJK), en de grond hoort bij het formulier met paneel. */
+/* Het formulier ligt boven de sectie eronder, zodat de slagschaduw van de formulierkaart over het dak van
+   de blauwe band valt in plaats van erachter (anders een harde naad). */
+.p-offerte .b-formulier{z-index:1}
+
 /* ---- Zo gaat het verder ----
    De vorm van de stations zelf staat in css/blok/stappen-na-aanvraag.css; hier alleen de achtergrond,
-   de gecentreerde kop en de voetplaat. */
-.p-offerte .b-stappen-na-aanvraag{background:linear-gradient(180deg,var(--white),var(--white) 55%,var(--primary-50))}
+   de gecentreerde kop en de voetplaat.
+   Sinds later op 28-09-2026 de Koningsblauwe band van deze pagina (sectie--blauw, dak en dakrand uit
+   style.css). Eerst had hij dezelfde lichte grond als het formulier, gespiegeld; de gebruiker zag daardoor
+   een blok in plaats van twee ("apart ayıralım, farklı renk olsun"). Merkboek: hoogstens één blauwe band
+   per pagina, en niet Diepblauw, want daar volgt de Diepblauwe footer op.
+   De achtergrond hier is alleen wat naast de nok zichtbaar is: het vervolg van de grond van het formulier
+   erboven (Blauw 50 onderaan, de gloed rechtsonder gespiegeld over de naad), zodat de hoeken aansluiten. */
+.p-offerte .b-stappen-na-aanvraag{background:
+  radial-gradient(40rem 22rem at 100% 0,var(--primary-100),transparent 72%),
+  var(--primary-50)}
+/* Een zacht verloop onderaan naar het Diepblauw van de footer (plus een vervaagde bovenrand van de wagenfoto)
+   is op 28-09-2026 geprobeerd en afgewezen ("beğenmedim, geri al"): de band houdt zijn effen Koningsblauw. */
+/* Op de band maakt style.css koppen, alinea's en links wit. De platen en de voetbalk blijven wit, dus daar
+   de eigen tekstkleuren terug (0,2,0 wint van .sectie--blauw p, de muis-regels in stappen-na-aanvraag.css
+   zijn met 0,3,0 nog sterker en blijven werken). */
+.p-offerte .b-stappen-na-aanvraag__nr{color:var(--primary-200)}
+.p-offerte .b-stappen-na-aanvraag__titel{color:var(--color-heading)}
+.p-offerte .b-stappen-na-aanvraag__regel{color:var(--grey-600)}
+.p-offerte .b-stappen-na-aanvraag__bel{color:var(--graphite)}
+.p-offerte .b-stappen-na-aanvraag__bel a:not(.wa-link){color:var(--brand-primary)}
+.p-offerte a.b-stappen-na-aanvraag__google{color:var(--ink)}
+.p-offerte a.b-stappen-na-aanvraag__google:hover{color:var(--brand-primary)}
+.p-offerte .b-stappen-na-aanvraag__voet :focus-visible{outline-color:var(--brand-primary)}
 .p-offerte .b-stappen-na-aanvraag__kop{margin-inline:auto;text-align:center}
 .p-offerte .b-stappen-na-aanvraag__kop h2::after{content:"";display:block;width:3.25rem;height:5px;margin:.9rem auto 0;border-radius:5px;background:var(--brand-accent)}
 /* De vorm van de drie stappen zelf staat sinds ronde 1 in css/blok/stappen-na-aanvraag.css; hier

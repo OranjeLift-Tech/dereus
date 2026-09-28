@@ -1,5 +1,5 @@
 """Vertrouwensrij (/contact/, #vertrouwen): vier compacte kaarten met een icoontegel, zoals de rij met
-kerncijfers onder de offertepil bij De Kievit. Alleen bevestigde feiten (geen keurmerken, geen jaartal).
+kerncijfers onder de offertepil bij referentie A. Alleen bevestigde feiten (geen keurmerken, geen jaartal).
 
 Kopij: contact.md, blok {#vertrouwen}: de kop is alleen voor schermlezers; vier ###-items (titel + tekst).
 Het icoon volgt uit de titel: Google, verzekerd, adviseur, bereikbaar; anders een vinkje.

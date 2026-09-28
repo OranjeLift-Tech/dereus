@@ -10,7 +10,7 @@
      03 nationaal         closing-panel-truck   een donker paneel, de foto op een schuin blok over de paneelrand
      04 internationaal    about-window-intro    de foto in een boog die op de onderrand van de band staat
      05 verhuislift       text-photo-left       de foto links met een plaat achter de hoek, de tekst rechts
-     06 opslag            opslag (De Kievit)    een donkere kaart en de foto op een schuine band met een streep
+     06 opslag            opslag (referentie A)    een donkere kaart en de foto op een schuine band met een streep
      07 montage           careers-split-crew    een witte kaart, de foto in een schuin vlak, de lijst als strook
      08 woningontruiming  two-col-checklist     een witte kaart, de foto met een donkere plank met schuine rand
    Overal hetzelfde: de dienstfoto met de uitsnede van dezelfde verhuizers erover, die niet op de bovenrand wordt
@@ -206,7 +206,7 @@
   width:62%;height:56%;border-radius:var(--radius-media);background:var(--brand-primary)}
 [data-vorm=text-photo-left] .b-dienstenpanelen__kader{aspect-ratio:4/3}
 
-/* ==== 06 opslag · opslag (De Kievit) ====
+/* ==== 06 opslag · opslag (referentie A) ====
    Een donkere kaart links met de tekst en de knoppen; rechts de lijst op de lichte band en daaronder de foto,
    die op een schuine Koningsblauwe band staat met een donkere streep langs de onderkant. Band en streep lopen
    over de volle schermbreedte, achter de kaart langs, en hangen allebei aan de linkeronderhoek van de foto: ze

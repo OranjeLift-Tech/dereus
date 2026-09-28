@@ -1,6 +1,6 @@
 """Statische kaart voor de contactpagina van Verhuisbedrijf De Reus.
 
-Eigen SVG op OpenStreetMap-data (ODbL), naar het voorbeeld van De Kievit (_werk/paginabeeld/maak_kaart.py).
+Eigen SVG op OpenStreetMap-data (ODbL), naar het voorbeeld van referentie A (_werk/paginabeeld/maak_kaart.py).
 Geen Google-kaart en geen embed: de kaart laadt niets van buiten, staat in de huisstijl en is meteen scherp.
 Attributie (ODbL) staat als zichtbaar bijschrift onder de kaart, in het blok kaart: "Kaartgegevens © OpenStreetMap-bijdragers".
 
