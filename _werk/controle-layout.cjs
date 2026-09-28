@@ -205,104 +205,182 @@ async function draai({ browser, basis, snel = false } = {}) {
               - document.querySelector('#kaart-kop').getBoundingClientRect().top) < 2), `${width}: map top aligns address heading`);
           }
           if (route === '/werkwijze/') {
-            /* Sinds 28-09-2026 staan de stappen als kaarten met een verhuizer (blok stapkaarten, optie A
-               steps-four-green); daarvoor de tijdlijn en nog eerder de stappenrail. De ankers stap-1 tot
-               stap-5 blijven, want daar kan van buiten naar gelinkt worden. De vorige vormen mogen niet
-               half blijven staan: dat is de manier waarop zo'n vervanging stilletjes misgaat. */
+            /* De stappen. Sinds de samenvoeging van 28-09-2026 de trap van Tugche (blok tijdlijn: "Die van Tugche:
+               1. /werkwijze/ #stappen (tijdlijn)", "with new clay icons"); daarvoor de stapkaarten (optie A
+               steps-four-green), die in werkwijze.py als regel om terug te wisselen staan. De controle volgt het
+               blok dat er staat. De ankers stap-1 tot stap-5 blijven, want daar kan van buiten naar gelinkt worden.
+               De vorige vormen mogen niet half blijven staan: dat is de manier waarop zo'n vervanging stilletjes
+               misgaat. */
             await page.locator('#stappen').scrollIntoViewIfNeeded();
-            assert.equal(await page.locator('.b-stappenlang, .b-tijdlijn').count(), 0, `${width}: de stappenrail of de tijdlijn staat er nog`);
-            assert.deepEqual(await page.locator('#stappen .b-stapkaarten__stap').evaluateAll(items => items.map(el => el.id)),
-              ['stap-1', 'stap-2', 'stap-3', 'stap-4', 'stap-5'], `${width}: de vijf kaarten en hun ankers`);
-            assert.equal(await page.locator('#stappen .knop--cta').count(), 1, `${width}: een primaire knop in de sectie`);
-            /* Wat u doet en wat wij doen staan open op de kaart: geen uitklap meer, dus openen en sluiten
-               kan niets verschuiven. */
-            assert.equal(await page.locator('#stappen details').count(), 0, `${width}: geen uitklap in de stappen`);
-            assert.deepEqual(await page.locator('#stappen .b-stapkaarten__duo').evaluateAll(dls => dls.map(dl => dl.querySelectorAll('dt').length)),
-              [2, 2, 2, 2, 2], `${width}: elke kaart heeft wat u doet en wat wij doen`);
-            /* Stap 1 noemt het nummer zonder WhatsApp-knop ernaast (23-09-2026, data-geen-whatsapp). */
-            assert.deepEqual(await page.evaluate(() => [document.querySelectorAll('#stap-1 a[href^="tel:"][data-geen-whatsapp]').length,
-              document.querySelectorAll('#stap-1 .wa-link').length]), [1, 0], `${width}: stap 1 heeft het nummer zonder WhatsApp-knop`);
-            // de kaarten onder de vouw zijn lui; laad ze nu, anders telt een beeld dat nog niet gevraagd is als kapot
-            await page.locator('#stappen .b-stapkaarten__foto, #stappen .b-stapkaarten__klei').evaluateAll(els => els.forEach(el => { el.loading = 'eager'; }));
-            await beeldenKlaar('#stappen .b-stapkaarten__foto, #stappen .b-stapkaarten__klei');
-            /* De figuur staat op de onderrand van het paneel (daar is hij afgesneden) en komt met het hoofd
-               boven de kaart uit; zakt hij terug of schuift hij onder de rand door, dan is de snijlijn te zien
-               of de vorm weg zonder dat er iets stuk lijkt. En het beeld moet er echt zijn. Het klei-icoon
-               (sinds 28-09-2026) hangt onder de paneelrand, maar mag de tekst eronder niet raken. */
-            assert.deepEqual(await page.locator('#stappen .b-stapkaarten__stap').evaluateAll(items => items.flatMap(el => {
-              const fig = el.querySelector('.b-stapkaarten__fig').getBoundingClientRect();
-              const paneel = el.querySelector('.b-stapkaarten__paneel').getBoundingClientRect();
-              const kaart = el.querySelector('.b-stapkaarten__kaart').getBoundingClientRect();
-              const foto = el.querySelector('.b-stapkaarten__foto');
-              const fout = [];
-              if (fig.top > kaart.top - 24) fout.push(`${el.id}: figuur komt niet boven de kaart uit`);
-              if (Math.abs(fig.bottom - paneel.bottom) > 1) fout.push(`${el.id}: figuur staat niet op de rand van het paneel`);
-              if (fig.left < kaart.left - 1 || fig.right > kaart.right + 1) fout.push(`${el.id}: figuur steekt buiten de kaart`);
-              if (!foto.complete || !foto.naturalWidth) fout.push(`${el.id}: beeld niet geladen`);
-              const klei = el.querySelector('.b-stapkaarten__klei');
-              if (!klei || !klei.complete || !klei.naturalWidth) fout.push(`${el.id}: klei-icoon niet geladen`);
-              else if (klei.getBoundingClientRect().bottom > el.querySelector('.b-stapkaarten__nr').getBoundingClientRect().top)
-                fout.push(`${el.id}: klei-icoon raakt de tekst`);
-              /* "Stap n" staat sinds 28-09-2026 op het wit tussen paneel en titel, niet meer als pil over de figuur */
-              const nr = el.querySelector('.b-stapkaarten__nr').getBoundingClientRect(), titel = el.querySelector('.b-stapkaarten__titel').getBoundingClientRect();
-              const over = (a, b) => Math.min(a.right, b.right) > Math.max(a.left, b.left) && Math.min(a.bottom, b.bottom) > Math.max(a.top, b.top);
-              if (!nr.width || nr.top < paneel.bottom || nr.bottom > titel.top || over(nr, fig) || over(nr, klei.getBoundingClientRect()))
-                fout.push(`${el.id}: "Stap n" ligt niet vrij tussen paneel en titel`);
-              return fout;
-            })), [], `${width}: figuren op de paneelrand, boven de kaart uit en geladen`);
-            // tops tegen de lijst: beelden boven de sectie die nog laden verschuiven de pagina, niet de rijen
-            const kaarten = await page.locator('#stappen .b-stapkaarten__stap').evaluateAll(items =>
-              items.map(el => Math.round(el.getBoundingClientRect().top - el.parentElement.getBoundingClientRect().top)));
-            const rijen = [...new Set(kaarten)].length;
-            if (width > 1100) {
-              assert.equal(rijen, 1, `${width}: de vijf kaarten horen op een rij (tops ${kaarten.join(', ')})`);
-            } else if (width > 700) {
-              assert.ok(rijen === 2 && kaarten[2] === kaarten[0] && kaarten[3] > kaarten[0],
-                `${width}: drie en twee kaarten (tops ${kaarten.join(', ')})`);
+            if (await page.locator('#stappen.b-tijdlijn').count()) {
+              assert.equal(await page.locator('.b-stappenlang, .b-stapkaarten').count(), 0, `${width}: de stappenrail of de stapkaarten staan er nog`);
+              assert.deepEqual(await page.locator('#stappen .b-tijdlijn__stap').evaluateAll(items => items.map(el => el.id)),
+                ['stap-1', 'stap-2', 'stap-3', 'stap-4', 'stap-5'], `${width}: de vijf treden en hun ankers`);
+              assert.equal(await page.locator('#stappen .knop--cta').count(), 1, `${width}: een primaire knop in de sectie`);
+              /* Stap 1 noemt het nummer zonder WhatsApp-knop ernaast (23-09-2026, data-geen-whatsapp). */
+              assert.deepEqual(await page.evaluate(() => [document.querySelectorAll('#stap-1 a[href^="tel:"][data-geen-whatsapp]').length,
+                document.querySelectorAll('#stap-1 .wa-link').length]), [1, 0], `${width}: stap 1 heeft het nummer zonder WhatsApp-knop`);
+              /* Het klei-icoon (sinds de samenvoeging, in plaats van de 3D-render) komt boven de plaat uit en mag de
+                 tekst niet afdekken. Zakt het terug achter de plaatrand of laadt het niet, dan is de vorm weg zonder
+                 dat er iets stuk lijkt. De iconen onder de vouw zijn lui: laad ze eerst. */
+              await page.locator('#stappen .b-tijdlijn__obj, #stappen .b-tijdlijn__team').evaluateAll(els => els.forEach(el => { el.loading = 'eager'; }));
+              await beeldenKlaar('#stappen .b-tijdlijn__obj, #stappen .b-tijdlijn__team');
+              assert.deepEqual(await page.locator('#stappen .b-tijdlijn__stap').evaluateAll(items => items.flatMap(el => {
+                const img = el.querySelector('.b-tijdlijn__obj');
+                if (!img || !img.complete || !img.naturalWidth) return [`${el.id}: klei-icoon niet geladen`];
+                if (!img.getAttribute('src').startsWith('/img/clay/')) return [`${el.id}: geen klei-icoon maar ${img.getAttribute('src')}`];
+                const obj = img.getBoundingClientRect();
+                const plaat = el.querySelector('.b-tijdlijn__plaat').getBoundingClientRect();
+                const fout = [];
+                if (obj.top >= plaat.top - 4) fout.push(`${el.id}: klei-icoon steekt niet boven de plaat uit`);
+                for (const naam of ['nr', 'titel']) {
+                  const t = el.querySelector(`.b-tijdlijn__${naam}`).getBoundingClientRect();
+                  if (obj.right > t.left && obj.left < t.right && obj.top < t.bottom && obj.bottom > t.top) {
+                    fout.push(`${el.id}: klei-icoon ligt over ${naam}`);
+                  }
+                }
+                return fout;
+              })), [], `${width}: klei-iconen geladen, boven de plaatrand en vrij van de tekst`);
+              assert.ok(await page.locator('#stappen .b-tijdlijn__team').evaluate(el => el.complete && el.naturalWidth > 0),
+                `${width}: het team op de gele trede is geladen`);
+              /* De WhatsApp-knop komt van ctx.contactlinks en landt in "Wat u doet"; hij mag de kolom ernaast
+                 niet raken (controle van Tugche, origin/main 9dbb9a8). */
+              assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('.b-tijdlijn__duo .wa-link')].flatMap(wa => {
+                const box = wa.getBoundingClientRect();
+                const buur = wa.closest('.b-tijdlijn__wie').nextElementSibling?.querySelector('dd');
+                if (!buur) return [];
+                const t = buur.getBoundingClientRect();
+                return box.right > t.left && box.left < t.right && box.top < t.bottom && box.bottom > t.top
+                  ? [`WhatsApp-knop overlapt "${buur.textContent.slice(0, 30)}..."`] : [];
+              })), [], `${width}: WhatsApp-knop vrij van de kolom ernaast`);
+              /* De vorm van de trap: breed vijf treden op een rij, onderaan gelijk en van links naar rechts hoger;
+                 tot 1180 drie en twee per rij (onderaan gelijk per rij); tot 760 onder elkaar. Tops tegen de lijst,
+                 zodat beelden die erboven nog laden de meting niet verschuiven. */
+              const treden = await page.locator('#stappen .b-tijdlijn__stap').evaluateAll(items => items.map(el => {
+                const r = el.getBoundingClientRect(), o = el.closest('.b-tijdlijn__trap').getBoundingClientRect();
+                return [Math.round(r.top - o.top), Math.round(r.bottom - o.top)];
+              }));
+              const tops = treden.map(v => v[0]), bodems = treden.map(v => v[1]);
+              if (width > 1180) {
+                assert.ok(Math.max(...bodems) - Math.min(...bodems) <= 2 && tops.every((v, i) => i === 0 || v < tops[i - 1]),
+                  `${width}: vijf treden op een rij die van links naar rechts oplopen (tops ${tops.join(', ')}, bodems ${bodems.join(', ')})`);
+              } else if (width > 760) {
+                assert.ok(Math.max(...bodems.slice(0, 3)) - Math.min(...bodems.slice(0, 3)) <= 2 && Math.abs(bodems[3] - bodems[4]) <= 2
+                  && bodems[3] > bodems[0] + 2, `${width}: drie en twee treden per rij (bodems ${bodems.join(', ')})`);
+              } else {
+                assert.ok(tops.every((v, i) => i === 0 || v > tops[i - 1]), `${width}: de treden horen onder elkaar (tops ${tops.join(', ')})`);
+              }
             } else {
-              assert.ok(kaarten.every((top, i) => i === 0 || top > kaarten[i - 1]),
-                `${width}: de kaarten horen onder elkaar (tops ${kaarten.join(', ')})`);
+              assert.equal(await page.locator('.b-stappenlang, .b-tijdlijn').count(), 0, `${width}: de stappenrail of de tijdlijn staat er nog`);
+              assert.deepEqual(await page.locator('#stappen .b-stapkaarten__stap').evaluateAll(items => items.map(el => el.id)),
+                ['stap-1', 'stap-2', 'stap-3', 'stap-4', 'stap-5'], `${width}: de vijf kaarten en hun ankers`);
+              assert.equal(await page.locator('#stappen .knop--cta').count(), 1, `${width}: een primaire knop in de sectie`);
+              /* Wat u doet en wat wij doen staan open op de kaart: geen uitklap meer, dus openen en sluiten
+                 kan niets verschuiven. */
+              assert.equal(await page.locator('#stappen details').count(), 0, `${width}: geen uitklap in de stappen`);
+              assert.deepEqual(await page.locator('#stappen .b-stapkaarten__duo').evaluateAll(dls => dls.map(dl => dl.querySelectorAll('dt').length)),
+                [2, 2, 2, 2, 2], `${width}: elke kaart heeft wat u doet en wat wij doen`);
+              /* Stap 1 noemt het nummer zonder WhatsApp-knop ernaast (23-09-2026, data-geen-whatsapp). */
+              assert.deepEqual(await page.evaluate(() => [document.querySelectorAll('#stap-1 a[href^="tel:"][data-geen-whatsapp]').length,
+                document.querySelectorAll('#stap-1 .wa-link').length]), [1, 0], `${width}: stap 1 heeft het nummer zonder WhatsApp-knop`);
+              // de kaarten onder de vouw zijn lui; laad ze nu, anders telt een beeld dat nog niet gevraagd is als kapot
+              await page.locator('#stappen .b-stapkaarten__foto, #stappen .b-stapkaarten__klei').evaluateAll(els => els.forEach(el => { el.loading = 'eager'; }));
+              await beeldenKlaar('#stappen .b-stapkaarten__foto, #stappen .b-stapkaarten__klei');
+              /* De figuur staat op de onderrand van het paneel (daar is hij afgesneden) en komt met het hoofd
+                 boven de kaart uit; zakt hij terug of schuift hij onder de rand door, dan is de snijlijn te zien
+                 of de vorm weg zonder dat er iets stuk lijkt. En het beeld moet er echt zijn. Het klei-icoon
+                 (sinds 28-09-2026) hangt onder de paneelrand, maar mag de tekst eronder niet raken. */
+              assert.deepEqual(await page.locator('#stappen .b-stapkaarten__stap').evaluateAll(items => items.flatMap(el => {
+                const fig = el.querySelector('.b-stapkaarten__fig').getBoundingClientRect();
+                const paneel = el.querySelector('.b-stapkaarten__paneel').getBoundingClientRect();
+                const kaart = el.querySelector('.b-stapkaarten__kaart').getBoundingClientRect();
+                const foto = el.querySelector('.b-stapkaarten__foto');
+                const fout = [];
+                if (fig.top > kaart.top - 24) fout.push(`${el.id}: figuur komt niet boven de kaart uit`);
+                if (Math.abs(fig.bottom - paneel.bottom) > 1) fout.push(`${el.id}: figuur staat niet op de rand van het paneel`);
+                if (fig.left < kaart.left - 1 || fig.right > kaart.right + 1) fout.push(`${el.id}: figuur steekt buiten de kaart`);
+                if (!foto.complete || !foto.naturalWidth) fout.push(`${el.id}: beeld niet geladen`);
+                const klei = el.querySelector('.b-stapkaarten__klei');
+                if (!klei || !klei.complete || !klei.naturalWidth) fout.push(`${el.id}: klei-icoon niet geladen`);
+                else if (klei.getBoundingClientRect().bottom > el.querySelector('.b-stapkaarten__nr').getBoundingClientRect().top)
+                  fout.push(`${el.id}: klei-icoon raakt de tekst`);
+                /* "Stap n" staat sinds 28-09-2026 op het wit tussen paneel en titel, niet meer als pil over de figuur */
+                const nr = el.querySelector('.b-stapkaarten__nr').getBoundingClientRect(), titel = el.querySelector('.b-stapkaarten__titel').getBoundingClientRect();
+                const over = (a, b) => Math.min(a.right, b.right) > Math.max(a.left, b.left) && Math.min(a.bottom, b.bottom) > Math.max(a.top, b.top);
+                if (!nr.width || nr.top < paneel.bottom || nr.bottom > titel.top || over(nr, fig) || over(nr, klei.getBoundingClientRect()))
+                  fout.push(`${el.id}: "Stap n" ligt niet vrij tussen paneel en titel`);
+                return fout;
+              })), [], `${width}: figuren op de paneelrand, boven de kaart uit en geladen`);
+              // tops tegen de lijst: beelden boven de sectie die nog laden verschuiven de pagina, niet de rijen
+              const kaarten = await page.locator('#stappen .b-stapkaarten__stap').evaluateAll(items =>
+                items.map(el => Math.round(el.getBoundingClientRect().top - el.parentElement.getBoundingClientRect().top)));
+              const rijen = [...new Set(kaarten)].length;
+              if (width > 1100) {
+                assert.equal(rijen, 1, `${width}: de vijf kaarten horen op een rij (tops ${kaarten.join(', ')})`);
+              } else if (width > 700) {
+                assert.ok(rijen === 2 && kaarten[2] === kaarten[0] && kaarten[3] > kaarten[0],
+                  `${width}: drie en twee kaarten (tops ${kaarten.join(', ')})`);
+              } else {
+                assert.ok(kaarten.every((top, i) => i === 0 || top > kaarten[i - 1]),
+                  `${width}: de kaarten horen onder elkaar (tops ${kaarten.join(', ')})`);
+              }
             }
             /* De voorbereiding (blok lijstplaat, sinds ronde 6) verving de witte checklistkaart. Het blok
                checklist bestaat nog, voor de dienst- en landpagina's, maar staat sinds ronde 6 niet meer op
                deze pagina; de regel bij #na-de-verhuizing hieronder telt dat er nergens meer een staat. */
             await page.locator('#voorbereiding').scrollIntoViewIfNeeded();
+            /* Sinds de samenvoeging van 28-09-2026 de Goudgele plaat van Tugche (blok lijstplaat-geel: "Die van Tugche:
+               2. /werkwijze/ #voorbereiding (gele lijstplaat)"); de Koningsblauwe lijstplaat staat in werkwijze.py als
+               regel om terug te wisselen. Beide hebben dezelfde opbouw onder een eigen voorvoegsel. */
+            const lp = await page.locator('#voorbereiding.b-lijstplaat-geel').count() ? 'b-lijstplaat-geel' : 'b-lijstplaat';
             assert.equal(await page.locator('#voorbereiding .b-checklist__kaart').count(), 0,
               `${width}: de oude checklistkaart staat nog in de voorbereiding`);
-            assert.equal(await page.locator('.b-lijstplaat__lijst > li').count(), 6, `${width}: de zes punten van het lijstje`);
-            /* De foto hoort er ook echt te zijn: een pad dat verschuift laat een leeg geel huis achter,
-               en dat valt op een blauwe plaat niet op. */
-            /* De versie van Tugche (blok lijstplaat-geel sinds de samenvoeging) heeft een eigen controle op foto en
-               uitsnede in origin/main 9dbb9a8; die gaat mee als dat blok hier live komt. */
-            await beeldenKlaar('.b-lijstplaat__foto');
-            assert.ok(await page.locator('.b-lijstplaat__foto').evaluate(el => el.complete && el.naturalWidth > 0),
-              `${width}: de foto in de huisvorm is geladen`);
+            assert.equal(await page.locator(`.${lp}__lijst > li`).count(), 6, `${width}: de zes punten van het lijstje`);
+            if (lp === 'b-lijstplaat-geel') {
+              /* De foto en de uitsnede van de verhuizer die eruit leunt (controle van Tugche, origin/main 9dbb9a8): een
+                 pad dat verschuift laat een lege plaat of een verhuizer zonder hoofd achter. Foto en uitsnede moeten
+                 even groot zijn, anders liggen ze niet op elkaar (zie UITSNEDE in lijstplaat-geel.py). En het
+                 voorwerp op de plaatrand is een klei-icoon (sinds de samenvoeging). */
+              await beeldenKlaar('.b-lijstplaat-geel__podium img, .b-lijstplaat-geel__klembord');
+              assert.deepEqual(await page.locator('.b-lijstplaat-geel__podium img').evaluateAll(els => els.map(el =>
+                el.complete && el.naturalWidth > 0 ? `${el.className} ${el.naturalWidth}x${el.naturalHeight}` : `${el.className} niet geladen`)),
+                ['b-lijstplaat-geel__uit 1200x1030', 'b-lijstplaat-geel__foto 1200x1030', 'b-lijstplaat-geel__voor 1200x1030'],
+                `${width}: foto en uitsnede van de verhuizer zijn geladen en even groot`);
+              assert.ok(await page.locator('.b-lijstplaat-geel__klembord').evaluate(el => el.complete && el.naturalWidth > 0
+                && el.getAttribute('src').startsWith('/img/clay/')), `${width}: het klei-icoon op de plaatrand is geladen`);
+            } else {
+              /* De foto hoort er ook echt te zijn: een pad dat verschuift laat een leeg geel huis achter,
+                 en dat valt op een blauwe plaat niet op. */
+              await beeldenKlaar('.b-lijstplaat__foto');
+              assert.ok(await page.locator('.b-lijstplaat__foto').evaluate(el => el.complete && el.naturalWidth > 0),
+                `${width}: de foto in de huisvorm is geladen`);
+            }
             /* Zelfde val als bij de tijdlijn: het klembord steekt boven de plaatrand uit en mag de lijstkop
                en de eerste regel niet afdekken. Het staat rechtsboven, de lijstkop links, en die twee
                kwamen op smal scherm tegen elkaar aan. */
-            assert.deepEqual(await page.evaluate(() => {
-              const obj = document.querySelector('.b-lijstplaat__klembord').getBoundingClientRect();
-              const plaat = document.querySelector('.b-lijstplaat__plaat').getBoundingClientRect();
+            assert.deepEqual(await page.evaluate(lp => {
+              const obj = document.querySelector(`.${lp}__klembord`).getBoundingClientRect();
+              const plaat = document.querySelector(`.${lp}__plaat`).getBoundingClientRect();
               const fout = [];
               if (obj.top >= plaat.top - 4) fout.push('klembord steekt niet boven de plaat uit');
-              for (const kies of ['.b-lijstplaat__lijstkop', '.b-lijstplaat__lijst > li']) {
+              for (const kies of [`.${lp}__lijstkop`, `.${lp}__lijst > li`]) {
                 const t = document.querySelector(kies).getBoundingClientRect();
                 if (obj.right > t.left && obj.left < t.right && obj.top < t.bottom && obj.bottom > t.top) {
                   fout.push(`klembord ligt over ${kies}`);
                 }
               }
               /* en de foto mag niet over de lijst heen vallen als de kolommen krap worden */
-              const foto = document.querySelector('.b-lijstplaat__beeld').getBoundingClientRect();
-              const lijst = document.querySelector('.b-lijstplaat__lijst').getBoundingClientRect();
+              const foto = document.querySelector(`.${lp}__beeld`).getBoundingClientRect();
+              const lijst = document.querySelector(`.${lp}__lijst`).getBoundingClientRect();
               if (foto.right > lijst.left + 1 && foto.left < lijst.right - 1
                 && foto.top < lijst.bottom - 1 && foto.bottom > lijst.top + 1) fout.push('foto ligt over de lijst');
               return fout;
-            }), [], `${width}: klembord boven de plaatrand, foto en tekst vrij van elkaar`);
+            }, lp), [], `${width}: klembord boven de plaatrand, foto en tekst vrij van elkaar`);
             /* Het gereedschap op de naad met de tijdlijn (optie A, 23-09-2026) is een ::before op de wrap
                en rekent vanaf de sectie. Op de telefoon loopt de kop over de volle breedte en staat het
                voorwerp er rechts boven; het mag de letters van de label en de kop niet raken. Gemeten op
                de tekst zelf (Range), niet op het blok, want dat loopt altijd door tot de rechterrand. */
-            assert.deepEqual(await page.evaluate(() => {
+            assert.deepEqual(await page.evaluate(lp => {
               const sectie = document.querySelector('#voorbereiding');
               const s = getComputedStyle(sectie.querySelector(':scope > .wrap'), '::before');
               if (s.content === 'none') return ['geen gereedschap op de naad'];
@@ -311,7 +389,7 @@ async function draai({ browser, basis, snel = false } = {}) {
               obj.left = obj.right - parseFloat(s.width);
               obj.bottom = obj.top + parseFloat(s.height);
               const fout = [];
-              for (const kies of ['.b-lijstplaat__kop .label', '.b-lijstplaat__kop h2', '.b-lijstplaat__kop .intro']) {
+              for (const kies of [`.${lp}__kop .label`, `.${lp}__kop h2`, `.${lp}__kop .intro`]) {
                 const el = sectie.querySelector(kies);
                 if (!el) continue;
                 const bereik = document.createRange();
@@ -320,7 +398,7 @@ async function draai({ browser, basis, snel = false } = {}) {
                   && obj.top < t.bottom && obj.bottom > t.top)) fout.push(`gereedschap ligt over ${kies}`);
               }
               return fout;
-            }), [], `${width}: gereedschap op de naad vrij van de kop`);
+            }, lp), [], `${width}: gereedschap op de naad vrij van de kop`);
             /* Na de verhuizing (blok namozaiek, versie 3 uit ronde 7, 23-09-2026) verving het blok naplaten,
                dat zelf de laatste checklistkaart verving. Blijft er ergens een halve checklist staan, dan
                staan er twee vormen van hetzelfde lijstje onder elkaar zonder dat er iets stuk lijkt. */
@@ -387,6 +465,22 @@ async function draai({ browser, basis, snel = false } = {}) {
                   `${width}: de tegels horen onder elkaar (tops ${tegels.join(', ')})`);
               }
             }
+          }
+          /* /offerte/ #na-aanvraag: sinds de samenvoeging van 28-09-2026 de stappen van Tugche op de Koningsblauwe band
+             (blok stappen-na-aanvraag: "11. /offerte/ #na-aanvraag (stappen op de blauwe band)", "clay icons"); het
+             blok na-bericht staat in offerte.py als regel om terug te wisselen. Een klei-icoon dat niet laadt laat een
+             leeg geel huis achter, en een icoon over de titel dekt de stap af. */
+          if (route === '/offerte/' && await page.locator('#na-aanvraag.b-stappen-na-aanvraag').count()) {
+            await page.locator('#na-aanvraag').scrollIntoViewIfNeeded();
+            await page.locator('#na-aanvraag .b-stappen-na-aanvraag__obj').evaluateAll(els => els.forEach(el => { el.loading = 'eager'; }));
+            await beeldenKlaar('#na-aanvraag .b-stappen-na-aanvraag__obj');
+            assert.equal(await page.locator('#na-aanvraag .b-stappen-na-aanvraag__stap').count(), 3, `${width}: de drie stappen na de aanvraag`);
+            assert.deepEqual(await page.locator('#na-aanvraag .b-stappen-na-aanvraag__stap').evaluateAll(items => items.flatMap((el, i) => {
+              const img = el.querySelector('.b-stappen-na-aanvraag__obj');
+              if (!img || !img.complete || !img.naturalWidth || !img.getAttribute('src').startsWith('/img/clay/')) return [`stap ${i + 1}: klei-icoon niet geladen`];
+              const o = img.getBoundingClientRect(), t = el.querySelector('.b-stappen-na-aanvraag__titel').getBoundingClientRect();
+              return o.right > t.left && o.left < t.right && o.top < t.bottom && o.bottom > t.top ? [`stap ${i + 1}: klei-icoon ligt over de titel`] : [];
+            })), [], `${width}: drie klei-iconen geladen en vrij van de titels`);
           }
           const heading = route === '/' ? '.hero__tekst' : '.pk__tekst';
           if (await page.locator(heading).count()) {

@@ -9,7 +9,8 @@ niet op elke plek).
 
 Kopij: contact.md, blok {#kaart}: label, kop (het adres), intro, knop.
 Gegevens (adres, telefoon, e-mail, tijden, route) komen uit config.py.
-Optionele velden: label-adres, label-tijden, offerte-link, kaart-knop.
+Optionele velden: label-adres, label-tijden, label-kvk, offerte-link, kaart-knop.
+Een derde regel met het KvK-nummer staat er alleen als config.FEITEN["KVK"] bekend is.
 Het beeld is img/kaart-den-haag.svg (_werk/kaart/maak_kaart.py, OpenStreetMap-data, ODbL). Die getekende kaart is de
 terugval in het paneel van blok wereld: een klik erop (of op de knop) laadt de echte kaart, een wereldbol die naar
 Den Haag vliegt. Het adreskaartje van dat paneel staat in de HTML maar niet in beeld (kaart.css): de regels ernaast
@@ -67,6 +68,11 @@ def html(ctx, kopij, man=MAN, **opties) -> str:
         _regel(ctx, "tijden", "klok", k.veld("label-tijden", "Bereikbaar"),
                tijden(ctx, f"b-{NAAM}") + f'<p class="b-{NAAM}__status">{ctx.bereikbaar("bereikbaar")}</p>'),
     ])
+    # Het KvK-nummer als derde regel, alleen als config.FEITEN het kent (sinds 28-09-2026: 91699568)
+    kvk = ctx.feit("KVK")
+    if kvk:
+        regels += _regel(ctx, "kvk", "document", k.veld("label-kvk", "KvK-nummer"),
+                         f'<p class="b-{NAAM}__waarde">{ctx.esc(str(kvk))}</p>')
     route = ctx.knop(k.veld("knop", "Route plannen"), c.ROUTE, soort="licht", icoon="route",
                      klasse="knop--icoon-voor", attrs='rel="noopener"')
     offerte = ctx.knop(k.veld("offerte-link", "Offerte aanvragen"), "/offerte/", soort="link")

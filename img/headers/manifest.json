@@ -1,9 +1,9 @@
 {
   "/": {
-    "src": "/img/headers/home.webp",
-    "width": 1600,
-    "height": 900,
-    "position": "50% 50%"
+    "src": "/img/headers/home-collage-1-dragen-stoep.webp",
+    "width": 1280,
+    "height": 960,
+    "position": "45% 50%"
   },
   "/diensten/": {
     "src": "/img/headers/diensten.webp",

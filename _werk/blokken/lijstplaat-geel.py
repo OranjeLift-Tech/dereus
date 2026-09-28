@@ -26,8 +26,10 @@ JS = False
 
 # Het 3D-klembord met de pen, over de bovenrand van de plaat: hetzelfde voorwerp en dezelfde opzet als de
 # kanaalkaarten op /contact/ (img/contact-3d/). Het staat stil, de hoek zit in het beeld zelf.
-# Sinds 28-09-2026 het klei-icoon formulier (img/clay/, vierkant) in plaats van de 3D-render; hoogte vast in de css.
-VOORWERP = ("/img/clay/formulier-240.webp", 240, 240)
+# Sinds 28-09-2026 een klei-icoon (img/clay/, vierkant) in plaats van de 3D-render; hoogte vast in de css.
+# Het klembord met de vinkjes en niet het formulier: dit is de afvinklijst, en het formulier staat op /werkwijze/
+# al bij stap 1 van de trap erboven (samenvoeging 28-09-2026).
+VOORWERP = ("/img/clay/klembord-240.webp", 240, 240)
 
 # De foto in de huisvorm. Wat hier hoort is sinds 23-09-2026 veranderd, dus lees dit voor je hem
 # vervangt.
@@ -154,7 +156,7 @@ def html(ctx, kopij, **opties) -> str:
     voorwerp = ""
     if opties.get("voorwerp", True):
         voorwerp = ctx.beeld(VOORWERP[0], "", VOORWERP[1], VOORWERP[2], klasse=f"b-{NAAM}__klembord", sizes="7.6rem",
-                             srcset="/img/clay/formulier-144.webp 144w, /img/clay/formulier-240.webp 240w")
+                             srcset="/img/clay/klembord-144.webp 144w, /img/clay/klembord-240.webp 240w")
     return f'''<section class="b-{NAAM} sectie sectie--{grond}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
       <div class="wrap">
         {ctx.kopgroep(k, klasse=f"b-{NAAM}__kop")}

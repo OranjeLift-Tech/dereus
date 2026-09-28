@@ -6,7 +6,9 @@ for styling. i only need the artifacts, not text"). Alleen decoratie: alt="", ge
 
 Geen eigen sectie: de pagina zet een van haar blokken in dit blok, als
 ("naadiconen", {"kopij": None, "blok": naam, "opties": opties, "plek": (sectie-id, [(icoon, kant, x, y), ...])}).
-html() rendert dat blok via ctx.blok en zet de iconen vlak voor de sluittag van de sectie met dat id. Zo blijven de
+html() rendert dat blok via ctx.blok en zet de iconen vlak voor de sluittag van de sectie met dat id. Noemt plek een
+derde veld, een klasse, dan komen ze als eerste kind in het eerste element met die klasse binnen die sectie
+(kant "hoek": vast aan dat element, zie naadiconen.css). Zo blijven de
 bestanden van de andere blokken onaangeroerd. De plaats per icoon staat in de pagina (home.py), de opmaak in
 css/blok/naadiconen.css.
 """
@@ -27,7 +29,7 @@ def _icoon(naam, kant, x, y):
 
 def html(ctx, kopij, blok, opties, plek, **_):
     binnen = ctx.blok(blok, **opties)
-    sid, iconen = plek
+    sid, iconen, *anker = plek
     begin = re.search(r'<section\b[^>]*\bid="%s"' % re.escape(sid), binnen)
     if not begin:
         raise BouwFout(f"{ctx.pagina.pad}: naadiconen vindt geen <section id=\"{sid}\"> in blok '{blok}'")
@@ -36,5 +38,12 @@ def html(ctx, kopij, blok, opties, plek, **_):
         diepte += -1 if tag.group(1) else 1
         if diepte == 0:
             eind = begin.start() + tag.start()
-            return binnen[:eind] + "".join(_icoon(*i) for i in iconen) + binnen[eind:]
-    raise BouwFout(f"{ctx.pagina.pad}: de sectie #{sid} in blok '{blok}' wordt niet gesloten")
+            break
+    else:
+        raise BouwFout(f"{ctx.pagina.pad}: de sectie #{sid} in blok '{blok}' wordt niet gesloten")
+    if anker:
+        m = re.compile(r'<[a-z]+\b[^>]*\bclass="(?:[^"]*\s)?%s[\s"][^>]*>' % re.escape(anker[0])).search(binnen, begin.start(), eind)
+        if not m:
+            raise BouwFout(f"{ctx.pagina.pad}: naadiconen vindt geen .{anker[0]} in #{sid} (blok '{blok}')")
+        eind = m.end()
+    return binnen[:eind] + "".join(_icoon(*i) for i in iconen) + binnen[eind:]

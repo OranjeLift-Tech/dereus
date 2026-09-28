@@ -26,7 +26,7 @@
 @media(max-width:767.98px){
   .pk__chips{margin:1.25rem calc(var(--gutter) * -1) 0}
   .pk__chips ul{justify-content:flex-start;flex-wrap:nowrap;gap:.6rem;overflow-x:auto;scroll-snap-type:x proximity;
-    padding:.25rem calc(var(--gutter) + 1.5rem) .75rem var(--gutter);scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    padding:.25rem calc(var(--gutter) + 1.5rem) .75rem var(--gutter);scroll-padding-inline:var(--gutter);scrollbar-width:none;-webkit-overflow-scrolling:touch;
     -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 1.5rem),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 1.5rem),transparent)}
   .pk__chips ul::-webkit-scrollbar{display:none}
   .pk__chips li{flex:none;scroll-snap-align:start}
@@ -35,17 +35,60 @@
   .pk__chip::before{display:none}
   .pk__chip:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 0 0 1px var(--brand-primary),0 3px 0 var(--brand-secondary),0 9px 14px -11px rgba(11,35,82,.45)}
 }
-/* ---- Een eigen dienstikoon per chip (28-09-2026) ----
-   De gebruiker: "nav in diensten, use different icons for each section, use the small icons, not the clay ones." Het
-   Solar-ikoon van de dienst (kit.DIENST_SOLAR, via blok kop) vervangt het huisje; chips zonder ikoon houden het huisje.
-   Ikoon, tussenruimte en linkerpadding zijn samen even breed als huisje, tussenruimte en padding
-   (.6 + 1.4 + .4 = .85 + 1.05 + .5), dus de chip blijft even groot. Bij hover wordt de chip Koningsblauw; het ikoon wordt dan goudgeel. Op de telefoon, waar het huisje
-   wegvalt, blijft het ikoon staan: de chip wordt breder, de rij niet hoger. */
-.pk__chip--icoon{gap:.4rem;padding-left:.6rem}
-.pk__chip--icoon::before{display:none}
-.pk__chip-ic{flex:none;width:1.4rem;height:1.4rem}
-.pk__chip--icoon:hover{--icoon-hoofd:var(--brand-accent)}
-@media(max-width:767.98px){.pk__chip--icoon{gap:.35rem;padding-left:.75rem}.pk__chip-ic{width:1.25rem;height:1.25rem}}
+/* ---- De dienstenstrook onder de kaart (28-09-2026) ----
+   Gekozen uit vijf versies, website/review/diensten-nav-20260928, versie 2 ("One strip, with tilted tiles over its
+   edge"). Chips met een dienstsleutel (alleen /diensten/) worden één witte strook van acht vakken met dezelfde blauwe
+   dikte als de pillen; boven elk vak hangt een Koningsblauwe tegel met het Solar-dienstikoon schuin over de rand.
+   Tussen 768 en 1180 twee stroken van vier: "Woningontruiming" (127 px in text-xs) past daar niet in een achtste. Op de
+   telefoon een schuifrij, met de tegels nog over de rand (de padding boven de rij maakt daar ruimte voor, want een
+   schuifrij knipt ook verticaal). Muis: het vak wordt blauw-50 en de tegel goudgeel; de tegel draait recht en het
+   ikoon groeit iets, dat laatste alleen zonder reduced motion. Er beweegt verder niets. */
+.pk__strook{margin-top:2.9rem}
+.pk__strook ul{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));max-width:74rem;margin:0 auto;padding:0;list-style:none;
+  border-radius:var(--radius-card);background:var(--white);
+  box-shadow:inset 0 1px 0 var(--white),0 0 0 1px rgba(14,26,51,.08),0 4px 0 #C9D9F5,0 18px 26px -16px rgba(11,35,82,.4)}
+.pk__strook li{position:relative;min-width:0}
+.pk__strook li+li::before{content:"";position:absolute;left:0;top:1.1rem;bottom:1.1rem;border-left:1px solid var(--color-border)}
+.pk__strook a{position:relative;display:block;height:100%;padding:2.05rem .5rem .85rem;color:var(--brand-primary);font-size:var(--text-xs);
+  font-weight:var(--weight-bold);line-height:1.25;text-align:center;text-decoration:none;transition:background-color .25s var(--ease)}
+.pk__strook a:hover{color:var(--brand-primary);text-decoration:none}
+.pk__strook a:focus-visible{outline:3px solid var(--brand-accent);outline-offset:3px}
+.pk__strook li:first-child a{border-radius:var(--radius-card) 0 0 var(--radius-card)}
+.pk__strook li:last-child a{border-radius:0 var(--radius-card) var(--radius-card) 0}
+.pk__tegel{--pk-kant:-6deg;--icoon-hoofd:var(--white);position:absolute;top:-1.2rem;left:calc(50% - 1.3rem);display:grid;place-items:center;
+  width:2.6rem;height:2.6rem;border-radius:10px;background:var(--brand-primary);rotate:var(--pk-kant);box-shadow:0 8px 14px -8px rgba(11,35,82,.65);
+  transition:rotate .3s var(--ease),background-color .3s var(--ease)}
+.pk__strook li:nth-child(even) .pk__tegel{--pk-kant:5deg}
+.pk__strook-ic{display:block;flex:none;width:1.5rem;height:1.5rem;rotate:calc(-1 * var(--pk-kant));transition:scale .3s var(--ease),rotate .3s var(--ease)}
+@media(hover:hover){
+  .pk__strook a:hover{background:var(--primary-50)}
+  .pk__strook a:hover .pk__tegel{--icoon-hoofd:var(--brand-secondary);background:var(--brand-accent)}
+}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .pk__strook a:hover .pk__tegel{--pk-kant:0deg}
+  .pk__strook a:hover .pk__strook-ic{scale:1.12}
+}
+@media(max-width:767.98px){
+  .pk__strook{margin:1.1rem calc(var(--gutter) * -1) 0}
+  .pk__strook ul{display:flex;flex-wrap:nowrap;justify-content:flex-start;gap:0;max-width:none;overflow-x:auto;scroll-snap-type:x proximity;
+    scroll-padding-inline:var(--gutter);padding:1.45rem calc(var(--gutter) + 1.5rem) 1rem var(--gutter);border-radius:0;background:none;box-shadow:none;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 1.5rem),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 1.5rem),transparent)}
+  .pk__strook ul::-webkit-scrollbar{display:none}
+  .pk__strook li{flex:none;min-width:6.75rem;scroll-snap-align:start;background:var(--white);box-shadow:0 -1px 0 rgba(14,26,51,.08),0 1px 0 rgba(14,26,51,.08),0 4px 0 #C9D9F5}
+  .pk__strook li:first-child{border-radius:var(--radius-card) 0 0 var(--radius-card);box-shadow:-1px 0 0 rgba(14,26,51,.08),0 -1px 0 rgba(14,26,51,.08),0 1px 0 rgba(14,26,51,.08),0 4px 0 #C9D9F5}
+  .pk__strook li:last-child{border-radius:0 var(--radius-card) var(--radius-card) 0;box-shadow:1px 0 0 rgba(14,26,51,.08),0 -1px 0 rgba(14,26,51,.08),0 1px 0 rgba(14,26,51,.08),0 4px 0 #C9D9F5}
+  .pk__strook a{padding:2rem .9rem .8rem;white-space:nowrap}
+}
+@media(min-width:768px) and (max-width:1179.98px){
+  .pk__strook ul{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:2.3rem;max-width:50rem;border-radius:0;background:none;box-shadow:none}
+  .pk__strook li{background:var(--white);box-shadow:0 -1px 0 rgba(14,26,51,.08),0 1px 0 rgba(14,26,51,.08),0 4px 0 #C9D9F5}
+  .pk__strook li:nth-child(4n+1){border-radius:var(--radius-card) 0 0 var(--radius-card);box-shadow:-1px 0 0 rgba(14,26,51,.08),0 -1px 0 rgba(14,26,51,.08),0 1px 0 rgba(14,26,51,.08),0 4px 0 #C9D9F5}
+  .pk__strook li:nth-child(4n){border-radius:0 var(--radius-card) var(--radius-card) 0;box-shadow:1px 0 0 rgba(14,26,51,.08),0 -1px 0 rgba(14,26,51,.08),0 1px 0 rgba(14,26,51,.08),0 4px 0 #C9D9F5}
+  .pk__strook li:nth-child(4n+1)::before{content:none}
+  .pk__strook li:nth-child(4n+1) a{border-radius:var(--radius-card) 0 0 var(--radius-card)}
+  .pk__strook li:nth-child(4n) a{border-radius:0 var(--radius-card) var(--radius-card) 0}
+}
 
 /* ---- De foto loopt door achter de offertekaart ----
    De grens tussen foto en achtergrond viel samen met de onderkant van de blauwe kopband van de kaart. Nu ligt hij

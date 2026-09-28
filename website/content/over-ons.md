@@ -50,21 +50,22 @@ tekst: Ook voor een spoedklus.
 label: Wat u van ons mag verwachten
 intro: Wij zeggen liever wat wij doen dan dat wij de beste zijn.
 knop: Offerte aanvragen
+Notitie: sinds 28-09-2026 het blok waardenblad (versie 5 uit website/review/zowerkenwij-20260928/, ronde 3 "less text"): per waarde een korte alinea. Alleen feiten die er al stonden; de verzekering houdt "tijdens de verhuizing".
 
 ### Wij doen het zware werk {#sterk}
-Tillen, sjouwen, een kast de trap af: dat laat u aan ons over. U bepaalt zelf hoeveel u aan ons overlaat, van alleen het zware werk tot inpakken en uitpakken.
+Tillen, sjouwen, een kast de trap af. U bepaalt zelf hoeveel u aan ons overlaat.
 
 ### Wij zetten alles netjes neer {#zorgvuldig}
-Onze verhuizers zijn vakmensen met jaren ervaring, geen studenten. Ze pakken zorgvuldig in, dragen met beleid en zetten alles op de plek die u aanwijst. Tijdens de verhuizing is uw inboedel standaard verzekerd.
+Ervaren vakmensen, geen studenten. Uw inboedel is tijdens de verhuizing standaard verzekerd.
 
 ### Wij doen wat we afspreken {#betrouwbaar}
-Onze verhuizers staan op het afgesproken tijdstip voor de deur. En u heeft één vaste verhuisadviseur, van de eerste vraag tot de verhuisdag.
+Op tijd voor de deur, en één vaste verhuisadviseur van de eerste vraag tot de verhuisdag.
 
 ### Wij zijn duidelijk over de prijs {#eerlijk}
-U krijgt vooraf een heldere offerte, gratis en vrijblijvend. Voorrijkosten rekenen wij niet. Wat de prijs bepaalt, leest u op de pagina [wat kost een verhuisbedrijf](/kosten/).
+Vooraf een heldere offerte, gratis en vrijblijvend. Geen voorrijkosten. [Wat kost een verhuisbedrijf?](/kosten/)
 
 ### Wij denken met u mee {#betrokken}
-Een verhuizing is meer dan dozen verplaatsen. Uw verhuisadviseur luistert naar wat u nodig heeft en blijft bereikbaar, 7 dagen per week.
+Uw verhuisadviseur luistert naar wat u nodig heeft en is 7 dagen per week bereikbaar.
 
 ## Wat klanten over ons zeggen {#reviews}
 label: Reviews

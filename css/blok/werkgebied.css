@@ -20,7 +20,7 @@
 .wg { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 1rem + 4vw, 5rem); align-items: center; }
 .wg .kopgroep { margin-bottom: 2rem; }
 .wg__regels { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, .16); }
-.wg__regel { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.1rem; padding: 1.35rem 0; border-bottom: 1px solid rgba(255, 255, 255, .16); }
+.wg__regel { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.1rem; padding: 1.35rem 0; border-bottom: 1px solid rgba(255, 255, 255, .16); }   /* 1.35rem: ook de maat van de route hieronder */
 .wg__icoon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--brand-accent); color: var(--brand-secondary); }
 .wg__icoon .ic { width: 22px; height: 22px; }
 .wg__titel { margin: .15rem 0 .35rem; font-size: var(--text-h4); }
@@ -103,13 +103,64 @@
   .wg__bron { padding: .2rem .7rem; font-size: .72rem; }
 }
 
+/* ---- Route, adresplaat en knoppen (sinds 28-09-2026) ----
+   "add the arrows, the offerte buttons, the adresplaat" uit website/review/werkgebied-20260928/r2/: de routelijn
+   van versie 2, de adresplaat van versie 3 en de knoppen van versie 5 (die hebben geen eigen regel nodig: .wg
+   .knoppen zet de ruimte erboven). Alleen waar werkgebied.py ze aanzet; blok kaart (/contact/) heeft ze niet.
+   De route: een gestippelde gouden lijn van tegel naar tegel, met een pijlpunt vlak boven de volgende tegel en een
+   zachte ring om elke tegel. De lijn is ::after van de regel en de pijlpunt ::before van de volgende tegel, want
+   ::before van de regel is het hoverpaneel hieronder. */
+.wg__regel { position: relative; }
+.wg__regels--route .wg__icoon { position: relative; z-index: 2; box-shadow: 0 0 0 5px rgb(255 204 51 / .16); }
+.wg__regels--route .wg__regel:not(:last-child)::after { content: ""; position: absolute; z-index: 1; left: 21px;
+  top: calc(1.35rem + 44px + 6px); bottom: calc(-1.35rem + 6px); border-left: 2px dashed var(--brand-accent); opacity: .9; }
+.wg__regels--route .wg__regel + .wg__regel .wg__icoon::before { content: ""; position: absolute; left: 17px; bottom: calc(100% + 4px);
+  width: 10px; height: 10px; border-right: 2px solid var(--brand-accent); border-bottom: 2px solid var(--brand-accent); rotate: 45deg; }
+/* De adresplaat: Koningsblauw op de linkerbovenhoek van de kaart, over de rand van de gouden plaat. Smal liggen
+   "Schilderswijk" en "Transvaalkwartier" dicht onder de bovenrand van de kaart; daar hangt de plaat over de
+   bovenrand van de figuur. */
+.wg__adres { position: absolute; z-index: 3; left: 0; top: calc(var(--wg-offset) + 1.25rem); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .75rem;
+  max-width: min(19rem, calc(100% - 2rem)); padding: .9rem 1.1rem .9rem .9rem; border-radius: 12px; background: var(--brand-primary); color: var(--white);
+  box-shadow: 0 18px 34px -16px rgba(0, 0, 0, .6); }
+.wg__adres-ic { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: var(--brand-accent); color: var(--brand-secondary); }
+.wg__adres-ic .ic { width: 20px; height: 20px; }
+.wg__adres p { margin: 0; font-size: var(--text-small); line-height: 1.4; color: rgba(255, 255, 255, .88); }
+.wg__adres p strong { display: block; color: var(--white); font-weight: var(--weight-bold); }
+.wg__adres .wg__link { margin-top: .45rem; }
+/* wit, niet het Lichtblauw van .sectie--diep a: dat haalt op Koningsblauw maar 4,59:1 */
+.b-werkgebied .wg__adres a.wg__link { color: var(--white); }
+@media (max-width: 560px) {
+  .wg__adres { top: -1.5rem; padding: .7rem .85rem .7rem .7rem; gap: .6rem; }
+  .wg__adres-ic { width: 32px; height: 32px; }
+  .wg__adres p { font-size: .9rem; }
+}
+
 /* hover: de gouden plaat schuift 4 px verder en de kaart zoomt in binnen zijn vlak, dat hem afknipt. Alleen
-   transform, dus er verschuift niets; de verhuizer beweegt nooit los van de kaart. */
+   transform, dus er verschuift niets; de verhuizer beweegt nooit los van de kaart.
+   De regels (sinds 28-09-2026, "add background changes when hovering specific options in the section", lezing A):
+   de regel onder de muis krijgt een paneel in --wg-hover, dat links en rechts --wg-hover-uit buiten de kolom steekt
+   en de lijntjes erboven en eronder vervangt. Het paneel is ::before met z-index -1: het ligt op de Diepblauwe grond
+   van de sectie (die ook z-index -1 heeft, maar eerder in de boom staat) en onder de tekst, de route en de tegels.
+   Niet de achtergrond van de li zelf: die heeft de overgang van data-reveal-groep, die elke eigen transition op de
+   li overschrijft. Alle tekst blijft licht op donker. De link wordt op het paneel wit (het Lichtblauw van
+   .sectie--diep a haalt op Koningsblauw maar 4,59:1); de gouden onderstreping blijft.
+   Lezing B (een band over de hele sectiebreedte) is een andere kleur hier en een andere inset. */
+.b-werkgebied { --wg-hover: var(--brand-primary); --wg-hover-uit: min(1.1rem, var(--gutter)); }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .wg__plaat { transition: transform .5s var(--wg-ease); }
   .wg__kaart:hover .wg__plaat { transform: translate(-4px, -4px); }
   .wg__beeld { transition: transform .6s var(--wg-ease); }
   .wg__kaart:hover .wg__beeld { transform: scale(1.04); }
+  .wg__regel::before { content: ""; position: absolute; z-index: -1; inset: -1px calc(-1 * var(--wg-hover-uit)); border-radius: 14px;
+    background: var(--wg-hover); box-shadow: 0 18px 34px -22px rgba(0, 0, 0, .7); opacity: 0; transition: opacity .3s var(--wg-ease); }
+  .wg__regel:hover::before { opacity: 1; }
+  .wg__regel:hover, .wg__regel:has(+ .wg__regel:hover) { border-bottom-color: transparent; }
+  .wg__regels:has(> .wg__regel:first-child:hover) { border-top-color: transparent; }
+  .wg__regel:hover .wg__link .ic { transform: translateX(3px); }
+  .wg__regel .wg__link { transition: color .3s var(--wg-ease); }
+  .b-werkgebied .wg__regel:hover a.wg__link { color: var(--white); }
+  .wg__regels--route .wg__icoon { transition: box-shadow .35s var(--wg-ease); }
+  .wg__regels--route .wg__regel:hover .wg__icoon { box-shadow: 0 0 0 8px rgb(255 204 51 / .22); }
 }
 
 /* ---- Geen voorwerp meer op de naad met "Sterk waar het zwaar is" (sinds 28-09-2026) ----

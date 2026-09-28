@@ -37,7 +37,9 @@ PAGINA = Pagina(
         # Daarvoor de routeband (intro-route-band); dat blok en zijn CSS blijven staan.
         ("stapkaarten", {"kopij_id": "werkwijze", "grond": "blauw"}),
         ("reviews", {}),
-        ("over-ons", {"kopij_van": ("over-ons", "verhaal"), "feiten": True, "motto": False}),   # een kopie van /over-ons/ #verhaal
+        # feiten: False sinds 28-09-2026, toen het KvK-nummer in config.FEITEN kwam: "Sterk waar het zwaar is" blijft zoals
+        # goedgekeurd, zonder feitenrijen. Het KvK-nummer staat in de footer, op /contact/ en in de JSON-LD.
+        ("over-ons", {"kopij_van": ("over-ons", "verhaal"), "feiten": False, "motto": False}),   # een kopie van /over-ons/ #verhaal
         ("werkgebied", {}),
         # kopkaart: de sectiekop hoort in de belkaart. De headset verhuist mee naar de
         # rechterbovenhoek van die kaart ("hoek"); het gat dat "headset-huis" vulde bestaat
@@ -60,7 +62,10 @@ NAADICONEN = {
     "reviews": ("reviews", [("telefoon", "links", 22, 19)]),
     "over-ons": ("over-ons", [("verhuislift", "links", 66, -58)]),
     "werkgebied": ("werkgebied", [("internationaal", "links", 82, -18)]),
-    "aanvraag": ("aanvraag", [("klembord", "rechts", 46, 21)]),
+    # Het klembord hangt sinds 28-09-2026 aan de formulierkaart, op de rechterbovenhoek, met een hover:
+    # "Vertel ons over uw verhuizing in homepage - make the artifact of the list next to the section be part of the section and have a hover effect."
+    # Derde veld: de klasse van het element waar het in hangt; x en y vanaf die hoek (negatief is erbuiten).
+    "aanvraag": ("aanvraag", [("klembord", "hoek", -14, -52)], "b-formulier__kaart"),
 }
 PAGINA.blokken = [("naadiconen", {"kopij": None, "blok": naam, "opties": opties, "plek": NAADICONEN[naam]})
                   if naam in NAADICONEN else (naam, opties) for naam, opties in PAGINA.blokken]

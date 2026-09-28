@@ -38,16 +38,12 @@ NAAM = "tijdlijn"
 CSS = True
 JS = False
 
-# Per station een 3D-render: map, bestandsnaam, breedte en hoogte. Bron: img/contact-3d/, img/kaart-3d/
-# en img/kosten-3d/, dezelfde reeks als de kaarten op /contact/ en /kosten/. Een klok bij stap 4, want
-# daar wordt de datum vastgezet; de wagen komt voorrijden bij stap 5.
-VOORWERPEN = [
-    ("contact-3d", "formulier", 346, 400),
-    ("contact-3d", "telefoon", 208, 400),
-    ("kaart-3d", "klembord", 600, 792),
-    ("contact-3d", "klok", 279, 320),
-    ("kosten-3d", "wagen", 594, 420),
-]
+# Per station een klei-icoon (img/clay/<naam>-144/240.webp, vierkant; website/review/clay-iconen-20260928/).
+# Sinds de samenvoeging van 28-09-2026 ("with new clay icons") in plaats van de 3D-renders uit img/contact-3d/,
+# img/kaart-3d/ en img/kosten-3d/. Dezelfde vijf als de stapkaarten die hier eerst stonden, voor dezelfde vijf
+# stappen: het formulier bij de aanvraag, de telefoon bij het contact, de envelop bij de offerte, de klok bij de
+# planning en de dozen op de verhuisdag.
+VOORWERPEN = ["formulier", "telefoon", "envelop", "klok", "dozen"]
 
 # Het slot: de echte voordeur (dezelfde foto als het eind van de weg op de home) in het huis uit het logo,
 # en het team met de verhuisdozen dat bovenop de gele trede staat.
@@ -71,8 +67,9 @@ def _kort(blok, sleutel):
     return _eerste_zin(blok.veld(sleutel))
 
 
-def _render(ctx, map_, naam, breedte, hoogte):
-    beeld = ctx.beeld(f"/img/{map_}/{naam}.webp", "", breedte, hoogte, klasse=f"b-{NAAM}__obj b-{NAAM}__obj--{naam}")
+def _render(ctx, naam):
+    beeld = ctx.beeld(f"/img/clay/{naam}-240.webp", "", 240, 240, klasse=f"b-{NAAM}__obj b-{NAAM}__obj--{naam}",
+                      srcset=f"/img/clay/{naam}-144.webp 144w, /img/clay/{naam}-240.webp 240w", sizes="5.4rem")
     return f'<span class="b-{NAAM}__ic" aria-hidden="true">{beeld}</span>'
 
 
@@ -114,10 +111,10 @@ def _stap(ctx, k, it, nr):
                f'<span class="b-{NAAM}__plus" aria-hidden="true">{ctx.icoon("plus")}</span></summary>'
                f'<div class="b-{NAAM}__paneel">{duo}{link}</div></details>')
         link = ""
-    map_, naam, breedte, hoogte = VOORWERPEN[(nr - 1) % len(VOORWERPEN)]
+    naam = VOORWERPEN[(nr - 1) % len(VOORWERPEN)]
     return f'''<li class="b-{NAAM}__stap" id="{ctx.esc(it.id)}" style="--i:{nr - 1}">
             <div class="b-{NAAM}__plaat">
-              {_render(ctx, map_, naam, breedte, hoogte)}
+              {_render(ctx, naam)}
               <h3 class="b-{NAAM}__titel"><span class="vh">{ctx.esc(k.veld("stap-woord", "Stap"))} {nr}: </span>{ctx.inline(it.titel)}</h3>
               <p class="b-{NAAM}__regel">{ctx.inline(_kort(it, "tekst"))}</p>
               {duo}

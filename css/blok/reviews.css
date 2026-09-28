@@ -216,3 +216,11 @@
 @media (max-width: 639.98px) {
   .rpaneel__g--klei { width: 3.5rem; height: 3.5rem; margin: 0; }
 }
+
+/* Klei bij hover op het blok (28-09-2026): de munt kantelt als het scorepaneel gehoverd wordt, het aanhalingsteken als
+   de kaart gehoverd wordt, zoals de klei op /diensten/ (-6deg en 1.08). Alleen de klei beweegt: rotate en scale op de
+   img zelf, niet op de li die de reveal krijgt, dus geen botsing met de reveal-transition en geen layoutverschuiving. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .rpaneel__g--klei img, .rkaart__quote--klei { transition: rotate .45s var(--ease), scale .45s var(--ease); }
+  .rpaneel:hover .rpaneel__g--klei img, .rkaart:hover .rkaart__quote--klei { rotate: -6deg; scale: 1.08; }
+}

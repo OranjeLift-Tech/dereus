@@ -5,11 +5,24 @@
    Per icoon staan --ni-x en --ni-y in de markup (home.py): x vanaf de linker- of rechterrand zoals geplaatst op
    1440, y vanaf de bovenkant van de sectie, zodat het icoon op zijn naad blijft als de sectie hoger of lager wordt.
    Boven 1440 schuift het mee met een gecentreerde strook van 1440 breed, en blijft het dus even ver van de inhoud.
+   Half doorzichtig sinds 28-09-2026: "on the added artifacts from the artifact-placer, make them all 50% opacity".
+   naadicoon--hoek (sinds 28-09-2026, het klembord bij #aanvraag): het icoon hangt niet aan de rand van de pagina maar
+   in een element van de sectie (home.py noemt de klasse), op diens rechterbovenhoek: --ni-x en --ni-y vanaf die hoek,
+   negatief is erbuiten. Met een hover op dat element: "Vertel ons over uw verhuizing in homepage - make the artifact of the list next to the section be part of the section and have a hover effect."
    ========================================================================== */
 .naadicoon{display:none}
 @media (min-width:1100px){
   .naadicoon{--ni-rand:max(0px,(100% - 1440px) / 2);display:block;position:absolute;z-index:5;top:var(--ni-y);
-    width:120px;height:auto;pointer-events:none}
+    width:120px;height:auto;opacity:.5;pointer-events:none}
   .naadicoon--links{left:calc(var(--ni-rand) + var(--ni-x))}
   .naadicoon--rechts{right:calc(var(--ni-rand) + var(--ni-x))}
+  /* Het anker is het element met het icoon als kind. Geen veld eronder: de overhang is 14 px opzij (op 1100 staat de
+     kaart 30 px van de rand) en de onderkant blijft 14 px boven het eerste veld, dus het mag de muis vangen. */
+  .naadicoon--hoek{top:var(--ni-y);right:var(--ni-x);pointer-events:auto}
+  :has(> .naadicoon--hoek){position:relative}
+}
+/* Geen data-reveal op het icoon of zijn anker, dus deze transition wordt niet door die van site.js overschreven. */
+@media (min-width:1100px) and (hover:hover) and (prefers-reduced-motion:no-preference){
+  .naadicoon--hoek{transition:opacity .3s var(--ease-out),translate .4s var(--ease-out),rotate .4s var(--ease-out)}
+  :has(> .naadicoon--hoek):hover > .naadicoon--hoek{opacity:1;translate:0 -6px;rotate:-6deg}
 }

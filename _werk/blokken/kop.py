@@ -9,7 +9,9 @@ de home heeft een eigen, grotere opening (hero.py).
 Opties:
   kopij_id  welk blok (standaard "kop")
   chips     lijst van (tekst, href) of (tekst, href, dienstsleutel) voor ankernavigatie onder de offertekaart,
-            buiten de kop zelf; met een dienstsleutel krijgt de chip het Solar-dienstikoon (sinds 28-09-2026)
+            buiten de kop zelf. Zonder dienstsleutel: witte pillen met het huisje. Met een dienstsleutel bij elke
+            chip: de dienstenstrook, een witte strook met per link een schuine tegel met het Solar-dienstikoon
+            (versie 2 uit website/review/diensten-nav-20260928, sinds 28-09-2026). Half en half kan niet.
   id        id van de sectie (standaard het kopij-id)
   dienst    voorkeuze voor de soort verhuizing in de offertekaart
   streep, icoon, knop, belregel  oude opties; ze worden geaccepteerd en genegeerd
@@ -22,12 +24,17 @@ JS = False
 AFHANKELIJK = ["offertepil"]
 
 
-def _chip(ctx, tekst, href, icoon=None):
-    """Eén ankerchip. Met icoon (een sleutel uit kit.DIENST_SOLAR) staat het Solar-dienstikoon voor de tekst in plaats
-    van het huisje; de tekst blijft de naam van de link."""
-    ic = ctx.dienst_icoon(icoon, klasse="pk__chip-ic") if icoon else ""
-    klasse = "pk__chip pk__chip--icoon" if icoon else "pk__chip"
-    return f'<li><a class="{klasse}" href="{ctx.esc(href)}">{ic}{ctx.inline(tekst)}</a></li>'
+def _chip(ctx, tekst, href):
+    """Eén ankerchip: de witte pil met het huisje."""
+    return f'<li><a class="pk__chip" href="{ctx.esc(href)}">{ctx.inline(tekst)}</a></li>'
+
+
+def _schakel(ctx, tekst, href, icoon):
+    """Eén link in de dienstenstrook: de tegel met het Solar-dienstikoon (een sleutel uit kit.DIENST_SOLAR) hangt
+    schuin over de bovenrand, de naam staat eronder. De tegel is versiering; de naam is de naam van de link."""
+    ic = ctx.dienst_icoon(icoon, klasse="pk__strook-ic")
+    return (f'<li><a href="{ctx.esc(href)}"><span class="pk__tegel" aria-hidden="true">{ic}</span>'
+            f'<span class="pk__strook-naam">{ctx.inline(tekst)}</span></a></li>')
 
 
 def html(ctx, kopij, chips=None, id=None, dienst=None, **opties):
@@ -44,8 +51,15 @@ def html(ctx, kopij, chips=None, id=None, dienst=None, **opties):
     delen.append(f'<p class="pk__bel"><a href="{ctx.telhref}">{ctx.icoon("telefoon")}<span>Bel {ctx.tel}</span></a></p>')
     chiphtml = ""
     if chips:
-        li = "".join(_chip(ctx, *chip) for chip in chips)
-        chiphtml = f'<nav class="pk__chips" aria-label="Op deze pagina"><ul role="list">{li}</ul></nav>'
+        met = [chip for chip in chips if len(chip) > 2 and chip[2]]
+        if met and len(met) != len(chips):
+            raise kit.BouwFout(f"{ctx.pagina.pad}: kop, geef alle chips een dienstsleutel of geen enkele")
+        if met:
+            li = "".join(_schakel(ctx, *chip) for chip in chips)
+            chiphtml = f'<nav class="pk__strook" aria-label="Op deze pagina"><ul role="list">{li}</ul></nav>'
+        else:
+            li = "".join(_chip(ctx, *chip[:2]) for chip in chips)
+            chiphtml = f'<nav class="pk__chips" aria-label="Op deze pagina"><ul role="list">{li}</ul></nav>'
     return f'''<section class="pk" id="{sid}" aria-labelledby="{sid}-h1">
   <div class="pk__grond" aria-hidden="true"><img class="pk__foto" src="{ctx.esc(foto["src"])}" alt="" width="{foto["width"]}" height="{foto["height"]}" style="object-position:{ctx.esc(foto.get("position", "50% 50%"))}" decoding="async" fetchpriority="high"><span class="pk__waas"></span></div>
   <div class="wrap pk__wrap">

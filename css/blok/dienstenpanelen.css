@@ -422,26 +422,6 @@
   :is(.b-dienstenpanelen__vlak,.b-dienstenpanelen__kolom,.b-dienstenpanelen__plank,.b-dienstenpanelen__kaart){border:1px solid CanvasText}
 }
 
-/* ==== de ankerchips boven dit blok (blok kop, alleen /diensten/ heeft er) ====
-   Acht chips braken als rijen van ongelijke lengte af: 6+2 op 1920, 5+3 op 900, 4+3+1 op 768. Nu vier plus
-   vier in een raster vanaf 768 px (daaronder is het de schuifstrook uit kop.css). Vanaf 950 px is elke kolom
-   even breed als de breedste chip, zodat de randen lijnen; daaronder past dat niet (4 x 215 px) en volgt elke
-   kolom zijn breedste chip, zonder het huisje en zonder het dienstikoon (vier keer ikoon plus tussenruimte past
-   niet op 768).
-   Staat hier en niet in kop.css omdat dit bestand alleen op /diensten/ laadt. */
-@media (min-width:768px){
-  .pk__ankers .pk__chips ul{display:grid;grid-template-columns:repeat(4,auto);justify-content:center}
-  .pk__ankers .pk__chip{width:100%;justify-content:center}
-}
-@media (min-width:768px) and (max-width:949px){
-  .pk__ankers .pk__chip{gap:0}
-  .pk__ankers .pk__chip::before,.pk__ankers .pk__chip-ic{display:none}
-  .pk__ankers .pk__chip--icoon{padding-left:.85rem}
-}
-@media (min-width:950px){
-  .pk__ankers .pk__chips ul{grid-template-columns:repeat(4,1fr);width:max-content;max-width:100%;margin-inline:auto}
-}
-
 /* ==== hover en klei (28-09-2026) ====
    De gebruiker: "add slight hover effect to the diensten sections like images moving just sligtly, and add more clay
    icons to them too". Met de muis boven een band groeien foto en uitsnede samen 2% vanaf hun onderkant (de maat van

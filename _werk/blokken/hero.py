@@ -54,10 +54,8 @@ def html(ctx, kopij, **opties):
     k = kopij
     cfg = ctx.cfg
     foto = kit.headerbeeld(ctx.pagina.pad)
-    achter = (f'<div class="hero__foto"><img src="{ctx.esc(foto["src"])}" alt="" '
-              f'width="{foto["width"]}" height="{foto["height"]}" '
-              f'style="object-position:{ctx.esc(foto.get("position", "50% 50%"))}" '
-              'decoding="async" fetchpriority="low"></div>')
+    # sinds 28-09-2026 is de foto uit de headerbeeldenlijst het eerste beeld van een bewegende collage (herocollage.py)
+    achter = ctx.blok("herocollage", kopij=None, foto=foto)
     b, h = cfg.LOGO_MATEN["beeldmerk"]
     textuur = f'<img class="hero__textuur" src="{ctx.logo("beeldmerk-negatief")}" alt="" width="{b}" height="{h}" decoding="async">'
     intro = k.veld("intro")
@@ -82,6 +80,7 @@ def html(ctx, kopij, **opties):
     </div>
     {figuur(ctx)}
   </div>
+  {ctx.blok("herocollage", kopij=None, deel="knop")}
 </section>
 <div class="hero-pil">
   <div class="wrap">{ctx.blok("offertepil", kopij_id=k.id or "offerte", variant="header")}</div>

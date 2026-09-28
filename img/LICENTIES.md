@@ -83,6 +83,27 @@ vervangen van twee stapfoto's in "Zo werkt het" (home). De header-achtergronden 
 - Licentie: niet vastgelegd. Het bronbeeld is gegenereerd voor De Bresser, een andere klant. Hoe het daar
   gemaakt is, is niet nagekeken.
 
+## img/dienst-opslag-v3.webp en img/dienst-opslag-v3-uit.webp
+
+- /diensten/#opslag (`_werk/blokken/dienstenpanelen.py`) en de tegel "Tijdelijke opslag" op de home
+  (`_werk/blokken/diensten.py`), sinds 28-09-2026 in plaats van `img/dienst-opslag-v2.webp` en `-v2-uit.webp`.
+  Een verhuizer zet een witte verhuisdoos met handgreep in een stelling in de opslaghal, een collega ver achter
+  hem. Alleen mannen, polo's zonder merk, doos zonder opdruk, geen logo in beeld.
+- Bron: zelf gegenereerd op 28-09-2026 met nano banana pro (gemini-3-pro-image-preview), ronde
+  `website/review/opslag-beeld-20260928/r2/` (rondebestand `website/review/opslag-beeld-r2.json`, de prompt in
+  `prompts.md` van die ronde), versie 4. Referenties: versie 4 uit de eerste ronde
+  (`website/review/opslag-beeld-20260928/versie-4.jpg`) voor de compositie, en het gezicht
+  `website/review/dienst-gezichten-20260923/live-rechts-man09.png` (uitsnede van de live verhuizers).
+- Het beeld zoals het uit het model kwam, zonder merk en zonder bewerking (2400x1792,
+  md5 9be7483412252ba5e6adc803e2183479), staat als `versie-4.jpg` in `website/review/opslag-beeld-20260928/r3/`.
+- Uitsnede met rembg, u2net_human_seg en birefnet-general (`r3/werk/uitsnij.py`): boven de schouderlijn de
+  fijne rand, eronder het strakke persoonsmasker, zodat de witte doos er niet aan blijft hangen.
+  `r3/versie-4-uit.png`, md5 7fa33cf25c0976966f49b979c3c577c7.
+- Export (`r3/werk/export-v3.cjs`): foto cover naar 720x540, WebP q82, md5 e022f5ac37924e04c47611599b7f4818;
+  uitsnede cover naar 1080x810, alfa onder 45 weg, WebP q78 alfa 80, md5 132010e8b101a33417b40c7c9cf587c5.
+- Goedgekeurd op 28-09-2026 in de ronde `website/review/opslag-beeld-20260928/r3/`, versie 4.
+- Licentie: eigen beeld. Nog niet in git: moet mee in dezelfde commit als diensten.py en dienstenpanelen.py.
+
 ## img/clay/: klei-iconen
 
 - Negentien vierkante, transparante WebP-iconen in kleistijl, elk in 144, 176, 240 en 480 px:
@@ -172,3 +193,7 @@ geen licentiespoor; stap-5 is een uitsnede van de hero van de oude Wix-site van 
 `img/helpen-kantoor.webp` staat sinds 28-09-2026 niet meer op /contact/: "Zo helpen wij u snel" gebruikt nu
 `img/verhuizer-doos-zijgreep-uit.webp` (optie beeld), met `img/helpen-drie-uit.webp` (optie figuur in
 `_werk/blokken/formulier.py`, zie hierboven) als versie van Tugche om te wisselen.
+
+`img/dienst-opslag-v2.webp` en `img/dienst-opslag-v2-uit.webp` zijn op 28-09-2026 vervangen door
+`img/dienst-opslag-v3.webp` en `-v3-uit.webp` (zie hierboven) en verwijderd: "remove the old image". Het eerste
+paar, `img/dienst-opslag.webp` en `-uit.webp`, blijft staan: de drie pagina's in `_ontwerpen/` gebruiken het nog.

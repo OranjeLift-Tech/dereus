@@ -17,3 +17,9 @@ De nieuwe foto's zijn 1600 × 900 pixels. Bestaande foto's zijn op maximaal hun 
 De foto's zijn als WebP met kwaliteit 84 geëxporteerd. Nieuwe foto's en gebruikte bronfoto's zijn visueel bekeken op storende logo's, ongewenste tekst en bruikbare uitsneden. Alle 27 bestanden bestaan en hebben onderling verschillende SHA-256-hashes. Controle van tekstcontrast en de uiteindelijke header gebeurt in de gedeelde paginatest, omdat de blauwe afdeklaag door CSS wordt toegevoegd.
 
 `maak.cjs` maakt de exports opnieuw vanuit `bronnen.json`. Het script gebruikt de geïnstalleerde Sharp-runtime en wijzigt geen bronfoto's.
+
+## De home: een bewegende collage (28-09-2026)
+
+Sinds 28-09-2026 staat achter de hero van de home een collage van vier beelden die na elkaar bewegen (`_werk/blokken/herocollage.py`). De gebruiker keurde beeld 2, 4, 5 en 6 uit `website/review/hero-collage-20260928/` goed; `home.webp` hoort daar niet bij. Het eerste beeld, `home-collage-1-dragen-stoep.webp`, is de manifestregel voor `/`; de andere drie staan in `herocollage.py`. Alle vier zijn kopieën van bestaande sitebeelden (`verhuisdag-dragen-stoep`, `dienst-verhuislift`, `footer-wagen`, `dienst-nationaal-v2-groot`), op maximaal 1280 breed en WebP q50, gemaakt met `maak-collage.cjs`. Het formaat is 4:3, niet 16:9, en de lift blijft 720 breed.
+
+Let op: `maak.cjs` kent de collage niet. Wie het draait, zet `/` in het manifest terug op `home.webp`; zet daarna de regel voor `/` hier weer terug.

@@ -4,7 +4,7 @@ Keuze van de gebruiker uit _ontwerpen/na-de-verhuizing-varianten.html, nummer 03
 (28-09-2026), naar het opslagblok van referentie A ("Even geen plek?"). Vervangt het blok namozaiek op deze
 pagina; namozaiek zelf blijft bestaan. Een schuine Goudgele band met een Diepblauwe streep eronder loopt door
 de Mist-sectie. Links een Diepblauwe kaart met label, kop, intro, de twee punten als rijen met een echt
-3D-voorwerp op een gele schijf (VOORWERP, anders een rond lijnicoon) en de knoppen; rechts staat de ploeg met dozen op de band. Alles staat stil (css/blok/naband.css).
+klei-icoon op een gele schijf (VOORWERP, anders een rond lijnicoon) en de knoppen; rechts staat de ploeg met dozen op de band. Alles staat stil (css/blok/naband.css).
 
 Kopij: werkwijze.md, blok {#na-de-verhuizing}: label, kop, intro en een lijst van twee regels die elk beginnen
 met een vette kop: "**Tevreden?** uitleg". De vette kop wordt de titel van de rij.
@@ -23,13 +23,10 @@ PUNTEN = [
     (("tevreden", "review"), "ster"),
 ]
 
-# Per icoon het echte 3D-voorwerp dat op een gele schijf staat (28-09-2026, "figuren echt maken"): map,
-# bestandsnaam, breedte, hoogte. Voor de ster de gouden ster en niet de reviewkaart img/contact-3d/score.webp:
-# die draagt het logo van Google (zie naplaten.py). Een icoon zonder voorwerp blijft een lijnicoon.
-VOORWERP = {
-    "telefoon": ("contact-3d", "telefoon", 208, 400),
-    "ster": ("kaart-3d", "ster", 240, 240),
-}
+# Per icoon het voorwerp dat op een gele schijf staat (28-09-2026, "figuren echt maken"). Sinds de samenvoeging
+# van 28-09-2026 de klei-iconen (img/clay/<naam>-144/240.webp, vierkant) in plaats van de 3D-renders, dezelfde
+# twee als in het mozaiek dat hier eerst stond. Een icoon zonder voorwerp blijft een lijnicoon.
+VOORWERP = {"telefoon", "ster"}
 
 # De ploeg met dozen (dezelfde uitsnede als de team-hero, img/team/team-hero-dozen.json).
 BEELD = "/img/team/team-hero-dozen"
@@ -65,9 +62,9 @@ def html(ctx, kopij, beeld=True, **opties) -> str:
         titel = f'<h3 class="b-{NAAM}__titel">{ctx.inline(kop)}</h3>' if kop else ""
         icoon = _icoon(kop, plek)
         if icoon in VOORWERP:
-            kaart, naam, b, h = VOORWERP[icoon]
-            teken = (f'<span class="b-{NAAM}__icoon b-{NAAM}__icoon--3d" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{naam}" '
-                     f'src="/img/{kaart}/{naam}.webp" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
+            teken = (f'<span class="b-{NAAM}__icoon b-{NAAM}__icoon--3d" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{icoon}" '
+                     f'src="/img/clay/{icoon}-240.webp" srcset="/img/clay/{icoon}-144.webp 144w, /img/clay/{icoon}-240.webp 240w" '
+                     f'sizes="4.4rem" alt="" width="240" height="240" loading="lazy" decoding="async"></span>')
         else:
             teken = f'<span class="b-{NAAM}__icoon">{ctx.icoon(icoon)}</span>'
         punten.append(f'''<li class="b-{NAAM}__punt">

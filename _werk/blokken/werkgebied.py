@@ -16,6 +16,12 @@ Twee plekken:
                          van dat blok weg (zie de notitie in over-ons.md); met True staat hij onder de regels.
 De verhuizer: een uitsnede van de hele man, alt leeg (gegenereerd beeld, het claimt niet wie het is). Een
 pagina met deze man al elders kiest er een andere via man=(src, breedte, hoogte).
+
+Sinds 28-09-2026 uit website/review/werkgebied-20260928/r2/ ("add the arrows, the offerte buttons, the adresplaat"):
+  route=True        de gouden routelijn met pijlpunten tussen de tegels (versie 2, Routelijn)
+  adresplaat=True   het adres met een routelink op de linkerbovenhoek van de kaart (versie 3, Adresplaat)
+  acties=True       "Offerte aanvragen" en de belknop onder de regels (versie 5, Offerte en bellen)
+/over-ons/ zet adresplaat en acties uit: het adres en de routeknop staan daar al, en het grote formulier volgt direct.
 """
 NAAM = "werkgebied"
 CSS = True
@@ -28,7 +34,7 @@ ICONEN = {"hoofdkantoor": "pin", "nederland": "vrachtwagen", "internationaal": "
 MAN = ("/img/verhuizer-doos-deken-uit.webp", 698, 1200)
 
 
-def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, **opties):
+def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, route=True, adresplaat=True, acties=True, **opties):
     k = kopij
     cfg = ctx.cfg
     items = ctx.kopij_van(regels_van[0]).blok(regels_van[1]).items if regels_van else k.items
@@ -48,19 +54,32 @@ def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, **op
         </li>''')
     alt = f"Kaart van Den Haag met het hoofdkantoor van {cfg.NAAM} aan de {cfg.STRAAT}"
     alineas = ctx.alineas(k.tekst, "wg__alinea") if alineas else ""
-    route = ""
+    nieuw_tabblad = '<span class="vh"> (opent OpenStreetMap in een nieuw tabblad)</span>'
+    routeknop = ""
     if k.veld("knop"):
-        route = (f'<div class="knoppen"><a class="knop knop--licht" href="{ctx.esc(cfg.ROUTE)}" rel="noopener" target="_blank">'
-                 f'{ctx.icoon("route")}<span>{ctx.inline(k.veld("knop"))}</span><span class="vh"> (opent OpenStreetMap in een nieuw tabblad)</span></a></div>')
-    lijst = f'<ul class="wg__regels" role="list" data-reveal-groep>{"".join(regels)}</ul>' if regels else ""
+        routeknop = (f'<div class="knoppen"><a class="knop knop--licht" href="{ctx.esc(cfg.ROUTE)}" rel="noopener" target="_blank">'
+                     f'{ctx.icoon("route")}<span>{ctx.inline(k.veld("knop"))}</span>{nieuw_tabblad}</a></div>')
+    knoppen = ""
+    if acties:
+        knoppen = (f'<div class="knoppen wg__acties">{ctx.knop("Offerte aanvragen", "/offerte/")}'
+                   f'{ctx.knop(f"Bel {cfg.TEL}", cfg.TELHREF, soort="licht", icoon="telefoon", klasse="knop--icoon-voor", attrs="data-geen-whatsapp")}</div>')
+    plaat = ""
+    if adresplaat:
+        plaat = (f'<div class="wg__adres"><span class="wg__adres-ic" aria-hidden="true">{ctx.icoon("pin")}</span><div>'
+                 f'<p><strong>{ctx.esc(cfg.STRAAT)}</strong>{ctx.esc(cfg.POSTCODE)} {ctx.esc(cfg.PLAATS)}</p>'
+                 f'<a class="wg__link" href="{ctx.esc(cfg.ROUTE)}" rel="noopener" target="_blank"><span>Route plannen</span>{ctx.icoon("pijl")}{nieuw_tabblad}</a>'
+                 f'</div></div>')
+    soort = "wg__regels wg__regels--route" if route else "wg__regels"
+    lijst = f'<ul class="{soort}" role="list" data-reveal-groep>{"".join(regels)}</ul>' if regels else ""
     msrc, mb, mh = man
     return f'''<section class="sectie sectie--{sectie} b-werkgebied" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop">
   <div class="wrap wg">
     <div class="wg__tekst">
       {ctx.kopgroep(k)}
       {lijst}
+      {knoppen}
       {alineas}
-      {route}
+      {routeknop}
     </div>
     <figure class="wg__kaart" data-reveal>
       <span class="wg__plaat" aria-hidden="true"></span>
@@ -68,6 +87,7 @@ def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, **op
         {ctx.beeld(KAART, alt, 1400, 933, klasse="wg__beeld")}
       </div>
       {ctx.beeld(msrc, "", mb, mh, klasse="wg__man")}
+      {plaat}
       <figcaption class="wg__bron"><span>Kaartgegevens © <a href="https://www.openstreetmap.org/copyright" rel="noopener" target="_blank">OpenStreetMap-bijdragers</a></span></figcaption>
     </figure>
   </div>

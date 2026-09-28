@@ -7,7 +7,7 @@ JS = False
 
 FOTOS = {
     "particulier": "particulier-v2", "zakelijk": "zakelijk-v2", "nationaal": "nationaal-v2",
-    "internationaal": "internationaal-v2b", "verhuislift": "verhuislift", "opslag": "opslag-v2",
+    "internationaal": "internationaal-v2b", "verhuislift": "verhuislift", "opslag": "opslag-v3",
     "montage": "montage-v2", "woningontruiming": "woningontruiming-v2",
 }
 
@@ -34,10 +34,10 @@ UITSTAP = {
     # op 7,28% van de hoogte (drempel 45), dus pop (0,0728 + 0,11) / (1 - 0,0728) en knip pop / (1 + pop).
     "internationaal-v2b": ("19.7%", "16.47%"),
     "verhuislift": ("43.2%", "30.15%"),
-    "opslag": ("50.1%", "33.38%"),
-    # opslag-v2 (23-09-2026, ander gezicht, zelfde uitsnede): de bovenkant van de persoon zakt van 26,05% naar
-    # 26,54% (korter haar), verder is de alfa gelijk, dus dezelfde pop en knip als opslag.
-    "opslag-v2": ("50.1%", "33.38%"),
+    # opslag-v3 (28-09-2026, versie 4 uit website/review/opslag-beeld-20260928/r3/, witte doos zonder merk; de
+    # gebruiker: "Goedgekeurd voor de site: versie 4" en "remove the old image", dus de twee vorige opslagfoto's zijn eruit):
+    # de alfa begint op 13,09% van de hoogte (drempel 45), dus pop (0,1309 + 0,11) / (1 - 0,1309) en knip pop / (1 + pop).
+    "opslag-v3": ("27.7%", "21.70%"),
     # montage-v2 (23-09-2026, versie 3 uit website/review/handyman-ronde-r7-20260923/): de alfa begint op 3,33% van
     # de hoogte (drempel 45), dus pop (0,0333 + 0,11) / (1 - 0,0333) en knip pop / (1 + pop).
     "montage-v2": ("14.8%", "12.91%"),

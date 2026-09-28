@@ -40,7 +40,7 @@ VORMEN = {"particulier": "service-story-tabs", "zakelijk": "fixed-price-cards", 
 
 # Welke dienstfoto in het paneel komt. Dezelfde kaart als in blok diensten (home).
 FOTOS = {"particulier": "particulier-v2", "zakelijk": "zakelijk-v2", "nationaal": "nationaal-v2",
-         "internationaal": "internationaal-v2b", "verhuislift": "verhuislift", "opslag": "opslag-v2",
+         "internationaal": "internationaal-v2b", "verhuislift": "verhuislift", "opslag": "opslag-v3",
          "montage": "montage-v2", "woningontruiming": "woningontruiming-v2"}
 
 

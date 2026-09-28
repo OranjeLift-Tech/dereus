@@ -1,0 +1,63 @@
+/* Zo werken wij als blad (/over-ons/ #zo-werken-wij), sinds 28-09-2026: versie 5 uit
+   website/review/zowerkenwij-20260928/, met ronde 2 ("make the icons pop out of the block and make the blocks be
+   more compact, less empty space") en ronde 3 ("less text"). Naar het patroon contact-direct-location uit
+   ../section-library. Van achter naar voor: het blad van Lucht naar goud, de vakman die --wb-rise boven zijn
+   bovenrand uitkomt, en de kop; daaronder de kaarten, met het klei-icoon --wb-uit boven de kaart.
+   Gemeten 28-09-2026 in de ronde: 774 px hoog op 1440 en 1388 px op 390, kaarten 221 px op 1440. */
+.b-waardenblad { --wb-rise: clamp(3.5rem, 6vw, 5.5rem); --wb-uit: 2.25rem; padding-top: max(1.5rem, var(--ruimte) - var(--wb-rise)); }
+.wb__blad { position: relative; margin-top: var(--wb-rise); border-radius: 14px 64px 14px 64px;
+  background: linear-gradient(100deg, var(--primary-100) 0%, var(--primary-50) 45%, var(--accent-100) 72%, var(--accent-200) 100%); }
+.wb__kop { min-width: 0; max-width: 40rem; padding: clamp(1.8rem, 4vw, 3.25rem) clamp(1.5rem, 4vw, 3.25rem); margin-right: clamp(18rem, 36%, 28rem); }
+.wb__kop h2 { margin: 0; }
+.wb__knop { margin-top: 1.6rem; }
+/* de vakman: rechter- en onderrand van het bestand (daar loopt de figuur tot de rand) op die van het blad */
+.wb__fig { position: absolute; right: 0; bottom: 0; height: calc(100% + var(--wb-rise)); aspect-ratio: 1080 / 810;
+  clip-path: inset(0 0 0 0 round 0 0 14px 0); pointer-events: none; }
+.wb__fig img { width: 100%; height: 100%; object-fit: contain; object-position: right bottom; filter: drop-shadow(0 8px 12px rgb(14 26 51 / .16)); }
+
+/* De kaarten: de kolombreedtes komen uit de tekstlengte (--wb-kolommen, gezet door waardenblad.py). */
+.wb__kaarten { display: grid; grid-template-columns: var(--wb-kolommen, repeat(5, minmax(0, 1fr))); gap: .9rem;
+  margin: calc(1.1rem + var(--wb-uit)) 0 0; padding: 0; list-style: none; }
+.wb__item { display: flex; min-width: 0; }
+.wb__kaart { flex: 1; display: flex; flex-direction: column; padding: 0 1.15rem 1.2rem; border-radius: 14px; background: var(--white);
+  border-bottom: 6px solid var(--brand-primary); box-shadow: 0 0 0 1px rgb(14 26 51 / .06), 0 14px 30px -24px rgb(14 26 51 / .42); }
+.wb__klei { width: 4.75rem; height: 4.75rem; margin: calc(-1 * var(--wb-uit)) 0 0 -.4rem; filter: drop-shadow(0 6px 6px rgb(14 26 51 / .16)); }
+.wb__kaart h3 { margin: .4rem 0 0; font-size: 1.3rem; }
+.wb__kaart p { margin: .35rem 0 0; color: var(--grey-600); font-size: .97rem; line-height: 1.55; }
+
+/* Tot 1100: drie kaarten boven, twee eronder in het midden */
+@media (max-width: 1100px) {
+  .wb__kaarten { grid-template-columns: repeat(6, minmax(0, 1fr)); row-gap: calc(.9rem + var(--wb-uit)); }
+  .wb__item { grid-column: span 2; }
+  .wb__item:nth-child(4) { grid-column: 2 / span 2; }
+}
+/* Gestapeld: de vakman boven, de witte kop schuift over zijn heup, zodat de onderkant van het bestand niet te zien is */
+@media (max-width: 900px) {
+  .b-waardenblad { --wb-rise: 2.5rem; }
+  .wb__blad { display: flex; flex-direction: column; border-radius: 14px 48px 14px 48px; padding: 0 1rem 1rem; }
+  .wb__fig { position: relative; order: -1; align-self: flex-end; height: clamp(15rem, 52vw, 21rem); margin: calc(-1 * var(--wb-rise)) -1rem 0 0; clip-path: inset(0 0 0 0); }
+  .wb__kop { position: relative; z-index: 1; max-width: none; margin: -4.5rem 0 0; padding: 1.5rem 1.4rem; border-radius: 14px; background: var(--white); }
+  .wb__kaarten { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wb__item, .wb__item:nth-child(4) { grid-column: auto; }
+  .wb__item:last-child { grid-column: 1 / -1; }
+}
+/* Telefoon: het icoon links boven, de titel ernaast, de tekst over de volle breedte eronder */
+@media (max-width: 560px) {
+  .b-waardenblad { --wb-uit: 1.5rem; }
+  .wb__kaarten { grid-template-columns: minmax(0, 1fr); }
+  .wb__kaart { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .8rem; align-items: end; padding: 0 1rem 1.1rem; }
+  .wb__klei { grid-row: 1 / 2; width: 3.75rem; height: 3.75rem; margin: calc(-1 * var(--wb-uit)) 0 0 -.3rem; }
+  .wb__kaart h3 { grid-column: 2; margin: 0 0 .15rem; font-size: 1.2rem; }
+  .wb__kaart p { grid-column: 1 / -1; margin-top: .5rem; }
+}
+
+/* hover: de kaart komt 3 px omhoog met een gouden voet, het icoon nog 3 px verder. Op de kaart en het icoon, niet
+   op de li: die heeft de overgang van data-reveal-groep, die een eigen transition overschrijft. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wb__kaart { transition: translate .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .wb__item:hover .wb__kaart { translate: 0 -3px; border-color: var(--brand-accent); box-shadow: 0 0 0 1px rgb(14 26 51 / .06), 0 22px 36px -22px rgb(14 26 51 / .48); }
+  .wb__klei { transition: translate .25s ease; }
+  .wb__item:hover .wb__klei { translate: 0 -3px; }
+  .wb__knop .ic { transition: translate .25s ease; }
+  .wb__knop:is(:hover, :focus-visible) .ic { translate: 4px 0; }
+}

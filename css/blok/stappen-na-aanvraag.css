@@ -97,11 +97,12 @@
 .b-stappen-na-aanvraag__ic::before{background:var(--accent-700);transform:translate(calc(-50% + 3px),4px)}
 .b-stappen-na-aanvraag__ic::after{background:linear-gradient(160deg,var(--accent-200),var(--brand-accent) 55%,var(--accent-600));
   transform:translateX(-50%)}
-.b-stappen-na-aanvraag__obj{position:absolute;z-index:1;left:50%;bottom:.4rem;width:auto;height:7rem;max-width:none;
+/* Sinds de samenvoeging (28-09-2026) klei-iconen in plaats van de 3D-renders: vierkant, dus zo breed als hoog.
+   Op 5,6 rem is de envelop even breed als het huis eronder (5 rem). */
+.b-stappen-na-aanvraag__obj{position:absolute;z-index:1;left:50%;bottom:.4rem;width:var(--klei,5.6rem);height:var(--klei,5.6rem);max-width:none;
   transform:translateX(-50%);
   filter:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 30%,transparent))
          drop-shadow(8px 15px 11px color-mix(in srgb,var(--brand-secondary) 34%,transparent))}
-.b-stappen-na-aanvraag__obj--klembord{height:6.8rem}
 
 /* de plaat onder het station */
 .b-stappen-na-aanvraag__plaat{position:relative;z-index:1;display:flex;flex:1;flex-direction:column;min-width:0;
@@ -179,7 +180,7 @@
   .b-stappen-na-aanvraag__ic::before,.b-stappen-na-aanvraag__ic::after{left:0;width:3.6rem}
   .b-stappen-na-aanvraag__ic::before{transform:translate(3px,4px)}
   .b-stappen-na-aanvraag__ic::after{transform:none}
-  .b-stappen-na-aanvraag__obj{left:.4rem;height:5.1rem;transform:none}
+  .b-stappen-na-aanvraag__obj{--klei:4.2rem;left:.2rem;transform:none}
   .b-stappen-na-aanvraag__plaat{display:block;margin-top:0;padding:.85rem 1.1rem .95rem;text-align:left}
   .b-stappen-na-aanvraag__nr{display:inline;margin-right:.5rem;font-size:1.3rem;vertical-align:-.05em}
   .b-stappen-na-aanvraag__titel{display:inline;margin:0}

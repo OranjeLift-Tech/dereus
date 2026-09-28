@@ -30,13 +30,13 @@ kolom-dereus: De Reus
 kolom-contact: Contact
 bereikbaar-kop: Bereikbaar
 adres-label: Hoofdkantoor
-onderregel: © 2026 Verhuisbedrijf De Reus
+onderregel: © 2026 Verhuisbedrijf De Reus · KvK {KVK}
 - [Over ons](/over-ons/)
 - [Werkwijze](/werkwijze/)
 - [Kosten](/kosten/)
 - [Reviews](/#reviews)
 - [Veelgestelde vragen](/#vragen)
-Notitie: de lijst hierboven is de kolom De Reus. Onderste regel verder: Algemene voorwaarden · Privacyverklaring. Het KvK-nummer komt er pas bij als De Reus het aanlevert (open vraag 1.1).
+Notitie: de lijst hierboven is de kolom De Reus. Onderste regel verder: Algemene voorwaarden · Privacyverklaring. Het KvK-nummer staat in de onderregel via het feit KVK uit config.FEITEN (91699568, gecontroleerd op kvk.nl op 28-09-2026); zonder dat feit valt de regel terug op "© jaar en naam".
 
 ## Andere diensten van De Reus {#verwant}
 label: Ook handig
