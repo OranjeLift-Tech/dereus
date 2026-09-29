@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.className+=' js'</script>
+<title>Zo bereikt u ons · 15 ontwerpen voor de kanaalkaarten · referentie A, B en C</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="/fonts/archivo-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/min/site.min.css?v=3aba39d545">
+<link rel="stylesheet" href="/css/min/contactkaarten.min.css?v=dc16a5ea14">
+<link rel="stylesheet" href="/css/min/uitsnede.min.css?v=c4e7533d09">
+<link rel="stylesheet" href="/css/min/logomotief.min.css?v=4313ffbe6d">
+<style>
+/* ===== pagina ===== */
+html{scroll-padding-top:4.5rem}
+.vnav{position:sticky;top:0;z-index:60;background:var(--brand-secondary);color:#fff;font-size:.875rem}
+.vnav .wrap{display:flex;align-items:center;gap:1rem;min-height:3.4rem;flex-wrap:wrap}
+.vnav b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.1rem;letter-spacing:.01em}
+.vnav__knop{padding:.4rem .8rem;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:none;color:#fff;font:600 .8rem/1 var(--font-sans);cursor:pointer}
+.vnav__knop:hover,.vnav__knop[aria-pressed="true"]{background:var(--brand-accent);border-color:var(--brand-accent);color:var(--brand-secondary)}
+.vnav__links{display:flex;flex-wrap:wrap;gap:.3rem;margin-left:auto}
+.vnav a{display:grid;place-items:center;min-width:2.3rem;height:2rem;padding:0 .4rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-weight:700;text-decoration:none}
+.vnav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.vkap{background:#fff;border-top:3px solid var(--brand-secondary);padding:1.1rem 0;position:relative;z-index:3}
+.vkap .wrap{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start}
+.vkap .wrap>div{flex:1 1 18rem;min-width:0}
+.vkap small,.vkap p{overflow-wrap:anywhere}
+.vkap__nr{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.35rem/1 var(--font-display);font-stretch:75%;box-shadow:2px 2px 0 var(--accent-700)}
+.vkap b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.35rem;color:var(--brand-primary)}
+.vkap small{display:block;margin:.1rem 0 .15rem;color:var(--grey-600);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.vkap p{margin:.2rem 0 0;max-width:92ch;color:var(--graphite);font-size:.9375rem}
+.vkap--eind{padding:2rem 0}
+.vkap__maat{flex:none;margin-left:auto;align-self:center;padding:.35rem .7rem;border-radius:999px;background:var(--success-50);color:var(--success);font-size:.8rem;font-weight:700;white-space:nowrap}
+.vctx{background:var(--brand-secondary);color:rgba(255,255,255,.5);font:600 .72rem/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;padding:.85rem 0 .8rem}
+.vctx--blauw{background:var(--brand-primary);color:rgba(255,255,255,.6)}
+body.zonder-kop .b-contactkaarten__boven{display:none}
+
+/* ===== gedeeld ===== */
+.k.sectie{position:relative;isolation:isolate;overflow-x:clip}
+.kk{list-style:none;margin:0;padding:0}
+.kk>li{min-width:0}
+.k-titel{margin:0 0 .45rem;color:var(--color-heading);font:var(--weight-bold) clamp(1.25rem,1.1rem + .5vw,1.45rem)/1.2 var(--font-display);font-stretch:var(--font-display-stretch)}
+.k-tekst{margin:0 0 1rem;color:var(--graphite);font-size:var(--text-small);line-height:1.55}
+.k-link{display:inline-flex;align-items:flex-end;gap:.4rem;margin-top:auto;color:var(--brand-primary);font-size:var(--text-small);font-weight:var(--weight-bold);line-height:1.4;text-decoration:none}
+.k-link span{min-width:0;overflow-wrap:break-word;text-decoration:underline;text-decoration-color:var(--primary-200);text-underline-offset:4px}
+.k-link:hover span{text-decoration-color:currentColor}
+.k-link .ic{flex:none;width:1rem;height:1rem;margin-bottom:.1em;transition:transform .3s var(--ease-out)}
+@media(hover:hover){.k-link:hover .ic{transform:translateX(3px)}}
+/* licht op donker: witte tekst, gele link */
+.k-donker .k-titel{color:#fff}
+.k-donker .k-tekst{color:color-mix(in srgb,#fff 86%,transparent)}
+.k-donker .k-link{color:var(--brand-accent)}
+.k-donker .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+.k-donker .k-link:hover span{text-decoration-color:currentColor}
+/* de echte voorwerpen: zelfde maten, kleur en schaduw als live, geschaald met --s */
+.k-obj{display:block;max-width:none;height:auto;pointer-events:none;
+  filter:saturate(1.18) contrast(1.07) brightness(1.02) drop-shadow(2px 4px 3px color-mix(in srgb,var(--ink) 30%,transparent)) drop-shadow(14px 26px 22px color-mix(in srgb,var(--ink) 32%,transparent))}
+.k-obj--telefoon{width:calc(15rem * var(--s,1))}
+.k-obj--envelop{width:calc(13.5rem * var(--s,1))}
+.k-obj--klembord{width:auto;height:calc(13.6rem * var(--s,1));rotate:-3deg}
+.k-obj--dozen{width:auto;height:calc(12.8rem * var(--s,1))}
+.k-foto{display:block;max-width:none}
+/* de groene neonhover van nu (ontwerp 06 uit de hover-ronde), waar het een kaart is */
+.k-neon{transition:translate .45s var(--ease-out),scale .45s var(--ease-out),box-shadow .45s var(--ease-out),rotate .6s var(--ease-out)}
+@media(hover:hover){.k-neon:hover{translate:-5px -5px;scale:1.02;
+  box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px color-mix(in srgb,var(--color-cta) 22%,transparent),0 0 0 2px var(--color-cta),3px 3px 0 2px var(--color-cta),6px 6px 0 2px var(--color-cta-hover),9px 9px 0 2px var(--color-cta-active),16px 22px 30px -10px color-mix(in srgb,var(--ink) 30%,transparent),0 0 12px 2px color-mix(in srgb,var(--color-cta) 85%,transparent),4px 4px 34px 8px color-mix(in srgb,var(--color-cta) 45%,transparent)}}
+.k .kk,.k04-plaat,.k07-plaat,.k08-baan,.k10-plaat,.k13-beeld,.k14-band,.k15-kaart{--rij-boven:clamp(2.5rem,1.8rem + 2.5vw,4rem)}
+
+/* ===== 01 trap op de gele band (referentie B .sgm) ===== */
+.k01{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;align-items:end;margin-top:var(--rij-boven);padding-top:8.9rem}
+.k01::before{content:"";position:absolute;left:-1.25rem;right:-1.25rem;bottom:-2.25rem;height:10rem;border-radius:18px;
+  background:linear-gradient(180deg,#FFD84F,var(--brand-accent) 55%,#F7C21C);
+  box-shadow:inset 0 1px 0 #FFE89A,0 8px 0 #D9A200,0 9px 0 color-mix(in srgb,var(--ink) 16%,transparent),0 32px 44px -26px color-mix(in srgb,var(--ink) 45%,transparent)}
+.k01-kaart{--s:.78;position:relative}
+.k01-kaart:nth-child(2){margin-bottom:2.5rem}
+.k01-kaart:nth-child(3){margin-bottom:5rem}
+.k01-kaart:nth-child(4){margin-bottom:7.5rem}
+.k01 .k-obj{position:absolute;z-index:0;left:50%;bottom:calc(100% - 1.9rem);translate:-50% 0}
+.k01 .k-obj--klembord{rotate:-5deg}
+.k01-doos{position:relative;z-index:1;display:flex;flex-direction:column;min-height:14.25rem;padding:1.3rem 1.35rem 1.4rem;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 18px 36px -20px color-mix(in srgb,var(--ink) 40%,transparent)}
+
+/* ===== 02 foto met voorwerp op de naad (referentie B .sgd1) ===== */
+.s02{padding-bottom:0}
+.k02{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:var(--rij-boven);padding:4.5rem 0 clamp(3rem,2rem + 3vw,4.5rem)}
+.k02::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;translate:-50% 0;background:var(--primary-100);
+  clip-path:polygon(0 0,50% 2.4rem,100% 0,100% 100%,0 100%)}
+.k02-kaart{--s:.56;display:flex;flex-direction:column;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--brand-secondary) 7%,transparent),0 1px 2px color-mix(in srgb,var(--ink) 8%,transparent),0 18px 34px -20px color-mix(in srgb,var(--ink) 40%,transparent)}
+.k02-beeld{position:relative;aspect-ratio:16/10;border-radius:var(--radius-card) var(--radius-card) 0 0}
+.k02-beeld .k-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.k02-beeld .k-obj{position:absolute;right:.35rem;bottom:-1.9rem}
+.k02-beeld .k-obj--telefoon,.k02-beeld .k-obj--envelop{right:-.4rem;bottom:-1.4rem}
+.k02-tekst{display:flex;flex:1;flex-direction:column;padding:1.15rem 1.3rem 1.35rem}
+.k02 .k-titel{padding-right:5.2rem}
+
+/* ===== 03 vier kleurtegels (referentie B .sgw-tegel) ===== */
+.k03{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:calc(var(--rij-boven) + 2.6rem)}
+.k03-tegel{position:relative;display:flex;flex-direction:column;min-height:16rem;padding:1.5rem 1.4rem 1.45rem;border-radius:var(--radius-card)}
+.k03-tegel:nth-child(1){background:var(--brand-secondary)}
+.k03-tegel:nth-child(2){background:var(--brand-accent)}
+.k03-tegel:nth-child(3){background:var(--primary-100)}
+.k03-tegel:nth-child(4){background:var(--brand-primary)}
+.k03-tegel:is(:nth-child(1),:nth-child(4)) .k-titel{color:#fff}
+.k03-tegel:is(:nth-child(1),:nth-child(4)) .k-tekst{color:color-mix(in srgb,#fff 86%,transparent)}
+.k03-tegel:is(:nth-child(1),:nth-child(4)) .k-link{color:var(--brand-accent)}
+.k03-tegel:is(:nth-child(1),:nth-child(4)) .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+.k03-tegel:nth-child(2) :is(.k-titel,.k-link){color:var(--brand-secondary)}
+.k03-tegel:nth-child(2) .k-tekst{color:var(--ink)}
+.k03-tegel:nth-child(2) .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-secondary) 40%,transparent)}
+.k03-tegel:nth-child(3) .k-tekst{color:var(--ink)}
+.k03-schijf{--s:.58;position:absolute;right:1rem;top:-2.8rem;width:7.2rem;height:7.2rem;border-radius:50%;background:#fff;
+  box-shadow:inset 0 -5px 0 color-mix(in srgb,var(--brand-secondary) 10%,transparent),0 14px 24px -12px rgba(0,0,0,.5)}
+.k03-schijf .k-obj{position:absolute;left:50%;bottom:.85rem;translate:-50% 0}
+.k03-schijf .k-obj--klembord,.k03-schijf .k-obj--dozen{bottom:1.1rem}
+.k03 .k-titel{margin-right:7.4rem;min-height:2.4em}
+
+/* ===== 04 goudgele plaat met foto-afdrukken (referentie B .sgt) ===== */
+.k04-plaat{margin-top:var(--rij-boven);padding:clamp(1.8rem,1rem + 2vw,2.6rem) clamp(1.3rem,.8rem + 1.6vw,2.4rem) clamp(1.6rem,1rem + 1.6vw,2.2rem);border-radius:28px;background:var(--brand-accent);
+  box-shadow:inset 0 1px 0 #FFE89A,0 8px 0 #D9A200,0 9px 0 color-mix(in srgb,var(--ink) 14%,transparent),0 34px 54px -32px color-mix(in srgb,var(--ink) 55%,transparent)}
+.k04{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(1.2rem,.8rem + 1.2vw,2rem)}
+.k04-kaart{--s:.5;display:flex;flex-direction:column}
+.k04-afdruk{position:relative;margin:0 0 2.1rem;padding:8px;background:#fff;border-radius:14px;box-shadow:0 18px 40px -18px rgba(0,0,0,.6);rotate:-3deg}
+.k04-kaart:nth-child(2) .k04-afdruk{rotate:2deg}
+.k04-kaart:nth-child(3) .k04-afdruk{rotate:-1.6deg}
+.k04-kaart:nth-child(4) .k04-afdruk{rotate:2.6deg}
+.k04-afdruk .k-foto{width:100%;aspect-ratio:4/3.1;object-fit:cover;border-radius:8px}
+.k04-afdruk figcaption{position:absolute;left:1rem;top:1rem;right:1rem}
+.k04-afdruk .k-titel{display:inline-block;margin:0;padding:.3rem .75rem;border-radius:99px;background:var(--brand-secondary);color:#fff;font:700 .76rem/1.3 var(--font-sans);letter-spacing:.1em;text-transform:uppercase}
+.k04-afdruk .k-obj{position:absolute;right:-1.1rem;bottom:-1.7rem;rotate:3deg}
+.k04-afdruk .k-obj--klembord{rotate:-4deg}
+.k04 .k-tekst{color:var(--ink)}
+.k04 .k-link{color:var(--brand-secondary)}
+.k04 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-secondary) 40%,transparent)}
+
+/* ===== 05 dikke gele onderrand (referentie B .sgct-kaart) ===== */
+.k05{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:calc(var(--rij-boven) + 3rem)}
+.k05-kaart{--s:.56;position:relative;container-type:inline-size;display:flex;flex-direction:column;align-items:flex-start;padding:5rem 1.4rem 1.3rem;background:#fff;border:1.5px solid var(--primary-200);border-bottom:8px solid var(--brand-accent);border-radius:var(--radius-card);
+  box-shadow:0 5px 0 #D9A200,0 6px 0 color-mix(in srgb,var(--ink) 12%,transparent),0 24px 36px -22px color-mix(in srgb,var(--ink) 42%,transparent)}
+.k05-icoon{position:absolute;left:.9rem;top:-3.4rem;width:10rem;height:8rem}
+.k05-icoon .k-obj{position:absolute;left:0;bottom:0}
+.k05 .k-titel{margin:0 0 .3rem;color:var(--brand-primary);font:700 .82rem/1.3 var(--font-sans);letter-spacing:.12em;text-transform:uppercase}
+.k05-waarde{max-width:100%;margin:0 0 .75rem;color:var(--brand-secondary);font:var(--weight-display) min(1.7rem,8.6cqi)/1.1 var(--font-display);font-stretch:var(--font-display-stretch)}
+.k05-waarde span{text-decoration-thickness:3px;text-decoration-color:var(--brand-accent);text-underline-offset:6px}
+.k05-waarde .ic{width:1.1rem;height:1.1rem;margin-bottom:.2em}
+.k05 .k-tekst{margin:0}
+
+/* ===== 06 gele nis, nummer en blauw vlak (referentie A .dienst) ===== */
+.k06{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.3rem;margin-top:calc(var(--rij-boven) + 2rem)}
+.k06-kaart{--s:.9;display:flex;flex-direction:column;border-radius:var(--radius-card);background:var(--brand-primary);color:#fff;transition:translate .2s var(--ease-out),background-color .2s var(--ease-out)}
+@media(hover:hover){.k06-kaart:hover{translate:0 -3px;background:var(--brand-secondary)}}
+.k06-nis{position:relative;aspect-ratio:760/435;border-radius:var(--radius-card) var(--radius-card) 0 0;background:radial-gradient(85% 90% at 50% 100%,#fff,var(--accent-100) 55%,var(--accent-200))}
+.k06-nis .k-obj{position:absolute;z-index:1;left:50%;bottom:.6rem;translate:-50% 0;transition:scale .8s var(--ease-out)}
+@media(hover:hover){.k06-kaart:hover .k-obj{scale:1.05}}
+.k06-nr{position:absolute;z-index:2;left:0;bottom:0;padding:.6rem .85rem;background:var(--brand-accent);color:var(--brand-secondary);font:var(--weight-display) 1.25rem/1 var(--font-display);font-stretch:var(--font-display-stretch);letter-spacing:.04em}
+.k06-tekst{display:flex;flex:1;flex-direction:column;padding:1.3rem 1.5rem 1.6rem}
+.k06 .k-titel{color:#fff}
+.k06 .k-tekst{color:color-mix(in srgb,#fff 88%,transparent)}
+.k06 .k-link{color:var(--brand-accent)}
+.k06 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+
+/* ===== 07 één plaat, vier vakken (referentie A .stappen) ===== */
+.k07-plaat{margin-top:calc(var(--rij-boven) + 4.5rem);padding:clamp(1.3rem,2.4vw,2rem);border-radius:24px;background:linear-gradient(180deg,var(--primary-50),var(--primary-100));border:1px solid var(--primary-100);
+  box-shadow:inset 0 1px 0 #fff,0 6px 0 var(--primary-200),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 24px -16px color-mix(in srgb,var(--ink) 26%,transparent),0 40px 60px -42px color-mix(in srgb,var(--brand-secondary) 50%,transparent)}
+.k07{--gat:clamp(1rem,2vw,1.6rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gat)}
+.k07-vak{--s:.74;--pl:0px;position:relative;display:flex;flex-direction:column;padding-top:4.6rem}
+.k07-vak:not(:first-child){--pl:var(--gat);border-left:1px solid var(--primary-200);padding-left:var(--gat)}
+.k07-vak .k-obj{position:absolute;left:calc(50% + var(--pl) / 2);bottom:calc(100% - 3.9rem);translate:-50% 0}
+.k07 .k-titel{min-height:2.4em;display:flex;align-items:flex-end}
+
+/* ===== 08 schuine gele band (referentie A .opslag__band) ===== */
+.k08-baan{position:relative;margin-top:calc(var(--rij-boven) + 3.6rem);padding-bottom:3.2rem}
+.k08-band{position:absolute;z-index:0;left:50%;width:100vw;translate:-50% 0;bottom:3.6rem;height:clamp(12rem,14vw,14.5rem);overflow:hidden;transform:skewY(-4deg);backface-visibility:hidden;
+  background:linear-gradient(90deg,#FFD84F,var(--brand-accent) 45%,var(--accent-600))}
+.k08-merk{position:absolute;left:2.5%;top:50%;translate:0 -50%;height:52%;width:auto;opacity:.55}
+.k08-lijn{position:absolute;z-index:0;left:50%;width:100vw;translate:-50% 0;bottom:calc(3.6rem - 16px);height:16px;background:var(--brand-secondary);transform:skewY(-4deg);backface-visibility:hidden}
+.k08{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.2rem}
+.k08-kaart{--s:.6;position:relative;display:flex;flex-direction:column;padding:5.2rem 1.35rem 1.35rem;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 26px 44px -24px color-mix(in srgb,var(--ink) 50%,transparent)}
+.k08-kaart .k-obj{position:absolute;left:50%;bottom:calc(100% - 4.4rem);translate:-50% 0}
+
+/* ===== 09 vier bogen (referentie A .venster__boog) ===== */
+.k09{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.2rem;margin-top:calc(var(--rij-boven) + 2.2rem)}
+.k09-kaart{--s:.9;display:flex;flex-direction:column;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 0 0 1px var(--primary-100),0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 18px 34px -22px color-mix(in srgb,var(--ink) 38%,transparent)}
+.k09-boog{position:relative;height:11.5rem;margin:-2.2rem .9rem 0;border-radius:999px 999px 0 0;background:linear-gradient(180deg,var(--primary-100),var(--primary-200))}
+.k09-boog::after{content:"";position:absolute;inset:12px 12px 0;border:2px solid var(--brand-accent);border-bottom:0;border-radius:999px 999px 0 0}
+.k09-boog .k-obj{position:absolute;z-index:1;left:50%;bottom:.3rem;translate:-50% 0;filter:saturate(1.18) contrast(1.07) brightness(1.02) drop-shadow(2px 4px 3px color-mix(in srgb,var(--ink) 30%,transparent)) drop-shadow(0 22px 22px color-mix(in srgb,var(--brand-secondary) 38%,transparent))}
+.k09-tekst{display:flex;flex:1;flex-direction:column;padding:1.2rem 1.35rem 1.4rem;border-top:1px solid var(--primary-100)}
+
+/* ===== 10 Diepblauwe plaat met driekleurenstreep (referentie A .zeker__card) ===== */
+.k10-plaat{position:relative;margin-top:calc(var(--rij-boven) + 4rem);padding:5.4rem clamp(1.4rem,3vw,2.6rem) clamp(1.6rem,3vw,2.4rem);border-radius:var(--radius-card);background:var(--brand-secondary);
+  box-shadow:0 30px 60px -30px color-mix(in srgb,var(--brand-secondary) 85%,transparent)}
+.k10-plaat::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;border-radius:var(--radius-card) var(--radius-card) 0 0;background:linear-gradient(90deg,var(--brand-primary) 0 30%,var(--brand-accent) 30% 72%,var(--primary-300) 72%)}
+.k10-merk{position:absolute;right:1.4rem;bottom:1.2rem;width:8.5rem;height:auto;opacity:.08;pointer-events:none}
+.k10{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem clamp(1.4rem,3vw,2.4rem)}
+.k10-vak{position:relative;display:flex;flex-direction:column;padding-top:1.4rem;border-top:1px solid color-mix(in srgb,#fff 16%,transparent)}
+.k10-schijf{--s:.62;position:absolute;left:50%;top:-4.3rem;translate:-50% 0;width:min(9.5rem,100%);height:2.4rem;border-radius:50%;
+  background:radial-gradient(60% 70% at 40% 35%,#FFE08A,var(--brand-accent) 60%,#F2B800);box-shadow:0 7px 0 #D9A200,0 8px 0 rgba(0,0,0,.25),0 20px 24px -10px rgba(0,0,0,.55)}
+.k10-schijf .k-obj{position:absolute;left:50%;bottom:.9rem;translate:-50% 0;filter:saturate(1.18) contrast(1.07) brightness(1.04) drop-shadow(2px 4px 3px rgba(0,0,0,.45)) drop-shadow(10px 20px 18px rgba(0,0,0,.4))}
+.k10 .k-titel{color:#fff}
+.k10 .k-tekst{color:color-mix(in srgb,#fff 84%,transparent)}
+.k10 .k-link{color:var(--brand-accent)}
+.k10 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+
+/* ===== 11 aan de gele lijn (referentie C .b-belofte) ===== */
+.k11{--band:1.15rem;--haak:2.3rem;position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(1rem,1.6vw,1.5rem);align-items:start;margin-top:var(--rij-boven);padding-top:calc(var(--band) / 2)}
+.k11::before{content:"";position:absolute;z-index:1;top:0;left:50%;width:100vw;height:var(--band);translate:-50% 0;background:var(--brand-accent);
+  box-shadow:inset 0 1px 0 #FFE89A,0 4px 0 #D9A200,0 12px 16px -8px color-mix(in srgb,var(--ink) 40%,transparent)}
+.k11::after{content:"";position:absolute;z-index:-2;top:45%;bottom:-2.5rem;left:50%;width:100vw;translate:-50% 0;background:linear-gradient(180deg,var(--primary-100),color-mix(in srgb,var(--primary-100) 0%,transparent));clip-path:polygon(0 12%,100% 0,100% 100%,0 100%)}
+.k11-kaart{--r:-1.6deg;--s:.6;position:relative;z-index:2;display:flex;flex-direction:column;margin-top:var(--haak);padding:1.1rem 1.3rem 1.35rem;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 7%,transparent),0 22px 38px -22px color-mix(in srgb,var(--ink) 45%,transparent);rotate:var(--r);transform-origin:50% calc(-1 * var(--haak));transition:rotate .9s cubic-bezier(.3,1.6,.45,1)}
+.k11-kaart:nth-child(even){--r:1.3deg}
+.k11-kaart:nth-child(3){--r:-.8deg}
+@media(hover:hover){.k11-kaart:hover{rotate:0deg}}
+.k11-haak{position:absolute;left:50%;bottom:100%;width:.9rem;height:calc(var(--haak) + .4rem);translate:-50% 0;border:2px solid var(--ink);border-bottom:0;border-radius:.45rem .45rem 0 0}
+.k11-haak::after{content:"";position:absolute;left:50%;bottom:-.35rem;width:1.6rem;height:.55rem;translate:-50% 0;border-radius:.2rem;background:var(--ink)}
+.k11-voorwerp{position:relative;display:block;height:8.6rem;margin:.2rem 0 .9rem}
+.k11-voorwerp .k-obj{position:absolute;left:50%;bottom:0;translate:-50% 0}
+
+/* ===== 12 grote fototegels met blauwe strook (referentie C .b-gezichten) ===== */
+.k12{display:grid;grid-template-columns:1.55fr 1fr 1fr 1fr;gap:clamp(.6rem,1.1vw,.95rem);margin-top:var(--rij-boven)}
+.k12-tegel{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:26rem;border-radius:var(--radius-card);overflow:hidden;isolation:isolate;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 8%,transparent),0 22px 40px -24px color-mix(in srgb,var(--ink) 50%,transparent);transition:translate .45s var(--ease-out),box-shadow .45s var(--ease-out)}
+.k12-tegel .k-foto{position:absolute;z-index:-1;inset:0;width:100%;height:100%;object-fit:cover;transition:scale .7s var(--ease-out)}
+.k12-tegel:nth-child(1) .k-foto{object-position:62% 30%}
+.k12-tegel:nth-child(3) .k-foto{object-position:45% 40%}
+.k12-tegel:nth-child(4) .k-foto{object-position:50% 25%}
+@media(hover:hover){.k12-tegel:hover{translate:0 -5px;box-shadow:0 2px 4px color-mix(in srgb,var(--ink) 6%,transparent),0 30px 46px -24px color-mix(in srgb,var(--ink) 55%,transparent)}.k12-tegel:hover .k-foto{scale:1.06}}
+.k12-strook{padding:1rem 1.2rem 1.15rem;background:color-mix(in srgb,var(--brand-primary) 90%,transparent);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.k12 .k-titel{margin:0 0 .3rem;color:#fff}
+.k12-tegel:first-child .k-titel{font-size:clamp(1.6rem,1.2rem + 1vw,2rem)}
+.k12 .k-tekst{margin:0 0 .6rem;color:color-mix(in srgb,#fff 90%,transparent);font-size:.95rem;line-height:1.5}
+.k12 .k-link{color:var(--brand-accent)}
+.k12 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+
+/* ===== 13 oplopende kaarten op een luchtfoto (referentie C .b-maten) ===== */
+.k13-beeld{position:relative;margin-top:var(--rij-boven)}
+.k13-foto{position:relative;margin:0;overflow:hidden;aspect-ratio:3.3/1;border-radius:var(--radius-media);background:var(--brand-secondary);box-shadow:0 30px 50px -36px color-mix(in srgb,var(--ink) 60%,transparent)}
+.k13-fotoimg{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%;scale:1.06}
+.k13-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,color-mix(in srgb,var(--brand-secondary) 55%,transparent),transparent 55%)}
+.k13{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;align-items:end;margin:-9.5rem clamp(.8rem,2.4vw,1.8rem) 0}
+.k13-maat{--hoog:14rem;--s:.5;position:relative;display:flex;flex-direction:column;min-height:var(--hoog);padding:1.5rem 1.35rem 1.35rem;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 30px 50px -32px color-mix(in srgb,var(--ink) 60%,transparent)}
+.k13-maat:nth-child(2){--hoog:15.5rem;background:var(--primary-100)}
+.k13-maat:nth-child(3){--hoog:17rem;background:var(--brand-primary)}
+.k13-maat:nth-child(4){--hoog:18.5rem;background:var(--brand-secondary)}
+.k13-maat::before{content:"";position:absolute;top:0;left:1.35rem;width:2.5rem;height:5px;border-radius:0 0 4px 4px;background:var(--brand-accent)}
+.k13-maat .k-obj{position:absolute;right:.5rem;bottom:calc(100% - 2.3rem)}
+.k13 .k-titel{padding-right:5.4rem}
+.k13-maat:nth-child(2) .k-tekst{color:var(--ink)}
+.k13-maat:is(:nth-child(3),:nth-child(4)) .k-titel{color:#fff}
+.k13-maat:is(:nth-child(3),:nth-child(4)) .k-tekst{color:color-mix(in srgb,#fff 86%,transparent)}
+.k13-maat:is(:nth-child(3),:nth-child(4)) .k-link{color:var(--brand-accent)}
+.k13-maat:is(:nth-child(3),:nth-child(4)) .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+
+/* ===== 14 fotoplaten aan één lijn (referentie C .b-historie) ===== */
+.s14{padding-bottom:0}
+.k14-band{position:relative;margin-top:var(--rij-boven);padding-block:3.2rem clamp(3rem,2rem + 3vw,4.25rem)}
+.k14-band::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;translate:-50% 0;background:var(--brand-accent);box-shadow:inset 0 1px 0 #FFE89A}
+.k14{--plaat:11.5rem;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(1.2rem,2.4vw,2.4rem)}
+.k14::before{content:"";position:absolute;left:0;right:0;top:calc(var(--plaat) + 1.85rem);height:3px;border-radius:2px;background:linear-gradient(to right,color-mix(in srgb,var(--brand-secondary) 30%,transparent),var(--brand-secondary) 70%)}
+.k14-stap{position:relative;display:flex;flex-direction:column}
+.k14-fig{margin:0 0 1.2rem}
+.k14-plaat{height:var(--plaat);overflow:hidden;border:6px solid #fff;border-radius:var(--radius-card);background:#fff;box-shadow:0 18px 34px -20px rgba(60,40,0,.7);rotate:-1.4deg}
+.k14-stap:nth-child(even) .k14-plaat{rotate:1.1deg}
+.k14-plaat .k-foto{width:100%;height:100%;object-fit:cover}
+.k14 .k-titel{position:relative;display:flex;align-items:center;gap:.6rem;width:fit-content;max-width:100%;margin:0 0 .55rem;padding-right:.7rem;background:var(--brand-accent);color:var(--brand-secondary);font-size:clamp(1.45rem,1.1rem + .9vw,1.85rem)}
+.k14 .k-titel::before{content:"";flex:none;width:.85rem;height:.85rem;border-radius:50%;background:var(--brand-secondary);box-shadow:0 0 0 .3rem var(--brand-accent)}
+.k14-stap:last-child .k-titel::before{background:#fff;box-shadow:0 0 0 .3rem var(--brand-accent),0 0 0 .45rem var(--brand-secondary)}
+.k14 .k-tekst{color:var(--ink)}
+.k14 .k-link{color:var(--brand-secondary)}
+.k14 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-secondary) 40%,transparent)}
+
+/* ===== 15 kanaalvakken met foto en gele strook (referentie B .sgpr) ===== */
+.k15-kaart{position:relative;display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);margin-top:calc(var(--rij-boven) + .8rem);border-radius:24px;background:#fff;
+  box-shadow:0 30px 60px -34px color-mix(in srgb,var(--brand-secondary) 60%,transparent)}
+.k15-kaart::after{content:"";position:absolute;inset:0;z-index:2;border:1px solid var(--brand-primary);border-radius:inherit;pointer-events:none}
+.k15-body{padding:clamp(1.4rem,2.6vw,2.2rem)}
+.k15{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+.k15-rij{--s:.36;position:relative;display:grid;grid-template-columns:5.4rem minmax(0,1fr);grid-template-rows:1fr auto;column-gap:1rem;padding:1.05rem 1.15rem 1.1rem;border:1px solid var(--grey-200);border-radius:12px;
+  transition:border-color .2s,background-color .2s,box-shadow .2s,translate .2s}
+@media(hover:hover){.k15-rij:hover{translate:0 -2px;border-color:var(--brand-primary);background:var(--primary-50);box-shadow:inset 0 0 0 1px var(--brand-primary),0 12px 22px -16px color-mix(in srgb,var(--ink) 45%,transparent)}}
+.k15-rij .k-obj{grid-row:1 / span 2;align-self:start;justify-self:center;margin-top:-1.4rem}
+.k15-rij .k-obj--klembord,.k15-rij .k-obj--dozen{margin-top:-1.8rem}
+.k15-rijtekst .k-titel{margin:0 0 .25rem;font-size:1.3rem}
+.k15-rijtekst .k-tekst{margin:0;font-size:.92rem;line-height:1.5}
+.k15-waarde{grid-column:2;margin-top:.6rem;color:var(--brand-primary);font:var(--weight-display) clamp(1.1rem,.95rem + .3vw,1.22rem)/1.15 var(--font-display);font-stretch:var(--font-display-stretch)}
+.k15-media{display:flex;flex-direction:column}
+.k15-beeld{position:relative;flex:1;min-height:14rem;overflow:hidden;border-radius:0 24px 0 0}
+.k15-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.k15-badge{flex:none;margin:0;padding:1.15rem 1.4rem 1.2rem;border-radius:0 0 24px 0;background:var(--brand-accent);color:var(--brand-secondary)}
+.k15-badge b{display:block;font:var(--weight-display) 2.4rem/1 var(--font-display);font-stretch:var(--font-display-stretch)}
+.k15-badge span{display:block;margin-top:.35rem;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+
+/* ===== smaller: twee naast elkaar, daarna onder elkaar ===== */
+@media(max-width:1080px){
+  .k01,.k02,.k03,.k04,.k05,.k06,.k07,.k08,.k09,.k10,.k11,.k13,.k14{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .k01{row-gap:9rem;padding-top:8.9rem}
+  .k01-kaart:nth-child(n){margin-bottom:0}
+  .k01::before{height:auto;top:55%}
+  .k03,.k05{row-gap:3.6rem}
+  .k06,.k09{row-gap:3.4rem}
+  .k07{row-gap:6rem}
+  .k10{row-gap:1.6rem}
+  .k10-plaat{margin-top:calc(var(--rij-boven) + 1.5rem);padding-top:2rem}
+  .k10-vak{padding-top:10.6rem}
+  .k10-schijf{top:7rem}
+  .k10-vak:first-child{border-top:0}
+  .k07-vak:nth-child(3){--pl:0px;border-left:0;padding-left:0}
+  .k08{row-gap:5.6rem}
+  .k08-band{height:auto;top:30%}
+  .k11-kaart:nth-child(n+3){margin-top:1.4rem;rotate:0deg}
+  .k11-kaart:nth-child(n+3) .k11-haak{display:none}
+  .k12{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .k12-tegel{min-height:22rem}
+  .k13{margin:1rem 0 0;row-gap:4rem;margin-top:-4rem}
+  .k13-maat:nth-child(n){min-height:0}
+  .k14::before{display:none}
+  .k15-kaart{grid-template-columns:minmax(0,1fr)}
+  .k15-media{order:-1}
+  .k15-beeld{min-height:16rem;border-radius:24px 24px 0 0}
+  .k15-badge{border-radius:0}
+}
+@media(max-width:600px){
+  .k01,.k02,.k03,.k04,.k05,.k06,.k07,.k08,.k09,.k10,.k11,.k12,.k13,.k14,.k15{grid-template-columns:minmax(0,1fr)}
+  .k07-vak:nth-child(n){--pl:0px;border-left:0;padding-left:0}
+  .k11-kaart:nth-child(n+2){margin-top:1.4rem;rotate:0deg}
+  .k11-kaart:nth-child(n+2) .k11-haak{display:none}
+  .k12-tegel{min-height:20rem}
+}
+
+</style>
+<script src="/js/site.js?v=0aa1a00f3c" defer></script>
+</head>
+<body class="p-contact">
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-check" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M18.4697 6.46967C18.7626 6.17678 19.2373 6.17678 19.5302 6.46967C19.8231 6.76256 19.8231 7.23732 19.5302 7.53022L9.53022 17.5302C9.23732 17.8231 8.76256 17.8231 8.46967 17.5302C8.17678 17.2373 8.17678 16.7626 8.46967 16.4697L18.4697 6.46967Z" opacity=".5"/><path d="M4.46967 12.4697C4.76256 12.1768 5.23732 12.1768 5.53022 12.4697L9.53022 16.4697C9.82311 16.7626 9.82311 17.2373 9.53022 17.5302C9.23732 17.8231 8.76256 17.8231 8.46967 17.5302L4.46967 13.5302C4.17678 13.2373 4.17678 12.7626 4.46967 12.4697Z"/></symbol><symbol id="i-chevron" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M8.30273 12.4044L11.6296 15.8351C11.8428 16.0549 12.1573 16.0549 12.3704 15.8351L18.8001 9.20467C19.2013 8.79094 18.9581 8 18.4297 8H12.7071L8.30273 12.4044Z"/><path d="M11.2929 8H5.5703C5.04189 8 4.79869 8.79094 5.1999 9.20467L7.60648 11.6864L11.2929 8Z" opacity=".5"/></symbol><symbol id="i-extern" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M20.5355 3.46447C19.0711 2 16.714 2 12 2C7.28595 2 4.92893 2 3.46447 3.46447C2 4.92893 2 7.28595 2 12C2 16.714 2 19.0711 3.46447 20.5355C4.92893 22 7.28595 22 12 22C16.714 22 19.0711 22 20.5355 20.5355C22 19.0711 22 16.714 22 12C22 7.28595 22 4.92893 20.5355 3.46447Z" opacity=".5"/><path d="M15.5787 9.17188C15.5787 8.75766 15.2429 8.42188 14.8287 8.42188L10.5861 8.42188C10.1719 8.42187 9.83609 8.75766 9.83609 9.17188C9.83609 9.58609 10.1719 9.92187 10.5861 9.92188H13.0181L8.64154 14.2984C8.34865 14.5913 8.34865 15.0662 8.64154 15.3591C8.93444 15.652 9.40931 15.652 9.70221 15.3591L14.0787 10.9825L14.0787 13.4145C14.0787 13.8287 14.4145 14.1645 14.8287 14.1645C15.2429 14.1645 15.5787 13.8287 15.5787 13.4145L15.5787 9.17188Z"/></symbol><symbol id="i-google" viewBox="0 0 24 24" fill="currentColor"><g transform="translate(2.64 2.64) scale(.78)"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.6l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></g></symbol><symbol id="i-mail" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M14.2 3H9.8C5.65164 3 3.57746 3 2.28873 4.31802C1 5.63604 1 7.75736 1 12C1 16.2426 1 18.364 2.28873 19.682C3.57746 21 5.65164 21 9.8 21H14.2C18.3484 21 20.4225 21 21.7113 19.682C23 18.364 23 16.2426 23 12C23 7.75736 23 5.63604 21.7113 4.31802C20.4225 3 18.3484 3 14.2 3Z" opacity=".5"/><path d="M19.1284 8.03302C19.4784 7.74133 19.5257 7.22112 19.234 6.87109C18.9423 6.52106 18.4221 6.47377 18.0721 6.76546L15.6973 8.74444C14.671 9.59966 13.9585 10.1915 13.357 10.5784C12.7747 10.9529 12.3798 11.0786 12.0002 11.0786C11.6206 11.0786 11.2258 10.9529 10.6435 10.5784C10.0419 10.1915 9.32941 9.59966 8.30315 8.74444L5.92837 6.76546C5.57834 6.47377 5.05812 6.52106 4.76643 6.87109C4.47474 7.22112 4.52204 7.74133 4.87206 8.03302L7.28821 10.0465C8.2632 10.859 9.05344 11.5176 9.75091 11.9661C10.4775 12.4334 11.185 12.7286 12.0002 12.7286C12.8154 12.7286 13.523 12.4334 14.2495 11.9661C14.947 11.5176 15.7372 10.859 16.7122 10.0465L19.1284 8.03302Z"/></symbol><symbol id="i-menu" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><rect x="4" y="6" width="16" height="2" rx="1"/><rect x="4" y="11" width="16" height="2" rx="1"/><rect x="4" y="16" width="16" height="2" rx="1"/></symbol><symbol id="i-pijl" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path fill-rule="evenodd" d="M3.25 12C3.25 11.5858 3.58579 11.25 4 11.25H13.25V12.75H4C3.58579 12.75 3.25 12.4142 3.25 12Z" clip-rule="evenodd" opacity=".5"/><path d="M13.25 12.75V18C13.25 18.3034 13.4327 18.5768 13.713 18.6929C13.9932 18.809 14.3158 18.7449 14.5303 18.5304L20.5303 12.5304C20.671 12.3897 20.75 12.1989 20.75 12C20.75 11.8011 20.671 11.6103 20.5303 11.4697L14.5303 5.46969C14.3158 5.25519 13.9932 5.19103 13.713 5.30711C13.4327 5.4232 13.25 5.69668 13.25 6.00002V11.25V12.75Z"/></symbol><symbol id="i-pin" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M12 2C7.58172 2 4 6.00258 4 10.5C4 14.9622 6.55332 19.8124 10.5371 21.6744C11.4657 22.1085 12.5343 22.1085 13.4629 21.6744C17.4467 19.8124 20 14.9622 20 10.5C20 6.00258 16.4183 2 12 2Z" opacity=".5"/><path d="M12 12.5C13.3807 12.5 14.5 11.3807 14.5 10C14.5 8.61929 13.3807 7.5 12 7.5C10.6193 7.5 9.5 8.61929 9.5 10C9.5 11.3807 10.6193 12.5 12 12.5Z"/></symbol><symbol id="i-plus" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M20 11.25C20.4142 11.25 20.75 11.5858 20.75 12C20.75 12.4142 20.4142 12.75 20 12.75L4 12.75C3.58579 12.75 3.25 12.4142 3.25 12C3.25 11.5858 3.58579 11.25 4 11.25L20 11.25Z"/><path d="M12.7705 20C12.7705 20.4142 12.4347 20.75 12.0205 20.75C11.6063 20.75 11.2705 20.4142 11.2705 20L11.2705 4C11.2705 3.58579 11.6063 3.25 12.0205 3.25C12.4347 3.25005 12.7705 3.58582 12.7705 4L12.7705 20Z" opacity=".5"/></symbol><symbol id="i-route" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><g fill-rule="evenodd" clip-rule="evenodd"><path d="M12 2C10.2843 2 8.90356 3.38071 6.14214 6.14214C3.38071 8.90356 2 10.2843 2 12C2 13.7157 3.38071 15.0964 6.14214 17.8579C8.90356 20.6193 10.2843 22 12 22C13.7157 22 15.0964 20.6193 17.8579 17.8579C20.6193 15.0964 22 13.7157 22 12C22 10.2843 20.6193 8.90356 17.8579 6.14214C15.0964 3.38071 13.7157 2 12 2Z" opacity=".5"/><path d="M12.7862 8.48705C13.0695 8.18486 13.5441 8.16955 13.8463 8.45285L16.513 10.9528C16.6642 11.0946 16.75 11.2927 16.75 11.5C16.75 11.7073 16.6642 11.9054 16.513 12.0472L13.8463 14.5472C13.5441 14.8305 13.0695 14.8151 12.7862 14.513C12.5029 14.2108 12.5182 13.7361 12.8204 13.4528L14.1034 12.25H10.6667C10.3329 12.25 9.8225 12.3497 9.4196 12.6216C9.05681 12.8665 8.75 13.2655 8.75 14C8.75 14.4142 8.41421 14.75 8 14.75C7.58579 14.75 7.25 14.4142 7.25 14C7.25 12.7345 7.83208 11.8835 8.5804 11.3784C9.28861 10.9003 10.1116 10.75 10.6667 10.75L14.1034 10.75L12.8204 9.54716C12.5182 9.26386 12.5029 8.78923 12.7862 8.48705Z"/></g></symbol><symbol id="i-schild" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M12 22C10.9807 22 10.6199 21.8425 9.89844 21.5273C7.23883 20.3655 3 17.6292 3 11.9912V11L12 8V22Z"/><path d="M12 2C12.8114 2 13.595 2.26825 15.1621 2.80469L15.7354 3.00098C18.7409 4.02979 20.244 4.54434 20.6221 5.08203C20.9996 5.6199 21 7.21941 21 10.417V11L12 8V2Z"/><g opacity=".5"><path d="M21 11V11.9912C21 17.6292 16.7612 20.3655 14.1016 21.5273C13.3801 21.8425 13.0193 22 12 22V8L21 11Z"/><path d="M12 8L3 11V10.417C3 7.21941 3.00041 5.6199 3.37793 5.08203C3.75595 4.54434 5.25909 4.02979 8.26465 3.00098L8.83789 2.80469C10.405 2.26825 11.1886 2 12 2V8Z"/></g></symbol><symbol id="i-sluit" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M5.53717 19.5302C5.24427 19.8231 4.7694 19.8231 4.47651 19.5302C4.18361 19.2373 4.18361 18.7624 4.47651 18.4696L18.4764 4.46967C18.7693 4.17678 19.2442 4.17678 19.5371 4.46967C19.8299 4.76256 19.8299 5.23744 19.5371 5.53033L5.53717 19.5302Z" opacity=".5"/><path d="M4.46978 5.53033C4.17689 5.23744 4.17689 4.76256 4.46978 4.46967C4.76268 4.17678 5.23755 4.17678 5.53044 4.46967L19.5303 18.4696C19.8232 18.7624 19.8232 19.2373 19.5303 19.5302C19.2374 19.8231 18.7626 19.8231 18.4697 19.5302L4.46978 5.53033Z"/></symbol><symbol id="i-ster" viewBox="1.565 1.565 20.87 20.87" fill="currentColor"><path d="M9.15316 5.40838C10.4198 3.13613 11.0531 2 12 2C12.9469 2 13.5802 3.13612 14.8468 5.40837L15.1745 5.99623C15.5345 6.64193 15.7144 6.96479 15.9951 7.17781C16.2757 7.39083 16.6251 7.4699 17.3241 7.62805L17.9605 7.77203C20.4201 8.32856 21.65 8.60682 21.9426 9.54773C22.2352 10.4886 21.3968 11.4691 19.7199 13.4299L19.2861 13.9372C18.8096 14.4944 18.5713 14.773 18.4641 15.1177C18.357 15.4624 18.393 15.8341 18.465 16.5776L18.5306 17.2544C18.7841 19.8706 18.9109 21.1787 18.1449 21.7602C17.3788 22.3417 16.2273 21.8115 13.9243 20.7512L13.3285 20.4768C12.6741 20.1755 12.3469 20.0248 12 20.0248C11.6531 20.0248 11.3259 20.1755 10.6715 20.4768L10.0757 20.7512C7.77268 21.8115 6.62118 22.3417 5.85515 21.7602C5.08912 21.1787 5.21588 19.8706 5.4694 17.2544L5.53498 16.5776C5.60703 15.8341 5.64305 15.4624 5.53586 15.1177C5.42868 14.773 5.19043 14.4944 4.71392 13.9372L4.2801 13.4299C2.60325 11.4691 1.76482 10.4886 2.05742 9.54773C2.35002 8.60682 3.57986 8.32856 6.03954 7.77203L6.67589 7.62805C7.37485 7.4699 7.72433 7.39083 8.00494 7.17781C8.28555 6.96479 8.46553 6.64194 8.82547 5.99623L9.15316 5.40838Z"/></symbol><symbol id="i-telefoon" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M10.0376 5.31617L10.6866 6.4791C11.2723 7.52858 11.0372 8.90532 10.1147 9.8278C10.1147 9.8278 10.1147 9.8278 10.1147 9.8278C10.1146 9.82792 8.99588 10.9468 11.0245 12.9755C13.0525 15.0035 14.1714 13.8861 14.1722 13.8853C14.1722 13.8853 14.1722 13.8853 14.1722 13.8853C15.0947 12.9628 16.4714 12.7277 17.5209 13.3134L18.6838 13.9624C20.2686 14.8468 20.4557 17.0692 19.0628 18.4622C18.2258 19.2992 17.2004 19.9505 16.0669 19.9934C14.1588 20.0658 10.9183 19.5829 7.6677 16.3323C4.41713 13.0817 3.93421 9.84122 4.00655 7.93309C4.04952 6.7996 4.7008 5.77423 5.53781 4.93723C6.93076 3.54428 9.15317 3.73144 10.0376 5.31617Z" opacity=".5"/><path d="M13.2595 1.87983C13.3257 1.47094 13.7122 1.19357 14.1211 1.25976C14.1464 1.26461 14.2279 1.27983 14.2705 1.28933C14.3559 1.30834 14.4749 1.33759 14.6233 1.38082C14.9201 1.46726 15.3347 1.60967 15.8323 1.8378C16.8286 2.29456 18.1544 3.09356 19.5302 4.46936C20.906 5.84516 21.705 7.17097 22.1617 8.16725C22.3899 8.66487 22.5323 9.07947 22.6187 9.37625C22.6619 9.52466 22.6912 9.64369 22.7102 9.72901C22.7197 9.77168 22.7267 9.80594 22.7315 9.83125L22.7373 9.86245C22.8034 10.2713 22.5286 10.6739 22.1197 10.7401C21.712 10.8061 21.3279 10.53 21.2601 10.1231C21.258 10.1121 21.2522 10.0828 21.2461 10.0551C21.2337 9.9997 21.2124 9.91188 21.1786 9.79572C21.1109 9.56339 20.9934 9.21806 20.7982 8.79238C20.4084 7.94207 19.7074 6.76789 18.4695 5.53002C17.2317 4.29216 16.0575 3.59117 15.2072 3.20134C14.7815 3.00618 14.4362 2.88865 14.2038 2.82097C14.0877 2.78714 13.9417 2.75363 13.8863 2.7413C13.4793 2.67347 13.1935 2.28755 13.2595 1.87983Z"/><path fill-rule="evenodd" d="M13.4857 5.3293C13.5995 4.93102 14.0146 4.7004 14.4129 4.81419L14.2069 5.53534C14.4129 4.81419 14.4129 4.81419 14.4129 4.81419L14.4144 4.81461L14.4159 4.81505L14.4192 4.81602L14.427 4.81834L14.4468 4.8245C14.4618 4.82932 14.4807 4.8356 14.5031 4.84357C14.548 4.85951 14.6074 4.88217 14.6802 4.91337C14.8259 4.97581 15.0249 5.07223 15.2695 5.21694C15.7589 5.50662 16.4271 5.9878 17.2121 6.77277C17.9971 7.55775 18.4782 8.22593 18.7679 8.7154C18.9126 8.95991 19.009 9.15897 19.0715 9.30466C19.1027 9.37746 19.1254 9.43682 19.1413 9.48173C19.1493 9.50418 19.1555 9.52301 19.1604 9.53809L19.1665 9.55788L19.1688 9.56563L19.1698 9.56896L19.1702 9.5705C19.1702 9.5705 19.1707 9.57194 18.4495 9.77798L19.1707 9.57194C19.2845 9.97021 19.0538 10.3853 18.6556 10.4991C18.2607 10.6119 17.8492 10.3862 17.7313 9.99413L17.7276 9.98335C17.7223 9.96832 17.7113 9.93874 17.6928 9.89554C17.6558 9.8092 17.5887 9.66797 17.4771 9.47938C17.2541 9.10264 16.8514 8.53339 16.1514 7.83343C15.4515 7.13348 14.8822 6.73078 14.5055 6.50781C14.3169 6.39619 14.1757 6.32909 14.0893 6.29209C14.0461 6.27358 14.0165 6.26254 14.0015 6.25721L13.9907 6.25352C13.5987 6.13564 13.3729 5.72419 13.4857 5.3293Z" clip-rule="evenodd"/></symbol><symbol id="i-wereld" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><circle cx="12" cy="10" r="7" opacity=".5"/><path d="M18.0036 1.49973C18.2799 1.19119 18.7536 1.16493 19.0622 1.44114C21.3242 3.46568 22.7496 6.40994 22.7497 9.68626C22.7497 15.4376 18.3609 20.164 12.7497 20.699V21.2497H13.9997C14.4139 21.2497 14.7497 21.5855 14.7497 21.9997C14.7497 22.4139 14.4139 22.7497 13.9997 22.7497H9.99973C9.58552 22.7497 9.24973 22.4139 9.24973 21.9997C9.24974 21.5855 9.58553 21.2497 9.99973 21.2497H11.2497V20.7409C8.14902 20.6204 5.37534 19.2232 3.44114 17.0622C3.16493 16.7536 3.19119 16.2799 3.49973 16.0036C3.80838 15.7274 4.28208 15.7536 4.55833 16.0622C6.31035 18.0197 8.8543 19.2496 11.6863 19.2497C16.9678 19.2497 21.2497 14.9678 21.2497 9.68626C21.2496 6.8543 20.0197 4.31035 18.0622 2.55833C17.7536 2.28208 17.7274 1.80838 18.0036 1.49973Z"/><path d="M18.947 10.8689C18.5587 14.0058 16.094 16.4996 12.9714 16.9333C12.7456 16.458 12.4787 15.3862 13.0056 14.3933C13.6959 13.0925 15.9935 13.0896 16.0027 13.0896C18.4051 13.0645 18.73 11.6061 18.947 10.8689Z"/><path d="M11.9997 2.99973C13.549 2.99979 14.9808 3.50312 16.1404 4.3552C16.3042 4.85255 15.9925 5.89199 15.6648 6.38938C15.5461 6.56953 15.2762 6.79262 14.9812 7.00462C14.3159 7.48259 13.4765 7.7194 13.0495 8.59934C12.9275 8.85096 12.9322 9.09746 12.9909 9.31126C13.0331 9.46496 13.0608 9.63223 13.0613 9.79563C13.0624 10.3238 12.528 10.7056 11.9997 10.6999C10.6247 10.6849 9.7248 9.57634 9.60227 8.21262C9.4711 6.75383 8.34571 5.39459 7.79954 4.89719L7.49778 4.63938C8.71479 3.61631 10.2854 2.99973 11.9997 2.99973Z"/></symbol><symbol id="i-whatsapp" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#25D366" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#25D366" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol><symbol id="i-whatsapp-wit" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#fff" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#fff" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol></svg>
+<nav class="vnav" aria-label="Ontwerpen"><div class="wrap"><b>/contact/ Zo bereikt u ons · 15 ontwerpen</b><button class="vnav__knop" type="button" data-kop aria-pressed="false">Kop en belkaart verbergen</button><div class="vnav__links"><a href="#v00">00</a><a href="#v01">01</a><a href="#v02">02</a><a href="#v03">03</a><a href="#v04">04</a><a href="#v05">05</a><a href="#v06">06</a><a href="#v07">07</a><a href="#v08">08</a><a href="#v09">09</a><a href="#v10">10</a><a href="#v11">11</a><a href="#v12">12</a><a href="#v13">13</a><a href="#v14">14</a><a href="#v15">15</a></div></div></nav>
+<div class="vkap" id="v00"><div class="wrap"><span class="vkap__nr">00</span><div><b>Nu live</b><small>Ter vergelijking, zo staat het op /contact/</small><p>De vier kaarten met de echte voorwerpen op een goudgele schijf. De klant vond dit mooi, maar niet "wow". In alle ontwerpen hieronder blijven de kop, de verhuizer en de belkaart gelijk; alleen de rij met de vier kanalen verandert.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit" id="contactkaarten-live" aria-labelledby="contactkaarten-kop-live">
+      <div class="wrap">
+        <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="contactkaarten-kop-live">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+        <ul class="b-contactkaarten__kanalen" role="list" data-reveal-groep><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--telefoon" src="/img/contact-echt/telefoon-240.webp" srcset="/img/contact-echt/telefoon-240.webp 240w, /img/contact-echt/telefoon-480.webp 480w" sizes="15rem" alt="" width="240" height="154" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Bel ons</h3>
+              <p>Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p>
+              <a class="b-contactkaarten__link" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--envelop" src="/img/contact-echt/envelop-216.webp" srcset="/img/contact-echt/envelop-216.webp 216w, /img/contact-echt/envelop-432.webp 432w" sizes="13.5rem" alt="" width="216" height="182" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Mail ons</h3>
+              <p>Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p>
+              <a class="b-contactkaarten__link" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--klembord" src="/img/contact-echt/klembord-136.webp" srcset="/img/contact-echt/klembord-136.webp 136w, /img/contact-echt/klembord-272.webp 272w" sizes="8.5rem" alt="" width="136" height="218" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Stuur een bericht</h3>
+              <p>Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p>
+              <a class="b-contactkaarten__link" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></a>
+            </li><li class="b-contactkaarten__kanaal">
+              <span class="b-contactkaarten__ic b-contactkaarten__ic--3d" aria-hidden="true"><img class="b-contactkaarten__obj b-contactkaarten__obj--dozen" src="/img/contact-echt/dozen-166.webp" srcset="/img/contact-echt/dozen-166.webp 166w, /img/contact-echt/dozen-307.webp 307w" sizes="10.4rem" alt="" width="166" height="205" loading="lazy" decoding="async"></span>
+              <h3 class="b-contactkaarten__titel">Vraag een offerte aan</h3>
+              <p>Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p>
+              <a class="b-contactkaarten__link" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></a>
+            </li></ul>
+      </div>
+    </section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v01"><div class="wrap"><span class="vkap__nr">01</span><div><b>Trap op de gele band</b><small>Referentie B · .sgm__kaarten, .sgm__band, .sgm__figuur (blokken/manieren.css)</small><p>De kaarten lopen als een trap op naar rechts, elk 2,5rem hoger. Onder de trap ligt een dikke goudgele band met een donkergele zijkant. Het voorwerp staat achter de bovenrand van zijn kaart, zoals de monteurs bij de referentie achter hun kaart staan.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s01" aria-labelledby="kop-k01">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k01">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <ul class="kk k01" role="list"><li class="k01-kaart"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"><div class="k01-doos k-neon"><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k01-kaart"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"><div class="k01-doos k-neon"><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k01-kaart"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"><div class="k01-doos k-neon"><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k01-kaart"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"><div class="k01-doos k-neon"><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li></ul>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v02"><div class="wrap"><span class="vkap__nr">02</span><div><b>Foto met voorwerp op de naad</b><small>Referentie B · .sgd1-kaart, .sgd1-beeld, .sgd1-ico, .sgd1::before (blokken/diensten.css)</small><p>Elke kaart krijgt een echte foto van het kanaal: iemand die belt, een laptop, typende handen, een hand die een offerte tekent. Het voorwerp staat groot op de naad tussen foto en tekst. De kaarten liggen op een lichtblauwe band met een V-inkeping aan de bovenkant.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s02" aria-labelledby="kop-k02">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k02">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <ul class="kk k02" role="list"><li class="k02-kaart k-neon"><div class="k02-beeld"><img class="k-foto " src="/img/stap-2-bellen.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"></div><div class="k02-tekst"><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k02-kaart k-neon"><div class="k02-beeld"><img class="k-foto " src="/img/stap-1-laptop.webp" alt="" width="1080" height="900" loading="lazy" decoding="async" aria-hidden="true"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"></div><div class="k02-tekst"><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k02-kaart k-neon"><div class="k02-beeld"><img class="k-foto " src="/img/stap-1-formulier.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"></div><div class="k02-tekst"><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k02-kaart k-neon"><div class="k02-beeld"><img class="k-foto " src="/img/stap-3-offerte.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"></div><div class="k02-tekst"><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li></ul>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v03"><div class="wrap"><span class="vkap__nr">03</span><div><b>Vier kleurtegels</b><small>Referentie B · .sgw-tegel:nth-child(1-4), .sgw-tegel__3d (blokken/waarom.css)</small><p>Vier tegels in vier merkkleuren: Diepblauw, Goudgeel, Lucht en Koningsblauw. Het voorwerp staat in een witte schijf rechtsboven en steekt ver boven de tegel uit; de titel staat ernaast.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s03" aria-labelledby="kop-k03">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k03">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <ul class="kk k03" role="list"><li class="k03-tegel k-neon"><span class="k03-schijf"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k03-tegel k-neon"><span class="k03-schijf"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k03-tegel k-neon"><span class="k03-schijf"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k03-tegel k-neon"><span class="k03-schijf"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li></ul>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v04"><div class="wrap"><span class="vkap__nr">04</span><div><b>Goudgele plaat met foto-afdrukken</b><small>Referentie B · .sgt__paneel, .sgt__fotos figure, figcaption (blokken/toennu.css)</small><p>Eén goudgele plaat over de hele breedte. Daarop vier scheve foto-afdrukken met een witte rand en de titel als donkere pil, zoals de team- en pandfoto bij de referentie. Het echte voorwerp ligt op de hoek van de afdruk.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s04" aria-labelledby="kop-k04">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k04">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <div class="k04-plaat"><ul class="kk k04" role="list"><li class="k04-kaart"><figure class="k04-afdruk"><img class="k-foto " src="/img/stap-2-bellen.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"><figcaption><h3 class="k-titel ">Bel ons</h3></figcaption><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"></figure><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k04-kaart"><figure class="k04-afdruk"><img class="k-foto " src="/img/stap-1-laptop.webp" alt="" width="1080" height="900" loading="lazy" decoding="async" aria-hidden="true"><figcaption><h3 class="k-titel ">Mail ons</h3></figcaption><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"></figure><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k04-kaart"><figure class="k04-afdruk"><img class="k-foto " src="/img/stap-1-formulier.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"><figcaption><h3 class="k-titel ">Stuur een bericht</h3></figcaption><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"></figure><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k04-kaart"><figure class="k04-afdruk"><img class="k-foto " src="/img/stap-3-offerte.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"><figcaption><h3 class="k-titel ">Vraag een offerte aan</h3></figcaption><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"></figure><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li></ul></div>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v05"><div class="wrap"><span class="vkap__nr">05</span><div><b>Dikke gele onderrand</b><small>Referentie B · .sgct__kaarten, .sgct-kaart, __icoon, __titel, __waarde (pages/contact.css, hun eigen contactpagina)</small><p>De kanaalkaarten van de contactpagina van de referentie: de titel klein en in hoofdletters, daaronder het nummer of adres groot als link, en een dikke goudgele onderrand met een donkergele zijkant. Het voorwerp steekt linksboven uit de kaart.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s05" aria-labelledby="kop-k05">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k05">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <ul class="kk k05" role="list"><li class="k05-kaart k-neon"><span class="k05-icoon"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Bel ons</h3><a class="k-link k05-waarde" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p></li><li class="k05-kaart k-neon"><span class="k05-icoon"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Mail ons</h3><a class="k-link k05-waarde" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p></li><li class="k05-kaart k-neon"><span class="k05-icoon"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Stuur een bericht</h3><a class="k-link k05-waarde" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p></li><li class="k05-kaart k-neon"><span class="k05-icoon"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Vraag een offerte aan</h3><a class="k-link k05-waarde" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p></li></ul>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v06"><div class="wrap"><span class="vkap__nr">06</span><div><b>Gele nis, nummer en blauw vlak</b><small>Referentie A · .diensten, .dienst__nis, .dienst__nr, .dienst__tekst (style.css)</small><p>De dienstkaart van de referentie: bovenin een lichtgele nis met het voorwerp, dat boven de kaart uitsteekt, linksonder een goudgeel nummerlabel, daaronder een Koningsblauw vlak met witte tekst en een gele link. Onder de muis de hover van de referentie: 3px omhoog, het vlak wordt Diepblauw, het voorwerp groeit iets.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s06" aria-labelledby="kop-k06">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k06">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <ul class="kk k06" role="list"><li class="k06-kaart"><div class="k06-nis"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"><span class="k06-nr" aria-hidden="true">01</span></div><div class="k06-tekst"><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k06-kaart"><div class="k06-nis"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"><span class="k06-nr" aria-hidden="true">02</span></div><div class="k06-tekst"><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k06-kaart"><div class="k06-nis"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"><span class="k06-nr" aria-hidden="true">03</span></div><div class="k06-tekst"><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k06-kaart"><div class="k06-nis"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"><span class="k06-nr" aria-hidden="true">04</span></div><div class="k06-tekst"><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li></ul>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v07"><div class="wrap"><span class="vkap__nr">07</span><div><b>Eén plaat, vier vakken</b><small>Referentie A · .stappen, .stap:not(:nth-child(4n+1)), .stap h3 (style.css, blok "Zo verloopt uw verhuizing")</small><p>Geen losse kaarten maar één dikke lichtblauwe plaat met vier vakken, gescheiden door dunne lijnen. De voorwerpen breken door de bovenrand van de plaat, elk boven zijn eigen vak.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s07" aria-labelledby="kop-k07">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k07">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <div class="k07-plaat"><ul class="kk k07" role="list"><li class="k07-vak"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k07-vak"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k07-vak"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k07-vak"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li></ul></div>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v08"><div class="wrap"><span class="vkap__nr">08</span><div><b>Schuine gele band</b><small>Referentie A · .opslag__band, .opslag__lijn, .opslag__mark (style.css, blok Inboedelopslag)</small><p>Een schuine goudgele band loopt van rand tot rand achter de kaarten, met een Diepblauwe streep eronder en het beeldmerk op de band. De witte kaarten staan op de band; de voorwerpen staan op de kaarten.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s08" aria-labelledby="kop-k08">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k08">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <div class="k08-baan"><div class="k08-band" aria-hidden="true"><img class="k08-merk" src="/img/logo/dereus-beeldmerk-negatief.svg" alt="" loading="lazy" decoding="async" aria-hidden="true"></div><div class="k08-lijn" aria-hidden="true"></div><ul class="kk k08" role="list"><li class="k08-kaart k-neon"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k08-kaart k-neon"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k08-kaart k-neon"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k08-kaart k-neon"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li></ul></div>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v09"><div class="wrap"><span class="vkap__nr">09</span><div><b>Vier bogen</b><small>Referentie A · .venster__boog, .venster__boog::after, .venster__persoon (style.css, blok "Na uw aanvraag")</small><p>Elke kaart heeft bovenin een boog zoals het venster bij de referentie: lichtblauw met een goudgele binnenlijn. Het voorwerp staat onderin de boog en steekt er bovenuit. Daaronder de tekst op wit.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s09" aria-labelledby="kop-k09">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k09">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <ul class="kk k09" role="list"><li class="k09-kaart k-neon"><div class="k09-boog"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"></div><div class="k09-tekst"><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k09-kaart k-neon"><div class="k09-boog"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"></div><div class="k09-tekst"><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k09-kaart k-neon"><div class="k09-boog"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"></div><div class="k09-tekst"><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k09-kaart k-neon"><div class="k09-boog"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"></div><div class="k09-tekst"><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li></ul>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v10"><div class="wrap"><span class="vkap__nr">10</span><div><b>Diepblauwe plaat met driekleurenstreep</b><small>Referentie A · .zeker__card, .zeker__card::before, .zeker__list li, .zeker__ok (style.css, blok Erkende Verhuizer)</small><p>Eén Diepblauwe plaat met bovenaan een streep in Koningsblauw, Goudgeel en lichtblauw. De vier kanalen staan naast elkaar met een dunne lijn erboven; de voorwerpen staan op goudgele schijven en steken boven de plaat uit. Witte tekst, gele links.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s10" aria-labelledby="kop-k10">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k10">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <div class="k10-plaat"><img class="k10-merk" src="/img/logo/dereus-beeldmerk-negatief.svg" alt="" loading="lazy" decoding="async" aria-hidden="true"><ul class="kk k10" role="list"><li class="k10-vak"><span class="k10-schijf"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k10-vak"><span class="k10-schijf"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k10-vak"><span class="k10-schijf"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k10-vak"><span class="k10-schijf"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li></ul></div>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v11"><div class="wrap"><span class="vkap__nr">11</span><div><b>Aan de gele lijn</b><small>Referentie C · .b-belofte__band, __kaart, __haak, __baan::before (belofte.min.css)</small><p>Een goudgele lijn van rand tot rand, met vier witte kaarten die er aan zwarte klemmen onder hangen, elk een fractie scheef. Onder de muis hangt de kaart recht, net als bij de referentie. Het voorwerp staat bovenin de kaart.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s11" aria-labelledby="kop-k11">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k11">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <ul class="kk k11" role="list"><li class="k11-kaart"><span class="k11-haak" aria-hidden="true"></span><span class="k11-voorwerp"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k11-kaart"><span class="k11-haak" aria-hidden="true"></span><span class="k11-voorwerp"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k11-kaart"><span class="k11-haak" aria-hidden="true"></span><span class="k11-voorwerp"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k11-kaart"><span class="k11-haak" aria-hidden="true"></span><span class="k11-voorwerp"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"></span><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li></ul>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v12"><div class="wrap"><span class="vkap__nr">12</span><div><b>Grote fototegels met blauwe strook</b><small>Referentie C · .b-gezichten__raster, __tegel--thuis, __link, __tekst (gezichten.min.css)</small><p>Vier grote foto's als tegels, "Bel ons" breder, zoals de thuisbasis bij de referentie. Onderaan elke tegel een doorschijnende Koningsblauwe strook met titel, tekst en link. Onder de muis komt de tegel omhoog en zoomt de foto iets in.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s12" aria-labelledby="kop-k12">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k12">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <ul class="kk k12" role="list"><li class="k12-tegel"><img class="k-foto " src="/img/stap-2-bellen.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"><div class="k12-strook"><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k12-tegel"><img class="k-foto " src="/img/stap-1-laptop.webp" alt="" width="1080" height="900" loading="lazy" decoding="async" aria-hidden="true"><div class="k12-strook"><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k12-tegel"><img class="k-foto " src="/img/stap-1-formulier.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"><div class="k12-strook"><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li><li class="k12-tegel"><img class="k-foto " src="/img/stap-3-offerte.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"><div class="k12-strook"><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></div></li></ul>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v13"><div class="wrap"><span class="vkap__nr">13</span><div><b>Oplopende kaarten op een luchtfoto</b><small>Referentie C · .b-maten__foto, .b-maten__schaal, .b-maten__maat--2/--3, .b-maten__maat::before (maten.min.css)</small><p>Een brede luchtfoto van een verhuizing: de wagen en de dozen op straat (de foto van de home-hero). Over de onderkant schuiven vier kaarten die oplopen in hoogte en in kleur, van wit naar Diepblauw, elk met een goudgeel lipje. Het voorwerp staat op de rechterbovenhoek van de kaart.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s13" aria-labelledby="kop-k13">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k13">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <div class="k13-beeld"><figure class="k13-foto"><img class="k13-fotoimg" src="/img/hero-bg-1920.webp" alt="" width="1920" height="1120" loading="lazy" decoding="async" aria-hidden="true"></figure><ul class="kk k13" role="list"><li class="k13-maat k-neon"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k13-maat k-neon"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k13-maat k-neon"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k13-maat k-neon"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li></ul></div>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v14"><div class="wrap"><span class="vkap__nr">14</span><div><b>Fotoplaten aan één lijn</b><small>Referentie C · .b-historie__tl, __tl::before, __plaat, __jaar::before (historie.min.css)</small><p>Op een goudgele band van rand tot rand: vier scheve fotoplaten met een witte rand, en onder de platen één Diepblauwe lijn met een stip per kanaal. De titel staat groot naast de stip, zoals de jaartallen bij de referentie.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s14" aria-labelledby="kop-k14">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k14">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <div class="k14-band"><ul class="kk k14" role="list"><li class="k14-stap"><figure class="k14-fig"><div class="k14-plaat"><img class="k-foto " src="/img/stap-2-bellen.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"></div></figure><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p><a class="k-link " href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k14-stap"><figure class="k14-fig"><div class="k14-plaat"><img class="k-foto " src="/img/stap-1-laptop.webp" alt="" width="1080" height="900" loading="lazy" decoding="async" aria-hidden="true"></div></figure><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p><a class="k-link " href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k14-stap"><figure class="k14-fig"><div class="k14-plaat"><img class="k-foto " src="/img/stap-1-formulier.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"></div></figure><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p><a class="k-link " href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k14-stap"><figure class="k14-fig"><div class="k14-plaat"><img class="k-foto " src="/img/stap-3-offerte.webp" alt="" width="560" height="380" loading="lazy" decoding="async" aria-hidden="true"></div></figure><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p><a class="k-link " href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li></ul></div>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap" id="v15"><div class="wrap"><span class="vkap__nr">15</span><div><b>Kanaalvakken met foto en gele strook</b><small>Referentie B · .sgpr__kaart, .sgpr__rijen, .sgpr-rij, .sgpr__media, .sgpr__badge (blokken/prijzen.css)</small><p>Eén witte kaart met een Koningsblauwe rand. Links de vier kanalen als vakken in een raster van twee bij twee, met het voorwerp klein linksboven en de link groot, zoals de prijzen bij de referentie. Rechts een hoge foto van de dozen met het logo en onderaan een goudgele strook met "7 dagen per week bereikbaar" uit de intro.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hierboven op /contact/: "Zo vindt u ons" (Diepblauw)</div></div>
+<section class="b-contactkaarten sectie sectie--wit v k s15" aria-labelledby="kop-k15">
+  <div class="wrap">
+    <div class="b-contactkaarten__boven">
+          <div class="b-contactkaarten__tekst" data-reveal>
+            <div class="kopgroep b-contactkaarten__kop"><p class="label">Contact</p><h2 id="kop-k15">Zo bereikt u ons</h2><p class="intro">U kiest zelf hoe u contact opneemt: bellen, mailen of een bericht sturen. Wij zijn 7 dagen per week bereikbaar en reageren binnen 24 uur.</p></div>
+
+          </div>
+          <div class="uitsnede b-contactkaarten__figuur" style="--uit-breed:698;--uit-hoog:1200;--uit-x:0;--uit-y:0;--uit-w:698;--uit-h:1200" aria-hidden="true"><img class="uitsnede__beeld" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async"><img class="b-contactkaarten__voorgrond" src="/img/verhuisdozen-uit.webp" alt="" width="562" height="522" loading="lazy" decoding="async"></div><div class="b-contactkaarten__belkaart" data-reveal>
+          <p class="b-contactkaarten__status"><span class="bereikbaar" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></p>
+          <a class="b-contactkaarten__nummer" href="tel:+31850005647">085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
+          <ul class="b-contactkaarten__uren" role="list"><li><span>ma t/m za</span><span>08.00 tot 20.00</span></li><li><span>zo</span><span>09.00 tot 17.00</span></li></ul>
+        </div>
+        </div>
+    <div class="k15-kaart"><div class="k15-body"><ul class="kk k15" role="list"><li class="k15-rij"><img class="k-obj k-obj--telefoon " src="/_ontwerpen/_bron-contact-echt/telefoon.webp" alt="" width="640" height="411" loading="lazy" decoding="async" aria-hidden="true"><div class="k15-rijtekst"><h3 class="k-titel ">Bel ons</h3><p class="k-tekst ">Voor een snelle vraag of een spoedklus. Maandag tot en met zaterdag van 08.00 tot 20.00 uur, zondag van 09.00 tot 17.00 uur.</p></div><a class="k-link k15-waarde" href="tel:+31850005647" data-geen-whatsapp><span>085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k15-rij"><img class="k-obj k-obj--envelop " src="/_ontwerpen/_bron-contact-echt/envelop.webp" alt="" width="560" height="472" loading="lazy" decoding="async" aria-hidden="true"><div class="k15-rijtekst"><h3 class="k-titel ">Mail ons</h3><p class="k-tekst ">Stuur uw vraag per mail. Binnen 24 uur krijgt u antwoord.</p></div><a class="k-link k15-waarde" href="mailto:info@verhuisbedrijfdereus.nl"><span>info@<wbr>verhuisbedrijfdereus.nl</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k15-rij"><img class="k-obj k-obj--klembord " src="/_ontwerpen/_bron-contact-echt/klembord.webp" alt="" width="374" height="600" loading="lazy" decoding="async" aria-hidden="true"><div class="k15-rijtekst"><h3 class="k-titel ">Stuur een bericht</h3><p class="k-tekst ">Vul het formulier op deze pagina in. Wij bellen of mailen u terug.</p></div><a class="k-link k15-waarde" href="#formulier"><span>Naar het formulier</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li><li class="k15-rij"><img class="k-obj k-obj--dozen " src="/_ontwerpen/_bron-contact-echt/dozen.webp" alt="" width="307" height="378" loading="lazy" decoding="async" aria-hidden="true"><div class="k15-rijtekst"><h3 class="k-titel ">Vraag een offerte aan</h3><p class="k-tekst ">Gaat het om een verhuizing? Dan belt uw verhuisadviseur u binnen 24 uur en ontvangt u daarna een offerte op maat.</p></div><a class="k-link k15-waarde" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-pijl"/></svg></a></li></ul></div><div class="k15-media"><div class="k15-beeld"><img class="k15-foto" src="/img/voorbereiding-dozen.webp" alt="" width="720" height="405" loading="lazy" decoding="async" aria-hidden="true"></div><p class="k15-badge"><b>7 dagen</b><span>per week bereikbaar</span></p></div></div>
+  </div>
+</section>
+<div class="vctx vctx--blauw" aria-hidden="true"><div class="wrap">Hieronder: de schuine Koningsblauwe band (4,9 uit 5 op Google · Standaard verzekerd · ...)</div></div>
+<div class="vkap vkap--eind"><div class="wrap"><p>Alle teksten en links zijn letterlijk die van /contact/. De voorwerpen zijn de echte foto's die nu live staan (telefoon, envelop, klembord, dozen); de foto's komen uit de eigen map (stap-2-bellen, stap-1-laptop, stap-1-formulier, stap-3-offerte, voorbereiding-dozen, hero-bg-1920). Geen nieuwe mensen: de verhuizer boven de kaarten staat er al. Elke bronklasse hierboven bestaat echt in de code van referentie A, B of C; in de De Reus-code komen die namen niet terug. Kies een nummer.</p></div></div>
+<script>
+(function(){
+function meet(){document.querySelectorAll('[data-maat]').forEach(function(m){var s=m.closest('.vkap').nextElementSibling;while(s&&s.tagName!=='SECTION')s=s.nextElementSibling;if(!s)return;var h=Math.round(s.getBoundingClientRect().height);var k=s.querySelector('.kk,.k04-plaat,.k07-plaat,.k08-baan,.k10-plaat,.k13-beeld,.k14-band,.k15-kaart,.b-contactkaarten__kanalen');var r=k?Math.round(s.getBoundingClientRect().bottom-k.getBoundingClientRect().top):0;m.textContent='Sectie '+h+' px · kaartenrij '+r+' px';});}
+addEventListener('load',meet);addEventListener('resize',meet);
+var b=document.querySelector('[data-kop]');b.addEventListener('click',function(){var aan=document.body.classList.toggle('zonder-kop');b.setAttribute('aria-pressed',aan);b.textContent=aan?'Kop en belkaart tonen':'Kop en belkaart verbergen';meet();});
+})();
+</script>
+</body>
+</html>

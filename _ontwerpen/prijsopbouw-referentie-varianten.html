@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.className+=' js'</script>
+<title>Hoe de prijs tot stand komt · 10 ontwerpen · referentie A, B en C</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="/css/min/site.min.css?v=3aba39d545">
+<link rel="stylesheet" href="/css/min/opbouw.min.css?v=a067e6b824">
+<link rel="stylesheet" href="/css/min/kosten-diepte.min.css?v=58850c32b4">
+<link rel="stylesheet" href="/css/min/opbouw-3d.min.css?v=d3d73f6583">
+<style>
+/* ===== pagina ===== */
+:root{
+  --plaat:inset 0 1px 0 #fff,0 0 0 1px color-mix(in srgb,var(--ink) 6%,transparent),0 6px 0 var(--primary-200),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 24px -16px color-mix(in srgb,var(--ink) 26%,transparent),0 40px 60px -42px color-mix(in srgb,var(--brand-secondary) 50%,transparent);
+  --plaat-blauw:inset 0 1px 0 rgba(255,255,255,.18),0 6px 0 var(--brand-secondary),0 7px 0 rgba(0,0,0,.25),0 18px 28px -16px color-mix(in srgb,var(--ink) 45%,transparent);
+  --obj-schaduw:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 28%,transparent)) drop-shadow(8px 14px 12px color-mix(in srgb,var(--brand-secondary) 30%,transparent));
+  --muis:450ms cubic-bezier(.4,0,.2,1);
+}
+html{scroll-padding-top:4.5rem}
+.vnav{position:sticky;top:0;z-index:60;background:var(--brand-secondary);color:#fff;font-size:.875rem}
+.vnav .wrap{display:flex;align-items:center;gap:1rem;min-height:3.4rem;flex-wrap:wrap}
+.vnav b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.1rem;letter-spacing:.01em}
+.vnav__links{display:flex;flex-wrap:wrap;gap:.3rem;margin-left:auto}
+.vnav a{display:grid;place-items:center;min-width:2.3rem;height:2rem;padding:0 .4rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-weight:700;text-decoration:none}
+.vnav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.vkap{background:#fff;border-top:3px solid var(--brand-secondary);padding:1.1rem 0;position:relative;z-index:3}
+.vkap .wrap{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start}
+.vkap .wrap>div{flex:1 1 18rem;min-width:0}
+.vkap small,.vkap p{overflow-wrap:anywhere}
+.vkap__nr{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.35rem/1 var(--font-display);font-stretch:75%;box-shadow:2px 2px 0 var(--accent-700)}
+.vkap b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.35rem;color:var(--brand-primary)}
+.vkap small{display:block;margin:.1rem 0 .15rem;color:var(--grey-600);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.vkap p{margin:.2rem 0 0;max-width:92ch;color:var(--graphite);font-size:.9375rem}
+.vkap--eind{padding:2rem 0}
+.vkap__maat{flex:none;margin-left:auto;align-self:center;padding:.35rem .7rem;border-radius:999px;background:var(--success-50);color:var(--success);font-size:.8rem;font-weight:700;white-space:nowrap}
+.vkap__maat.is-hoog{background:var(--accent-100);color:#8A5A00}
+.vctx{background:var(--brand-secondary);color:rgba(255,255,255,.5);font:600 .72rem/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;padding:.85rem 0 .8rem}
+.vctx--wit{background:#fff;color:var(--grey-400);border-top:1px solid var(--grey-200)}
+
+/* ===== gedeeld ===== */
+.v.sectie{position:relative;padding-block:clamp(3rem,2rem + 3vw,4.5rem);overflow-x:clip}
+.v .kopgroep{width:auto;max-width:none;margin:0;text-align:left}
+.v .kopgroep .label{justify-content:flex-start}
+.v .kopgroep .label{margin-bottom:.8rem}
+.v .kopgroep .h2{margin:0;font-size:clamp(2.1rem,1.6rem + 1.4vw,2.8rem);line-height:1.02}
+.v .kopgroep .intro{margin:.75rem 0 0;margin-inline:0;max-width:58ch;font-size:1.0625rem;line-height:1.55;color:var(--graphite)}
+:where(.v) h3{margin:0;font-size:1.3rem;line-height:1.15;color:var(--brand-primary)}
+:where(.v) p{margin:0}
+.v .lijstkop{margin:0;font:700 .8125rem/1.2 var(--font-sans);font-stretch:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-secondary)}
+.v .obj{display:block;width:100%;height:auto;object-fit:contain;filter:var(--obj-schaduw)}
+.v .of{display:grid;place-items:center;flex:none;width:2.7rem;height:2.7rem;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE27A,var(--brand-accent) 60%);color:var(--brand-secondary);font:800 1rem/1 var(--font-display);font-stretch:75%;text-transform:uppercase;letter-spacing:.02em;box-shadow:0 3px 0 var(--accent-700),0 8px 14px -6px color-mix(in srgb,var(--ink) 45%,transparent)}
+.v .vink{display:grid;place-items:center;flex:none;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary)}
+.v .vink .ic{width:.8rem;height:.8rem}
+
+/* foto + uitsnede van dezelfde foto: wat boven --top ligt, steekt boven het kader uit (rekensom van .sgpr__beeld) */
+.pop{position:relative;container-type:size;
+  --ph:max(100cqh / (1 - var(--top)),100cqw / var(--ar));
+  --pw:calc(var(--ph) * var(--ar));
+  --pt:calc(-1 * var(--top) * var(--ph));
+  --pl:clamp(100cqw - var(--pw),50cqw - var(--mid) * var(--pw),0px);
+  --p:calc((var(--top) - var(--d0)) * var(--ph))}
+.pop__raam{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
+.pop__raam img,.pop__uit img{position:absolute;left:var(--pl);width:var(--pw);height:var(--ph);max-width:none;object-fit:fill}
+.pop__raam img{top:var(--pt)}
+.pop__uit{position:absolute;left:0;right:0;bottom:0;height:calc(100% + var(--p) + 12px);overflow:hidden;pointer-events:none}
+.pop__uit img{top:calc(var(--pt) + var(--p) + 12px)}
+
+/* =====================================================================
+   01 · referentie A .werkwijze__top + .stappen
+   ===================================================================== */
+.o01__top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(1rem,3vw,2.5rem);align-items:end}
+.o01__wagen{position:relative;z-index:2;margin:0 0 -2.6rem;justify-self:end;width:min(100%,31rem)}
+.o01__wagen .obj{filter:drop-shadow(0 22px 20px color-mix(in srgb,var(--brand-secondary) 30%,transparent))}
+.o01__paneel{position:relative;background:#fff;border-radius:22px;padding:2.1rem 2rem 1.9rem;box-shadow:var(--plaat)}
+.o01__paneel .lijstkop{margin-bottom:1.1rem}
+.o01__stappen{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.4rem;list-style:none;margin:0;padding:0}
+.o01__stap:not(:first-child){border-left:1px solid var(--primary-100);padding-left:1.4rem}
+.o01__nr{display:block;font:800 2.9rem/1 var(--font-display);font-stretch:75%;color:var(--brand-primary)}
+.o01__nr::after{content:"";display:block;width:1.9rem;height:4px;margin:.45rem 0 .8rem;border-radius:2px;background:var(--brand-accent)}
+.o01__stap h3{font-size:1.28rem;margin-bottom:.35rem}
+.o01__stap p{font-size:.95rem;line-height:1.5;color:var(--grey-600)}
+.o01__onder{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:2.2rem;align-items:center;margin-top:1.9rem}
+.o01__duo{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:.7rem}
+.o01__vak{display:grid;grid-template-columns:3.6rem minmax(0,1fr);gap:.25rem .9rem;align-items:center;min-height:100%;background:#fff;border-radius:16px;padding:1rem 1.15rem;box-shadow:var(--plaat)}
+.o01__vak .obj{grid-row:span 2;width:3.6rem;height:4.4rem}
+.o01__vak h3{align-self:end;font-size:1.45rem}
+.o01__vak p{align-self:start;font-size:.9rem;line-height:1.45;color:var(--graphite)}
+.o01__vak--blauw{background:linear-gradient(160deg,var(--brand-primary),var(--primary-600));box-shadow:var(--plaat-blauw)}
+.o01__vak--blauw h3{color:#fff}
+.o01__vak--blauw p{color:rgba(255,255,255,.88)}
+.o01__slot{font-size:.9375rem;line-height:1.55;color:var(--graphite)}
+.o01__soorten{list-style:none;margin:.8rem 0 0;padding:0;display:grid;gap:.5rem}
+.o01__soorten li{display:grid;grid-template-columns:1.5rem minmax(0,1fr);gap:.6rem;align-items:start}
+.o01__soorten h3{display:inline;font:700 .95rem/1.4 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o01__soorten p{display:inline;font-size:.9rem;color:var(--grey-600)}
+.o01__soorten h3::after{content:" · "}
+.o01__soorten div{line-height:1.4}
+@media (max-width:980px){
+  .o01__top{grid-template-columns:1fr}
+  .o01__wagen{justify-self:center;width:min(80%,24rem)}
+  .o01__stappen{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .o01__stap:not(:first-child){border-left:0;padding-left:0}
+  .o01__stap:nth-child(2n){border-left:1px solid var(--primary-100);padding-left:1.4rem}
+  .o01__onder{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .o01__stappen{grid-template-columns:1fr}
+  .o01__stap:nth-child(2n){border-left:0;padding-left:0}
+  .o01__stap:not(:first-child){border-top:1px solid var(--primary-100);padding-top:1rem}
+  .o01__duo{grid-template-columns:1fr;justify-items:stretch}
+  .o01__duo .of{justify-self:center}
+}
+
+/* =====================================================================
+   02 · referentie A .hist5 + .pol
+   ===================================================================== */
+.o02__in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(2rem,5vw,4.5rem);align-items:center}
+.o02 .kopgroep{margin-bottom:1.4rem}
+.o02 .lijstkop{margin-bottom:.9rem}
+.o02__tl{list-style:none;margin:0 0 1.3rem;padding:0;position:relative;display:grid;gap:.8rem}
+.o02__tl::before{content:"";position:absolute;left:calc(3.4rem + 4px);top:.6rem;bottom:.6rem;width:2px;background:var(--primary-100)}
+.o02__tl li{position:relative;display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:1.3rem;align-items:start}
+.o02__tl li::before{content:"";position:absolute;left:3.4rem;top:.35rem;width:10px;height:10px;border-radius:50%;background:var(--brand-accent);box-shadow:0 0 0 3px #fff,0 0 0 4px var(--accent-700)}
+.o02__nr{font:800 1.7rem/1 var(--font-display);font-stretch:75%;color:var(--brand-primary)}
+.o02__tl h3{font:700 1.02rem/1.3 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o02__tl p{margin-top:.1rem;font-size:.93rem;line-height:1.45;color:var(--grey-600)}
+.o02__slot{padding-top:1.1rem;border-top:1px solid var(--grey-200);font-size:.9375rem;line-height:1.55;color:var(--graphite)}
+.o02__soorten{list-style:none;margin:.8rem 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.o02__soorten li{display:grid;grid-template-columns:1.5rem minmax(0,1fr);gap:.6rem;align-items:start}
+.o02__soorten h3{font:700 .95rem/1.3 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o02__soorten p{font-size:.875rem;line-height:1.45;color:var(--grey-600)}
+.o02__stapel{position:relative;height:0;padding-bottom:112%}
+.o02__pol{position:absolute;margin:0;background:#fff;padding:14px 14px 0;border-radius:3px;box-shadow:0 18px 40px -16px rgba(14,26,51,.42),0 6px 14px -6px rgba(14,26,51,.3);transition:rotate var(--muis),scale var(--muis),box-shadow var(--muis)}
+.o02__pol img{display:block;width:100%;aspect-ratio:4/3;height:auto;object-fit:cover}
+.o02__pol figcaption{padding:.8rem .35rem 1rem}
+.o02__pol h3{font-size:1.5rem}
+.o02__pol p{margin-top:.15rem;font-size:.9rem;line-height:1.4;color:var(--graphite)}
+.o02__pol--1{top:0;left:0;width:61%;rotate:-2.5deg;z-index:2}
+.o02__pol--1 img{object-position:50% 40%}
+.o02__pol--2{top:39%;right:0;width:58%;rotate:4deg;z-index:1}
+.o02__pol--2 img{object-position:50% 16%}
+.o02__of{position:absolute;z-index:3;left:57%;top:31%;width:4.2rem!important;height:4.2rem!important;font-size:1.5rem!important;rotate:-8deg}
+@media (hover:hover){.o02__pol:hover{rotate:0deg;scale:1.03;z-index:4;box-shadow:0 26px 56px -18px rgba(14,26,51,.5)}}
+@media (max-width:900px){
+  .o02__in{grid-template-columns:1fr}
+  .o02__stapel{max-width:34rem;width:100%;margin-inline:auto;padding-bottom:min(112%,38rem)}
+}
+@media (max-width:560px){.o02__soorten{grid-template-columns:1fr}.o02__pol h3{font-size:1.2rem}.o02__pol p{font-size:.8rem}}
+
+/* =====================================================================
+   03 · referentie A .blok--stapel.blok--paneel + .dzc-tabel + .usps--rij
+   ===================================================================== */
+.o03__boven{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(1.5rem,3.5vw,3rem);align-items:stretch}
+.o03__paneel{background:var(--primary-50);border-left:6px solid var(--brand-accent);border-radius:24px;padding:clamp(1.5rem,2.6vw,2.3rem);box-shadow:0 0 0 1px var(--primary-100)}
+.o03 .kopgroep .intro{font-size:1rem}
+.o03__paneel .lijstkop{margin:1.3rem 0 .6rem}
+.o03__tabelvak{background:#fff;border-radius:16px;box-shadow:0 0 0 1px var(--primary-100),0 10px 24px -18px rgba(14,26,51,.4);overflow:hidden}
+.o03__tabel{width:100%;border-collapse:collapse}
+.o03__tabel tr+tr>*{border-top:1px solid var(--primary-100)}
+.o03__tabel th{width:14.5rem;padding:.7rem .9rem .7rem 1rem;text-align:left;vertical-align:top;font:800 1.15rem/1.2 var(--font-display);font-stretch:75%;color:var(--brand-primary)}
+.o03__tabel td{padding:.72rem 1rem .72rem .3rem;font-size:.94rem;line-height:1.45;color:var(--graphite)}
+.o03__nr{display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;margin-right:.6rem;border-radius:7px;background:var(--brand-primary);color:#fff;font:800 .85rem/1 var(--font-display);vertical-align:.1em}
+.o03__foto{position:relative;margin:0;border-radius:24px;overflow:hidden;min-height:19rem;background:var(--primary-100)}
+.o03__foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:scale var(--muis)}
+.o03__foto figcaption{position:absolute;left:1rem;right:1rem;bottom:1rem;background:rgba(11,35,82,.8);color:#fff;font:700 .78rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;padding:.6rem .9rem;border-radius:10px;border-bottom:3px solid var(--brand-accent);backdrop-filter:blur(4px)}
+@media (hover:hover){.o03__foto:hover img{scale:1.05}}
+.o03__rij{list-style:none;margin:2.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6rem}
+.o03__rij li{position:relative}
+.o03__ico{display:grid;place-items:center;width:4.4rem;height:4.4rem;margin-bottom:.8rem;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--primary-100));box-shadow:0 0 0 1px var(--primary-200)}
+.o03__ico .obj{width:3.3rem;height:3.3rem}
+.o03__rij h3{font-size:1.35rem;margin-bottom:.3rem}
+.o03__rij p{font-size:.94rem;line-height:1.5;color:var(--grey-600)}
+.o03__of{position:absolute;left:-1.55rem;top:1rem;translate:-50% 0;width:2.3rem!important;height:2.3rem!important;font-size:.85rem!important}
+.o03__slot{margin-top:1.4rem;padding-top:1.1rem;border-top:1px solid var(--grey-200);max-width:none;font-size:.9375rem;line-height:1.55;color:var(--graphite)}
+@media (max-width:960px){
+  .o03__boven{grid-template-columns:1fr}
+  .o03__foto{order:-1;aspect-ratio:16/10;min-height:0}
+  .o03__rij{grid-template-columns:1fr 1fr}
+  .o03__of{display:none!important}
+}
+@media (max-width:600px){
+  .o03__tabel,.o03__tabel tbody,.o03__tabel tr,.o03__tabel th,.o03__tabel td{display:block;width:auto}
+  .o03__tabel td{padding:0 1rem .8rem 3.3rem}
+  .o03__rij{grid-template-columns:1fr}
+}
+
+/* =====================================================================
+   04 · referentie B .sgdp-stappen + .sgdp-stap, paneel .sgz
+   ===================================================================== */
+.o04__kop{max-width:46rem}
+.o04 .lijstkop{margin-top:1.4rem}
+.o04__stappen{--uit:2.6rem;list-style:none;margin:calc(1rem + var(--uit)) 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem}
+.o04__stap{position:relative;padding:0 1.15rem 1.3rem;border-radius:18px;background:#fff;box-shadow:0 0 0 1px var(--primary-100),0 6px 0 var(--primary-200),0 18px 30px -22px rgba(14,26,51,.45)}
+.o04__beeld{position:relative;aspect-ratio:1.55;margin:0 -1.15rem 1rem;border-radius:18px 18px 0 0;background:radial-gradient(120% 90% at 70% 100%,var(--accent-200),var(--accent-50) 70%);box-shadow:inset 0 -1px 0 var(--accent-200)}
+.o04__figuur{position:absolute;bottom:0;right:8%;width:auto;height:calc(100% + var(--uit));max-width:none;filter:drop-shadow(0 10px 10px rgba(14,26,51,.28));transform-origin:50% 100%;transition:scale var(--muis)}
+.o04__figuur.rechts{right:0}
+.o04__figuur.breed{right:0;height:auto;width:88%;max-height:calc(100% + var(--uit));object-fit:contain;object-position:right bottom}
+@media (hover:hover){.o04__stap:hover .o04__figuur{scale:1.06}}
+.o04__no{position:absolute;top:.75rem;left:.75rem;z-index:1;padding:.32rem .7rem;border-radius:999px;background:var(--brand-primary);color:#fff;font:800 .95rem/1 var(--font-display);font-stretch:75%;letter-spacing:.03em;box-shadow:0 2px 0 var(--brand-secondary)}
+.o04__stap h3{font-size:1.28rem;margin-bottom:.35rem}
+.o04__stap p{font-size:.93rem;line-height:1.5;color:var(--grey-600)}
+.o04__paneel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:2rem;align-items:center;margin-top:2rem;padding:1.6rem 1.8rem;border-radius:22px;background:#fff;box-shadow:var(--plaat)}
+.o04__slot{font-size:.9375rem;line-height:1.55;color:var(--graphite)}
+.o04__soorten{list-style:none;margin:.9rem 0 0;padding:0;display:grid;gap:.55rem}
+.o04__soorten li{display:grid;grid-template-columns:1.5rem minmax(0,1fr);gap:.6rem}
+.o04__soorten h3{font:700 .95rem/1.35 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o04__soorten p{font-size:.875rem;line-height:1.45;color:var(--grey-600)}
+.o04__tegels{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:.7rem}
+.o04__tegel{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.2rem .9rem;align-items:center;padding:1rem 1.1rem;border-radius:16px;background:var(--primary-50);box-shadow:0 0 0 1px var(--primary-100)}
+.o04__tegel .obj{grid-row:span 2;width:3.4rem;height:4.2rem}
+.o04__tegel h3{align-self:end;font-size:1.55rem}
+.o04__tegel p{align-self:start;font-size:.9rem;line-height:1.45;color:var(--graphite)}
+@media (max-width:1100px){.o04__stappen{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:calc(1rem + var(--uit))}}
+@media (max-width:900px){.o04__paneel{grid-template-columns:1fr}}
+@media (max-width:700px){.o04__stappen{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.o04__stappen{grid-template-columns:1fr}.o04__beeld{aspect-ratio:2.2}.o04__tegels{grid-template-columns:1fr}.o04__tegels .of{justify-self:center}}
+
+/* =====================================================================
+   05 · referentie B .sgdp-kaarten + .sgdp-kaart--uitgelicht + .kerncijfers
+   ===================================================================== */
+.o05--zacht{background:var(--accent-50)}
+.o05__kop{max-width:46rem}
+.o05__kaarten{list-style:none;margin:2.4rem 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.9rem 1rem}
+.o05__kaart{position:relative;display:flex;flex-direction:column;padding:1.4rem 1.5rem 1.5rem;border-radius:18px;background:#fff;box-shadow:0 0 0 1px var(--primary-100),0 14px 30px -24px rgba(14,26,51,.45)}
+.o05__foto{display:block;width:7.2rem;aspect-ratio:4/3;margin:-2.6rem 0 0 -.3rem;border-radius:12px;overflow:hidden;border:4px solid #fff;box-shadow:0 6px 0 var(--primary-200),0 14px 20px -10px rgba(14,26,51,.5);rotate:-2deg;background:var(--primary-100)}
+.o05__foto img{display:block;width:100%;height:100%;object-fit:cover;transition:scale var(--muis)}
+@media (hover:hover){.o05__kaart:hover .o05__foto img{scale:1.08}}
+.o05__nr{position:absolute;top:1rem;right:1.2rem;font:800 1.9rem/1 var(--font-display);font-stretch:75%;color:var(--primary-200)}
+.o05__kaart h3{margin-top:.95rem;font-size:1.35rem}
+.o05__kaart p{margin-top:.35rem;font-size:.95rem;line-height:1.55;color:var(--grey-600)}
+.o05__kaart--uitgelicht{justify-content:center;gap:.5rem;background:linear-gradient(160deg,#FFD95A,var(--brand-accent));box-shadow:0 0 0 1px var(--accent-600),0 6px 0 var(--accent-700),0 18px 30px -20px rgba(14,26,51,.45)}
+.o05__prijs{display:grid;grid-template-columns:3rem minmax(0,1fr);gap:.9rem;align-items:center}
+.o05__prijs .obj{width:3rem;height:3.7rem}
+.o05__kaart--uitgelicht h3{margin:0;color:var(--brand-secondary);font-size:1.4rem}
+.o05__kaart--uitgelicht p{margin-top:.1rem;color:var(--brand-secondary);font-size:.9rem;line-height:1.4}
+.o05__of{margin-left:.15rem;width:2.2rem!important;height:2.2rem!important;font-size:.8rem!important;background:var(--brand-secondary)!important;color:var(--brand-accent)!important;box-shadow:0 3px 0 #06142f!important}
+.o05__cijfers{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr);margin-top:1.6rem;border-radius:20px;background:#fff;box-shadow:0 0 0 1px var(--primary-100),0 18px 36px -26px rgba(14,26,51,.45)}
+.o05__cijfers>*{padding:1.15rem 1.4rem}
+.o05__cijfers>*+*{border-left:1px solid var(--primary-100)}
+.o05__slot{align-self:center;font-size:.9rem;line-height:1.5;color:var(--graphite)}
+.o05__cijfer{display:grid;grid-template-columns:3.6rem minmax(0,1fr);gap:.9rem;align-items:center}
+.o05__cijfer .obj{width:3.6rem;height:3rem}
+.o05__cijfer h3{font:700 .98rem/1.3 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o05__cijfer p{margin-top:.1rem;font-size:.86rem;line-height:1.45;color:var(--grey-600)}
+@media (max-width:980px){.o05__kaarten{grid-template-columns:repeat(2,minmax(0,1fr))}.o05__cijfers{grid-template-columns:1fr 1fr}.o05__slot{grid-column:1/-1}.o05__cijfers>*+*{border-left:0;border-top:1px solid var(--primary-100)}.o05__cijfer+.o05__cijfer{border-left:1px solid var(--primary-100)}}
+@media (max-width:600px){.o05__kaarten{grid-template-columns:1fr}.o05__cijfers{grid-template-columns:1fr}.o05__cijfer+.o05__cijfer{border-left:0}}
+
+/* =====================================================================
+   06 · referentie B .sgteam
+   ===================================================================== */
+.o06__kop{margin-bottom:1.4rem!important}
+.o06__rij{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(2rem,5vw,4rem)}
+.o06 .lijstkop{margin-bottom:.8rem}
+.o06__feiten{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.o06__feiten li{display:grid;grid-template-columns:3.6rem minmax(0,1fr);column-gap:1rem;align-items:center;padding:.5rem 1.1rem .5rem .7rem;border-radius:16px;background:#fff;box-shadow:0 0 0 1px var(--primary-100),0 14px 30px -24px rgba(14,26,51,.45)}
+.o06__foto{display:block;width:3.6rem;height:3.6rem;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #fff,0 0 0 5px var(--brand-accent)}
+.o06__foto img{display:block;width:100%;height:100%;object-fit:cover}
+.o06__feiten h3{font-size:1.18rem}
+.o06__feiten p{margin-top:.1rem;font-size:.9rem;line-height:1.4;color:var(--grey-600)}
+.o06__podium{position:relative;align-self:end;padding-right:1.7rem;isolation:isolate}
+.o06__stapel{--v:1.7rem;position:absolute;z-index:0;left:0;right:1.7rem;top:17%;bottom:0}
+.o06__stapel::before,.o06__stapel::after{content:"";position:absolute;inset:0;border-radius:20px;transition:translate var(--muis)}
+.o06__stapel::before{background:linear-gradient(150deg,var(--brand-primary),var(--brand-secondary));translate:var(--v) calc(-1 * var(--v));box-shadow:0 18px 34px -20px rgba(11,35,82,.6)}
+.o06__stapel::after{background:linear-gradient(180deg,var(--primary-100),var(--primary-50));box-shadow:0 1px 2px rgba(14,26,51,.06),0 16px 30px -18px rgba(11,35,82,.45)}
+.o06__team{position:relative;z-index:1;display:block;width:88%;height:auto;margin-inline:auto;transform-origin:50% 100%;filter:drop-shadow(0 12px 14px rgba(14,26,51,.3));transition:scale var(--muis)}
+@media (hover:hover){.o06__podium:hover .o06__stapel{--v:2.2rem}.o06__podium:hover .o06__team{scale:1.03}}
+.o06__cta{margin-top:2rem;padding:1.4rem clamp(1.4rem,4vw,3rem) 1.5rem;border-radius:28px;background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 8px 0 var(--accent-700),0 28px 40px -26px rgba(14,26,51,.55);text-align:center}
+.o06__duo{display:flex;justify-content:center;align-items:center;gap:1.6rem}
+.o06__prijs{flex:1 1 0;max-width:24rem}
+.o06__prijs h3{font-size:clamp(1.6rem,1.2rem + 1.2vw,2.1rem);color:var(--brand-secondary)}
+.o06__prijs p{margin-top:.25rem;font-size:1rem;font-weight:600;line-height:1.45;text-wrap:balance}
+.o06__of{background:var(--brand-secondary)!important;color:var(--brand-accent)!important;box-shadow:0 3px 0 #06142f!important}
+.o06__slot{max-width:70ch;margin:1.1rem auto 0;font-size:.92rem;line-height:1.55;color:color-mix(in srgb,var(--brand-secondary) 88%,transparent)}
+.o06__knoppen{list-style:none;margin:1.2rem 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem}
+.o06__knoppen li{display:grid;grid-template-columns:3rem minmax(0,1fr);gap:.7rem;align-items:center;padding:.45rem 1.3rem .45rem .6rem;border-radius:999px;background:#fff;text-align:left;box-shadow:0 3px 0 var(--accent-700),0 10px 20px -12px rgba(14,26,51,.5)}
+.o06__knoppen .obj{width:3rem;height:2.6rem}
+.o06__knoppen h3{font:700 .95rem/1.25 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o06__knoppen p{font-size:.82rem;line-height:1.35;color:var(--grey-600)}
+@media (max-width:1000px){.o06__rij{grid-template-columns:1fr}.o06__podium{max-width:36rem;width:100%;margin-inline:auto}}
+@media (max-width:640px){.o06__duo{flex-direction:column;gap:.8rem}.o06__knoppen li{border-radius:18px}}
+
+/* =====================================================================
+   07 · referentie B .sgpr (prijzenblok)
+   ===================================================================== */
+.o07{padding-top:clamp(5.5rem,7vw,6.5rem)!important}
+.o07__kaart{position:relative;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);background:#fff;border-radius:24px;box-shadow:var(--plaat)}
+.o07__kaart::after{content:"";position:absolute;inset:0;z-index:4;border:1px solid var(--primary-200);border-radius:inherit;pointer-events:none}
+.o07__body{padding:clamp(1.4rem,2.6vw,2.3rem)}
+.o07 .kopgroep .h2{font-size:clamp(1.8rem,1.4rem + 1.1vw,2.35rem)}
+.o07 .kopgroep .intro{font-size:.95rem}
+.o07__rijen{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:.6rem;margin-top:1.2rem}
+.o07-rij{display:flex;align-items:center;justify-content:space-between;gap:.9rem;height:100%;border:1px solid var(--grey-200);border-radius:12px;padding:.75rem .7rem .75rem 1rem;transition:border-color .2s,background .2s,box-shadow .2s}
+.o07-rij h3{font-size:1.4rem}
+.o07-rij p{margin-top:.1rem;font-size:.85rem;line-height:1.4;color:var(--grey-600)}
+.o07-rij .obj{flex:none;width:3.2rem;height:3.6rem}
+.o07-rij--uitgelicht,.o07-rij:hover{border-color:var(--brand-primary);background:var(--primary-50);box-shadow:inset 0 0 0 1px var(--brand-primary)}
+.o07__rijen:has(.o07-rij:hover) .o07-rij--uitgelicht:not(:hover){border-color:var(--grey-200);background:none;box-shadow:none}
+.o07 .lijstkop{margin:1.2rem 0 .55rem}
+.o07__factoren{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.4rem}
+.o07__factoren li{display:grid;grid-template-columns:1.7rem minmax(0,1fr);gap:.65rem;align-items:start}
+.o07__nr{display:grid;place-items:center;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--primary-100);color:var(--brand-primary);font:800 .8rem/1 var(--font-display)}
+.o07__factoren h3{font:700 .95rem/1.3 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o07__factoren p{font-size:.84rem;line-height:1.4;color:var(--grey-600)}
+.o07__voet{margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--grey-200);font-size:.84rem;line-height:1.5;color:var(--grey-600)}
+.o07__media{position:relative;display:flex;flex-direction:column}
+.o07__beeld{position:relative;z-index:3;flex:1 1 auto;min-height:22rem;border-radius:0 24px 0 0}
+.o07__beeld .pop__raam img{transition:scale var(--muis)}
+.o07__badge{position:relative;z-index:3;display:grid;gap:.9rem;padding:1.2rem 1.4rem 1.3rem;border-radius:0 0 24px 0;background:linear-gradient(160deg,#FFD95A,var(--brand-accent));color:var(--brand-secondary)}
+.o07__badge>div{display:grid;grid-template-columns:3.2rem minmax(0,1fr);gap:.1rem .8rem;align-items:center}
+.o07__badge .obj{grid-row:span 2;width:3.2rem;height:2.8rem}
+.o07__badge h3{align-self:end;font-size:1.35rem;color:var(--brand-secondary)}
+.o07__badge p{align-self:start;font-size:.84rem;line-height:1.4;font-weight:500}
+@media (max-width:980px){
+  .o07__kaart{grid-template-columns:1fr}
+  .o07__media{order:-1}
+  .o07__beeld{flex:none;min-height:0;aspect-ratio:16/10;border-radius:24px 24px 0 0}
+  .o07__badge{border-radius:0;grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){.o07__rijen{grid-template-columns:1fr}.o07__rijen .of{justify-self:center}.o07__factoren{grid-template-columns:1fr}.o07__badge{grid-template-columns:1fr}}
+
+/* =====================================================================
+   08 · referentie C .b-maten
+   ===================================================================== */
+.o08__kop{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-areas:"titel lead" "feiten keuze";gap:1.2rem clamp(2.5rem,5vw,5rem);align-items:start;margin-bottom:clamp(2rem,3.4vw,2.8rem)}
+.o08__titel{grid-area:titel}
+.o08__titel .label{margin-bottom:.8rem}
+.o08__titel .h2{margin:0;font-size:clamp(2.1rem,1.6rem + 1.4vw,2.8rem);line-height:1.02}
+.o08__lead{grid-area:lead;align-self:end;font-size:1.0625rem;line-height:1.55;color:var(--graphite)}
+.o08__feiten{grid-area:feiten;list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
+.o08__feiten li{position:relative;padding-left:1.6rem}
+.o08__feiten li::before{content:"";position:absolute;left:.1rem;top:.45em;width:.62rem;height:.62rem;border-radius:2px;background:var(--brand-accent);box-shadow:1px 1px 0 var(--accent-700);rotate:45deg}
+.o08__feiten .vink{display:none}
+.o08__feiten h3{display:inline;font:700 1rem/1.5 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o08__feiten h3::after{content:": "}
+.o08__feiten p{display:inline;font-size:.95rem;color:var(--graphite)}
+.o08__feiten div{line-height:1.45}
+.o08__keuze{grid-area:keuze;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:.6rem}
+.o08__prijs{display:grid;grid-template-columns:2.8rem minmax(0,1fr);gap:.8rem;align-items:center;height:100%;padding:.8rem 1rem;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--primary-100),0 12px 22px -18px rgba(14,26,51,.5)}
+.o08__prijs .obj{width:2.8rem;height:3.4rem}
+.o08__prijs h3{font-size:1.3rem}
+.o08__prijs p{margin-top:.1rem;font-size:.85rem;line-height:1.4;color:var(--grey-600)}
+.o08__of{width:2.3rem!important;height:2.3rem!important;font-size:.82rem!important}
+.o08__beeld{position:relative;isolation:isolate}
+.o08__podium{position:relative;container-type:inline-size}
+.o08__foto{position:relative;margin:0;overflow:hidden;border-radius:24px;aspect-ratio:3;background:var(--brand-secondary);box-shadow:0 30px 50px -36px rgba(14,26,51,.6)}
+.o08__fotoimg{display:block;width:100%;height:100%;object-fit:cover;object-position:30% 62%}
+.o08__foto::after{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(11,35,82,.45),rgba(11,35,82,0) 45%)}
+.o08__boog{--bw:23cqw;position:absolute;z-index:1;right:-1.2%;bottom:-13%;width:var(--bw);height:104%;border-radius:calc(var(--bw) / 2) calc(var(--bw) / 2) 18px 18px;pointer-events:none}
+.o08__boog::before,.o08__boog::after{content:"";position:absolute;border-radius:inherit}
+.o08__boog::before{inset:-14px 14px 14px -14px;border:2px solid var(--brand-accent)}
+.o08__boog::after{inset:0;background:linear-gradient(165deg,#2D5FC4 0%,var(--brand-primary) 45%,var(--brand-secondary) 100%);box-shadow:0 30px 50px -30px rgba(6,20,47,.75)}
+.o08__verhuizer{position:absolute;z-index:2;right:4.2cqw;bottom:-12%;width:auto;max-width:none;height:106%;filter:drop-shadow(0 12px 14px rgba(6,20,47,.4));transform-origin:50% 100%;transition:scale var(--muis)}
+@media (hover:hover){.o08__podium:hover .o08__verhuizer{scale:1.05}}
+.o08__vraag{position:absolute;z-index:3;left:1.3rem;top:1.3rem;padding:.55rem 1rem;border-radius:999px;background:#fff;color:var(--brand-secondary);font:700 .95rem/1.2 var(--font-sans);box-shadow:0 10px 24px -14px rgba(14,26,51,.6)}
+.o08__schaal{position:relative;z-index:3;margin:-10rem 26cqw 0 1.3rem}
+.o08__maten{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7rem;align-items:end}
+.o08__maat{--hoog:12.5rem;position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:.6rem;min-height:var(--hoog);padding:1.15rem .95rem 1rem;border-radius:16px;background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(14,26,51,.06),0 30px 50px -32px rgba(14,26,51,.6)}
+.o08__maat::before{content:"";position:absolute;top:0;left:1rem;width:2.3rem;height:5px;border-radius:0 0 4px 4px;background:var(--brand-accent)}
+.o08__maat--2{--hoog:14rem;background:var(--primary-100)}
+.o08__maat--3{--hoog:15.75rem;background:var(--brand-primary);color:#fff}
+.o08__maat--4{--hoog:17rem;background:var(--primary-600);color:#fff}
+.o08__maat--5{--hoog:18.5rem;background:var(--brand-secondary);color:#fff}
+.o08__getal{margin:0}
+.o08__getal b{font:800 2.6rem/.9 var(--font-display);font-stretch:75%;color:var(--brand-primary)}
+.o08__maat h3{font-size:1.12rem;line-height:1.15;color:var(--brand-secondary)}
+.o08__maat p{margin-top:.3rem;font-size:.8rem;line-height:1.4;color:var(--grey-600)}
+.o08__maat:is(.o08__maat--3,.o08__maat--4,.o08__maat--5) :is(h3,.o08__getal b){color:#fff}
+.o08__maat:is(.o08__maat--3,.o08__maat--4,.o08__maat--5) p{color:rgba(255,255,255,.82)}
+.o08__noot{margin:.9rem .2rem 0;max-width:none;font-size:.86rem;line-height:1.5;color:var(--grey-600)}
+@media (max-width:1100px){
+  .o08__kop{grid-template-columns:1fr;grid-template-areas:"titel" "lead" "feiten" "keuze"}
+  .o08__schaal{margin:-5rem .8rem 0}
+  .o08__maten{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .o08__boog,.o08__verhuizer{display:none}
+}
+@media (max-width:640px){.o08__maten{grid-template-columns:1fr 1fr}.o08__maat{--hoog:auto!important}.o08__keuze{grid-template-columns:1fr}.o08__keuze .of{justify-self:center}.o08__foto{aspect-ratio:16/10}}
+
+/* =====================================================================
+   09 · referentie C .b-certificaat
+   ===================================================================== */
+.o09__top{position:relative;display:grid;grid-template-columns:min(46rem,60%) minmax(0,1fr);column-gap:2rem;margin-bottom:clamp(1.6rem,3vw,2.4rem)}
+.o09__wagen{grid-column:2;position:absolute;inset:-1rem 0 -2.2rem 0;margin:0;z-index:2}
+.o09__wagen .obj{width:100%;height:100%;object-fit:contain;object-position:right bottom}
+.o09__map{position:relative;display:grid;grid-template-columns:minmax(0,1fr) clamp(15rem,11rem + 7vw,20rem);filter:drop-shadow(0 26px 34px rgba(11,35,82,.18))}
+.o09__vel{position:relative;z-index:2;display:flex;flex-direction:column;border-radius:20px 0 0 20px;background:#fff;overflow:hidden;box-shadow:0 0 0 1px var(--primary-100)}
+.o09__hoofd{display:flex;align-items:center;gap:1.6rem;padding:1.3rem 2.2rem;border-bottom:4px solid var(--brand-accent);background:linear-gradient(160deg,var(--brand-primary),var(--brand-secondary))}
+.o09__logo{flex:none;width:auto;height:3.6rem}
+.o09__titel{font-size:clamp(1.5rem,1.2rem + .8vw,1.9rem)!important;color:#fff!important;padding-left:1.6rem;border-left:1px solid rgba(255,255,255,.3)}
+.o09__lijst{list-style:none;margin:0;padding:1.1rem 2.2rem .4rem;display:grid;grid-template-columns:1fr 1fr;column-gap:2.4rem}
+.o09__lijst li{display:grid;grid-template-columns:1.9rem minmax(0,1fr);gap:.9rem;padding:.85rem 0;border-bottom:1px solid var(--grey-200)}
+.o09__nr{display:grid;place-items:center;width:1.9rem;height:1.8rem;border-radius:5px;background:var(--brand-primary);color:#fff;font:800 .85rem/1 var(--font-display);box-shadow:0 2px 0 var(--brand-secondary)}
+.o09__lijst h3{font:700 1rem/1.3 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o09__lijst p{margin-top:.15rem;font-size:.9rem;line-height:1.45;color:var(--grey-600)}
+.o09__bron{margin-top:auto;padding:1rem 2.2rem 1.2rem;border-top:1px solid var(--grey-200);font-size:.86rem;line-height:1.5;color:var(--grey-600)}
+.o09__zij{position:relative;display:flex;flex-direction:column;border-radius:0 20px 20px 0;overflow:hidden;background:linear-gradient(170deg,var(--brand-primary),var(--brand-secondary) 70%);color:#fff}
+.o09__foto{margin:0;height:11rem;clip-path:polygon(0 0,100% 0,100% 72%,0 100%)}
+.o09__foto img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+.o09__paneel{display:flex;flex-direction:column;justify-content:center;gap:.9rem;padding:.6rem 1.5rem 1.6rem;flex:1}
+.o09__of{margin-left:.3rem}
+.o09__prijs{display:grid;grid-template-columns:2.8rem minmax(0,1fr);gap:.1rem .9rem;align-items:center}
+.o09__prijs .obj{grid-row:span 2;width:2.8rem;height:3.4rem;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35))}
+.o09__prijs h3{align-self:end;font-size:1.45rem;color:#fff}
+.o09__prijs p{align-self:start;font-size:.88rem;line-height:1.45;color:rgba(255,255,255,.84)}
+.o09__of{width:2.2rem!important;height:2.2rem!important;font-size:.8rem!important}
+.o09__soorten{list-style:none;margin:.6rem 0 0;padding:1rem 2.2rem;display:grid;grid-template-columns:1fr 1fr;column-gap:2.4rem;background:var(--primary-50)}
+.o09__soorten li{display:grid;grid-template-columns:1.5rem minmax(0,1fr);gap:.6rem}
+.o09__soorten h3{font:700 .95rem/1.3 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o09__soorten p{font-size:.86rem;line-height:1.4;color:var(--grey-600)}
+@media (max-width:1000px){
+  .o09__top{grid-template-columns:1fr}
+  .o09__wagen{grid-column:auto;position:static;width:min(20rem,60%);margin:1rem 0 0 auto}
+  .o09__map{grid-template-columns:1fr}
+  .o09__vel{border-radius:20px 20px 0 0}
+  .o09__zij{border-radius:0 0 20px 20px}
+}
+@media (max-width:640px){.o09__lijst,.o09__soorten{grid-template-columns:1fr;padding-inline:1.3rem}.o09__soorten{row-gap:.7rem}.o09__hoofd{flex-direction:column;align-items:flex-start;gap:.8rem;padding-inline:1.3rem}.o09__titel{padding-left:0;border-left:0}.o09__bron{padding-inline:1.3rem}}
+
+/* =====================================================================
+   10 · referentie C .b-checklist
+   ===================================================================== */
+.o10__in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:clamp(2rem,5vw,4.5rem);align-items:start;isolation:isolate}
+.o10__in::before{content:"";position:absolute;z-index:-1;left:-50vw;right:44%;top:40%;height:40%;pointer-events:none;background:linear-gradient(90deg,var(--brand-secondary),var(--brand-primary));transform:skewY(-5deg)}
+.o10 .kopgroep{margin-bottom:1.6rem}
+.o10__beeld{position:relative;margin:0;border-radius:22px;overflow:hidden;aspect-ratio:16/10;box-shadow:0 30px 50px -30px rgba(6,20,47,.6)}
+.o10__beeld img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%;transition:scale .8s cubic-bezier(.4,0,.2,1)}
+@media (hover:hover){.o10__beeld:hover img{scale:1.05}}
+.o10__duo{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:.6rem;margin-top:1.6rem}
+.o10__prijs{display:grid;grid-template-columns:3rem minmax(0,1fr);gap:.8rem;align-items:center;height:100%;padding:.9rem 1rem;border-radius:16px;background:#fff;box-shadow:var(--plaat)}
+.o10__prijs .obj{width:3rem;height:3.7rem}
+.o10__prijs h3{font-size:1.35rem}
+.o10__prijs p{margin-top:.1rem;font-size:.86rem;line-height:1.4;color:var(--grey-600)}
+.o10__prijs--blauw{background:linear-gradient(160deg,var(--brand-primary),var(--primary-600));box-shadow:var(--plaat-blauw)}
+.o10__prijs--blauw h3{color:#fff}
+.o10__prijs--blauw p{color:rgba(255,255,255,.86)}
+.o10__bord{position:relative;z-index:2;isolation:isolate;width:100%;max-width:36rem;margin:1.4rem auto 0;padding:2.6rem clamp(1.15rem,3vw,2rem) 1.5rem}
+.o10__bord::before{content:"";position:absolute;z-index:-2;inset:-1rem -1rem -1.3rem;border-radius:22px;background:linear-gradient(160deg,var(--brand-primary),var(--brand-secondary) 65%);rotate:-1.8deg;box-shadow:0 34px 60px -34px rgba(6,20,47,.75)}
+.o10__bord::after{content:"";position:absolute;z-index:-1;inset:0;border-radius:6px;background:#fff;box-shadow:0 1px 2px rgba(14,26,51,.08)}
+.o10__titel{position:relative;margin:0;padding-bottom:.8rem;border-bottom:2px solid var(--brand-secondary);font-size:1.55rem!important;color:var(--brand-secondary)!important}
+.o10__titel::before{content:"";position:absolute;top:-4.1rem;left:50%;width:7.6rem;height:2.8rem;margin-left:-3.8rem;border-radius:.75rem .75rem .5rem .5rem;background:url(/img/logo/dereus-beeldmerk-negatief.svg) center 55%/2rem no-repeat,linear-gradient(#5b6170,#161b26);box-shadow:0 6px 12px -6px rgba(10,10,10,.6),inset 0 1px 0 rgba(255,255,255,.25)}
+.o10__lijst{list-style:none;margin:0;padding:0}
+.o10__punt{display:grid;grid-template-columns:1.45rem minmax(0,1fr);gap:.95rem;padding:.8rem 0;border-bottom:1px dashed var(--primary-200)}
+.o10__punt .vink{width:1.45rem;height:1.45rem;margin-top:.05rem;border-radius:5px;box-shadow:0 0 0 2px var(--accent-700) inset}
+.o10__punt b{display:block;font:700 1rem/1.35 var(--font-sans);color:var(--ink)}
+.o10__punt span:not(.vink){display:block;margin-top:.15rem;font-size:.9rem;line-height:1.45;color:var(--grey-600)}
+.o10__voet{margin-top:1rem;font-size:.86rem;line-height:1.5;color:var(--grey-600)}
+.o10__soorten{list-style:none;margin:.9rem 0 0;padding:.9rem 0 0;border-top:2px solid var(--brand-secondary);display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.o10__soorten li{display:grid;grid-template-columns:1.5rem minmax(0,1fr);gap:.55rem}
+.o10__soorten h3{font:700 .92rem/1.3 var(--font-sans);font-stretch:normal;color:var(--ink)}
+.o10__soorten p{font-size:.82rem;line-height:1.4;color:var(--grey-600)}
+@media (max-width:900px){.o10__in{grid-template-columns:1fr}.o10__in::before{top:18%;height:22%}}
+@media (max-width:560px){.o10__duo{grid-template-columns:1fr}.o10__duo .of{justify-self:center}.o10__soorten{grid-template-columns:1fr}}
+
+</style>
+<script src="/js/site.js?v=0aa1a00f3c" defer></script>
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-check" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M18.4697 6.46967C18.7626 6.17678 19.2373 6.17678 19.5302 6.46967C19.8231 6.76256 19.8231 7.23732 19.5302 7.53022L9.53022 17.5302C9.23732 17.8231 8.76256 17.8231 8.46967 17.5302C8.17678 17.2373 8.17678 16.7626 8.46967 16.4697L18.4697 6.46967Z" opacity=".5"/><path d="M4.46967 12.4697C4.76256 12.1768 5.23732 12.1768 5.53022 12.4697L9.53022 16.4697C9.82311 16.7626 9.82311 17.2373 9.53022 17.5302C9.23732 17.8231 8.76256 17.8231 8.46967 17.5302L4.46967 13.5302C4.17678 13.2373 4.17678 12.7626 4.46967 12.4697Z"/></symbol><symbol id="i-chevron" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M8.30273 12.4044L11.6296 15.8351C11.8428 16.0549 12.1573 16.0549 12.3704 15.8351L18.8001 9.20467C19.2013 8.79094 18.9581 8 18.4297 8H12.7071L8.30273 12.4044Z"/><path d="M11.2929 8H5.5703C5.04189 8 4.79869 8.79094 5.1999 9.20467L7.60648 11.6864L11.2929 8Z" opacity=".5"/></symbol><symbol id="i-document" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M3 10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157C21 4.34315 21 6.22876 21 10V14C21 17.7712 21 19.6569 19.8284 20.8284C18.6569 22 16.7712 22 13 22H11C7.22876 22 5.34315 22 4.17157 20.8284C3 19.6569 3 17.7712 3 14V10Z" opacity=".5"/><path d="M13 15.25C13.4142 15.25 13.75 15.5858 13.75 16C13.75 16.4142 13.4142 16.75 13 16.75H8C7.58579 16.75 7.25 16.4142 7.25 16C7.25 15.5858 7.58579 15.25 8 15.25H13Z"/><path d="M16 11.25C16.4142 11.25 16.75 11.5858 16.75 12C16.75 12.4142 16.4142 12.75 16 12.75H8C7.58579 12.75 7.25 12.4142 7.25 12C7.25 11.5858 7.58579 11.25 8 11.25H16Z"/><path d="M16 7.25C16.4142 7.25 16.75 7.58579 16.75 8C16.75 8.41421 16.4142 8.75 16 8.75H8C7.58579 8.75 7.25 8.41421 7.25 8C7.25 7.58579 7.58579 7.25 8 7.25H16Z"/></symbol><symbol id="i-extern" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M20.5355 3.46447C19.0711 2 16.714 2 12 2C7.28595 2 4.92893 2 3.46447 3.46447C2 4.92893 2 7.28595 2 12C2 16.714 2 19.0711 3.46447 20.5355C4.92893 22 7.28595 22 12 22C16.714 22 19.0711 22 20.5355 20.5355C22 19.0711 22 16.714 22 12C22 7.28595 22 4.92893 20.5355 3.46447Z" opacity=".5"/><path d="M15.5787 9.17188C15.5787 8.75766 15.2429 8.42188 14.8287 8.42188L10.5861 8.42188C10.1719 8.42187 9.83609 8.75766 9.83609 9.17188C9.83609 9.58609 10.1719 9.92187 10.5861 9.92188H13.0181L8.64154 14.2984C8.34865 14.5913 8.34865 15.0662 8.64154 15.3591C8.93444 15.652 9.40931 15.652 9.70221 15.3591L14.0787 10.9825L14.0787 13.4145C14.0787 13.8287 14.4145 14.1645 14.8287 14.1645C15.2429 14.1645 15.5787 13.8287 15.5787 13.4145L15.5787 9.17188Z"/></symbol><symbol id="i-google" viewBox="0 0 24 24" fill="currentColor"><g transform="translate(2.64 2.64) scale(.78)"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.6l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></g></symbol><symbol id="i-klok" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" opacity=".5"/><path fill-rule="evenodd" d="M12 7.25C12.4142 7.25 12.75 7.58579 12.75 8V11.6893L15.0303 13.9697C15.3232 14.2626 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2626 15.3232 13.9697 15.0303L11.4697 12.5303C11.329 12.3897 11.25 12.1989 11.25 12V8C11.25 7.58579 11.5858 7.25 12 7.25Z" clip-rule="evenodd"/></symbol><symbol id="i-mail" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M14.2 3H9.8C5.65164 3 3.57746 3 2.28873 4.31802C1 5.63604 1 7.75736 1 12C1 16.2426 1 18.364 2.28873 19.682C3.57746 21 5.65164 21 9.8 21H14.2C18.3484 21 20.4225 21 21.7113 19.682C23 18.364 23 16.2426 23 12C23 7.75736 23 5.63604 21.7113 4.31802C20.4225 3 18.3484 3 14.2 3Z" opacity=".5"/><path d="M19.1284 8.03302C19.4784 7.74133 19.5257 7.22112 19.234 6.87109C18.9423 6.52106 18.4221 6.47377 18.0721 6.76546L15.6973 8.74444C14.671 9.59966 13.9585 10.1915 13.357 10.5784C12.7747 10.9529 12.3798 11.0786 12.0002 11.0786C11.6206 11.0786 11.2258 10.9529 10.6435 10.5784C10.0419 10.1915 9.32941 9.59966 8.30315 8.74444L5.92837 6.76546C5.57834 6.47377 5.05812 6.52106 4.76643 6.87109C4.47474 7.22112 4.52204 7.74133 4.87206 8.03302L7.28821 10.0465C8.2632 10.859 9.05344 11.5176 9.75091 11.9661C10.4775 12.4334 11.185 12.7286 12.0002 12.7286C12.8154 12.7286 13.523 12.4334 14.2495 11.9661C14.947 11.5176 15.7372 10.859 16.7122 10.0465L19.1284 8.03302Z"/></symbol><symbol id="i-menu" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><rect x="4" y="6" width="16" height="2" rx="1"/><rect x="4" y="11" width="16" height="2" rx="1"/><rect x="4" y="16" width="16" height="2" rx="1"/></symbol><symbol id="i-pijl" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path fill-rule="evenodd" d="M3.25 12C3.25 11.5858 3.58579 11.25 4 11.25H13.25V12.75H4C3.58579 12.75 3.25 12.4142 3.25 12Z" clip-rule="evenodd" opacity=".5"/><path d="M13.25 12.75V18C13.25 18.3034 13.4327 18.5768 13.713 18.6929C13.9932 18.809 14.3158 18.7449 14.5303 18.5304L20.5303 12.5304C20.671 12.3897 20.75 12.1989 20.75 12C20.75 11.8011 20.671 11.6103 20.5303 11.4697L14.5303 5.46969C14.3158 5.25519 13.9932 5.19103 13.713 5.30711C13.4327 5.4232 13.25 5.69668 13.25 6.00002V11.25V12.75Z"/></symbol><symbol id="i-plus" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M20 11.25C20.4142 11.25 20.75 11.5858 20.75 12C20.75 12.4142 20.4142 12.75 20 12.75L4 12.75C3.58579 12.75 3.25 12.4142 3.25 12C3.25 11.5858 3.58579 11.25 4 11.25L20 11.25Z"/><path d="M12.7705 20C12.7705 20.4142 12.4347 20.75 12.0205 20.75C11.6063 20.75 11.2705 20.4142 11.2705 20L11.2705 4C11.2705 3.58579 11.6063 3.25 12.0205 3.25C12.4347 3.25005 12.7705 3.58582 12.7705 4L12.7705 20Z" opacity=".5"/></symbol><symbol id="i-schild" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M12 22C10.9807 22 10.6199 21.8425 9.89844 21.5273C7.23883 20.3655 3 17.6292 3 11.9912V11L12 8V22Z"/><path d="M12 2C12.8114 2 13.595 2.26825 15.1621 2.80469L15.7354 3.00098C18.7409 4.02979 20.244 4.54434 20.6221 5.08203C20.9996 5.6199 21 7.21941 21 10.417V11L12 8V2Z"/><g opacity=".5"><path d="M21 11V11.9912C21 17.6292 16.7612 20.3655 14.1016 21.5273C13.3801 21.8425 13.0193 22 12 22V8L21 11Z"/><path d="M12 8L3 11V10.417C3 7.21941 3.00041 5.6199 3.37793 5.08203C3.75595 4.54434 5.25909 4.02979 8.26465 3.00098L8.83789 2.80469C10.405 2.26825 11.1886 2 12 2V8Z"/></g></symbol><symbol id="i-sluit" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M5.53717 19.5302C5.24427 19.8231 4.7694 19.8231 4.47651 19.5302C4.18361 19.2373 4.18361 18.7624 4.47651 18.4696L18.4764 4.46967C18.7693 4.17678 19.2442 4.17678 19.5371 4.46967C19.8299 4.76256 19.8299 5.23744 19.5371 5.53033L5.53717 19.5302Z" opacity=".5"/><path d="M4.46978 5.53033C4.17689 5.23744 4.17689 4.76256 4.46978 4.46967C4.76268 4.17678 5.23755 4.17678 5.53044 4.46967L19.5303 18.4696C19.8232 18.7624 19.8232 19.2373 19.5303 19.5302C19.2374 19.8231 18.7626 19.8231 18.4697 19.5302L4.46978 5.53033Z"/></symbol><symbol id="i-ster" viewBox="1.565 1.565 20.87 20.87" fill="currentColor"><path d="M9.15316 5.40838C10.4198 3.13613 11.0531 2 12 2C12.9469 2 13.5802 3.13612 14.8468 5.40837L15.1745 5.99623C15.5345 6.64193 15.7144 6.96479 15.9951 7.17781C16.2757 7.39083 16.6251 7.4699 17.3241 7.62805L17.9605 7.77203C20.4201 8.32856 21.65 8.60682 21.9426 9.54773C22.2352 10.4886 21.3968 11.4691 19.7199 13.4299L19.2861 13.9372C18.8096 14.4944 18.5713 14.773 18.4641 15.1177C18.357 15.4624 18.393 15.8341 18.465 16.5776L18.5306 17.2544C18.7841 19.8706 18.9109 21.1787 18.1449 21.7602C17.3788 22.3417 16.2273 21.8115 13.9243 20.7512L13.3285 20.4768C12.6741 20.1755 12.3469 20.0248 12 20.0248C11.6531 20.0248 11.3259 20.1755 10.6715 20.4768L10.0757 20.7512C7.77268 21.8115 6.62118 22.3417 5.85515 21.7602C5.08912 21.1787 5.21588 19.8706 5.4694 17.2544L5.53498 16.5776C5.60703 15.8341 5.64305 15.4624 5.53586 15.1177C5.42868 14.773 5.19043 14.4944 4.71392 13.9372L4.2801 13.4299C2.60325 11.4691 1.76482 10.4886 2.05742 9.54773C2.35002 8.60682 3.57986 8.32856 6.03954 7.77203L6.67589 7.62805C7.37485 7.4699 7.72433 7.39083 8.00494 7.17781C8.28555 6.96479 8.46553 6.64194 8.82547 5.99623L9.15316 5.40838Z"/></symbol><symbol id="i-telefoon" viewBox="1.565 1.565 20.87 20.87" overflow="visible" fill="currentColor"><path d="M10.0376 5.31617L10.6866 6.4791C11.2723 7.52858 11.0372 8.90532 10.1147 9.8278C10.1147 9.8278 10.1147 9.8278 10.1147 9.8278C10.1146 9.82792 8.99588 10.9468 11.0245 12.9755C13.0525 15.0035 14.1714 13.8861 14.1722 13.8853C14.1722 13.8853 14.1722 13.8853 14.1722 13.8853C15.0947 12.9628 16.4714 12.7277 17.5209 13.3134L18.6838 13.9624C20.2686 14.8468 20.4557 17.0692 19.0628 18.4622C18.2258 19.2992 17.2004 19.9505 16.0669 19.9934C14.1588 20.0658 10.9183 19.5829 7.6677 16.3323C4.41713 13.0817 3.93421 9.84122 4.00655 7.93309C4.04952 6.7996 4.7008 5.77423 5.53781 4.93723C6.93076 3.54428 9.15317 3.73144 10.0376 5.31617Z" opacity=".5"/><path d="M13.2595 1.87983C13.3257 1.47094 13.7122 1.19357 14.1211 1.25976C14.1464 1.26461 14.2279 1.27983 14.2705 1.28933C14.3559 1.30834 14.4749 1.33759 14.6233 1.38082C14.9201 1.46726 15.3347 1.60967 15.8323 1.8378C16.8286 2.29456 18.1544 3.09356 19.5302 4.46936C20.906 5.84516 21.705 7.17097 22.1617 8.16725C22.3899 8.66487 22.5323 9.07947 22.6187 9.37625C22.6619 9.52466 22.6912 9.64369 22.7102 9.72901C22.7197 9.77168 22.7267 9.80594 22.7315 9.83125L22.7373 9.86245C22.8034 10.2713 22.5286 10.6739 22.1197 10.7401C21.712 10.8061 21.3279 10.53 21.2601 10.1231C21.258 10.1121 21.2522 10.0828 21.2461 10.0551C21.2337 9.9997 21.2124 9.91188 21.1786 9.79572C21.1109 9.56339 20.9934 9.21806 20.7982 8.79238C20.4084 7.94207 19.7074 6.76789 18.4695 5.53002C17.2317 4.29216 16.0575 3.59117 15.2072 3.20134C14.7815 3.00618 14.4362 2.88865 14.2038 2.82097C14.0877 2.78714 13.9417 2.75363 13.8863 2.7413C13.4793 2.67347 13.1935 2.28755 13.2595 1.87983Z"/><path fill-rule="evenodd" d="M13.4857 5.3293C13.5995 4.93102 14.0146 4.7004 14.4129 4.81419L14.2069 5.53534C14.4129 4.81419 14.4129 4.81419 14.4129 4.81419L14.4144 4.81461L14.4159 4.81505L14.4192 4.81602L14.427 4.81834L14.4468 4.8245C14.4618 4.82932 14.4807 4.8356 14.5031 4.84357C14.548 4.85951 14.6074 4.88217 14.6802 4.91337C14.8259 4.97581 15.0249 5.07223 15.2695 5.21694C15.7589 5.50662 16.4271 5.9878 17.2121 6.77277C17.9971 7.55775 18.4782 8.22593 18.7679 8.7154C18.9126 8.95991 19.009 9.15897 19.0715 9.30466C19.1027 9.37746 19.1254 9.43682 19.1413 9.48173C19.1493 9.50418 19.1555 9.52301 19.1604 9.53809L19.1665 9.55788L19.1688 9.56563L19.1698 9.56896L19.1702 9.5705C19.1702 9.5705 19.1707 9.57194 18.4495 9.77798L19.1707 9.57194C19.2845 9.97021 19.0538 10.3853 18.6556 10.4991C18.2607 10.6119 17.8492 10.3862 17.7313 9.99413L17.7276 9.98335C17.7223 9.96832 17.7113 9.93874 17.6928 9.89554C17.6558 9.8092 17.5887 9.66797 17.4771 9.47938C17.2541 9.10264 16.8514 8.53339 16.1514 7.83343C15.4515 7.13348 14.8822 6.73078 14.5055 6.50781C14.3169 6.39619 14.1757 6.32909 14.0893 6.29209C14.0461 6.27358 14.0165 6.26254 14.0015 6.25721L13.9907 6.25352C13.5987 6.13564 13.3729 5.72419 13.4857 5.3293Z" clip-rule="evenodd"/></symbol><symbol id="i-whatsapp" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#25D366" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#25D366" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol><symbol id="i-whatsapp-wit" viewBox="-72 -72 864 864" fill="currentColor"><path fill="#fff" d="M360,0C161.18,0,0,161.18,0,360c0,65.41,17.45,126.75,47.94,179.61L0,720l187.02-44.21c51.34,28.18,110.28,44.21,172.98,44.21,198.82,0,360-161.18,360-360S558.82,0,360,0ZM360,655.52c-60.17,0-116.13-17.98-162.82-48.87l-110.49,28.14,30.99-105.61c-33.53-47.93-53.2-106.26-53.2-169.19,0-163.21,132.31-295.52,295.52-295.52s295.52,132.31,295.52,295.52-132.31,295.52-295.52,295.52Z"/><path fill="#fff" d="M444.35,407.52l87.1,41.06c4,1.88,6.56,5.94,6.2,10.34-.94,11.46-5.54,34.43-26.13,55.02-58.12,58.12-162.49-7.64-166.74-10.18-25.67-13.79-50.06-32.24-73.19-55.36-23.12-23.12-41.58-47.52-55.37-73.19-2.55-4.24-68.31-108.61-10.18-166.74,20.59-20.59,43.56-25.19,55.02-26.13,4.41-.36,8.46,2.2,10.34,6.2l41.07,87.1c1.94,4.12,1.09,9.02-2.13,12.24l-30.61,30.61c-6.62,6.62-8.56,16.93-4,25.11,11.17,20.03,26.19,39.32,43.59,57.07,17.75,17.4,37.04,32.43,57.07,43.59,8.18,4.56,18.48,2.62,25.11-4l30.61-30.61c3.22-3.22,8.12-4.08,12.24-2.13Z"/></symbol></svg>
+<nav class="vnav" aria-label="Ontwerpen"><div class="wrap"><b>/kosten/ Hoe de prijs tot stand komt · 10 ontwerpen</b><div class="vnav__links"><a href="#v00">00</a><a href="#v01">01</a><a href="#v02">02</a><a href="#v03">03</a><a href="#v04">04</a><a href="#v05">05</a><a href="#v06">06</a><a href="#v07">07</a><a href="#v08">08</a><a href="#v09">09</a><a href="#v10">10</a></div></div></nav>
+<div class="vkap" id="v00"><div class="wrap"><span class="vkap__nr">00</span><div><b>Zo staat het blok nu live</b><small>Ter vergelijking</small><p>Gele schijven met klei-voorwerpen, de accolade naar het fotoduo All-in / Regieprijs, de slottekst en de twee stroken. Elk ontwerp hieronder vervangt dit hele blok en houdt precies dezelfde teksten.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<div class="p-kosten"><section class="b-opbouw b-opbouw--3d sectie sectie--mist" id="opbouw-live" aria-labelledby="opbouw-kop-live" data-b="opbouw">
+      <div class="wrap">
+        <div class="b-opbouw__kop" data-reveal>
+          <p class="label">Prijsopbouw</p>
+          <h2 class="h2" id="opbouw-kop-live">Hoe de prijs tot stand komt</h2>
+          <p class="b-opbouw__intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p>
+        </div>
+        <h3 class="b-opbouw__lijstkop">Wat de prijs bepaalt</h3>
+        <ol class="b-opbouw__factoren" data-reveal-groep><li class="b-opbouw__factor"><span class="b-opbouw__podium" aria-hidden="true"><img class="b-opbouw__obj" src="/img/clay/dozen-logo-240.webp" srcset="/img/clay/dozen-logo-240.webp 240w, /img/clay/dozen-logo-480.webp 480w" sizes="(max-width:479px) 6.8rem, (max-width:799px) 9.8rem, 11.6rem" alt="" width="240" height="240" loading="lazy" decoding="async"></span><span class="b-opbouw__nr" aria-hidden="true">01</span><h3 class="b-opbouw__factorkop">Hoeveel er mee moet</h3><p>Een studio is sneller verhuisd dan een eengezinswoning.</p></li><li class="b-opbouw__factor"><span class="b-opbouw__podium" aria-hidden="true"><img class="b-opbouw__obj" src="/img/clay/nationaal-240.webp" srcset="/img/clay/nationaal-240.webp 240w, /img/clay/nationaal-480.webp 480w" sizes="(max-width:479px) 6.8rem, (max-width:799px) 9.8rem, 11.6rem" alt="" width="240" height="240" loading="lazy" decoding="async"></span><span class="b-opbouw__nr" aria-hidden="true">02</span><h3 class="b-opbouw__factorkop">De afstand</h3><p>Binnen Den Haag of naar de andere kant van het land.</p></li><li class="b-opbouw__factor"><span class="b-opbouw__podium" aria-hidden="true"><img class="b-opbouw__obj" src="/img/clay/trap-logo-240.webp" srcset="/img/clay/trap-logo-240.webp 240w, /img/clay/trap-logo-480.webp 480w" sizes="(max-width:479px) 6.8rem, (max-width:799px) 9.8rem, 11.6rem" alt="" width="240" height="240" loading="lazy" decoding="async"></span><span class="b-opbouw__nr" aria-hidden="true">03</span><h3 class="b-opbouw__factorkop">De bereikbaarheid</h3><p>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</p></li><li class="b-opbouw__factor"><span class="b-opbouw__podium" aria-hidden="true"><img class="b-opbouw__obj" src="/img/clay/montage-240.webp" srcset="/img/clay/montage-240.webp 240w, /img/clay/montage-480.webp 480w" sizes="(max-width:479px) 6.8rem, (max-width:799px) 9.8rem, 11.6rem" alt="" width="240" height="240" loading="lazy" decoding="async"></span><span class="b-opbouw__nr" aria-hidden="true">04</span><h3 class="b-opbouw__factorkop">Wat u zelf doet</h3><p>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</p></li><li class="b-opbouw__factor"><span class="b-opbouw__podium" aria-hidden="true"><img class="b-opbouw__obj" src="/img/clay/opslag-logo-240.webp" srcset="/img/clay/opslag-logo-240.webp 240w, /img/clay/opslag-logo-480.webp 480w" sizes="(max-width:479px) 6.8rem, (max-width:799px) 9.8rem, 11.6rem" alt="" width="240" height="240" loading="lazy" decoding="async"></span><span class="b-opbouw__nr" aria-hidden="true">05</span><h3 class="b-opbouw__factorkop">Extra diensten</h3><p>Zoals een verhuislift of tijdelijke opslag.</p></li></ol>
+        <div class="b-opbouw__accolade" aria-hidden="true"></div>
+        <div class="b-opbouw__duo b-opbouw__duo--foto" data-reveal><article class="b-opbouw__vak" id="all-in-live"><figure class="b-opbouw__foto" style="--snede:50% 38%"><img src="/img/stap-3-offerte.webp" alt="" width="560" height="380" sizes="(max-width:760px) 92vw, 50vw" loading="lazy" decoding="async"></figure><div class="b-opbouw__vakkaart"><span class="b-opbouw__ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-document"/></svg></span><h3 class="b-opbouw__vakkop">All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div></article><span class="b-opbouw__naad" aria-hidden="true">of</span><article class="b-opbouw__vak" id="regie-live"><figure class="b-opbouw__foto" style="--snede:50% 14%"><img src="/img/verhuisdag-uitladen.webp" alt="" width="1400" height="1050" sizes="(max-width:760px) 92vw, 50vw" loading="lazy" decoding="async"></figure><div class="b-opbouw__vakkaart"><span class="b-opbouw__ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-klok"/></svg></span><h3 class="b-opbouw__vakkop">Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div></article></div>
+        <p class="b-opbouw__slot">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p>
+        <div class="b-opbouw__stroken" data-reveal-groep><article class="b-opbouw__soort b-opbouw__soort--strook" id="voorrijkosten-live"><h3 class="b-opbouw__soortkop">Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></article><article class="b-opbouw__soort b-opbouw__soort--strook" id="betalen-live"><h3 class="b-opbouw__soortkop">Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></article></div>
+      </div>
+    </section></div>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v01"><div class="wrap"><span class="vkap__nr">01</span><div><b>Wagen boven het stappenpaneel</b><small>Referentie A · .werkwijze__top + .stappen ("Zo verloopt uw verhuizing")</small><p>Kop links, rechts de echte De Reus-bakwagen die op het paneel staat; het paneel heeft de vijf factoren als genummerde kolommen met een lijn ertussen, zoals de stappen van referentie A. Onder het paneel All-in prijs (Koningsblauwe plaat, klembord met de offerte) of Regieprijs (witte plaat, wekker), en rechts de slottekst met de twee zekerheden.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--lucht v o01 " aria-labelledby="kop-o01">
+<div class="wrap">
+  <div class="o01__top"><div class="kopgroep "><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o01">Hoe de prijs tot stand komt</h2><p class="intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div><figure class="o01__wagen"><img class="obj obj--bakwagen " src="/_ontwerpen/_bron-prijsopbouw-ref/img/bakwagen.webp" alt="" width="900" height="594" loading="lazy" decoding="async" aria-hidden="true"></figure></div>
+  <div class="o01__paneel">
+    <h3 class="lijstkop">Wat de prijs bepaalt</h3>
+    <ol class="o01__stappen"><li class="o01__stap"><span class="o01__nr" aria-hidden="true">01</span><h3>Hoeveel er mee moet</h3><p>Een studio is sneller verhuisd dan een eengezinswoning.</p></li><li class="o01__stap"><span class="o01__nr" aria-hidden="true">02</span><h3>De afstand</h3><p>Binnen Den Haag of naar de andere kant van het land.</p></li><li class="o01__stap"><span class="o01__nr" aria-hidden="true">03</span><h3>De bereikbaarheid</h3><p>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</p></li><li class="o01__stap"><span class="o01__nr" aria-hidden="true">04</span><h3>Wat u zelf doet</h3><p>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</p></li><li class="o01__stap"><span class="o01__nr" aria-hidden="true">05</span><h3>Extra diensten</h3><p>Zoals een verhuislift of tijdelijke opslag.</p></li></ol>
+  </div>
+  <div class="o01__onder">
+    <div class="o01__duo"><div class="o01__vak o01__vak--blauw"><img class="obj obj--klembord " src="/_ontwerpen/_bron-prijsopbouw-ref/img/klembord.webp" alt="" width="348" height="560" loading="lazy" decoding="async" aria-hidden="true"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div><span class="of " aria-hidden="true">of</span><div class="o01__vak"><img class="obj obj--wekker " src="/_ontwerpen/_bron-prijsopbouw-ref/img/wekker.webp" alt="" width="375" height="560" loading="lazy" decoding="async" aria-hidden="true"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div></div>
+    <div class="o01__rest"><p class="o01__slot">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p><ul class="o01__soorten"><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div></li><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></li></ul></div>
+  </div>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v02"><div class="wrap"><span class="vkap__nr">02</span><div><b>Tijdlijn met twee afdrukken</b><small>Referentie A · .hist5 + .hist5__tl + .pol ("Meer dan honderd jaar verhuizen")</small><p>De opbouw van het historieblok: links de kop en de vijf factoren als tijdlijn (nummer, punt op de lijn, titel en uitleg), rechts een stapel foto-afdrukken. De twee afdrukken zijn All-in prijs (de handtekening onder de offerte) en Regieprijs (uitladen op de verhuisdag), met een gele "of"-sticker ertussen. Onder de tijdlijn de slottekst en de twee zekerheden.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--wit v o02 " aria-labelledby="kop-o02">
+<div class="wrap o02__in">
+  <div class="o02__tekst">
+    <div class="kopgroep "><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o02">Hoe de prijs tot stand komt</h2><p class="intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div>
+    <h3 class="lijstkop">Wat de prijs bepaalt</h3>
+    <ol class="o02__tl"><li><span class="o02__nr" aria-hidden="true">01</span><div><h3>Hoeveel er mee moet</h3><p>Een studio is sneller verhuisd dan een eengezinswoning.</p></div></li><li><span class="o02__nr" aria-hidden="true">02</span><div><h3>De afstand</h3><p>Binnen Den Haag of naar de andere kant van het land.</p></div></li><li><span class="o02__nr" aria-hidden="true">03</span><div><h3>De bereikbaarheid</h3><p>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</p></div></li><li><span class="o02__nr" aria-hidden="true">04</span><div><h3>Wat u zelf doet</h3><p>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</p></div></li><li><span class="o02__nr" aria-hidden="true">05</span><div><h3>Extra diensten</h3><p>Zoals een verhuislift of tijdelijke opslag.</p></div></li></ol>
+    <p class="o02__slot">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p>
+    <ul class="o02__soorten"><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div></li><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></li></ul>
+  </div>
+  <div class="o02__stapel">
+    <figure class="o02__pol o02__pol--1"><img class="" src="/img/stap-3-offerte.webp" alt="" width="560" height="380" loading="lazy" decoding="async"><figcaption><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></figcaption></figure>
+    <figure class="o02__pol o02__pol--2"><img class="" src="/img/verhuisdag-uitladen.webp" alt="" width="1400" height="1050" loading="lazy" decoding="async"><figcaption><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></figcaption></figure>
+    <span class="of o02__of" aria-hidden="true">of</span>
+  </div>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v03"><div class="wrap"><span class="vkap__nr">03</span><div><b>Open kaart: paneel met tabel en foto</b><small>Referentie A · .blok.blok--stapel.blok--paneel + .dzc-tabel + .usps--rij ("Waar dit getal vandaan komt")</small><p>Links een lichtblauw paneel met een dikke gele rand links (blok--paneel) met de kop en de vijf factoren als tabel, rechts een hoge foto met een donkere bijschriftbalk. Daaronder de rij van vier (usps--rij): All-in prijs of Regieprijs, Geen voorrijkosten, Betalen op de verhuisdag, elk met een echt voorwerp in een ronde tegel. De slottekst sluit af.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--wit v o03 " aria-labelledby="kop-o03">
+<div class="wrap">
+  <div class="o03__boven">
+    <div class="o03__paneel">
+      <div class="kopgroep "><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o03">Hoe de prijs tot stand komt</h2><p class="intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div>
+      <p class="lijstkop">Wat de prijs bepaalt</p>
+      <div class="o03__tabelvak"><table class="o03__tabel"><tbody><tr><th scope="row"><span class="o03__nr" aria-hidden="true">01</span>Hoeveel er mee moet</th><td>Een studio is sneller verhuisd dan een eengezinswoning.</td></tr><tr><th scope="row"><span class="o03__nr" aria-hidden="true">02</span>De afstand</th><td>Binnen Den Haag of naar de andere kant van het land.</td></tr><tr><th scope="row"><span class="o03__nr" aria-hidden="true">03</span>De bereikbaarheid</th><td>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</td></tr><tr><th scope="row"><span class="o03__nr" aria-hidden="true">04</span>Wat u zelf doet</th><td>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</td></tr><tr><th scope="row"><span class="o03__nr" aria-hidden="true">05</span>Extra diensten</th><td>Zoals een verhuislift of tijdelijke opslag.</td></tr></tbody></table></div>
+    </div>
+    <figure class="o03__foto"><img class="" src="/img/voorbereiding-trap.webp" alt="" width="1200" height="1030" loading="lazy" decoding="async" style="object-position:40% 40%"><figcaption>De bereikbaarheid</figcaption></figure>
+  </div>
+  <ul class="o03__rij"><li><span class="o03__ico"><img class="obj obj--klembord " src="/_ontwerpen/_bron-prijsopbouw-ref/img/klembord.webp" alt="" width="348" height="560" loading="lazy" decoding="async" aria-hidden="true"></span><div><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div></li><li><span class="o03__ico"><img class="obj obj--wekker " src="/_ontwerpen/_bron-prijsopbouw-ref/img/wekker.webp" alt="" width="375" height="560" loading="lazy" decoding="async" aria-hidden="true"></span><span class="of o03__of" aria-hidden="true">of</span><div><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div></li><li><span class="o03__ico"><img class="obj obj--bakwagen " src="/_ontwerpen/_bron-prijsopbouw-ref/img/bakwagen.webp" alt="" width="900" height="594" loading="lazy" decoding="async" aria-hidden="true"></span><div><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div></li><li><span class="o03__ico"><img class="obj obj--munten " src="/_ontwerpen/_bron-prijsopbouw-ref/img/munten.webp" alt="" width="460" height="315" loading="lazy" decoding="async" aria-hidden="true"></span><div><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></li></ul>
+  <p class="o03__slot">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v04"><div class="wrap"><span class="vkap__nr">04</span><div><b>Kaarten met de verhuizer erboven uit</b><small>Referentie B · /bedrijven/ .sgdp-stappen + .sgdp-stap + .sgdp-stap__figuur ("In vier stappen …") en .sgz ("Een boom bij elke klus")</small><p>Het blok "Zo werkt het" van /bedrijven/: vijf witte kaarten met een warm vlak bovenin, waar een echte De Reus-verhuizer boven de kaart uitsteekt (twee man met een doos, de oudere verhuizer met een doos, de verhuislift, de boormachine, de opslag), een Koningsblauw nummer-label en daaronder titel en uitleg. Daaronder het paneel uit hetzelfde referentieblok (.sgz): links de slottekst met de twee zekerheden, rechts de tegels All-in prijs of Regieprijs met het klembord en de wekker.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--lucht v o04 " aria-labelledby="kop-o04">
+<div class="wrap">
+  <div class="o04__kop"><div class="kopgroep "><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o04">Hoe de prijs tot stand komt</h2><p class="intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div></div>
+  <h3 class="lijstkop">Wat de prijs bepaalt</h3>
+  <ol class="o04__stappen"><li class="o04__stap"><div class="o04__beeld"><img class="o04__figuur breed" src="/_ontwerpen/_bron-prijsopbouw-ref/img/fig-woningontruiming.webp" alt="" width="855" height="736" loading="lazy" decoding="async" aria-hidden="true"><span class="o04__no">01</span></div><h3>Hoeveel er mee moet</h3><p>Een studio is sneller verhuisd dan een eengezinswoning.</p></li><li class="o04__stap"><div class="o04__beeld"><img class="o04__figuur " src="/_ontwerpen/_bron-prijsopbouw-ref/img/verhuizer-doos.webp" alt="" width="241" height="565" loading="lazy" decoding="async" aria-hidden="true"><span class="o04__no">02</span></div><h3>De afstand</h3><p>Binnen Den Haag of naar de andere kant van het land.</p></li><li class="o04__stap"><div class="o04__beeld"><img class="o04__figuur breed" src="/_ontwerpen/_bron-prijsopbouw-ref/img/fig-verhuislift.webp" alt="" width="868" height="628" loading="lazy" decoding="async" aria-hidden="true"><span class="o04__no">03</span></div><h3>De bereikbaarheid</h3><p>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</p></li><li class="o04__stap"><div class="o04__beeld"><img class="o04__figuur rechts" src="/_ontwerpen/_bron-prijsopbouw-ref/img/fig-montage.webp" alt="" width="720" height="783" loading="lazy" decoding="async" aria-hidden="true"><span class="o04__no">04</span></div><h3>Wat u zelf doet</h3><p>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</p></li><li class="o04__stap"><div class="o04__beeld"><img class="o04__figuur " src="/_ontwerpen/_bron-prijsopbouw-ref/img/fig-opslag.webp" alt="" width="464" height="704" loading="lazy" decoding="async" aria-hidden="true"><span class="o04__no">05</span></div><h3>Extra diensten</h3><p>Zoals een verhuislift of tijdelijke opslag.</p></li></ol>
+  <div class="o04__paneel">
+    <div class="o04__paneeltekst"><p class="o04__slot">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p><ul class="o04__soorten"><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div></li><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></li></ul></div>
+    <div class="o04__tegels"><div class="o04__tegel"><img class="obj obj--klembord " src="/_ontwerpen/_bron-prijsopbouw-ref/img/klembord.webp" alt="" width="348" height="560" loading="lazy" decoding="async" aria-hidden="true"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div><span class="of o04__of" aria-hidden="true">of</span><div class="o04__tegel"><img class="obj obj--wekker " src="/_ontwerpen/_bron-prijsopbouw-ref/img/wekker.webp" alt="" width="375" height="560" loading="lazy" decoding="async" aria-hidden="true"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div></div>
+  </div>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v05"><div class="wrap"><span class="vkap__nr">05</span><div><b>Zes kaarten, de zesde uitgelicht</b><small>Referentie B · /bedrijven/ .sgdp-kaarten + .sgdp-kaart + .sgdp-kaart--uitgelicht ("Wat levert zonnestroom je bedrijf op?") en .kerncijfers</small><p>Het voordelenblok van /bedrijven/ op een zachte gele grond: zes kaarten in drie kolommen. De vijf factoren hebben elk een echte foto als tegel linksboven (in plaats van de klei-iconen van de referentie), de zesde kaart is uitgelicht in Goudgeel en draagt All-in prijs of Regieprijs. Daaronder de kerncijferbalk van dezelfde pagina: de slottekst, Geen voorrijkosten (bakwagen) en Betalen op de verhuisdag (munten).</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--wit v o05 o05--zacht" aria-labelledby="kop-o05">
+<div class="wrap">
+  <div class="kopgroep o05__kop"><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o05">Hoe de prijs tot stand komt</h2><p class="intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div>
+  <ul class="o05__kaarten"><li class="o05__kaart"><span class="o05__foto"><img class="" src="/img/voorbereiding-dozen.webp" alt="" width="720" height="405" loading="lazy" decoding="async" style="object-position:50% 60%"></span><span class="o05__nr" aria-hidden="true">01</span><h3>Hoeveel er mee moet</h3><p>Een studio is sneller verhuisd dan een eengezinswoning.</p></li><li class="o05__kaart"><span class="o05__foto"><img class="" src="/img/dienst-nationaal-v2.webp" alt="" width="720" height="540" loading="lazy" decoding="async" style="object-position:58% 45%"></span><span class="o05__nr" aria-hidden="true">02</span><h3>De afstand</h3><p>Binnen Den Haag of naar de andere kant van het land.</p></li><li class="o05__kaart"><span class="o05__foto"><img class="" src="/img/voorbereiding-trap.webp" alt="" width="1200" height="1030" loading="lazy" decoding="async" style="object-position:40% 40%"></span><span class="o05__nr" aria-hidden="true">03</span><h3>De bereikbaarheid</h3><p>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</p></li><li class="o05__kaart"><span class="o05__foto"><img class="" src="/img/verwachten-inpakken.webp" alt="" width="720" height="540" loading="lazy" decoding="async" style="object-position:50% 45%"></span><span class="o05__nr" aria-hidden="true">04</span><h3>Wat u zelf doet</h3><p>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</p></li><li class="o05__kaart"><span class="o05__foto"><img class="" src="/img/dienst-verhuislift.webp" alt="" width="720" height="540" loading="lazy" decoding="async" style="object-position:60% 40%"></span><span class="o05__nr" aria-hidden="true">05</span><h3>Extra diensten</h3><p>Zoals een verhuislift of tijdelijke opslag.</p></li><li class="o05__kaart o05__kaart--uitgelicht"><div class="o05__prijs"><img class="obj obj--klembord " src="/_ontwerpen/_bron-prijsopbouw-ref/img/klembord.webp" alt="" width="348" height="560" loading="lazy" decoding="async" aria-hidden="true"><div><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div></div><span class="of o05__of" aria-hidden="true">of</span><div class="o05__prijs"><img class="obj obj--wekker " src="/_ontwerpen/_bron-prijsopbouw-ref/img/wekker.webp" alt="" width="375" height="560" loading="lazy" decoding="async" aria-hidden="true"><div><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div></div></li></ul>
+  <div class="o05__cijfers"><p class="o05__slot">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p><div class="o05__cijfer"><img class="obj obj--bakwagen " src="/_ontwerpen/_bron-prijsopbouw-ref/img/bakwagen.webp" alt="" width="900" height="594" loading="lazy" decoding="async" aria-hidden="true"><div><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div></div><div class="o05__cijfer"><img class="obj obj--munten " src="/_ontwerpen/_bron-prijsopbouw-ref/img/munten.webp" alt="" width="460" height="315" loading="lazy" decoding="async" aria-hidden="true"><div><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></div></div>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v06"><div class="wrap"><span class="vkap__nr">06</span><div><b>De ploeg op het podium, gele band eronder</b><small>Referentie B · /bedrijven/ .sgteam + .sgteam__feiten + .sgteam__podium + .sgteam__cta ("Eigen monteurs, eigen voorraad, eigen pand")</small><p>Het teamblok van /bedrijven/: links de kop en de vijf factoren als gestapelde witte kaartjes met een ronde foto, rechts drie De Reus-verhuizers met dozen op twee platen (achter Koningsblauw verloop, voor lichtblauw); hun hoofden komen boven de voorste plaat uit. Daaronder de Goudgele band van hetzelfde blok met All-in prijs of Regieprijs, de slottekst en de twee zekerheden als witte knoppen met echt voorwerp.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--wit v o06 " aria-labelledby="kop-o06">
+<div class="wrap">
+  <div class="o06__rij">
+    <div><div class="kopgroep o06__kop"><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o06">Hoe de prijs tot stand komt</h2><p class="intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div><h3 class="lijstkop">Wat de prijs bepaalt</h3><ol class="o06__feiten"><li><span class="o06__foto"><img class="" src="/img/voorbereiding-dozen.webp" alt="" width="720" height="405" loading="lazy" decoding="async" style="object-position:50% 60%"></span><div><h3>Hoeveel er mee moet</h3><p>Een studio is sneller verhuisd dan een eengezinswoning.</p></div></li><li><span class="o06__foto"><img class="" src="/img/dienst-nationaal-v2.webp" alt="" width="720" height="540" loading="lazy" decoding="async" style="object-position:58% 45%"></span><div><h3>De afstand</h3><p>Binnen Den Haag of naar de andere kant van het land.</p></div></li><li><span class="o06__foto"><img class="" src="/img/voorbereiding-trap.webp" alt="" width="1200" height="1030" loading="lazy" decoding="async" style="object-position:40% 40%"></span><div><h3>De bereikbaarheid</h3><p>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</p></div></li><li><span class="o06__foto"><img class="" src="/img/verwachten-inpakken.webp" alt="" width="720" height="540" loading="lazy" decoding="async" style="object-position:50% 45%"></span><div><h3>Wat u zelf doet</h3><p>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</p></div></li><li><span class="o06__foto"><img class="" src="/img/dienst-verhuislift.webp" alt="" width="720" height="540" loading="lazy" decoding="async" style="object-position:60% 40%"></span><div><h3>Extra diensten</h3><p>Zoals een verhuislift of tijdelijke opslag.</p></div></li></ol></div>
+    <div class="o06__podium" aria-hidden="true"><span class="o06__stapel"></span><img class="o06__team" src="/img/team/team-hero-dozen-1100.webp" alt="" width="1100" height="1195" loading="lazy" decoding="async"></div>
+  </div>
+  <div class="o06__cta">
+    <div class="o06__duo"><div class="o06__prijs"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div><span class="of o06__of" aria-hidden="true">of</span><div class="o06__prijs"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div></div>
+    <p class="o06__slot">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p>
+    <ul class="o06__knoppen"><li><img class="obj obj--bakwagen " src="/_ontwerpen/_bron-prijsopbouw-ref/img/bakwagen.webp" alt="" width="900" height="594" loading="lazy" decoding="async" aria-hidden="true"><div><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div></li><li><img class="obj obj--munten " src="/_ontwerpen/_bron-prijsopbouw-ref/img/munten.webp" alt="" width="460" height="315" loading="lazy" decoding="async" aria-hidden="true"><div><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></li></ul>
+  </div>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v07"><div class="wrap"><span class="vkap__nr">07</span><div><b>De prijskaart</b><small>Referentie B · .sgpr + .sgpr-rij + .sgpr-rij--uitgelicht + .sgpr__beeld + .sgpr__boven ("Vaste vanafprijzen, inclusief installatie")</small><p>Het prijzenblok van referentie B, zonder bedragen want die staan niet op de site: een witte kaart met links de kop, de twee prijsvormen als prijsrijen (All-in uitgelicht, met het klembord en de wekker waar bij de referentie het bedrag staat), de vijf factoren en de slottekst als voetregel. Rechts de foto van de verhuizer met de doos; zijn hoofd steekt boven de kaart uit (dezelfde rekensom als .sgpr__boven), en daaronder het Goudgele vlak met de twee zekerheden.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--mist v o07 " aria-labelledby="kop-o07">
+<div class="wrap">
+  <div class="o07__kaart">
+    <div class="o07__body">
+      <div class="kopgroep "><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o07">Hoe de prijs tot stand komt</h2><p class="intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div>
+      <div class="o07__rijen"><div class="o07-rij o07-rij--uitgelicht"><div><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div><img class="obj obj--klembord " src="/_ontwerpen/_bron-prijsopbouw-ref/img/klembord.webp" alt="" width="348" height="560" loading="lazy" decoding="async" aria-hidden="true"></div><span class="of o07__of" aria-hidden="true">of</span><div class="o07-rij"><div><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div><img class="obj obj--wekker " src="/_ontwerpen/_bron-prijsopbouw-ref/img/wekker.webp" alt="" width="375" height="560" loading="lazy" decoding="async" aria-hidden="true"></div></div>
+      <h3 class="lijstkop">Wat de prijs bepaalt</h3>
+      <ol class="o07__factoren"><li><span class="o07__nr" aria-hidden="true">01</span><div><h3>Hoeveel er mee moet</h3><p>Een studio is sneller verhuisd dan een eengezinswoning.</p></div></li><li><span class="o07__nr" aria-hidden="true">02</span><div><h3>De afstand</h3><p>Binnen Den Haag of naar de andere kant van het land.</p></div></li><li><span class="o07__nr" aria-hidden="true">03</span><div><h3>De bereikbaarheid</h3><p>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</p></div></li><li><span class="o07__nr" aria-hidden="true">04</span><div><h3>Wat u zelf doet</h3><p>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</p></div></li><li><span class="o07__nr" aria-hidden="true">05</span><div><h3>Extra diensten</h3><p>Zoals een verhuislift of tijdelijke opslag.</p></div></li></ol>
+      <p class="o07__voet">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p>
+    </div>
+    <div class="o07__media">
+      <div class="pop o07__beeld" style="--ar:1.3333;--top:0.35;--d0:0.27;--mid:0.56" aria-hidden="true"><div class="pop__raam"><img class="pop__foto" src="/img/dienst-nationaal-v2-groot.webp" alt="" width="1440" height="1080" loading="lazy" decoding="async"></div><div class="pop__uit"><img class="" src="/img/dienst-nationaal-v2-uit.webp" alt="" width="1080" height="810" loading="lazy" decoding="async"></div></div>
+      <div class="o07__badge"><div><img class="obj obj--bakwagen " src="/_ontwerpen/_bron-prijsopbouw-ref/img/bakwagen.webp" alt="" width="900" height="594" loading="lazy" decoding="async" aria-hidden="true"><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div><div><img class="obj obj--munten " src="/_ontwerpen/_bron-prijsopbouw-ref/img/munten.webp" alt="" width="460" height="315" loading="lazy" decoding="async" aria-hidden="true"><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></div>
+    </div>
+  </div>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v08"><div class="wrap"><span class="vkap__nr">08</span><div><b>Foto met oplopende kaarten en de boog</b><small>Referentie C · .b-maten + .b-maten__podium + .b-maten__boog + .b-maten__maten ("Even geen plek? Wij bewaren het")</small><p>Het opslagblok van referentie C: kop in twee kolommen (links titel en de twee zekerheden met gele ruitjes, rechts de inleiding met All-in prijs of Regieprijs), daaronder een brede foto van een lege kamer met dozen, met het wit label "Wat de prijs bepaalt" en de vijf factoren als kaarten die over de onderrand van de foto oplopen, van wit naar Diepblauw. Rechts staat de oudere verhuizer met de doos in een Koningsblauwe boog met gele lijn. De slottekst staat als noot onder de kaarten.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--lucht v o08 " aria-labelledby="kop-o08">
+<div class="wrap">
+  <div class="o08__kop">
+    <div class="o08__titel"><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o08">Hoe de prijs tot stand komt</h2></div>
+    <p class="o08__lead">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p>
+    <ul class="o08__feiten"><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div></li><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></li></ul>
+    <div class="o08__keuze"><div class="o08__prijs"><img class="obj obj--klembord " src="/_ontwerpen/_bron-prijsopbouw-ref/img/klembord.webp" alt="" width="348" height="560" loading="lazy" decoding="async" aria-hidden="true"><div><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div></div><span class="of o08__of" aria-hidden="true">of</span><div class="o08__prijs"><img class="obj obj--wekker " src="/_ontwerpen/_bron-prijsopbouw-ref/img/wekker.webp" alt="" width="375" height="560" loading="lazy" decoding="async" aria-hidden="true"><div><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div></div></div>
+  </div>
+  <div class="o08__beeld">
+    <div class="o08__podium">
+      <figure class="o08__foto"><img class="o08__fotoimg" src="/img/headers/home.webp" alt="" width="1600" height="900" loading="lazy" decoding="async"></figure>
+      <span class="o08__boog" aria-hidden="true"></span><img class="o08__verhuizer" src="/_ontwerpen/_bron-prijsopbouw-ref/img/verhuizer-doos.webp" alt="" width="241" height="565" loading="lazy" decoding="async" aria-hidden="true">
+      <p class="o08__vraag">Wat de prijs bepaalt</p>
+    </div>
+    <div class="o08__schaal">
+      <ol class="o08__maten"><li class="o08__maat o08__maat--1"><p class="o08__getal" aria-hidden="true"><b>01</b></p><div><h3>Hoeveel er mee moet</h3><p>Een studio is sneller verhuisd dan een eengezinswoning.</p></div></li><li class="o08__maat o08__maat--2"><p class="o08__getal" aria-hidden="true"><b>02</b></p><div><h3>De afstand</h3><p>Binnen Den Haag of naar de andere kant van het land.</p></div></li><li class="o08__maat o08__maat--3"><p class="o08__getal" aria-hidden="true"><b>03</b></p><div><h3>De bereikbaarheid</h3><p>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</p></div></li><li class="o08__maat o08__maat--4"><p class="o08__getal" aria-hidden="true"><b>04</b></p><div><h3>Wat u zelf doet</h3><p>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</p></div></li><li class="o08__maat o08__maat--5"><p class="o08__getal" aria-hidden="true"><b>05</b></p><div><h3>Extra diensten</h3><p>Zoals een verhuislift of tijdelijke opslag.</p></div></li></ol>
+      <p class="o08__noot">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p>
+    </div>
+  </div>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v09"><div class="wrap"><span class="vkap__nr">09</span><div><b>Het keurmerkvel met zijkolom</b><small>Referentie C · .b-certificaat + .b-certificaat__top + .b-certificaat__wagen + .b-certificaat__map + .b-certificaat__hoofd ("Uw verhuizing gegarandeerd")</small><p>Het certificaatblok van referentie C: kop links met de echte bakwagen rechts ernaast, daaronder een wit vel met een Diepblauwe kop (logo, gele onderrand), de vijf factoren genummerd in twee kolommen, de twee zekerheden en de slottekst als bronregel. Rechts de zijkolom: een foto met een schuine onderkant en een Koningsblauw-naar-Diepblauw paneel met All-in prijs of Regieprijs, elk met zijn voorwerp.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--wit v o09 " aria-labelledby="kop-o09">
+<div class="wrap">
+  <div class="o09__top"><div class="kopgroep o09__kop"><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o09">Hoe de prijs tot stand komt</h2><p class="intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div><figure class="o09__wagen"><img class="obj obj--bakwagen " src="/_ontwerpen/_bron-prijsopbouw-ref/img/bakwagen.webp" alt="" width="900" height="594" loading="lazy" decoding="async" aria-hidden="true"></figure></div>
+  <div class="o09__map">
+    <div class="o09__vel">
+      <div class="o09__hoofd"><img class="o09__logo" src="/img/logo/dereus-logo-negatief.svg" alt="" loading="lazy" decoding="async" aria-hidden="true"><h3 class="o09__titel">Wat de prijs bepaalt</h3></div>
+      <ol class="o09__lijst"><li><span class="o09__nr" aria-hidden="true">01</span><div><h3>Hoeveel er mee moet</h3><p>Een studio is sneller verhuisd dan een eengezinswoning.</p></div></li><li><span class="o09__nr" aria-hidden="true">02</span><div><h3>De afstand</h3><p>Binnen Den Haag of naar de andere kant van het land.</p></div></li><li><span class="o09__nr" aria-hidden="true">03</span><div><h3>De bereikbaarheid</h3><p>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</p></div></li><li><span class="o09__nr" aria-hidden="true">04</span><div><h3>Wat u zelf doet</h3><p>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</p></div></li><li><span class="o09__nr" aria-hidden="true">05</span><div><h3>Extra diensten</h3><p>Zoals een verhuislift of tijdelijke opslag.</p></div></li></ol>
+      <ul class="o09__soorten"><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div></li><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></li></ul>
+      <p class="o09__bron">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p>
+    </div>
+    <aside class="o09__zij" aria-label="All-in prijs of Regieprijs">
+      <figure class="o09__foto"><img class="" src="/img/verhuisdag-uitladen.webp" alt="" width="1400" height="1050" loading="lazy" decoding="async"></figure>
+      <div class="o09__paneel">
+        <div class="o09__prijs"><img class="obj obj--klembord " src="/_ontwerpen/_bron-prijsopbouw-ref/img/klembord.webp" alt="" width="348" height="560" loading="lazy" decoding="async" aria-hidden="true"><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div><span class="of o09__of" aria-hidden="true">of</span><div class="o09__prijs"><img class="obj obj--wekker " src="/_ontwerpen/_bron-prijsopbouw-ref/img/wekker.webp" alt="" width="375" height="560" loading="lazy" decoding="async" aria-hidden="true"><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div>
+      </div>
+    </aside>
+  </div>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap" id="v10"><div class="wrap"><span class="vkap__nr">10</span><div><b>Het klembord met de vijf punten</b><small>Referentie C · .b-checklist + .b-checklist__beeld + .b-checklist__bord + .b-checklist__punt ("Hoe eerder de datum vastligt, hoe rustiger")</small><p>Het checklistblok van referentie C: links de kop en een foto op een schuine Koningsblauwe band, daaronder All-in prijs of Regieprijs als twee platen. Rechts een klembord (Diepblauwe achterplaat, witte vel, klem met het beeldmerk) met "Wat de prijs bepaalt" en de vijf factoren als afgevinkte punten; onderaan het vel de slottekst, want daar vraagt de tekst om alles vooraf te melden, en de twee zekerheden.</p></div><span class="vkap__maat" data-maat></span></div></div>
+<div class="vctx vctx--wit" aria-hidden="true"><div class="wrap">Hierboven op /kosten/: het directe antwoord (wit)</div></div>
+<section class="sectie sectie--wit v o10 " aria-labelledby="kop-o10">
+<div class="wrap o10__in">
+  <div class="o10__links">
+    <div class="kopgroep "><p class="label">Prijsopbouw</p><h2 class="h2" id="kop-o10">Hoe de prijs tot stand komt</h2><p class="intro">Geen verhuizing is hetzelfde, dus ook geen prijs. Vooraf schatten wij de afstand, het volume en zo nodig het gewicht van uw spullen in, zo staat het ook in onze algemene voorwaarden. Daarna krijgt u een offerte.</p></div>
+    <figure class="o10__beeld"><img class="" src="/img/verhuisdag-aankomst.webp" alt="" width="1400" height="1050" loading="lazy" decoding="async"></figure>
+    <div class="o10__duo"><div class="o10__prijs o10__prijs--blauw"><img class="obj obj--klembord " src="/_ontwerpen/_bron-prijsopbouw-ref/img/klembord.webp" alt="" width="348" height="560" loading="lazy" decoding="async" aria-hidden="true"><div><h3>All-in prijs</h3><p>Eén vast bedrag voor de verhuizing zoals die in de offerte staat.</p></div></div><span class="of o10__of" aria-hidden="true">of</span><div class="o10__prijs"><img class="obj obj--wekker " src="/_ontwerpen/_bron-prijsopbouw-ref/img/wekker.webp" alt="" width="375" height="560" loading="lazy" decoding="async" aria-hidden="true"><div><h3>Regieprijs</h3><p>U betaalt voor de tijd die de verhuizing werkelijk kost.</p></div></div></div>
+  </div>
+  <div class="o10__bord">
+    <h3 class="o10__titel">Wat de prijs bepaalt</h3>
+    <ol class="o10__lijst"><li class="o10__punt"><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><b>Hoeveel er mee moet</b><span>Een studio is sneller verhuisd dan een eengezinswoning.</span></div></li><li class="o10__punt"><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><b>De afstand</b><span>Binnen Den Haag of naar de andere kant van het land.</span></div></li><li class="o10__punt"><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><b>De bereikbaarheid</b><span>Een smalle trap, een hoge verdieping of weinig ruimte om te parkeren kost meer tijd.</span></div></li><li class="o10__punt"><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><b>Wat u zelf doet</b><span>Pakt u zelf in, of doen wij dat? Moeten meubels uit elkaar en weer in elkaar?</span></div></li><li class="o10__punt"><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><b>Extra diensten</b><span>Zoals een verhuislift of tijdelijke opslag.</span></div></li></ol>
+    <p class="o10__voet">Verandert er iets ten opzichte van de offerte, bijvoorbeeld omdat er meer mee moet dan afgesproken? Dan wordt dat meer- of minderwerk verrekend. Meld daarom vooraf alles wat voor de verhuizing van belang is. Hoe vollediger uw informatie, hoe beter de offerte past.</p>
+    <ul class="o10__soorten"><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Geen voorrijkosten</h3><p>U betaalt voor de verhuizing zelf, niet voor de rit naar uw adres.</p></div></li><li><span class="vink" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div><h3>Betalen op de verhuisdag</h3><p>U betaalt op de verhuisdag, tenzij we samen iets anders afspreken.</p></div></li></ul>
+  </div>
+</div>
+</section>
+<div class="vctx" aria-hidden="true"><div class="wrap">Hieronder: Wat kost een verhuizing? (de Diepblauwe trapband)</div></div>
+<div class="vkap vkap--eind"><div class="wrap"><p>Alle teksten zijn letterlijk die van /kosten/ #opbouw: kop, inleiding, de vijf factoren, All-in prijs of Regieprijs, de slottekst en de twee stroken. Er staan geen klei-iconen meer in: de factoren hebben echte foto's uit de eigen map, en bij All-in, Regie, voorrijkosten en betalen staan de echte fotovoorwerpen van /contact/ (klembord met de offerte, wekker, de bakwagen, munten). Elke bronklasse hierboven bestaat echt in de code van referentie A, B of C; in de De Reus-code komen die namen niet terug. Kies een nummer.</p></div></div>
+<script>
+(function(){
+function meet(){document.querySelectorAll('[data-maat]').forEach(function(m){var s=m.closest('.vkap').nextElementSibling;while(s&&!(s.tagName==='SECTION'||s.classList.contains('p-kosten')))s=s.nextElementSibling;if(!s)return;var h=Math.round(s.getBoundingClientRect().height);m.textContent='Blokhoogte '+h+' px';m.classList.toggle('is-hoog',h>900);});}
+addEventListener('load',meet);addEventListener('resize',meet);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+/* Verhuisbedrijf De Reus · blok opbouw, stijl "balie" (/kosten/#opbouw, 29-09-2026)
+   Ontwerp 05 uit _ontwerpen/prijsopbouw-referentie-varianten-2.html, naar het vensterblok van referentie A (.venster:
+   een figuur voor een boog, het beeldmerk als watermerk). Geladen via extra_css van de pagina, na kosten-diepte.css:
+   daarom wint .b-opbouw.b-opbouw--balie van de lichtblauwe rasterondergrond die kosten-diepte aan .b-opbouw geeft.
+   Lagen van achter naar voor: de Goudgele band met dakrand (::before), het beeldmerk als watermerk, het witte huis uit
+   het logo, de drie verhuizers, de witte balie met All-in prijs en Regieprijs die voor hun voeten langs schuift.
+   Tekst op geel is Diepblauw (ruim 10:1). De factorplaatjes worden wit als de muis erop staat (wens van de gebruiker). */
+.b-opbouw.b-opbouw--balie{--muis-duur:450ms;--muis-curve:cubic-bezier(.4,0,.2,1);
+  --geel-onder:#F9C422;--daklijnen:repeating-linear-gradient(22deg,rgb(11 35 82 / .07) 0 1px,transparent 1px 13px);
+  position:relative;isolation:isolate;overflow:clip;border-top:0;background:var(--white);
+  padding-block:calc(var(--ruimte) + var(--dak)) var(--ruimte)}
+/* de band: dezelfde nok als de blauwe banden van de site, het gele vlak met een lichte gloed en de daklijnen */
+.b-opbouw--balie::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;
+  clip-path:polygon(0 var(--dak),50% 0,100% var(--dak),100% 100%,0 100%);
+  background:radial-gradient(ellipse 62rem 60% at 50% 42%,rgb(255 214 71 / .9),transparent 100%),
+    var(--daklijnen),linear-gradient(180deg,#FFD447,var(--brand-accent) 45%,var(--geel-onder))}
+/* het randmotief van de secties (style.css) hoort niet op deze band; het ontwerp heeft het beeldmerk als watermerk */
+.b-opbouw.b-opbouw--balie.sectie::after{content:none}
+/* de hoeken naast de nok van de Diepblauwe trapband eronder lopen door in het geel (letterlijke waarden: de variabelen
+   hierboven gelden alleen binnen deze sectie, niet op de buursectie) */
+.b-opbouw--balie + .b-treden{background:repeating-linear-gradient(22deg,rgb(11 35 82 / .07) 0 1px,transparent 1px 13px),#F9C422}
+
+.b-opbouw__merk{position:absolute;z-index:-1;left:-2vw;bottom:-2vw;width:min(360px,26vw);height:auto;opacity:.08;pointer-events:none}
+
+/* ---- kop en factoren links, het team rechts ---- */
+.b-opbouw__raster{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(1.5rem,4vw,4rem);align-items:end}
+.b-opbouw__links{padding-bottom:2.6rem}
+.b-opbouw--balie .b-opbouw__kop{max-width:none;margin:0}
+.b-opbouw--balie .b-opbouw__kop .label{margin-bottom:.8rem;color:var(--brand-secondary)}
+.b-opbouw--balie .b-opbouw__kop>.h2{margin:0;font-size:clamp(2.2rem,1.7rem + 1.5vw,3rem);line-height:1.02;color:var(--brand-secondary)}
+.b-opbouw--balie .b-opbouw__kop>p{margin:.8rem 0 0;max-width:58ch;font-size:1.0625rem;line-height:1.55;color:rgba(11,35,82,.86)}
+.b-opbouw--balie .b-opbouw__lijstkop{margin:1.4rem 0 .6rem;color:var(--brand-secondary);font:var(--weight-bold) .8125rem/1.2 var(--font-sans);
+  letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.b-opbouw__punten{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.b-opbouw__punt{display:grid;grid-template-columns:2.4rem minmax(0,1fr);gap:.9rem;align-items:center;padding:.6rem 1rem .6rem .7rem;border-radius:14px;
+  background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.85),0 10px 20px -16px rgba(120,80,0,.7);
+  transition:background-color var(--muis-duur) var(--muis-curve),box-shadow var(--muis-duur) var(--muis-curve)}
+.b-opbouw__schijf{display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--brand-secondary);color:var(--brand-accent);
+  font:var(--weight-display) 1rem/1 var(--font-display);font-stretch:var(--font-display-stretch);letter-spacing:.02em;
+  box-shadow:0 3px 0 #06142F,0 8px 12px -6px rgba(3,10,30,.5)}
+.b-opbouw__puntkop{margin:0;font:var(--weight-bold) 1.02rem/1.3 var(--font-sans);font-stretch:normal;color:var(--brand-secondary)}
+.b-opbouw__punt p{margin:0;font-size:.9rem;line-height:1.4;color:rgba(11,35,82,.8)}
+@media (hover:hover){
+  .b-opbouw__punt:hover{background:var(--white);box-shadow:inset 0 0 0 1px var(--white),0 16px 26px -16px rgba(120,80,0,.8)}
+}
+
+.b-opbouw__team{position:relative;align-self:stretch;min-height:clamp(430px,37vw,530px)}
+.b-opbouw__huis{position:absolute;left:3%;bottom:0;width:94%;height:auto;filter:drop-shadow(0 24px 30px rgba(120,80,0,.35))}
+.b-opbouw__huisvlak{fill:var(--white)}
+.b-opbouw__huislijn{fill:none;stroke:var(--brand-secondary);stroke-width:3;vector-effect:non-scaling-stroke}
+.b-opbouw__ploeg{position:absolute;z-index:2;left:50%;bottom:0;translate:-50% 0;width:114%;height:auto;max-width:none;
+  filter:drop-shadow(0 22px 26px rgba(11,35,82,.35))}
+
+/* ---- de balie: All-in prijs of Regieprijs, met de slottekst als voet ---- */
+.b-opbouw__balie{position:relative;z-index:3;margin-top:-1.4rem;border-radius:22px;background:var(--white);
+  box-shadow:0 9px 0 var(--primary-200),0 10px 0 rgba(14,26,51,.1),0 40px 60px -34px rgba(90,60,0,.8)}
+.b-opbouw__keuze{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.b-opbouw__prijs{position:relative;display:flex;flex-direction:column;justify-content:center;min-height:8rem;padding:1.5rem 1.8rem 1.5rem 8.6rem;scroll-margin-top:6.5rem}
+.b-opbouw__keuzeof + .b-opbouw__prijs{border-left:1px solid var(--grey-200)}
+.b-opbouw__voorwerp{position:absolute;left:1.6rem;bottom:1.1rem;width:auto;height:8.8rem;max-width:none;object-fit:contain;
+  filter:drop-shadow(2px 4px 3px rgba(11,35,82,.28)) drop-shadow(8px 16px 14px rgba(11,35,82,.3))}
+.b-opbouw__prijs:last-child .b-opbouw__voorwerp{height:8.2rem}   /* de wekker, iets lager dan het klembord */
+.b-opbouw__prijskop{margin:0;font:var(--weight-display) 1.75rem/1.15 var(--font-display);font-stretch:var(--font-display-stretch);color:var(--brand-primary)}
+.b-opbouw__prijs p{margin:.25rem 0 0;color:var(--graphite);line-height:1.45}
+.b-opbouw__keuzeof{position:absolute;z-index:2;left:50%;top:50%;translate:-50% -50%;display:grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#FFE58A,var(--brand-accent) 55%,var(--accent-600));color:var(--brand-secondary);
+  font:var(--weight-display) 1.05rem/1 var(--font-display);font-stretch:var(--font-display-stretch);text-transform:uppercase;letter-spacing:.02em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 3px 0 var(--accent-700),0 10px 16px -6px rgba(14,26,51,.5)}
+.b-opbouw__voet{margin:0;padding:1rem 2rem 1.1rem;border-top:1px solid var(--grey-200);border-radius:0 0 22px 22px;background:var(--primary-50);
+  color:var(--graphite);font-size:.95rem;line-height:1.55;text-align:center}
+
+/* ---- de twee zekerheden als Diepblauwe pillen ---- */
+.b-opbouw__pillen{list-style:none;margin:1.8rem 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:.9rem 1.2rem}
+.b-opbouw__pil{display:grid;grid-template-columns:4.4rem minmax(0,1fr);gap:.9rem;align-items:center;max-width:31rem;padding:.55rem 1.4rem .55rem .7rem;
+  border-radius:999px;background:var(--brand-secondary);box-shadow:0 5px 0 #06142F,0 18px 26px -16px rgba(3,10,30,.6);scroll-margin-top:6.5rem}
+.b-opbouw__pilbeeld{display:block;width:4.4rem;height:3rem;object-fit:contain;
+  filter:drop-shadow(2px 4px 3px rgba(3,10,30,.35)) drop-shadow(6px 12px 10px rgba(3,10,30,.3))}
+.b-opbouw__pilkop{margin:0;font:var(--weight-bold) 1rem/1.3 var(--font-sans);font-stretch:normal;color:var(--white)}
+.b-opbouw__pil p{margin:0;font-size:.86rem;line-height:1.4;color:rgba(255,255,255,.82)}
+
+@media (max-width:1100px){
+  .b-opbouw__raster{grid-template-columns:minmax(0,1fr)}
+  .b-opbouw__team{min-height:clamp(340px,70vw,480px);max-width:36rem;width:100%;margin-inline:auto}
+}
+@media (max-width:900px){
+  .b-opbouw__keuze{grid-template-columns:minmax(0,1fr);gap:2.8rem}
+  .b-opbouw__keuzeof + .b-opbouw__prijs{border-left:0;border-top:1px solid var(--grey-200)}
+}
+@media (max-width:700px){
+  .b-opbouw__prijs{padding-left:6.4rem}
+  .b-opbouw__voorwerp,.b-opbouw__prijs:last-child .b-opbouw__voorwerp{left:1rem;height:6.8rem}
+  .b-opbouw__ploeg{width:104%}
+}
+@media (prefers-reduced-motion:reduce){
+  .b-opbouw__punt{transition:none}
+}

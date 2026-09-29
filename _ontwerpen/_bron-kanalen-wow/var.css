@@ -1,0 +1,318 @@
+/* ===== pagina ===== */
+html{scroll-padding-top:4.5rem}
+.vnav{position:sticky;top:0;z-index:60;background:var(--brand-secondary);color:#fff;font-size:.875rem}
+.vnav .wrap{display:flex;align-items:center;gap:1rem;min-height:3.4rem;flex-wrap:wrap}
+.vnav b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.1rem;letter-spacing:.01em}
+.vnav__knop{padding:.4rem .8rem;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:none;color:#fff;font:600 .8rem/1 var(--font-sans);cursor:pointer}
+.vnav__knop:hover,.vnav__knop[aria-pressed="true"]{background:var(--brand-accent);border-color:var(--brand-accent);color:var(--brand-secondary)}
+.vnav__links{display:flex;flex-wrap:wrap;gap:.3rem;margin-left:auto}
+.vnav a{display:grid;place-items:center;min-width:2.3rem;height:2rem;padding:0 .4rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-weight:700;text-decoration:none}
+.vnav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.vkap{background:#fff;border-top:3px solid var(--brand-secondary);padding:1.1rem 0;position:relative;z-index:3}
+.vkap .wrap{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start}
+.vkap .wrap>div{flex:1 1 18rem;min-width:0}
+.vkap small,.vkap p{overflow-wrap:anywhere}
+.vkap__nr{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.35rem/1 var(--font-display);font-stretch:75%;box-shadow:2px 2px 0 var(--accent-700)}
+.vkap b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.35rem;color:var(--brand-primary)}
+.vkap small{display:block;margin:.1rem 0 .15rem;color:var(--grey-600);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.vkap p{margin:.2rem 0 0;max-width:92ch;color:var(--graphite);font-size:.9375rem}
+.vkap--eind{padding:2rem 0}
+.vkap__maat{flex:none;margin-left:auto;align-self:center;padding:.35rem .7rem;border-radius:999px;background:var(--success-50);color:var(--success);font-size:.8rem;font-weight:700;white-space:nowrap}
+.vctx{background:var(--brand-secondary);color:rgba(255,255,255,.5);font:600 .72rem/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;padding:.85rem 0 .8rem}
+.vctx--blauw{background:var(--brand-primary);color:rgba(255,255,255,.6)}
+body.zonder-kop .b-contactkaarten__boven{display:none}
+
+/* ===== gedeeld ===== */
+.k.sectie{position:relative;isolation:isolate;overflow-x:clip}
+.kk{list-style:none;margin:0;padding:0}
+.kk>li{min-width:0}
+.k-titel{margin:0 0 .45rem;color:var(--color-heading);font:var(--weight-bold) clamp(1.25rem,1.1rem + .5vw,1.45rem)/1.2 var(--font-display);font-stretch:var(--font-display-stretch)}
+.k-tekst{margin:0 0 1rem;color:var(--graphite);font-size:var(--text-small);line-height:1.55}
+.k-link{display:inline-flex;align-items:flex-end;gap:.4rem;margin-top:auto;color:var(--brand-primary);font-size:var(--text-small);font-weight:var(--weight-bold);line-height:1.4;text-decoration:none}
+.k-link span{min-width:0;overflow-wrap:break-word;text-decoration:underline;text-decoration-color:var(--primary-200);text-underline-offset:4px}
+.k-link:hover span{text-decoration-color:currentColor}
+.k-link .ic{flex:none;width:1rem;height:1rem;margin-bottom:.1em;transition:transform .3s var(--ease-out)}
+@media(hover:hover){.k-link:hover .ic{transform:translateX(3px)}}
+/* licht op donker: witte tekst, gele link */
+.k-donker .k-titel{color:#fff}
+.k-donker .k-tekst{color:color-mix(in srgb,#fff 86%,transparent)}
+.k-donker .k-link{color:var(--brand-accent)}
+.k-donker .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+.k-donker .k-link:hover span{text-decoration-color:currentColor}
+/* de echte voorwerpen: zelfde maten, kleur en schaduw als live, geschaald met --s */
+.k-obj{display:block;max-width:none;height:auto;pointer-events:none;
+  filter:saturate(1.18) contrast(1.07) brightness(1.02) drop-shadow(2px 4px 3px color-mix(in srgb,var(--ink) 30%,transparent)) drop-shadow(14px 26px 22px color-mix(in srgb,var(--ink) 32%,transparent))}
+.k-obj--telefoon{width:calc(15rem * var(--s,1))}
+.k-obj--envelop{width:calc(13.5rem * var(--s,1))}
+.k-obj--klembord{width:auto;height:calc(13.6rem * var(--s,1));rotate:-3deg}
+.k-obj--dozen{width:auto;height:calc(12.8rem * var(--s,1))}
+.k-foto{display:block;max-width:none}
+/* de groene neonhover van nu (ontwerp 06 uit de hover-ronde), waar het een kaart is */
+.k-neon{transition:translate .45s var(--ease-out),scale .45s var(--ease-out),box-shadow .45s var(--ease-out),rotate .6s var(--ease-out)}
+@media(hover:hover){.k-neon:hover{translate:-5px -5px;scale:1.02;
+  box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px color-mix(in srgb,var(--color-cta) 22%,transparent),0 0 0 2px var(--color-cta),3px 3px 0 2px var(--color-cta),6px 6px 0 2px var(--color-cta-hover),9px 9px 0 2px var(--color-cta-active),16px 22px 30px -10px color-mix(in srgb,var(--ink) 30%,transparent),0 0 12px 2px color-mix(in srgb,var(--color-cta) 85%,transparent),4px 4px 34px 8px color-mix(in srgb,var(--color-cta) 45%,transparent)}}
+.k .kk,.k04-plaat,.k07-plaat,.k08-baan,.k10-plaat,.k13-beeld,.k14-band,.k15-kaart{--rij-boven:clamp(2.5rem,1.8rem + 2.5vw,4rem)}
+
+/* ===== 01 trap op de gele band (referentie B .sgm) ===== */
+.k01{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;align-items:end;margin-top:var(--rij-boven);padding-top:8.9rem}
+.k01::before{content:"";position:absolute;left:-1.25rem;right:-1.25rem;bottom:-2.25rem;height:10rem;border-radius:18px;
+  background:linear-gradient(180deg,#FFD84F,var(--brand-accent) 55%,#F7C21C);
+  box-shadow:inset 0 1px 0 #FFE89A,0 8px 0 #D9A200,0 9px 0 color-mix(in srgb,var(--ink) 16%,transparent),0 32px 44px -26px color-mix(in srgb,var(--ink) 45%,transparent)}
+.k01-kaart{--s:.78;position:relative}
+.k01-kaart:nth-child(2){margin-bottom:2.5rem}
+.k01-kaart:nth-child(3){margin-bottom:5rem}
+.k01-kaart:nth-child(4){margin-bottom:7.5rem}
+.k01 .k-obj{position:absolute;z-index:0;left:50%;bottom:calc(100% - 1.9rem);translate:-50% 0}
+.k01 .k-obj--klembord{rotate:-5deg}
+.k01-doos{position:relative;z-index:1;display:flex;flex-direction:column;min-height:14.25rem;padding:1.3rem 1.35rem 1.4rem;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 18px 36px -20px color-mix(in srgb,var(--ink) 40%,transparent)}
+
+/* ===== 02 foto met voorwerp op de naad (referentie B .sgd1) ===== */
+.s02{padding-bottom:0}
+.k02{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:var(--rij-boven);padding:4.5rem 0 clamp(3rem,2rem + 3vw,4.5rem)}
+.k02::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;translate:-50% 0;background:var(--primary-100);
+  clip-path:polygon(0 0,50% 2.4rem,100% 0,100% 100%,0 100%)}
+.k02-kaart{--s:.56;display:flex;flex-direction:column;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--brand-secondary) 7%,transparent),0 1px 2px color-mix(in srgb,var(--ink) 8%,transparent),0 18px 34px -20px color-mix(in srgb,var(--ink) 40%,transparent)}
+.k02-beeld{position:relative;aspect-ratio:16/10;border-radius:var(--radius-card) var(--radius-card) 0 0}
+.k02-beeld .k-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.k02-beeld .k-obj{position:absolute;right:.35rem;bottom:-1.9rem}
+.k02-beeld .k-obj--telefoon,.k02-beeld .k-obj--envelop{right:-.4rem;bottom:-1.4rem}
+.k02-tekst{display:flex;flex:1;flex-direction:column;padding:1.15rem 1.3rem 1.35rem}
+.k02 .k-titel{padding-right:5.2rem}
+
+/* ===== 03 vier kleurtegels (referentie B .sgw-tegel) ===== */
+.k03{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:calc(var(--rij-boven) + 2.6rem)}
+.k03-tegel{position:relative;display:flex;flex-direction:column;min-height:16rem;padding:1.5rem 1.4rem 1.45rem;border-radius:var(--radius-card)}
+.k03-tegel:nth-child(1){background:var(--brand-secondary)}
+.k03-tegel:nth-child(2){background:var(--brand-accent)}
+.k03-tegel:nth-child(3){background:var(--primary-100)}
+.k03-tegel:nth-child(4){background:var(--brand-primary)}
+.k03-tegel:is(:nth-child(1),:nth-child(4)) .k-titel{color:#fff}
+.k03-tegel:is(:nth-child(1),:nth-child(4)) .k-tekst{color:color-mix(in srgb,#fff 86%,transparent)}
+.k03-tegel:is(:nth-child(1),:nth-child(4)) .k-link{color:var(--brand-accent)}
+.k03-tegel:is(:nth-child(1),:nth-child(4)) .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+.k03-tegel:nth-child(2) :is(.k-titel,.k-link){color:var(--brand-secondary)}
+.k03-tegel:nth-child(2) .k-tekst{color:var(--ink)}
+.k03-tegel:nth-child(2) .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-secondary) 40%,transparent)}
+.k03-tegel:nth-child(3) .k-tekst{color:var(--ink)}
+.k03-schijf{--s:.58;position:absolute;right:1rem;top:-2.8rem;width:7.2rem;height:7.2rem;border-radius:50%;background:#fff;
+  box-shadow:inset 0 -5px 0 color-mix(in srgb,var(--brand-secondary) 10%,transparent),0 14px 24px -12px rgba(0,0,0,.5)}
+.k03-schijf .k-obj{position:absolute;left:50%;bottom:.85rem;translate:-50% 0}
+.k03-schijf .k-obj--klembord,.k03-schijf .k-obj--dozen{bottom:1.1rem}
+.k03 .k-titel{margin-right:7.4rem;min-height:2.4em}
+
+/* ===== 04 goudgele plaat met foto-afdrukken (referentie B .sgt) ===== */
+.k04-plaat{margin-top:var(--rij-boven);padding:clamp(1.8rem,1rem + 2vw,2.6rem) clamp(1.3rem,.8rem + 1.6vw,2.4rem) clamp(1.6rem,1rem + 1.6vw,2.2rem);border-radius:28px;background:var(--brand-accent);
+  box-shadow:inset 0 1px 0 #FFE89A,0 8px 0 #D9A200,0 9px 0 color-mix(in srgb,var(--ink) 14%,transparent),0 34px 54px -32px color-mix(in srgb,var(--ink) 55%,transparent)}
+.k04{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(1.2rem,.8rem + 1.2vw,2rem)}
+.k04-kaart{--s:.5;display:flex;flex-direction:column}
+.k04-afdruk{position:relative;margin:0 0 2.1rem;padding:8px;background:#fff;border-radius:14px;box-shadow:0 18px 40px -18px rgba(0,0,0,.6);rotate:-3deg}
+.k04-kaart:nth-child(2) .k04-afdruk{rotate:2deg}
+.k04-kaart:nth-child(3) .k04-afdruk{rotate:-1.6deg}
+.k04-kaart:nth-child(4) .k04-afdruk{rotate:2.6deg}
+.k04-afdruk .k-foto{width:100%;aspect-ratio:4/3.1;object-fit:cover;border-radius:8px}
+.k04-afdruk figcaption{position:absolute;left:1rem;top:1rem;right:1rem}
+.k04-afdruk .k-titel{display:inline-block;margin:0;padding:.3rem .75rem;border-radius:99px;background:var(--brand-secondary);color:#fff;font:700 .76rem/1.3 var(--font-sans);letter-spacing:.1em;text-transform:uppercase}
+.k04-afdruk .k-obj{position:absolute;right:-1.1rem;bottom:-1.7rem;rotate:3deg}
+.k04-afdruk .k-obj--klembord{rotate:-4deg}
+.k04 .k-tekst{color:var(--ink)}
+.k04 .k-link{color:var(--brand-secondary)}
+.k04 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-secondary) 40%,transparent)}
+
+/* ===== 05 dikke gele onderrand (referentie B .sgct-kaart) ===== */
+.k05{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:calc(var(--rij-boven) + 3rem)}
+.k05-kaart{--s:.56;position:relative;container-type:inline-size;display:flex;flex-direction:column;align-items:flex-start;padding:5rem 1.4rem 1.3rem;background:#fff;border:1.5px solid var(--primary-200);border-bottom:8px solid var(--brand-accent);border-radius:var(--radius-card);
+  box-shadow:0 5px 0 #D9A200,0 6px 0 color-mix(in srgb,var(--ink) 12%,transparent),0 24px 36px -22px color-mix(in srgb,var(--ink) 42%,transparent)}
+.k05-icoon{position:absolute;left:.9rem;top:-3.4rem;width:10rem;height:8rem}
+.k05-icoon .k-obj{position:absolute;left:0;bottom:0}
+.k05 .k-titel{margin:0 0 .3rem;color:var(--brand-primary);font:700 .82rem/1.3 var(--font-sans);letter-spacing:.12em;text-transform:uppercase}
+.k05-waarde{max-width:100%;margin:0 0 .75rem;color:var(--brand-secondary);font:var(--weight-display) min(1.7rem,8.6cqi)/1.1 var(--font-display);font-stretch:var(--font-display-stretch)}
+.k05-waarde span{text-decoration-thickness:3px;text-decoration-color:var(--brand-accent);text-underline-offset:6px}
+.k05-waarde .ic{width:1.1rem;height:1.1rem;margin-bottom:.2em}
+.k05 .k-tekst{margin:0}
+
+/* ===== 06 gele nis, nummer en blauw vlak (referentie A .dienst) ===== */
+.k06{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.3rem;margin-top:calc(var(--rij-boven) + 2rem)}
+.k06-kaart{--s:.9;display:flex;flex-direction:column;border-radius:var(--radius-card);background:var(--brand-primary);color:#fff;transition:translate .2s var(--ease-out),background-color .2s var(--ease-out)}
+@media(hover:hover){.k06-kaart:hover{translate:0 -3px;background:var(--brand-secondary)}}
+.k06-nis{position:relative;aspect-ratio:760/435;border-radius:var(--radius-card) var(--radius-card) 0 0;background:radial-gradient(85% 90% at 50% 100%,#fff,var(--accent-100) 55%,var(--accent-200))}
+.k06-nis .k-obj{position:absolute;z-index:1;left:50%;bottom:.6rem;translate:-50% 0;transition:scale .8s var(--ease-out)}
+@media(hover:hover){.k06-kaart:hover .k-obj{scale:1.05}}
+.k06-nr{position:absolute;z-index:2;left:0;bottom:0;padding:.6rem .85rem;background:var(--brand-accent);color:var(--brand-secondary);font:var(--weight-display) 1.25rem/1 var(--font-display);font-stretch:var(--font-display-stretch);letter-spacing:.04em}
+.k06-tekst{display:flex;flex:1;flex-direction:column;padding:1.3rem 1.5rem 1.6rem}
+.k06 .k-titel{color:#fff}
+.k06 .k-tekst{color:color-mix(in srgb,#fff 88%,transparent)}
+.k06 .k-link{color:var(--brand-accent)}
+.k06 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+
+/* ===== 07 één plaat, vier vakken (referentie A .stappen) ===== */
+.k07-plaat{margin-top:calc(var(--rij-boven) + 4.5rem);padding:clamp(1.3rem,2.4vw,2rem);border-radius:24px;background:linear-gradient(180deg,var(--primary-50),var(--primary-100));border:1px solid var(--primary-100);
+  box-shadow:inset 0 1px 0 #fff,0 6px 0 var(--primary-200),0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 24px -16px color-mix(in srgb,var(--ink) 26%,transparent),0 40px 60px -42px color-mix(in srgb,var(--brand-secondary) 50%,transparent)}
+.k07{--gat:clamp(1rem,2vw,1.6rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gat)}
+.k07-vak{--s:.74;--pl:0px;position:relative;display:flex;flex-direction:column;padding-top:4.6rem}
+.k07-vak:not(:first-child){--pl:var(--gat);border-left:1px solid var(--primary-200);padding-left:var(--gat)}
+.k07-vak .k-obj{position:absolute;left:calc(50% + var(--pl) / 2);bottom:calc(100% - 3.9rem);translate:-50% 0}
+.k07 .k-titel{min-height:2.4em;display:flex;align-items:flex-end}
+
+/* ===== 08 schuine gele band (referentie A .opslag__band) ===== */
+.k08-baan{position:relative;margin-top:calc(var(--rij-boven) + 3.6rem);padding-bottom:3.2rem}
+.k08-band{position:absolute;z-index:0;left:50%;width:100vw;translate:-50% 0;bottom:3.6rem;height:clamp(12rem,14vw,14.5rem);overflow:hidden;transform:skewY(-4deg);backface-visibility:hidden;
+  background:linear-gradient(90deg,#FFD84F,var(--brand-accent) 45%,var(--accent-600))}
+.k08-merk{position:absolute;left:2.5%;top:50%;translate:0 -50%;height:52%;width:auto;opacity:.55}
+.k08-lijn{position:absolute;z-index:0;left:50%;width:100vw;translate:-50% 0;bottom:calc(3.6rem - 16px);height:16px;background:var(--brand-secondary);transform:skewY(-4deg);backface-visibility:hidden}
+.k08{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.2rem}
+.k08-kaart{--s:.6;position:relative;display:flex;flex-direction:column;padding:5.2rem 1.35rem 1.35rem;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 26px 44px -24px color-mix(in srgb,var(--ink) 50%,transparent)}
+.k08-kaart .k-obj{position:absolute;left:50%;bottom:calc(100% - 4.4rem);translate:-50% 0}
+
+/* ===== 09 vier bogen (referentie A .venster__boog) ===== */
+.k09{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.2rem;margin-top:calc(var(--rij-boven) + 2.2rem)}
+.k09-kaart{--s:.9;display:flex;flex-direction:column;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 0 0 1px var(--primary-100),0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 18px 34px -22px color-mix(in srgb,var(--ink) 38%,transparent)}
+.k09-boog{position:relative;height:11.5rem;margin:-2.2rem .9rem 0;border-radius:999px 999px 0 0;background:linear-gradient(180deg,var(--primary-100),var(--primary-200))}
+.k09-boog::after{content:"";position:absolute;inset:12px 12px 0;border:2px solid var(--brand-accent);border-bottom:0;border-radius:999px 999px 0 0}
+.k09-boog .k-obj{position:absolute;z-index:1;left:50%;bottom:.3rem;translate:-50% 0;filter:saturate(1.18) contrast(1.07) brightness(1.02) drop-shadow(2px 4px 3px color-mix(in srgb,var(--ink) 30%,transparent)) drop-shadow(0 22px 22px color-mix(in srgb,var(--brand-secondary) 38%,transparent))}
+.k09-tekst{display:flex;flex:1;flex-direction:column;padding:1.2rem 1.35rem 1.4rem;border-top:1px solid var(--primary-100)}
+
+/* ===== 10 Diepblauwe plaat met driekleurenstreep (referentie A .zeker__card) ===== */
+.k10-plaat{position:relative;margin-top:calc(var(--rij-boven) + 4rem);padding:5.4rem clamp(1.4rem,3vw,2.6rem) clamp(1.6rem,3vw,2.4rem);border-radius:var(--radius-card);background:var(--brand-secondary);
+  box-shadow:0 30px 60px -30px color-mix(in srgb,var(--brand-secondary) 85%,transparent)}
+.k10-plaat::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;border-radius:var(--radius-card) var(--radius-card) 0 0;background:linear-gradient(90deg,var(--brand-primary) 0 30%,var(--brand-accent) 30% 72%,var(--primary-300) 72%)}
+.k10-merk{position:absolute;right:1.4rem;bottom:1.2rem;width:8.5rem;height:auto;opacity:.08;pointer-events:none}
+.k10{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem clamp(1.4rem,3vw,2.4rem)}
+.k10-vak{position:relative;display:flex;flex-direction:column;padding-top:1.4rem;border-top:1px solid color-mix(in srgb,#fff 16%,transparent)}
+.k10-schijf{--s:.62;position:absolute;left:50%;top:-4.3rem;translate:-50% 0;width:min(9.5rem,100%);height:2.4rem;border-radius:50%;
+  background:radial-gradient(60% 70% at 40% 35%,#FFE08A,var(--brand-accent) 60%,#F2B800);box-shadow:0 7px 0 #D9A200,0 8px 0 rgba(0,0,0,.25),0 20px 24px -10px rgba(0,0,0,.55)}
+.k10-schijf .k-obj{position:absolute;left:50%;bottom:.9rem;translate:-50% 0;filter:saturate(1.18) contrast(1.07) brightness(1.04) drop-shadow(2px 4px 3px rgba(0,0,0,.45)) drop-shadow(10px 20px 18px rgba(0,0,0,.4))}
+.k10 .k-titel{color:#fff}
+.k10 .k-tekst{color:color-mix(in srgb,#fff 84%,transparent)}
+.k10 .k-link{color:var(--brand-accent)}
+.k10 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+
+/* ===== 11 aan de gele lijn (referentie C .b-belofte) ===== */
+.k11{--band:1.15rem;--haak:2.3rem;position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(1rem,1.6vw,1.5rem);align-items:start;margin-top:var(--rij-boven);padding-top:calc(var(--band) / 2)}
+.k11::before{content:"";position:absolute;z-index:1;top:0;left:50%;width:100vw;height:var(--band);translate:-50% 0;background:var(--brand-accent);
+  box-shadow:inset 0 1px 0 #FFE89A,0 4px 0 #D9A200,0 12px 16px -8px color-mix(in srgb,var(--ink) 40%,transparent)}
+.k11::after{content:"";position:absolute;z-index:-2;top:45%;bottom:-2.5rem;left:50%;width:100vw;translate:-50% 0;background:linear-gradient(180deg,var(--primary-100),color-mix(in srgb,var(--primary-100) 0%,transparent));clip-path:polygon(0 12%,100% 0,100% 100%,0 100%)}
+.k11-kaart{--r:-1.6deg;--s:.6;position:relative;z-index:2;display:flex;flex-direction:column;margin-top:var(--haak);padding:1.1rem 1.3rem 1.35rem;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 7%,transparent),0 22px 38px -22px color-mix(in srgb,var(--ink) 45%,transparent);rotate:var(--r);transform-origin:50% calc(-1 * var(--haak));transition:rotate .9s cubic-bezier(.3,1.6,.45,1)}
+.k11-kaart:nth-child(even){--r:1.3deg}
+.k11-kaart:nth-child(3){--r:-.8deg}
+@media(hover:hover){.k11-kaart:hover{rotate:0deg}}
+.k11-haak{position:absolute;left:50%;bottom:100%;width:.9rem;height:calc(var(--haak) + .4rem);translate:-50% 0;border:2px solid var(--ink);border-bottom:0;border-radius:.45rem .45rem 0 0}
+.k11-haak::after{content:"";position:absolute;left:50%;bottom:-.35rem;width:1.6rem;height:.55rem;translate:-50% 0;border-radius:.2rem;background:var(--ink)}
+.k11-voorwerp{position:relative;display:block;height:8.6rem;margin:.2rem 0 .9rem}
+.k11-voorwerp .k-obj{position:absolute;left:50%;bottom:0;translate:-50% 0}
+
+/* ===== 12 grote fototegels met blauwe strook (referentie C .b-gezichten) ===== */
+.k12{display:grid;grid-template-columns:1.55fr 1fr 1fr 1fr;gap:clamp(.6rem,1.1vw,.95rem);margin-top:var(--rij-boven)}
+.k12-tegel{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:26rem;border-radius:var(--radius-card);overflow:hidden;isolation:isolate;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 8%,transparent),0 22px 40px -24px color-mix(in srgb,var(--ink) 50%,transparent);transition:translate .45s var(--ease-out),box-shadow .45s var(--ease-out)}
+.k12-tegel .k-foto{position:absolute;z-index:-1;inset:0;width:100%;height:100%;object-fit:cover;transition:scale .7s var(--ease-out)}
+.k12-tegel:nth-child(1) .k-foto{object-position:62% 30%}
+.k12-tegel:nth-child(3) .k-foto{object-position:45% 40%}
+.k12-tegel:nth-child(4) .k-foto{object-position:50% 25%}
+@media(hover:hover){.k12-tegel:hover{translate:0 -5px;box-shadow:0 2px 4px color-mix(in srgb,var(--ink) 6%,transparent),0 30px 46px -24px color-mix(in srgb,var(--ink) 55%,transparent)}.k12-tegel:hover .k-foto{scale:1.06}}
+.k12-strook{padding:1rem 1.2rem 1.15rem;background:color-mix(in srgb,var(--brand-primary) 90%,transparent);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.k12 .k-titel{margin:0 0 .3rem;color:#fff}
+.k12-tegel:first-child .k-titel{font-size:clamp(1.6rem,1.2rem + 1vw,2rem)}
+.k12 .k-tekst{margin:0 0 .6rem;color:color-mix(in srgb,#fff 90%,transparent);font-size:.95rem;line-height:1.5}
+.k12 .k-link{color:var(--brand-accent)}
+.k12 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+
+/* ===== 13 oplopende kaarten op een luchtfoto (referentie C .b-maten) ===== */
+.k13-beeld{position:relative;margin-top:var(--rij-boven)}
+.k13-foto{position:relative;margin:0;overflow:hidden;aspect-ratio:3.3/1;border-radius:var(--radius-media);background:var(--brand-secondary);box-shadow:0 30px 50px -36px color-mix(in srgb,var(--ink) 60%,transparent)}
+.k13-fotoimg{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%;scale:1.06}
+.k13-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,color-mix(in srgb,var(--brand-secondary) 55%,transparent),transparent 55%)}
+.k13{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;align-items:end;margin:-9.5rem clamp(.8rem,2.4vw,1.8rem) 0}
+.k13-maat{--hoog:14rem;--s:.5;position:relative;display:flex;flex-direction:column;min-height:var(--hoog);padding:1.5rem 1.35rem 1.35rem;border-radius:var(--radius-card);background:#fff;
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 30px 50px -32px color-mix(in srgb,var(--ink) 60%,transparent)}
+.k13-maat:nth-child(2){--hoog:15.5rem;background:var(--primary-100)}
+.k13-maat:nth-child(3){--hoog:17rem;background:var(--brand-primary)}
+.k13-maat:nth-child(4){--hoog:18.5rem;background:var(--brand-secondary)}
+.k13-maat::before{content:"";position:absolute;top:0;left:1.35rem;width:2.5rem;height:5px;border-radius:0 0 4px 4px;background:var(--brand-accent)}
+.k13-maat .k-obj{position:absolute;right:.5rem;bottom:calc(100% - 2.3rem)}
+.k13 .k-titel{padding-right:5.4rem}
+.k13-maat:nth-child(2) .k-tekst{color:var(--ink)}
+.k13-maat:is(:nth-child(3),:nth-child(4)) .k-titel{color:#fff}
+.k13-maat:is(:nth-child(3),:nth-child(4)) .k-tekst{color:color-mix(in srgb,#fff 86%,transparent)}
+.k13-maat:is(:nth-child(3),:nth-child(4)) .k-link{color:var(--brand-accent)}
+.k13-maat:is(:nth-child(3),:nth-child(4)) .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-accent) 45%,transparent)}
+
+/* ===== 14 fotoplaten aan één lijn (referentie C .b-historie) ===== */
+.s14{padding-bottom:0}
+.k14-band{position:relative;margin-top:var(--rij-boven);padding-block:3.2rem clamp(3rem,2rem + 3vw,4.25rem)}
+.k14-band::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;translate:-50% 0;background:var(--brand-accent);box-shadow:inset 0 1px 0 #FFE89A}
+.k14{--plaat:11.5rem;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(1.2rem,2.4vw,2.4rem)}
+.k14::before{content:"";position:absolute;left:0;right:0;top:calc(var(--plaat) + 1.85rem);height:3px;border-radius:2px;background:linear-gradient(to right,color-mix(in srgb,var(--brand-secondary) 30%,transparent),var(--brand-secondary) 70%)}
+.k14-stap{position:relative;display:flex;flex-direction:column}
+.k14-fig{margin:0 0 1.2rem}
+.k14-plaat{height:var(--plaat);overflow:hidden;border:6px solid #fff;border-radius:var(--radius-card);background:#fff;box-shadow:0 18px 34px -20px rgba(60,40,0,.7);rotate:-1.4deg}
+.k14-stap:nth-child(even) .k14-plaat{rotate:1.1deg}
+.k14-plaat .k-foto{width:100%;height:100%;object-fit:cover}
+.k14 .k-titel{position:relative;display:flex;align-items:center;gap:.6rem;width:fit-content;max-width:100%;margin:0 0 .55rem;padding-right:.7rem;background:var(--brand-accent);color:var(--brand-secondary);font-size:clamp(1.45rem,1.1rem + .9vw,1.85rem)}
+.k14 .k-titel::before{content:"";flex:none;width:.85rem;height:.85rem;border-radius:50%;background:var(--brand-secondary);box-shadow:0 0 0 .3rem var(--brand-accent)}
+.k14-stap:last-child .k-titel::before{background:#fff;box-shadow:0 0 0 .3rem var(--brand-accent),0 0 0 .45rem var(--brand-secondary)}
+.k14 .k-tekst{color:var(--ink)}
+.k14 .k-link{color:var(--brand-secondary)}
+.k14 .k-link span{text-decoration-color:color-mix(in srgb,var(--brand-secondary) 40%,transparent)}
+
+/* ===== 15 kanaalvakken met foto en gele strook (referentie B .sgpr) ===== */
+.k15-kaart{position:relative;display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);margin-top:calc(var(--rij-boven) + .8rem);border-radius:24px;background:#fff;
+  box-shadow:0 30px 60px -34px color-mix(in srgb,var(--brand-secondary) 60%,transparent)}
+.k15-kaart::after{content:"";position:absolute;inset:0;z-index:2;border:1px solid var(--brand-primary);border-radius:inherit;pointer-events:none}
+.k15-body{padding:clamp(1.4rem,2.6vw,2.2rem)}
+.k15{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+.k15-rij{--s:.36;position:relative;display:grid;grid-template-columns:5.4rem minmax(0,1fr);grid-template-rows:1fr auto;column-gap:1rem;padding:1.05rem 1.15rem 1.1rem;border:1px solid var(--grey-200);border-radius:12px;
+  transition:border-color .2s,background-color .2s,box-shadow .2s,translate .2s}
+@media(hover:hover){.k15-rij:hover{translate:0 -2px;border-color:var(--brand-primary);background:var(--primary-50);box-shadow:inset 0 0 0 1px var(--brand-primary),0 12px 22px -16px color-mix(in srgb,var(--ink) 45%,transparent)}}
+.k15-rij .k-obj{grid-row:1 / span 2;align-self:start;justify-self:center;margin-top:-1.4rem}
+.k15-rij .k-obj--klembord,.k15-rij .k-obj--dozen{margin-top:-1.8rem}
+.k15-rijtekst .k-titel{margin:0 0 .25rem;font-size:1.3rem}
+.k15-rijtekst .k-tekst{margin:0;font-size:.92rem;line-height:1.5}
+.k15-waarde{grid-column:2;margin-top:.6rem;color:var(--brand-primary);font:var(--weight-display) clamp(1.1rem,.95rem + .3vw,1.22rem)/1.15 var(--font-display);font-stretch:var(--font-display-stretch)}
+.k15-media{display:flex;flex-direction:column}
+.k15-beeld{position:relative;flex:1;min-height:14rem;overflow:hidden;border-radius:0 24px 0 0}
+.k15-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.k15-badge{flex:none;margin:0;padding:1.15rem 1.4rem 1.2rem;border-radius:0 0 24px 0;background:var(--brand-accent);color:var(--brand-secondary)}
+.k15-badge b{display:block;font:var(--weight-display) 2.4rem/1 var(--font-display);font-stretch:var(--font-display-stretch)}
+.k15-badge span{display:block;margin-top:.35rem;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+
+/* ===== smaller: twee naast elkaar, daarna onder elkaar ===== */
+@media(max-width:1080px){
+  .k01,.k02,.k03,.k04,.k05,.k06,.k07,.k08,.k09,.k10,.k11,.k13,.k14{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .k01{row-gap:9rem;padding-top:8.9rem}
+  .k01-kaart:nth-child(n){margin-bottom:0}
+  .k01::before{height:auto;top:55%}
+  .k03,.k05{row-gap:3.6rem}
+  .k06,.k09{row-gap:3.4rem}
+  .k07{row-gap:6rem}
+  .k10{row-gap:1.6rem}
+  .k10-plaat{margin-top:calc(var(--rij-boven) + 1.5rem);padding-top:2rem}
+  .k10-vak{padding-top:10.6rem}
+  .k10-schijf{top:7rem}
+  .k10-vak:first-child{border-top:0}
+  .k07-vak:nth-child(3){--pl:0px;border-left:0;padding-left:0}
+  .k08{row-gap:5.6rem}
+  .k08-band{height:auto;top:30%}
+  .k11-kaart:nth-child(n+3){margin-top:1.4rem;rotate:0deg}
+  .k11-kaart:nth-child(n+3) .k11-haak{display:none}
+  .k12{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .k12-tegel{min-height:22rem}
+  .k13{margin:1rem 0 0;row-gap:4rem;margin-top:-4rem}
+  .k13-maat:nth-child(n){min-height:0}
+  .k14::before{display:none}
+  .k15-kaart{grid-template-columns:minmax(0,1fr)}
+  .k15-media{order:-1}
+  .k15-beeld{min-height:16rem;border-radius:24px 24px 0 0}
+  .k15-badge{border-radius:0}
+}
+@media(max-width:600px){
+  .k01,.k02,.k03,.k04,.k05,.k06,.k07,.k08,.k09,.k10,.k11,.k12,.k13,.k14,.k15{grid-template-columns:minmax(0,1fr)}
+  .k07-vak:nth-child(n){--pl:0px;border-left:0;padding-left:0}
+  .k11-kaart:nth-child(n+2){margin-top:1.4rem;rotate:0deg}
+  .k11-kaart:nth-child(n+2) .k11-haak{display:none}
+  .k12-tegel{min-height:20rem}
+}

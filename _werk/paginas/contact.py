@@ -22,8 +22,12 @@ PAGINA = Pagina(
         # figuur: een verhuizer in het lege vak tussen de kop en de belkaart, in lagen: plaat en huis
         # erachter, dozen ervoor (gevraagd 23-09-2026). verhuizer-doos-deken-uit.webp heeft geen
         # doorzichtige rand (alfa-bbox is het hele bestand, 698x1200); bij een wissel opnieuw meten.
+        # Sinds 29-09-2026 stijl foto: per kanaal een echte foto met het voorwerp op de naad, op een lichtblauwe band
+        # (ontwerp 02 uit _ontwerpen/contactkanalen-wow-varianten.html; de gele schijven waren mooi maar niet "wow").
         ("contactkaarten", {"figuur": ("/img/verhuizer-doos-deken-uit.webp", 698, 1200, 0, 0, 698, 1200),
-                            "voorgrond": ("/img/verhuisdozen-uit.webp", 562, 522)}),
+                            "voorgrond": ("/img/verhuisdozen-uit.webp", 562, 522), "stijl": "foto"}),
+        # Tot 29-09-2026 de voorwerpen op een goudgele schijf, aan door deze regel te wisselen met de regel erboven:
+        # ("contactkaarten", {"figuur": ("/img/verhuizer-doos-deken-uit.webp", 698, 1200, 0, 0, 698, 1200), "voorgrond": ("/img/verhuisdozen-uit.webp", 562, 522)}),
         # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
         # de kaarten met een plaatrand, de verhuizer groter (optie stijl in contactkaarten.py); de groene hover staat altijd aan
         # ("contactkaarten", {"figuur": ("/img/verhuizer-doos-deken-uit.webp", 698, 1200, 0, 0, 698, 1200), "voorgrond": ("/img/verhuisdozen-uit.webp", 562, 522), "stijl": "groen"}),

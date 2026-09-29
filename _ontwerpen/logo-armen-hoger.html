@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logo · armen over het huis</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="/css/min/site.min.css?v=3aba39d545">
+<style>
+/* Voorstel 29-09-2026: armen hoger en grotere biceps. Bron: _bron-logo-armen/armen.mjs (node armen.mjs). */
+body{background:#fff}
+.vnav{position:sticky;top:0;z-index:60;background:var(--brand-secondary);color:#fff;font-size:.875rem}
+.vnav .wrap{display:flex;align-items:center;gap:1rem;min-height:3.4rem;flex-wrap:wrap}
+.vnav b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.1rem;letter-spacing:.01em}
+.vnav__links{display:flex;flex-wrap:wrap;gap:.3rem;margin-left:auto}
+.vnav a{display:grid;place-items:center;height:2rem;padding:0 .7rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-weight:700;text-decoration:none}
+.vnav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+
+.lk{padding:2.5rem 0 3rem;border-top:1px solid var(--grey-200)}
+.lk:first-of-type{border-top:0}
+.lk h2{margin:0 0 .35rem;font:800 clamp(1.5rem,2.4vw,2rem)/1.1 var(--font-display);font-stretch:75%;color:var(--brand-primary)}
+.lk__uitleg{margin:0 0 1.75rem;max-width:78ch;color:var(--graphite)}
+.lk__uitleg li{margin:.15rem 0}
+.lk--mist{background:var(--off-white)}
+.lk--blauw{background:var(--brand-primary);color:#fff}
+.lk--blauw h2{color:#fff}.lk--blauw .lk__uitleg{color:rgba(255,255,255,.8)}
+.lk--diep{background:var(--brand-secondary)}
+
+/* rij van logo's op dezelfde schaal, uitgelijnd op de voet van het huis / het woordmerk */
+.rij{display:flex;flex-wrap:wrap;align-items:flex-end;gap:2.5rem 3.5rem}
+.rij figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:.9rem;max-width:100%}
+.rij img{display:block;max-width:100%;height:auto}
+.rij figcaption{font-size:.85rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--grey-600);text-align:center}
+.rij figcaption small{display:block;margin-top:.15rem;font-weight:500;letter-spacing:0;text-transform:none;font-size:.8rem}
+.lk--blauw figcaption,.lk--diep figcaption{color:rgba(255,255,255,.75)}
+.tip{display:inline-block;margin-left:.35rem;padding:.12rem .5rem;border-radius:999px;background:var(--brand-accent);color:var(--brand-secondary);font-size:.72rem;letter-spacing:.04em}
+.rij--vier{gap:2rem 2.25rem}
+.pijl{align-self:center;font:800 2.5rem/1 var(--font-display);color:var(--grey-300)}
+
+/* header op ware grootte: witte balk, logo hangt eronder uit zoals op de site */
+.kop{display:grid;gap:1.25rem}
+.kop__balk{position:relative;display:flex;align-items:flex-start;gap:1.5rem;height:46px;padding:0 1.5rem;background:#fff;border-radius:6px;box-shadow:0 1px 0 var(--grey-200),0 10px 24px -18px rgba(11,35,82,.45);margin-bottom:60px}
+.kop__balk img{position:relative;top:6px;flex:none;width:auto;max-width:none;height:var(--h)}
+.kop__menu{display:flex;gap:1.3rem;align-self:center;margin-left:auto;font-weight:600;font-size:.9rem;color:var(--ink)}
+.kop__knop{align-self:center;padding:.45rem 1rem;border-radius:999px;background:var(--brand-accent);color:var(--brand-secondary);font-weight:800;font-size:.85rem}
+.kop__label{font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--grey-600);margin-bottom:.4rem}
+@media (max-width:760px){.kop__menu{display:none}}
+</style>
+</head>
+<body>
+<nav class="vnav"><div class="wrap">
+  <b>Logo De Reus · armen over het huis, grotere biceps</b>
+  <div class="vnav__links"><a href="#vergelijk">Voor / na</a><a href="#sterktes">3 sterktes</a><a href="#header">In de header</a><a href="#blauw">Op blauw</a></div>
+</div></nav>
+
+<section class="lk" id="vergelijk"><div class="wrap">
+  <h2>Voor en na</h2>
+  <div class="lk__uitleg">
+    <p>Wens van de klant: de armen hoger en over het huis, en de biceps iets groter. Beide logo's staan hieronder op precies dezelfde schaal.</p>
+    <ul>
+      <li>De armen gaan omhoog en draaien om de schouder iets naar binnen: de ellebogen komen hoger en de vuisten staan boven het dak.</li>
+      <li>De armen liggen vóór het huis. Waar ze over de dakrand komen, wordt het huis uitgespaard met dezelfde witte naad als nu langs de muur.</li>
+      <li>De arm blijft de originele tekening; alleen de biceps is ongeveer 20 % groter.</li>
+      <li>Huis, woordmerk en kleuren zijn niet veranderd. Het logo wordt iets hoger (828 → 881) en blijft even breed.</li>
+    </ul>
+  </div>
+  <div class="rij">
+    <figure><img src="/img/logo/dereus-logo.svg" width="440" height="364" alt="Huidig logo"><figcaption>Huidig</figcaption></figure>
+    <span class="pijl" aria-hidden="true">→</span>
+    <figure><img src="_bron-logo-armen/midden/dereus-logo.svg" width="440" height="388" alt="Voorstel: armen over het huis, grotere biceps"><figcaption>Voorstel <span class="tip">midden</span></figcaption></figure>
+  </div>
+</div></section>
+
+<section class="lk lk--mist" id="sterktes"><div class="wrap">
+  <h2>Drie sterktes</h2>
+  <p class="lk__uitleg">Dezelfde ingreep in drie maten: hoe ver de armen omhoog en over het huis komen en hoeveel de biceps groeit. Op dezelfde schaal als het huidige logo links.</p>
+  <div class="rij rij--vier">
+    <figure><img src="/img/logo/dereus-logo.svg" width="250" height="207" alt="Huidig logo"><figcaption>Huidig<small>zoals nu</small></figcaption></figure>
+    <figure><img src="_bron-logo-armen/licht/dereus-logo.svg" width="250" height="219" alt="Voorstel licht"><figcaption>Licht<small>iets over de dakrand · biceps +15 %</small></figcaption></figure>
+    <figure><img src="_bron-logo-armen/midden/dereus-logo.svg" width="250" height="220" alt="Voorstel midden"><figcaption>Midden <span class="tip">advies</span><small>over de dakrand · biceps +20 %</small></figcaption></figure>
+    <figure><img src="_bron-logo-armen/sterk/dereus-logo.svg" width="250" height="225" alt="Voorstel sterk"><figcaption>Sterk<small>hoog over het huis · biceps +25 %</small></figcaption></figure>
+  </div>
+</div></section>
+
+<section class="lk" id="header"><div class="wrap">
+  <h2>In de header, ware grootte</h2>
+  <p class="lk__uitleg">Het staande logo hangt in de header onder de balk uit. Bij het voorstel is het logo 96 px hoog in plaats van 90 px, zodat VERHUISBEDRIJF DE REUS even groot blijft; de extra hoogte zit alleen in de armen.</p>
+  <div class="kop">
+    <div>
+      <div class="kop__label">Huidig · 90 px</div>
+      <div class="kop__balk"><img src="/img/logo/dereus-logo.svg" height="90" width="109" style="--h:90px" alt="Huidig logo"><span class="kop__menu"><span>Diensten</span><span>Werkwijze</span><span>Kosten</span><span>Over ons</span><span>Contact</span></span><span class="kop__knop">Offerte</span></div>
+    </div>
+    <div>
+      <div class="kop__label">Voorstel · 96 px</div>
+      <div class="kop__balk"><img src="_bron-logo-armen/midden/dereus-logo.svg" height="96" width="109" style="--h:96px" alt="Voorstel logo"><span class="kop__menu"><span>Diensten</span><span>Werkwijze</span><span>Kosten</span><span>Over ons</span><span>Contact</span></span><span class="kop__knop">Offerte</span></div>
+    </div>
+  </div>
+  <div class="rij" style="margin-top:2rem">
+    <figure><img src="/img/logo/dereus-logo.svg" height="58" width="70" style="width:70px" alt=""><figcaption>Huidig<small>telefoon, 58 px</small></figcaption></figure>
+    <figure><img src="_bron-logo-armen/midden/dereus-logo.svg" height="62" width="70" style="width:70px" alt=""><figcaption>Voorstel<small>telefoon, 62 px</small></figcaption></figure>
+  </div>
+</div></section>
+
+<section class="lk lk--blauw" id="blauw"><div class="wrap">
+  <h2>Op blauw</h2>
+  <p class="lk__uitleg">Negatieve versies (witte armen) op Koningsblauw en de horizontale versie op Diepblauw; het woordmerk staat weer midden naast het hogere beeldmerk.</p>
+  <div class="rij">
+    <figure><img src="/img/logo/dereus-logo-negatief.svg" width="300" height="248" alt="Huidig negatief"><figcaption>Huidig</figcaption></figure>
+    <figure><img src="_bron-logo-armen/midden/dereus-logo-negatief.svg" width="300" height="264" alt="Voorstel negatief"><figcaption>Voorstel</figcaption></figure>
+  </div>
+</div></section>
+<section class="lk lk--diep"><div class="wrap">
+  <div class="rij">
+    <figure><img src="/img/logo/dereus-logo-horizontaal-negatief.svg" width="489" height="102" alt="Huidig horizontaal"><figcaption>Huidig horizontaal</figcaption></figure>
+    <figure><img src="_bron-logo-armen/midden/dereus-logo-horizontaal-negatief.svg" width="489" height="112" alt="Voorstel horizontaal"><figcaption>Voorstel horizontaal</figcaption></figure>
+  </div>
+</div></section>
+</body>
+</html>

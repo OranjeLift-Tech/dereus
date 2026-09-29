@@ -93,14 +93,17 @@
    hierboven; de plaatrand in rust, de grotere verhuizer en zijn hover gelden alleen met stijl="groen" (.b-contactkaarten--groen).
    De klei-iconen blijven dan staan.
    29-09-2026, vraag van de gebruiker: de groene neonhover weer op alle kaarten ("onu geri getir"), ook op de vlakke.
-   In rust dan negen doorzichtige schaduwen, zodat de overgang naar de hover even vloeiend blijft. */
+   In rust dan negen doorzichtige schaduwen, zodat de overgang naar de hover even vloeiend blijft.
+   29-09-2026, later: de hover groeide te veel en was te grof (de kaart schoof 8 px over de buurkaart heen). Nu
+   groeit hij niet meer en schuift hij niet opzij: hij komt 4 px omhoog, met de groene rand, een groene onderlip
+   van 3 px in plaats van de zijkant van 9 px, en een zachtere gloed. Nog steeds negen schaduwen in dezelfde volgorde. */
 .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{
   box-shadow:inset 0 1px 0 transparent,inset 0 0 14px transparent,0 0 0 2px transparent,0 0 0 0 transparent,0 0 0 0 transparent,0 0 0 0 transparent,0 0 0 transparent,0 0 12px 2px transparent,4px 4px 34px 8px transparent;
   transition:opacity .55s var(--ease),transform .55s var(--ease),translate calc(var(--duration-base) * 2.25) var(--ease-out),scale calc(var(--duration-base) * 2.25) var(--ease-out),box-shadow calc(var(--duration-base) * 2.25) var(--ease-out)}
 .b-contactkaarten--groen .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{
   box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px transparent,0 0 0 2px transparent,0 6px 0 0 #D5E2F8,0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent),0 0 12px 2px transparent,4px 4px 34px 8px transparent}
-@media(hover:hover){.b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover{translate:-5px -5px;scale:1.02;
-  box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px color-mix(in srgb,var(--color-cta) 22%,transparent),0 0 0 2px var(--color-cta),3px 3px 0 2px var(--color-cta),6px 6px 0 2px var(--color-cta-hover),9px 9px 0 2px var(--color-cta-active),16px 22px 30px -10px color-mix(in srgb,var(--ink) 30%,transparent),0 0 12px 2px color-mix(in srgb,var(--color-cta) 85%,transparent),4px 4px 34px 8px color-mix(in srgb,var(--color-cta) 45%,transparent)}}
+@media(hover:hover){.b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover{translate:0 -4px;
+  box-shadow:inset 0 1px 0 var(--white),inset 0 0 12px color-mix(in srgb,var(--color-cta) 12%,transparent),0 0 0 2px var(--color-cta),0 3px 0 2px var(--color-cta-active),0 0 0 0 transparent,0 0 0 0 transparent,0 18px 30px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 0 10px 1px color-mix(in srgb,var(--color-cta) 45%,transparent),0 12px 28px -8px color-mix(in srgb,var(--color-cta) 28%,transparent)}}
 /* de groene WhatsApp-knop onder het nummer: eigen breedte en lucht, niet tegen de link aan */
 .b-contactkaarten__kanaal>.wa-link{align-self:flex-start;margin:.7rem 0 0;margin-inline-start:0}
 /* 8rem: de voorwerpen op de gele schijf steken bijna 5rem boven de kaart uit (29-09-2026) */
@@ -152,3 +155,33 @@
 .b-contactkaarten--groen .b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld{pointer-events:auto;transform-origin:39% 100%;transition:scale .35s var(--ease)}
 @media(hover:hover){.b-contactkaarten--groen .b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld:hover{scale:1.08}}
 @media(prefers-reduced-motion:reduce){.b-contactkaarten--groen .b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld{transition:none}}
+
+/* ---- Stijl foto (optie stijl="foto", /contact/, 29-09-2026) ----
+   De gele schijven vond de klant mooi, maar niet "wow". Gekozen: ontwerp 02 uit
+   _ontwerpen/contactkanalen-wow-varianten.html, naar de dienstkaarten van referentie B (foto bovenin, een voorwerp op
+   de naad, de kaarten op een band met een V-inkeping). Per kanaal een echte foto; het echte voorwerp (img/contact-echt/)
+   staat klein rechtsonder op de foto en hangt over de naad heen de tekst in. De band is --primary-100 en loopt van
+   rand tot rand (100vw, daarom overflow-x:clip); isolation houdt hem boven het wit van de sectie. De groene neonhover
+   blijft: in rust dezelfde negen schaduwen in dezelfde volgorde, met hier een dunne rand en een zachte slagschaduw.
+   Deze regel (0,2,0) staat na de rustregel van de hover en vóór de hoverregel (0,3,0), dus de hover wint nog. */
+.b-contactkaarten--foto{isolation:isolate;overflow-x:clip;padding-bottom:0}
+.b-contactkaarten--foto .b-contactkaarten__kanalen{position:relative;gap:1.1rem;margin-top:clamp(2.5rem,1.8rem + 2.5vw,4rem);padding:4.5rem 0 clamp(3rem,2rem + 3vw,4.5rem)}
+.b-contactkaarten--foto .b-contactkaarten__kanalen::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;translate:-50% 0;
+  background:var(--primary-100);clip-path:polygon(0 0,50% 2.4rem,100% 0,100% 100%,0 100%)}
+.b-contactkaarten--foto .b-contactkaarten__kanaal{padding:0;border:0;border-radius:var(--radius-card);background:var(--white);
+  box-shadow:inset 0 1px 0 transparent,inset 0 0 14px transparent,0 0 0 1px color-mix(in srgb,var(--brand-secondary) 7%,transparent),0 1px 2px color-mix(in srgb,var(--ink) 8%,transparent),0 18px 34px -20px color-mix(in srgb,var(--ink) 40%,transparent),0 0 0 0 transparent,0 0 0 transparent,0 0 12px 2px transparent,4px 4px 34px 8px transparent}
+.b-contactkaarten--foto .b-contactkaarten__beeld{position:relative;aspect-ratio:16/10;border-radius:var(--radius-card) var(--radius-card) 0 0}
+.b-contactkaarten--foto .b-contactkaarten__foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+/* het voorwerp: maten horen bij FOTO in contactkaarten.py (sizes) */
+.b-contactkaarten--foto .b-contactkaarten__obj{left:auto;right:.35rem;bottom:-1.9rem;translate:none;rotate:none;height:auto}
+.b-contactkaarten--foto .b-contactkaarten__obj--telefoon{right:-.4rem;bottom:-1.4rem;width:8.4rem}
+.b-contactkaarten--foto .b-contactkaarten__obj--envelop{right:-.4rem;bottom:-1.4rem;width:7.6rem}
+.b-contactkaarten--foto .b-contactkaarten__obj--klembord{width:auto;height:7.6rem;rotate:-3deg}
+.b-contactkaarten--foto .b-contactkaarten__obj--dozen{width:auto;height:7.2rem}
+.b-contactkaarten--foto .b-contactkaarten__inhoud{display:flex;flex:1;flex-direction:column;padding:1.15rem 1.3rem 1.35rem}
+/* ruimte voor het voorwerp dat over de naad hangt */
+.b-contactkaarten--foto .b-contactkaarten__titel{padding-right:5.2rem}
+/* de schuine actielijn eronder (/contact/ #vertrouwen): boven de streep loopt de band door, eronder de kleur van de
+   sectie die volgt (het formulier is lucht), zodat er geen witte strook tussen band en streep valt */
+.b-contactkaarten--foto + .b-actielijn{background:linear-gradient(var(--primary-100) 50%,var(--white) 50%)}
+.b-contactkaarten--foto + .b-actielijn:has(+ .sectie--lucht){background:linear-gradient(var(--primary-100) 50%,var(--primary-50) 50%)}

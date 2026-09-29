@@ -42,8 +42,19 @@ VOORWERP = {
     "doos": ("dozen", 166, 307, 205, "10.4rem"),
 }
 
+# Optie stijl="foto" (29-09-2026, ontwerp 02 uit _ontwerpen/contactkanalen-wow-varianten.html, naar de dienstkaarten
+# van referentie B): de gele schijven vond de klant mooi maar niet "wow". Nu bovenin elke kaart een echte foto van het
+# kanaal en het voorwerp klein op de naad tussen foto en tekst; de kaarten liggen op een lichtblauwe band met een
+# V-inkeping. Per icoon: foto, breedte, hoogte, weergavebreedte van het voorwerp (sizes; gelijk aan contactkaarten.css).
+FOTO = {
+    "telefoon": ("/img/stap-2-bellen.webp", 560, 380, "8.4rem"),
+    "mail": ("/img/stap-1-laptop.webp", 1080, 900, "7.6rem"),
+    "document": ("/img/stap-1-formulier.webp", 560, 380, "4.8rem"),
+    "doos": ("/img/stap-3-offerte.webp", 560, 380, "5.8rem"),
+}
 
-def _kanaal(ctx, i, it):
+
+def _kanaal(ctx, i, it, foto=False):
     icoon, doel, std = KANALEN[i] if i < len(KANALEN) else ("pijl", "/contact/", "Meer")
     if doel == "tel":
         href, std = ctx.telhref, ctx.tel
@@ -53,6 +64,22 @@ def _kanaal(ctx, i, it):
         href = doel
     linktekst = it.veld("linktekst") or std
     geen_wa = " data-geen-whatsapp" if doel == "tel" else ""   # de belkaart erboven heeft de knop al
+    tekst = f'''<h3 class="b-{NAAM}__titel">{ctx.inline(it.kop)}</h3>
+              {ctx.alineas(it.tekst)}
+              <a class="b-{NAAM}__link" href="{ctx.esc(href)}"{geen_wa}><span>{ctx.esc(linktekst).replace("@", "@<wbr>")}</span>{ctx.icoon("pijl")}</a>'''
+    if foto and icoon in FOTO and icoon in VOORWERP:     # foto bovenin, het voorwerp op de naad
+        fsrc, fb, fh, omaat = FOTO[icoon]
+        naam, b, b2, h, _ = VOORWERP[icoon]
+        pad = f"/img/contact-echt/{naam}"
+        beeld = (f'<div class="b-{NAAM}__beeld" aria-hidden="true">{ctx.beeld(fsrc, "", fb, fh, klasse=f"b-{NAAM}__foto")}'
+                 f'<img class="b-{NAAM}__obj b-{NAAM}__obj--{naam}" src="{pad}-{b}.webp" srcset="{pad}-{b}.webp {b}w, {pad}-{b2}.webp {b2}w" '
+                 f'sizes="{omaat}" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></div>')
+        return f'''<li class="b-{NAAM}__kanaal">
+              {beeld}
+              <div class="b-{NAAM}__inhoud">
+              {tekst}
+              </div>
+            </li>'''
     if icoon in VOORWERP:                  # een echt voorwerp dat uit de kaart steekt, in plaats van het lijnicoon
         naam, b, b2, h, maat = VOORWERP[icoon]
         pad = f"/img/contact-echt/{naam}"
@@ -63,9 +90,7 @@ def _kanaal(ctx, i, it):
         beeld = f'<span class="b-{NAAM}__ic" aria-hidden="true">{ctx.icoon(icoon)}</span>'
     return f'''<li class="b-{NAAM}__kanaal">
               {beeld}
-              <h3 class="b-{NAAM}__titel">{ctx.inline(it.kop)}</h3>
-              {ctx.alineas(it.tekst)}
-              <a class="b-{NAAM}__link" href="{ctx.esc(href)}"{geen_wa}><span>{ctx.esc(linktekst).replace("@", "@<wbr>")}</span>{ctx.icoon("pijl")}</a>
+              {tekst}
             </li>'''
 
 
@@ -83,7 +108,8 @@ def _belkaart(ctx):
 def html(ctx, kopij, **opties) -> str:
     k = kopij
     sid = opties.get("id", k.id)
-    kanalen = "".join(_kanaal(ctx, i, it) for i, it in enumerate(k.items))
+    foto = opties.get("stijl") == "foto"
+    kanalen = "".join(_kanaal(ctx, i, it, foto) for i, it in enumerate(k.items))
     figuur = ""
     if opties.get("figuur"):
         src, breed, hoog, ux, uy, uw, uh = opties["figuur"]
@@ -96,7 +122,8 @@ def html(ctx, kopij, **opties) -> str:
         figuur = f'<div class="uitsnede b-{NAAM}__figuur" style="{maten}" aria-hidden="true">{beeld}</div>'
     # stijl="groen": de versie van Tugche (origin/main 9dbb9a8, 28-09-2026), de plaatrand in rust en een
     # grotere verhuizer; de groene zijkant onder de muis staat sinds 29-09-2026 altijd aan (css/blok/contactkaarten.css)
-    stijl = " b-" + NAAM + "--groen" if opties.get("stijl") == "groen" else ""
+    # stijl="foto": zie FOTO hierboven
+    stijl = {"groen": f" b-{NAAM}--groen", "foto": f" b-{NAAM}--foto"}.get(opties.get("stijl"), "")
     return f'''<section class="b-{NAAM}{stijl} sectie sectie--wit" id="{sid}" aria-labelledby="{sid}-kop">
       <div class="wrap">
         <div class="b-{NAAM}__boven">

@@ -237,6 +237,10 @@ vervangen van twee stapfoto's in "Zo werkt het" (home). De header-achtergronden 
     weggepoetst (`headset-merk.cjs`).
   Alle vier **Unsplash License**, geen Unsplash+ (API 29-09-2026: premium en plus false). Originelen en .json in
   `_ai-beelden/contact-echt/bron/`, werkwijze in de LEESMIJ daar.
+- /kosten/ #opbouw (stijl "balie", `_werk/blokken/opbouw.py`, BALIE_VOORWERP), sinds 29-09-2026: `klembord-*`
+  (all-in prijs), `wekker-*` (regieprijs), `bakwagen-*` (geen voorrijkosten) en `munten-*` (betalen). Nieuw is alleen
+  `wekker-192.webp`, de 2x-export van dezelfde wekker (zelfde bron en bewerking als `wekker-48/96`: alfa hard, trim,
+  sharpen, WebP q90). Licentie en bron: zie `wekker-*` hierboven.
 
 ## Vervangen
 
