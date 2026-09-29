@@ -198,10 +198,11 @@ async function draai({ browser, basis, snel = false } = {}) {
             const vormen = await page.locator('main > section.b-dienstenpanelen').evaluateAll(els => els.map(el => el.dataset.vorm || ''));
             assert.ok(vormen.every(Boolean) && new Set(vormen).size === 8, `${width}: eight service sections, eight different patterns (${vormen.join(', ')})`);
           }
-          /* Sinds 28-09-2026 heeft #kaart de vorm van het werkgebied: de kaart (.wg__kaartvlak) begint op de regel
-             van de kop, de gouden plaat erachter op die van het label. Onder 1060 staat de figuur onderaan. */
-          if (route === '/contact/' && width > 1060) {
-            assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.b-kaart .wg__kaartvlak').getBoundingClientRect().top
+          /* Sinds 29-09-2026 staat op /contact/ weer de kaart van Tugche (blok kaart-tugche, klassen b-kaart__*):
+             het beeld begint op de regel van de kop, zoals in haar controle (9dbb9a8). Daarvoor de vorm van het
+             werkgebied, met .b-kaart .wg__kaartvlak boven 1060. */
+          if (route === '/contact/' && width > 960) {
+            assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.b-kaart__beeld').getBoundingClientRect().top
               - document.querySelector('#kaart-kop').getBoundingClientRect().top) < 2), `${width}: map top aligns address heading`);
           }
           if (route === '/werkwijze/') {

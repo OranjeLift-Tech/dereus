@@ -8,6 +8,7 @@ from html.parser import HTMLParser
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import beeldvarianten as _varianten
 import config as cfg
 import kopij as _kopij
 from kopij import BouwFout
@@ -516,6 +517,10 @@ class Ctx:
                 f'style="fill:var(--icoon-hoofd,var(--brand-primary,#1746A2))">{DIENST_SOLAR[sleutel]}</svg>')
 
     def beeld(self, src, alt, breedte, hoogte, lui=True, klasse="", sizes=None, srcset=None, prioriteit=False):
+        # Lichtere versie en telefoonbreedtes uit _werk/beeldvarianten.py; een eigen srcset van het blok gaat voor.
+        if not srcset:
+            src, srcset, auto = _varianten.kies(src, lui and not prioriteit, self.pagina.pad)
+            sizes = sizes or auto
         a = [f'src="{esc(src)}"', f'alt="{esc(alt)}"', f'width="{breedte}"', f'height="{hoogte}"']
         if klasse:
             a.insert(0, f'class="{klasse}"')

@@ -11,7 +11,9 @@
     if (!header) return;
     header.classList.toggle('is-vast', window.scrollY > 24);
   }
-  scrol();
+  /* De eerste keer in een frame: scrollY direct bij het laden lezen dwong de hele eerste layout af
+     binnen dit script (Lighthouse mobiel: forced reflow van ~200 ms, 29-09-2026). */
+  requestAnimationFrame(scrol);
   window.addEventListener('scroll', scrol, { passive: true });
 
   /* 2. Submenu's: de rubriekslink draagt zelf de chevron en de ARIA. Klikken gaat naar de

@@ -16,8 +16,9 @@ Twee plekken:
 Knoppen alleen als het blok de velden knop of linktekst (met link) heeft; #verhaal heeft ze nu niet.
 
 Het beeld: dezelfde uitsnede als op de reviewkaart van /diensten/, drie verhuizers met een rechte snede
-door de heupen, precies wat het patroon verwacht. Gegenereerd, geen foto van de echte ploeg, dus alt leeg:
-het beeld claimt niet wie het zijn. config.FEITEN["TEAM_BEELD"] (het oude huisvenster) leest dit blok niet
+door de heupen, precies wat het patroon verwacht. Gegenereerd, geen foto van de echte ploeg. Sinds 29-09-2026
+(SEO-ronde) beschrijft de alt wat er te zien is, zonder te zeggen wie het zijn; tot dan was hij leeg.
+config.FEITEN["TEAM_BEELD"] (het oude huisvenster) leest dit blok niet
 meer; een echte teamfoto hoort hier pas als hij ook als uitsnede bestaat.
 Opties: feiten (False), sectie ("wit").
 """
@@ -25,7 +26,10 @@ NAAM = "over-ons"
 CSS = True
 JS = False
 
-TEAM = ("/img/review-verhuizers-lachend-breed.webp", 914, 504)
+# pad, breedte, hoogte en alt. De alt zegt niet wie het zijn: het beeld is gegenereerd. Zelfde opbouw als
+# TEAM_BEELD_ALT in config.py.
+TEAM = ("/img/review-verhuizers-lachend-breed.webp", 914, 504,
+        "Illustratief beeld van drie lachende verhuizers in blauwe polo's met het logo van De Reus")
 
 FEITRIJEN = [
     ("OPRICHTINGSJAAR", "Opgericht in", "kalender"),
@@ -87,14 +91,14 @@ def html(ctx, kopij, feiten=False, sectie="wit", kopij_van=None, team=TEAM, **op
         knoppen.append(ctx.knop(k.veld("linktekst"), k.veld("link", "/over-ons/"), soort="licht"))
     elif knoppen:
         knoppen.append(ctx.belknop("licht"))
-    src, b, h = team
+    src, b, h, alt = team
     return f'''<section class="sectie sectie--{sectie} b-over" id="{ctx.esc(anker)}" aria-labelledby="{ctx.esc(k.id)}-kop">
   <div class="wrap">
     <div class="over__rij">
       <div class="over__links">
         <div class="over__podium" data-reveal>
           <span class="over__platen" aria-hidden="true"></span>
-          {ctx.beeld(src, "", b, h, klasse="over__team")}
+          {ctx.beeld(src, alt, b, h, klasse="over__team")}
         </div>
         <div class="over__kop" data-reveal>
           {ctx.kopgroep(k)}

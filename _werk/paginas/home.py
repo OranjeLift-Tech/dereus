@@ -26,11 +26,13 @@ PAGINA = Pagina(
     blokken=[
         ("hero", {"kopij_id": "offerte"}),
         ("diensten", {}),
-        ("waarom", {}),
         # De cijfers als schuine actielijn (28-09-2026): "make this section into an action line, like a stripe that
         # is slanted and has icons by each line". Zelfde blok als #vertrouwen op /contact/. Het oude blok cijfers.py
         # blijft bestaan. Hier zonder "sectie": de cijferband telde niet mee in de motieftellers van style.css.
+        # Sinds 29-09-2026 voor waarom: "in homepage - put the actionline a section higher". De grijze helft erachter
+        # staat in actielijn.css (.sectie--mist + .b-actielijn), het gat erboven in diensten.css en eronder in waarom.css.
         ("actielijn", {"kopij_id": "cijfers"}),
+        ("waarom", {}),
         # Zo werkt het: de stappen als kaarten met een verhuizer (steps-four-green uit ../section-library), zoals op
         # /werkwijze/, op de Koningsblauwe band uit de regel hierboven. Gekozen op 28-09-2026: "Home "Zo werkt het",
         # routeband or option A (28-09-2026): A on Koningsblauw" (website/review/zowerkthet-home-vergelijk-20260928/).
@@ -52,19 +54,27 @@ PAGINA = Pagina(
 )
 
 # Klei-iconen op de naden, alleen vanaf 1100 px (blok naadiconen). De gebruiker plaatste ze zelf met de artifact
-# placer op 1440 (28-09-2026). Per blok: het id van de sectie en per icoon (naam, kant, x, y) in px, gemeten uit
-# zijn export op de home van 15:41: x vanaf die kant van de pagina, y vanaf de bovenkant van de sectie.
+# placer op 1440: eerst op 28-09-2026, opnieuw op 29-09-2026 (export via dereus-2f, nu met een eigen dekking per icoon).
+# Per blok: het id van de sectie en per icoon (naam, kant, x, y, dekking): x in px vanaf die kant van de pagina, y vanaf
+# de bovenkant van de sectie, beide omgerekend uit de procenten van de export van 29-09-2026 op 1440, gemeten op de bouw
+# van 13:23 (secties diensten 1258, waarom 904, werkwijze 832, reviews 1063, over-ons 941, werkgebied 1074 hoog).
 NAADICONEN = {
-    "diensten": ("diensten", [("particulier", "rechts", 77, 60), ("dozen", "links", 33, 68)]),
-    # Ster in plaats van het schild (28-09-2026, "sure replace"): het schild stond al op de kaart "Standaard verzekerd".
-    "waarom": ("waarom", [("ster", "links", 70, -52)]),
-    "stapkaarten": ("werkwijze", [("nationaal", "rechts", 50, 148)]),
-    "reviews": ("reviews", [("telefoon", "links", 22, 19)]),
-    "over-ons": ("over-ons", [("verhuislift", "links", 66, -58)]),
-    "werkgebied": ("werkgebied", [("internationaal", "links", 82, -18)]),
+    "diensten": ("diensten", [("particulier", "rechts", 77, 60, .52), ("dozen", "links", 78, 65, .48)]),
+    # De ster boven #waarom en de vrachtwagen in #werkwijze gingen er eerder op 29-09-2026 af ("Dit mag u van ons
+    # verwachten - remove the star clay artifact near this section.", "Zo werkt het - remove the truck clay icon near
+    # the section"). In zijn export van diezelfde dag staan daar deze vier.
+    # Zesde veld 1160: de verhuislift staat er pas vanaf 1160 px. Van 1100 tot 1140 lag hij op het eind van de intro
+    # ("...Daarom zeggen"); de gebruiker op 29-09-2026: "12. Waarom verhuislift icon: hide below 1160".
+    "waarom": ("waarom", [("verhuislift", "rechts", 109, 64, .53, 1160), ("vakman", "links", 76, 68, .48)]),
+    "stapkaarten": ("werkwijze", [("woningontruiming", "links", 105, -30, .5), ("zakelijk", "rechts", 180, -35, .47)]),
+    "reviews": ("reviews", [("telefoon", "links", 92, -84, .46)]),
+    "over-ons": ("over-ons", [("verhuislift", "links", 66, -51, .47)]),
+    "werkgebied": ("werkgebied", [("internationaal", "links", 82, -19, .52)]),
     # Het klembord hangt sinds 28-09-2026 aan de formulierkaart, op de rechterbovenhoek, met een hover:
     # "Vertel ons over uw verhuizing in homepage - make the artifact of the list next to the section be part of the section and have a hover effect."
     # Derde veld: de klasse van het element waar het in hangt; x en y vanaf die hoek (negatief is erbuiten).
+    # De export van 29-09-2026 noemt nog een los klembord in #aanvraag (rechts 46, y 21, dekking 1): precies de plek van
+    # 28-09-2026, die als concept in zijn placer bleef staan. Geen tweede klembord dus; het blijft alleen op de kaart.
     "aanvraag": ("aanvraag", [("klembord", "hoek", -14, -52)], "b-formulier__kaart"),
 }
 PAGINA.blokken = [("naadiconen", {"kopij": None, "blok": naam, "opties": opties, "plek": NAADICONEN[naam]})

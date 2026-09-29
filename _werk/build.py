@@ -141,6 +141,14 @@ def css_verklein(css):
     return css
 
 
+def _css_sluit(mini, bron):
+    """Een los stylesheet sluit een open blok of commentaar aan zijn eigen eind af; in één bundel zou het
+    de regels van het volgende blok opslokken. Dus: open haakjes of commentaar is een bouwfout."""
+    buiten = "".join(d for i, d in enumerate(_STRING.split(mini)) if not i % 2)
+    if buiten.count("{") != buiten.count("}") or "/*" in buiten:
+        raise BouwFout(f"{bron}: niet gesloten {{ }} of /* in de CSS, dat zou in de paginabundel de volgende blokken breken")
+
+
 def hash_van(*teksten):
     h = hashlib.sha1()
     for t in teksten:
@@ -393,31 +401,45 @@ def kopieer_merk():
 # CSS en JS per pagina
 # ---------------------------------------------------------------------------
 class Bestanden:
-    """Houdt de verkleinde CSS bij (één keer schrijven) en geeft de URL met ?v=."""
+    """Houdt de verkleinde CSS bij (één keer schrijven) en geeft de URL met ?v=.
+
+    Sinds 29-09-2026 laadt elke pagina één stylesheet: css/min/pagina/<naam>.min.css, de kern plus de
+    CSS van haar blokken in dezelfde volgorde als de losse <link>s ervoor, dus dezelfde cascade. Vijftien
+    losse bestanden blokkeerden op een telefoon de eerste weergave (Lighthouse render-blocking, 310 ms op
+    de home). site.min.css en de losse blokbestanden schrijven we nog steeds: de reviewpagina's in
+    website/review/ linken ze."""
 
     def __init__(self):
-        self.css_urls = {}
+        self.css_mini = {}
         self.js_urls = {}
         if not DROOG:
             (WORTEL / "css" / "min").mkdir(parents=True, exist_ok=True)
         kern = "\n".join((WORTEL / p).read_text(encoding="utf-8") for p in CSS_KERN)
-        mini = css_verklein(kern)
-        schrijf(WORTEL / "css" / "min" / "site.min.css", mini)
-        self.kern_css = f"/css/min/site.min.css?v={hash_van(mini)}"
+        self.kern_mini = css_verklein(kern)
+        schrijf(WORTEL / "css" / "min" / "site.min.css", self.kern_mini)
         js = (WORTEL / "js" / "site.js").read_text(encoding="utf-8")
         self.kern_js = f"/js/site.js?v={hash_van(js)}"
 
     def blok_css(self, naam):
-        if naam in self.css_urls:
-            return self.css_urls[naam]
+        """De verkleinde CSS van een blok, of None als het blok geen CSS heeft."""
+        if naam in self.css_mini:
+            return self.css_mini[naam]
         bron = WORTEL / "css" / "blok" / f"{naam}.css"
-        url = None
+        mini = None
         if bron.exists():
             mini = css_verklein(bron.read_text(encoding="utf-8"))
+            _css_sluit(mini, f"css/blok/{naam}.css")
             schrijf(WORTEL / "css" / "min" / f"{naam}.min.css", mini)
-            url = f"/css/min/{naam}.min.css?v={hash_van(mini)}"
-        self.css_urls[naam] = url
-        return url
+        self.css_mini[naam] = mini
+        return mini
+
+    def pagina_css(self, pagina, namen):
+        """Eén stylesheet voor de pagina; de URL met ?v=, zodat een wijziging de cache van een jaar breekt."""
+        delen = [self.kern_mini] + [m for m in (self.blok_css(n) for n in namen) if m]
+        tekst = "\n".join(delen)
+        naam = pagina.bestand.removesuffix("index.html").removesuffix(".html").strip("/").replace("/", "-") or "home"
+        schrijf(WORTEL / "css" / "min" / "pagina" / f"{naam}.min.css", tekst)
+        return f"/css/min/pagina/{naam}.min.css?v={hash_van(tekst)}"
 
     def blok_js(self, naam):
         if naam in self.js_urls:
@@ -544,7 +566,7 @@ def bouw_pagina(pagina, register, bestanden, streng):
     hdr, ld, ft, bb = (ctx.contactlinks(fragment) for fragment in (hdr, ld, ft, bb))
     delen = [ctx.contactlinks(fragment) for fragment in delen]
 
-    css = [bestanden.kern_css] + [u for u in (bestanden.blok_css(n) for n in gebruikt) if u]
+    css = [bestanden.pagina_css(pagina, gebruikt)]
     js = [bestanden.kern_js] + [u for u in (bestanden.blok_js(n) for n in gebruikt) if u]
     head = kop_html(pagina, ctx, css, js, jsonld_voor(pagina, ctx))
     klasse = " ".join(k for k in ["p", pagina.body_klasse, f"header-{pagina.header}"] if k)
@@ -674,6 +696,11 @@ def bouw(alleen=None, streng=False, concept=False, alles=False):
             waarschuwingen.append("seo.py ontbreekt nog: geen sitemap.xml en robots.txt")
     verborgen = kit.ALLE_PADEN - kit.ZICHTBAAR
     fouten, meer = bewakers.controleer(uitvoer, te_bouwen, WORTEL, volledig=not alleen, verborgen=verborgen)
+    if DROOG:
+        # Droog schrijft niets, dus een bestand dat deze build zou aanmaken (de eerste bundel van een pagina,
+        # de CSS van een nieuw blok) staat nog niet op schijf. Dat is geen fout van de pagina die ernaar linkt.
+        nieuw = {"/" + _rel(d) for soort, d in GEWIJZIGD if soort == "nieuw"}
+        fouten = [f for f in fouten if f.partition(": bestand bestaat niet: ")[2].split("?")[0] not in nieuw]
     waarschuwingen += meer
     for w in waarschuwingen:
         print(f"  let op   {w}")

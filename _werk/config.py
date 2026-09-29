@@ -78,8 +78,10 @@ PUBLICEER = {
 # Tussen haakjes het nummer van de open vraag aan de klant.
 FEITEN = {
     # bedrijf (1.1, 1.2)
-    "RECHTSVORM": None,             # bijvoorbeeld "eenmanszaak"
-    "KVK": None,                    # KvK-nummer als tekst; maakt het woord KvK toegestaan
+    # KvK en rechtsvorm gecontroleerd op kvk.nl op 28-09-2026 (handelsnamen Verhuisbedrijf De Reus en De Reus
+    # Verhuizingen). De gebruiker: alleen de KvK als badge, "nothing that needs client data".
+    "RECHTSVORM": "eenmanszaak",
+    "KVK": "91699568",              # KvK-nummer als tekst; maakt het woord KvK toegestaan
     "OPRICHTINGSJAAR": None,        # jaartal; maakt "sinds 2015" toegestaan
     "EIGENAAR": None,               # naam van de eigenaar (/over-ons/)
     "TEAM": None,                   # korte omschrijving van het team (/over-ons/)

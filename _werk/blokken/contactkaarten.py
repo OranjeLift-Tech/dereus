@@ -29,13 +29,12 @@ KANALEN = [
     ("doos", "/offerte/", "Offerte aanvragen"),
 ]
 
-# Per icoon het voorwerp: sinds 28-09-2026 het klei-icoon in img/clay/<naam>-240/480.webp (vierkant,
-# website/review/clay-iconen-20260928/) in plaats van de 3D-render uit img/contact-3d/. Naam, breedte, hoogte.
+# Per icoon het 3D-voorwerp in img/contact-3d/: bestandsnaam, breedte en hoogte (bron: _ai-beelden/contact-3d/)
 VOORWERP = {
-    "telefoon": ("telefoon", 240, 240),
-    "mail": ("envelop", 240, 240),
-    "document": ("formulier", 240, 240),
-    "doos": ("dozen", 240, 240),
+    "telefoon": ("telefoon", 208, 400),
+    "mail": ("envelop", 347, 400),
+    "document": ("formulier", 346, 400),
+    "doos": ("doos", 425, 400),
 }
 
 
@@ -52,8 +51,7 @@ def _kanaal(ctx, i, it):
     if icoon in VOORWERP:                  # een echt voorwerp dat uit de kaart steekt, in plaats van het lijnicoon
         naam, b, h = VOORWERP[icoon]
         beeld = (f'<span class="b-{NAAM}__ic b-{NAAM}__ic--3d" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{naam}" '
-                 f'src="/img/clay/{naam}-240.webp" srcset="/img/clay/{naam}-240.webp 240w, /img/clay/{naam}-480.webp 480w" '
-                 f'sizes="10rem" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
+                 f'src="/img/contact-3d/{naam}.webp" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
     else:
         beeld = f'<span class="b-{NAAM}__ic" aria-hidden="true">{ctx.icoon(icoon)}</span>'
     return f'''<li class="b-{NAAM}__kanaal">
@@ -69,6 +67,7 @@ def _belkaart(ctx):
     regels = "".join(f'<li><span>{ctx.esc(t["kort"])}</span><span>{ctx.esc(t["van"])} tot {ctx.esc(t["tot"])}</span></li>'
                      for t in c.TIJDEN)
     return f'''<div class="b-{NAAM}__belkaart" data-reveal>
+          <img class="b-{NAAM}__beltoestel" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async">
           <p class="b-{NAAM}__status">{ctx.bereikbaar("bereikbaar")}</p>
           <a class="b-{NAAM}__nummer" href="{c.TELHREF}">{ctx.esc(c.TEL)}</a>
           <ul class="b-{NAAM}__uren" role="list">{regels}</ul>
@@ -89,10 +88,7 @@ def html(ctx, kopij, **opties) -> str:
             beeld += ctx.beeld(vsrc, "", vbreed, vhoog, klasse=f"b-{NAAM}__voorgrond")
         maten = f"--uit-breed:{breed};--uit-hoog:{hoog};--uit-x:{ux};--uit-y:{uy};--uit-w:{uw};--uit-h:{uh}"
         figuur = f'<div class="uitsnede b-{NAAM}__figuur" style="{maten}" aria-hidden="true">{beeld}</div>'
-    # stijl="groen": de versie van Tugche (origin/main 9dbb9a8, 28-09-2026), de groene zijkant onder de muis en een
-    # grotere verhuizer; zie css/blok/contactkaarten.css
-    stijl = " b-" + NAAM + "--groen" if opties.get("stijl") == "groen" else ""
-    return f'''<section class="b-{NAAM}{stijl} sectie sectie--wit" id="{sid}" aria-labelledby="{sid}-kop">
+    return f'''<section class="b-{NAAM} sectie sectie--wit" id="{sid}" aria-labelledby="{sid}-kop">
       <div class="wrap">
         <div class="b-{NAAM}__boven">
           <div class="b-{NAAM}__tekst" data-reveal>

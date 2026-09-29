@@ -239,25 +239,48 @@ def diensten(pagina, ctx):
     """Service-knooppunten op /diensten/, elk met het anker van zijn blok (of zijn eigen pagina, als die live is)."""
     d = _domein(ctx)
     namen = dict(DIENSTEN)
+    beschrijvingen = {}
     k = _kopij(pagina, ctx)
     for sleutel, _ in DIENSTEN:
         b = _blok(k, sleutel)
         kop = getattr(b, "kop", None) if b is not None else None
         if kop:
             namen[sleutel] = _platte_tekst(kop)
+        # de eerste alinea van het blok, zoals hij op de pagina staat (SEO-ronde 29-09-2026)
+        tekst = getattr(b, "tekst", None) if b is not None else None
+        if tekst:
+            beschrijvingen[sleutel] = _platte_tekst(tekst[0])
     zichtbaar = _zichtbaar()
     uit = []
     for sleutel, _ in DIENSTEN:
         id_, url = _dienst_adres(d, sleutel, zichtbaar)
-        uit.append({
+        knoop = {
             "@type": "Service",
             "@id": id_,
             "name": namen[sleutel],
             "url": url,
             "provider": {"@id": f"{d}/#bedrijf"},
-            "areaServed": {"@type": "Country", "name": "Nederland"},
-        })
+        }
+        if sleutel in beschrijvingen:
+            knoop["description"] = beschrijvingen[sleutel]
+        gebied = _dienst_gebied(ctx, sleutel)
+        if gebied:
+            knoop["areaServed"] = gebied
+        uit.append(knoop)
     return uit
+
+
+def _dienst_gebied(ctx, sleutel):
+    """areaServed van een dienst op /diensten/. De meeste diensten: Nederland. Internationaal: Nederland plus de landen
+    die de klant heeft bevestigd (config.FEITEN LANDEN, open vraag 5.1), net als op de eigen dienstpagina. Zolang er
+    geen landen zijn: geen areaServed, want de kopij noemt geen landen en "Nederland" alleen past niet bij een
+    verhuizing over de grens (SEO-ronde 29-09-2026)."""
+    if sleutel != "internationaal":
+        return {"@type": "Country", "name": "Nederland"}
+    landen = _feit(ctx, "LANDEN") or []
+    if not landen:
+        return None
+    return [{"@type": "Country", "name": "Nederland"}] + [{"@type": "Country", "name": str(l)} for l in landen]
 
 
 def _h1(pagina, ctx):

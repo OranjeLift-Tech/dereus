@@ -45,6 +45,17 @@ JS = False
 # planning en de dozen op de verhuisdag.
 VOORWERPEN = ["formulier", "telefoon", "envelop", "klok", "dozen"]
 
+# Optie klei=False (29-09-2026, KLEI in _werk/paginas/werkwijze.py): de 3D-renders van Tugche (origin/main 9dbb9a8),
+# per station map, bestandsnaam, breedte en hoogte. Bron: img/contact-3d/, img/kaart-3d/ en img/kosten-3d/. Een klok
+# bij stap 4, want daar wordt de datum vastgezet; de wagen komt voorrijden bij stap 5.
+RENDERS = [
+    ("contact-3d", "formulier", 346, 400),
+    ("contact-3d", "telefoon", 208, 400),
+    ("kaart-3d", "klembord", 600, 792),
+    ("contact-3d", "klok", 279, 320),
+    ("kosten-3d", "wagen", 594, 420),
+]
+
 # Het slot: de echte voordeur (dezelfde foto als het eind van de weg op de home) in het huis uit het logo,
 # en het team met de verhuisdozen dat bovenop de gele trede staat.
 SLOTBEELD = ("/img/nieuw-huis.webp", 400, 450)
@@ -67,9 +78,15 @@ def _kort(blok, sleutel):
     return _eerste_zin(blok.veld(sleutel))
 
 
-def _render(ctx, naam):
-    beeld = ctx.beeld(f"/img/clay/{naam}-240.webp", "", 240, 240, klasse=f"b-{NAAM}__obj b-{NAAM}__obj--{naam}",
-                      srcset=f"/img/clay/{naam}-144.webp 144w, /img/clay/{naam}-240.webp 240w", sizes="5.4rem")
+def _render(ctx, nr, klei):
+    if klei:
+        naam = VOORWERPEN[(nr - 1) % len(VOORWERPEN)]
+        beeld = ctx.beeld(f"/img/clay/{naam}-240.webp", "", 240, 240,
+                          klasse=f"b-{NAAM}__obj b-{NAAM}__obj--{naam} b-{NAAM}__obj--klei",
+                          srcset=f"/img/clay/{naam}-144.webp 144w, /img/clay/{naam}-240.webp 240w", sizes="5.4rem")
+    else:
+        map_, naam, breedte, hoogte = RENDERS[(nr - 1) % len(RENDERS)]
+        beeld = ctx.beeld(f"/img/{map_}/{naam}.webp", "", breedte, hoogte, klasse=f"b-{NAAM}__obj b-{NAAM}__obj--{naam}")
     return f'<span class="b-{NAAM}__ic" aria-hidden="true">{beeld}</span>'
 
 
@@ -79,7 +96,7 @@ def _render(ctx, naam):
 GEEN_WHATSAPP = {"stap-1"}
 
 
-def _stap(ctx, k, it, nr):
+def _stap(ctx, k, it, nr, klei=True):
     duo = ""
     for sleutel in ("u", "wij"):
         if it.veld(sleutel):
@@ -111,10 +128,9 @@ def _stap(ctx, k, it, nr):
                f'<span class="b-{NAAM}__plus" aria-hidden="true">{ctx.icoon("plus")}</span></summary>'
                f'<div class="b-{NAAM}__paneel">{duo}{link}</div></details>')
         link = ""
-    naam = VOORWERPEN[(nr - 1) % len(VOORWERPEN)]
     return f'''<li class="b-{NAAM}__stap" id="{ctx.esc(it.id)}" style="--i:{nr - 1}">
             <div class="b-{NAAM}__plaat">
-              {_render(ctx, naam)}
+              {_render(ctx, nr, klei)}
               <h3 class="b-{NAAM}__titel"><span class="vh">{ctx.esc(k.veld("stap-woord", "Stap"))} {nr}: </span>{ctx.inline(it.titel)}</h3>
               <p class="b-{NAAM}__regel">{ctx.inline(_kort(it, "tekst"))}</p>
               {duo}
@@ -149,7 +165,8 @@ def _slot(ctx, k):
 def html(ctx, kopij, **opties) -> str:
     k = kopij
     grond = "mist" if opties.get("grond", "mist") == "mist" else "wit"
-    stappen = "".join(_stap(ctx, k, it, i) for i, it in enumerate(k.items, 1))
+    klei = opties.get("klei", True)          # False: de 3D-renders van Tugche (RENDERS)
+    stappen = "".join(_stap(ctx, k, it, i, klei) for i, it in enumerate(k.items, 1))
     # data-reveal-groep staat op de trap en niet op de lijst: de lijst heeft display:contents en dus geen
     # eigen vak, waardoor de IntersectionObserver in site.js hem nooit in beeld zag komen en de vijf treden
     # onzichtbaar bleven (28-09-2026). De treden zelf verschijnen nu zonder onthulling.

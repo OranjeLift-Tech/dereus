@@ -116,9 +116,10 @@
   top: calc(1.35rem + 44px + 6px); bottom: calc(-1.35rem + 6px); border-left: 2px dashed var(--brand-accent); opacity: .9; }
 .wg__regels--route .wg__regel + .wg__regel .wg__icoon::before { content: ""; position: absolute; left: 17px; bottom: calc(100% + 4px);
   width: 10px; height: 10px; border-right: 2px solid var(--brand-accent); border-bottom: 2px solid var(--brand-accent); rotate: 45deg; }
-/* De adresplaat: Koningsblauw op de linkerbovenhoek van de kaart, over de rand van de gouden plaat. Smal liggen
-   "Schilderswijk" en "Transvaalkwartier" dicht onder de bovenrand van de kaart; daar hangt de plaat over de
-   bovenrand van de figuur. */
+/* De adresplaat: Koningsblauw op de linkerbovenhoek van de kaart, over de rand van de gouden plaat. Gestapeld
+   (onder 900) liggen "Schilderswijk" en "Transvaalkwartier" dicht onder de bovenrand van de kaart; daar hangt de
+   plaat over de bovenrand van de figuur. Eerst deed hij dat alleen tot 560, en gemeten 29-09-2026 dekte hij bij
+   561 en 700 "Transvaalkwartier" af. */
 .wg__adres { position: absolute; z-index: 3; left: 0; top: calc(var(--wg-offset) + 1.25rem); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .75rem;
   max-width: min(19rem, calc(100% - 2rem)); padding: .9rem 1.1rem .9rem .9rem; border-radius: 12px; background: var(--brand-primary); color: var(--white);
   box-shadow: 0 18px 34px -16px rgba(0, 0, 0, .6); }
@@ -129,8 +130,11 @@
 .wg__adres .wg__link { margin-top: .45rem; }
 /* wit, niet het Lichtblauw van .sectie--diep a: dat haalt op Koningsblauw maar 4,59:1 */
 .b-werkgebied .wg__adres a.wg__link { color: var(--white); }
+@media (max-width: 899.98px) {
+  .wg__adres { top: -1.5rem; }
+}
 @media (max-width: 560px) {
-  .wg__adres { top: -1.5rem; padding: .7rem .85rem .7rem .7rem; gap: .6rem; }
+  .wg__adres { padding: .7rem .85rem .7rem .7rem; gap: .6rem; }
   .wg__adres-ic { width: 32px; height: 32px; }
   .wg__adres p { font-size: .9rem; }
 }
@@ -169,3 +173,32 @@
    vrijliet. Sinds die sectie het patroon about-address-team is, staat daar het podium met de platen
    tot onderaan; het voorwerp kwam er 20 px onder te hangen (website/review/sterk-waar-built-20260928/).
    De 3D-voorwerpen staan bovendien op de lijst om te verdwijnen; het beeldbestand blijft staan. */
+
+/* ---- Klei-iconen (sinds 29-09-2026) ----
+   "Vanuit Den Haag section - add clay icon to this section", en uit website/review/klei-overons-werkgebied-20260929/
+   "add both options, but make the clay icon in top right be diff from the 3 in the line". Allemaal uit de
+   goedgekeurde klei-set (img/clay/).
+   In de regels: de gele tegels met Solar-iconen worden klei-iconen zonder tegel (--wg-ic). De routelijn en de
+   pijlpunt schuiven mee naar het midden van het grotere icoon; daarvoor .wg__regels--klei, want de regels van de
+   route hierboven rekenen met de tegel van 44 px. */
+.b-werkgebied { --wg-ic: 56px; --wg-klei: clamp(5rem, 3.6rem + 4.5vw, 8.5rem); }
+.wg__icoon--klei { width: var(--wg-ic); height: var(--wg-ic); border-radius: 0; background: none; }
+.wg__icoon--klei img { display: block; width: 100%; height: 100%; filter: drop-shadow(0 6px 8px rgb(5 14 35 / .45)); }
+.wg__regels--route .wg__icoon--klei { box-shadow: none; }
+.wg__regels--route.wg__regels--klei .wg__regel:not(:last-child)::after { left: calc(var(--wg-ic) / 2 - 1px); top: calc(1.35rem + var(--wg-ic) + 6px); }
+.wg__regels--route.wg__regels--klei .wg__regel + .wg__regel .wg__icoon::before { left: calc(var(--wg-ic) / 2 - 5px); }
+/* Op de kaart: de verhuislift hangt over de rechterbovenhoek, zoals het klembord op de formulierkaart. --wg-klei is
+   zijn breedte; de helft steekt boven de kaart uit. Een ander icoon dan de drie in de regels. */
+.wg__klei { position: absolute; z-index: 3; top: calc(var(--wg-offset) - var(--wg-klei) * .5); right: calc(var(--wg-reikwijdte) - var(--wg-klei) * .22);
+  width: var(--wg-klei); height: auto; aspect-ratio: 1; pointer-events: none; filter: drop-shadow(0 10px 12px rgb(5 14 35 / .45)); }
+@media (max-width: 560px) {
+  .b-werkgebied { --wg-ic: 48px; }
+  .wg__klei { right: 0; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wg__icoon--klei img { transition: translate .35s var(--wg-ease); }
+  .wg__regels--route .wg__regel:hover .wg__icoon--klei { box-shadow: none; }
+  .wg__regel:hover .wg__icoon--klei img { translate: 0 -3px; }
+  .wg__klei { transition: translate .5s var(--wg-ease); }
+  .wg__kaart:hover .wg__klei { translate: 0 -4px; }
+}

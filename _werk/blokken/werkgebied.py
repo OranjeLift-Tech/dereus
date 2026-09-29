@@ -28,10 +28,20 @@ CSS = True
 JS = False
 
 KAART = "/img/kaart-den-haag.svg"
-ICONEN = {"hoofdkantoor": "pin", "nederland": "vrachtwagen", "internationaal": "wereld"}
+# Klei-iconen uit de goedgekeurde set (img/clay/), sinds 29-09-2026: per regel in plaats van de gele Solar-tegels,
+# en een ander icoon op de rechterbovenhoek van de kaart ("add both options, but make the clay icon in top right be
+# diff from the 3 in the line"). De set heeft geen kaartspeld; het huis staat het dichtst bij het hoofdkantoor.
+# De verhuislift past bij de bovenwoningen met smalle trappen uit de regel over Den Haag.
+KLEI = {"hoofdkantoor": "particulier", "nederland": "nationaal", "internationaal": "internationaal"}
+KLEI_KAART = "verhuislift"
 # De man met de deken en de hoge doos: live op /contact/, niet op de home of /over-ons/. Het logo op de doos
 # loopt tot 88 procent van zijn hoogte, dus de voetplaat mag hooguit de onderste 10,7 procent bedekken.
 MAN = ("/img/verhuizer-doos-deken-uit.webp", 698, 1200)
+
+
+def _klei(ctx, naam, klasse, sizes):
+    return ctx.beeld(f"/img/clay/{naam}-144.webp", "", 144, 144, klasse=klasse, sizes=sizes,
+                     srcset=f"/img/clay/{naam}-144.webp 144w, /img/clay/{naam}-240.webp 240w, /img/clay/{naam}-480.webp 480w")
 
 
 def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, route=True, adresplaat=True, acties=True, **opties):
@@ -45,7 +55,7 @@ def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, rout
         meer = (f'<a class="wg__link" href="{ctx.esc(link)}"><span>{ctx.inline(linktekst or "Lees meer")}</span>{ctx.icoon("pijl")}</a>'
                 if link else "")
         regels.append(f'''<li class="wg__regel">
-          <span class="wg__icoon" aria-hidden="true">{ctx.icoon(ICONEN.get(it.id, "pin"))}</span>
+          <span class="wg__icoon wg__icoon--klei" aria-hidden="true">{_klei(ctx, KLEI.get(it.id, "particulier"), "", "(max-width: 560px) 48px, 56px")}</span>
           <div>
             <h3 class="wg__titel">{ctx.inline(it.titel)}</h3>
             <p>{ctx.inline(it.veld("tekst"))}</p>
@@ -69,7 +79,7 @@ def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, rout
                  f'<p><strong>{ctx.esc(cfg.STRAAT)}</strong>{ctx.esc(cfg.POSTCODE)} {ctx.esc(cfg.PLAATS)}</p>'
                  f'<a class="wg__link" href="{ctx.esc(cfg.ROUTE)}" rel="noopener" target="_blank"><span>Route plannen</span>{ctx.icoon("pijl")}{nieuw_tabblad}</a>'
                  f'</div></div>')
-    soort = "wg__regels wg__regels--route" if route else "wg__regels"
+    soort = ("wg__regels wg__regels--route" if route else "wg__regels") + " wg__regels--klei"
     lijst = f'<ul class="{soort}" role="list" data-reveal-groep>{"".join(regels)}</ul>' if regels else ""
     msrc, mb, mh = man
     return f'''<section class="sectie sectie--{sectie} b-werkgebied" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop">
@@ -87,6 +97,7 @@ def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, rout
         {ctx.beeld(KAART, alt, 1400, 933, klasse="wg__beeld")}
       </div>
       {ctx.beeld(msrc, "", mb, mh, klasse="wg__man")}
+      {_klei(ctx, KLEI_KAART, "wg__klei", "(max-width: 560px) 5rem, 8.5rem")}
       {plaat}
       <figcaption class="wg__bron"><span>Kaartgegevens © <a href="https://www.openstreetmap.org/copyright" rel="noopener" target="_blank">OpenStreetMap-bijdragers</a></span></figcaption>
     </figure>

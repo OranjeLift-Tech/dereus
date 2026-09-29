@@ -1,11 +1,13 @@
 """Actielijn: een schuine blauwe streep met vier korte feiten, elk met een klei-icoon.
 Gebruikt op de home (#cijfers, in plaats van de cijferband) en op /contact/ (#vertrouwen, in plaats van de
-vertrouwensrij). Bron: section-library/slanted-action-line. De oude blokken cijfers.py en vertrouwensrij.py
-staan er nog, maar geen pagina gebruikt ze.
+vertrouwensrij). Sinds 29-09-2026 ook op /over-ons/, met de #cijfers van de home (kopij_van). Bron:
+section-library/slanted-action-line. De oude blokken cijfers.py en vertrouwensrij.py staan er nog, maar geen
+pagina gebruikt ze.
 
 Kopij: een ##-blok met een kop die alleen voor schermlezers is, en vier ###-items (titel + tekst:).
 Het icoon volgt uit titel en tekst samen; zonder treffer het klembord.
-Opties: id (standaard het id van het kopijblok); sectie=True maakt het een .sectie .sectie--wit. Dat telt dan mee
+Opties: id (standaard het id van het kopijblok); kopij_van=(pagina, id) haalt de feiten uit de kopij van een
+andere pagina, en dan geeft de pagina "kopij": None mee; sectie=True maakt het een .sectie .sectie--wit. Dat telt dan mee
 in de motieftellers van style.css (nth-child of .sectie), dus alleen waar het vorige blok er ook een was: /contact/.
 Op de home was de cijferband geen .sectie; met de klasse erbij schuiven de motieven van alle secties eronder op.
 """
@@ -54,6 +56,12 @@ def _klei(naam):
 
 def html(ctx, kopij, **opties) -> str:
     k = kopij
+    if opties.get("kopij_van"):
+        # (pagina, id): de feiten van een andere pagina, zoals over-ons.py dat doet. Zo staat dezelfde lijn op
+        # /over-ons/ ("add action line to the diensten and over-ons pages", 29-09-2026) zonder tweede kopie van de
+        # kopij. De pagina geeft dan "kopij": None mee, anders zoekt build.py een eigen #actielijn.
+        pagina, kid = opties["kopij_van"]
+        k = ctx.kopij_van(pagina).blok(kid)
     sid = ctx.esc(opties.get("id", k.id))
     feiten = "".join(f'''<li class="b-{NAAM}__feit">
             <span class="b-{NAAM}__ic" aria-hidden="true">{_klei(_icoon(it.titel + " " + it.veld("tekst")))}</span>

@@ -27,6 +27,13 @@ PUNTEN = [
 # van 28-09-2026 de klei-iconen (img/clay/<naam>-144/240.webp, vierkant) in plaats van de 3D-renders, dezelfde
 # twee als in het mozaiek dat hier eerst stond. Een icoon zonder voorwerp blijft een lijnicoon.
 VOORWERP = {"telefoon", "ster"}
+# Optie klei=False (29-09-2026, KLEI in _werk/paginas/werkwijze.py): de 3D-renders van Tugche (origin/main 9dbb9a8),
+# per icoon map, bestandsnaam, breedte en hoogte. Voor de ster de gouden ster en niet de reviewkaart
+# img/contact-3d/score.webp: die draagt het logo van Google (zie naplaten.py).
+RENDERS = {
+    "telefoon": ("contact-3d", "telefoon", 208, 400),
+    "ster": ("kaart-3d", "ster", 240, 240),
+}
 
 # De ploeg met dozen (dezelfde uitsnede als de team-hero, img/team/team-hero-dozen.json).
 BEELD = "/img/team/team-hero-dozen"
@@ -56,15 +63,20 @@ def html(ctx, kopij, beeld=True, **opties) -> str:
     k = kopij
     if not k.lijst:
         return ""
+    klei = opties.get("klei", True)          # False: de 3D-renders van Tugche (RENDERS)
     punten = []
     for plek, regel in enumerate(k.lijst):
         kop, uitleg = _deel(regel)
         titel = f'<h3 class="b-{NAAM}__titel">{ctx.inline(kop)}</h3>' if kop else ""
         icoon = _icoon(kop, plek)
-        if icoon in VOORWERP:
-            teken = (f'<span class="b-{NAAM}__icoon b-{NAAM}__icoon--3d" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{icoon}" '
+        if icoon in VOORWERP and klei:
+            teken = (f'<span class="b-{NAAM}__icoon b-{NAAM}__icoon--3d" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{icoon} b-{NAAM}__obj--klei" '
                      f'src="/img/clay/{icoon}-240.webp" srcset="/img/clay/{icoon}-144.webp 144w, /img/clay/{icoon}-240.webp 240w" '
                      f'sizes="4.4rem" alt="" width="240" height="240" loading="lazy" decoding="async"></span>')
+        elif icoon in RENDERS and not klei:
+            kaart, naam, b, h = RENDERS[icoon]
+            teken = (f'<span class="b-{NAAM}__icoon b-{NAAM}__icoon--3d" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{naam}" '
+                     f'src="/img/{kaart}/{naam}.webp" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
         else:
             teken = f'<span class="b-{NAAM}__icoon">{ctx.icoon(icoon)}</span>'
         punten.append(f'''<li class="b-{NAAM}__punt">

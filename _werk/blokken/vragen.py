@@ -18,7 +18,8 @@ voor is. Standaard staan ze uit, dus de pagina's die ze niet vragen veranderen g
 """
 NAAM = "vragen"
 CSS = True
-JS = False
+# Sinds 29-09-2026 js/blok/vragen.js: het paneel houdt bij het openen zijn hoogte in rust ("6. FAQ: A").
+JS = True
 
 # Optie beeld: een voorwerp uit de 3D-reeks. Naam -> bron, breedte, hoogte, behandeling.
 #   "steekt-uit" (/contact/): de uitsnede steekt rechtsboven uit het Diepblauwe paneel. Absoluut geplaatst,

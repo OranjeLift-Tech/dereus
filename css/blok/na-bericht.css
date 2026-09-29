@@ -57,9 +57,8 @@
   .b-na-bericht__beeld{width:min(80%,22rem);margin-top:calc(min(80%,22rem) * .18)}
 }
 @media(max-width:560px){.b-na-bericht__beeld{width:min(100%,19rem);margin-top:calc(min(100%,19rem) * .18)}}
-/* De dakrand blijft heel; alleen de ruimte rond de overgang vanaf het formulier krimpt. */
-.p-contact .b-formulier--contact { padding-bottom: calc(var(--ruimte) * .5); }
-.p-contact .b-formulier--contact + .b-na-bericht { padding-top: calc(var(--ruimte) * .5 + var(--dak)); }
+/* 29-09-2026: de krimp rond de overgang van het formulier naar deze band op /contact/ (28-09-2026) is weg,
+   terug naar de versie van Tugche (9dbb9a8): daar houden beide secties hun gewone ruimte. */
 
 /* ---- dezelfde band op /offerte/ en de bedanktpagina's (28-09-2026) ----
    De gebruiker koos "5. What happens next: A: Navy band with photo": deze band is sindsdien de vorm voor

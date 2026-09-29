@@ -23,3 +23,9 @@ De foto's zijn als WebP met kwaliteit 84 geëxporteerd. Nieuwe foto's en gebruik
 Sinds 28-09-2026 staat achter de hero van de home een collage van vier beelden die na elkaar bewegen (`_werk/blokken/herocollage.py`). De gebruiker keurde beeld 2, 4, 5 en 6 uit `website/review/hero-collage-20260928/` goed; `home.webp` hoort daar niet bij. Het eerste beeld, `home-collage-1-dragen-stoep.webp`, is de manifestregel voor `/`; de andere drie staan in `herocollage.py`. Alle vier zijn kopieën van bestaande sitebeelden (`verhuisdag-dragen-stoep`, `dienst-verhuislift`, `footer-wagen`, `dienst-nationaal-v2-groot`), op maximaal 1280 breed en WebP q50, gemaakt met `maak-collage.cjs`. Het formaat is 4:3, niet 16:9, en de lift blijft 720 breed.
 
 Let op: `maak.cjs` kent de collage niet. Wie het draait, zet `/` in het manifest terug op `home.webp`; zet daarna de regel voor `/` hier weer terug.
+
+## /diensten/: een lichtere kop (29-09-2026)
+
+Sinds 29-09-2026 wijzen `/diensten/` en de zeven concept-dienstpagina's in het manifest naar `diensten-licht.webp`. Dat is dezelfde uitsnede van `werk-straat.png` op 1600 × 900, maar als WebP q60 in plaats van q84: 99 KB in plaats van 176 KB. Een kleinere breedte voor de telefoon helpt hier niet, want daar staat de kop ongeveer 950 CSS-pixels breed. De vergelijking oud tegen nieuw staat in `website/review/mobiel-beelden-20260929/`. Het bestand komt uit `_werk/beeldvarianten.py` (de tabel `LOS`), niet uit `maak.cjs`. `diensten.webp` wordt daarna niet meer gebruikt.
+
+Let op: `maak.cjs` zet ook deze regels terug op `diensten.webp`.

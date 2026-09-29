@@ -10,7 +10,7 @@
      03 nationaal         closing-panel-truck   een donker paneel, de foto op een schuin blok over de paneelrand
      04 internationaal    about-window-intro    de foto in een boog die op de onderrand van de band staat
      05 verhuislift       text-photo-left       de foto links met een plaat achter de hoek, de tekst rechts
-     06 opslag            opslag (referentie A)    een donkere kaart en de foto op een schuine band met een streep
+     06 opslag            disc-callout-pills    de foto in een schijf, het hoofd erboven, de lijst als pillen op de rand
      07 montage           careers-split-crew    een witte kaart, de foto in een schuin vlak, de lijst als strook
      08 woningontruiming  two-col-checklist     een witte kaart, de foto met een donkere plank met schuine rand
    Overal hetzelfde: de dienstfoto met de uitsnede van dezelfde verhuizers erover, die niet op de bovenrand wordt
@@ -124,7 +124,11 @@
   border-radius:var(--radius-media);background:var(--dp-blok);rotate:atan2(2 * var(--dak),100vw)}
 [data-vorm=service-story-tabs] .b-dienstenpanelen__kader::after{content:"";position:absolute;z-index:0;inset:0;border-radius:var(--radius-media);box-shadow:var(--schaduw-lg)}
 [data-vorm=service-story-tabs] .b-dienstenpanelen__kaart{position:relative;z-index:3;margin:calc(-1 * var(--dp-over)) clamp(.75rem,2vw,1.75rem) 0;padding:1.25rem 1.5rem 1.4rem;
-  border-radius:var(--radius-card);background:var(--white);color:var(--color-text);box-shadow:var(--schaduw-lg)}
+  border-radius:var(--radius-card);background:var(--primary-50);color:var(--color-text)}
+/* geen schaduw onder de kaart (29-09-2026, de gebruiker: "remove the shadow from the wat erbij kan horen block"): hij
+   werd door de naad eronder recht afgesneden. De schaduw van het kader (::after hierboven) blijft; die valt achter de kaart.
+   Zonder schaduw viel de witte kaart weg op de witte band ("now it blends with the background, change the color a bit"),
+   dus Blauw 50 in plaats van wit: 1,07:1 tegen de band, de lijstkop 8,03:1 en de lijst 16,10:1 erop. */
 /* twee kolommen in de lijst zodra de kaart er breed genoeg voor is */
 @container (min-width:34rem){
   [data-vorm=service-story-tabs] .b-dienstenpanelen__lijst{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -137,7 +141,9 @@
    verhouding (1:1, zoals in het patroon); het gele vak vangt op wat de tekstkolom langer is. */
 [data-vorm=fixed-price-cards]{--band:var(--brand-primary);padding-top:calc(var(--bandpad) + clamp(2.5rem,5vw,4.5rem))}
 [data-vorm=fixed-price-cards] .b-dienstenpanelen__vlak{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);grid-template-rows:auto 1fr;
-  grid-template-areas:"kolom beeld" "kolom voet";border-radius:var(--radius-media);background:var(--white);color:var(--color-text);box-shadow:var(--schaduw-lg)}
+  grid-template-areas:"kolom beeld" "kolom voet";border-radius:var(--radius-media);background:var(--white);color:var(--color-text)}
+/* geen schaduw onder de kaart (29-09-2026, de gebruiker: "Panel shadows: yes, remove on all three"): hij werd door de naad
+   eronder recht afgesneden */
 [data-vorm=fixed-price-cards] .b-dienstenpanelen__kolom{grid-area:kolom;padding:clamp(1.5rem,3vw,2.75rem)}
 [data-vorm=fixed-price-cards] .b-dienstenpanelen__beeld{grid-area:beeld;min-width:0}
 [data-vorm=fixed-price-cards] .b-dienstenpanelen__kader{aspect-ratio:1;--dp-r:0 var(--radius-media) 0 0;--dp-uitknip:inset(-100cqh 0 0 0)}
@@ -163,7 +169,9 @@
 [data-vorm=closing-panel-truck]{--band:var(--primary-100);--ct-pad:clamp(2rem,3.4vw,3rem);--ct-uit:clamp(1.75rem,3.2vw,3rem);
   padding-top:calc(var(--bandpad) + var(--ct-uit) + clamp(2.5rem,4.5vw,4rem))}
 [data-vorm=closing-panel-truck] .b-dienstenpanelen__vlak{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,4rem);
-  padding:var(--ct-pad) clamp(1.5rem,4vw,3.5rem);border-radius:var(--radius-media);background:var(--brand-secondary);box-shadow:var(--schaduw-lg)}
+  padding:var(--ct-pad) clamp(1.5rem,4vw,3.5rem);border-radius:var(--radius-media);background:var(--brand-secondary)}
+/* geen schaduw onder het paneel (29-09-2026, de gebruiker: "Verhuizen door heel Nederland - the shadow below the section,
+   remove it"): hij viel op de Lichtblauwe band en werd door de naad eronder recht afgesneden */
 [data-vorm=closing-panel-truck] .b-dienstenpanelen__kolom{align-self:center}
 [data-vorm=closing-panel-truck] .b-dienstenpanelen__beeld{position:relative;min-width:0;margin-top:calc(-1 * (var(--ct-pad) + var(--ct-uit)))}
 /* het schuine blok achter de onderhoek van de foto */
@@ -206,36 +214,56 @@
   width:62%;height:56%;border-radius:var(--radius-media);background:var(--brand-primary)}
 [data-vorm=text-photo-left] .b-dienstenpanelen__kader{aspect-ratio:4/3}
 
-/* ==== 06 opslag · opslag (referentie A) ====
-   Een donkere kaart links met de tekst en de knoppen; rechts de lijst op de lichte band en daaronder de foto,
-   die op een schuine Koningsblauwe band staat met een donkere streep langs de onderkant. Band en streep lopen
-   over de volle schermbreedte, achter de kaart langs, en hangen allebei aan de linkeronderhoek van de foto: ze
-   zijn om die hoek gekanteld (--op-helling), en de onderrand van de foto is even schuin afgeknipt, zodat hij
-   over de hele breedte onder de streep valt. De lijst staat boven de foto omdat de foto liggend is: in het
-   patroon vult een staande uitsnede de hele hoogte, hier bleef de ruimte boven de foto anders leeg. */
-[data-vorm=opslag]{--band:var(--primary-50);--op-helling:2.6deg}
-[data-vorm=opslag] .b-dienstenpanelen__paneel{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
-  gap:clamp(2rem,4vw,4rem);align-items:end}
-[data-vorm=opslag] .b-dienstenpanelen__kolom{position:relative;z-index:4;align-self:start;margin-bottom:clamp(3rem,6vw,5.5rem);
-  padding:clamp(1.5rem,3vw,2.25rem);border-radius:var(--radius-media);background:var(--brand-secondary);box-shadow:0 24px 50px -28px rgba(11,35,82,.7)}
-[data-vorm=opslag] .b-dienstenpanelen__beeld{min-width:0}
-/* de lijst met ruimte eronder voor het hoofd dat boven de foto uitkomt */
-[data-vorm=opslag] .b-dienstenpanelen__kaart{margin:0 0 clamp(4.5rem,7vw,6rem)}
-[data-vorm=opslag] .b-dienstenpanelen__kader{aspect-ratio:4/3;
-  --dp-vakknip:polygon(0 0,100% 0,100% calc(100% - 100cqw * tan(var(--op-helling))),0 100%);
-  --dp-uitknip:polygon(0 -100%,100% -100%,100% calc(100% - 100cqw * tan(var(--op-helling))),0 100%)}
-/* band (::before) en streep (::after): van ver links tot ver rechts, gekanteld om de linkerrand van de foto */
-[data-vorm=opslag] .b-dienstenpanelen__kader::before,[data-vorm=opslag] .b-dienstenpanelen__kader::after{content:"";position:absolute;left:-100vw;right:-100vw;
-  transform-origin:100vw 50%;transform:skewY(calc(-1 * var(--op-helling)));pointer-events:none}
-[data-vorm=opslag] .b-dienstenpanelen__kader::before{z-index:0;top:38%;bottom:-1.4rem;background:linear-gradient(90deg,var(--brand-primary),var(--primary-600))}
-[data-vorm=opslag] .b-dienstenpanelen__kader::after{z-index:3;bottom:-.6rem;height:1.2rem;background:var(--brand-secondary)}
+/* ==== 06 opslag · disc-callout-pills ====
+   Sinds 29-09-2026: versie 5 "Schijf" van ronde 2 (de gebruiker: "Version 5: Schijf (disc-callout-pills): KEEP";
+   review: website/review/opslag-sectie-r2-20260929/). Links de foto in een grote schijf, rechts de tekst en de
+   knoppen. Achter de fotoschijf ligt een Diepblauwe schijf, een stuk naar links en naar boven verschoven: het
+   hoofd van de verhuizer komt boven de fotoschijf uit en staat tegen dat blauw. De lijst staat als drie witte
+   pillen op de linkeronderkant van de schijf, elk een stap verder naar rechts en over de rand heen, onder een
+   goudgeel label; het kleiobject op de rechterrand. Alle tekst donker op licht.
+   Het kader is de schijf: vierkant, met de gewone fotolaag erin (4:3, de kaderlijn op --dp-knip). De uitsnede
+   is alleen boven rij --dcp-rij van de foto te zien, waar hij niets dan het hoofd bevat; daaronder toont de
+   foto zelf de verhuizer, zodat zijn schouders niet buiten de ronde rand uitsteken. De maten komen uit het
+   patroon (../section-library/disc-callout-pills): de schijf is --dcp-d breed, met het midden op 47% van de
+   fotobreedte (--dp-x .43 bij deze kadermaat). De band blijft Lichtblauw: de band erboven (05) is Crème. */
+[data-vorm=disc-callout-pills]{--band:var(--primary-50);--dcp-d:clamp(20rem,32vw,29rem);--dcp-rij:.26}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__paneel{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);grid-template-areas:"beeld kolom";
+  align-items:center;column-gap:clamp(2.5rem,5vw,4.5rem)}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__kolom{grid-area:kolom}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__nr{background:var(--brand-accent);color:var(--brand-secondary)}
+/* het beeld is zo breed als de schijf en staat rechts in zijn kolom: links ervan is plaats voor de pillen */
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__beeld{grid-area:beeld;position:relative;justify-self:end;width:var(--dcp-d);min-width:0;container-type:inline-size}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__kader{--dcp-schijf:100cqw;--dp-x:.43;--dp-r:50%;width:var(--dcp-schijf);margin-top:calc(var(--dcp-schijf) * .15);aspect-ratio:1;
+  --dp-uitknip:inset(-100cqh 0 calc(100cqh - (var(--dcp-rij) - var(--dp-t)) * var(--dp-iw) * .75) 0)}
+/* de Diepblauwe schijf achter de foto; het hoofd reikt tot een tiende boven de fotoschijf, dit blauw tot 15% */
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__kader::before{content:"";position:absolute;z-index:0;inset:0;border-radius:50%;
+  background:var(--brand-secondary);translate:-7% -15%}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__uit img{filter:none}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__klei{left:97.5%;top:66.5%;translate:-50% -50%}
+/* de pillen: vanaf halverwege de schijf op de linkeronderkant, over de rand */
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__kaart{position:absolute;z-index:5;left:-34cqw;top:65cqw;width:max(72cqw,21rem);margin:0;
+  display:grid;justify-items:start;gap:.55rem}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__lijstkop{margin:0;padding:.3rem .75rem;border-radius:99px;background:var(--brand-accent);color:var(--brand-secondary)}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst{justify-items:start;gap:.55rem}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li{width:fit-content;max-width:100%;padding:.65rem 1.1rem .65rem 2.8rem;border-radius:1.25rem;
+  background:var(--white);color:var(--color-text);box-shadow:0 14px 30px -14px rgba(14,26,51,.38);font-size:1rem;font-weight:var(--weight-semibold);line-height:1.45}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li::before,[data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li::after{left:.65rem;top:.6rem;width:1.5rem;height:1.5rem}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li::after{-webkit-mask-size:.95rem;mask-size:.95rem}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li:nth-child(2){margin-left:6cqw}
+[data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li:nth-child(3){margin-left:16cqw}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li{transition:translate .25s var(--ease),box-shadow .25s var(--ease)}
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li:hover{translate:0 -3px;box-shadow:0 18px 34px -14px rgba(14,26,51,.45)}
+}
 
 /* ==== 07 montage · careers-split-crew ====
    Een witte kaart op de donkere band. Links de tekst en de knoppen; rechts de foto in een vlak met een schuine
    linkerrand, de verhuizer komt boven de kaartrand uit, en de lijst ligt als witte strook over de onderkant. */
 [data-vorm=careers-split-crew]{--band:var(--brand-secondary);padding-top:calc(var(--bandpad) + clamp(2rem,4vw,3.5rem))}
 [data-vorm=careers-split-crew] .b-dienstenpanelen__vlak{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:stretch;
-  border-radius:var(--radius-media);background:var(--white);color:var(--color-text);box-shadow:var(--schaduw-lg)}
+  border-radius:var(--radius-media);background:var(--white);color:var(--color-text)}
+/* geen schaduw onder de kaart (29-09-2026, de gebruiker: "Panel shadows: yes, remove on all three"); de strook met de
+   lijst over de foto houdt zijn kleine kaartschaduw */
 [data-vorm=careers-split-crew] .b-dienstenpanelen__kolom{display:flex;flex-direction:column;padding:clamp(1.75rem,3.4vw,3rem) clamp(1.5rem,3vw,2.75rem)}
 [data-vorm=careers-split-crew] .b-dienstenpanelen__acties{margin-top:auto;padding-top:var(--space-7)}
 [data-vorm=careers-split-crew] .b-dienstenpanelen__beeld{position:relative;min-width:0;min-height:24rem}
@@ -308,10 +336,13 @@
   [data-vorm=text-photo-left] .b-dienstenpanelen__paneel{grid-template-columns:minmax(0,1fr);grid-template-areas:"beeld" "kolom";gap:calc(1.8rem + var(--tpl-plaat))}
   [data-vorm=text-photo-left] .b-dienstenpanelen__beeld{margin-top:clamp(1.5rem,6vw,2.5rem)}
 
-  /* 06: de kaart boven, de foto eronder op de band */
-  [data-vorm=opslag] .b-dienstenpanelen__paneel{grid-template-columns:minmax(0,1fr);gap:clamp(3rem,10vw,4rem)}
-  [data-vorm=opslag] .b-dienstenpanelen__kolom{margin-bottom:0}
-  [data-vorm=opslag] .b-dienstenpanelen__kaart{margin-bottom:clamp(3.5rem,12vw,4.5rem)}
+  /* 06: de tekst boven, de schijf eronder in het midden, de pillen onder de schijf over de onderrand */
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__paneel{grid-template-columns:minmax(0,1fr);grid-template-areas:"kolom" "beeld";row-gap:2.5rem}
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__beeld{justify-self:center;width:100%}
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__kader{--dcp-schijf:min(100cqw,25rem);margin-inline:auto}
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__kaart{position:relative;left:auto;top:auto;width:auto;margin-top:-2.5rem;justify-items:center}
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst{justify-items:center}
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li:nth-child(n){margin-left:0}
 
   /* 07: de foto boven in de kaart, de strook eroverheen */
   [data-vorm=careers-split-crew]{padding-top:calc(var(--bandpad) + clamp(1.5rem,6vw,2.5rem))}
@@ -347,10 +378,15 @@
   [data-vorm=careers-split-crew] .b-dienstenpanelen__kader{--dp-r:0}
   [data-vorm=careers-split-crew] .b-dienstenpanelen__kolom{padding-inline:var(--pad)}
 }
+/* 06 op een telefoon: een kleinere schijf, zodat het kleiobject op de rechterrand binnen de kolom blijft */
+@media (max-width:560px){
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__kader{--dcp-schijf:min(100cqw - 2rem,19rem)}
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__klei{left:93%}
+}
 
 /* ==== acht banden ====
    Elk paneel heeft een eigen grond (--band, bij het patroon hierboven). Licht en donker wisselen: wit, blauw,
-   lichtblauw met een donker paneel, donkerblauw, creme, lichtblauw met een blauwe band, donkerblauw, mist.
+   lichtblauw met een donker paneel, donkerblauw, creme, lichtblauw met een blauwe schijf, donkerblauw, mist.
    Het aangeklikte anker: een goudgele lijn over de volle breedte (verderop langs de naad). */
 .b-dienstenpanelen:target::before{box-shadow:inset 0 6px 0 var(--brand-accent)}
 /* 01 particulier: wit, maar het begint in de Mist van de pagina, zodat de chiprij erboven niet op een harde
@@ -406,20 +442,35 @@
 .b-dienstenpanelen+.b-dienstenpanelen:target::before{box-shadow:none;
   --naadschaduw:linear-gradient(var(--hoek),transparent 50%,var(--brand-accent) 50%,var(--brand-accent) calc(50% + 6px),transparent calc(50% + 6px))
     0 calc(-1*var(--rand))/100% calc(var(--naad) + 2*var(--rand)) no-repeat}
-/* De sectie na de laatste band (reviews, Wit) volgde tot 28-09 een .sectie--mist en kreeg daardoor van style.css
-   de schuine overgang van Mist naar Wit. De laatste band is Mist van kleur, dus die overgang hoort er nog steeds;
-   dezelfde regel als in style.css (":is(.sectie--wit + .sectie--mist, .sectie--mist + .sectie--wit)"). */
-.b-dienstenpanelen--woningontruiming + .sectie--wit{padding-top:max(var(--ruimte),calc(var(--overgang-hoogte) + 1rem));
-  background-image:linear-gradient(to bottom left,var(--off-white) 50%,transparent 50%);
-  background-repeat:no-repeat;background-size:100% var(--overgang-hoogte);background-position:top center}
+/* ---- Na de laatste band: reviews (Wit), de actielijn, het formulier (Mist) ----
+   29-09-2026, de gebruiker: "Woningontruiming inbetween Wat klanten zeggen - make the background transition cleaner and
+   smaller gap between them", "Wat klanten zeggen inbetween Vertel ons over uw verhuizing section - make the background
+   inbetween cleaner", en bij de actielijn (website/review/opslag-naad-20260929/): "the transition between the sections is
+   bad, one has background sligtly darker white. also reduce the space between action line and the sections next to it a bit."
+   Tot nu toe: de schuine overgang Mist naar Wit hieronder werd weggeschreven door reviews.css (".p-diensten .b-reviews",
+   een verloop van wit naar Blauw 50, zelfde gewicht en later geladen), dus Woningontruiming stopte met een rechte lijn en
+   een afgesneden kaartschaduw; de reviews eindigden in Blauw 50 boven de witte actielijn, en daaronder begon het Mist.
+   Nu: de reviews zijn Wit met de schuine overgang bovenaan, de actielijn wisselt achter zijn streep van Wit naar Mist
+   (actielijn.css) en het formulier is Mist. Twee kleuren, een schuine lijn, geen trede.
+   Gewicht (0,4,0), zodat het wint van de /diensten/-regels in reviews.css (0,3,0 en 0,2,0), die later laden.
+   Ruimte bij 1440 / 390: Woningontruiming tot de reviews 153 / 95 naar 103 / 66 px; laatste reviewkaart tot de streep
+   62 / 40 naar 46 / 29; streep tot de foto van het formulier 104 / 68 naar 79 / 51. */
+/* de kaart ligt boven de reviews, zodat zijn schaduw over de naad valt in plaats van erop af te breken */
+.b-dienstenpanelen--woningontruiming{z-index:1;padding-bottom:calc(var(--bandpad) * .6)}
+.p-diensten .b-dienstenpanelen--woningontruiming + .b-reviews.sectie{
+  padding-top:calc(var(--overgang-hoogte) * .5 + 1.5rem);padding-bottom:calc(var(--ruimte) * .3);
+  background:linear-gradient(to bottom left,var(--off-white) 50%,transparent 50%) top center/100% var(--overgang-hoogte) no-repeat,var(--white)}
+.p-diensten .b-actielijn + .b-formulier.sectie--mist{padding-top:calc(var(--ruimte) * .7)}
 @media (forced-colors:active){
-  .b-dienstenpanelen--woningontruiming + .sectie--wit{background-image:none}
+  .p-diensten .b-dienstenpanelen--woningontruiming + .b-reviews.sectie{background-image:none}
   .b-dienstenpanelen{--naadschaduw:none}
   .b-dienstenpanelen+.b-dienstenpanelen::after{display:none}
   .b-dienstenpanelen__kader::before,[data-vorm=about-window-intro] .b-dienstenpanelen__kader::after,
-  [data-vorm=opslag] .b-dienstenpanelen__kader::after,
   [data-vorm=text-photo-left] .b-dienstenpanelen__beeld::before,[data-vorm=two-col-checklist] .b-dienstenpanelen__plank::before{display:none}
   :is(.b-dienstenpanelen__vlak,.b-dienstenpanelen__kolom,.b-dienstenpanelen__plank,.b-dienstenpanelen__kaart){border:1px solid CanvasText}
+  /* 06: de pillen zijn los, dus elke pil een rand in plaats van een kader om de groep */
+  [data-vorm=disc-callout-pills] .b-dienstenpanelen__kaart{border:0}
+  [data-vorm=disc-callout-pills] :is(.b-dienstenpanelen__lijstkop,.b-dienstenpanelen__lijst li){border:1px solid CanvasText}
 }
 
 /* ==== hover en klei (28-09-2026) ====

@@ -53,11 +53,17 @@ FOOTER_EXTRA = [
     ("Werkgebied", "/werkgebied/"),
 ]
 
-# De wagen in de footer: img/footer-wagen.webp, de wagen die de gebruiker op 28-09-2026 goedkeurde. De bredere
-# wagen van Tugche (origin/main 9dbb9a8, de oude wagen met links 800 px straat erbij) staat eronder: wissel de twee
-# regels. Het masker en het verloop voor die wagen hangen aan .footer__wagen--breed in css/style.css.
-WAGEN, WAGEN_KLASSE = ("/img/footer-wagen.webp", 1200, 847), ""
-# WAGEN, WAGEN_KLASSE = ("/img/footer-wagen-breed.webp", 2000, 847), " footer__wagen--breed"
+# De wagen in de footer: img/footer-wagen-breed-v2.webp, de vrachtwagen die de gebruiker op 28-09-2026 goedkeurde
+# met links 800 px erbij (lucht, molens en weg; de linker 520 px zijn met nano banana aangevuld). Zo staat de
+# voorkant van de wagen niet meer op de rand van de foto, het idee van Tugche (origin/main 9dbb9a8). GitHub-keuze 12:
+# "add the new image from mine and make the fade out slower". Het masker en het verloop hangen aan
+# .footer__wagen--breed in css/style.css. De smalle wagen staat eronder: wissel de twee regels.
+# Live sinds 29-09-2026, ronde 2 versie A2 (website/review/footer-wagen-r2-20260929/): "add the requested footer
+# fade out changes". /offerte/ is toen nog niet opnieuw gebouwd en hield een tijd de smalle wagen.
+# Sinds 29-09-2026 v3, dezelfde foto met rechts 160 px erbij: "move the truck image in footer a bit to the left"
+# (zie style.css). v2 staat nog in img/.
+WAGEN, WAGEN_KLASSE = ("/img/footer-wagen-breed-v3.webp", 2160, 847), " footer__wagen--breed"
+# WAGEN, WAGEN_KLASSE = ("/img/footer-wagen.webp", 1200, 847), ""
 
 _LINK = re.compile(r"^\[([^\]]+)\]\(([^)\s]+)\)$")
 _CIJFER = re.compile(r"(\d+(?:[.,]\d+)?)")

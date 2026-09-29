@@ -224,3 +224,20 @@
   .rpaneel__g--klei img, .rkaart__quote--klei { transition: rotate .45s var(--ease), scale .45s var(--ease); }
   .rpaneel:hover .rpaneel__g--klei img, .rkaart:hover .rkaart__quote--klei { rotate: -6deg; scale: 1.08; }
 }
+
+/* Hover op de kaarten en op het scorepaneel (29-09-2026). De gebruiker: "add slight background change to the review
+   block when hovering, add slight hover movement when hovering the main block in review section to the workers."
+   De kaart kleurt van Wit naar Blauw 50 (#F3F7FE), de hovertint van .knop--licht en het menu; de tekst blijft donker op
+   licht. De ploeg achter het scorepaneel komt 8 px omhoog als het paneel gehoverd wordt: het beeld heeft
+   pointer-events:none, dus .rplek:hover is het paneel. De kleur zit op de figure en de beweging op de img, met de losse
+   translate (die telt op bij de translateX(-50%) van .rkaart__klant). Geen van beide is het li dat de reveal krijgt,
+   dus de transition blijft staan, en er verschuift niets in de layout. De ploeg zakt 8 px minder diep achter het
+   paneel (4,25 tot 6,5rem), de afgesneden rand blijft verborgen. */
+@media (hover: hover) {
+  .rkaart figure { transition: background-color .3s var(--ease); }
+  .rkaart:hover figure { background-color: var(--primary-50); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .rkaart__klant--ploeg { transition: translate .45s var(--ease); }
+  .rplek:hover > .rkaart__klant--ploeg { translate: 0 -8px; }
+}

@@ -41,23 +41,32 @@
   .wb__item, .wb__item:nth-child(4) { grid-column: auto; }
   .wb__item:last-child { grid-column: 1 / -1; }
 }
-/* Telefoon: het icoon links boven, de titel ernaast, de tekst over de volle breedte eronder */
+/* Telefoon: het icoon links boven, de titel ernaast, de tekst over de volle breedte eronder.
+   max-width: none, want de negatieve marge maakt de auto-kolom 55,2 px en img { max-width: 100% } uit site.css kneep
+   het icoon dan tot 55,2 x 60 (Lighthouse image-aspect-ratio, Best Practices 96 op mobiel; gemeten 29-09-2026). */
 @media (max-width: 560px) {
   .b-waardenblad { --wb-uit: 1.5rem; }
   .wb__kaarten { grid-template-columns: minmax(0, 1fr); }
   .wb__kaart { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .8rem; align-items: end; padding: 0 1rem 1.1rem; }
-  .wb__klei { grid-row: 1 / 2; width: 3.75rem; height: 3.75rem; margin: calc(-1 * var(--wb-uit)) 0 0 -.3rem; }
+  .wb__klei { grid-row: 1 / 2; width: 3.75rem; height: 3.75rem; max-width: none; margin: calc(-1 * var(--wb-uit)) 0 0 -.3rem; }
   .wb__kaart h3 { grid-column: 2; margin: 0 0 .15rem; font-size: 1.2rem; }
   .wb__kaart p { grid-column: 1 / -1; margin-top: .5rem; }
 }
 
 /* hover: de kaart komt 3 px omhoog met een gouden voet, het icoon nog 3 px verder. Op de kaart en het icoon, niet
-   op de li: die heeft de overgang van data-reveal-groep, die een eigen transition overschrijft. */
+   op de li: die heeft de overgang van data-reveal-groep, die een eigen transition overschrijft.
+   De vakman (29-09-2026, "Zo werken wij - add worker moving with hover effect"): met de muis op het blad komt hij
+   naar voren, in .45s zoals de verhuizers bij de reviews, de vragen en het formulier. Geen translate van 8 px zoals
+   daar: hij is op de onderrand van het blad afgesneden en daar liet dat 8 px blad onder de snede zien. scale 1.02
+   vanuit de hoek rechtsonder houdt de snede op zijn plek en tilt het hoofd 7 tot 8 px (gemeten 960 tot 1440), met nog
+   4 tot 5 px tot de knip van .wb__fig erboven. Op het beeld en niet op het blad, dat de reveal krijgt. */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .wb__kaart { transition: translate .25s ease, box-shadow .25s ease, border-color .25s ease; }
   .wb__item:hover .wb__kaart { translate: 0 -3px; border-color: var(--brand-accent); box-shadow: 0 0 0 1px rgb(14 26 51 / .06), 0 22px 36px -22px rgb(14 26 51 / .48); }
   .wb__klei { transition: translate .25s ease; }
   .wb__item:hover .wb__klei { translate: 0 -3px; }
+  .wb__fig img { transform-origin: 100% 100%; transition: scale .45s var(--ease); }
+  .wb__blad:hover .wb__fig img { scale: 1.02; }
   .wb__knop .ic { transition: translate .25s ease; }
   .wb__knop:is(:hover, :focus-visible) .ic { translate: 4px 0; }
 }

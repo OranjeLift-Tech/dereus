@@ -107,10 +107,23 @@
 }
 
 /* hover van het patroon (steps-four-green, hover:start tot hover:end): de kaart gaat 4px omhoog met een
-   diepere schaduw, de pil schuift 3px op. De figuur beweegt alleen met de hele kaart. */
+   diepere schaduw, de pil schuift 3px op. De figuur beweegt alleen met de hele kaart.
+   Sinds 29-09-2026 springt het klei-icoon mee: "Zo werkt het section - add effects to the clay icons on hover of the
+   block, could be different from slight movement". Dus niet het gebaar van de vragen en de diensten (-6deg, 1.08),
+   maar een sprong uit het paneel: 8px omhoog, 1.14 groter en -8deg, op een veerboog die even voorbij het eindpunt
+   schiet en terugvalt, met een schaduw die loskomt van de paneelrand. Op het beeld, niet op de li: die krijgt de
+   reveal, en diens transition zou deze overschrijven. */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .b-stapkaarten__kaart { transition: translate .25s ease, box-shadow .25s ease; }
   .b-stapkaarten__stap:hover .b-stapkaarten__kaart { translate: 0 -4px; box-shadow: var(--sk-schaduw-op); }
   .b-stapkaarten__nr { transition: translate .25s ease; }
   .b-stapkaarten__stap:hover .b-stapkaarten__nr { translate: 3px 0; }
+  .b-stapkaarten__klei {
+    --sk-veer: cubic-bezier(.34, 1.56, .64, 1);
+    transform-origin: 50% 85%;
+    transition: translate .5s var(--sk-veer), rotate .5s var(--sk-veer), scale .5s var(--sk-veer), filter .5s var(--ease);
+  }
+  .b-stapkaarten__stap:hover .b-stapkaarten__klei {
+    translate: 0 -8px; rotate: -8deg; scale: 1.14; filter: drop-shadow(0 16px 12px rgb(10 25 60 / .24));
+  }
 }

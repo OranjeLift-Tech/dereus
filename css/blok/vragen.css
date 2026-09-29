@@ -376,6 +376,19 @@
   .b-vragen--paneel .vragen__kop:has(> .vragen__werker) .vragen__vulbeeld { left: 0; right: auto; object-position: left bottom; }
 }
 
+/* ---- het paneel houdt zijn hoogte als er een vraag opengaat (optie A, 29-09-2026) ----
+   Uit de ronde van 28-09-2026 ("Veelgestelde vragen - reduce the movement when clicking on the questions",
+   website/review/vragen-beweging-20260928/), gekozen op 29-09-2026: "6. FAQ: A". Het raster rekte het paneel tot de
+   hoogte van de lijst, dus met elk antwoord groeide het mee: de vraagtekens werden groter en de verhuizer zakte mee.
+   js/blok/vragen.js meet bij de eerste klik op een vraag, zolang er niets open staat, de hoogte van het paneel in rust
+   en zet die als --paneel-rust met .is-vast op de sectie; hier houdt het paneel die hoogte. Alleen de lijst beweegt nog,
+   en de aangeklikte vraag springt nog omhoog als er een andere boven haar dichtgaat (optie B, vragen die open blijven,
+   is het niet geworden). Zonder JavaScript, en onder 900px waar het paneel een kaart boven de lijst is, blijft alles
+   zoals het was. */
+@media (min-width: 900px) {
+  .b-vragen--paneel.is-vast .vragen__kop { align-self: start; height: var(--paneel-rust); }
+}
+
 /* ---- Goudgele band (stijl="geel", /contact/ en /werkwijze/, 28-09-2026) ----
    Ontwerp 07 uit _ontwerpen/vragen-referentie-ronde1.html, gekozen door de gebruiker, met een wijziging op
    verzoek: het geel is geen plaat in een witte sectie maar de sectie zelf, van rand tot rand. Hetzelfde
@@ -452,4 +465,38 @@
     box-shadow: 0 2px 0 rgba(0, 0, 0, .05), 0 36px 50px -18px rgba(90, 60, 0, .6); }
   .vragen__fotos:hover .vragen__afdrukfoto, .vragen__fotos:hover .vragen__afdrukuit { scale: 1.04; }
   .vragen__fotos:hover .vragen__afdrukuit { filter: drop-shadow(0 16px 16px rgba(11, 35, 82, .32)); }
+}
+
+/* ---- hover op het blok (29-09-2026) ----
+   Gevraagd: "Veelgestelde vragen - add slight hover movements to the worker and clay icons, add slight background change
+   to the question blocks". Dezelfde maten als de reviews (reviews.css) en het formulier van dezelfde dag:
+   - de vraagkaarten kleuren van Wit naar Blauw 50 (#F3F7FE), de hovertint van .knop--licht, het menu en de reviewkaarten.
+     Alleen waar de vragen kaarten zijn: het paneel vanaf 900px en de Goudgele band. Daaronder zijn het lijstregels
+     zonder eigen vlak. De tekst blijft donker op licht. Een kleur is geen beweging, dus alleen (hover: hover); het
+     blok met minder beweging in style.css zet de transition toch al op bijna nul.
+   - op het blauwe paneel komt de verhuizer 8px omhoog en draaien de klei-iconen (headset en vraagtekens) -6 graden en
+     worden 1,08, allebei in .45s, zodra de muis op het paneel komt. De beelden hebben pointer-events:none, dus het
+     paneel is de trigger; een klik op een vraag laat ze stil. De verhuizer wordt onderaan door clip-path afgesneden,
+     niet door overflow: zijn beeld loopt onder de rand door, dus omhoog toont 8px meer been en geen gat. overflow gaat
+     daarvoor op visible, anders knipt de bovenrand zijn hoofd (de uitsnede heeft boven geen lucht). Met min-height: 0:
+     zonder overflow rekt aspect-ratio het vak tot de hoogte van het hele beeld, en dan stond de verhuizer van 13:05 tot
+     13:25 op 29-09-2026 tot zijn schoenen in het paneel ("the worker image should be lowered, the legs should
+     disappear when going below the blue block"). Nu weer boven de knie afgesneden, zoals hierboven bij WERKER.
+   - op de Goudgele band tilt de afdruk al (hierboven). De headset draaide daar tot 29-09-2026 mee (2 graden, 1,08);
+     dat is eraf: "5. Headset tilt: drop".
+   Alles met translate, rotate en scale en niets op .vragen__lijst, dat de reveal krijgt: er verschuift niets. */
+@media (hover: hover) {
+  .vraag { transition: background-color .3s var(--ease); }
+  .b-vragen--geel .vraag:hover { background: var(--primary-50); }
+}
+@media (hover: hover) and (min-width: 900px) {
+  :is(.p-contact, .b-vragen--paneel) .vraag:hover { background: var(--primary-50); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .b-vragen--paneel .vragen__werker { overflow: visible; min-height: 0; }
+  .vragen__werkerbeeld { transition: translate .45s var(--ease); }
+  .vragen__kop:hover .vragen__werkerbeeld { translate: 0 -8px; }
+  .vragen__beeld, .vragen__vulbeeld { transition: rotate .45s var(--ease), scale .45s var(--ease); }
+  .vragen__vulbeeld { transform-origin: 50% 100%; }
+  .vragen__kop:hover :is(.vragen__beeld, .vragen__vulbeeld) { rotate: -6deg; scale: 1.08; }
 }

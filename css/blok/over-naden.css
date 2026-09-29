@@ -1,0 +1,55 @@
+/* Naden op /over-ons/ (29-09-2026). De gebruiker: "in over-ons - make the transitions to next sections be more
+   interesting, make the lines tilted etc. make it clean." Gekozen uit website/review/over-ons-naden-20260929/:
+   optie A, met de notitie "dont add the tilt to the footer".
+
+   Elke vlakke overgang binnen de pagina wordt een rechte schuine lijn over de volle breedte. De richting wisselt
+   van naad tot naad, zodat de pagina van boven naar beneden heen en weer loopt: kop \, actielijn /, blad naar
+   reviews \, dakrand van Den Haag /\, Den Haag naar formulier /. De footer houdt zijn rechte bovenrand.
+   De actielijn en haar twee buren blijven van actielijn.css, de dakrand van style.css.
+
+   De helling is die van de actielijn, 0,036 van de breedte (52 px op 1440, 14 px op 390), dus elke naad loopt
+   evenwijdig aan of gespiegeld op die streep. Geen nieuwe diagonaal.
+   Alleen vlakken, geen lijnen of strepen erbij, en geen extra ruimte: elke wig valt in de lege rand van een
+   sectie, ook aan zijn diepste kant. Alleen deze pagina laadt dit bestand (over_ons.py, extra_css). */
+.p-over-ons { --ovn-s: calc(.036 * 100vw); }
+
+/* 1. Kop naar verhaal. De foto eindigt schuin (links hoog), en de strook onder de foto is wit in plaats van Mist:
+   daar lag een tweede, vlakke naad vlak onder de eerste. De strook begint waar de kaart de foto verlaat; die overlap
+   komt uit kop.css (.pk-pil, margin-top). */
+.p-over-ons .pk::after {
+  content: ""; position: absolute; z-index: 0; left: 0; right: 0; bottom: 0; height: var(--ovn-s); pointer-events: none;
+  background: var(--white); clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+.p-over-ons .pk-pil { background: linear-gradient(transparent calc(4rem + 3.25rem), var(--white) 0); }
+@media (max-width: 767.98px) {
+  .p-over-ons .pk-pil { background: linear-gradient(transparent calc(2rem + 5.25rem), var(--white) 0); }
+}
+
+/* 2. Het blad (lichtblauw) naar de reviews (wit, over_ons.py): een lichtblauwe wig rechtsboven in de reviews. Hij ligt
+   op ::before, boven het randmotief (::after, z-index -2) en onder de inhoud. Hij begint een pixel boven de reviews,
+   over de laatste rij van het blad in dezelfde kleur: zo tekent de rand van de knip nooit een lichte rij op de grens. */
+.p-over-ons .b-waardenblad + .b-reviews::before {
+  content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: -1px; height: calc(var(--ovn-s) + 1px); pointer-events: none;
+  background: var(--primary-50); clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+/* 3. Den Haag (Diepblauw) naar het formulier (Mist): een diepblauwe wig linksboven in het formulier. Het vlak is een
+   laag van de eigen achtergrond; de stippen (::before) en het randmotief (::after) knippen erlangs, anders tekenen
+   ze op het blauw. De halve pixel aan weerszijden van 50% houdt de schuine rand glad. De onderkant van het formulier
+   blijft recht en sluit vlak aan op de footer. */
+.p-over-ons .b-werkgebied + .b-formulier {
+  background: linear-gradient(to bottom right, var(--brand-secondary) calc(50% - .5px), transparent calc(50% + .5px)) top / 100% var(--ovn-s) no-repeat,
+    var(--off-white);
+}
+.p-over-ons .b-werkgebied + .b-formulier::before,
+.p-over-ons .b-werkgebied + .b-formulier::after { clip-path: polygon(0 var(--ovn-s), 100% 0, 100% 100%, 0 100%); }
+
+/* De diepblauwe band eindigt op een halve pixel: op 1440 gaf dat een lichtere rij over de volle breedte, zichtbaar nu
+   het vlak eronder ook blauw is. Het blauwe vlak loopt daarom een pixel door; het formulier ligt eroverheen. */
+.p-over-ons .b-werkgebied:has(+ .b-formulier)::before { bottom: -1px; }
+
+@media (forced-colors: active) {
+  .p-over-ons .pk::after, .p-over-ons .b-waardenblad + .b-reviews::before { content: none; }
+  .p-over-ons .pk-pil { background: none; }
+  .p-over-ons .b-werkgebied + .b-formulier { background: Canvas; }
+}

@@ -16,11 +16,12 @@ intro: Van een verhuizing binnen Den Haag tot een verhuizing over de grens: Verh
 
 ## Particuliere verhuizingen {#particulier}
 label: Particulier
-lijstkop: Wat erbij kan horen
+lijstkop: Wat bij een particuliere verhuizing kan horen
 slot: Heeft u haast? Ook spoedklussen pakken wij op. Bel ons op 085 000 5647.
 kosten-linktekst: Wat kost een particuliere verhuizing?
 kosten-link: /kosten/#verhuizing
 knop: Offerte aanvragen
+knop-schermlezer: voor een particuliere verhuizing
 
 Gaat u verhuizen en ziet u op tegen het sjouwen, de planning en alles wat erbij komt kijken? Als particulier verhuisbedrijf nemen wij u het zware werk uit handen. U bepaalt zelf hoeveel u aan ons overlaat.
 
@@ -33,11 +34,12 @@ Uw verhuisadviseur bespreekt vooraf met u wat er mee moet, hoe beide adressen be
 
 ## Zakelijke verhuizingen, voor kantoren en kleine bedrijven {#zakelijk}
 label: Zakelijk
-lijstkop: Wat erbij kan horen
+lijstkop: Wat bij een zakelijke verhuizing kan horen
 slot: Zoekt u een verhuisbedrijf voor uw kantoor? Vraag een offerte aan en vertel kort hoe groot uw kantoor is.
 kosten-linktekst: Wat kost een zakelijke verhuizing?
 kosten-link: /kosten/#verhuizing
 knop: Offerte aanvragen
+knop-schermlezer: voor een zakelijke verhuizing
 
 Een bedrijfsverhuizing wilt u zo kort mogelijk laten duren. Als zakelijk verhuisbedrijf verhuizen wij kantoren en kleine bedrijven, met een vaste planning en één aanspreekpunt.
 
@@ -52,10 +54,11 @@ Notitie: grotere bedrijfsverhuizingen, verhuizen in de avond of het weekend en h
 
 ## Verhuizen door heel Nederland {#nationaal}
 label: Door heel Nederland
-lijstkop: Wat erbij kan horen
+lijstkop: Wat bij een verhuizing door Nederland kan horen
 kosten-linktekst: Wat kost een verhuizing?
 kosten-link: /kosten/#verhuizing
 knop: Offerte aanvragen
+knop-schermlezer: voor een verhuizing door Nederland
 
 Verhuist u van Den Haag naar een andere plaats, of van elders naar Den Haag? Wij verhuizen door heel Nederland. Over een grotere afstand werkt het hetzelfde als dichtbij: één verhuisadviseur, een heldere offerte en verhuizers die op tijd voor de deur staan.
 
@@ -67,10 +70,11 @@ Een verhuisbedrijf in Nederland kiest u niet op de kaart, maar op hoe het werkt.
 
 ## Internationale verhuizingen, van en naar Nederland {#internationaal}
 label: Internationaal
-lijstkop: Wat erbij kan horen
+lijstkop: Wat bij een internationale verhuizing kan horen
 kosten-linktekst: Wat kost een internationale verhuizing?
 kosten-link: /kosten/#verhuizing
 knop: Offerte aanvragen
+knop-schermlezer: voor een internationale verhuizing
 
 Gaat u naar het buitenland verhuizen, of komt u juist naar Nederland? Als internationaal verhuisbedrijf verhuizen wij van en naar Nederland, over de weg.
 
@@ -84,10 +88,11 @@ Notitie: landen (zoeken het meest: Spanje, Frankrijk, Duitsland, België) pas al
 
 ## Verhuizen met de verhuislift {#verhuislift}
 label: Verhuislift
-lijstkop: Wat erbij kan horen
+lijstkop: Wat bij verhuizen met de verhuislift kan horen
 kosten-linktekst: Wat kost verhuizen met een verhuislift?
 kosten-link: /kosten/#verhuislift
 knop: Offerte aanvragen
+knop-schermlezer: voor verhuizen met de verhuislift
 
 Past de bank niet door het trappenhuis, of is de trap smal en steil? Dan verhuizen wij uw spullen via het raam of het balkon, met een verhuislift. Dat spaart tijd en voorkomt gesjouw op de trap.
 
@@ -104,6 +109,7 @@ lijstkop: Handig als
 kosten-linktekst: Wat kost opslag van uw inboedel?
 kosten-link: /kosten/#opslag
 knop: Offerte aanvragen
+knop-schermlezer: voor tijdelijke opslag
 
 Krijgt u de sleutel van uw nieuwe huis later dan u uit uw oude huis moet? Of gaat u eerst verbouwen? Dan kan uw inboedel tijdelijk in de opslag. Zoekt u een verhuisbedrijf met opslag, dan regelt u de verhuizing en het bewaren van uw spullen bij één partij.
 
@@ -117,10 +123,11 @@ Notitie: waar de opslag is, hoe lang, onder welke voorwaarden en hoe de inboedel
 
 ## Handymanservice: montage en kleine klussen {#montage}
 label: Handymanservice
-lijstkop: Wat erbij kan horen
+lijstkop: Wat bij de handymanservice kan horen
 kosten-linktekst: Wat kost montage bij een verhuizing?
 kosten-link: /kosten/#montage
 knop: Offerte aanvragen
+knop-schermlezer: voor de handymanservice
 
 Een kast of bed gaat vaak niet in één stuk de deur uit. Wij demonteren uw meubels voor de verhuizing en bouwen ze in uw nieuwe huis weer op. Een klant schreef erover: "De montage liep vlekkeloos."
 
@@ -133,10 +140,11 @@ Notitie: welke klussen verder onder de handymanservice vallen (zoals lampen, gor
 
 ## Woningontruiming {#woningontruiming}
 label: Woningontruiming
-lijstkop: Wat erbij kan horen
+lijstkop: Wat bij een woningontruiming kan horen
 kosten-linktekst: Wat kost een woningontruiming?
 kosten-link: /kosten/#woningontruiming
 knop: Offerte aanvragen
+knop-schermlezer: voor een woningontruiming
 
 Soms moet een woning leeg, bijvoorbeeld na een overlijden of bij een verhuizing naar een zorginstelling. Dat is vaak een zwaar moment. Wij nemen het werk van u over, rustig en met respect voor wat er staat en voor wie er afscheid neemt.
 

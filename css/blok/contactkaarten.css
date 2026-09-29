@@ -14,6 +14,11 @@
    eruit. Eerst hing het vlak zelf buiten de kaart, verborgen met clip-path: dat verbergt de verf maar
    niet de overloop, en waar de kaart de schermrand raakt maakte het de pagina 10 tot 24 px te breed. */
 .b-contactkaarten__belkaart::after{content:"";position:absolute;z-index:-1;right:0;bottom:0;width:10.5rem;height:calc(13rem * 509.8 / 535.3 - 2rem);background:color-mix(in srgb,var(--white) 8%,transparent);-webkit-mask:var(--huisje) left top/13rem auto no-repeat;mask:var(--huisje) left top/13rem auto no-repeat}
+/* Een echt toestel in plaats van een getekend beliconentje. Het staat rechtsboven half buiten de kaart,
+   met een diepe schaduw eronder, zodat het er uit springt. Het staat stil; de hoek zit in het beeld zelf. */
+.b-contactkaarten__beltoestel{position:absolute;z-index:2;right:clamp(-2rem,-1.2vw,-1.1rem);top:clamp(-2.6rem,-2vw,-1.6rem);
+  width:auto;height:clamp(5.5rem,9vw,7.5rem);pointer-events:none;
+  filter:drop-shadow(0 2px 4px rgba(4,16,44,.45)) drop-shadow(0 16px 20px rgba(4,16,44,.5)) drop-shadow(0 34px 40px rgba(4,16,44,.4))}
 .b-contactkaarten__status{margin:0 0 .5rem;font-size:var(--text-small)}
 .b-contactkaarten__status .bereikbaar{color:var(--white)}
 .b-contactkaarten__status .bereikbaar__stip{background:var(--brand-accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand-accent) 30%,transparent)}
@@ -50,15 +55,16 @@
 
 /* ---- 3D-voorwerpen op de kanaalkaarten ----
    Telefoon, envelop, klembord en verhuisdoos zijn echte 3D-renders (img/contact-3d/, bron: three.js, één lichtbron
-   linksboven, het echte logo op de doos). Drie lagen: de kaart, vlak zoals onder "Dit mag u van ons verwachten" op de
-   home (css/blok/waarom.css), het goudgele huis uit het logo, ook vlak, en daarvoor het voorwerp dat boven de
-   kaartrand uitsteekt. De slagschaduw valt naar rechtsonder. Alles staat stil. */
+   linksboven, het echte logo op de doos). Drie lagen: de kaart, het goudgele huis uit het logo met een zichtbare dikte,
+   en daarvoor het voorwerp dat boven de kaartrand uitsteekt. De slagschaduw valt naar rechtsonder. Alles staat stil. */
 .b-contactkaarten__kanalen{margin-top:calc(clamp(2.5rem,1.8rem + 2.5vw,4rem) + 3rem)}
-.b-contactkaarten__kanaal{--kaart-vlak:var(--primary-50);background:var(--kaart-vlak);border:1px solid color-mix(in srgb,var(--kaart-vlak) 92%,var(--brand-secondary));box-shadow:none}
-.b-contactkaarten__ic--3d{position:relative;display:block;width:100%;height:4.9rem;aspect-ratio:auto;margin-bottom:1.15rem;padding:0;background:none;-webkit-mask:none;mask:none}
-.b-contactkaarten__ic--3d::after{content:"";position:absolute;left:0;bottom:0;width:5.1rem;aspect-ratio:535.3/509.8;
+.b-contactkaarten__kanaal{box-shadow:inset 0 1px 0 var(--white),0 6px 0 #D5E2F8,0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent)}
+.b-contactkaarten__ic--3d{position:relative;display:block;width:100%;height:4.9rem;aspect-ratio:auto;margin-bottom:1.15rem;padding:0;background:none;-webkit-mask:none;mask:none;
+  filter:drop-shadow(3px 8px 7px color-mix(in srgb,var(--brand-secondary) 22%,transparent))}
+.b-contactkaarten__ic--3d::before,.b-contactkaarten__ic--3d::after{content:"";position:absolute;left:0;bottom:0;width:5.1rem;aspect-ratio:535.3/509.8;
   -webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
-.b-contactkaarten__ic--3d::after{background:var(--brand-accent)}
+.b-contactkaarten__ic--3d::before{background:var(--accent-700);transform:translate(4px,5px)}
+.b-contactkaarten__ic--3d::after{background:linear-gradient(160deg,#FFDA6B,var(--brand-accent) 55%,#F5B91A)}
 .b-contactkaarten__obj{position:absolute;z-index:1;left:2rem;bottom:-.6rem;width:auto;height:9.8rem;max-width:none;
   filter:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 35%,transparent)) drop-shadow(10px 20px 14px color-mix(in srgb,var(--brand-secondary) 38%,transparent))}
 .b-contactkaarten__obj--telefoon{left:2.9rem;height:10.2rem}
@@ -71,22 +77,20 @@
    in site.css, dus die overgangen staan hier ook in de lijst.
    28-09-2026: daarbij een neongloed in hetzelfde groen, net als de treden op /werkwijze/ (een zachte gloed
    binnen de rand en twee erbuiten), en een rustiger overgang: 450 ms in plaats van 200 ms, want 200 ms was
-   "te snel". Via --duration-base, zodat het bij verminderde beweging op 0 blijft.
-   Samenvoeging 28-09-2026: dit is de versie van Tugche (origin/main 9dbb9a8). Live staan de vlakke kaarten van
-   hierboven; deze regels, de grotere verhuizer en zijn hover gelden alleen met stijl="groen" (.b-contactkaarten--groen).
-   De klei-iconen blijven dan staan. */
-.b-contactkaarten--groen .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{
+   "te snel". Via --duration-base, zodat het bij verminderde beweging op 0 blijft. */
+.b-contactkaarten__kanalen>.b-contactkaarten__kanaal{
   box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px transparent,0 0 0 2px transparent,0 6px 0 0 #D5E2F8,0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent),0 0 12px 2px transparent,4px 4px 34px 8px transparent;
   transition:opacity .55s var(--ease),transform .55s var(--ease),translate calc(var(--duration-base) * 2.25) var(--ease-out),scale calc(var(--duration-base) * 2.25) var(--ease-out),box-shadow calc(var(--duration-base) * 2.25) var(--ease-out)}
-@media(hover:hover){.b-contactkaarten--groen .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover{translate:-5px -5px;scale:1.02;
+@media(hover:hover){.b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover{translate:-5px -5px;scale:1.02;
   box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px color-mix(in srgb,var(--color-cta) 22%,transparent),0 0 0 2px var(--color-cta),3px 3px 0 2px var(--color-cta),6px 6px 0 2px var(--color-cta-hover),9px 9px 0 2px var(--color-cta-active),16px 22px 30px -10px color-mix(in srgb,var(--ink) 30%,transparent),0 0 12px 2px color-mix(in srgb,var(--color-cta) 85%,transparent),4px 4px 34px 8px color-mix(in srgb,var(--color-cta) 45%,transparent)}}
 /* de groene WhatsApp-knop onder het nummer: eigen breedte en lucht, niet tegen de link aan */
 .b-contactkaarten__kanaal>.wa-link{align-self:flex-start;margin:.7rem 0 0;margin-inline-start:0}
 @media(max-width:1080px){.b-contactkaarten__kanalen{row-gap:4.6rem}}
-
-/* Minder ruimte tussen de kaart met het adres en de contactmogelijkheden. */
-.p-contact .b-kaart { padding-bottom: calc(var(--ruimte) * .5); }
-.p-contact .b-kaart + .b-contactkaarten { padding-top: calc(var(--ruimte) * .5); }
+/* Op een telefoon is er rechts van de kaart geen marge meer: daar stak het toestel 2 px buiten het
+   venster en noemde controle-layout het bij naam in de overflow van /contact/. Het schuift dan tot
+   tegen de kaartrand. De pagina is op die maten al te breed door een andere oorzaak; dit haalt
+   alleen dit element uit de meting. */
+@media(max-width:560px){.b-contactkaarten__beltoestel{right:0}}
 
 /* ---- de verhuizer tussen de kop en de belkaart, in lagen (optie figuur, /contact/) ----
    Gevraagd: een beeld in het lege vak tussen de kop en het blok "Nu bereikbaar", met een achtergrond
@@ -108,9 +112,8 @@
    figuur staat in de middelste kolom, ver van de paginarand, en onder 1024 px staat hij uit.
    Hoogte 28-09-2026 van 21vw/19.5rem naar 24vw/23rem ("stond te klein"): op een laptop (1536) 368 in
    plaats van 312 px, zodat hij boven de belkaart uitsteekt; bij 1024 maar 246 px (was 240), want daar
-   heeft het nummer in de belkaart de breedte nodig. Die hoogte is van Tugche en geldt alleen met stijl="groen";
-   live blijft 21vw/19.5rem (samenvoeging 28-09-2026). */
-.b-contactkaarten__boven .b-contactkaarten__figuur{align-self:end;height:clamp(15rem,21vw,19.5rem);width:auto;overflow:visible;pointer-events:none;
+   heeft het nummer in de belkaart de breedte nodig. */
+.b-contactkaarten__boven .b-contactkaarten__figuur{align-self:end;height:clamp(15rem,24vw,23rem);width:auto;overflow:visible;pointer-events:none;
   --uit-schaduw:0 10px 14px rgb(14 26 51 / .24);
   --uit-plaat-vulling:linear-gradient(158deg,var(--primary-300),var(--primary-200));
   --uit-plaat-rand:rgb(23 70 162 / .14);
@@ -124,7 +127,6 @@
 /* 28-09-2026, vraag van de gebruiker: onder de muis wordt de verhuizer groter (net als in #reviews en "Uw
    lijstje" op /werkwijze/ en op /offerte/). Het vak laat de muis door (pointer-events hierboven), dus alleen de
    verhuizer zelf vangt hem; de dozen ervoor blijven staan. Hij groeit vanaf zijn voeten (39 % van de breedte). */
-.b-contactkaarten--groen .b-contactkaarten__boven .b-contactkaarten__figuur{height:clamp(15rem,24vw,23rem)}
-.b-contactkaarten--groen .b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld{pointer-events:auto;transform-origin:39% 100%;transition:scale .35s var(--ease)}
-@media(hover:hover){.b-contactkaarten--groen .b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld:hover{scale:1.08}}
-@media(prefers-reduced-motion:reduce){.b-contactkaarten--groen .b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld{transition:none}}
+.b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld{pointer-events:auto;transform-origin:39% 100%;transition:scale .35s var(--ease)}
+@media(hover:hover){.b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld:hover{scale:1.08}}
+@media(prefers-reduced-motion:reduce){.b-contactkaarten__boven .b-contactkaarten__figuur .uitsnede__beeld{transition:none}}
