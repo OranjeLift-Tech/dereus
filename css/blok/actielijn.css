@@ -100,6 +100,20 @@
   .b-actielijn__feit:hover .b-actielijn__ic{transform:translateY(-3px) rotate(-8deg)}
 }
 
+/* zweven (29-09-2026), de gebruiker: "make the action line icons move a bit, hover around like in solargreen.nl repo".
+   De beweging van de klei-iconen van Solar Green (solargreen-www, assets/css/www.css, sg-zweef, sinds 28-09-2026):
+   het icoon gaat in 3,5s op en neer, op het hoogste punt 8px hoger en 5 graden gekanteld, ease-in-out, zonder eind.
+   Elk feit loopt een kwart periode voor op het vorige, dus ze bewegen niet tegelijk. Alleen het beeld beweegt, met
+   translate en rotate: de span houdt zijn hover hierboven (transform) en de li zijn scroll-reveal. De streep en de
+   feiten houden hun maat, er verschuift niets. Alleen met een muis en zonder verminderde beweging. */
+@keyframes al-zweef{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -8px;rotate:-5deg}}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .b-actielijn__ic img{animation:al-zweef 3.5s ease-in-out infinite}
+  .b-actielijn__feit:nth-child(4n+2) .b-actielijn__ic img{animation-delay:-.875s}
+  .b-actielijn__feit:nth-child(4n+3) .b-actielijn__ic img{animation-delay:-1.75s}
+  .b-actielijn__feit:nth-child(4n) .b-actielijn__ic img{animation-delay:-2.625s}
+}
+
 /* hoog contrast: geen gekleurde vlakken, de tekst blijft in systeemkleuren */
 @media(forced-colors:active){
   .b-actielijn__streep::after,.b-actielijn__feit + .b-actielijn__feit::before{content:none}
