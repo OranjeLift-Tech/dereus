@@ -389,6 +389,16 @@
   .b-vragen--paneel.is-vast .vragen__kop { align-self: start; height: var(--paneel-rust); }
 }
 
+/* ---- home: minder lege ruimte naar het formulier eronder (29-09-2026) ----
+   De gebruiker: "Veelgestelde vragen section in homepage - reduce the empty space between it and the section below."
+   Het gat was de volle onderruimte van deze sectie, de halve bovenruimte van #aanvraag (twee keer mist) en de 64px
+   waarmee de verhuizer boven de formulierkaart uitsteekt (--rijs, formulier.css): van de onderkant van de vragen tot
+   de kaart 189px op 1440, 124px op 390. Een kwart onderruimte maakt dat 126 / 82px: de kaart begint dan even ver
+   onder de vragen als de inhoud van een gewone sectie onder de vorige (anderhalve --ruimte). De verhuizer staat nog
+   62 / 42px onder de vragen, het klembord op de kaarthoek 74px onder de lijst. Alleen de home, dezelfde vorm als de
+   naden in waarom.css; /kosten/, /contact/ en /werkwijze/ houden hun ruimte. Gewicht (0,3,0), wint van .sectie. */
+.p-home .b-vragen:has(+ .b-formulier) { padding-bottom: calc(var(--ruimte) * .25); }
+
 /* ---- Goudgele band (stijl="geel", /contact/ en /werkwijze/, 28-09-2026) ----
    Ontwerp 07 uit _ontwerpen/vragen-referentie-ronde1.html, gekozen door de gebruiker, met een wijziging op
    verzoek: het geel is geen plaat in een witte sectie maar de sectie zelf, van rand tot rand. Hetzelfde

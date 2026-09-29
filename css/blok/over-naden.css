@@ -25,6 +25,19 @@
   .p-over-ons .pk-pil { background: linear-gradient(transparent calc(2rem + 5.25rem), var(--white) 0); }
 }
 
+/* Actielijn naar het blad (29-09-2026). De gebruiker: "Zo werken wij in over-ons - reduce the empty space between it
+   and the section above". Onder de streep lagen drie lagen lucht op elkaar: de onderrand van de actielijn, de bovenrand
+   van het blad en --wb-rise, waarin de vakman boven het blad uitkomt (131 px van de streep tot het blad op 1440, 76 op
+   390). De eerste twee gaan weg, de rise blijft: daar staat de vakman. Gestapeld (tot 900 px, waardenblad.css) houdt de
+   actielijn haar onderrand, anders komt zijn hoofd tegen de streep. Alleen ruimte: de streep, haar grond (actielijn.css)
+   en de helling blijven zoals ze zijn. Hier en niet in over-ons.css, want dat bestand zit ook in de bundel van de home.
+   flow-root: zonder bovenrand zakt de marge van het blad door de sectie heen, en dan staat onder de streep de grijze
+   pagina in plaats van lucht. */
+.p-over-ons .b-actielijn + .b-waardenblad { display: flow-root; padding-top: 0; }
+@media (min-width: 900.02px) {
+  .p-over-ons .b-actielijn:has(+ .b-waardenblad) { padding-bottom: 0; }
+}
+
 /* 2. Het blad (lichtblauw) naar de reviews (wit, over_ons.py): een lichtblauwe wig rechtsboven in de reviews. Hij ligt
    op ::before, boven het randmotief (::after, z-index -2) en onder de inhoud. Hij begint een pixel boven de reviews,
    over de laatste rij van het blad in dezelfde kleur: zo tekent de rand van de knip nooit een lichte rij op de grens. */

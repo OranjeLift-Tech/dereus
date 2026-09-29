@@ -14,14 +14,15 @@ def _chips():
     return [(doc.blok(d).veld("label") or doc.blok(d).kop, f"#{d}", d) for d in DIENSTEN if doc.heeft(d)]
 
 
-# Klei-iconen in drie dienstsecties, alleen vanaf 1100 px (blok naadiconen, zoals op de home). De gebruiker plaatste
+# Klei-iconen in twee dienstsecties, alleen vanaf 1100 px (blok naadiconen, zoals op de home). De gebruiker plaatste
 # ze zelf met de artifact placer op 1440 (export 29-09-2026). Per icoon (naam, kant, x, y, dekking): x in px vanaf die
 # kant van de pagina, y vanaf de bovenkant van de sectie, beide omgerekend uit de procenten van de export op 1440
 # (secties 835, 939 en 707 hoog). De dekking is die uit de export; zonder vijfde veld wordt het .5, de vaste regel
 # voor placer-iconen ("on the added artifacts from the artifact-placer, make them all 50% opacity").
+# Het formulier boven #zakelijk ("formulier", links, 63, -12, .48) is weg sinds 29-09-2026, de gebruiker: "remove the
+# clipboard icon"; het hield de ruimte boven die kaart groot (dienstenpanelen.css, "ruimte rond 02, 04 en 06").
 NAADICONEN = [
     ("nationaal", [("dozen", "links", 55, 33, .61)]),
-    ("zakelijk", [("formulier", "links", 63, -12, .48)]),
     ("internationaal", [("vakman", "rechts", 60, 41, .55)]),
 ]
 

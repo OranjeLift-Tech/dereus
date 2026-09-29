@@ -139,7 +139,8 @@
    rechts de foto in de bovenhoek van de kaart, met de verhuizers boven de kaartrand, en daaronder het goudgele
    vak (in het patroon de combinatiekorting) met de losse opmerking en de kostenlink. De foto houdt zijn
    verhouding (1:1, zoals in het patroon); het gele vak vangt op wat de tekstkolom langer is. */
-[data-vorm=fixed-price-cards]{--band:var(--brand-primary);padding-top:calc(var(--bandpad) + clamp(2.5rem,5vw,4.5rem))}
+[data-vorm=fixed-price-cards]{--band:var(--brand-primary);
+  padding-top:calc(var(--bandpad) + clamp(1.5rem,3vw,2.5rem) - clamp(0px,(100vw - 1160px) * .07,1.25rem))}
 [data-vorm=fixed-price-cards] .b-dienstenpanelen__vlak{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);grid-template-rows:auto 1fr;
   grid-template-areas:"kolom beeld" "kolom voet";border-radius:var(--radius-media);background:var(--white);color:var(--color-text)}
 /* geen schaduw onder de kaart (29-09-2026, de gebruiker: "Panel shadows: yes, remove on all three"): hij werd door de naad
@@ -259,7 +260,7 @@
 /* ==== 07 montage · careers-split-crew ====
    Een witte kaart op de donkere band. Links de tekst en de knoppen; rechts de foto in een vlak met een schuine
    linkerrand, de verhuizer komt boven de kaartrand uit, en de lijst ligt als witte strook over de onderkant. */
-[data-vorm=careers-split-crew]{--band:var(--brand-secondary);padding-top:calc(var(--bandpad) + clamp(2rem,4vw,3.5rem))}
+[data-vorm=careers-split-crew]{--band:var(--brand-secondary);padding-top:calc(var(--bandpad) + clamp(.75rem,1.2vw,1.25rem))}
 [data-vorm=careers-split-crew] .b-dienstenpanelen__vlak{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:stretch;
   border-radius:var(--radius-media);background:var(--white);color:var(--color-text)}
 /* geen schaduw onder de kaart (29-09-2026, de gebruiker: "Panel shadows: yes, remove on all three"); de strook met de
@@ -312,7 +313,7 @@
   [data-vorm=service-story-tabs] .b-dienstenpanelen__kaart{margin-inline:.5rem;padding:1rem 1.05rem 1.15rem}
 
   /* 02: de foto boven in de kaart, het gele vak onderaan */
-  [data-vorm=fixed-price-cards]{padding-top:calc(var(--bandpad) + clamp(2rem,8vw,3.5rem))}
+  [data-vorm=fixed-price-cards]{padding-top:calc(var(--bandpad) + clamp(1rem,4vw,2rem))}
   [data-vorm=fixed-price-cards] .b-dienstenpanelen__vlak{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;grid-template-areas:"beeld" "kolom" "voet"}
   [data-vorm=fixed-price-cards] .b-dienstenpanelen__kader{aspect-ratio:3/2;--dp-r:var(--radius-media) var(--radius-media) 0 0}
   [data-vorm=fixed-price-cards] .b-dienstenpanelen__voet{border-radius:0 0 var(--radius-media) var(--radius-media)}
@@ -345,7 +346,7 @@
   [data-vorm=disc-callout-pills] .b-dienstenpanelen__lijst li:nth-child(n){margin-left:0}
 
   /* 07: de foto boven in de kaart, de strook eroverheen */
-  [data-vorm=careers-split-crew]{padding-top:calc(var(--bandpad) + clamp(1.5rem,6vw,2.5rem))}
+  [data-vorm=careers-split-crew]{padding-top:calc(var(--bandpad) + clamp(.5rem,2vw,1.25rem))}
   [data-vorm=careers-split-crew] .b-dienstenpanelen__vlak{grid-template-columns:minmax(0,1fr)}
   [data-vorm=careers-split-crew] .b-dienstenpanelen__beeld{order:-1;min-height:0;aspect-ratio:4/3}
   [data-vorm=careers-split-crew] .b-dienstenpanelen__kader{--dp-r:var(--radius-media) var(--radius-media) 0 0;
@@ -442,6 +443,35 @@
 .b-dienstenpanelen+.b-dienstenpanelen:target::before{box-shadow:none;
   --naadschaduw:linear-gradient(var(--hoek),transparent 50%,var(--brand-accent) 50%,var(--brand-accent) calc(50% + 6px),transparent calc(50% + 6px))
     0 calc(-1*var(--rand))/100% calc(var(--naad) + 2*var(--rand)) no-repeat}
+/* ---- ruimte rond 02, 04 en 06 ----
+   29-09-2026, de gebruiker: "Zakelijke verhuizingen, voor kantoren en kleine bedrijven - reduce the empty space between it
+   and the section above", "Internationale verhuizingen, van en naar Nederland - reduce the empty space between it and the
+   section above" en "Tijdelijke opslag - reduce the empty space between it and the sections below and above". Alleen
+   ruimte: de naden houden hun vorm, richting en kleur (06>07 was al "seam: KEEP").
+   02 en 07: de extra ruimte boven de kaart is kleiner (padding-top van fixed-price-cards en careers-split-crew, hierboven
+   en in het telefoonblok). 03>04, 05>06 en 06>07: de band erboven en de band eronder geven elk een stuk padding af. De
+   afname groeit met de breedte: tot 1280 loopt de tekst langer door en staat hij al dicht bij de schuine lijn, dus daar
+   gaat er weinig of niets af. Wat verschuift blijft minstens 25 px van de lijn.
+   Daarna, ook 29-09-2026, op de vraag of het icoon boven 02 omhoog mocht en of 03>04 op de telefoon flauwer mocht:
+   "1. remove the clipboard icon 2. do it".
+   02: het formulier-icoon is weg (diensten.py, NAADICONEN). Vanaf 1160 gaat er nog tot 1,25rem af (padding-top van
+   fixed-price-cards hierboven); nu bepalen de hoofden van de verhuizers boven de kaart de grens, minstens 27 px onder de
+   naad. 01 geeft vanaf 1300 tot 10 px van zijn onderrand af; de kostenlink links blijft minstens 25 px boven de naad.
+   03>04 tot 699: --steil .4 in plaats van .75 (naad 30 naar 16 px op 390). Wat de lijn zo aan ruimte vrijmaakt geven
+   de band erboven en de band eronder af.
+   Van de laatste inhoud erboven tot de kop, 1440 / 390, voor deze twee rondes naar nu: 02 318 / 427 naar 256 / 411
+   (tot de kaart 230 / 120 naar 168 / 104); 04 202 / 132 naar 167 / 112; 06 227 / 132 naar 165 / 120; onder 06, tot de
+   kaart van 07, 214 / 112 naar 146 / 96. */
+.b-dienstenpanelen--particulier{padding-bottom:calc(var(--bandpad) - clamp(0px,(100vw - 1300px) * .1,.625rem))}
+.b-dienstenpanelen--nationaal{padding-bottom:calc(var(--bandpad) - clamp(0px,(100vw - 1000px) * .045,1rem))}
+.b-dienstenpanelen--internationaal{padding-top:calc(var(--bandpad) - clamp(3px,(100vw - 1000px) * .04 + 3px,1.25rem))}
+.b-dienstenpanelen--verhuislift{padding-bottom:calc(var(--bandpad) - clamp(.25rem,(100vw - 900px) * .045 + .25rem,1.6rem))}
+.b-dienstenpanelen--opslag{padding-top:calc(var(--bandpad) - clamp(.5rem,(100vw - 768px) * .05 + .5rem,2.25rem));
+  padding-bottom:calc(var(--bandpad) - clamp(0px,(100vw - 1280px) * .175,1.75rem))}
+@media (max-width:699px){
+  .b-dienstenpanelen--nationaal{padding-bottom:calc(var(--bandpad) - .6rem)}
+  .b-dienstenpanelen--internationaal{--steil:.4;padding-top:calc(var(--bandpad) - .7rem)}
+}
 /* ---- Na de laatste band: reviews (Wit), de actielijn, het formulier (Mist) ----
    29-09-2026, de gebruiker: "Woningontruiming inbetween Wat klanten zeggen - make the background transition cleaner and
    smaller gap between them", "Wat klanten zeggen inbetween Vertel ons over uw verhuizing section - make the background
