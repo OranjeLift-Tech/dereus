@@ -23,6 +23,8 @@ Sinds 28-09-2026 uit website/review/werkgebied-20260928/r2/ ("add the arrows, th
   acties=True       "Offerte aanvragen" en de belknop onder de regels (versie 5, Offerte en bellen)
 /over-ons/ zet adresplaat en acties uit: het adres en de routeknop staan daar al, en het grote formulier volgt direct.
 """
+import _b4
+
 NAAM = "werkgebied"
 CSS = True
 JS = False
@@ -50,7 +52,7 @@ def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, rout
     items = ctx.kopij_van(regels_van[0]).blok(regels_van[1]).items if regels_van else k.items
     regels = []
     for it in items:
-        link = it.veld("link")
+        link = _b4.schakel(ctx, it.veld("link")) if it.veld("link") else ""   # de eigen pagina zodra die live is
         linktekst = it.veld("linktekst")
         meer = (f'<a class="wg__link" href="{ctx.esc(link)}"><span>{ctx.inline(linktekst or "Lees meer")}</span>{ctx.icoon("pijl")}</a>'
                 if link else "")

@@ -29,3 +29,7 @@ Let op: `maak.cjs` kent de collage niet. Wie het draait, zet `/` in het manifest
 Sinds 29-09-2026 wijzen `/diensten/` en de zeven concept-dienstpagina's in het manifest naar `diensten-licht.webp`. Dat is dezelfde uitsnede van `werk-straat.png` op 1600 × 900, maar als WebP q60 in plaats van q84: 99 KB in plaats van 176 KB. Een kleinere breedte voor de telefoon helpt hier niet, want daar staat de kop ongeveer 950 CSS-pixels breed. De vergelijking oud tegen nieuw staat in `website/review/mobiel-beelden-20260929/`. Het bestand komt uit `_werk/beeldvarianten.py` (de tabel `LOS`), niet uit `maak.cjs`. `diensten.webp` wordt daarna niet meer gebruikt.
 
 Let op: `maak.cjs` zet ook deze regels terug op `diensten.webp`.
+
+## Testlijn diensten-paginas (29-09-2026)
+
+Alleen op de branch `test/diensten-paginas`: de acht diensten van `/diensten/` zijn eigen pagina's (`_werk/paginas/dienstpaginas.py`). Vier adressen waren er al; `nationale-verhuizingen`, `verhuislift`, `montage` en `woningontruiming` staan erbij in het manifest, net als de andere dienstpagina's met `diensten-licht.webp`. `maak.cjs` en `bronnen.json` kennen ze niet.

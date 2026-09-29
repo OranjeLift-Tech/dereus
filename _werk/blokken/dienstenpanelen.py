@@ -108,7 +108,8 @@ def _paneel(ctx, k, nr):
     if k.veld("kosten-link"):
         kosten = ctx.knop(k.veld("kosten-linktekst"), k.veld("kosten-link"), soort="link")
     pagina = _b4.dienst_href(ctx, k.id)
-    eigen_pagina = not pagina.startswith("/diensten/#")
+    # op zijn eigen pagina (dienstpaginas.py) linkt het paneel niet naar zichzelf
+    eigen_pagina = not pagina.startswith("/diensten/#") and pagina != ctx.pagina.pad
     kop = ctx.inline(k.kop)
     meer = ""
     if eigen_pagina and k.veld("pagina-linktekst"):
@@ -194,4 +195,6 @@ def _paneel(ctx, k, nr):
 def html(ctx, kopij, **opties) -> str:
     ids = opties.get("kopij_ids") or DIENSTEN
     blokken = [ctx.kopij.blok(i) for i in ids]
-    return "\n".join(_paneel(ctx, k, i + 1) for i, k in enumerate(blokken))
+    # het volgnummer is de plek op /diensten/, ook als een pagina maar één dienst toont (dienstpaginas.py)
+    return "\n".join(_paneel(ctx, k, DIENSTEN.index(k.id) + 1 if k.id in DIENSTEN else i + 1)
+                     for i, k in enumerate(blokken))

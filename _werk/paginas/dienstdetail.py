@@ -13,11 +13,14 @@ from kit import Pagina
 
 # pad, kopijbestand, dienst (merkicoon, ?dienst= en de voorkeuze in de offertepil), waar de pagina op wacht, en het feit
 # dat bevestigd moet zijn voordat de pagina aan mag (None = geen voorwaarde). Aanzetten zonder dat feit is een bouwfout.
+# In de testlijn test/diensten-paginas zijn de vier dienstadressen hieronder de pagina's uit dienstpaginas.py (de
+# secties van /diensten/). Hun conceptregels staan als commentaar: met twee pagina's op een adres zou de build het
+# bestand van de live pagina opruimen als concept dat uit staat. De kopij diensten-*.md blijft staan, ongebruikt.
 TABEL = [
-    ("/diensten/particuliere-verhuizingen/", "diensten-particulier", "particulier", "Akkoord van de klant op de tekst", None),
-    ("/diensten/zakelijke-verhuizingen/", "diensten-zakelijk", "zakelijk", "Zakelijk: avond, weekend en IT (open vraag 2.5)", None),
-    ("/diensten/tijdelijke-opslag/", "diensten-opslag", "opslag", "Opslaglocatie, termijnen en verzekering (open vragen 1.6 en 2.4)", None),
-    ("/diensten/internationale-verhuizingen/", "diensten-internationaal", "internationaal", "Landen (open vraag 5.1)", None),
+    # ("/diensten/particuliere-verhuizingen/", "diensten-particulier", "particulier", "Akkoord van de klant op de tekst", None),
+    # ("/diensten/zakelijke-verhuizingen/", "diensten-zakelijk", "zakelijk", "Zakelijk: avond, weekend en IT (open vraag 2.5)", None),
+    # ("/diensten/tijdelijke-opslag/", "diensten-opslag", "opslag", "Opslaglocatie, termijnen en verzekering (open vragen 1.6 en 2.4)", None),
+    # ("/diensten/internationale-verhuizingen/", "diensten-internationaal", "internationaal", "Landen (open vraag 5.1)", None),
     ("/diensten/studentenverhuizing/", "doelgroep-studenten", "particulier", "Bevestiging dat De Reus dit aanbiedt (open vraag 5.6)", "STUDENTEN_DIENST"),
     ("/diensten/seniorenverhuizing/", "doelgroep-senioren", "particulier", "Bevestiging dat De Reus dit aanbiedt (open vraag 5.6)", "SENIOREN_DIENST"),
     ("/diensten/spoedverhuizing/", "spoedverhuizing", "particulier", "Bevestiging dat De Reus dit aanbiedt (open vraag 5.6)", "SPOED_DIENST"),

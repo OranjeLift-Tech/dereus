@@ -26,11 +26,17 @@ DIENSTEN = [
     ("montage", "Handymanservice", "Handymanservice"),
     ("woningontruiming", "Woningontruiming", "Woningontruiming"),
 ]
+# In de testlijn test/diensten-paginas alle acht (paginas/dienstpaginas.py); dezelfde lijst staat in
+# _b4.DIENST_PAGINA en jsonld.DIENST_PAGINA.
 DIENST_PAGINA = {
     "particulier": "/diensten/particuliere-verhuizingen/",
     "zakelijk": "/diensten/zakelijke-verhuizingen/",
+    "nationaal": "/diensten/nationale-verhuizingen/",
     "internationaal": "/diensten/internationale-verhuizingen/",
+    "verhuislift": "/diensten/verhuislift/",
     "opslag": "/diensten/tijdelijke-opslag/",
+    "montage": "/diensten/montage/",
+    "woningontruiming": "/diensten/woningontruiming/",
 }
 
 # Standaardmenu: label, href. Diensten krijgt het megamenu.

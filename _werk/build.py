@@ -456,7 +456,7 @@ class Bestanden:
 def meta_van(pagina, ctx):
     titel = pagina.titel or ctx.kopij.titel or cfg.NAAM
     beschrijving = pagina.beschrijving or ctx.kopij.beschrijving or ""
-    og_titel = ctx.kopij.meta.get("og-titel", titel)
+    og_titel = pagina.og_titel or ctx.kopij.meta.get("og-titel", titel)
     return titel, beschrijving, og_titel
 
 

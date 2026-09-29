@@ -28,12 +28,17 @@ WERKDAGEN = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 TYPE = {"/contact/": "ContactPage", "/over-ons/": "AboutPage"}
 
 # Dienstblokken op /diensten/ met een eigen (concept)pagina. Staat die pagina live, dan wijst de Service-knoop
-# daarheen in plaats van naar het anker.
+# daarheen in plaats van naar het anker. In de testlijn test/diensten-paginas alle acht (paginas/dienstpaginas.py);
+# dezelfde lijst staat in _b4.DIENST_PAGINA en navigatie.DIENST_PAGINA.
 DIENST_PAGINA = {
     "particulier": "/diensten/particuliere-verhuizingen/",
     "zakelijk": "/diensten/zakelijke-verhuizingen/",
+    "nationaal": "/diensten/nationale-verhuizingen/",
     "internationaal": "/diensten/internationale-verhuizingen/",
+    "verhuislift": "/diensten/verhuislift/",
     "opslag": "/diensten/tijdelijke-opslag/",
+    "montage": "/diensten/montage/",
+    "woningontruiming": "/diensten/woningontruiming/",
 }
 INTERNATIONAAL = "/diensten/internationale-verhuizingen/"
 
@@ -284,9 +289,13 @@ def _dienst_gebied(ctx, sleutel):
 
 
 def _h1(pagina, ctx):
-    """De H1 uit de kopij zonder opmaak, of de titel. Een kop met een nog niet ingevuld {FEIT} telt niet."""
+    """De H1 uit de kopij zonder opmaak, of de titel. Een kop met een nog niet ingevuld {FEIT} telt niet.
+    Leest het blok kop van de pagina een ander kopijblok (optie kopij_id, zoals de dienstpagina's die diensten.md
+    delen), dan is de kop van dat blok de H1."""
     doc = _kopij(pagina, ctx)
-    kop = getattr(getattr(doc, "h1", None), "kop", None)
+    kid = next((o.get("kopij_id") for n, o in getattr(pagina, "blokken", []) if n == "kop" and isinstance(o, dict)), None)
+    bron = _blok(doc, kid) if kid and kid != "kop" else getattr(doc, "h1", None)
+    kop = getattr(bron, "kop", None)
     if kop and "{" not in kop:
         return _platte_tekst(kop)
     titel = _veld(pagina, "titel", ctx) or ""

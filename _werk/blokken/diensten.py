@@ -1,6 +1,8 @@
 """Diensten op de home: acht fotokaarten met de bestaande dienstlinks en kopij."""
 import re
 
+import _b4
+
 NAAM = "diensten"
 CSS = True
 JS = False
@@ -79,7 +81,7 @@ def html(ctx, kopij, **opties):
     tegels = []
     for it in k.items:
         sleutel = it.id
-        link = it.veld("link") or f"/diensten/#{sleutel}"
+        link = _b4.schakel(ctx, it.veld("link") or f"/diensten/#{sleutel}")   # de eigen pagina zodra die live is
         titel = ctx.inline(it.titel)
         foto = FOTOS.get(sleutel)
         beeld = uit = stijl = ""

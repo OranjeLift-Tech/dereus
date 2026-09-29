@@ -31,6 +31,7 @@ class Pagina:
     preload_beeld: dict = None                # {"href":..., "imagesrcset":..., "imagesizes":..., "media":...}
     titel: str = None                         # overschrijft de voorkant van de kopij
     beschrijving: str = None
+    og_titel: str = None                      # overschrijft og-titel uit de voorkant (dienstpaginas.py delen diensten.md)
     og_beeld: str = "/img/og.jpg"
     letterlijk: bool = False                  # juridische tekst letterlijk: geen controle op verboden woorden
     concept: bool = False                     # pas live als config.PUBLICEER[pad] True is (BOUWPLAN 12)

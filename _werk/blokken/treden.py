@@ -4,9 +4,13 @@ Pagina: /kosten/ (kopij_id "verhuizing"). Kopij: label, intro of tekst, drie ite
 lijst (links naar de diensten) en knop.
 """
 
+import re
+
+import _b4
 import kit
 
 NAAM = "treden"
+_DIENSTLINK = re.compile(r"\]\((/diensten/#[a-z]+)\)")
 CSS = True
 JS = False
 
@@ -50,7 +54,8 @@ def html(ctx, kopij, **opties) -> str:
                    f'width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
         treden += (f'<li class="b-{NAAM}__trede b-{NAAM}__trede--{i + 1}">{fig}<h3 class="b-{NAAM}__tredekop">{ctx.inline(it.kop)}</h3>'
                    f'{bedrag}{ctx.alineas(it.tekst)}</li>')
-    links = "".join(f"<li>{ctx.inline(r)}</li>" for r in k.lijst)
+    # [dienst](/diensten/#sleutel) wordt de eigen pagina zodra die live is
+    links = "".join(f"<li>{ctx.inline(_DIENSTLINK.sub(lambda m: f'](' + _b4.schakel(ctx, m.group(1)) + ')', r))}</li>" for r in k.lijst)
     links = f'<ul class="b-{NAAM}__links">{links}</ul>' if links else ""
     knop = ctx.knop(k.veld("knop"), "/offerte/", soort="cta") if k.veld("knop") else ""
     intro = f'<p class="b-{NAAM}__intro">{ctx.inline(k.veld("intro"))}</p>' if k.veld("intro") else ""

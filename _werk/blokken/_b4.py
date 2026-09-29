@@ -9,11 +9,17 @@ import config as cfg
 import kopij as _kopij
 
 # De diensten met een eigen pagina. Zolang die pagina uit staat, blijft de link het anker op /diensten/.
+# In de testlijn test/diensten-paginas alle acht (paginas/dienstpaginas.py); dezelfde lijst staat in
+# navigatie.DIENST_PAGINA en jsonld.DIENST_PAGINA.
 DIENST_PAGINA = {
     "particulier": "/diensten/particuliere-verhuizingen/",
     "zakelijk": "/diensten/zakelijke-verhuizingen/",
-    "opslag": "/diensten/tijdelijke-opslag/",
+    "nationaal": "/diensten/nationale-verhuizingen/",
     "internationaal": "/diensten/internationale-verhuizingen/",
+    "verhuislift": "/diensten/verhuislift/",
+    "opslag": "/diensten/tijdelijke-opslag/",
+    "montage": "/diensten/montage/",
+    "woningontruiming": "/diensten/woningontruiming/",
 }
 # Doelgroeppagina's: geen menu-item. Staan ze live, dan linkt het paneel Particulier op /diensten/ ernaar.
 DOELGROEPEN = [("/diensten/studentenverhuizing/", "doelgroep-studenten"), ("/diensten/seniorenverhuizing/", "doelgroep-senioren"),

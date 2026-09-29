@@ -95,6 +95,30 @@
     "height": 900,
     "position": "50% 50%"
   },
+  "/diensten/nationale-verhuizingen/": {
+    "src": "/img/headers/diensten-licht.webp",
+    "width": 1600,
+    "height": 900,
+    "position": "50% 50%"
+  },
+  "/diensten/verhuislift/": {
+    "src": "/img/headers/diensten-licht.webp",
+    "width": 1600,
+    "height": 900,
+    "position": "50% 50%"
+  },
+  "/diensten/montage/": {
+    "src": "/img/headers/diensten-licht.webp",
+    "width": 1600,
+    "height": 900,
+    "position": "50% 50%"
+  },
+  "/diensten/woningontruiming/": {
+    "src": "/img/headers/diensten-licht.webp",
+    "width": 1600,
+    "height": 900,
+    "position": "50% 50%"
+  },
   "/diensten/studentenverhuizing/": {
     "src": "/img/headers/diensten-licht.webp",
     "width": 1600,

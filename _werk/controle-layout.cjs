@@ -14,6 +14,13 @@ const kit = require('./controle-kit.cjs');
 const UIT = path.resolve(__dirname, '../website/review/cleanup');
 const ROUTES = ['/', '/diensten/', '/kosten/', '/offerte/', '/contact/', '/over-ons/', '/werkwijze/',
   '/algemene-voorwaarden/', '/privacyverklaring/', '/offerte/bedankt/', '/contact/bedankt/', '/404.html'];
+/* Testlijn test/diensten-paginas (29-09-2026): de acht secties van /diensten/ als eigen pagina
+   (paginas/dienstpaginas.py). Sleutel van de sectie en adres, in de volgorde van /diensten/. */
+const DIENSTPAGINAS = [['particulier', '/diensten/particuliere-verhuizingen/'], ['zakelijk', '/diensten/zakelijke-verhuizingen/'],
+  ['nationaal', '/diensten/nationale-verhuizingen/'], ['internationaal', '/diensten/internationale-verhuizingen/'],
+  ['verhuislift', '/diensten/verhuislift/'], ['opslag', '/diensten/tijdelijke-opslag/'], ['montage', '/diensten/montage/'],
+  ['woningontruiming', '/diensten/woningontruiming/']];
+ROUTES.push(...DIENSTPAGINAS.map(([, pad]) => pad));
 const BREEDTES = [1440, 1100, 768, 390, 320];
 const BREEDTES_SNEL = [1440, 390];
 
@@ -197,6 +204,17 @@ async function draai({ browser, basis, snel = false } = {}) {
                blokken/dienstenpanelen.py), als data-vorm op de sectie: acht secties, acht verschillende vormen. */
             const vormen = await page.locator('main > section.b-dienstenpanelen').evaluateAll(els => els.map(el => el.dataset.vorm || ''));
             assert.ok(vormen.every(Boolean) && new Set(vormen).size === 8, `${width}: eight service sections, eight different patterns (${vormen.join(', ')})`);
+          }
+          const dienstpagina = DIENSTPAGINAS.find(([, pad]) => pad === route);
+          if (dienstpagina) {
+            /* Een dienstpagina is een sectie van /diensten/: een H1, dan precies die ene sectie met haar eigen
+               anker, patroon en H2, en die kop linkt niet naar de pagina zelf. */
+            assert.equal(await page.locator('h1').count(), 1, `${width} ${route}: one h1`);
+            assert.deepEqual(await page.locator('main > section.b-dienstenpanelen').evaluateAll(els => els.map(el => {
+              const kop = document.getElementById(el.getAttribute('aria-labelledby'));
+              return `${el.id}:${kop && el.contains(kop) && kop.tagName === 'H2' ? 'h2' : 'geen naam'}:${el.dataset.vorm ? 'vorm' : 'geen vorm'}`;
+            })), [`${dienstpagina[0]}:h2:vorm`], `${width} ${route}: the one service section with its anchor, name and pattern`);
+            assert.equal(await page.locator(`main a[href="${route}"]`).count(), 0, `${width} ${route}: no link to itself in main`);
           }
           /* De kaart op /contact/ begint op de regel van de kop. Sinds de samenvoeging van 8971f9e (29-09-2026) weer
              het blok kaart, de vorm van het werkgebied met haar speld en klok: .wg__kaartvlak, boven 1060. Van de

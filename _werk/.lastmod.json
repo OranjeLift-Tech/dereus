@@ -1,7 +1,7 @@
 {
   "/": {
     "datum": "2026-09-29",
-    "hash": "af096b9a7355e6f5"
+    "hash": "c74fffa5baaa08f7"
   },
   "/algemene-voorwaarden/": {
     "datum": "2026-09-28",
@@ -13,11 +13,43 @@
   },
   "/diensten/": {
     "datum": "2026-09-29",
-    "hash": "23fca95d9d348205"
+    "hash": "56f3fbab3a60c99b"
+  },
+  "/diensten/internationale-verhuizingen/": {
+    "datum": "2026-09-29",
+    "hash": "c0a2ff1596f5edaa"
+  },
+  "/diensten/montage/": {
+    "datum": "2026-09-29",
+    "hash": "acb6c057eb372231"
+  },
+  "/diensten/nationale-verhuizingen/": {
+    "datum": "2026-09-29",
+    "hash": "f983cda574698a0b"
+  },
+  "/diensten/particuliere-verhuizingen/": {
+    "datum": "2026-09-29",
+    "hash": "e0d34a1f540c4660"
+  },
+  "/diensten/tijdelijke-opslag/": {
+    "datum": "2026-09-29",
+    "hash": "3af229adef71da40"
+  },
+  "/diensten/verhuislift/": {
+    "datum": "2026-09-29",
+    "hash": "e33dd100d5c0dbbf"
+  },
+  "/diensten/woningontruiming/": {
+    "datum": "2026-09-29",
+    "hash": "0efd4b880a7d36d2"
+  },
+  "/diensten/zakelijke-verhuizingen/": {
+    "datum": "2026-09-29",
+    "hash": "b8e522d01150d392"
   },
   "/kosten/": {
     "datum": "2026-09-29",
-    "hash": "d38923ad983c5706"
+    "hash": "5ddaa6097fd650a0"
   },
   "/offerte/": {
     "datum": "2026-09-29",
@@ -25,7 +57,7 @@
   },
   "/over-ons/": {
     "datum": "2026-09-29",
-    "hash": "974f2f02e35b37c9"
+    "hash": "82e9b56ff93d2807"
   },
   "/privacyverklaring/": {
     "datum": "2026-09-28",
