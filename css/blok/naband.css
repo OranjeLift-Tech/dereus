@@ -64,8 +64,12 @@
 .b-naband__icoon--3d::before{content:"";position:absolute;left:0;right:0;bottom:.35rem;height:1.4rem;border-radius:50%;
   background:linear-gradient(180deg,color-mix(in srgb,var(--brand-accent),var(--white) 40%),var(--brand-accent) 70%);
   box-shadow:0 5px 0 var(--accent-700),0 16px 16px -6px rgba(0,0,0,.5)}
+/* De 3D-renders van Tugche (optie klei=False, zie KLEI in _werk/paginas/werkwijze.py): breedte uit de verhouding. */
 .b-naband__obj{position:absolute;left:0;right:0;bottom:.9rem;width:auto;max-width:none;height:4rem;margin-inline:auto;pointer-events:none;
   filter:drop-shadow(2px 3px 2px rgba(0,0,0,.3)) drop-shadow(8px 12px 10px rgba(0,0,0,.35))}
 .b-naband__obj--telefoon{height:6rem;bottom:.75rem}
 .b-naband__obj--ster{height:3.9rem}
+/* Sinds de samenvoeging (28-09-2026) de klei-iconen telefoon en ster (klei=True, __obj--klei), vierkant: even hoog
+   als de schijf breed is. */
+.b-naband__obj.b-naband__obj--klei{width:4.4rem;height:4.4rem;bottom:.9rem}
 @media print{.b-naband__icoon--3d::before{box-shadow:none}.b-naband__obj{filter:none}}

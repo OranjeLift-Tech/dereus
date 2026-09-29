@@ -1,11 +1,17 @@
 /* Verwachtingen: een rustige fotocompositie naast vier concrete afspraken. */
 
-/* Het gat tussen "Welke verhuizing u ook plant" en deze sectie was 203px op 1440: 83px onderruimte
-   van de dienstensectie plus 120px bovenruimte hier. Die 120 is niet het gewone ritme maar de
-   schuine overgang tussen de grijze en de witte band: max(--ruimte, 2 x --dak + 1rem). Met de helft
-   van de schuinte valt de padding terug op --ruimte en blijft de overgang zichtbaar. Alleen op de
-   home; op /diensten/ staat hetzelfde blok en daar is niets gevraagd. */
-.p-home .b-waarom { --overgang-hoek: .5; }
+/* Het gat boven deze sectie op de home. Tot 29-09-2026 volgde hij op de grijze dienstensectie: eerst 203px op 1440,
+   daarna 137px met een halve schuine overgang (--overgang-hoek .5). Sinds 29-09-2026 staat de actielijn ertussen
+   ("in homepage - put the actionline a section higher") en is hier om minder ruimte gevraagd ("make the space
+   between the section at the top smaller"). Dezelfde factor als de onderruimte van de dienstensectie (diensten.css),
+   dus even veel lucht boven als onder de streep: 75px op 1440, 48px op 390. Het blok staat alleen op de home. */
+.p-home .b-actielijn + .b-waarom { padding-top: calc(var(--ruimte) * .65); }
+/* En het gat eronder, naar de blauwe band "Zo werkt het" (29-09-2026), de gebruiker: "Zo werkt het - reduce the empty
+   space above the section". Van de knop tot het label van de band: 224 / 138 px naar 137 / 80 px bij 1440 / 390.
+   Het dak blijft heel: de band houdt zijn volle --dak bovenop zijn eigen ruimte, alleen die ruimte en het wit erboven
+   worden kleiner (nok tot label 141 naar 96 px op 1440, 82 naar 52 op 390). Gewicht (0,3,0), wint van .sectie--blauw. */
+.p-home .b-waarom:has(+ .b-stapkaarten) { padding-bottom: calc(var(--ruimte) * .5); }
+.p-home .b-waarom + .b-stapkaarten { padding-top: calc(var(--ruimte) * .45 + var(--dak)); }
 .waarom__kop { max-width: 52rem; margin-inline: auto; text-align: center; }
 .waarom__kop .label, .waarom__knoppen { justify-content: center; }
 .waarom__kop .intro { margin-inline: auto; }

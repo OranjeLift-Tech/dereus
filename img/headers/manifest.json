@@ -6,7 +6,7 @@
     "position": "45% 50%"
   },
   "/diensten/": {
-    "src": "/img/headers/diensten.webp",
+    "src": "/img/headers/diensten-licht.webp",
     "width": 1600,
     "height": 900,
     "position": "50% 50%"
@@ -72,43 +72,43 @@
     "position": "50% 50%"
   },
   "/diensten/particuliere-verhuizingen/": {
-    "src": "/img/headers/diensten.webp",
+    "src": "/img/headers/diensten-licht.webp",
     "width": 1600,
     "height": 900,
     "position": "50% 50%"
   },
   "/diensten/zakelijke-verhuizingen/": {
-    "src": "/img/headers/diensten.webp",
+    "src": "/img/headers/diensten-licht.webp",
     "width": 1600,
     "height": 900,
     "position": "50% 50%"
   },
   "/diensten/tijdelijke-opslag/": {
-    "src": "/img/headers/diensten.webp",
+    "src": "/img/headers/diensten-licht.webp",
     "width": 1600,
     "height": 900,
     "position": "50% 50%"
   },
   "/diensten/internationale-verhuizingen/": {
-    "src": "/img/headers/diensten.webp",
+    "src": "/img/headers/diensten-licht.webp",
     "width": 1600,
     "height": 900,
     "position": "50% 50%"
   },
   "/diensten/studentenverhuizing/": {
-    "src": "/img/headers/diensten.webp",
+    "src": "/img/headers/diensten-licht.webp",
     "width": 1600,
     "height": 900,
     "position": "50% 50%"
   },
   "/diensten/seniorenverhuizing/": {
-    "src": "/img/headers/diensten.webp",
+    "src": "/img/headers/diensten-licht.webp",
     "width": 1600,
     "height": 900,
     "position": "50% 50%"
   },
   "/diensten/spoedverhuizing/": {
-    "src": "/img/headers/diensten.webp",
+    "src": "/img/headers/diensten-licht.webp",
     "width": 1600,
     "height": 900,
     "position": "50% 50%"

@@ -1,0 +1,92 @@
+"""Adres en kaart (/contact/, #kaart) in de versie van Tugche (origin/main 9dbb9a8, 28-09-2026), sinds 29-09-2026
+weer op /contact/: "revert changes to werkwijze and contact to be the latest tugche changes". Dit is haar kaart.py
+ongewijzigd, op twee dingen na: de bloknaam is kaart-tugche, zodat hij naast onze versie (kaart.py, de vorm van het
+werkgebied op de home) kan bestaan, en de klassen blijven b-kaart__*, zodat haar CSS (css/blok/kaart-tugche.css,
+haar kaart.css) en de regels in andere bestanden die .b-kaart noemen ongewijzigd gelden.
+
+Opzet zoals "Waar u ons vindt" op de contactpagina van referentie A:
+links de kaart in een afgeronde kaart met een adrespil, rechts het adres als kop, een korte tekst, twee
+gegevenskaarten (adres en openingstijden met de bereikbaarheidsstatus) en de knoppen. Telefoon en e-mail staan niet
+hier maar in de kanaalkaarten van contactkaarten (design review 1.7, C1: het nummer niet op elke plek).
+
+Kopij: contact.md, blok {#kaart}: label, kop (het adres), intro, knop.
+Gegevens (adres, telefoon, e-mail, tijden, route) komen uit config.py.
+Optionele velden: label-adres, label-tijden, offerte-link.
+Het beeld is img/kaart-den-haag.svg (_werk/kaart/maak_kaart.py, OpenStreetMap-data, ODbL). Die getekende kaart is de
+terugval in het paneel van blok wereld: een klik erop (of op de knop) laadt de echte kaart, een wereldbol die naar
+Den Haag vliegt, net als op de home. De pin en "Route plannen" in het paneel openen de routeplanner.
+Optioneel veld: kaart-knop.
+"""
+
+NAAM = "kaart-tugche"
+KLASSE = "kaart"                  # de klassen van haar blok, b-kaart__*
+CSS = True
+JS = False
+AFHANKELIJK = ["wereld"]          # stijl en gedrag van de wereldbol (css/blok/wereld.css, js/blok/wereld.js)
+
+BEELD = "/img/kaart-den-haag.svg"
+BREEDTE, HOOGTE = 1400, 933
+
+
+def _dagen_attr(nummers):
+    """Voor site.js: '1-6' voor maandag tot en met zaterdag, '0' voor zondag."""
+    n = sorted(nummers)
+    if len(n) > 1 and n == list(range(n[0], n[-1] + 1)):
+        return f"{n[0]}-{n[-1]}"
+    return ",".join(str(x) for x in n)
+
+
+def tijden(ctx, klasse):
+    rijen = []
+    for t in ctx.cfg.TIJDEN:
+        dagen = t["dagen"][:1].upper() + t["dagen"][1:]
+        rijen.append(f'<div class="{klasse}__tijd" data-dagen="{_dagen_attr(t["nummers"])}">'
+                     f'<dt>{ctx.esc(dagen)}</dt><dd>{ctx.esc(t["van"])} tot {ctx.esc(t["tot"])} uur</dd></div>')
+    return f'<dl class="{klasse}__tijden">{"".join(rijen)}</dl>'
+
+
+def _gegeven(ctx, soort, icoon, label, inhoud):
+    return f'''<li class="b-{KLASSE}__gegeven b-{KLASSE}__gegeven--{soort}">
+              <span class="b-{KLASSE}__ic" aria-hidden="true">{ctx.icoon(icoon)}</span>
+              <div><p class="b-{KLASSE}__lbl">{ctx.esc(label)}</p>{inhoud}</div>
+            </li>'''
+
+
+def html(ctx, kopij, **opties) -> str:
+    k = kopij
+    sid = opties.get("id", k.id or "kaart")
+    grond = opties.get("grond", "mist")
+    c = ctx.cfg
+    alt = f"Kaart van Den Haag met de locatie van {c.NAAM} aan de {c.STRAAT}"
+    gegevens = "".join([
+        _gegeven(ctx, "adres", "pin", k.veld("label-adres", "Hoofdkantoor"),
+                 f'<address class="b-{KLASSE}__waarde">{ctx.esc(c.STRAAT)}<br>{ctx.esc(c.POSTCODE)} {ctx.esc(c.PLAATS)}</address>'),
+        _gegeven(ctx, "tijden", "klok", k.veld("label-tijden", "Bereikbaar"),
+                 tijden(ctx, f"b-{KLASSE}") + f'<p class="b-{KLASSE}__status">{ctx.bereikbaar("bereikbaar")}</p>'),
+    ])
+    route = ctx.knop(k.veld("knop", "Route plannen"), c.ROUTE, soort="blauw", icoon="route",
+                     klasse="knop--icoon-voor", attrs='rel="noopener"')
+    offerte = ctx.knop(k.veld("offerte-link", "Offerte aanvragen"), "/offerte/", soort="link")
+    return f'''<section class="b-{KLASSE} sectie sectie--{grond}" id="{sid}" aria-labelledby="{sid}-kop">
+      <div class="wrap b-{KLASSE}__in">
+        <figure class="b-{KLASSE}__beeld" data-reveal>
+          <div class="b-{KLASSE}__venster">
+            <div class="wereld b-{KLASSE}__wereld" data-wereld data-lat="{c.GEO[0]}" data-lng="{c.GEO[1]}">
+              {ctx.beeld(BEELD, alt, BREEDTE, HOOGTE, klasse="wereld__terugval", sizes="(min-width: 1024px) 40vw, 100vw")}
+              <button class="wereld__start knop knop--licht" type="button" data-wereld-start>{ctx.icoon("wereld")}{ctx.esc(k.veld("kaart-knop", "Bekijk interactieve kaart"))}</button>
+              <p class="wereld__melding vh" role="status" data-wereld-melding></p>
+              <div class="wereld__info"><span class="wereld__ic">{ctx.icoon("pin")}</span><div>
+                <address class="wereld__adres">{ctx.esc(c.STRAAT)}<br>{ctx.esc(c.POSTCODE)} {ctx.esc(c.PLAATS)}</address>
+                <a class="wereld__route" href="{c.ROUTE}" rel="noopener">{ctx.esc(k.veld("knop", "Route plannen"))}{ctx.icoon("pijl")}</a>
+              </div></div>
+            </div>
+          </div>
+          <figcaption class="b-{KLASSE}__bron">Kaartgegevens © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap-bijdragers</a></figcaption>
+        </figure>
+        <div class="b-{KLASSE}__tekst">
+          {ctx.kopgroep(k, klasse=f"b-{KLASSE}__kop")}
+          <ul class="b-{KLASSE}__gegevens" role="list" data-reveal-groep>{gegevens}</ul>
+          <div class="knoppen">{route}{offerte}</div>
+        </div>
+      </div>
+    </section>'''

@@ -14,8 +14,11 @@
   --over-offset-hover: 2.17rem;                     /* zover schuift hij bij hover */
   --over-plaat-top: 23%;                            /* bovenrand van de platen, van de hoogte van de uitsnede */
   --over-plaat-achter: linear-gradient(210deg, var(--brand-accent), var(--accent-600));
-  --over-plaat-voor: var(--primary-50);
-  --over-kaart: var(--off-white);
+  /* plaat en kaarten sinds 29-09-2026 Blauw 100 (waren Blauw 50 en Mist): "make the white background directly
+     behind the workers into light blue instead", "also do light blue bg for the 4 blocks". Niet Blauw 200: daarop
+     haalt de kaarttekst (--grey-600) 4,29:1, op Blauw 100 5,0:1. */
+  --over-plaat-voor: var(--primary-100);
+  --over-kaart: var(--primary-100);
   --over-rand: var(--brand-primary);                /* de rand van een feitenkaart bij hover */
   --over-ease: cubic-bezier(.22, .61, .36, 1);
 }
@@ -64,8 +67,9 @@
 .over__icoon .ic { width: 1.75rem; height: 1.75rem; }
 /* Het klei-icoon (sinds 28-09-2026): de tegel blijft als lichtblauwe plaat, want Koningsblauwe klei op een
    Koningsblauwe tegel valt weg. Het icoon is groter dan de tegel en steekt er boven en opzij een stukje
-   uit, in de kolomafstand; de kolom en dus de kaart blijven even groot. */
-.over__icoon--klei { position: relative; background: var(--primary-100); }
+   uit, in de kolomafstand; de kolom en dus de kaart blijven even groot. Sinds 29-09-2026 is de kaart zelf
+   Blauw 100, dus de tegel een stap donkerder (Blauw 200), anders valt hij weg in de kaart. */
+.over__icoon--klei { position: relative; background: var(--primary-200); }
 .over__klei { position: absolute; left: 50%; bottom: -3px; width: 4.25rem; max-width: none; height: auto; translate: -50% 0;
   filter: drop-shadow(0 4px 5px rgb(10 25 60 / .16)); }
 .over__kaart h3 { margin: 0; color: var(--brand-secondary); font-size: var(--text-h4); line-height: var(--leading-snug); }
@@ -121,6 +125,12 @@
 .p-over-ons .b-over { padding-top: var(--ruimte); padding-bottom: calc(var(--ruimte) * .5); }
 .p-over-ons .b-kernwaarden--krap { padding-top: calc(var(--ruimte) * .5 + var(--dak)); }
 .p-over-ons .b-reviews { padding-bottom: calc(var(--ruimte) * .5); }
+/* Zo werken wij naar de reviews (29-09-2026), de gebruiker: "Wat klanten over ons zeggen in over-ons - reduce the space
+   with the section above this one." Van de laatste kaart van het blad tot het label van de reviews: 179 / 118 px naar
+   104 / 67 px bij 1440 / 390, zoals de reviews op /diensten/ (103 / 66). Alleen ruimte; de grond en een schuine lijn
+   laten we aan de naadopties van /over-ons/. */
+.p-over-ons .b-waardenblad:has(+ .b-reviews) { padding-bottom: calc(var(--ruimte) * .6); }
+.p-over-ons .b-waardenblad + .b-reviews { padding-top: calc(var(--ruimte) * .5); }
 .p-over-ons .b-werkgebied { padding-top: calc(var(--ruimte) * .5 + var(--dak)); }
 @media (min-width: 900px) {
   .p-over-ons .b-kernwaarden--krap .kwhoofd { align-items: start; }

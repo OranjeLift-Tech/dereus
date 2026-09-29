@@ -12,6 +12,9 @@ attributen als de stilstaande foto ervoor: de LCP-kandidaten blijven dezelfde. B
 <template> (niet geladen, geen img in document.images); js/blok/herocollage.js zet ze pas na het load-event in de
 pagina en start de beweging als alle vier gedecodeerd zijn. Tot 28-09-2026 17:30 was dat een img met alleen
 data-src, maar een img zonder src is ongeldig en controle-layout.cjs zag hem als kapot beeld. Met prefers-reduced-motion of Save-Data blijft beeld 1 stil staan en worden de andere nooit opgehaald.
+Alle vier hebben fetchpriority="low". Zonder die hint krijgen beeld 2 tot 4 na het inzetten prioriteit High, want ze
+liggen in beeld, en rekent de gesimuleerde LCP van Lighthouse ze mee als beelden waar de LCP op wacht: mobiel 8,0 s
+in plaats van 5,05 s (gemeten 29-09-2026).
 De beelden maakt img/headers/maak-collage.cjs.
 
 In hero.py: ctx.blok("herocollage", kopij=None, foto=<manifestregel>) geeft de fotolaag,
@@ -69,11 +72,9 @@ def html(ctx, kopij, foto=None, deel="foto", **opties):
     for n, b in enumerate(BEELDEN):
         if n == 0:
             src, (w, h), pos = foto["src"], (foto["width"], foto["height"]), foto.get("position", "50% 50%")
-            bron = f'src="{ctx.esc(src)}" fetchpriority="low"'
         else:
             src, (w, h), pos = b["src"], b["maat"], b["pos"]
-            bron = f'src="{ctx.esc(src)}"'
-        img = f'<img {bron} alt="" width="{w}" height="{h}" decoding="async">'
+        img = f'<img src="{ctx.esc(src)}" fetchpriority="low" alt="" width="{w}" height="{h}" decoding="async">'
         # beeld 2 tot 4 in een <template>: een img zonder src is ongeldig en telt in controle-layout als kapot beeld
         ramen.append(f'<div class="collage__raam" style="{_stijl(n, b, pos)}">'
                      f'{img if n == 0 else "<template>" + img + "</template>"}</div>')

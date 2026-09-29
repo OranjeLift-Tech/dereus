@@ -182,4 +182,4 @@ tekst: Gevaarlijke stoffen meldt u vooraf. Niet gemelde gevaarlijke stoffen neme
 tekst: Ja. Ons hoofdkantoor staat in Den Haag, en wij verhuizen door heel Nederland. Ook van en naar het buitenland, over de weg.
 
 ### Hoe snel hoor ik iets na mijn aanvraag?
-tekst: Binnen 24 uur belt uw verhuisadviseur u. Samen bespreekt u uw wensen en uw inboedel. Daarna ontvangt u een vrijblijvende offerte op maat.
+tekst: Binnen 24 uur belt uw verhuisadviseur u. Samen bespreekt u uw wensen en uw inboedel. Daarna ontvangt u een vrijblijvende offerte op maat. Waar de prijs van afhangt, leest u op onze pagina [Wat kost een verhuisbedrijf?](/kosten/)

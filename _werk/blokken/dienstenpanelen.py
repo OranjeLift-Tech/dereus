@@ -2,7 +2,8 @@
 
 Pagina: /diensten/. Kopij: de acht ##-blokken uit diensten.md (opties["kopij_ids"]).
 Velden per blok: label (korte naam, ook de chiptekst), tekst, lijstkop, lijst, slot,
-kosten-linktekst, kosten-link, knop, en optioneel pagina-linktekst en (bij particulier) doelgroepen-kop.
+kosten-linktekst, kosten-link, knop, knop-schermlezer (wat een schermlezer achter de knoptekst hoort), en
+optioneel pagina-linktekst en (bij particulier) doelgroepen-kop.
 Heeft een dienst een eigen pagina die live is (config.PUBLICEER), dan linkt het paneel ernaar: met de knoptekst uit
 pagina-linktekst, en anders via de kop van het paneel. Staat de pagina uit, dan verandert er niets.
 
@@ -35,7 +36,7 @@ DIENSTEN = ["particulier", "zakelijk", "nationaal", "internationaal",
 
 # Welk patroon uit ../section-library elke dienst krijgt (de map heet zo in de bibliotheek). Elk patroon één keer.
 VORMEN = {"particulier": "service-story-tabs", "zakelijk": "fixed-price-cards", "nationaal": "closing-panel-truck",
-          "internationaal": "about-window-intro", "verhuislift": "text-photo-left", "opslag": "opslag",
+          "internationaal": "about-window-intro", "verhuislift": "text-photo-left", "opslag": "disc-callout-pills",
           "montage": "careers-split-crew", "woningontruiming": "two-col-checklist"}
 
 # Welke dienstfoto in het paneel komt. Dezelfde kaart als in blok diensten (home).
@@ -125,6 +126,12 @@ def _paneel(ctx, k, nr):
     # "Offerte aanvragen" heeft overal de CTA-stijl (besluit van de gebruiker, via dereus-28): de kleur komt uit de
     # tokens --color-cta van de kernlaag, dit blok legt zelf geen knopkleur vast
     knop = ctx.knop(k.veld("knop"), f"/offerte/?dienst={k.id}", soort="cta")
+    # De dienst in de naam van de knop (29-09-2026, SEO-ronde; Lighthouse identical-links-same-purpose): acht keer
+    # "Offerte aanvragen" naar acht verschillende adressen. De zichtbare tekst blijft gelijk; een schermlezer hoort
+    # knop-schermlezer erachter, dus de naam van de link begint met wat er te zien is.
+    extra = k.veld("knop-schermlezer")
+    if extra:
+        knop = knop.replace("</span>", f'<span class="vh"> {ctx.esc(extra)}</span></span>', 1)
     # het label boven de kop is dezelfde naam als de chip die hierheen springt, met het volgnummer ervoor
     label = k.veld("label")
     label = (f'<p class="label b-{NAAM}__label"><span class="b-{NAAM}__nr">{nr:02d}</span>{ctx.inline(label)}</p>'
@@ -157,12 +164,12 @@ def _paneel(ctx, k, nr):
         grond = donker if vorm == "about-window-intro" else ""
         binnen = (f'<div class="b-{NAAM}__kolom"{grond}>{tekst}{kaart}{acties}</div>'
                   f'<div class="b-{NAAM}__beeld">{kader}</div>')
-    elif vorm == "opslag":
-        # de donkere kaart links met de tekst en de knoppen; rechts de lijst en daaronder de foto, die op een schuine
-        # band staat met een streep over de onderrand. De lijst staat boven de foto: de foto is liggend, en zonder de
-        # lijst bleef de ruimte erboven leeg.
-        binnen = (f'<div class="b-{NAAM}__kolom"{donker}>{tekst}{acties}</div>'
-                  f'<div class="b-{NAAM}__beeld">{kaart}{kader}</div>')
+    elif vorm == "disc-callout-pills":
+        # sinds 29-09-2026 (ronde 2, de gebruiker hield versie 5 "Schijf"): rechts de tekst en de knoppen op de lichte
+        # band; links de foto in een schijf met het hoofd erboven, en de lijst als pillen over de rand van de schijf.
+        # De lijst staat na het kader: op een telefoon schuift hij onder de schijf over de onderrand.
+        binnen = (f'<div class="b-{NAAM}__kolom">{tekst}{acties}</div>'
+                  f'<div class="b-{NAAM}__beeld">{kader}{kaart}</div>')
     elif vorm == "careers-split-crew":
         # een witte kaart: links de tekst en de knoppen, rechts de foto in een schuin vlak met de verhuizer boven de
         # kaartrand, en de lijst als witte strook over de onderkant van de foto

@@ -20,7 +20,8 @@ voor is. Standaard staan ze uit, dus de pagina's die ze niet vragen veranderen g
 """
 NAAM = "vragen"
 CSS = True
-JS = False
+# Sinds 29-09-2026 js/blok/vragen.js: het paneel houdt bij het openen zijn hoogte in rust ("6. FAQ: A").
+JS = True
 
 # Optie beeld: een voorwerp uit de 3D-reeks. Naam -> bron, breedte, hoogte, behandeling.
 #   "steekt-uit" (/contact/): de uitsnede steekt rechtsboven uit het Diepblauwe paneel. Absoluut geplaatst,
@@ -139,12 +140,12 @@ def _geel(ctx, kid, kopgroep, vragen, bel, afdruk):
 # kaarten op een schuin gestippeld vel, rechts de kop met een omlijnd vraagteken erachter, de bereikbaarheid en de
 # belregel: het beeldmerk in een witte schijf, de vraag, en het nummer met een Goudgele streep eronder. contactlinks
 # zet de WhatsApp-knop er zelf achter. Geen mensen en geen voorwerpen: /contact/ toont er al drie, de adviseur in de
-# boog staat er direct boven. Vormgeving: onderaan css/blok/vragen.css, "Gesprek".
+# boog staat er direct boven. Vormgeving: css/blok/vragen-gesprek.css, "Gesprek".
 # Optie stijl="kaart" (29-09-2026, /contact/): dezelfde markup als "gesprek", in een Koningsblauwe kaart met dikte naar
 # het voorraadblok van referentie B (.sgdp-voorraad): links een collega met headset die boven de kaart uitsteekt, met
 # "Nu bereikbaar" als gele pil op haar podium; rechts de kop, de vragen als regels en de belrij. Ontwerp 03 uit
 # _ontwerpen/vragen-contact-ronde3.html, gekozen door de gebruiker ("gesprek" alleen vond die te sober). Ze staat links
-# omdat de adviseur in de boog van #na-bericht erboven rechts staat. Vormgeving: onderaan css/blok/vragen.css, "Kaart".
+# omdat de adviseur in de boog van #na-bericht erboven rechts staat. Vormgeving: css/blok/vragen-gesprek.css, "Kaart".
 # De klassen van het podium zijn nieuw: .vragen__beeld en .vragen__foto bestaan al (headset en kopkaartfiguur).
 COLLEGA = ("/img/contact-uit.webp", 1200, 800)
 
@@ -152,6 +153,12 @@ COLLEGA = ("/img/contact-uit.webp", 1200, 800)
 def _gesprek(ctx, kid, kopgroep, vragen, bel, kaart=False, sectie="wit"):
     """Eigen klassen voor alles buiten de vragen zelf, net als _geel: op /contact/ hangen er aan .p-contact
     paneelregels op .vragen__kop, .vragen__bel en .vragen__lijst. Met kaart gaat "Nu bereikbaar" het podium in."""
+    # De opmaak van gesprek en kaart staat sinds de samenvoeging van 29-09-2026 in css/blok/vragen-gesprek.css, direct
+    # na vragen.css, net als toen hij onderaan vragen.css stond. Alleen hier geladen, zodat de CSS van de pagina's met
+    # het blauwe paneel gelijk blijft.
+    for naam in ("vragen", "vragen-gesprek"):
+        if naam not in ctx.gebruikt:
+            ctx.gebruikt.append(naam)
     nu = ctx.bereikbaar("bereikbaar vragen__nu")
     podium = ""
     if kaart:

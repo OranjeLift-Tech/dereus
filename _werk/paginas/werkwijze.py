@@ -1,5 +1,9 @@
 """/werkwijze/: kop, de drie stappen als trap van kaarten, de voorbereiding, de verhuisdag (de blauwe band met dakrand),
-na de verhuizing, reviews, vragen over de werkwijze en de offertepil."""
+na de verhuizing, reviews, vragen over de werkwijze en de offertepil.
+
+Samengevoegd op 29-09-2026 met origin/main 8971f9e ("add all the changes to it except to the homepage, diensten,
+over-ons pages"): de pagina van Tugche, met twee keuzes van hier die zij niet aanraakte: de offertepil zonder de
+verhuizer in de kopband ("2. keep hers", 29-09-2026) en naband met klei=False, haar 3D-voorwerpen."""
 from kit import Pagina
 
 PAGINA = Pagina(
@@ -31,7 +35,9 @@ PAGINA = Pagina(
         # Diepblauwe kaart op een schuine gele band, nummer 03 uit _ontwerpen/na-de-verhuizing-varianten.html, met de
         # 3D-telefoon en -ster op een gele schijf (Tugche, 28-09-2026; na de samenvoeging op 29-09-2026 teruggezet,
         # de klant koos dit blok)
-        ("naband", {"kopij_id": "na-de-verhuizing"}),
+        # klei=False: haar 3D-telefoon en -ster (8971f9e). True geeft de klei-iconen uit de samenvoegreview van
+        # 28-09-2026 ("with clay on 1, 2, 3 and 11").
+        ("naband", {"kopij_id": "na-de-verhuizing", "klei": False}),
         # mozaiek van vier tegels, versie 3 uit ronde 7 (23-09-2026), aan door deze regels te wisselen met de regel erboven:
         # ("namozaiek", {"kopij_id": "na-de-verhuizing",
         #                "foto": ("/img/dienst-nationaal-v2-groot.webp", 1440, 1080),
@@ -50,6 +56,10 @@ PAGINA = Pagina(
         # Goudgele band met foto-afdruk (ontwerp 07 uit _ontwerpen/vragen-referentie-ronde1.html). Afdruk
         # woningontruiming: de bankscene staat al twee keer op deze pagina (verhuisdag).
         # ("vragen", {"kopij_id": "vragen", "stijl": "geel", "afdruk": "woningontruiming"}),
-        ("offertepil", {"variant": "los"}),
+        # Zonder de verhuizer in de kopband, zoals bij Tugche (9dbb9a8). Die kwam er sitebreed bij na haar commit
+        # (keuze van de gebruiker, 28-09-2026); op deze pagina op 29-09-2026 weer weg: "2. keep hers".
+        ("offertepil", {"variant": "los", "beeld": None}),
+        # Met de verhuizer (FIGUUR in _werk/blokken/offertepil.py):
+        # ("offertepil", {"variant": "los"}),
     ],
 )

@@ -59,11 +59,18 @@
 
 /* ---- de render, die linksboven uit de plaat komt ---- */
 .b-tijdlijn__ic{position:absolute;z-index:2;left:.9rem;top:0;transform:translateY(-58%)}
-/* Sinds de samenvoeging (28-09-2026) klei-iconen in plaats van de 3D-renders: vierkant en tot op 2 procent
-   bijgesneden, dus een maat voor alle vijf. 5,4 rem was de hoogte van de render bij stap 1. */
-.b-tijdlijn__obj{display:block;width:5.4rem;max-width:none;height:5.4rem;
+/* De 3D-renders van Tugche (optie klei=False, zie KLEI in _werk/paginas/werkwijze.py): breedte uit de verhouding,
+   per voorwerp een hoogte. */
+.b-tijdlijn__obj{display:block;width:auto;max-width:none;height:5.4rem;
   filter:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 30%,transparent))
          drop-shadow(8px 15px 11px color-mix(in srgb,var(--brand-secondary) 34%,transparent))}
+.b-tijdlijn__obj--telefoon{height:5.85rem}
+.b-tijdlijn__obj--klembord{height:5.3rem}
+.b-tijdlijn__obj--klok{height:4.7rem}
+.b-tijdlijn__obj--wagen{height:4.05rem}
+/* Sinds de samenvoeging (28-09-2026) klei-iconen in plaats van de 3D-renders (klei=True, __obj--klei): vierkant en
+   tot op 2 procent bijgesneden, dus een maat voor alle vijf. 5,4 rem was de hoogte van de render bij stap 1. */
+.b-tijdlijn__obj.b-tijdlijn__obj--klei{width:5.4rem;height:5.4rem}
 
 .b-tijdlijn__titel{margin:0 0 .35rem;color:var(--color-heading);
   font:var(--weight-display) 1.25rem/1.12 var(--font-display);font-stretch:var(--font-display-stretch);text-wrap:balance}

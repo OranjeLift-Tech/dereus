@@ -462,10 +462,6 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 /* ---- Header: een rij zoals referentie A en Brocken, licht zodra vast ---- */
 .header { position: fixed; inset: 0 0 auto; z-index: 50; color: var(--white); transition: background-color .35s var(--ease), box-shadow .35s var(--ease), color .35s var(--ease); }
 .header__balk .wrap { display: flex; align-items: center; gap: clamp(.75rem, 1.4vw, 1.25rem); min-height: var(--header-h); padding-block: .9rem; transition: min-height .35s var(--ease), padding .35s var(--ease); }
-/* De balk is smaller dan de pagina, zoals bij referentie A (29-09-2026, "logo staat te veel links"): 1200 px breed
-   met 40 px binnenrand. Op 1536 px begint het logo daardoor op 208 px in plaats van 167 px, net als daar, en de
-   offerteknop schuift even ver naar binnen. */
-@media (min-width: 768px) { .header__balk .wrap { --pad: 2.5rem; max-width: 1200px; } }
 .header__logo { position: relative; display: block; flex: none; line-height: 0; }
 .header__logo img { height: 42px; width: auto; transition: opacity .35s var(--ease), height .35s var(--ease); }
 .header__logo--zonder-tagline img { height: 64px; }
@@ -498,14 +494,6 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .header__reviews > .ic { width: 20px; height: 20px; }
 .header__reviews__ster { display: inline-flex; color: var(--brand-accent); font-size: .9375rem; }
 .header__reviews b { font: var(--weight-bold) .9375rem/1 var(--font-sans); }
-/* De pil verschijnt pas na het scrollen, zoals bij referentie A (29-09-2026). Bovenaan staan alleen telefoon en
-   offerteknop. Hij schuift dicht in plaats van display: none, anders springt het menu in één tik opzij; de -1rem
-   heft de gap van .header__acties op zolang hij dicht is. visibility haalt hem dan ook uit de tabvolgorde. */
-.header__reviews { flex: none; max-width: 8rem; overflow: hidden; white-space: nowrap;
-  transition: background-color .35s var(--ease), box-shadow .35s var(--ease), opacity .35s var(--ease),
-    max-width .35s var(--ease), padding .35s var(--ease), margin .35s var(--ease), visibility 0s; }
-.header:not(.is-vast) .header__reviews { max-width: 0; padding-inline: 0; margin-right: -1rem; opacity: 0; visibility: hidden;
-  transition-delay: 0s, 0s, 0s, 0s, 0s, 0s, .35s; }
 .header__cta { min-height: 46px; padding: .7rem 1.1rem; font-size: .875rem; white-space: nowrap; }
 .header__menu {
   display: none; place-items: center; width: 46px; height: 46px; margin-left: .25rem; border: 1px solid rgba(255, 255, 255, .45);
@@ -636,11 +624,8 @@ body.lade-open { overflow: hidden; }
    niet hoger van. Het verloop ligt erover heen; de uitnodiging staat er met z-index 1 bovenop. */
 .footer__wagen { position: absolute; z-index: 0; top: 0; bottom: 0; right: calc(50% - 50vw); left: auto;
   width: min(76%, 72rem); max-width: none; height: 100%; object-fit: cover; object-position: 50% 42%;
-  /* De linkerkant van de foto vervaagt over bijna de halve foto, anders tekent de rand van het beeld zich af tegen
-     het Diepblauw (29-09-2026: "çok keskin", de cabine mag in het donker). Rechts loopt de foto tot de schermrand
-     door, zonder vervagen: "sağdaki boşluklar neden var, komple kaplasın". */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 24%, #000 48%);
-  mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 24%, #000 48%); }
+  /* de linkerkant van de foto zelf vervaagt, anders tekent de rand van het beeld zich af tegen het Diepblauw */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); }
 .footer__intro::after { content: ""; position: absolute; z-index: 0; inset: 0 calc(50% - 50vw); pointer-events: none;
   background: linear-gradient(90deg, var(--brand-secondary) 0 30%, rgba(11, 35, 82, .9) 44%, rgba(11, 35, 82, .52) 64%, rgba(11, 35, 82, .22) 100%),
     linear-gradient(0deg, rgba(11, 35, 82, .55), rgba(11, 35, 82, 0) 55%); }
@@ -651,42 +636,46 @@ body.lade-open { overflow: hidden; }
 @media (min-width: 768px) {
   .footer__wagen { width: auto; aspect-ratio: 1200 / 732; object-position: 50% 55.7%; }
 }
-/* 29-09-2026: "araba fotoğrafı biraz daha sola gelsin", en rechts moet de foto de band helemaal vullen. Achter de
-   oplegger staat nog maar 30 px weg in de foto, dus de wagen komt alleen naar links als de foto iets groter wordt:
-   het vak toont rij 120 tot 774 (654 rijen) in plaats van 64 tot 796. Dak (rij ~308) en wielen (tot ~745) blijven
-   erin. Op 1536 staat de neus zo ~70 px verder naar links. Het verloop schuift even ver mee, zodat de cabine niet
-   donkerder wordt dan hij was. Pas vanaf 1200px: daaronder zou de cabine onder de knoppen schuiven.
-   Later op 29-09-2026: "karanlık arabanın önünü çok kapatıyor, biraz daha sola alalım". De bumper staat op 3% van de
-   foto en de cabine loopt tot 27%, dus het masker tot 48% legde de hele cabine in het donker. Nu vervaagt alleen de
-   strook straat links van de bumper (dekkend op 14%) en is het verloop verder naar links geschoven (20/32/46/60),
-   zodat de cabine nog maar licht getint is. Vanaf 1200px staat de tekst niet meer boven de foto; daaronder wel,
-   daar blijft het donker zoals het was. */
-@media (min-width: 1200px) {
-  .footer__wagen { aspect-ratio: 1200 / 654; object-position: 50% 62%;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 5%, #000 14%);
-    mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 5%, #000 14%); }
-  .footer__intro::after {
-    background: linear-gradient(90deg, var(--brand-secondary) 0 20%, rgba(11, 35, 82, .9) 32%, rgba(11, 35, 82, .5) 46%, rgba(11, 35, 82, .26) 60%, rgba(11, 35, 82, .2) 100%),
-      linear-gradient(0deg, rgba(11, 35, 82, .55), rgba(11, 35, 82, 0) 55%); }
-}
-/* ---- De bredere wagen van Tugche (origin/main 9dbb9a8, 28-09-2026), alleen met .footer__wagen--breed ----
-   Live staat img/footer-wagen.webp, de wagen die de gebruiker op 28-09-2026 goedkeurde. De regel voor
-   footer-wagen-breed.webp staat in _werk/navigatie.py als commentaar onder de live regel.
-   Tugche: de bumper stond op de linkerrand van de foto, dus de voorkant van de wagen viel in het masker en
-   zag er afgesneden uit ("sola dogru uzasin"). footer-wagen-breed.webp is dezelfde foto met links 800 px straat
-   erbij (gevel, stoep en klinkers uit de eigen linkerstrook, verder van de wagen zachter; _werk/footer-wagen-breder.cjs).
-   Het vak wordt daarom 2000/732 breed: de wagen blijft even groot en op dezelfde plek, de foto loopt verder door.
-   Het vervagen gebeurt op de aangevulde strook links van de wagen (x 0-800 van 2000): op 41% is het beeld dekkend
-   en de bumper staat op 40%, dus de wagen zelf vervaagt niet meer mee. Het verloop is links lichter (effen tot
-   24% in plaats van 30%), anders viel de langere straat links van de wagen weg onder het Diepblauw. */
+/* ---- De brede wagen, alleen met .footer__wagen--breed (idee van Tugche, origin/main 9dbb9a8) ----
+   Live staat img/footer-wagen-breed-v2.webp, de regel staat in _werk/navigatie.py. Tugche: de bumper stond op de
+   linkerrand van de foto, dus de voorkant van de wagen viel in het masker en zag er afgesneden uit ("sola dogru
+   uzasin"). Het beeld heeft daarom links 800 px meer, en het vak is 2000/732 breed: de wagen blijft even groot en
+   op dezelfde plek, de foto loopt verder door.
+   GitHub-keuze 12: "make the fade out slower", en in ronde 2 "but make it start earlier so less of the image is
+   covered". Van 10% naar 50% zichtbaar loopt over 314 px op 1440 (bij Tugche 188) en begint op x 539 (ronde 1: 601).
+   Het verloop is daarvoor links lichter (.82 op 28%) en over de wagen lichter (.44 op 44%, bij Tugche .5 op 56%),
+   zodat de bumper op 50% van de volle sterkte staat (ronde 1: 45%). Veel vroeger kan niet: op 1920 begint het al
+   op de linkerrand van het vak, en een steilere eerste stap tekent die rand af als een verticale streep.
+   Gemeten in website/review/footer-wagen-r2-20260929/.
+   Sinds 29-09-2026 footer-wagen-breed-v3.webp: "move the truck image in footer a bit to the left". Achter de wagen
+   was geen foto meer (de achterkant stond 13 px van de rechterrand op 1440), dus rechts zijn 160 px weg, veld en lucht
+   aangevuld met nano banana; de 2000 px van v2 blijven zoals ze waren. Het vak wordt 2160/732 en de maskerstops zijn
+   met 2000/2160 herschaald (12, 34 en 60% worden 11.11, 31.48 en 55.56%), dus het vervagen ligt op dezelfde plek op
+   de wagen. Vanaf 1100px staat de wagen zo 81 px verder links (1440 en 1920), 75 px op 1100. Tussen 768 en 1099 loopt
+   de wagen al onder de tekst: daar zet translate het vak 160/2160 van zijn breedte terug naar rechts en verandert er
+   niets (.footer knipt de rest met overflow:clip). */
 .footer__wagen--breed {
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .5) 23%, #000 41%);
-  mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .5) 23%, #000 41%); }
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .2) 11.11%, rgba(0, 0, 0, .45) 31.48%, #000 55.56%);
+  mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .2) 11.11%, rgba(0, 0, 0, .45) 31.48%, #000 55.56%); }
 .footer__intro:has(> .footer__wagen--breed)::after {
-  background: linear-gradient(90deg, var(--brand-secondary) 0 24%, rgba(11, 35, 82, .88) 36%, rgba(11, 35, 82, .5) 56%, rgba(11, 35, 82, .22) 100%),
+  background: linear-gradient(90deg, var(--brand-secondary) 0 24%, rgba(11, 35, 82, .82) 28%, rgba(11, 35, 82, .44) 44%, rgba(11, 35, 82, .22) 100%),
     linear-gradient(0deg, rgba(11, 35, 82, .55), rgba(11, 35, 82, 0) 55%); }
 @media (min-width: 768px) {
-  .footer__wagen.footer__wagen--breed { aspect-ratio: 2000 / 732; }
+  .footer__wagen.footer__wagen--breed { aspect-ratio: 2160 / 732; translate: calc(100% * 160 / 2160) 0; }
+}
+@media (min-width: 1100px) {
+  .footer__wagen.footer__wagen--breed { translate: none; }
+}
+/* Gevraagd op 29-09-2026: "Footer text at 768: fix it". Tussen 768 en 1099px staat de oplegger onder de tekst en gaf
+   zijn witte zijkant achter de alinea 2,28:1 (op 779px), de kop 2,57:1. Het verloop houdt daarom .7 dekking tot 490px:
+   de alinea eindigt op die breedtes hooguit op 478px (48ch vanaf de kantlijn van 24px), dus alleen de tekstkolom wordt
+   donkerder en de cabine rechts ervan nauwelijks. Daarna zakt het in 110px terug naar .44, zoals vanaf 1100px.
+   Gemeten van 768 tot 1099 in stappen van 8px, elke pixel achter de alinea: slechtste nu 5,53:1 (787px), de kop 6,75:1.
+   Vanaf 1100px verandert er niets. */
+@media (min-width: 768px) and (max-width: 1099.98px) {
+  .footer__intro:has(> .footer__wagen--breed)::after {
+    background: linear-gradient(90deg, var(--brand-secondary) 0 24%, rgba(11, 35, 82, .82) 28%, rgba(11, 35, 82, .7) 490px, rgba(11, 35, 82, .44) 600px, rgba(11, 35, 82, .22) 100%),
+      linear-gradient(0deg, rgba(11, 35, 82, .55), rgba(11, 35, 82, 0) 55%); }
 }
 /* Vier kolommen op één rij: merk, Diensten (zelf twee kolommen breed), De Reus, Contact. Elke kolom is precies
    zo breed als zijn inhoud en de ruimte die overblijft gaat naar de tussenruimtes (space-between), zodat de rij

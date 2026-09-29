@@ -30,6 +30,10 @@ JS = False
 # Het klembord met de vinkjes en niet het formulier: dit is de afvinklijst, en het formulier staat op /werkwijze/
 # al bij stap 1 van de trap erboven (samenvoeging 28-09-2026).
 VOORWERP = ("/img/clay/klembord-240.webp", 240, 240)
+# Optie klei=False (29-09-2026, KLEI in _werk/paginas/werkwijze.py): de 3D-render van Tugche (origin/main 9dbb9a8).
+# Dezelfde css: de hoogte staat vast, de breedte volgt de verhouding. Het gereedschap op de naad erboven
+# (css/blok/lijstplaat-geel.css, onderaan) blijft klei: haar img/kosten-3d/gereedschap.webp is weg sinds 3ec4faa.
+RENDER = ("/img/contact-3d/formulier.webp", 346, 400)
 
 # De foto in de huisvorm. Wat hier hoort is sinds 23-09-2026 veranderd, dus lees dit voor je hem
 # vervangt.
@@ -154,9 +158,11 @@ def html(ctx, kopij, **opties) -> str:
         beeld = (f'<span class="b-{NAAM}__beeld" aria-hidden="true"><span class="b-{NAAM}__kader"></span>'
                  f'<span class="b-{NAAM}__podium">{uit}{foto}<span class="b-{NAAM}__glas"></span>{voor}</span></span>')
     voorwerp = ""
-    if opties.get("voorwerp", True):
+    if opties.get("voorwerp", True) and opties.get("klei", True):
         voorwerp = ctx.beeld(VOORWERP[0], "", VOORWERP[1], VOORWERP[2], klasse=f"b-{NAAM}__klembord", sizes="7.6rem",
                              srcset="/img/clay/klembord-144.webp 144w, /img/clay/klembord-240.webp 240w")
+    elif opties.get("voorwerp", True):
+        voorwerp = ctx.beeld(RENDER[0], "", RENDER[1], RENDER[2], klasse=f"b-{NAAM}__klembord")
     return f'''<section class="b-{NAAM} sectie sectie--{grond}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
       <div class="wrap">
         {ctx.kopgroep(k, klasse=f"b-{NAAM}__kop")}

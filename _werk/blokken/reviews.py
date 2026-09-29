@@ -2,13 +2,14 @@
 Namen letterlijk, avatars als initialen (geen foto's). Nooit een aantal reviews noemen (open vraag 1.4).
 
 Varianten:
-  volledig  (nu nergens; tot 29-09-2026 home, /diensten/, /over-ons/, daarna reviewrail)  scorepaneel in Diepblauw met de ploeg erachter,
+  volledig  (home, /diensten/, /werkwijze/, /over-ons/)  scorepaneel in Diepblauw met de ploeg erachter,
             de uitgelichte review groot, daaronder de andere
   compact   (nu nergens)  drie reviews in een rij met de score erboven
 Optie sectie: "mist" of "wit" (standaard mist bij volledig, wit bij compact).
 """
 import re
 
+import beeldvarianten
 import kit
 
 NAAM = "reviews"
@@ -33,7 +34,7 @@ def klantbeeld(i):
     return f'<img class="rkaart__klant" src="{pad}" alt="" loading="lazy" decoding="async">'
 
 
-def ploegbeeld(k, i):
+def ploegbeeld(k, i, pagina):
     """Een beeld van de ploeg boven een van de kaarten, als de pagina er in haar eigen kopij om vraagt.
 
     Dit blok staat op vier pagina's, dus het beeld hangt aan de kopij en niet aan het blok: alleen de
@@ -50,14 +51,13 @@ def ploegbeeld(k, i):
     if i + 1 != bij:
         return ""
     b, h = _maat(pad, (760, 504))
-    return (f'<img class="rkaart__klant rkaart__klant--ploeg" src="{pad}" alt="" '
-            f'width="{b}" height="{h}" loading="lazy" decoding="async">')
+    return _ploegimg(pad, b, h, pagina)
 
 
 PLOEG = "/img/review-verhuizers.webp"
 
 
-def paneelploeg(k):
+def paneelploeg(k, pagina):
     """De ploeg achter het scorepaneel van variant A (keuze van de gebruiker, 28-09-2026).
 
     beeld: in het eigen {#reviews}-blok gaat voor; anders de ploeg met de doos en de steekwagen. Die staat
@@ -65,7 +65,14 @@ def paneelploeg(k):
     """
     pad = k.veld("beeld") or PLOEG
     b, h = _maat(pad, (760, 504))
-    return (f'<img class="rkaart__klant rkaart__klant--ploeg" src="{pad}" alt="" '
+    return _ploegimg(pad, b, h, pagina)
+
+
+def _ploegimg(pad, b, h, pagina):
+    """Het ploegbeeld als img. Lichtere breedtes voor de telefoon komen uit _werk/beeldvarianten.py (29-09-2026)."""
+    src, srcset, sizes = beeldvarianten.kies(pad, pagina=pagina)
+    extra = f' srcset="{srcset}" sizes="{sizes}"' if srcset else ""
+    return (f'<img class="rkaart__klant rkaart__klant--ploeg" src="{src}"{extra} alt="" '
             f'width="{b}" height="{h}" loading="lazy" decoding="async">')
 
 
@@ -122,7 +129,7 @@ def paneel(ctx, home_blok, eigen):
     score_tekst = eigen.veld("score-tekst") or home_blok.veld("score-tekst") or ctx.score
     link = eigen.veld("profiel-linktekst") or home_blok.veld("profiel-linktekst", "Bekijk alle reviews op Google")
     # het paneel heeft overflow:hidden voor zijn huis, dus de ploeg staat ernaast in .rplek en niet erin
-    return f'''<li class="rplek">{paneelploeg(eigen)}<div class="rpaneel">
+    return f'''<li class="rplek">{paneelploeg(eigen, ctx.pagina.pad)}<div class="rpaneel">
         <span class="rpaneel__g rpaneel__g--klei">{KLEI_GOOGLE}</span>
         <p class="rpaneel__score"><b>{ctx.cfg.GOOGLE_SCORE}</b><span>uit 5<small>op Google</small></span></p>
         {ctx.sterren(klasse="sterren rpaneel__sterren")}
@@ -146,7 +153,7 @@ def html(ctx, kopij, variant="volledig", sectie=None, **opties):
     if variant == "compact":
         grond = sectie or "wit"
         rij = (uit + rest)[:3]
-        kaarten = "".join(kaart(ctx, it, i, klant=ploegbeeld(k, i) or klantbeeld(i)) for i, it in enumerate(rij))
+        kaarten = "".join(kaart(ctx, it, i, klant=ploegbeeld(k, i, ctx.pagina.pad) or klantbeeld(i)) for i, it in enumerate(rij))
         link = home.veld("profiel-linktekst", "Bekijk alle reviews op Google")
         return f'''<section class="sectie sectie--{grond} b-reviews b-reviews--compact" id="{kid}" aria-labelledby="{kid}-kop">
   <div class="wrap">

@@ -41,6 +41,13 @@
 /* een lichtblauwe band eronder (/contact/, het formulier): de grond wisselt achter de streep van wit naar lucht, anders
    blijft onder de schuine rand een witte wig van 21 tot 73px staan (1440). De streep bedekt het midden op elke breedte. */
 .b-actielijn:has(+ .sectie--lucht){background:linear-gradient(var(--white) 50%,var(--primary-50) 50%)}
+/* een Mist-band erboven (de home sinds 29-09-2026, onder #diensten: "in homepage - put the actionline a section higher"):
+   de grond begint in Mist, anders staat tussen de grijze band en de streep een witte strook of wig */
+.sectie--mist + .b-actielijn{background:linear-gradient(var(--off-white) 50%,var(--white) 50%)}
+/* /diensten/ (29-09-2026), tussen de witte reviews en het formulier op Mist: zelfde soort wissel achter de streep, anders
+   staat onder de schuine rand een witte wig tegen de Mist ("one has background sligtly darker white"). Alleen hier, want
+   de home en /over-ons/ laden dit bestand ook. De ruimte eromheen regelt dienstenpanelen.css op de buren. */
+.p-diensten .b-actielijn:has(+ .sectie--mist){background:linear-gradient(var(--white) 50%,var(--off-white) 50%)}
 
 /* De streep. De feiten kantelen met dezelfde helling, dus met de halve stijging boven en onder de gecentreerde
    lijst blijft de afstand tot beide schuine randen overal gelijk. */

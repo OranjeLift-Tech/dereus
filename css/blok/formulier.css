@@ -182,12 +182,22 @@
 .b-formulier__kaart--beeld .b-formulier__podium{position:relative;flex:1000 1 auto;
   min-height:calc(var(--figuur-b) * .65 - var(--rijs));max-height:calc(var(--figuur-b) * 1.65 - var(--rijs))}
 .b-formulier .b-formulier__kaart--beeld .b-formulier__beeld{position:absolute;left:var(--zij-pad);top:calc(var(--rijs) * -1);
-  width:var(--figuur-b);height:calc(100% + var(--rijs) + 2px);max-width:none;margin:0;
+  width:var(--figuur-b);height:calc(100% + var(--rijs) + 10px);max-width:none;margin:0;
   object-fit:cover;object-position:50% 0;pointer-events:none}
 .b-formulier__kaart--beeld .b-formulier__paneel{position:relative;z-index:1;flex:1 0 auto;display:flex;flex-direction:column;justify-content:center;
   gap:var(--space-6);padding:var(--zij-pad)}
 .b-formulier__kaart--beeld .b-formulier__paneel::before{content:"";position:absolute;z-index:-1;inset:calc(var(--schuin) * -1) 0 0;background:var(--primary-200);
   border-radius:0 0 0 24px;clip-path:polygon(0 var(--schuin),58% var(--schuin),100% 0,100% 100%,0 100%)}
+/* Hover (29-09-2026): "Zo regelt u het in een paar minuten - add slight movement to the worker image on hover".
+   De verhuizer komt 8px omhoog in .45s, dezelfde maat en tijd als de verhuizer bij de reviews (reviews.css) en bij
+   de vragen. transform en niet translate: onder 900px staat translate al op -50% 0. Het beeld vangt geen muis
+   (pointer-events:none), dus de hele zijkolom is de trigger. Het beeld loopt daarom 10px onder de bovenrand van het
+   paneel door in plaats van 2px: anders valt bij het optillen een lichte streep onder de benen. In rust ligt dat
+   stuk onder het paneel en verandert er niets, want cover rekent hier altijd met de breedte. */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .b-formulier__kaart--beeld .b-formulier__beeld{transition:transform .45s var(--ease)}
+  .b-formulier__kaart--beeld .b-formulier__zij:hover .b-formulier__beeld{transform:translateY(-8px)}
+}
 
 @media (hover:hover){.b-formulier__tel:hover svg{transform:rotate(-12deg) scale(1.06)}}
 

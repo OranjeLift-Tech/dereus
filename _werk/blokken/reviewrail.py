@@ -1,5 +1,4 @@
-"""Reviews als rail met een scorepodium (#reviews op /werkwijze/, en sinds 29-09-2026 ook op de home, /diensten/ en
-/over-ons/: de klant wilde dit blok in alle reviewsecties).
+"""Reviews als rail met een scorepodium (/werkwijze/, #reviews "Zo gaat het in de praktijk").
 
 Gevraagd op 28-09-2026: het reviewblok van referentie B (_blokken/reviews.html + assets/css/blokken/reviews.css,
 klassen sgr__) in de huisstijl van De Reus. Links het podium: twee verschoven platen (Koningsblauw naar Diepblauw

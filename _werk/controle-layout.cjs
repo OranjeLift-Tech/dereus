@@ -198,11 +198,15 @@ async function draai({ browser, basis, snel = false } = {}) {
             const vormen = await page.locator('main > section.b-dienstenpanelen').evaluateAll(els => els.map(el => el.dataset.vorm || ''));
             assert.ok(vormen.every(Boolean) && new Set(vormen).size === 8, `${width}: eight service sections, eight different patterns (${vormen.join(', ')})`);
           }
-          /* Sinds 28-09-2026 heeft #kaart de vorm van het werkgebied: de kaart (.wg__kaartvlak) begint op de regel
-             van de kop, de gouden plaat erachter op die van het label. Onder 1060 staat de figuur onderaan. */
-          if (route === '/contact/' && width > 1060) {
-            assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.b-kaart .wg__kaartvlak').getBoundingClientRect().top
-              - document.querySelector('#kaart-kop').getBoundingClientRect().top) < 2), `${width}: map top aligns address heading`);
+          /* De kaart op /contact/ begint op de regel van de kop. Sinds de samenvoeging van 8971f9e (29-09-2026) weer
+             het blok kaart, de vorm van het werkgebied met haar speld en klok: .wg__kaartvlak, boven 1060. Van de
+             ochtend van 29-09-2026 tot die samenvoeging haar oudere kaart (blok kaart-tugche, .b-kaart__beeld, boven
+             960, zoals in haar controle van 9dbb9a8); de controle volgt het blok dat er staat. */
+          const kaartBeeld = route === '/contact/' && await page.locator('.b-kaart__beeld').count()
+            ? ['.b-kaart__beeld', 960] : ['.b-kaart .wg__kaartvlak', 1060];
+          if (route === '/contact/' && width > kaartBeeld[1]) {
+            assert.ok(await page.evaluate(kies => Math.abs(document.querySelector(kies).getBoundingClientRect().top
+              - document.querySelector('#kaart-kop').getBoundingClientRect().top) < 2, kaartBeeld[0]), `${width}: map top aligns address heading`);
           }
           if (route === '/werkwijze/') {
             /* De stappen. Sinds de samenvoeging van 28-09-2026 de trap van Tugche (blok tijdlijn: "Die van Tugche:
@@ -212,7 +216,21 @@ async function draai({ browser, basis, snel = false } = {}) {
                De vorige vormen mogen niet half blijven staan: dat is de manier waarop zo'n vervanging stilletjes
                misgaat. */
             await page.locator('#stappen').scrollIntoViewIfNeeded();
-            if (await page.locator('#stappen.b-tijdlijn').count()) {
+            if (await page.locator('#stappen.b-stappentrap').count()) {
+              /* Sinds de samenvoeging van 8971f9e (29-09-2026) de trap van Tugche in drie stappen (blok stappentrap:
+                 "de klant vond vijf stappen te veel, drie leest rustiger"). Dus drie ankers, stap-1 tot stap-3; naar
+                 stap-4 en stap-5 linkt niets. Een knop in de sectie, en de figuren en klei-iconen moeten er echt zijn. */
+              assert.equal(await page.locator('.b-stappenlang, .b-tijdlijn, .b-stapkaarten').count(), 0,
+                `${width}: de stappenrail, de tijdlijn of de stapkaarten staan er nog`);
+              assert.deepEqual(await page.locator('#stappen .b-stappentrap__kaart').evaluateAll(items => items.map(el => el.id)),
+                ['stap-1', 'stap-2', 'stap-3'], `${width}: de drie kaarten en hun ankers`);
+              assert.equal(await page.locator('#stappen .knop--cta').count(), 1, `${width}: een primaire knop in de sectie`);
+              await page.locator('#stappen img').evaluateAll(els => els.forEach(el => { el.loading = 'eager'; }));
+              await beeldenKlaar('#stappen img');
+              assert.deepEqual(await page.locator('#stappen img').evaluateAll(els => els
+                .filter(el => !el.complete || !el.naturalWidth).map(el => el.getAttribute('src'))), [],
+                `${width}: figuren en klei-iconen van de trap geladen`);
+            } else if (await page.locator('#stappen.b-tijdlijn').count()) {
               assert.equal(await page.locator('.b-stappenlang, .b-stapkaarten').count(), 0, `${width}: de stappenrail of de stapkaarten staan er nog`);
               assert.deepEqual(await page.locator('#stappen .b-tijdlijn__stap').evaluateAll(items => items.map(el => el.id)),
                 ['stap-1', 'stap-2', 'stap-3', 'stap-4', 'stap-5'], `${width}: de vijf treden en hun ankers`);
@@ -394,8 +412,10 @@ async function draai({ browser, basis, snel = false } = {}) {
             /* Het gereedschap op de naad met de tijdlijn (optie A, 23-09-2026) is een ::before op de wrap
                en rekent vanaf de sectie. Op de telefoon loopt de kop over de volle breedte en staat het
                voorwerp er rechts boven; het mag de letters van de label en de kop niet raken. Gemeten op
-               de tekst zelf (Range), niet op het blok, want dat loopt altijd door tot de rechterrand. */
+               de tekst zelf (Range), niet op het blok, want dat loopt altijd door tot de rechterrand.
+               De CSS zet het alleen na de tijdlijn of de stapkaarten; na de stappentrap (8971f9e) is er geen. */
             assert.deepEqual(await page.evaluate(lp => {
+              if (!document.querySelector('#stappen:is(.b-tijdlijn, .b-stapkaarten)')) return [];
               const sectie = document.querySelector('#voorbereiding');
               const s = getComputedStyle(sectie.querySelector(':scope > .wrap'), '::before');
               if (s.content === 'none') return ['geen gereedschap op de naad'];

@@ -18,7 +18,7 @@ JS = False
 
 # De ploeg bij de wagen (live als kop van /diensten/) en een verhuizer met twee dozen (live op /kosten/
 # en /over-ons/). Allebei staan ze nog niet op de home; het team uit de hero staat daar al bovenaan.
-FOTO = ("/img/headers/diensten.webp", 1600, 900)
+FOTO = ("/img/headers/diensten-licht.webp", 1600, 900)
 UITSNEDE = ("/img/verhuizer-twee-dozen-uit.webp", 407, 1200)
 
 

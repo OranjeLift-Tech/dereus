@@ -59,30 +59,16 @@ def google(ctx, klasse="of-google"):
             f'<span>{ctx.sterren()}<small>uit 5 op Google</small></span></a>')
 
 
-# Rechts in de kopband van de headerkaart: één donkere pil met drie vakken, zoals de keurmerkpil van
-# referentie A (gebruiker, 29-09-2026). Daar staan een reviewcijfer, een branchekeurmerk en een aantal
-# beoordelingen; hier alleen wat voor De Reus vaststaat:
-#   1. de Google-score (config.GOOGLE_SCORE),
-#   2. het schild (sinds 28-09-2026 een losse witte pil, de tekst staat zo op /contact/ #vertrouwen;
-#      geen bedrag, dat hoort bij het eigen risico in de FAQ),
-#   3. de reactietijd uit "De Reus in cijfers" (home.md #cijfers).
-# Geen keurmerk dat de klant niet bevestigd heeft (zie de bewakers). Zodra FEITEN["AANTAL_REVIEWS"]
-# bekend is, neemt dat aantal vak 3 over, net als in het voorbeeld.
-SCHILD = "Standaard verzekerd"
-REACTIE = ("24 uur", "tot wij u bellen")
+# Het schild naast de Google-pil in de headerkaart (gebruiker, 28-09-2026: "yes" op "add the Standaard
+# verzekerd shield next to Google"). De tekst staat zo op /contact/ (#vertrouwen). Geen bedrag: dat hoort
+# bij het eigen risico en staat samen in de FAQ.
+SCHILD = ("Standaard verzekerd", "Uw inboedel, tijdens de verhuizing")
 
 
-def keurmerken(ctx):
-    aantal = ctx.feit("AANTAL_REVIEWS")
-    kop, onder = (str(aantal), "beoordelingen op Google") if aantal else REACTIE
-    e = ctx.esc
-    return (f'<div class="of-keurmerken" role="group" aria-label="Beoordeling en zekerheden">'
-            f'<a class="of-keurmerk of-keurmerk--google" href="{e(ctx.cfg.GOOGLE_PROFIEL)}" rel="noopener" '
-            f'target="_blank" aria-label="{e(ctx.score)}">{ctx.icoon("google", "ic ic--google")}'
-            f'<b>{ctx.cfg.GOOGLE_SCORE}</b><span class="of-keurmerk__onder">{ctx.sterren()}<small>uit 5 op Google</small></span></a>'
-            f'<span class="of-keurmerk of-keurmerk--schild">{ctx.icoon("schild")}<b>{e(SCHILD)}</b></span>'
-            f'<span class="of-keurmerk of-keurmerk--tekst"><b>{e(kop)}</b><small>{e(onder)}</small></span>'
-            f'</div>')
+def schild(ctx):
+    kop, onder = SCHILD
+    return (f'<span class="of-schild">{ctx.icoon("schild")}'
+            f'<span><b>{ctx.esc(kop)}</b><small>{ctx.esc(onder)}</small></span></span>')
 
 
 def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="", **opties):
@@ -98,7 +84,8 @@ def html(ctx, kopij, variant="hero", over_kop=False, dienst=None, van="", naar="
         knop = k.veld("pil-knop", "Offerte aanvragen")
         vinken = ctx.lijst(k.lijst, "of-vinken vinklijst")
         prefix = "header-of" if variant == "header" else "of"
-        merken = keurmerken(ctx) if variant == "header" else google(ctx)
+        # schild en Google als één groep, zodat ze samen onder de titel vallen als de kop te smal wordt
+        merken = f'<div class="of-merken">{schild(ctx)}{google(ctx)}</div>' if variant == "header" else google(ctx)
         return f'''<div class="of-wrap" id="{prefix}-kaart">
     <div class="of-box of-box--hero{" of-box--header" if variant == "header" else ""}">
       <div class="of-kop">
