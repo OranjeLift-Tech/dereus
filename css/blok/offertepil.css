@@ -77,9 +77,6 @@
 .of-box--header::before { width:3.25rem; height:3px; left:1.25rem; }
 .of-box--header .of-kop { gap:.75rem 1.5rem; margin-bottom:.85rem; align-items:center; }
 .of-box--header .of-titel { font-size:1.5rem; }
-.of-box--header .of-google { padding:.3rem .7rem .3rem .4rem; background:transparent; box-shadow:none; }
-.of-box--header .of-google b { font-size:1.5rem; }
-.of-box--header .of-google .ic--google { width:1.8rem; height:1.8rem; }
 .of-box--header .of-pil { border-radius:14px; padding:.3rem; box-shadow:inset 0 0 0 1px var(--color-border); }
 .of-box--header .of-veld { padding:.4rem 1rem; border-radius:10px; gap:.15rem; }
 .of-box--header .of-veld:first-child { padding-left:1rem; }
@@ -130,9 +127,6 @@
   .of-box--header { padding:1rem; border-radius:16px; }
   .of-box--header .of-kop { flex-wrap:nowrap; gap:.6rem; }
   .of-box--header .of-titel { font-size:1.3rem; }
-  .of-box--header .of-google { gap:.35rem; padding:.2rem 0; }
-  .of-box--header .of-google b { font-size:1.25rem; }
-  .of-box--header .of-google small { display:none; }
   .of-box--header .of-veld--datum, .of-box--header .of-veld--dienst { grid-column:1/-1; }
   .of-box--header .of-veld :is(input,select) { min-height:32px; font-size:1rem; }
   .of-box--header .of-voet .of-vinken { display:none; }
@@ -141,36 +135,60 @@
 
 /* ---- Headerkaart: blauwe kopband ----
    De kaart in elke paginakop is vlak, met één zachte schaduw die hem van de paginakop losmaakt. De kop is een effen
-   Koningsblauwe band met de goudgele nok erop (het dak van het logo), de Google-score staat als witte pil op die
-   band. De velden hebben een dunne rand, met een klein icoon bij elk label. De vinkjes zijn goudgele schijven: geel alleen als vlak. Alles staat stil. */
+   Koningsblauwe band met de goudgele nok erop (het dak van het logo), rechts op die band de keurmerkpil (zie
+   hieronder). De velden hebben een dunne rand, met een klein icoon bij elk label. De vinkjes zijn goudgele schijven: geel alleen als vlak. Alles staat stil. */
 .of-box--header{border:0;border-radius:22px;
   box-shadow:0 0 0 1px rgba(14,26,51,.06),0 18px 40px -24px rgba(11,35,82,.35)}
 .of-box--header::before{z-index:1;left:1.4rem;width:4.25rem;height:5px}
-.of-box--header .of-kop{position:relative;isolation:isolate;overflow:hidden;margin:-1rem -1.25rem .95rem;padding:.8rem 1.25rem .8rem 1.4rem;border-radius:22px 22px 0 0;
+.of-box--header .of-kop{position:relative;isolation:isolate;overflow:hidden;margin:-1rem -1.25rem .95rem;padding:.67rem 1.25rem .67rem 1.4rem;border-radius:22px 22px 0 0;
   background:var(--brand-primary)}
 /* het huis uit het logo als stil watermerk rechts */
 .of-box--header .of-kop::after{content:"";position:absolute;z-index:-1;right:11rem;bottom:-1.6rem;width:6.5rem;aspect-ratio:535.3/509.8;background:rgba(255,255,255,.07);
   -webkit-mask:var(--huisvlak) center/contain no-repeat;mask:var(--huisvlak) center/contain no-repeat}
 .of-box--header .of-titel{color:var(--white);font-size:1.65rem}
-.of-box--header .of-google{padding:.3rem .85rem .3rem .4rem;background:var(--white);box-shadow:none}
-.of-box--header .of-google:hover{background:var(--accent-100)}
-.of-box--header .of-google:focus-visible{outline:3px solid var(--brand-accent);outline-offset:3px}
-.of-box--header .of-google .ic--google{box-shadow:none}
-/* Het schild naast de Google-pil (28-09-2026), in dezelfde witte pil. Samen in .of-merken, zodat ze als paar
-   onder de titel vallen waar de kop te smal is (560 tot 767 px). Op de telefoon staan ze onder elkaar rechts
-   van de titel, Google bovenaan: naast elkaar passen ze daar niet (titel 150 + pil 165 in 324 px bij 390). */
-.of-box--header .of-merken{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
-.of-box--header .of-schild{display:inline-flex;align-items:center;gap:.55rem;padding:.3rem .95rem .3rem .4rem;border-radius:999px;background:var(--white);line-height:1.1}
-.of-box--header .of-schild .ic{flex:none;width:1.8rem;height:1.8rem;padding:.3rem;border-radius:50%;background:var(--primary-50);color:var(--brand-primary)}
-.of-box--header .of-schild>span{display:grid;gap:2px}
-.of-box--header .of-schild b{font-size:.9375rem;font-weight:var(--weight-bold);color:var(--brand-secondary);white-space:nowrap}
-.of-box--header .of-schild small{font-size:.78rem;font-weight:var(--weight-semibold);color:var(--grey-600)}
+/* Keurmerkpil (29-09-2026): Google-score, schild en reactietijd als één donkere pil met drie vakken en dunne
+   scheidslijnen, naar de keurmerkpil van referentie A (.keurmerken). Vervangt de twee losse witte pillen. De pil
+   is 46 px hoog en de band heeft daarom .67rem in plaats van .8rem padding: de band blijft 67 px (560 tot 767 px:
+   110 px, telefoon 97 px), dus de fotogrens van "De foto loopt door achter de offertekaart" (kop.css) klopt nog.
+   Telefoon: de pil onder de titel over de hele breedte, de vakken delen de ruimte. Onder 400 px vallen de sterren
+   weg, anders past "24 uur" op 320 px niet meer. */
+.of-box--header .of-keurmerken{display:flex;align-items:stretch;flex:none;max-width:100%;padding:3px;border-radius:999px;
+  background:rgba(11,35,82,.42);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.of-keurmerk{display:flex;align-items:center;gap:.5rem;min-height:40px;padding:0 1rem;color:var(--white);line-height:1;text-decoration:none}
+.of-keurmerk+.of-keurmerk{border-left:1px solid rgba(255,255,255,.24)}
+a.of-keurmerk{border-radius:999px 0 0 999px}
+a.of-keurmerk:hover{background:rgba(255,255,255,.1);color:var(--white);text-decoration:none}
+a.of-keurmerk:focus-visible{outline:3px solid var(--brand-accent);outline-offset:2px}
+.of-keurmerk b{font:var(--weight-display) 1.15rem/1 var(--font-display);font-stretch:var(--font-display-stretch)}
+.of-keurmerk small{font-size:.66rem;font-weight:var(--weight-semibold);color:rgba(255,255,255,.82);white-space:nowrap}
+.of-keurmerk--google{padding-left:.25rem}
+.of-keurmerk--google .ic--google{flex:none;width:2rem;height:2rem;padding:.38rem;border-radius:50%;background:var(--white)}
+.of-keurmerk--google b{font-size:1.6rem}
+.of-keurmerk__onder{display:grid;gap:3px}
+.of-keurmerk__onder .sterren .ic{width:.8rem;height:.8rem}
+.of-keurmerk--schild .ic{flex:none;width:1.65rem;height:1.65rem;color:var(--brand-accent)}
+.of-keurmerk--schild b{max-width:6.2rem;font-size:.92rem;line-height:1.02;letter-spacing:.03em;text-transform:uppercase}
+.of-keurmerk--tekst{flex-direction:column;justify-content:center;gap:4px;padding-right:1.25rem;text-align:center}
 @media (max-width:559.98px){
-  .of-box--header .of-merken{flex:none;flex-direction:column-reverse;flex-wrap:nowrap;align-items:stretch;gap:.35rem}
-  .of-box--header .of-schild{gap:.35rem;padding:.25rem .7rem .25rem .3rem}
-  .of-box--header .of-schild .ic{width:1.5rem;height:1.5rem;padding:.25rem}
-  .of-box--header .of-schild b{font-size:.75rem}
-  .of-box--header .of-schild small{display:none}
+  .of-box--header .of-kop{flex-wrap:wrap;gap:.45rem}
+  .of-box--header .of-titel{margin:0}
+  .of-box--header .of-keurmerken{width:100%}
+  .of-keurmerk{flex:1 1 auto;justify-content:center;min-width:0;min-height:38px;padding:0 .5rem;gap:.35rem}
+  .of-keurmerk--google{padding-left:.2rem}
+  .of-keurmerk--google .ic--google{width:1.7rem;height:1.7rem;padding:.32rem}
+  .of-keurmerk--google b{font-size:1.3rem}
+  .of-keurmerk__onder small{display:none}
+  .of-keurmerk__onder .sterren .ic{width:.6rem;height:.6rem}
+  .of-keurmerk--schild .ic{width:1.3rem;height:1.3rem}
+  .of-keurmerk--schild b{max-width:5rem;font-size:.72rem}
+  .of-keurmerk--tekst{padding-right:.6rem}
+  .of-keurmerk--tekst b{font-size:.95rem}
+  .of-keurmerk--tekst small{font-size:.58rem}
+}
+@media (max-width:399.98px){
+  .of-keurmerk__onder{display:none}
+  .of-keurmerk{padding:0 .4rem}
+  .of-keurmerk--tekst small{font-size:.54rem}
 }
 .of-box--header .of-pil{background:#F3F6FB;box-shadow:inset 0 0 0 1px #C9D3E4}
 .of-box--header .of-veld:hover{background:rgba(255,255,255,.75)}
@@ -195,7 +213,6 @@
   .of-box--header .of-kop{margin:-1rem -1rem .9rem;padding:.7rem 1rem .7rem 1.1rem;border-radius:18px 18px 0 0}
   .of-box--header::before{left:1.1rem;width:3.25rem;height:4px}
   .of-box--header .of-titel{font-size:1.3rem}
-  .of-box--header .of-google{padding:.25rem .7rem .25rem .3rem}
   .of-box--header .of-kop::after{display:none}
 }
 

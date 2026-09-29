@@ -462,6 +462,10 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 /* ---- Header: een rij zoals referentie A en Brocken, licht zodra vast ---- */
 .header { position: fixed; inset: 0 0 auto; z-index: 50; color: var(--white); transition: background-color .35s var(--ease), box-shadow .35s var(--ease), color .35s var(--ease); }
 .header__balk .wrap { display: flex; align-items: center; gap: clamp(.75rem, 1.4vw, 1.25rem); min-height: var(--header-h); padding-block: .9rem; transition: min-height .35s var(--ease), padding .35s var(--ease); }
+/* De balk is smaller dan de pagina, zoals bij referentie A (29-09-2026, "logo staat te veel links"): 1200 px breed
+   met 40 px binnenrand. Op 1536 px begint het logo daardoor op 208 px in plaats van 167 px, net als daar, en de
+   offerteknop schuift even ver naar binnen. */
+@media (min-width: 768px) { .header__balk .wrap { --pad: 2.5rem; max-width: 1200px; } }
 .header__logo { position: relative; display: block; flex: none; line-height: 0; }
 .header__logo img { height: 42px; width: auto; transition: opacity .35s var(--ease), height .35s var(--ease); }
 .header__logo--zonder-tagline img { height: 64px; }
@@ -494,6 +498,14 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .header__reviews > .ic { width: 20px; height: 20px; }
 .header__reviews__ster { display: inline-flex; color: var(--brand-accent); font-size: .9375rem; }
 .header__reviews b { font: var(--weight-bold) .9375rem/1 var(--font-sans); }
+/* De pil verschijnt pas na het scrollen, zoals bij referentie A (29-09-2026). Bovenaan staan alleen telefoon en
+   offerteknop. Hij schuift dicht in plaats van display: none, anders springt het menu in één tik opzij; de -1rem
+   heft de gap van .header__acties op zolang hij dicht is. visibility haalt hem dan ook uit de tabvolgorde. */
+.header__reviews { flex: none; max-width: 8rem; overflow: hidden; white-space: nowrap;
+  transition: background-color .35s var(--ease), box-shadow .35s var(--ease), opacity .35s var(--ease),
+    max-width .35s var(--ease), padding .35s var(--ease), margin .35s var(--ease), visibility 0s; }
+.header:not(.is-vast) .header__reviews { max-width: 0; padding-inline: 0; margin-right: -1rem; opacity: 0; visibility: hidden;
+  transition-delay: 0s, 0s, 0s, 0s, 0s, 0s, .35s; }
 .header__cta { min-height: 46px; padding: .7rem 1.1rem; font-size: .875rem; white-space: nowrap; }
 .header__menu {
   display: none; place-items: center; width: 46px; height: 46px; margin-left: .25rem; border: 1px solid rgba(255, 255, 255, .45);

@@ -1,4 +1,4 @@
-"""/diensten/: kop met ankerchips, acht diensten, reviews (variant A, zoals de home) en het grote offerteformulier
+"""/diensten/: kop met ankerchips, acht diensten, reviews (scorepodium + rail, zoals de home) en het grote offerteformulier
 van de home (blok aanvraag)."""
 import kopij as _kopij
 from kit import Pagina
@@ -31,11 +31,17 @@ PAGINA = Pagina(
     kopij="diensten",
     header="transparant",
     body_klasse="p-diensten",
-    extra_css=("reviews-ster",),   # de 3D-ster op de uitgelichte review
+    # "reviews-ster" (de 3D-ster op de uitgelichte review) hoort bij het reviewblok "reviews"; zet hem terug als dat
+    # blok hieronder weer aan gaat.
     blokken=[
         ("kop", {"chips": _chips()}),
         ("naadiconen", {"kopij": None, "blok": "dienstenpanelen", "opties": {"kopij_ids": DIENSTEN}, "plek": NAADICONEN}),
-        ("reviews", {"sectie": "wit"}),                   # variant A met de ploeg achter het scorepaneel (28-09-2026)
+        # het reviewblok van /werkwijze/ (scorepodium + rail, referentie B) sinds 29-09-2026: de klant wilde het in
+        # alle reviewsecties (Tugche, 8971f9e; na de samenvoeging van 29-09-2026 teruggezet).
+        ("reviewrail", {"kopij_id": "reviews", "sectie": "wit", "accent": "klanten zeggen"}),
+        # variant A met de ploeg achter het scorepaneel (28-09-2026), aan door deze regel te wisselen met de regel
+        # erboven (en "reviews-ster" terug in extra_css):
+        # ("reviews", {"sectie": "wit"}),
         # De actielijn van de home, met dezelfde kopij (home.md, #cijfers): plek 2 gekozen op 29-09-2026
         # (website/review/opslag-naad-20260929/, item 4). De grond eromheen staat in dienstenpanelen.css en actielijn.css.
         ("actielijn", {"kopij": None, "kopij_van": ("home", "cijfers")}),

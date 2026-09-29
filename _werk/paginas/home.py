@@ -22,7 +22,8 @@ PAGINA = Pagina(
     header="transparant",
     body_klasse="p-home",
     preload_beeld=_preload(),
-    extra_css=("reviews-ster",),              # de gouden 3D-ster op de uitgelichte review, alleen hier
+    # "reviews-ster" (de gouden 3D-ster op de uitgelichte review) hoort bij het reviewblok "reviews"; zet hem terug
+    # als dat blok hieronder weer aan gaat.
     blokken=[
         ("hero", {"kopij_id": "offerte"}),
         ("diensten", {}),
@@ -38,15 +39,24 @@ PAGINA = Pagina(
         # routeband or option A (28-09-2026): A on Koningsblauw" (website/review/zowerkthet-home-vergelijk-20260928/).
         # Daarvoor de routeband (intro-route-band); dat blok en zijn CSS blijven staan.
         ("stapkaarten", {"kopij_id": "werkwijze", "grond": "blauw"}),
-        ("reviews", {}),
+        # het reviewblok van /werkwijze/ (scorepodium + rail, referentie B) sinds 29-09-2026: de klant wilde het in
+        # alle reviewsecties (Tugche, 8971f9e; na de samenvoeging van 29-09-2026 teruggezet).
+        ("reviewrail", {"kopij_id": "reviews", "sectie": "mist", "accent": "over ons zeggen"}),
+        # variant A (trio achter het donkere scorepaneel), aan door deze regel te wisselen met de regel erboven (en
+        # "reviews-ster" terug in extra_css):
+        # ("reviews", {}),
         # feiten: False sinds 28-09-2026, toen het KvK-nummer in config.FEITEN kwam: "Sterk waar het zwaar is" blijft zoals
         # goedgekeurd, zonder feitenrijen. Het KvK-nummer staat in de footer, op /contact/ en in de JSON-LD.
         ("over-ons", {"kopij_van": ("over-ons", "verhaal"), "feiten": False, "motto": False}),   # een kopie van /over-ons/ #verhaal
-        ("werkgebied", {}),
+        # voorwerpen="echt": echte voorwerpen in de gele tegels (Tugche, 8971f9e); zonder de klei-iconen
+        ("werkgebied", {"voorwerpen": "echt"}),
         # kopkaart: de sectiekop hoort in de belkaart. De headset verhuist mee naar de
         # rechterbovenhoek van die kaart ("hoek"); het gat dat "headset-huis" vulde bestaat
         # niet meer zodra de kop in de kaart staat.
-        ("vragen", {"beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),
+        # Sinds 29-09-2026 de blauwe kaart met de collega, zoals op /contact/ (Tugche: alle vragenblokken zo).
+        ("vragen", {"stijl": "kaart"}),
+        # Tot 29-09-2026 het blauwe paneel, aan door deze regel te wisselen met de regel erboven:
+        # ("vragen", {"beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),
         ("aanvraag", {"kopij": None}),
         # homecontact ("Wilt u iets bespreken over uw verhuizing?") is eraf sinds 28-09-2026:
         # "remove from homepage as it sits right below the other form". Blok en CSS blijven bestaan.
@@ -67,7 +77,8 @@ NAADICONEN = {
     # ("...Daarom zeggen"); de gebruiker op 29-09-2026: "12. Waarom verhuislift icon: hide below 1160".
     "waarom": ("waarom", [("verhuislift", "rechts", 109, 64, .53, 1160), ("vakman", "links", 76, 68, .48)]),
     "stapkaarten": ("werkwijze", [("woningontruiming", "links", 105, -30, .5), ("zakelijk", "rechts", 180, -35, .47)]),
-    "reviews": ("reviews", [("telefoon", "links", 92, -84, .46)]),
+    # sleutel reviewrail: het blok heet sinds de terugzetting van 29-09-2026 weer zo, de sectie blijft #reviews
+    "reviewrail": ("reviews", [("telefoon", "links", 92, -84, .46)]),
     "over-ons": ("over-ons", [("verhuislift", "links", 66, -51, .47)]),
     "werkgebied": ("werkgebied", [("internationaal", "links", 82, -19, .52)]),
     # Het klembord hangt sinds 28-09-2026 aan de formulierkaart, op de rechterbovenhoek, met een hover:
