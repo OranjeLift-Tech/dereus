@@ -1,0 +1,85 @@
+/* Zo pakken we het aan (/diensten/zakelijke-verhuizingen/ #hoe), 29-09-2026. Naar het patroon branch-route-stops
+   (De Bresser) uit ../section-library: de kop links, rechts een foto waarvan het kader lager begint dan de uitsnede,
+   en over de onderrand van de foto een witte strook met de vier stappen als haltes op een gestippelde route.
+   De gebruiker: "expand the 8 diensten pages with 2 more page specific sections in each page, use the
+   section-library verified sections for this, add hover effects and clay icons to each one".
+   Anders dan de bibliotheek: Mist in plaats van een blauw vlak (een tekstpolariteit per sectie, donker op licht), en
+   per halte een klei-icoon op de route, tussen de speld en de volgende halte.
+   Van achter naar voor: de foto, met het kader vanaf --rstop-kader; de twee verhuizers als uitsnede op dezelfde doos,
+   zodat hun hoofden en schouders boven het kader uitkomen; de strook, die de onderrand van de foto afdekt.
+   De uitsnede (verhuisdag-dragen-stoep-uit) loopt van 20,3 % tot 50 % van de hoogte: de hoofden beginnen op 20,3 %, de
+   bank op 35,3 %. Het kader op 33 % houdt de bank eronder; de lege strook boven de hoofden (15 % van de breedte) schuift
+   met --rstop-op onder de ruimte van de sectie of de kop. */
+.b-routestops { --rstop-overlap: clamp(2.25rem, 3.4vw, 3rem); --rstop-kader: 33%; --rstop-op: -13%; --rstop-klei: 3.5rem; --rstop-gat: 1.25rem;
+  --rstop-speld: 22px; --rstop-lijn: var(--primary-300); }
+.rstop__raster { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 13fr); column-gap: clamp(2rem, 4vw, 3.5rem); align-items: end; }
+.rstop__kop { min-width: 0; padding-bottom: calc(var(--rstop-overlap) + 1.5rem); }
+.rstop__kop h2 { margin: 0; }
+.rstop__kop .intro { max-width: 44ch; }
+.rstop__knoppen { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.5rem; margin-top: 1.6rem; }
+
+/* de foto en de uitsnede hebben dezelfde doos (beide 1400 x 1050); alleen de foto wordt geknipt. De marge in procent
+   rekent op de breedte van de kolom. pointer-events: gestapeld ligt de lege bovenkant over de knoppen. */
+.rstop__fig { position: relative; min-width: 0; aspect-ratio: 4 / 3; margin: var(--rstop-op) 0 0; pointer-events: none; }
+.rstop__fig img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.rstop__foto { clip-path: inset(var(--rstop-kader) 0 0 0 round var(--radius-media)); }
+.rstop__uit { z-index: 1; }
+
+/* de strook: het blokeinde dat de onderrand van de foto afdekt */
+.rstop__strook { grid-column: 1 / -1; position: relative; z-index: 2; min-width: 0; margin-top: calc(-1 * var(--rstop-overlap));
+  padding: 1.5rem 1.75rem 1.6rem; border-radius: var(--radius-card); background: var(--white);
+  box-shadow: 0 0 0 1px rgb(14 26 51 / .06), 0 26px 44px -26px rgb(14 26 51 / .45); }
+.rstop__lijst { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem var(--rstop-gat); margin: 0; padding: 0; list-style: none; }
+.rstop__halte { position: relative; min-width: 0; padding-top: calc(var(--rstop-klei) + .8rem); }
+.rstop__speld { position: absolute; left: 0; top: calc(var(--rstop-klei) / 2 - var(--rstop-speld) / 2); z-index: 1;
+  width: var(--rstop-speld); height: var(--rstop-speld); border-radius: 50%; background: var(--white);
+  box-shadow: inset 0 0 0 6px var(--brand-primary); }
+/* de route loopt van elke speld naar de volgende, over het gat heen; het klei-icoon ligt erop */
+.rstop__halte::before { content: ""; position: absolute; top: calc(var(--rstop-klei) / 2 - 1px); left: var(--rstop-speld);
+  right: calc(-1 * var(--rstop-gat)); border-top: 2px dashed var(--rstop-lijn); }
+.rstop__halte:last-child::before { display: none; }
+/* een witte schijf achter de klei, zodat de stippellijn niet door de lege hoeken van het beeld loopt */
+.rstop__klei { position: absolute; left: calc(var(--rstop-speld) + .6rem); top: 0; z-index: 1; width: var(--rstop-klei); height: var(--rstop-klei);
+  max-width: none; padding: .2rem; border-radius: 50%; background: var(--white); transform-origin: 50% 100%;
+  filter: drop-shadow(0 6px 6px rgb(14 26 51 / .14)); }
+.rstop__halte h3 { margin: 0 0 .35rem; font-size: 1.2rem; }
+.rstop__halte p { margin: 0; color: var(--grey-600); font-size: .95rem; line-height: 1.55; }
+
+/* Gestapeld: de kop boven, de foto eronder, de strook over de onderrand; de haltes twee aan twee */
+@media (max-width: 900px) {
+  .rstop__raster { grid-template-columns: minmax(0, 1fr); }
+  .rstop__kop { padding-bottom: 1.25rem; }
+  .rstop__lijst { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rstop__halte:nth-child(2n)::before { display: none; }
+}
+/* Telefoon: een kolom, de route loopt verticaal langs de spelden, de klei naast de titel */
+@media (max-width: 560px) {
+  .b-routestops { --rstop-klei: 3rem; --rstop-gat: 1.4rem; --rstop-overlap: 1.75rem; }
+  .rstop__knoppen { flex-direction: column; align-items: stretch; }
+  .rstop__knoppen .knop--link { align-self: flex-start; }
+  .rstop__strook { padding: 1.25rem 1.1rem 1.35rem; }
+  .rstop__lijst { grid-template-columns: minmax(0, 1fr); row-gap: var(--rstop-gat); }
+  .rstop__halte { display: grid; grid-template-columns: var(--rstop-klei) minmax(0, 1fr); column-gap: .7rem;
+    padding: 0 0 0 calc(var(--rstop-speld) + .75rem); }
+  .rstop__klei { position: static; grid-column: 1; grid-row: 1; }
+  .rstop__halte h3 { grid-column: 2; grid-row: 1; align-self: center; margin: 0; }
+  .rstop__halte p { grid-column: 1 / -1; margin-top: .5rem; }
+  .rstop__halte::before, .rstop__halte:nth-child(2n)::before { display: block; top: calc(var(--rstop-klei) / 2 + var(--rstop-speld) / 2);
+    left: calc(var(--rstop-speld) / 2 - 1px); right: auto; bottom: calc(-1 * (var(--rstop-gat) + var(--rstop-klei) / 2 - var(--rstop-speld) / 2));
+    border-top: 0; border-left: 2px dashed var(--rstop-lijn); }
+  .rstop__halte:last-child::before, .rstop__halte:nth-child(2n):last-child::before { display: none; }
+}
+
+/* hover: de klei van een halte maakt het gebaar van de site (rotate -6deg, scale 1.08, .35s zoals de home-tegels) en
+   de speld loopt vol. Op de klei en de speld, niet op de li: die krijgt de overgang van data-reveal-groep. De foto
+   zoomt niet (het patroon: de uitsnede moet op de foto blijven passen); de pijl van de knop schuift al via style.css. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .rstop__klei { transition: rotate .35s var(--ease), scale .35s var(--ease); }
+  .rstop__speld { transition: background-color .3s var(--ease); }
+  .rstop__halte:hover .rstop__klei { rotate: -6deg; scale: 1.08; }
+  .rstop__halte:hover .rstop__speld { background: var(--brand-primary); }
+}
+@media (forced-colors: active) {
+  .rstop__strook { border: 1px solid CanvasText; }
+  .rstop__speld { border: 2px solid CanvasText; }
+}

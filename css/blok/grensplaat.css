@@ -1,0 +1,75 @@
+/* Zo gaat een verhuizing over de grens (/diensten/internationale-verhuizingen/ #over-de-grens), 29-09-2026, dereus-49.
+   Naar het patroon locations-plate-truck (De Bresser) uit ../section-library: een band met een schuine bovenrand,
+   links de tekst en een actie, rechts de vrachtwagen die met zijn dak boven de band uitsteekt, en een witte plaat over
+   de wielen met de vier stappen, elk met een klei-icoon. Geclaimd als #7 in _werk/dienstsecties-register.md.
+   Anders dan het patroon is de band licht (Blauw 200) en niet donker: het paneel erboven is al een volle Diepblauwe
+   band (dereus-37: "Don't put another navy band straight under it: change the ground, or separate them"). Een witte
+   strook scheidt ze, en de witte wagen krijgt een schaduw zodat hij op de lichte band blijft staan.
+   Een tekstpolariteit: alles donker op licht. De intro is Inkt, want Leisteen haalt op Blauw 200 geen 4,5:1.
+   De wagen is de vrachtwagen uit de footer (img/footer-wagen-breed-v3.webp), uitgeknipt: img/dienstsecties/. */
+.sectie.b-grensplaat{--gp-band:var(--primary-200);--gp-strook:clamp(1.5rem,3vw,2.5rem);--gp-pad:clamp(3rem,5vw,4.5rem);
+  --gp-kanteling:var(--dak);--gp-zak:-1.25rem;--gp-wagen:100%;--gp-klei:3.5rem;
+  overflow-x:clip;padding-top:calc(var(--gp-strook) + var(--gp-pad));padding-bottom:clamp(3rem,5vw,4.5rem)}
+/* de band: vanaf de strook tot de onderrand, de bovenrand zakt van links naar rechts met --gp-kanteling */
+.gp__band{position:absolute;z-index:-1;inset:var(--gp-strook) 0 0;background:var(--gp-band);
+  clip-path:polygon(0 0,100% var(--gp-kanteling),100% 100%,0 100%)}
+.gp__raster{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);column-gap:clamp(2rem,4.5vw,4.5rem)}
+.gp__tekst{align-self:center;min-width:0}
+.gp__tekst h2{margin:0;max-width:18ch}
+.b-grensplaat .intro{color:var(--ink)}
+.gp__tekst .knoppen{margin-top:1.5rem}
+
+/* het beeld: de wagen (laag 1) steekt boven de bandrand uit, de plaat (laag 2) ligt over de wielen. De plaat komt
+   30 procent van de wagenhoogte omhoog (441/1140 x 0,30 = 0,116 van de wagenbreedte), daaronder zitten de wielen. */
+.gp__beeld{position:relative;min-width:0;display:flex;flex-direction:column;margin-top:calc(var(--gp-zak) - var(--gp-pad))}
+.gp__wagen{position:relative;z-index:0;align-self:center;width:var(--gp-wagen);height:auto;max-width:none;
+  filter:drop-shadow(0 14px 16px rgb(11 35 82 / .22))}
+.gp__plaat{position:relative;z-index:1;margin:calc(var(--gp-wagen) * -.116) 0 0;padding:clamp(.6rem,1.2vw,1rem);
+  border-radius:var(--radius-card);background:var(--white);box-shadow:var(--schaduw-lg)}
+.gp__stappen{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.25rem;margin:0;padding:0;list-style:none}
+.gp__stap{display:flex;min-width:0}
+.gp__kaart{flex:1;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.8rem;align-items:start;align-content:start;min-width:0;
+  padding:.8rem .85rem .9rem;border-radius:10px;background:var(--white)}
+.gp__klei{grid-row:span 2;width:var(--gp-klei);height:var(--gp-klei);max-width:none;transform-origin:50% 100%;
+  filter:drop-shadow(0 5px 5px rgb(14 26 51 / .14))}
+.gp__kaart h3{margin:.3rem 0 0;font-size:1.25rem;line-height:1.2}
+.gp__kaart p{margin:.3rem 0 0;color:var(--grey-600);font-size:.95rem;line-height:1.55}
+
+/* de naad naar de sectie eronder (Mist, "Regel dit op tijd"): de band loopt als driehoek door in haar bovenpadding,
+   evenwijdig aan zijn bovenrand, in plaats van de witte driehoek van Wit naar Mist uit style.css. Gewicht (0,3,0) tegen
+   .sectie--wit + .sectie--mist (0,2,0). De driehoek is --dak hoog in plaats van twee keer, dus de padding ook. */
+.p-diensten .b-grensplaat + .sectie--mist{padding-top:max(var(--ruimte),calc(var(--dak) + 1.5rem));
+  background-image:linear-gradient(to bottom left,var(--primary-200) 50%,transparent 50%);background-size:100% var(--dak)}
+
+/* Tot 900: een kolom. De tekst staat op het wit, de band begint pas achter het beeld, --gp-rand onder de bovenkant
+   van de wagen, en loopt over de volle breedte door tot de onderrand van de sectie. */
+@media (max-width:900px){
+  .sectie.b-grensplaat{--gp-wagen:min(100%,36rem);--gp-rand:clamp(2rem,9vw,3.25rem);padding-top:calc(var(--ruimte) * .8)}
+  .gp__band{display:none}
+  .gp__raster{grid-template-columns:minmax(0,1fr);row-gap:1.75rem}
+  .gp__beeld{margin-top:0}
+  .gp__beeld::before{content:"";position:absolute;z-index:-1;top:var(--gp-rand);bottom:calc(-1 * clamp(3rem,5vw,4.5rem));
+    left:calc(50% - 50vw);right:calc(50% - 50vw);background:var(--gp-band);clip-path:polygon(0 0,100% var(--gp-kanteling),100% 100%,0 100%)}
+  .gp__plaat{margin-top:calc(var(--gp-wagen) * -.116)}
+}
+@media (max-width:560px){
+  .sectie.b-grensplaat{--gp-klei:3rem}
+  .gp__stappen{grid-template-columns:minmax(0,1fr);gap:0}
+  .gp__kaart{padding:.7rem .6rem .75rem}
+  .gp__kaart h3{font-size:1.15rem}
+  .gp__stap + .gp__stap .gp__kaart{border-top:1px solid var(--grey-200);border-radius:0 0 10px 10px}
+}
+
+/* hover: de stap kleurt van wit naar Blauw 50 in .3s, de klei maakt het gebaar van de site (rotate -6deg, scale 1.08).
+   Op de kaart en het icoon, niet op de li: die heeft de overgang van data-reveal-groep. De wagen staat stil. */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .gp__kaart{transition:background-color .3s var(--ease)}
+  .gp__klei{transition:rotate .35s var(--ease),scale .35s var(--ease)}
+  .gp__kaart:hover{background-color:var(--primary-50)}
+  .gp__kaart:hover .gp__klei{rotate:-6deg;scale:1.08}
+}
+@media (forced-colors:active){
+  .gp__band,.gp__beeld::before{background:none;border-top:1px solid CanvasText}
+  .p-diensten .b-grensplaat + .sectie--mist{background-image:none}
+  .gp__plaat{border:1px solid CanvasText}
+}

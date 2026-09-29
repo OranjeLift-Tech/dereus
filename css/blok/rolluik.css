@@ -1,0 +1,119 @@
+/* Rolluik (/diensten/tijdelijke-opslag/ #zo-werkt-opslag, testlijn 29-09-2026, dereus-3e): hoe opslag bij een
+   verhuizing gaat, in drie stappen, met een aanspreekpunt. Links een opslagdeur met het rolluik half dicht en de
+   verhuisadviseur in de opening; rechts de kop, drie stappen op een stippellijn en de knop.
+   Bron: section-library/door-shutter-steps (nieuw, gemaakt met /section; nog niet in de catalogus, wacht op zijn
+   akkoord). Wens van de gebruiker: "expand the 8 diensten pages with 2 more page specific sections in each page, use
+   the section-library verified sections for this, add hover effects and clay icons to each one ... make new ones if
+   there is section style being used already using the section skill".
+
+   Diepte in drie lagen: de deur als grond (rail, rolluik, opening), de adviseur die met hoofd en schouders over de
+   onderlat van het rolluik steekt, en het witte naamplaatje dat zijn benen afdekt waar de uitsnede ophoudt.
+   Het rolluik is warm geel: het blauwe shirt komt ertegen los.
+   Een tekstpolariteit: donker op licht.
+
+   De deur rekent in containereenheden (cqw): de hoogte van de opening, de adviseur en de minimale hoogte van het
+   rolluik volgen de breedte van de deur zelf. De uitsnede (img/offerte-figuur-uit.webp, 435x752) houdt op bij de
+   dijen, zonder lege rand. */
+.b-rolluik{
+  --rl-rail:var(--brand-secondary);
+  --rl-luik:var(--accent-200);
+  --rl-lat:color-mix(in srgb,var(--accent-700) 28%,transparent);
+  --rl-onderlat:var(--accent-600);
+  --rl-binnen:var(--accent-50);
+  --rl-dozen:var(--accent-700);
+  --rl-route:var(--primary-300);
+  --rl-tint:var(--primary-50);
+  --rl-schijf:4rem;                                /* het klei-icoon op zijn schijf */
+  --rl-pad:.9rem;                                  /* binnenrand van een stap */
+}
+.b-rolluik__raster{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-rows:auto auto 1fr;
+  column-gap:clamp(2rem,4vw,4rem);row-gap:1.5rem}
+
+/* rechts: kop, stappen, knoppen; de knoppen staan onderaan, op de hoogte van de voet van de deur */
+.b-rolluik__kop{grid-column:2;min-width:0}
+.b-rolluik__kop .kopgroep{max-width:none;margin:0;text-align:left}
+.b-rolluik__kop .kopgroep .label{justify-content:flex-start}
+.b-rolluik__kop .intro{max-width:46ch;margin-inline:0}
+
+/* de stappen: rijen op de sectie zelf, een stippellijn van schijf naar schijf */
+.b-rolluik__stappen{grid-column:2;min-width:0;display:grid;gap:.35rem;margin:0 0 0 calc(-1 * var(--rl-pad));padding:0;list-style:none}
+.b-rolluik__stap{position:relative;display:grid;grid-template-columns:var(--rl-schijf) minmax(0,1fr);gap:1rem;align-items:start;
+  padding:var(--rl-pad)}
+/* de tint bij hover is een laag eronder: li krijgt zijn overgangen van de reveal */
+.b-rolluik__stap::before{content:"";position:absolute;z-index:-1;inset:0;border-radius:var(--radius-card);background:transparent}
+.b-rolluik__stap:not(:last-child)::after{content:"";position:absolute;z-index:-1;left:calc(var(--rl-pad) + var(--rl-schijf) / 2 - 1px);
+  top:calc(var(--rl-pad) + var(--rl-schijf) / 2);bottom:calc(-1 * (.35rem + var(--rl-pad) + var(--rl-schijf) / 2));
+  border-left:2px dashed var(--rl-route)}
+.b-rolluik__klei{display:block;width:var(--rl-schijf);height:var(--rl-schijf);padding:.3rem;border-radius:50%;background:var(--rl-tint)}
+.b-rolluik__staptekst{min-width:0;padding-top:.15rem}
+.b-rolluik__nr{display:block;color:var(--brand-primary);font:var(--weight-bold) .8125rem/1.4 var(--font-sans);
+  letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.b-rolluik__stap h3{margin:.15rem 0 0;color:var(--graphite);font-size:clamp(1.25rem,1.15rem + .35vw,1.45rem);line-height:1.2}
+.b-rolluik__stap p{margin:.3rem 0 0;color:var(--color-text-muted);font-size:1rem;line-height:1.5}
+
+.b-rolluik__acties{grid-column:2;align-self:end;display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.75rem;min-width:0}
+.b-rolluik__acties .belregel{align-items:center;margin:0}
+.b-rolluik__acties .belregel .ic{margin-top:0}
+.b-rolluik__acties .belregel a{display:inline-flex;align-items:center;min-height:44px}
+
+/* de deur: rail, rolluik (neemt de rest van de hoogte), opening (volgt de breedte), naamplaatje erop */
+.b-rolluik__deur{grid-column:1;grid-row:1 / -1;position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;
+  min-width:0;container-type:inline-size;overflow:clip;border-radius:var(--radius-media);background:var(--rl-binnen);
+  --rl-open:75cqw;                                 /* hoogte van de opening, 4:3 */
+  --rl-boven:.35;                                  /* deel van de adviseur boven de opening, over het rolluik */
+  --rl-voet:1rem}                                  /* afstand van het naamplaatje tot de voet van de deur */
+.b-rolluik__rail{position:relative;z-index:4;height:1rem;background:var(--rl-rail)}
+/* de minimale hoogte houdt 1,75 rem tussen de rail en het haar: de uitsnede begint bovenaan met het haar, en de
+   adviseur staat --rl-voet + 1,5 rem boven de voet van de deur */
+.b-rolluik__luik{position:relative;z-index:1;min-height:calc(var(--rl-open) * var(--rl-boven) + var(--rl-voet) + 3.25rem);
+  background:repeating-linear-gradient(to bottom,transparent 0 1.6rem,var(--rl-lat) 1.6rem 1.75rem),var(--rl-luik)}
+.b-rolluik__luik::after{content:"";position:absolute;inset:auto 0 0;height:.9rem;background:var(--rl-onderlat)}
+.b-rolluik__opening{position:relative;z-index:2;height:var(--rl-open)}
+.b-rolluik__dozen{position:absolute;left:6%;bottom:calc(var(--rl-voet) + 3rem);width:34%;height:auto;opacity:.22;
+  fill:none;stroke:var(--rl-dozen);stroke-width:1.6;stroke-linejoin:round}
+/* de adviseur: benen achter het naamplaatje, hoofd en schouders over de onderlat van het rolluik */
+.b-rolluik__figuur{position:absolute;right:9%;bottom:calc(var(--rl-voet) + 1.5rem);height:calc(var(--rl-open) * (1 + var(--rl-boven)));
+  aspect-ratio:435/752}
+.b-rolluik__figuur img{display:block;width:100%;height:100%;object-fit:contain;object-position:50% 100%}
+.b-rolluik__plaat{position:absolute;z-index:3;left:var(--rl-voet);right:var(--rl-voet);bottom:var(--rl-voet);display:flex;align-items:center;
+  gap:.75rem;margin:0;padding:.55rem 1rem .55rem .55rem;border-radius:var(--radius-card);background:var(--white);box-shadow:var(--schaduw)}
+.b-rolluik__plaatklei{flex:none;width:3rem;height:3rem}
+.b-rolluik__plaat span{min-width:0;color:var(--color-text-muted);font-size:1rem;line-height:1.35}
+.b-rolluik__plaat b{display:block;color:var(--graphite);font-size:1.0625rem}
+
+/* een smalle deur naast de stappen wordt hoog: een hogere opening vult hem met de adviseur in plaats van met het rolluik */
+@media (min-width:1100px) and (max-width:1279.98px){
+  .b-rolluik__deur{--rl-open:90cqw}
+}
+/* onder 1100 staat de deur op de volle breedte tussen de kop en de stappen */
+@media (max-width:1099.98px){
+  .b-rolluik__raster{grid-template-columns:minmax(0,1fr);grid-template-rows:none;row-gap:1.75rem}
+  .b-rolluik__kop,.b-rolluik__stappen,.b-rolluik__acties{grid-column:1}
+  .b-rolluik__deur{grid-column:1;grid-row:auto;--rl-open:42cqw}   /* breed: ongeveer 12:5 */
+}
+@media (max-width:559.98px){
+  .b-rolluik{--rl-schijf:3.25rem;--rl-pad:.7rem}
+  .b-rolluik__deur{--rl-open:72cqw;--rl-voet:.75rem}
+  .b-rolluik__figuur{right:6%;bottom:calc(var(--rl-voet) + 1.25rem)}
+  .b-rolluik__dozen{width:30%;left:5%}
+  .b-rolluik__acties{flex-direction:column;align-items:stretch}
+  .b-rolluik__acties .belregel{justify-content:center}
+}
+
+/* hover: een stap krijgt een lichte tint (.3s) en de schijf wordt wit, het klei-icoon maakt het gebaar van de site
+   (.45s); boven de deur rolt het rolluik 10 px op onder de rail, de adviseur blijft staan, en het icoon op het
+   naamplaatje maakt hetzelfde gebaar. Zonder muis of met minder beweging blijft alleen de kleur. */
+@media (hover:hover){
+  .b-rolluik__stap::before{transition:background-color .3s var(--ease)}
+  .b-rolluik__stap:hover::before{background:var(--rl-tint)}
+  .b-rolluik__klei{transition:background-color .3s var(--ease)}
+  .b-rolluik__stap:hover .b-rolluik__klei{background-color:var(--white)}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .b-rolluik__klei{transition:background-color .3s var(--ease),transform .45s var(--ease)}
+  .b-rolluik__stap:hover .b-rolluik__klei{transform:rotate(-6deg) scale(1.08)}
+  .b-rolluik__luik{transition:translate .45s var(--ease)}
+  .b-rolluik__deur:hover .b-rolluik__luik{translate:0 -10px}
+  .b-rolluik__plaatklei{transition:transform .45s var(--ease)}
+  .b-rolluik__deur:hover .b-rolluik__plaatklei{transform:rotate(-6deg) scale(1.08)}
+}

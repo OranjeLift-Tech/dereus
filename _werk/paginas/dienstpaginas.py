@@ -16,16 +16,23 @@ De body krijgt p-diensten, zodat de naden onder het paneel dezelfde zijn als op 
 
 Een pagina aanpassen: haar regel in PAGINAS_DIENST (adres) of haar blokken in _blokken(). De adressen staan ook in
 _b4.DIENST_PAGINA, navigatie.DIENST_PAGINA en jsonld.DIENST_PAGINA; daardoor linken het menu, de footer, de koppen op
-/diensten/ en de Service-knopen naar deze pagina's. De vier adressen die er al waren (particulier, zakelijk, opslag,
+/diensten/ en de Service-knopen naar deze pagina's.
+
+Twee extra secties per pagina (29-09-2026, de gebruiker: "expand the 8 diensten pages with 2 more page specific
+sections in each page"): elke pagina heeft een eigen bestand paginas/_dienstsecties_<sleutel>.py met SECTIES, gebouwd
+door een eigen sessie. Ze komen tussen het paneel en de reviews. build.py laadt bestanden met een _ niet als pagina,
+maar telt ze wel mee in de vingerafdruk van de cache. Welk patroon elke sectie gebruikt: _werk/dienstsecties-register.md. De vier adressen die er al waren (particulier, zakelijk, opslag,
 internationaal) waren conceptpagina's van dienstdetail.py; die regels staan daar nu als commentaar, hun kopij
 (website/content/diensten-*.md) is niet gebruikt.
 """
+import importlib
 import re
 import sys
 
 import kopij as _kopij
 import navigatie
 from kit import Pagina
+from kopij import BouwFout
 
 # dienstsleutel (het ##-blok in diensten.md) en adres, in de volgorde van /diensten/
 PAGINAS_DIENST = [
@@ -53,6 +60,14 @@ def _naadiconen(sleutel):
     return [p for p in getattr(diensten, "NAADICONEN", []) if p[0] == sleutel]
 
 
+def _extra(sleutel):
+    """De extra secties van deze pagina uit paginas/_dienstsecties_<sleutel>.py (de map staat op sys.path)."""
+    secties = list(getattr(importlib.import_module(f"_dienstsecties_{sleutel}"), "SECTIES", []))
+    if len(secties) > 2:
+        raise BouwFout(f"paginas/_dienstsecties_{sleutel}.py: {len(secties)} secties, de opdracht is er twee per pagina")
+    return secties
+
+
 def _blokken(sleutel):
     plek = _naadiconen(sleutel)
     paneel = (("naadiconen", {"kopij": None, "blok": "dienstenpanelen", "opties": {"kopij_ids": [sleutel]}, "plek": plek})
@@ -60,6 +75,7 @@ def _blokken(sleutel):
     return [
         ("kop", {"kopij_id": sleutel, "id": "kop", "dienst": sleutel}),
         paneel,
+        *_extra(sleutel),
         # zoals onder de acht secties van /diensten/ (paginas/diensten.py)
         ("reviews", {"sectie": "wit"}),
         ("actielijn", {"kopij": None, "kopij_van": ("home", "cijfers")}),

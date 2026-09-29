@@ -1,0 +1,69 @@
+/* Staankaart (/diensten/verhuislift/ #ruimte-op-straat, testlijn 29-09-2026, dereus-3e): de verhuislift heeft plek op
+   straat nodig, en soms een vergunning. Een warme kaart met links de kop, twee alinea's en de knop; rechts staat een
+   verhuizer van De Reus met een doos op de schouder, de voeten op de onderrand van de kaart en het hoofd erboven.
+   Bron: section-library/pay-after-stock-figure, hier met de huisstijl. Wens van de gebruiker: "expand the 8 diensten
+   pages with 2 more page specific sections in each page, use the section-library verified sections for this, add hover
+   effects and clay icons to each one".
+
+   Diepte in drie lagen: de kaart als grond, de verhuizer die boven de kaart uitsteekt, en het witte plaatje met het
+   klei-icoon dat over zijn onderbenen valt.
+   De kaart is Crème en geen Diepblauw: het blauwe shirt en de donkerblauwe broek van de verhuizer vallen weg tegen
+   blauw en komen los tegen warm geel.
+   Een tekstpolariteit: donker op licht.
+
+   De uitsnede (img/verhuizer-doos-schouder-uit.webp, 489x1200) loopt van de bovenkant van de doos tot de zolen,
+   zonder lege rand. */
+.b-staankaart{
+  --sk-kaart:var(--accent-100);
+  --sk-plaat:var(--white);
+  --sk-uit:5rem;                                   /* hoe ver de verhuizer boven de kaart uitsteekt */
+  --sk-beeld:clamp(16rem,25vw,22rem);              /* breedte van de kolom met de verhuizer */
+}
+.b-staankaart__kaart{position:relative;display:grid;grid-template-columns:minmax(0,1fr) var(--sk-beeld);margin-top:var(--sk-uit);
+  border-radius:var(--r-paneel);background:var(--sk-kaart);box-shadow:var(--schaduw)}
+.b-staankaart__tekst{min-width:0;padding:clamp(1.75rem,3.5vw,3rem)}
+.b-staankaart__tekst .kopgroep{max-width:none;margin:0 0 1.1rem;text-align:left}
+.b-staankaart__tekst .kopgroep .label{justify-content:flex-start}
+/* twee alinea's naast elkaar: de plek op straat en de vergunning */
+.b-staankaart__alineas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(1.5rem,3vw,2.5rem)}
+.b-staankaart__alineas p{margin:0;text-wrap:pretty}
+.b-staankaart__tekst .knoppen{margin-top:1.6rem}
+
+/* de verhuizer: voeten op de onderrand van de kaart, hoofd en doos erboven */
+.b-staankaart__beeld{position:relative;min-width:0;min-height:17rem}
+.b-staankaart__figuur{position:absolute;z-index:2;right:12%;bottom:0;height:calc(100% + var(--sk-uit));aspect-ratio:489/1200;pointer-events:none}
+.b-staankaart__figuur img{display:block;width:100%;height:100%;object-fit:contain;object-position:50% 100%;
+  filter:drop-shadow(0 14px 16px rgba(14,26,51,.22))}
+/* het plaatje ligt voor de verhuizer, over zijn onderbenen */
+.b-staankaart__plaat{position:absolute;z-index:3;left:0;bottom:1.4rem;display:inline-flex;align-items:center;gap:.55rem;margin:0;
+  padding:.35rem 1.15rem .35rem .35rem;border-radius:999px;background:var(--sk-plaat);color:var(--brand-secondary);
+  font-weight:var(--weight-bold);font-size:1rem;line-height:1.2;white-space:nowrap;box-shadow:var(--schaduw)}
+.b-staankaart__klei{flex:none;width:2.75rem;height:2.75rem}
+
+@media (max-width:1099.98px){
+  .b-staankaart__alineas{grid-template-columns:minmax(0,1fr);gap:1rem}
+}
+/* smal: de verhuizer staat in een strook boven de tekst, midden op de kaart */
+@media (max-width:899.98px){
+  .b-staankaart{--sk-uit:clamp(10rem,44vw,14rem)}
+  .b-staankaart__kaart{grid-template-columns:minmax(0,1fr)}
+  .b-staankaart__beeld{order:-1;min-height:0;height:clamp(6rem,20vw,8rem)}
+  .b-staankaart__figuur{right:50%;translate:50% 0}
+  .b-staankaart__plaat{left:auto;right:1rem;bottom:.6rem}
+  .b-staankaart__tekst{padding-top:1.5rem}
+}
+@media (max-width:559.98px){
+  .b-staankaart__tekst{padding:1.25rem 1.15rem 1.5rem}
+  .b-staankaart__plaat{right:.75rem;font-size:.9375rem}
+  .b-staankaart__klei{width:2.5rem;height:2.5rem}
+  .b-staankaart__tekst .knop{width:100%}
+}
+
+/* hover op de kaart: de verhuizer tilt 8 px (.45s, zoals de verhuizers elders), het klei-icoon maakt het gebaar van de
+   site. De verhuizer zelf vangt geen muis (pointer-events), dus de trigger is de kaart en niet de uitsnede. */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .b-staankaart__figuur img{transition:translate .45s var(--ease)}
+  .b-staankaart__kaart:hover .b-staankaart__figuur img{translate:0 -8px}
+  .b-staankaart__klei{transition:transform .45s var(--ease)}
+  .b-staankaart__kaart:hover .b-staankaart__klei{transform:rotate(-6deg) scale(1.08)}
+}

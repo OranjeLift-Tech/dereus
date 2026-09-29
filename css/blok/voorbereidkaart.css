@@ -1,0 +1,72 @@
+/* Wat u vooraf kunt regelen (/diensten/particuliere-verhuizingen/ #voorbereiding), 29-09-2026. Naar het patroon
+   vacancy-detail-card (Solar Green) uit ../section-library: een witte kaart op Mist met bovenin de kop en de intro,
+   daaronder drie kolommen met een klei-icoon, een titel en de punten, en onderaan een balk in Blauw 50 met de vraag en
+   de belknop. De gebruiker: "expand the 8 diensten pages with 2 more page specific sections in each page, use the
+   section-library verified sections for this, add hover effects and clay icons to each one".
+   Anders dan de bibliotheek: elke kolom staat op een dunne lijn en het klei-icoon ligt half over die lijn; de kolom
+   kleurt bij hover. Een tekstpolariteit: alles donker op licht. */
+.b-voorbereidkaart { --vbk-klei: 4.25rem; --vbk-rand: clamp(1.4rem, 4vw, 3rem); }
+.sectie.b-voorbereidkaart { padding-bottom: calc(var(--ruimte) * .6); }
+.vbk__kaart { overflow: hidden; border-radius: var(--radius-media); background: var(--white);
+  box-shadow: 0 0 0 1px rgb(14 26 51 / .06), 0 22px 44px -30px rgb(14 26 51 / .45); }
+/* de kop: label en titel links, de intro rechts op de onderlijn van de titel, zodat de kaart bovenin niet half leeg is */
+.vbk__kop { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(1.5rem, 4vw, 3.5rem); align-items: end;
+  padding: var(--vbk-rand) var(--vbk-rand) 0; }
+.vbk__kop h2 { margin: 0; }
+.vbk__kop .intro { max-width: 52ch; margin: 0; }
+
+/* de kolommen: elk op een lijn in Blauw 100, het icoon half erboven */
+.vbk__kolommen { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem clamp(.5rem, 1.5vw, 1.25rem);
+  margin: 0; padding: calc(clamp(1.75rem, 3.5vw, 2.5rem) + var(--vbk-klei) / 2) calc(var(--vbk-rand) - 1rem) clamp(1.25rem, 3vw, 2rem); list-style: none; }
+.vbk__kolom { position: relative; min-width: 0; padding: calc(var(--vbk-klei) / 2 + .75rem) 1rem 1.1rem; border-top: 2px solid var(--primary-100);
+  border-radius: 0 0 var(--radius-card) var(--radius-card); }
+.vbk__klei { position: absolute; left: .6rem; top: calc(-1 * var(--vbk-klei) / 2 - 1px); width: var(--vbk-klei); height: var(--vbk-klei);
+  max-width: none; transform-origin: 50% 100%; filter: drop-shadow(0 6px 6px rgb(14 26 51 / .16)); }
+.vbk__kolom h3 { margin: 0; font-size: 1.25rem; }
+.vbk__punten { display: grid; gap: .8rem; margin: .8rem 0 0; padding: 0; list-style: none; }
+.vbk__punten li { display: grid; grid-template-columns: 20px minmax(0, 1fr); column-gap: .6rem; align-items: start; }
+.vbk__punten .ic { width: 20px; height: 20px; margin-top: .15rem; color: var(--color-cta); }
+.vbk__punten strong { display: block; color: var(--ink); font-size: 1rem; line-height: 1.4; }
+.vbk__punten span > span { display: block; margin-top: .2rem; color: var(--grey-600); font-size: .95rem; line-height: 1.55; }
+
+/* de balk onderaan: de vraag links, de belknop (en WhatsApp, via contactlinks) rechts */
+.vbk__balk { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem) var(--vbk-rand); background: var(--primary-50); }
+.vbk__balk h3 { margin: 0; font-size: 1.3rem; }
+.vbk__balk p { margin: .3rem 0 0; max-width: 34em; color: var(--graphite); line-height: 1.5; }
+.vbk__knoppen { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; }
+
+/* de naad naar de reviews: de schuine rand Mist naar Wit uit style.css, die reviews.css (".p-diensten .b-reviews", een
+   verloop van wit naar Blauw 50, zelfde gewicht en later geladen) anders wegschrijft. Gewicht (0,4,0). De kop van de
+   reviews begint op driekwart van de schuinte: op 1440 staat hij dan nog onder de Mist-driehoek (die loopt rechtsboven). */
+.p-diensten .b-voorbereidkaart + .b-reviews.sectie { padding-top: max(calc(var(--ruimte) * .8), calc(var(--overgang-hoogte) * .75 + 1rem));
+  background: linear-gradient(to bottom left, var(--off-white) 50%, transparent 50%) top center / 100% var(--overgang-hoogte) no-repeat,
+    linear-gradient(180deg, var(--white), var(--primary-50)); }
+
+/* Gestapeld: een kolom onder de andere, de lijn en het icoon erboven */
+@media (max-width: 900px) {
+  .b-voorbereidkaart { --vbk-klei: 3.5rem; }
+  .vbk__kop { grid-template-columns: minmax(0, 1fr); }
+  .vbk__kop .intro { margin-top: 1rem; }
+  .vbk__kolommen { grid-template-columns: minmax(0, 1fr); row-gap: calc(var(--vbk-klei) / 2 + 1rem); }
+}
+@media (max-width: 560px) {
+  .vbk__kolommen { padding-inline: calc(var(--vbk-rand) - .75rem); }
+  .vbk__kolom { padding-inline: .75rem; }
+  .vbk__klei { left: .35rem; }
+  .vbk__knoppen, .vbk__knoppen > * { width: 100%; margin: 0; }
+}
+
+/* hover: de kolom kleurt van wit naar Blauw 50 in .3s (de kaarttint van de site) en de klei maakt het gebaar
+   (rotate -6deg, scale 1.08, .35s). De kaart zelf is het reveal-element, dus de overgang staat op de kolom en de klei. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .vbk__kolom { transition: background-color .3s var(--ease); }
+  .vbk__klei { transition: rotate .35s var(--ease), scale .35s var(--ease); }
+  .vbk__kolom:hover { background-color: var(--primary-50); }
+  .vbk__kolom:hover .vbk__klei { rotate: -6deg; scale: 1.08; }
+}
+@media (forced-colors: active) {
+  .p-diensten .b-voorbereidkaart + .b-reviews.sectie { background-image: none; }
+  .vbk__kaart { border: 1px solid CanvasText; }
+  .vbk__kolom { border-top-color: CanvasText; }
+}

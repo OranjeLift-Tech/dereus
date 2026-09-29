@@ -1,0 +1,64 @@
+/* Tipraster (/diensten/tijdelijke-opslag/ #voor-u-opslaat, testlijn 29-09-2026, dereus-3e): wat u regelt voor uw
+   spullen de opslag in gaan. Links de kop, twee alinea's en onderaan een link naar artikel 4 van de voorwaarden;
+   rechts een kleine kop en vier kaarten in een raster van twee bij twee, elk met een klei-icoon en een korte kop.
+   De vierde kaart (gevaarlijke stoffen) is geel, want die gaat over wat u vooraf moet melden.
+   Bron: section-library/vision-goals, hier met de huisstijl. Wens van de gebruiker: "expand the 8 diensten pages with
+   2 more page specific sections in each page, use the section-library verified sections for this, add hover effects
+   and clay icons to each one".
+
+   Diepte in drie lagen: de Mist-band met het huisraster als grond, de kaarten erop, en het klei-icoon dat boven de
+   bovenrand van zijn kaart uitsteekt.
+   Een tekstpolariteit: donker op licht, ook op de gele kaart. */
+.b-tipraster{
+  --tr-kaart:var(--white);
+  --tr-kaart-hover:var(--primary-50);
+  --tr-uitgelicht:var(--brand-accent);
+  --tr-uitgelicht-hover:var(--accent-200);
+  --tr-klei:4rem;
+  --tr-uit:1.2rem;                                 /* hoe ver het icoon boven de kaart uitsteekt */
+  --tr-r:var(--radius-card);
+}
+/* beide kolommen zo hoog als de hoogste: de link zakt naar onderen, de twee rijen kaarten vullen de rest */
+.b-tipraster__raster{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(2rem,5vw,4rem);align-items:stretch}
+.b-tipraster__tekst{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.b-tipraster__tekst .kopgroep{max-width:none;margin:0 0 1rem;text-align:left}
+.b-tipraster__tekst .kopgroep .label{justify-content:flex-start}
+.b-tipraster__tekst p:not(.label){max-width:44ch;text-wrap:pretty}
+.b-tipraster__tekst .knop--link{min-height:44px;margin-top:auto}
+
+.b-tipraster__rechts{display:flex;flex-direction:column;min-width:0}
+.b-tipraster__rechts > h3{margin:0;font-size:clamp(1.4rem,1.2rem + .6vw,1.75rem);line-height:1.15}
+.b-tipraster__kaarten{flex:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));
+  gap:calc(var(--tr-uit) + 1rem) 1rem;margin:calc(var(--tr-uit) + 1.1rem) 0 0;padding:0;list-style:none}
+.b-tipraster__kaart{position:relative;display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:1.1rem 1.3rem 1.3rem}
+/* de kaart zelf is een laag eronder: li krijgt zijn overgangen van de reveal, dus de kleur verloopt hier */
+.b-tipraster__kaart::before{content:"";position:absolute;z-index:-1;inset:0;border-radius:var(--tr-r);background:var(--tr-kaart);
+  box-shadow:var(--schaduw-kaart)}
+.b-tipraster__kaart--uitgelicht::before{background:var(--tr-uitgelicht)}
+.b-tipraster__klei{display:block;width:var(--tr-klei);height:var(--tr-klei);margin:calc(-1.1rem - var(--tr-uit)) 0 0 -.25rem}
+.b-tipraster__kaart h3{margin:.55rem 0 0;font-size:clamp(1.15rem,1.05rem + .35vw,1.3rem);line-height:1.2}
+.b-tipraster__kaart--uitgelicht h3{color:var(--brand-secondary)}
+
+@media (max-width:899.98px){
+  .b-tipraster__raster{grid-template-columns:minmax(0,1fr)}
+  .b-tipraster__tekst .knop--link{margin-top:.25rem}
+}
+/* een telefoon: de kaarten als rijen, het icoon links en boven de rand van de kaart */
+@media (max-width:559.98px){
+  .b-tipraster{--tr-klei:3.25rem;--tr-uit:.9rem}
+  .b-tipraster__kaarten{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  .b-tipraster__kaart{flex-direction:row;align-items:center;gap:.9rem;padding:.85rem 1rem}
+  .b-tipraster__klei{flex:none;align-self:flex-start;margin:calc(-.85rem - var(--tr-uit)) 0 0 -.15rem}
+  .b-tipraster__kaart h3{margin:0;font-size:1.125rem}
+}
+
+/* hover: de kaart kleurt licht op zoals de kaarten elders (.3s), het klei-icoon maakt het gebaar van de site (.45s) */
+@media (hover:hover){
+  .b-tipraster__kaart::before{transition:background-color .3s var(--ease)}
+  .b-tipraster__kaart:hover::before{background-color:var(--tr-kaart-hover)}
+  .b-tipraster__kaart--uitgelicht:hover::before{background-color:var(--tr-uitgelicht-hover)}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .b-tipraster__klei{transition:transform .45s var(--ease)}
+  .b-tipraster__kaart:hover .b-tipraster__klei{transform:rotate(-6deg) scale(1.08)}
+}

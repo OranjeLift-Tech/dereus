@@ -1,0 +1,71 @@
+/* Regel dit op tijd (/diensten/internationale-verhuizingen/ #op-tijd), 29-09-2026, dereus-49. Nieuw patroon
+   tip-sheets-pocket (/section, ../section-library/tip-sheets-pocket, preview in _preview/, nog niet geregistreerd):
+   vier tips als vellen papier die in een map staan. De achterkant van de map (Accent 200) staat erachter, de voorkant
+   (Goudgeel) ligt over hun onderrand, met een zin en de offerteknop. Geclaimd als #8 in _werk/dienstsecties-register.md.
+   Een tekstpolariteit: alles donker op licht, ook op het goud (Diepblauw op Accent).
+   Het vel kantelt en beweegt op .tm__blad, niet op de li: die heeft de overgang van data-reveal-groep, die een eigen
+   transition overschrijft (dereus-37: "put the hover on transform or translate, not on the reveal element's transition"). */
+.sectie.b-tipmap{--tm-rijs:2.25rem;--tm-zak:3.75rem;--tm-helling:1.25rem;--tm-klei:4.25rem;--tm-r:22px}
+.tm__kop{max-width:44rem;margin:0 0 clamp(2rem,3.5vw,2.75rem);text-align:left}
+.tm__kop .label{justify-content:flex-start}
+.tm__kop .intro{margin-inline:0}
+
+/* de map: de achterkant (::before) begint --tm-rijs onder de bovenkant van de vellen */
+.tm__map{position:relative;isolation:isolate;padding-top:1.25rem}
+.tm__map::before{content:"";position:absolute;z-index:-1;inset:calc(1.25rem + var(--tm-rijs)) 0 0;border-radius:var(--tm-r);background:var(--accent-200)}
+.tm__vellen{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem;margin:0;padding:0 1.75rem;list-style:none}
+.tm__vel{display:flex;min-width:0}
+.tm__blad{--tm-kanteling:-.7deg;position:relative;flex:1;min-width:0;padding:1.5rem 1.35rem 1.4rem;border-radius:12px;background:var(--white);
+  box-shadow:0 1px 2px rgb(14 26 51 / .06),0 14px 28px -16px rgb(14 26 51 / .3);rotate:var(--tm-kanteling)}
+.tm__vel:nth-child(2) .tm__blad{--tm-kanteling:.5deg}
+.tm__vel:nth-child(3) .tm__blad{--tm-kanteling:-.5deg}
+.tm__vel:nth-child(4) .tm__blad{--tm-kanteling:.7deg}
+/* de vellen in de laatste rij reiken achter de voorkant */
+.tm__vel:nth-last-child(-n+4) .tm__blad{padding-bottom:calc(var(--tm-zak) + var(--tm-helling) + 1.4rem)}
+.tm__klei{position:absolute;top:-1.4rem;right:-.8rem;width:var(--tm-klei);height:var(--tm-klei);max-width:none;
+  filter:drop-shadow(0 6px 6px rgb(14 26 51 / .16))}
+.tm__blad h3{margin:0 2.75rem .5rem 0;font-size:1.3rem;line-height:1.2}
+.tm__blad p{margin:0;color:var(--grey-600);font-size:1rem;line-height:1.55}
+
+/* de voorkant: over de onderrand van de vellen, de bovenrand loopt naar rechts --tm-helling omhoog */
+.tm__voor{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:1.25rem 2rem;
+  margin-top:calc(-1 * (var(--tm-zak) + var(--tm-helling)));padding:calc(1.4rem + var(--tm-helling)) 2rem 1.4rem;
+  border-radius:0 0 var(--tm-r) var(--tm-r);background:var(--brand-accent);color:var(--brand-secondary);
+  clip-path:polygon(0 var(--tm-helling),100% 0,100% 100%,0 100%)}
+.tm__voor p{margin:0;max-width:40rem;font-size:1.1rem;font-weight:var(--weight-semibold);line-height:1.5}
+.tm__voor .knop{flex:none}
+
+/* de naad naar de reviews: dezelfde schuine rand als Mist naar Wit (style.css), hier naar hun eigen verloop.
+   Gewicht (0,4,0) tegen .p-diensten .b-reviews (reviews.css, 0,2,0), zoals tipkaarten.css. */
+.p-diensten .b-tipmap + .b-reviews.sectie{padding-top:max(var(--ruimte),calc(var(--overgang-hoogte) + 1rem));
+  background:linear-gradient(to bottom left,var(--off-white) 50%,transparent 50%) top center / 100% var(--overgang-hoogte) no-repeat,
+    linear-gradient(180deg,var(--white),var(--primary-50))}
+
+@media (max-width:1100px){
+  .sectie.b-tipmap{--tm-rijs:2rem;--tm-zak:3.25rem}
+  .tm__vellen{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:2.25rem;padding:0 1.25rem}
+  .tm__vel:nth-last-child(-n+4) .tm__blad{padding-bottom:1.4rem}
+  .tm__vel:nth-last-child(-n+2) .tm__blad{padding-bottom:calc(var(--tm-zak) + var(--tm-helling) + 1.4rem)}
+  .tm__voor{padding-inline:1.5rem}
+}
+@media (max-width:560px){
+  .sectie.b-tipmap{--tm-helling:.9rem;--tm-klei:3.75rem;--tm-r:18px}
+  .tm__vellen{grid-template-columns:minmax(0,1fr);row-gap:1.6rem;padding:0 .75rem}
+  .tm__vel:nth-last-child(-n+2) .tm__blad{padding-bottom:1.4rem}
+  .tm__vel:last-child .tm__blad{padding-bottom:calc(var(--tm-zak) + var(--tm-helling) + 1.4rem)}
+  .tm__klei{right:-.45rem}
+  .tm__voor{flex-direction:column;align-items:stretch;padding-inline:1.25rem}
+}
+
+/* hover: het vel komt 10px uit de map en staat recht (translate en rotate, in .35s), de klei maakt het gebaar van de
+   site (rotate -6deg, scale 1.08). De knop heeft de hover van de site (kleur en pijl). */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .tm__blad{transition:translate .35s var(--ease),rotate .35s var(--ease)}
+  .tm__klei{transition:rotate .35s var(--ease),scale .35s var(--ease)}
+  .tm__blad:hover{translate:0 -10px;rotate:0deg}
+  .tm__blad:hover .tm__klei{rotate:-6deg;scale:1.08}
+}
+@media (forced-colors:active){
+  .p-diensten .b-tipmap + .b-reviews.sectie{background-image:none}
+  .tm__map::before,.tm__blad,.tm__voor{border:1px solid CanvasText}
+}

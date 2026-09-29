@@ -1,0 +1,67 @@
+/* Tips voor een soepele kantoorverhuizing (/diensten/zakelijke-verhuizingen/ #tips), 29-09-2026. Naar het patroon
+   text-benefit-cards (Solar Green) uit ../section-library: een crème band, bovenaan de kop naast een witte tekstkaart
+   (hier de vraag die zakelijke klanten het eerst stellen), daaronder de tips als kaarten met een klei-icoon dat
+   linksboven uit de kaart steekt; de laatste kaart is goud. De gebruiker: "expand the 8 diensten pages with 2 more page
+   specific sections in each page, use the section-library verified sections for this, add hover effects and clay
+   icons to each one". Een tekstpolariteit: alles donker op licht, ook op het goud (Inkt op Accent).
+   Crème is Accent 50. De schuine rand bovenaan komt van style.css (Mist naar Wit, met .sectie--wit op de sectie); die
+   onderaan staat hier, op de reviews, want die volgen direct. */
+.sectie.b-tipkaarten { --tipk-uit: 1.75rem; --tipk-klei: 5.25rem; padding-bottom: calc(var(--ruimte) * .6); background-color: var(--accent-50); }
+.tipk__rij { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: end; }
+.tipk__kop { min-width: 0; }
+.tipk__kop h2 { margin: 0; }
+.tipk__vraag { min-width: 0; padding: clamp(1.3rem, 3vw, 1.9rem); border-radius: var(--radius-card); background: var(--white);
+  box-shadow: 0 0 0 1px rgb(14 26 51 / .06); }
+.tipk__vraag h3 { margin: 0; font-size: 1.3rem; }
+.tipk__vraag p { margin: .55rem 0 0; color: var(--grey-600); line-height: 1.65; }
+.tipk__vraag .knop { margin-top: .9rem; }
+
+/* de kaarten: even hoog, ook over twee rijen (grid-auto-rows 1fr); het icoon steekt --tipk-uit boven de kaart uit */
+.tipk__kaarten { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: calc(1rem + var(--tipk-uit)) 1rem;
+  margin: calc(clamp(2.25rem, 4vw, 3rem) + var(--tipk-uit)) 0 0; padding: 0; list-style: none; }
+.tipk__item { display: flex; min-width: 0; }
+.tipk__kaart { flex: 1; display: flex; flex-direction: column; min-width: 0; padding: 0 1.35rem 1.4rem; border-radius: var(--radius-card);
+  background: var(--white); box-shadow: 0 0 0 1px rgb(14 26 51 / .06), 0 14px 30px -24px rgb(14 26 51 / .45); }
+.tipk__item:last-child .tipk__kaart { background: var(--brand-accent); box-shadow: 0 14px 30px -24px rgb(14 26 51 / .5); }
+.tipk__klei { width: var(--tipk-klei); height: var(--tipk-klei); max-width: none; margin: calc(-1 * var(--tipk-uit)) 0 0 -.45rem;
+  transform-origin: 50% 100%; filter: drop-shadow(0 6px 6px rgb(14 26 51 / .16)); }
+.tipk__kaart h3 { margin: .6rem 0 0; font-size: 1.2rem; line-height: 1.25; }
+.tipk__kaart p { margin: .45rem 0 0; color: var(--grey-600); font-size: .97rem; line-height: 1.6; }
+.tipk__item:last-child .tipk__kaart p { color: var(--ink); }
+
+/* de naad naar de reviews: dezelfde schuine rand als Mist naar Wit (style.css), hier van crème naar hun eigen verloop.
+   Gewicht (0,4,0) tegen .p-diensten .b-reviews (reviews.css, 0,2,0) en .sectie--wit + .sectie--wit (style.css). */
+.p-diensten .b-tipkaarten + .b-reviews.sectie { padding-top: max(calc(var(--ruimte) * .8), calc(var(--overgang-hoogte) * .75 + 1rem));
+  background: linear-gradient(to bottom left, var(--accent-50) 50%, transparent 50%) top center / 100% var(--overgang-hoogte) no-repeat,
+    linear-gradient(180deg, var(--white), var(--primary-50)); }
+
+@media (max-width: 1100px) {
+  .tipk__kaarten { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .tipk__rij { grid-template-columns: minmax(0, 1fr); align-items: start; }
+}
+/* Telefoon: het icoon links boven, de titel ernaast, de tekst over de volle breedte eronder (zoals waardenblad) */
+@media (max-width: 560px) {
+  .sectie.b-tipkaarten { --tipk-uit: 1.25rem; --tipk-klei: 3.75rem; }
+  .tipk__kaarten { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; }
+  .tipk__kaart { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .8rem; align-items: end; padding: 0 1.1rem 1.15rem; }
+  .tipk__klei { grid-row: 1; margin: calc(-1 * var(--tipk-uit)) 0 0 -.3rem; }
+  .tipk__kaart h3 { grid-column: 2; margin: 0 0 .1rem; }
+  .tipk__kaart p { grid-column: 1 / -1; margin-top: .55rem; }
+}
+
+/* hover: de kaart kleurt van wit naar Blauw 50 in .3s, de gouden van Accent naar Accent 200, en de klei maakt het
+   gebaar van de site (rotate -6deg, scale 1.08, .35s). Op de kaart en het icoon, niet op de li: die heeft de overgang
+   van data-reveal-groep, die een eigen transition overschrijft. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .tipk__kaart { transition: background-color .3s var(--ease); }
+  .tipk__klei { transition: rotate .35s var(--ease), scale .35s var(--ease); }
+  .tipk__kaart:hover { background-color: var(--primary-50); }
+  .tipk__item:last-child .tipk__kaart:hover { background-color: var(--accent-200); }
+  .tipk__kaart:hover .tipk__klei { rotate: -6deg; scale: 1.08; }
+}
+@media (forced-colors: active) {
+  .p-diensten .b-tipkaarten + .b-reviews.sectie { background-image: none; }
+  .tipk__kaart, .tipk__vraag { border: 1px solid CanvasText; }
+}
