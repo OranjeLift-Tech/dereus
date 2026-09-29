@@ -37,6 +37,10 @@ Waar het beeld komt te liggen rekent _venster() uit, uit de plaats van de mensen
 Het slot is dan geen losse regel meer maar een blok: elke afspraak een eigen helft met een
 3D-voorwerp dat boven het blok uitkomt, en de verwijzing naar de voorwaarden als voet. De tekst
 komt ongewijzigd uit de kopij; _afspraken() deelt hem alleen op in zinnen.
+
+Optie grond (29-09-2026): "blauw" (standaard) of "geel". Geel is het Goudgeel van het logo, voor een
+pagina die anders te blauw wordt; de dakrand blijft die van .sectie--blauw, alleen de kleuren wisselen
+(blok "Goudgele band" onderaan css/blok/verhuisdag.css).
 """
 import re
 
@@ -149,8 +153,9 @@ def _zak(i, aantal):
     return f"{abs(midden - 50) / 50:.4f}"
 
 
-def html(ctx, kopij, **opties) -> str:
+def html(ctx, kopij, grond="blauw", **opties) -> str:
     k = kopij
+    geel = f" b-{NAAM}--geel" if grond == "geel" else ""
     beelden = _kaders(k)
 
     uitsnedes = _uitsnedes(k) if beelden else None
@@ -170,7 +175,7 @@ def html(ctx, kopij, **opties) -> str:
                 f'<span class="b-{NAAM}__buiten">{uit}</span></span>'
                 f'<h3 class="b-{NAAM}__titel">{ctx.inline(it.titel)}</h3>{ctx.alineas(it.tekst)}</li>')
         slot = _afspraken(ctx, k.veld("slot")) if k.veld("slot") else ""
-        return f'''<section class="b-{NAAM} b-{NAAM}--kaders b-{NAAM}--uit sectie sectie--blauw" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}" style="--detail-inhoud:{KADERBREEDTE}">
+        return f'''<section class="b-{NAAM} b-{NAAM}--kaders b-{NAAM}--uit sectie sectie--blauw{geel}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}" style="--detail-inhoud:{KADERBREEDTE}">
       <div class="wrap">
         {ctx.kopgroep(k, "kopgroep--midden")}
         {ctx.alineas(k.tekst, "b-" + NAAM + "__tekst")}
@@ -188,7 +193,7 @@ def html(ctx, kopij, **opties) -> str:
             f'<h3 class="b-{NAAM}__titel">{ctx.inline(it.titel)}</h3>{ctx.alineas(it.tekst)}</li>'
             for i, it in enumerate(k.items))
         slot = f'<p class="b-{NAAM}__slot">{ctx.inline(k.veld("slot"))}</p>' if k.veld("slot") else ""
-        return f'''<section class="b-{NAAM} b-{NAAM}--kaders sectie sectie--blauw" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}" style="--detail-inhoud:{KADERBREEDTE}">
+        return f'''<section class="b-{NAAM} b-{NAAM}--kaders sectie sectie--blauw{geel}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}" style="--detail-inhoud:{KADERBREEDTE}">
       <div class="wrap">
         {ctx.kopgroep(k, "kopgroep--midden")}
         {ctx.alineas(k.tekst, "b-" + NAAM + "__tekst")}
@@ -206,7 +211,7 @@ def html(ctx, kopij, **opties) -> str:
         src, breedte, hoogte = FOTO
         beeld = ctx.beeld(src, "", breedte, hoogte)      # sier: alles wat telt staat in de tekst ernaast
         slot = f'<div class="b-{NAAM}__afsluiter"><span class="b-{NAAM}__foto">{beeld}</span>{slot}</div>'
-    return f'''<section class="b-{NAAM} sectie sectie--blauw" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
+    return f'''<section class="b-{NAAM} sectie sectie--blauw{geel}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
       <div class="wrap">
         {ctx.kopgroep(k, "kopgroep--midden")}
         {ctx.alineas(k.tekst, "b-" + NAAM + "__tekst")}

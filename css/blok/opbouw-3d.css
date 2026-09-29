@@ -13,6 +13,10 @@
   background:linear-gradient(180deg,#FFDD6B,var(--brand-accent));box-shadow:0 9px 0 var(--accent-700),0 28px 26px -10px rgba(11,35,82,.4)}
 .b-opbouw__obj{position:relative;display:block;width:100%;max-width:none;height:11.6rem;margin-bottom:.9rem;object-fit:contain;object-position:50% 100%;pointer-events:none;
   filter:drop-shadow(3px 4px 2px rgba(11,35,82,.28)) drop-shadow(14px 20px 16px rgba(11,35,82,.34))}
+/* onder de muis groeit het voorwerp een beetje, vanaf de schijf (gebruiker, 29-09-2026) */
+.b-opbouw__obj{transform-origin:50% 100%;transition:scale .45s cubic-bezier(.4,0,.2,1)}
+@media (hover:hover){.b-opbouw__podium:hover .b-opbouw__obj{scale:1.08}}
+@media (prefers-reduced-motion:reduce){.b-opbouw__obj{transition:none}}
 
 /* het nummer: geen schijf meer, een klein cijfer boven de kop */
 .p-kosten .b-opbouw--3d .b-opbouw__nr{display:block;width:auto;height:auto;margin:0;border-radius:0;background:none;box-shadow:none;color:var(--brand-primary);font-size:1.1rem;letter-spacing:.06em}

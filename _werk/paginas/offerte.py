@@ -19,15 +19,19 @@ PAGINA = Pagina(
         # de opzet van het offerteblok van referentie B, zoals /contact/ (zie _paneel in formulier.py): de lachende
         # verhuizer (uit img/over-verhuizer.webp) steekt boven de kaart uit, het blauwe paneel valt over zijn onderlichaam
         # ("formulier", {"variant": "offerte", "figuur": ("/img/offerte-figuur-uit.webp", 435, 752)}),
-        # Sinds 28-09-2026 dezelfde Diepblauwe band met foto als "Na uw bericht" op /contact/ ("5. What happens
-        # next: A: Navy band with photo"), als plaat in een witte sectie: deze pagina eindigt op de footer en
-        # houdt zo een lichte band ervoor. Hiervoor stond hier ("stappen-na-aanvraag", {"kopij_id": "na-aanvraag"});
-        # dat blok bestaat nog. De Google-pil gaat mee.
-        # onder_beeld (28-09-2026): WhatsApp en de pil stonden "very off place"; nu een knoppenrij onder de foto.
-        ("na-bericht", {"kopij_id": "na-aanvraag", "paneel": True, "grond": "wit", "google": True, "knoppen": None,
-                        "onder_beeld": True}),
-        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
-        # Zo gaat het verder op de Koningsblauwe band; de opmaak in css/blok/offerte-diepte.css komt mee
+        # Sinds 29-09-2026 (de gebruiker koos ontwerp 15 uit _ontwerpen/offerte-na-aanvraag-varianten.html): een Goudgele
+        # band van rand tot rand met de klantenservicemedewerker, en een wit paneel met de kop, de stappen, de belregel,
+        # WhatsApp en de Google-pil dat over de band valt en eronder uithangt. Op Mist, net als het formulier erboven,
+        # zodat er geen schuine overgang boven de band komt; de gele band houdt de twee blokken uit elkaar.
+        ("bandpaneel", {"kopij_id": "na-aanvraag"}),
+        # Tugche (origin/main 9dbb9a8, 28-09-2026), op 29-09-2026 op verzoek van de gebruiker even weer aan ("önceki
+        # yaptığım stil"), aan door deze regel te wisselen met de regel erboven: Zo gaat het verder op de Koningsblauwe
+        # band; de opmaak in css/blok/offerte-diepte.css komt mee (AFHANKELIJK)
         # ("stappen-na-aanvraag", {"kopij_id": "na-aanvraag"}),
+        # Van 28-09-2026 (samenvoeging) tot 29-09-2026 stond hier, aan door deze regel te wisselen met de regel erboven:
+        # dezelfde Diepblauwe band met foto als "Na uw bericht" op /contact/ ("5. What happens next: A: Navy band with
+        # photo"), als plaat in een witte sectie, met de Google-pil en een knoppenrij onder de foto (onder_beeld).
+        # ("na-bericht", {"kopij_id": "na-aanvraag", "paneel": True, "grond": "wit", "google": True, "knoppen": None,
+        #                 "onder_beeld": True}),
     ],
 )

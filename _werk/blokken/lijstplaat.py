@@ -1,15 +1,19 @@
-"""Een afvinklijst op één grote Koningsblauwe plaat, met een foto in de huisvorm ernaast. Voor #voorbereiding.
+"""Een afvinklijst op één grote Koningsblauwe plaat, met een foto ernaast waar de verhuizer uit leunt. Voor #voorbereiding.
 
 Pagina: /werkwijze/. Ronde 6, versie 3 (website/review/werkwijze-ronde-6/notitie-3.md).
 De plaat is hetzelfde middel als de belkaart op /contact/: Koningsblauw dat naar Diepblauw zakt, een
 zichtbare dikte onder de onderrand, een goudgeel tabje op de bovenrand en het huisje uit het logo in de
-hoek. Het 3D-klembord hangt over de bovenrand. De foto in de lijst is in de huisvorm uit het logo geknipt
-met een goudgeel huis er net iets omheen, hetzelfde diepte-idee als de panelen op /diensten/, maar met
-één laag: er stapt hier geen uitsnede uit het huis. Alles staat stil.
+hoek. Het 3D-klembord hangt over de bovenrand. Sinds 29-09-2026 zit de foto verzonken in een dikke
+Diepblauwe plaat en leunt de verhuizer eruit naar voren: zijn hoofd en zijn hand aan de kast komen boven
+de rand uit (dezelfde opbouw als lijstplaat-geel, ontwerp 09 "Diepe plaat" uit
+_ontwerpen/lijstplaat-uit-de-foto.html, maar op deze blauwe plaat). Alleen onder de muis zoomt de foto
+met de verhuizer iets in; verder staat alles stil.
 
 Alle klassen staan onder b-lijstplaat, zodat dit blok geen naam deelt met een ander blok op dezelfde pagina.
 
-Opties: kopij_id (welk blok), grond = "wit" of "mist", foto (aan of uit), voorwerp (aan of uit).
+Opties: kopij_id (welk blok), grond = "wit" of "mist", foto (aan of uit), voorwerp (aan of uit),
+plaat = "blauw" (standaard) of "geel". Geel (29-09-2026) is het Goudgeel van het logo met Diepblauwe tekst,
+omdat /werkwijze/ te blauw werd; de kleuren staan in het blok "Goudgele plaat" onderaan css/blok/lijstplaat.css.
 Kopij: label, intro, lijstkop, lijst (een regel mag beginnen met een vette kop: "**Dozen op tijd.** uitleg"),
 slot, en optioneel linktekst en link.
 """
@@ -103,6 +107,18 @@ VOORWERP = ("/img/clay/formulier-240.webp", 240, 240)
 # node _werk/export-lijstplaat-kast.cjs
 FOTO = ("/img/voorbereiding-kast.webp", 1200, 1030)
 
+# RONDE 5 (29-09-2026): de verhuizer moet in 3D boven de foto uitkomen. De uitsnede is
+# met achtergrondverwijdering uit FOTO geknipt (28-09-2026, voor lijstplaat-geel) en heeft PRECIES hetzelfde
+# formaat; de verhuizer staat op dezelfde pixels, zodat de twee beelden op elkaar vallen: binnen het kader
+# zie je de foto, erbuiten alleen de verhuizer. Vervang je FOTO, maak dan ook deze uitsnede opnieuw op
+# hetzelfde formaat, anders schuift hij los van zijn eigen foto.
+# Sinds 29-09-2026 11:55 alleen zijn hoofd boven de rand, niet zijn hand (vraag van de gebruiker): in
+# voorbereiding-kast-hoofd.webp is de opgeheven arm boven y 418 weggehaald, dus alles waar arm en hoofd nog
+# los van elkaar staan. Daaronder valt de arm altijd binnen het kader (de rand ligt op y 283 tot 375,
+# ook met --boven .45 en inzoomen), en daar laat de foto hem gewoon zien. De oude uitsnede met de hand:
+# voorbereiding-kast-man.webp (nog in gebruik bij lijstplaat-geel).
+UITSNEDE = "/img/voorbereiding-kast-hoofd.webp"
+
 _VET = re.compile(r"^\*\*(.+?)\*\*\s*(.*)$")
 
 
@@ -117,6 +133,7 @@ def _punt(ctx, regel):
 def html(ctx, kopij, **opties) -> str:
     k = kopij
     grond = "mist" if opties.get("grond") == "mist" else "wit"
+    geel = f" b-{NAAM}--geel" if opties.get("plaat") == "geel" else ""
     punten = "".join(_punt(ctx, r) for r in k.lijst)
     lijstkop = f'<h3 class="b-{NAAM}__lijstkop">{ctx.inline(k.veld("lijstkop"))}</h3>' if k.veld("lijstkop") else ""
     # De slotregel is een tipvak: een doorschijnend vlak op de plaat met een goudgele kantlijn, dezelfde
@@ -126,17 +143,22 @@ def html(ctx, kopij, **opties) -> str:
     if k.veld("link"):
         link = (f'<p class="b-{NAAM}__acties">'
                 f'{ctx.knop(k.veld("linktekst"), k.veld("link"), soort="link", klasse=f"b-{NAAM}__link")}</p>')
-    # alt blijft leeg: de lijst ernaast zegt alles wat de foto laat zien, en het goudgele huis eromheen is sier
+    # alt blijft leeg: de lijst ernaast zegt alles wat de foto laat zien, en de verhuizer is dezelfde foto.
+    # De volgorde in het podium is de stapelvolgorde: de verhuizer met zijn slagschaduw onder de foto, de
+    # foto op het kader geknipt, het glas (de schaduw van de verdieping) op de foto, en de verhuizer nog
+    # een keer schoon bovenop, zodat hij voor de verdieping staat en niet erin.
     beeld = ""
     if opties.get("foto", True):
+        uit = ctx.beeld(UITSNEDE, "", FOTO[1], FOTO[2], klasse=f"b-{NAAM}__uit")
         foto = ctx.beeld(FOTO[0], "", FOTO[1], FOTO[2], klasse=f"b-{NAAM}__foto")
-        beeld = (f'<span class="b-{NAAM}__beeld" aria-hidden="true">'
-                 f'<span class="b-{NAAM}__huis">{foto}</span></span>')
+        voor = ctx.beeld(UITSNEDE, "", FOTO[1], FOTO[2], klasse=f"b-{NAAM}__voor")
+        beeld = (f'<span class="b-{NAAM}__beeld" aria-hidden="true"><span class="b-{NAAM}__kader"></span>'
+                 f'<span class="b-{NAAM}__podium">{uit}{foto}<span class="b-{NAAM}__glas"></span>{voor}</span></span>')
     voorwerp = ""
     if opties.get("voorwerp", True):
         voorwerp = ctx.beeld(VOORWERP[0], "", VOORWERP[1], VOORWERP[2], klasse=f"b-{NAAM}__klembord", sizes="7.6rem",
                              srcset="/img/clay/formulier-144.webp 144w, /img/clay/formulier-240.webp 240w")
-    return f'''<section class="b-{NAAM} sectie sectie--{grond}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
+    return f'''<section class="b-{NAAM} sectie sectie--{grond}{geel}" id="{ctx.esc(k.id)}" aria-labelledby="{ctx.esc(k.id)}-kop" data-b="{NAAM}">
       <div class="wrap">
         {ctx.kopgroep(k, klasse=f"b-{NAAM}__kop")}
         <div class="b-{NAAM}__plaat" data-reveal>

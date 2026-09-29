@@ -29,12 +29,17 @@ KANALEN = [
     ("doos", "/offerte/", "Offerte aanvragen"),
 ]
 
-# Per icoon het 3D-voorwerp in img/contact-3d/: bestandsnaam, breedte en hoogte (bron: _ai-beelden/contact-3d/)
+# Per icoon het voorwerp. Sinds 29-09-2026 echte foto's, vrijstaand, in img/contact-echt/<naam>-<breedte>.webp:
+# de klei-iconen (img/clay/) vond de gebruiker "te AI, gemaakt". Telefoon, envelop en klembord zijn
+# Unsplash-foto's met het belscherm, de briefkaart en het formulier van De Reus erop gedrukt; de dozen komen uit
+# img/voorbereiding-dozen.webp. Ze staan op een goudgele schijf (ontwerp 05, _ontwerpen/contactkaarten-echt-varianten.html).
+# Bron en werkwijze: _ai-beelden/contact-echt/LEESMIJ.md.
+# Naam, breedte 1x, breedte 2x, hoogte 1x, weergavebreedte (sizes; gelijk aan de breedte in contactkaarten.css).
 VOORWERP = {
-    "telefoon": ("telefoon", 208, 400),
-    "mail": ("envelop", 347, 400),
-    "document": ("formulier", 346, 400),
-    "doos": ("doos", 425, 400),
+    "telefoon": ("telefoon", 240, 480, 154, "15rem"),
+    "mail": ("envelop", 216, 432, 182, "13.5rem"),
+    "document": ("klembord", 136, 272, 218, "8.5rem"),
+    "doos": ("dozen", 166, 307, 205, "10.4rem"),
 }
 
 
@@ -49,9 +54,11 @@ def _kanaal(ctx, i, it):
     linktekst = it.veld("linktekst") or std
     geen_wa = " data-geen-whatsapp" if doel == "tel" else ""   # de belkaart erboven heeft de knop al
     if icoon in VOORWERP:                  # een echt voorwerp dat uit de kaart steekt, in plaats van het lijnicoon
-        naam, b, h = VOORWERP[icoon]
+        naam, b, b2, h, maat = VOORWERP[icoon]
+        pad = f"/img/contact-echt/{naam}"
         beeld = (f'<span class="b-{NAAM}__ic b-{NAAM}__ic--3d" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{naam}" '
-                 f'src="/img/contact-3d/{naam}.webp" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
+                 f'src="{pad}-{b}.webp" srcset="{pad}-{b}.webp {b}w, {pad}-{b2}.webp {b2}w" '
+                 f'sizes="{maat}" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
     else:
         beeld = f'<span class="b-{NAAM}__ic" aria-hidden="true">{ctx.icoon(icoon)}</span>'
     return f'''<li class="b-{NAAM}__kanaal">
@@ -67,7 +74,6 @@ def _belkaart(ctx):
     regels = "".join(f'<li><span>{ctx.esc(t["kort"])}</span><span>{ctx.esc(t["van"])} tot {ctx.esc(t["tot"])}</span></li>'
                      for t in c.TIJDEN)
     return f'''<div class="b-{NAAM}__belkaart" data-reveal>
-          <img class="b-{NAAM}__beltoestel" src="/img/contact-3d/telefoon.webp" alt="" width="208" height="400" loading="lazy" decoding="async">
           <p class="b-{NAAM}__status">{ctx.bereikbaar("bereikbaar")}</p>
           <a class="b-{NAAM}__nummer" href="{c.TELHREF}">{ctx.esc(c.TEL)}</a>
           <ul class="b-{NAAM}__uren" role="list">{regels}</ul>
@@ -88,7 +94,10 @@ def html(ctx, kopij, **opties) -> str:
             beeld += ctx.beeld(vsrc, "", vbreed, vhoog, klasse=f"b-{NAAM}__voorgrond")
         maten = f"--uit-breed:{breed};--uit-hoog:{hoog};--uit-x:{ux};--uit-y:{uy};--uit-w:{uw};--uit-h:{uh}"
         figuur = f'<div class="uitsnede b-{NAAM}__figuur" style="{maten}" aria-hidden="true">{beeld}</div>'
-    return f'''<section class="b-{NAAM} sectie sectie--wit" id="{sid}" aria-labelledby="{sid}-kop">
+    # stijl="groen": de versie van Tugche (origin/main 9dbb9a8, 28-09-2026), de plaatrand in rust en een
+    # grotere verhuizer; de groene zijkant onder de muis staat sinds 29-09-2026 altijd aan (css/blok/contactkaarten.css)
+    stijl = " b-" + NAAM + "--groen" if opties.get("stijl") == "groen" else ""
+    return f'''<section class="b-{NAAM}{stijl} sectie sectie--wit" id="{sid}" aria-labelledby="{sid}-kop">
       <div class="wrap">
         <div class="b-{NAAM}__boven">
           <div class="b-{NAAM}__tekst" data-reveal>

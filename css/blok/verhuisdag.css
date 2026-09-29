@@ -210,3 +210,40 @@
     filter:drop-shadow(0 5px 3px rgba(3,10,30,.38)) drop-shadow(12px 26px 20px rgba(3,10,30,.42))}
   .b-verhuisdag--uit .b-verhuisdag__kader:hover .b-verhuisdag__vloer{scale:1.08;opacity:.8}
 }
+
+/* ---- Goudgele band (29-09-2026, optie grond="geel" in verhuisdag.py) ----
+   /werkwijze/ werd te blauw: stappen, lijstplaat, reviewkaarten, vragenpaneel en footer zijn allemaal blauw.
+   Daarom is deze band nu het Goudgeel van het logo (--brand-accent), egaal. De dakrand, de ruimte en de
+   laag met het logo komen nog van .sectie--blauw in style.css; hier wisselen alleen de kleuren. Tekst op
+   geel is Diepblauw (ruim 10:1). Het nummer op de kaders wordt Diepblauw met een geel cijfer, zoals het
+   logo zelf: blauw op geel. De schaduwen blijven Diepblauw maar lichter, anders wordt het geel vies. */
+.b-verhuisdag--geel{--grond:var(--brand-accent);--op-geel:var(--brand-secondary);
+  --op-geel-zacht:color-mix(in srgb,var(--brand-secondary) 84%,var(--brand-accent));color:var(--op-geel)}
+.b-verhuisdag.b-verhuisdag--geel.sectie--blauw:not(.sectie *)::before{background:
+  radial-gradient(ellipse calc(var(--detail-inhoud) / 2 + 7rem) 58% at 50% 50%,var(--grond) calc(var(--detail-inhoud) / 2),transparent 100%),
+  repeating-linear-gradient(22deg,color-mix(in srgb,var(--brand-secondary) calc(var(--detail-sterkte) * 6%),transparent) 0 1px,transparent 1px 13px),
+  var(--grond)}
+/* het logo in de zijmarge (logomotief.css) en het oude randmotief: Diepblauw in plaats van wit */
+.b-verhuisdag.b-verhuisdag--geel.sectie--blauw:not(.sectie *){--logo-tint:11 35 82;--logo-alfa:calc(var(--detail-sterkte) * .09);
+  --motief-kleur:11 35 82;--motief-alfa:calc(var(--detail-sterkte) * .22)}
+.b-verhuisdag--geel.sectie--blauw .label,
+.b-verhuisdag--geel.sectie--blauw :is(h2,h3,h4){color:var(--op-geel)}
+.b-verhuisdag--geel.sectie--blauw .intro,
+.b-verhuisdag--geel.sectie--blauw :is(.b-verhuisdag__tekst,.b-verhuisdag__moment) p{color:var(--op-geel-zacht)}
+.b-verhuisdag--geel.sectie--blauw :focus-visible{outline-color:var(--brand-secondary)}
+.b-verhuisdag--geel .b-verhuisdag__moment::after{background:var(--brand-secondary);color:var(--brand-accent);
+  box-shadow:0 8px 16px -8px rgba(11,35,82,.55)}
+.b-verhuisdag--geel .b-verhuisdag__raam{box-shadow:0 0 0 1px rgba(11,35,82,.12),0 24px 44px -26px rgba(11,35,82,.55)}
+.b-verhuisdag--geel .b-verhuisdag__buiten{filter:drop-shadow(0 3px 2px rgba(11,35,82,.28)) drop-shadow(8px 16px 14px rgba(11,35,82,.26))}
+.b-verhuisdag--geel .b-verhuisdag__afspraken{box-shadow:0 26px 48px -26px rgba(11,35,82,.5)}
+/* op de route- en kaderindeling zonder uitsnede: stippellijn en stip in Diepblauw */
+.b-verhuisdag--geel .b-verhuisdag__dag::before,
+.b-verhuisdag--geel .b-verhuisdag__moment:not(:last-child)::before{border-color:rgba(11,35,82,.45)}
+.b-verhuisdag--geel .b-verhuisdag__stip{background:var(--brand-secondary);box-shadow:0 0 0 7px var(--brand-accent),0 0 0 8px rgba(11,35,82,.25)}
+.b-verhuisdag--geel .b-verhuisdag__slot::before{background:var(--brand-secondary)}
+@media (hover:hover) and (pointer:fine){
+  .b-verhuisdag--geel.b-verhuisdag--uit .b-verhuisdag__kader:hover .b-verhuisdag__raam{
+    box-shadow:0 0 0 1px rgba(11,35,82,.14),0 36px 56px -26px rgba(11,35,82,.6)}
+  .b-verhuisdag--geel.b-verhuisdag--uit .b-verhuisdag__kader:hover .b-verhuisdag__buiten{
+    filter:drop-shadow(0 5px 3px rgba(11,35,82,.3)) drop-shadow(12px 26px 20px rgba(11,35,82,.3))}
+}

@@ -18,19 +18,43 @@
 
 /* ---- de regels: adres en openingstijden ---- */
 .b-kaart__waarde { display: block; margin: 0; color: rgba(255, 255, 255, .88); font-size: var(--text-small); font-style: normal; line-height: 1.55; }
-.b-kaart__tijden { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem 1.5rem; margin: .15rem 0 0; }
-.b-kaart__tijd { display: grid; gap: 0; padding-left: .6rem; border-left: 3px solid rgba(255, 255, 255, .22); }
+.b-kaart__tijden { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .5rem 1.5rem; margin: .15rem 0 0; }
+.b-kaart__tijd { display: grid; align-content: start; gap: 0; padding-left: .6rem; border-left: 3px solid rgba(255, 255, 255, .22); }
 .b-kaart__tijd dt { color: rgba(255, 255, 255, .88); font-size: var(--text-small); line-height: 1.35; }
 .b-kaart__tijd dd { margin: 0; color: rgba(255, 255, 255, .72); font-size: var(--text-small); font-variant-numeric: tabular-nums; }
 .b-kaart__tijd.is-vandaag { border-left-color: var(--brand-accent); }
 .b-kaart__tijd.is-vandaag dd { color: var(--white); }
 .b-kaart .b-kaart__status { margin: .7rem 0 0; font-size: var(--text-xs); }
-@media (max-width: 560px) { .b-kaart__tijden { grid-template-columns: minmax(0, 1fr); } }
+/* max-content: "Maandag tot en met zaterdag" blijft op één regel naast de bredere tegel (29-09-2026); in de smalle
+   kolom tussen 900 en 1060 en op de telefoon staan de tijden onder elkaar */
+@media (max-width: 560px), (min-width: 900px) and (max-width: 1060px) { .b-kaart__tijden { grid-template-columns: minmax(0, 1fr); } }
 
-/* knoppen: de route als lichte knop zoals op /over-ons/, de offerte als witte tekstlink met gouden streep */
+/* ---- echte voorwerpen in de gele tegels (29-09-2026) ----
+   "ikonları daha gerçekçi yap ve bi tık o kutudan çıkıyor gibi olsun": in plaats van de lijniconen een blauwe punaise
+   uit een echte wegenkaart en een zilveren wekker (img/contact-echt/, zelfde werkwijze als de kanaalkaarten erboven).
+   De tegel wordt een dik goudgeel blok van hetzelfde materiaal als de gele schijven daar: licht linksboven, een harde
+   onderkant in #D9A200 en een zachte slagschaduw op het Diepblauw. Het voorwerp staat in de tegel en steekt ongeveer
+   anderhalve centimeter boven de bovenrand uit; de punaise zit met de naald in het blok, de wekker staat op de
+   onderkant met een contactschaduw onder zijn pootjes. */
+.b-kaart .b-kaart__tegel { position: relative; width: 3.5rem; height: 3.5rem; border-radius: 14px;
+  background: radial-gradient(75% 75% at 32% 28%, #FFE08A, var(--brand-accent) 58%, #F2B800);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .55), 0 5px 0 #D9A200, 0 6px 0 rgb(0 0 0 / .2), 0 18px 24px -8px rgb(0 0 0 / .55); }
+.b-kaart__tegel::after { content: ""; position: absolute; z-index: 0; left: 50%; translate: -50% 0; border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(90 60 0 / .5), transparent); }
+.b-kaart__tegel--punaise::after { bottom: .6rem; width: 1.4rem; height: .5rem; margin-left: -.05rem; }
+.b-kaart__tegel--wekker::after { bottom: .2rem; width: 2.6rem; height: .55rem; }
+.b-kaart__obj { position: absolute; z-index: 1; left: 50%; translate: -50% 0; height: auto; max-width: none; pointer-events: none; transform-origin: 50% 100%;
+  filter: saturate(1.15) contrast(1.06) drop-shadow(1px 3px 2px rgb(5 14 35 / .35)) drop-shadow(5px 10px 8px rgb(5 14 35 / .3)); }
+.b-kaart__obj--punaise { bottom: .75rem; width: 2.6rem; margin-left: .3rem; rotate: -7deg;
+  filter: brightness(1.28) saturate(1.2) contrast(1.05) drop-shadow(1px 3px 2px rgb(5 14 35 / .35)) drop-shadow(5px 10px 8px rgb(5 14 35 / .3)); }   /* Koningsblauw, anders verdwijnt de kop in het Diepblauw */
+.b-kaart__obj--wekker { bottom: .3rem; width: 2.9rem; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .b-kaart__obj { transition: translate .35s var(--wg-ease), scale .35s var(--wg-ease); }
+  .b-kaart .wg__regel:hover .b-kaart__obj { translate: -50% -3px; scale: 1.06; }
+}
+
+/* knoppen: de route als lichte knop zoals op /over-ons/, de offerte als groen blok zoals in de header (29-09-2026) */
 .b-kaart .wg .knoppen { align-items: center; }
-.b-kaart .knop--link { color: var(--white); }
-.b-kaart .knop--link span { text-decoration-color: var(--brand-accent); }
 
 /* ---- de echte kaart: het paneel van blok wereld in het kaartvlak ----
    Het paneel vult het vlak en neemt zijn vorm over: geen eigen radius of schaduw. De getekende kaart is de terugval;

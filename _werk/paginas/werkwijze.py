@@ -1,57 +1,65 @@
-"""/werkwijze/: kop, de vijf stappen als trap, de voorbereiding op de Goudgele plaat, de verhuisdag (de ene blauwe band met
-dakrand), na de verhuizing op de schuine gele band, reviews als rail, vragen op de Goudgele band en de offertepil.
+"""/werkwijze/: kop, de drie stappen als trap van kaarten, de voorbereiding, de verhuisdag (de blauwe band met dakrand),
+na de verhuizing, reviews, vragen over de werkwijze en de offertepil.
 
-Sinds 29-09-2026 de pagina van Tugche (origin/main 9dbb9a8, 28-09-2026), op verzoek: "revert changes to werkwijze and
-contact to be the latest tugche changes". Haar blokken in haar volgorde; haar lijstplaat heet hier lijstplaat-geel,
-omdat de samenvoeging van 28-09-2026 onze Koningsblauwe lijstplaat onder die naam liet staan. Onze versie van elke
-sectie staat als commentaar onder de hare: terug door die twee te wisselen.
-
-KLEI: de klei-iconen (img/clay/) in plaats van haar 3D-renders, zoals gekozen in de samenvoegreview van 28-09-2026
-("with clay on 1, 2, 3 and 11"). False geeft haar renders terug in tijdlijn, lijstplaat-geel en naband."""
+Samengevoegd op 29-09-2026 met origin/main 8971f9e ("add all the changes to it except to the homepage, diensten,
+over-ons pages"): de pagina van Tugche, met twee keuzes van hier die zij niet aanraakte: de offertepil zonder de
+verhuizer in de kopband ("2. keep hers", 29-09-2026) en naband met klei=False, haar 3D-voorwerpen."""
 from kit import Pagina
-
-KLEI = True
 
 PAGINA = Pagina(
     pad="/werkwijze/",
     kopij="werkwijze",
     header="transparant",
     body_klasse="p-werkwijze",
-    extra_css=("logomotief",),                # het logo in de zijmarge in plaats van de randmotieven (28-09-2026)
-    # Onze had er ook "reviews-ster" bij, de 3D-ster op de uitgelichte review van het blok reviews.
+    # "reviews-ster" (de 3D-ster op de uitgelichte review) hoort bij het reviewblok "reviews"; zet hem terug
+    # als dat blok hieronder weer aan gaat.
+    extra_css=("logomotief",),                # het logo in de zijmarge in plaats van de randmotieven (Tugche, 28-09-2026)
     blokken=[
         ("kop", {}),
-        # De tijdlijn als trap (css/blok/tijdlijn.css).
-        ("tijdlijn", {"kopij_id": "stappen", "klei": KLEI}),
-        # Onze: de vijf stappen als kaarten met een verhuizer die er bovenuit komt: steps-four-green uit
-        # ../section-library, optie A uit website/review/zowerkthet-bibliotheek-20260928/ (28-09-2026).
+        # De drie stappen als trap van drie kaarten met een medewerker erachter, boven een Goudgele band (29-09-2026:
+        # de klant wilde drie stappen in plaats van vijf, in de opzet van het blok "Bel ons, videobel ons of kom
+        # langs" van referentie B; css/blok/stappentrap.css).
+        ("stappentrap", {"kopij_id": "stappen"}),
+        # De stappen als kaarten met een verhuizer die er bovenuit komt: steps-four-green uit ../section-library,
+        # optie A uit website/review/zowerkthet-bibliotheek-20260928/ (28-09-2026), aan door deze regel te
+        # wisselen met de regel erboven. Werkt ook met drie stappen.
         # ("stapkaarten", {"kopij_id": "stappen"}),
-        # De Goudgele plaat waar de verhuizer uit leunt (ontwerp 09 "Diepe plaat").
-        ("lijstplaat-geel", {"kopij_id": "voorbereiding", "grond": "wit", "klei": KLEI}),    # wit, zodat de dakrand erboven schoon aansluit
-        # Onze: de Koningsblauwe plaat.
-        # ("lijstplaat", {"kopij_id": "voorbereiding", "grond": "wit"}),
-        ("verhuisdag", {}),
-        # Diepblauwe kaart op een schuine gele band, nummer 03 uit _ontwerpen/na-de-verhuizing-varianten.html
-        # (28-09-2026); verving het mozaiek (blok namozaiek, dat blijft bestaan)
-        ("naband", {"kopij_id": "na-de-verhuizing", "klei": KLEI}),
-        # Onze: mozaiek van vier tegels, versie 3 uit ronde 7 (23-09-2026); de foto is nationaal r4 versie 2
+        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
+        # de tijdlijn als trap (css/blok/tijdlijn.css)
+        # ("tijdlijn", {"kopij_id": "stappen"}),
+        ("lijstplaat", {"kopij_id": "voorbereiding", "grond": "wit", "plaat": "geel"}),   # wit, zodat de dakrand erboven schoon aansluit; Goudgele plaat (29-09-2026): de pagina werd te blauw
+        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
+        # de Goudgele plaat waar de verhuizer uit leunt (ontwerp 09 "Diepe plaat"), met de klei-iconen van hier
+        # ("lijstplaat-geel", {"kopij_id": "voorbereiding", "grond": "wit"}),
+        ("verhuisdag", {}),                         # blauw; "grond": "geel" (29-09-2026) teruggedraaid, stond de klant niet
+        # Diepblauwe kaart op een schuine gele band, nummer 03 uit _ontwerpen/na-de-verhuizing-varianten.html, met de
+        # 3D-telefoon en -ster op een gele schijf (Tugche, 28-09-2026; na de samenvoeging op 29-09-2026 teruggezet,
+        # de klant koos dit blok)
+        # klei=False: haar 3D-telefoon en -ster (8971f9e). True geeft de klei-iconen uit de samenvoegreview van
+        # 28-09-2026 ("with clay on 1, 2, 3 and 11").
+        ("naband", {"kopij_id": "na-de-verhuizing", "klei": False}),
+        # mozaiek van vier tegels, versie 3 uit ronde 7 (23-09-2026), aan door deze regels te wisselen met de regel erboven:
         # ("namozaiek", {"kopij_id": "na-de-verhuizing",
         #                "foto": ("/img/dienst-nationaal-v2-groot.webp", 1440, 1080),
         #                "foto_srcset": "/img/dienst-nationaal-v2.webp 720w, /img/dienst-nationaal-v2-groot.webp 1440w"}),
-        # het reviewblok van referentie B (scorepodium + rail) in onze stijl (28-09-2026). Wit, tussen twee Mist-secties.
+        # het reviewblok van referentie B (scorepodium + rail) in onze stijl; weer aan op 29-09-2026, de klant
+        # koos dit blok (Tugche)
         ("reviewrail", {"kopij_id": "reviews", "accent": "in de praktijk"}),
-        # Onze: variant A zoals de home (28-09-2026), met "reviews-ster" in extra_css hierboven.
+        # variant A zoals de home (28-09-2026), aan door deze regel te wisselen met de regel erboven (en
+        # "reviews-ster" terug in extra_css):
         # ("reviews", {"sectie": "wit"}),
-        # Goudgele band met foto-afdruk (ontwerp 07 uit _ontwerpen/vragen-referentie-ronde1.html, 28-09-2026), net als
-        # /contact/. Afdruk woningontruiming: de bankscene staat al twee keer op deze pagina (verhuisdag).
-        ("vragen", {"kopij_id": "vragen", "stijl": "geel", "afdruk": "woningontruiming"}),
-        # Onze: kopkaart: de sectiekop hoort hier in de belkaart, niet erboven. foto: de verhuizer rechts in die
-        # kaart. Hetzelfde blauwe paneel als op de home, /kosten/ en /contact/ (23-09-2026).
-        # ("vragen", {"kopij_id": "vragen", "beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),
+        # kopkaart: de sectiekop hoort hier in de belkaart, niet erboven. foto: de verhuizer
+        # rechts in die kaart. Beide opties staan alleen op deze pagina aan.
+        ("vragen", {"kopij_id": "vragen", "stijl": "kaart"}),   # de blauwe kaart met de collega, zoals op /contact/ (29-09-2026)
+        # tot 29-09-2026: ("vragen", {"kopij_id": "vragen", "beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),
+        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
+        # Goudgele band met foto-afdruk (ontwerp 07 uit _ontwerpen/vragen-referentie-ronde1.html). Afdruk
+        # woningontruiming: de bankscene staat al twee keer op deze pagina (verhuisdag).
+        # ("vragen", {"kopij_id": "vragen", "stijl": "geel", "afdruk": "woningontruiming"}),
         # Zonder de verhuizer in de kopband, zoals bij Tugche (9dbb9a8). Die kwam er sitebreed bij na haar commit
         # (keuze van de gebruiker, 28-09-2026); op deze pagina op 29-09-2026 weer weg: "2. keep hers".
         ("offertepil", {"variant": "los", "beeld": None}),
-        # Onze: met de verhuizer (FIGUUR in _werk/blokken/offertepil.py).
+        # Met de verhuizer (FIGUUR in _werk/blokken/offertepil.py):
         # ("offertepil", {"variant": "los"}),
     ],
 )

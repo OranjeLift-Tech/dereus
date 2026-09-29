@@ -28,6 +28,14 @@ BEELD = "/img/kaart-den-haag.svg"
 BREEDTE, HOOGTE = 1400, 933
 MAN = ("/img/verhuizer-twee-dozen-uit.webp", 407, 1200)
 
+# Echte voorwerpen in de gele tegels (29-09-2026, "ikonları daha gerçekçi yap, bi tık o kutudan çıkıyor gibi"):
+# icoon -> (bestand in img/contact-echt, breedte 1x, breedte 2x, hoogte 1x, sizes). Zelfde werkwijze als de
+# kanaalkaarten erboven (_ai-beelden/contact-echt/LEESMIJ.md). Een regel zonder voorwerp houdt het lijnicoon.
+VOORWERP = {
+    "pin": ("punaise", 44, 88, 76, "2.75rem"),     # Unsplash 46Tg56viOUg, blauwe punaise uit een wegenkaart
+    "klok": ("wekker", 48, 96, 72, "3rem"),         # Unsplash flpCsXSVgoo, zilveren wekker
+}
+
 
 def _dagen_attr(nummers):
     """Voor site.js: '1-6' voor maandag tot en met zaterdag, '0' voor zondag."""
@@ -46,9 +54,19 @@ def tijden(ctx, klasse):
     return f'<dl class="{klasse}__tijden">{"".join(rijen)}</dl>'
 
 
+def _tegel(ctx, icoon):
+    if icoon in VOORWERP:
+        naam, b, b2, h, maat = VOORWERP[icoon]
+        pad = f"/img/contact-echt/{naam}"
+        return (f'<span class="wg__icoon b-{NAAM}__tegel b-{NAAM}__tegel--{naam}" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{naam}" '
+                f'src="{pad}-{b}.webp" srcset="{pad}-{b}.webp {b}w, {pad}-{b2}.webp {b2}w" '
+                f'sizes="{maat}" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
+    return f'<span class="wg__icoon" aria-hidden="true">{ctx.icoon(icoon)}</span>'
+
+
 def _regel(ctx, soort, icoon, titel, inhoud):
     return f'''<li class="wg__regel b-{NAAM}__regel b-{NAAM}__regel--{soort}">
-          <span class="wg__icoon" aria-hidden="true">{ctx.icoon(icoon)}</span>
+          {_tegel(ctx, icoon)}
           <div>
             <h3 class="wg__titel">{ctx.esc(titel)}</h3>
             {inhoud}
@@ -75,7 +93,8 @@ def html(ctx, kopij, man=MAN, **opties) -> str:
                          f'<p class="b-{NAAM}__waarde">{ctx.esc(str(kvk))}</p>')
     route = ctx.knop(k.veld("knop", "Route plannen"), c.ROUTE, soort="licht", icoon="route",
                      klasse="knop--icoon-voor", attrs='rel="noopener"')
-    offerte = ctx.knop(k.veld("offerte-link", "Offerte aanvragen"), "/offerte/", soort="link")
+    # groen blok zoals de knop in de header (29-09-2026), niet meer de witte tekstlink
+    offerte = ctx.knop(k.veld("offerte-link", "Offerte aanvragen"), "/offerte/", soort="cta")
     msrc, mb, mh = man
     return f'''<section class="b-{NAAM} b-werkgebied sectie sectie--{grond}" id="{sid}" aria-labelledby="{sid}-kop">
   <div class="wrap wg">

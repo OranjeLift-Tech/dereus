@@ -1,0 +1,122 @@
+/* ===== pagina ===== */
+html{scroll-padding-top:4.5rem}
+.vnav{position:sticky;top:0;z-index:60;background:var(--brand-secondary);color:#fff;font-size:.875rem}
+.vnav .wrap{display:flex;align-items:center;gap:1rem;min-height:3.4rem;flex-wrap:wrap}
+.vnav b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.1rem;letter-spacing:.01em}
+.vnav__links{display:flex;flex-wrap:wrap;gap:.3rem;margin-left:auto}
+.vnav a{display:grid;place-items:center;min-width:2.3rem;height:2rem;padding:0 .4rem;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-weight:700;text-decoration:none}
+.vnav a:hover{background:var(--brand-accent);color:var(--brand-secondary)}
+.vkap{background:#fff;border-top:3px solid var(--brand-secondary);padding:1.1rem 0;position:relative;z-index:3}
+.vkap .wrap{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start}
+.vkap .wrap>div{flex:1 1 18rem;min-width:0}
+.vkap small,.vkap p{overflow-wrap:anywhere}
+.vkap__nr{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--brand-accent);color:var(--brand-secondary);font:800 1.35rem/1 var(--font-display);font-stretch:75%;box-shadow:2px 2px 0 var(--accent-700)}
+.vkap b{font-family:var(--font-display);font-stretch:75%;font-weight:800;font-size:1.35rem;color:var(--brand-primary)}
+.vkap small{display:block;margin:.1rem 0 .15rem;color:var(--grey-600);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.vkap p{margin:.2rem 0 0;max-width:92ch;color:var(--graphite);font-size:.9375rem}
+.vkap--eind{padding:2rem 0}
+.vkap__maat{flex:none;margin-left:auto;align-self:center;padding:.35rem .7rem;border-radius:999px;background:var(--success-50);color:var(--success);font-size:.8rem;font-weight:700;white-space:nowrap}
+.vkap__maat.is-hoog{background:var(--accent-100);color:#8A5A00}
+.vctx{background:var(--brand-secondary);color:rgba(255,255,255,.5);font:600 .72rem/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;padding:.85rem 0 .8rem}
+.v.sectie{overflow-x:clip}
+
+/* ===== gedeeld: het podium (referentie C .b-vragen__podium / .b-vragen__staan) ===== */
+.v .vragen__zij::after{content:none}
+.v .vragen__podium{position:relative;margin-top:1.5rem}
+.v .vragen__staan{position:relative;isolation:isolate;display:block}
+.v .vragen__collega{display:block;width:auto;max-width:100%;margin:0 auto;transform-origin:50% 100%;pointer-events:none}
+.v .vragen__nu{position:absolute;z-index:3;left:1rem;bottom:1rem;padding:.45rem 1rem .45rem .7rem;font-size:.9rem}
+@media (hover:hover){
+  .v .vragen__collega{transition:scale .6s var(--ease)}
+  .v .vragen__podium:hover .vragen__collega{scale:1.04}
+}
+@media (prefers-reduced-motion:reduce){.v .vragen__podium:hover .vragen__collega{scale:none}}
+/* figuur links, vragen rechts: de adviseur in de boog erboven staat rechts */
+@media (min-width:900px){
+  :is(.z01,.z02) .vragen__in{grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"zij gesprek";align-items:center}
+  :is(.z01,.z02) .vragen__gesprek::before{inset:-1.1rem -1.1rem -1.1rem 1.8rem;rotate:1.2deg}
+}
+
+/* ===== 01 Collega aan de lijn ===== */
+.z01 .vragen__gesprek::before{box-shadow:8px 8px 0 var(--primary-200)}
+.z01 .vraag{box-shadow:0 4px 0 var(--primary-200),0 14px 26px -18px rgba(14,26,51,.42)}
+.z01 .vragen__staan::before{content:"";position:absolute;z-index:-1;inset:36% 0 0;border-radius:0 0 var(--radius-media) var(--radius-media);
+  background:linear-gradient(165deg,var(--brand-primary),var(--primary-600));clip-path:polygon(0 0,100% 30%,100% 100%,0 100%)}
+.z01 .vragen__collega{height:clamp(16rem,11rem + 8vw,21rem);max-width:none;filter:drop-shadow(0 14px 14px rgba(11,35,82,.3));clip-path:inset(-4rem -4rem 0 -4rem)}
+.z01 .vragen__nu{background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 4px 0 var(--accent-700),0 12px 24px -12px rgba(0,0,0,.5)}
+
+/* ===== 02 Blauwe plaat met het team ===== */
+.z02 .vragen__gesprek::before{background:var(--brand-primary) radial-gradient(rgba(255,255,255,.16) 1px,transparent 1.6px) 0 0/16px 16px;
+  box-shadow:8px 8px 0 var(--brand-secondary),0 30px 50px -30px rgba(7,24,56,.7)}
+.z02 .vraag{box-shadow:0 4px 0 var(--primary-300),0 14px 26px -16px rgba(7,24,56,.6)}
+.z02 .vragen__staan::before{content:"";position:absolute;z-index:-1;inset:40% 0 0;border-radius:0 0 var(--radius-media) var(--radius-media);
+  background:linear-gradient(165deg,var(--accent-200),var(--brand-accent) 55%,var(--accent-600));clip-path:polygon(0 0,100% 30%,100% 100%,0 100%)}
+.z02 .vragen__collega{height:clamp(16rem,11rem + 8vw,20rem);max-width:none;filter:drop-shadow(0 14px 14px rgba(90,60,0,.35));clip-path:inset(-4rem -4rem 0 -4rem)}
+.z02 .vragen__nu{background:var(--white);color:var(--brand-secondary);box-shadow:0 4px 0 var(--accent-700),0 12px 24px -12px rgba(0,0,0,.45)}
+
+/* ===== 03-05 de kaart (referentie B .sgdp-voorraad) ===== */
+:is(.z03,.z04,.z05){--kp:clamp(1.4rem,.8rem + 2.2vw,2.4rem)}
+:is(.z03,.z04,.z05) .vragen__in{position:relative;isolation:isolate;grid-template-columns:minmax(0,1fr);grid-template-areas:"kop" "lijst" "bel" "fig";
+  row-gap:1.1rem;padding:var(--kp) calc(var(--pad) + var(--kp));margin-top:clamp(3rem,4vw,4.25rem)}
+:is(.z03,.z04,.z05) .vragen__in::before{content:"";position:absolute;z-index:-1;inset:0 var(--pad);border-radius:18px}
+.z03 .vragen__in::before,.z04 .vragen__in::before{background:var(--brand-primary);box-shadow:0 8px 0 var(--brand-secondary),0 24px 48px -28px rgba(11,35,82,.6)}
+.z05 .vragen__in::before{background:linear-gradient(100deg,#FFD447,var(--brand-accent) 60%,var(--accent-600));box-shadow:0 8px 0 var(--accent-700),0 24px 48px -28px rgba(90,60,0,.6)}
+:is(.z03,.z04,.z05) .vragen__zij{display:contents}
+:is(.z03,.z04,.z05) .kopgroep{grid-area:kop;margin:0}
+:is(.z03,.z04) .kopgroep :is(.label,h2){color:var(--white)}
+:is(.z03,.z04) .kopgroep .label .ic{color:var(--brand-accent)}
+.z05 .kopgroep :is(.label,h2){color:var(--brand-secondary)}
+:is(.z03,.z04,.z05) .vragen__beller{grid-area:bel;margin:0}
+:is(.z03,.z04,.z05) .vragen__gesprek{grid-area:lijst}
+:is(.z03,.z04,.z05) .vragen__gesprek::before{content:none}
+:is(.z03,.z04,.z05) .vragen__podium{grid-area:fig;margin:0 calc(-1 * var(--kp)) calc(-1 * var(--kp));min-height:15rem}
+:is(.z03,.z04,.z05) .vragen__staan{position:absolute;inset:0;overflow:hidden;border-radius:0 0 18px 18px}
+:is(.z03,.z04,.z05) .vragen__collega{position:absolute;bottom:0;left:50%;translate:-50% 0;height:17rem;max-width:none;filter:drop-shadow(0 14px 18px rgba(0,0,0,.25))}
+:is(.z03,.z04,.z05) .vragen__nu{left:var(--kp);bottom:1.2rem}
+:is(.z03,.z04) .vragen__nu{background:var(--brand-accent);color:var(--brand-secondary);box-shadow:0 4px 0 var(--accent-700),0 12px 26px -12px rgba(0,0,0,.5)}
+.z05 .vragen__nu{background:var(--brand-secondary);color:var(--white);box-shadow:0 4px 0 #071838,0 12px 26px -12px rgba(0,0,0,.5)}
+@media (min-width:900px){
+  :is(.z03,.z04,.z05) .vragen__in{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);grid-template-areas:"fig kop" "fig lijst" "fig bel";column-gap:clamp(1.5rem,3vw,2.75rem);align-items:start}
+  :is(.z03,.z04,.z05) .vragen__podium{align-self:stretch;margin:calc(-1 * var(--kp)) 0 calc(-1 * var(--kp)) calc(-1 * var(--kp));min-height:0}
+  :is(.z03,.z04,.z05) .vragen__staan{overflow:visible;border-radius:0;clip-path:inset(-30rem -3rem 0 0 round 0 0 0 18px)}
+  :is(.z03,.z04,.z05) .vragen__collega{left:54%;height:clamp(26rem,20rem + 16vw,35rem);clip-path:inset(-20rem -20rem 0 -20rem)}
+  .z05 .vragen__collega{left:47%;height:clamp(24rem,18rem + 14vw,32rem)}
+}
+
+/* 03: de vragen als regels in de kaart, zoals ontwerp 10 */
+.z03 .vragen__gesprek{gap:0}
+.z03 .vraag{border-radius:0;background:none;box-shadow:none;border-top:1px solid rgba(255,255,255,.22)}
+.z03 .vraag:last-child{border-bottom:1px solid rgba(255,255,255,.22)}
+.z03 .vraag::before{content:none}
+.z03 .vraag summary{min-height:3.3rem;padding:.55rem 0}
+.z03 .vraag__nr{color:var(--brand-accent)}
+.z03 .vraag__tekst,.z03 .vraag[open] .vraag__tekst{color:var(--white)}
+.z03 .vraag summary:hover .vraag__tekst{color:var(--brand-accent)}
+.z03 .vraag__plus{background:rgba(255,255,255,.14);color:var(--white)}
+.z03 .vraag[open] .vraag__plus{background:var(--brand-accent);color:var(--brand-secondary)}
+.z03 .vraag__antwoord{margin:0;padding:0 0 1rem 2.3rem;border:0}
+.z03 .vraag__antwoord::before{content:none}
+.z03 .vraag__antwoord p{color:rgba(255,255,255,.9)}
+.z03 .vraag__antwoord a:not(.wa-link):not([href^="tel:"]){color:var(--white)}
+.z03 .vraag__antwoord a[href^="tel:"]{background:var(--brand-accent);color:var(--brand-secondary)}
+.z03 .vragen__beller{grid-template-columns:minmax(0,1fr);row-gap:.6rem}
+.z03 .vragen__beller::before{content:none}
+.z03 .vragen__belvraag,.z03 .vragen__belnr{grid-column:1}
+.z03 .vragen__belvraag{color:var(--white);font-weight:var(--weight-bold);font-size:1rem}
+.z03 .vragen__belnr a[href^="tel:"]{min-height:48px;padding:.6rem 1.4rem;border-radius:999px;background:var(--brand-accent);color:var(--brand-secondary);
+  font:var(--weight-bold) 1rem/1.2 var(--font-sans);box-shadow:0 4px 0 var(--accent-700)}
+.z03 .vragen__belnr a[href^="tel:"]:hover{background:var(--accent-600);color:var(--brand-secondary)}
+.z03 .vragen__belnr .wa-link{min-height:48px;box-shadow:0 4px 0 #14552B}
+
+/* 04 en 05: de vragen als witte kaarten met plaatrand (referentie C .b-vraag) */
+:is(.z04,.z05) .vragen__gesprek{gap:.55rem}
+:is(.z04,.z05) .vraag summary{min-height:3.4rem;padding:.5rem .9rem .5rem 1.2rem}
+.z04 .vraag{box-shadow:0 4px 0 var(--brand-secondary),0 14px 24px -14px rgba(7,24,56,.6)}
+.z05 .vraag{box-shadow:0 4px 0 var(--accent-700),0 14px 24px -14px rgba(90,60,0,.5)}
+.z04 .vragen__belvraag{color:rgba(255,255,255,.88)}
+.z04 .vragen__belnr a[href^="tel:"]{color:var(--white)}
+.z04 .vragen__belnr a[href^="tel:"]:hover{color:var(--brand-accent)}
+.z04 .vragen__beller::before{box-shadow:0 0 0 1px rgba(255,255,255,.25),0 8px 18px -8px rgba(0,0,0,.45)}
+.z05 .vragen__belvraag{color:var(--brand-secondary)}
+.z05 .vragen__belnr a[href^="tel:"]{background-image:linear-gradient(var(--brand-secondary),var(--brand-secondary))}
+.z05 .vragen__beller::before{box-shadow:0 0 0 1px rgba(11,35,82,.15),0 8px 18px -8px rgba(90,60,0,.5)}

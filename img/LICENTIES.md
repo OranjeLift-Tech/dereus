@@ -170,6 +170,14 @@ vervangen van twee stapfoto's in "Zo werkt het" (home). De header-achtergronden 
   (onder 120 weg, boven 200 vol), de donkere kastrand naast de vingers van de opgeheven hand weggehaald.
   Zelfde formaat 1200x1030, WebP q88, alfa q92.
 
+## img/voorbereiding-kast-hoofd.webp
+
+- /werkwijze/ #voorbereiding ("Uw lijstje"), UITSNEDE in `_werk/blokken/lijstplaat.py` sinds 29-09-2026: alleen het
+  hoofd van de verhuizer komt boven de fotolijst uit, niet zijn hand (vraag van de gebruiker).
+- Bron: `img/voorbereiding-kast-man.webp` hierboven, dus dezelfde herkomst en licentie.
+- Bewerkt: in elke rij boven y 418 is alles links van het hoofd doorzichtig gemaakt (de opgeheven arm en hand),
+  met sharp. Verder pixel voor pixel gelijk. Zelfde formaat 1200x1030, WebP q90, alfa q100.
+
 ## img/offerte-figuur-uit.webp
 
 - /offerte/, "Zo regelt u het in een paar minuten" (`_werk/paginas/offerte.py`, formulier figuur=), de versie van
@@ -183,6 +191,52 @@ vervangen van twee stapfoto's in "Zo werkt het" (home). De header-achtergronden 
 - Bewerkt: achtergrond en de doos linksonder verwijderd met @imgly/background-removal-node (model medium), alfa
   hard gemaakt (onder 120 weg, boven 200 vol), bijgesneden op de persoon: kruin tot y 800, de onderkant van het
   shirt op 78,7% van de hoogte. 435x752, WebP q90.
+
+## img/offerte-klantenservice-uit.webp
+
+- /offerte/, "Zo gaat het verder" (`_werk/blokken/bandpaneel.py`, BEELD), sinds 29-09-2026: de
+  klantenservicemedewerker in de Goudgele band (ontwerp 15 uit `_ontwerpen/offerte-na-aanvraag-varianten.html`).
+- Bron: `img/contact-klantenservice-boog-uit.webp` (werkwijze in `_ai-beelden/na-bericht-boog/LEESMIJ.md`), zelf
+  gemaakt uit `img/contact-klantenservice-foto.webp` en `-uit.webp`. De herkomst van die foto staat nog niet in
+  dit bestand: nog uitzoeken.
+- Bewerkt: het bureau loopt rechts zacht uit in plaats van recht af te houden; boven en onder de koffiekop gaat de
+  alfa van x 770 naar 0 bij x 850, de kop zelf blijft heel en het randje toetsenbord rechts ervan is weg
+  (`_ontwerpen/_bron-na-aanvraag-ref/uitsnede.cjs`). 850x730, WebP q90, alfa q100.
+
+## img/contact-echt/*.webp
+
+- /contact/, de vier kanaalkaarten onder "Zo bereikt u ons" (`_werk/blokken/contactkaarten.py`, VOORWERP), sinds
+  29-09-2026 in plaats van de klei-iconen uit `img/clay/`, die de gebruiker "te AI, gemaakt" vond. Per voorwerp twee
+  breedtes (1x en 2x), WebP q84, alfa q95. Werkwijze en scripts: `_ai-beelden/contact-echt/LEESMIJ.md`.
+- `telefoon-*`: Unsplash, https://unsplash.com/photos/dBESAHgPL6c, Mediamodifier. Het lege scherm kreeg een
+  belscherm van De Reus (beeldmerk, naam, 085 000 5647) in perspectief.
+- `envelop-*`: Unsplash, https://unsplash.com/photos/ehI8qokwP7s, Mediamodifier. Op de lege kaart staan het
+  horizontale logo en een paar tekstregels.
+- `klembord-*`: Unsplash, https://unsplash.com/photos/UEQedPdLXVU, mockupbee. Op het lege vel staat een
+  contactformulier met het logo.
+- Licentie van deze drie: **Unsplash License** (gratis, ook commercieel, geen naamsvermelding verplicht). Geen van
+  de drie is Unsplash+ (nagekeken via de API op 29-09-2026: premium en plus allebei false). Originelen (2000 px)
+  in `_ai-beelden/contact-echt/bron/`, met de gegevens per foto in een .json ernaast.
+- `dozen-*`: uitsnede van de twee dozen uit `img/voorbereiding-dozen.webp` (eigen beeld, logo en nummer staan er al
+  op). Achtergrond weg met @imgly/background-removal-node, verder ongewijzigd.
+- `punaise-*` en `wekker-*`: /contact/ #kaart ("Zo vindt u ons"), de gele tegels van Hoofdkantoor en Bereikbaar
+  (`_werk/blokken/kaart.py`, VOORWERP), sinds 29-09-2026 in plaats van de lijniconen pin en klok. `punaise-*` is de
+  blauwe punaise bij Stoke-on-Trent uit Unsplash https://unsplash.com/photos/46Tg56viOUg (Paul Marlow, wegenkaart
+  vol punaises, origineel 3534 px); `wekker-*` is Unsplash https://unsplash.com/photos/flpCsXSVgoo (Joan Tran).
+  Beide **Unsplash License**, geen Unsplash+ (API 29-09-2026: premium en plus false). Achtergrond weg met imgly,
+  alfarand hard gemaakt, verder ongewijzigd; WebP q90. Originelen en .json in `_ai-beelden/contact-echt/bron/`.
+- Home #werkgebied en /over-ons/ #den-haag + #zo-werken-wij, sinds 29-09-2026 in plaats van de lijniconen in de gele
+  tegels (`_werk/blokken/werkgebied.py` en `kernwaarden.py`, VOORWERP). `punaise-*`, `wekker-*` en `dozen-*` zijn
+  dezelfde beelden als hierboven (`dozen-58/116` is een kleinere export van dezelfde uitsnede). Nieuw:
+  - `bakwagen-*`: uitsnede van de bakwagen uit `img/footer-wagen-breed.webp` (eigen beeld, logo en nummer staan er al
+    op). Achtergrond weg met imgly, de witte laadbak dichtgezet.
+  - `wereldbol-*`: Unsplash https://unsplash.com/photos/9tmrYLRL7Ww (Subhash Nusetti).
+  - `plant-*`: Unsplash https://unsplash.com/photos/2LlRY-bMmig (Kelsey Brown); de witte pot dichtgezet.
+  - `munten-*`: Unsplash https://unsplash.com/photos/OApHds2yEGQ (Ibrahim Rifath), alleen de twee rechter stapels.
+  - `headset-*`: Unsplash https://unsplash.com/photos/dJ2hnNSqsmk (Barry A); het merkteken op de oorschelp is
+    weggepoetst (`headset-merk.cjs`).
+  Alle vier **Unsplash License**, geen Unsplash+ (API 29-09-2026: premium en plus false). Originelen en .json in
+  `_ai-beelden/contact-echt/bron/`, werkwijze in de LEESMIJ daar.
 
 ## Vervangen
 

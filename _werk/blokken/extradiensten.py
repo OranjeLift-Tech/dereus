@@ -16,8 +16,9 @@ STANDAARD = ["opslag", "verhuislift", "montage", "woningontruiming"]
 # Het voorwerp dat op elke kaart staat en er bovenuit steekt: sinds 28-09-2026 het klei-icoon van die dienst
 # (img/clay/<naam>-240/480.webp, vierkant; website/review/clay-iconen-20260928/). Het vak is 12 rem hoog met
 # object-fit contain. Vormgeving: css/blok/extradiensten.css en css/blok/kosten-diepte.css.
-VOORWERP = {"opslag": "opslag", "verhuislift": "verhuislift", "montage": "montage",
-            "woningontruiming": "woningontruiming"}
+# Sinds 29-09-2026 staat het De Reus-logo op de dozen (-logo, _ai-beelden/clay-logo/logo-op-doos.cjs); montage heeft geen doos.
+VOORWERP = {"opslag": "opslag-logo", "verhuislift": "verhuislift-logo", "montage": "montage",
+            "woningontruiming": "woningontruiming-logo"}
 
 
 def html(ctx, kopij, **opties) -> str:

@@ -1,24 +1,24 @@
 ---
 titel: Werkwijze: zo werkt verhuizen | Verhuisbedrijf De Reus
-beschrijving: Van aanvraag tot verhuisdag in vijf stappen, met één vaste verhuisadviseur. Lees wat wij doen, wat u doet en hoe u zich voorbereidt op de verhuisdag.
+beschrijving: Van aanvraag tot verhuisdag in drie stappen, met één vaste verhuisadviseur. Lees wat wij doen, wat u doet en hoe u zich voorbereidt op de verhuisdag.
 og-titel: Zo werkt een verhuizing met De Reus
 ---
 <!--
 Kopij /werkwijze/, dereus-4e. Eigen pagina sinds het nieuwe menu (besluit gebruiker via dereus-28). Veldcontract met dereus-b4.
-Blokken: kop, stappen (stap-1 tot stap-5, titels gelijk aan de home), voorbereiding, verhuisdag, na-de-verhuizing, reviews, vragen, offertepil.
+Blokken: kop, stappen (stap-1 tot stap-3 sinds 29-09-2026; de home heeft er vijf), voorbereiding, verhuisdag, na-de-verhuizing, reviews, vragen, offertepil.
 De reviews zelf staan in home.md; hier alleen label, kop en intro.
 Termijnen alleen waar de huidige site ze noemt: "word binnen 24 uur gebeld" en "stellen dezelfde dag een vrijblijvende offerte op maat voor u op".
 Voorwaarden: artikel 3.5, 4, 6, 7 en 12.
 -->
 
 # Zo werkt een verhuizing met De Reus {#kop}
-intro-kort: Van aanvraag tot verhuisdag in vijf stappen, met één vaste verhuisadviseur.
+intro-kort: Van aanvraag tot verhuisdag in drie stappen, met één vaste verhuisadviseur.
 label: Werkwijze
-intro: Wat doet een verhuisbedrijf eigenlijk, van de eerste vraag tot de laatste doos? Bij De Reus gaat het in vijf stappen, met één vaste verhuisadviseur als aanspreekpunt. Hieronder leest u per stap wat er gebeurt, wat u zelf doet en wat wij voor u regelen.
+intro: Wat doet een verhuisbedrijf eigenlijk, van de eerste vraag tot de laatste doos? Bij De Reus gaat het in drie stappen, met één vaste verhuisadviseur als aanspreekpunt. Hieronder leest u per stap wat er gebeurt, wat u zelf doet en wat wij voor u regelen.
 
 ## Van aanvraag tot verhuisdag {#stappen}
-label: In vijf stappen
-intro: Elke verhuizing loopt bij ons via dezelfde vijf stappen. Zo weet u steeds waar u aan toe bent.
+label: In drie stappen
+intro: Elke verhuizing loopt bij ons via dezelfde drie stappen. Zo weet u steeds waar u aan toe bent.
 u-label: Wat u doet
 wij-label: Wat wij doen
 einde-titel: Uw nieuwe huis
@@ -26,38 +26,34 @@ einde-tekst: Van uw eerste vraag tot de sleutel in uw nieuwe deur. Eén vaste ve
 einde-linktekst: Offerte aanvragen
 einde-link: /offerte/
 einde-alt: Voordeur van een woning in Den Haag
+belregel: Liever bellen? 085 000 5647
 
-### Offerte aanvragen {#stap-1}
+<!-- 29-09-2026: op vraag van de klant drie stappen in plaats van vijf. Stap 1 = de oude stappen 1 en 2
+(aanvraag en persoonlijk contact), stap 2 = de oude stappen 3 en 4 (offerte en planning), stap 3 = de verhuisdag.
+De vijf oude stappen staan in git (commit 98f7e0e). De home houdt haar eigen vijf stappen (home.md #werkwijze). -->
+
+### Aanvraag en persoonlijk contact {#stap-1}
 beeld: /img/stap-aanvraag.webp
+kort: Binnen 24 uur na uw aanvraag belt uw verhuisadviseur u.
 u: U vult het formulier in, of u belt ons op 085 000 5647.
-wij: Wij lezen uw aanvraag en koppelen u aan een vaste verhuisadviseur.
+wij: Wij koppelen u aan een vaste verhuisadviseur, die meedenkt en uw vragen beantwoordt.
 linktekst: Offerte aanvragen
 link: /offerte/
 
-U vertelt ons kort waar u vandaan komt, waar u naartoe gaat en wanneer u wilt verhuizen. Meer hoeven wij in deze stap nog niet te weten.
+U vertelt ons kort waar u vandaan komt, waar u naartoe gaat en wanneer u wilt verhuizen. Binnen 24 uur na uw aanvraag belt uw verhuisadviseur u. In dat gesprek nemen we uw wensen en uw inboedel door.
 
-### Persoonlijk contact {#stap-2}
-u: U vertelt wat er mee moet, hoe beide adressen bereikbaar zijn en wat u zelf wilt doen.
-wij: Wij denken mee, beantwoorden uw vragen en schatten in hoeveel werk de verhuizing is.
-
-Binnen 24 uur na uw aanvraag belt uw verhuisadviseur u. In dat gesprek nemen we uw wensen en uw inboedel door.
-
-### Offerte ontvangen {#stap-3}
-u: U leest de offerte rustig door. Wilt u iets aanpassen, dan laat u het uw verhuisadviseur weten.
-wij: Wij stellen de offerte op, doorgaans nog dezelfde dag als het gesprek.
+### Offerte en planning {#stap-2}
+kort: U krijgt een vrijblijvende offerte op maat, doorgaans nog dezelfde dag.
+u: U leest de offerte rustig door. Wilt u iets aanpassen, dan laat u het weten.
+wij: Accepteert u de offerte, dan zetten wij de datum vast.
 linktekst: Wat de prijs bepaalt
 link: /kosten/
 
-U krijgt een duidelijke, vrijblijvende offerte op maat. Daarin staat of u een all-in prijs of een regieprijs krijgt.
+U krijgt een duidelijke, vrijblijvende offerte op maat, doorgaans nog dezelfde dag als het gesprek. Daarin staat of u een all-in prijs of een regieprijs krijgt. Pas als u de offerte accepteert, is de afspraak rond. Daarna regelen wij de rest.
 
-### Planning bevestigen {#stap-4}
-u: U accepteert de offerte.
-wij: Wij zetten de datum vast en bereiden de verhuisdag voor.
-
-Pas als u de offerte accepteert, is de afspraak rond. Daarna regelen wij de rest.
-
-### Verhuisdag {#stap-5}
+### Verhuisdag {#stap-3}
 beeld: /img/stap-verhuisdag.webp
+kort: Onze verhuizers staan op het afgesproken tijdstip voor de deur. Zij tillen, dragen en zetten alles netjes neer.
 u: U wijst aan waar alles moet komen.
 wij: Wij doen het zware werk, van de eerste doos tot de laatste kast.
 
