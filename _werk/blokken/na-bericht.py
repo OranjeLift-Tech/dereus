@@ -21,6 +21,9 @@ de bedanktpagina's (systeem.md {#offerte-bedankt} en {#contact-bedankt}: stappen
            haar bureau, zonder kamer erachter en met een grote Goudgele duim ernaast, zoals de contactkop van
            referentie A (BUREAU en DUIM hieronder, blok "Beeld bureau" in css/blok/na-bericht.css). Zonder
            deze optie de foto met het huisvlak en de uitsnede (FOTO en UITSNEDE).
+           "boog": de adviseur aan haar bureau, zonder kamer, in een witte boog met een Goudgele binnenlijn die
+           op de onderrand van de band staat, zoals "Na uw aanvraag" bij referentie A (.venster__boog). BOOG
+           hieronder, blok "Beeld boog" in css/blok/na-bericht.css (29-09-2026).
 Items van het kopijblok worden genummerde stappen.
 """
 
@@ -39,6 +42,11 @@ UITSNEDE = ("/img/contact-klantenservice-uit.webp", 1200, 800)
 # (bron en werkwijze: _ai-beelden/na-bericht-bureau/). Onderaan loopt het bureau tot de rand door,
 # die rand krijgt in de css ronde hoeken; boven is alles vrij.
 BUREAU = ("/img/contact-klantenservice-bureau-uit.webp", 1060, 690)
+
+# Optie beeld="boog": dezelfde adviseur met bureau, schrijfblok en kop, zonder kamer en zonder scherm, zodat
+# alles binnen de boog valt (bron en werkwijze: _ai-beelden/na-bericht-boog/). Links 40 px lucht naast haar
+# rug, rechts houdt het bureau op bij de kop; de onderrand loopt door het bureaufront en valt op de sectierand.
+BOOG = ("/img/contact-klantenservice-boog-uit.webp", 850, 730)
 
 # duim omhoog bij beeld="bureau": manchet links, hand met duim; egaal, de kleur komt uit de css
 DUIM = ('<svg class="b-na-bericht__duim" viewBox="0 0 120 108" aria-hidden="true" focusable="false">'
@@ -106,9 +114,13 @@ def html(ctx, kopij, **opties) -> str:
              f'<div class="knoppen">{knoppen}</div>' if knoppen else ""]
     inhoud = "\n          ".join(d for d in delen if d)
     bureau = opties.get("beeld") == "bureau"
+    boog = opties.get("beeld") == "boog"
     if bureau:
         figuur = f'''{DUIM}
           {ctx.beeld(BUREAU[0], "", BUREAU[1], BUREAU[2], klasse=f"b-{NAAM}__foto")}'''
+    elif boog:
+        figuur = f'''<span class="b-{NAAM}__boog" aria-hidden="true"></span>
+          {ctx.beeld(BOOG[0], "", BOOG[1], BOOG[2], klasse=f"b-{NAAM}__foto")}'''
     else:
         figuur = f'''<div class="b-{NAAM}__kader">
             {ctx.beeld(FOTO[0], "", FOTO[1], FOTO[2], klasse=f"b-{NAAM}__foto")}
@@ -123,7 +135,8 @@ def html(ctx, kopij, **opties) -> str:
     # met kop wijst de sectie naar die kop; zonder kop (bedankt) krijgt zij een eigen naam en geen id,
     # want het kopijblok deelt zijn id met de paginakop
     naam = f' id="{sid}" aria-labelledby="{sid}-kop"' if met_kop else ' aria-label="Wat er nu gebeurt"'
-    extra = (f" b-{NAAM}--onder-beeld" if onder else "") + (f" b-{NAAM}--bureau" if bureau else "")
+    extra = ((f" b-{NAAM}--onder-beeld" if onder else "") + (f" b-{NAAM}--bureau" if bureau else "")
+             + (f" b-{NAAM}--boog" if boog else ""))
     if paneel:
         return f'''<section class="b-{NAAM} b-{NAAM}--paneel{extra} sectie sectie--{opties.get("grond", "wit")}"{naam}>
       <div class="wrap">

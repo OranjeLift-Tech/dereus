@@ -14,7 +14,34 @@ _FACTOR = re.compile(r"^\*\*(.+?)\*\*\s*(.*)$")
 # Optie voorwerpen (/kosten/): per factor een voorwerp op een gele schijf. Sinds 28-09-2026 de klei-iconen
 # (img/clay/<naam>-240/480.webp, vierkant; website/review/clay-iconen-20260928/) in plaats van de 3D-renders uit
 # img/kosten-3d/. Het vak is 11.6 rem hoog met object-fit contain; vormgeving in css/blok/opbouw-3d.css.
-VOORWERPEN = ["dozen", "nationaal", "trap", "montage", "opslag"]
+# Sinds 29-09-2026 staat bij dozen, trap en opslag het De Reus-logo op de dozen (<naam>-logo-240/480.webp, zelfde
+# klei-icoon met het kleurenlogo in perspectief op de zijkant gezet; de gewone iconen blijven voor de andere pagina's).
+VOORWERPEN = ["dozen-logo", "nationaal", "trap-logo", "montage", "opslag-logo"]
+
+# Optie duo="foto" (/kosten/, 29-09-2026): all-in prijs en regieprijs als het blok "Een verhuislift of opslag
+# erbij" van referentie C (.b-liftopslag__duo: twee foto's die op een schuine naad tegen elkaar staan, met een
+# schijf op de naad, en een witte kaart met een rond icoon die over de onderkant van elke foto valt). De gebruiker
+# vond de twee betaalpassen geen blok. Per item-id: foto, breedte, hoogte, icoon, uitsnede (object-position).
+# All-in: de offerte die getekend wordt (één vast bedrag zoals in de offerte). Regie: de verhuizers aan het werk
+# (de tijd die de verhuizing werkelijk kost).
+FOTODUO = {
+    "all-in": ("/img/stap-3-offerte.webp", 560, 380, "document", "50% 38%"),
+    "regie": ("/img/verhuisdag-uitladen.webp", 1400, 1050, "klok", "50% 14%"),
+}
+
+
+def _vak(ctx, it):
+    """Een helft van het fotoduo: foto, dan de kaart met icoon, kop en tekst."""
+    foto = ""
+    if it.id in FOTODUO:
+        src, b, h, ic, snede = FOTODUO[it.id]
+        foto = (f'<figure class="b-{NAAM}__foto" style="--snede:{snede}">'
+                f'{ctx.beeld(src, "", b, h, sizes="(max-width:760px) 92vw, 50vw")}</figure>')
+        ic = f'<span class="b-{NAAM}__ic" aria-hidden="true">{ctx.icoon(ic)}</span>'
+    else:
+        ic = ""
+    return (f'<article class="b-{NAAM}__vak" id="{it.id}">{foto}<div class="b-{NAAM}__vakkaart">{ic}'
+            f'<h3 class="b-{NAAM}__vakkop">{ctx.inline(it.kop)}</h3>{ctx.alineas(it.tekst)}</div></article>')
 
 
 def _factor(ctx, regel, nr, voorwerp=None):
@@ -46,7 +73,11 @@ def html(ctx, kopij, **opties) -> str:
     lijstkop = f'<h3 class="b-{NAAM}__lijstkop">{ctx.inline(k.veld("lijstkop"))}</h3>' if k.veld("lijstkop") else ""
     duo, rest = k.items[:2], k.items[2:]
     duo_html = ""
-    if len(duo) == 2:
+    if len(duo) == 2 and opties.get("duo") == "foto":
+        duo_html = (f'<div class="b-{NAAM}__duo b-{NAAM}__duo--foto" data-reveal>{_vak(ctx, duo[0])}'
+                    f'<span class="b-{NAAM}__naad" aria-hidden="true">{ctx.esc(opties.get("of", "of"))}</span>'
+                    f'{_vak(ctx, duo[1])}</div>')
+    elif len(duo) == 2:
         duo_html = (f'<div class="b-{NAAM}__duo" data-reveal>{_soort(ctx, duo[0], "b-" + NAAM + "__soort--a")}'
                     f'<span class="b-{NAAM}__of" aria-hidden="true">{ctx.esc(opties.get("of", "of"))}</span>'
                     f'{_soort(ctx, duo[1], "b-" + NAAM + "__soort--b")}</div>')

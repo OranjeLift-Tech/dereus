@@ -22,6 +22,11 @@ Sinds 28-09-2026 uit website/review/werkgebied-20260928/r2/ ("add the arrows, th
   adresplaat=True   het adres met een routelink op de linkerbovenhoek van de kaart (versie 3, Adresplaat)
   acties=True       "Offerte aanvragen" en de belknop onder de regels (versie 5, Offerte en bellen)
 /over-ons/ zet adresplaat en acties uit: het adres en de routeknop staan daar al, en het grote formulier volgt direct.
+
+Sinds 29-09-2026 staan in de gele tegels echte voorwerpen in plaats van lijniconen, zoals op /contact/ #kaart: "bu
+bölümdeki figürleri de gerçek ve kutudan çıkacakmış gibi yap". Den Haag de blauwe punaise (dezelfde als op /contact/),
+Nederland de bakwagen van De Reus (uitsnede uit img/footer-wagen-breed.webp), het buitenland een wereldbol (Unsplash).
+Bestanden en bronnen: VOORWERP hieronder, img/LICENTIES.md en _ai-beelden/contact-echt/LEESMIJ.md.
 """
 NAAM = "werkgebied"
 CSS = True
@@ -29,9 +34,26 @@ JS = False
 
 KAART = "/img/kaart-den-haag.svg"
 ICONEN = {"hoofdkantoor": "pin", "nederland": "vrachtwagen", "internationaal": "wereld"}
+# icoon -> (bestand in img/contact-echt, breedte 1x, breedte 2x, hoogte 1x, sizes). Een icoon zonder voorwerp blijft
+# een lijnicoon in de tegel.
+VOORWERP = {
+    "pin": ("punaise", 44, 88, 76, "2.75rem"),           # Unsplash 46Tg56viOUg, ook op /contact/ #kaart
+    "vrachtwagen": ("bakwagen", 96, 192, 63, "5.6rem"),  # eigen beeld (5.2rem onder 1280 px), img/footer-wagen-breed.webp
+    "wereld": ("wereldbol", 58, 116, 86, "3.6rem"),      # Unsplash 9tmrYLRL7Ww
+}
 # De man met de deken en de hoge doos: live op /contact/, niet op de home of /over-ons/. Het logo op de doos
 # loopt tot 88 procent van zijn hoogte, dus de voetplaat mag hooguit de onderste 10,7 procent bedekken.
 MAN = ("/img/verhuizer-doos-deken-uit.webp", 698, 1200)
+
+
+def _tegel(ctx, icoon):
+    if icoon in VOORWERP:
+        naam, b, b2, h, maat = VOORWERP[icoon]
+        pad = f"/img/contact-echt/{naam}"
+        return (f'<span class="wg__icoon wg__tegel wg__tegel--{naam}" aria-hidden="true"><img class="wg__obj wg__obj--{naam}" '
+                f'src="{pad}-{b}.webp" srcset="{pad}-{b}.webp {b}w, {pad}-{b2}.webp {b2}w" '
+                f'sizes="{maat}" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
+    return f'<span class="wg__icoon" aria-hidden="true">{ctx.icoon(icoon)}</span>'
 
 
 def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, route=True, adresplaat=True, acties=True, **opties):
@@ -45,7 +67,7 @@ def html(ctx, kopij, sectie="diep", regels_van=None, alineas=True, man=MAN, rout
         meer = (f'<a class="wg__link" href="{ctx.esc(link)}"><span>{ctx.inline(linktekst or "Lees meer")}</span>{ctx.icoon("pijl")}</a>'
                 if link else "")
         regels.append(f'''<li class="wg__regel">
-          <span class="wg__icoon" aria-hidden="true">{ctx.icoon(ICONEN.get(it.id, "pin"))}</span>
+          {_tegel(ctx, ICONEN.get(it.id, "pin"))}
           <div>
             <h3 class="wg__titel">{ctx.inline(it.titel)}</h3>
             <p>{ctx.inline(it.veld("tekst"))}</p>

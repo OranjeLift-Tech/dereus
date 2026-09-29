@@ -15,6 +15,26 @@ CSS = True
 JS = False
 
 ICONEN = {"sterk": "doos", "zorgvuldig": "schild", "betrouwbaar": "klok", "eerlijk": "euro", "betrokken": "persoon"}
+# Sinds 29-09-2026 een echt voorwerp in een dikke gele tegel, zoals /contact/ en het werkgebied ("bu over ons sayfasındaki
+# figürleri de aynı şekilde istiyorum"): icoon -> (bestand in img/contact-echt, breedte 1x, breedte 2x, hoogte 1x, sizes).
+# Bronnen in img/LICENTIES.md. Een icoon zonder voorwerp blijft een lijnicoon.
+VOORWERP = {
+    "doos": ("dozen", 58, 116, 72, "3.2rem"),           # de twee logodozen van /contact/, eigen beeld
+    "schild": ("plant", 62, 124, 72, "3.9rem"),         # Unsplash 2LlRY-bMmig: een kamerplant, netjes neergezet
+    "klok": ("wekker", 48, 96, 72, "3rem"),             # Unsplash flpCsXSVgoo, ook op /contact/ #kaart
+    "euro": ("munten", 80, 160, 55, "4.7rem"),          # Unsplash OApHds2yEGQ, twee stapels eurocenten
+    "persoon": ("headset", 53, 106, 77, "3.3rem"),      # Unsplash dJ2hnNSqsmk: de verhuisadviseur blijft bereikbaar
+}
+
+
+def _icoon(ctx, naam):
+    if naam in VOORWERP:
+        bestand, b, b2, h, maat = VOORWERP[naam]
+        pad = f"/img/contact-echt/{bestand}"
+        return (f'<span class="kw__icoon kw__tegel kw__tegel--{bestand}" aria-hidden="true"><img class="kw__obj kw__obj--{bestand}" '
+                f'src="{pad}-{b}.webp" srcset="{pad}-{b}.webp {b}w, {pad}-{b2}.webp {b2}w" '
+                f'sizes="{maat}" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
+    return f'<span class="kw__icoon" aria-hidden="true">{ctx.icoon(naam)}</span>'
 
 # pop: hoe ver de laag boven het kader uitsteekt (in % van de kaderhoogte); knip: waar het kader
 # begint, gemeten over de laag (pop / (1 + pop)). Alfa van dienst-particulier-v2-uit begint op 21,98%.
@@ -31,7 +51,7 @@ def html(ctx, kopij, sectie="blauw", foto=None, compact=None, **opties):
         raise ValueError(f"kernwaarden: geen uitstapmaten voor foto {foto!r}, meet ze en zet ze in UITSTAP")
 
     eerste, *rest = k.items
-    icoon = lambda it: f'<span class="kw__icoon" aria-hidden="true">{ctx.icoon(ICONEN.get(it.id, "check"))}</span>'
+    icoon = lambda it: _icoon(ctx, ICONEN.get(it.id, "check"))
     beeld, stijl = "", ""
     if foto:
         pop, knip = UITSTAP[foto]

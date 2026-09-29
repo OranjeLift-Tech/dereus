@@ -6,7 +6,9 @@ Antwoorden mogen als tekst:-veld of als losse alinea's onder de ###-vraag staan.
 Opties: sectie ("mist" standaard, of "wit"), open (nummer van de vraag die open staat, standaard geen),
 kopkaart (zet de kop IN de belkaart in plaats van erboven), foto (een vrijstaande verhuizer rechts in
 die kaart), stijl ("paneel" voor de blauwe paneelopmaak, "geel" voor de Goudgele band met foto-afdruk, met
-afdruk= uit AFDRUK; sectie, beeld, kopkaart, vulling en werker doen dan niets), vulling (standaard aan: de
+afdruk= uit AFDRUK, "gesprek" voor de vragen op een gestippeld vel met de kop ernaast, "kaart" voor dezelfde opzet in een
+blauwe kaart met een collega; bij geel doen sectie, beeld, kopkaart, vulling en werker niets, bij gesprek en kaart
+alleen sectie), vulling (standaard aan: de
 vraagtekens (klei-icoon) in het blauwe paneel, zie VULLING; zonder paneel blijft het vak onzichtbaar) en
 werker (standaard aan in het paneel met kopkaart en zonder foto: een verhuizer rechtsonder in het paneel,
 zie WERKER; False zet hem uit, een naam uit WERKER kiest een andere uitsnede).
@@ -131,6 +133,48 @@ def _geel(ctx, kid, kopgroep, vragen, bel, afdruk):
 </section>'''
 
 
+# Optie stijl="gesprek" (29-09-2026, /contact/): het vragenblok van referentie C (.b-vragen__gesprek, .b-vragen__kop,
+# .b-vragen__bel), in de kleuren van De Reus. De gebruiker vond het blauwe paneel met de headset, de vraagtekens en de
+# verhuizer te druk, alles over elkaar heen, en vroeg om een blok uit een van de referenties. Links de vragen als witte
+# kaarten op een schuin gestippeld vel, rechts de kop met een omlijnd vraagteken erachter, de bereikbaarheid en de
+# belregel: het beeldmerk in een witte schijf, de vraag, en het nummer met een Goudgele streep eronder. contactlinks
+# zet de WhatsApp-knop er zelf achter. Geen mensen en geen voorwerpen: /contact/ toont er al drie, de adviseur in de
+# boog staat er direct boven. Vormgeving: onderaan css/blok/vragen.css, "Gesprek".
+# Optie stijl="kaart" (29-09-2026, /contact/): dezelfde markup als "gesprek", in een Koningsblauwe kaart met dikte naar
+# het voorraadblok van referentie B (.sgdp-voorraad): links een collega met headset die boven de kaart uitsteekt, met
+# "Nu bereikbaar" als gele pil op haar podium; rechts de kop, de vragen als regels en de belrij. Ontwerp 03 uit
+# _ontwerpen/vragen-contact-ronde3.html, gekozen door de gebruiker ("gesprek" alleen vond die te sober). Ze staat links
+# omdat de adviseur in de boog van #na-bericht erboven rechts staat. Vormgeving: onderaan css/blok/vragen.css, "Kaart".
+# De klassen van het podium zijn nieuw: .vragen__beeld en .vragen__foto bestaan al (headset en kopkaartfiguur).
+COLLEGA = ("/img/contact-uit.webp", 1200, 800)
+
+
+def _gesprek(ctx, kid, kopgroep, vragen, bel, kaart=False, sectie="wit"):
+    """Eigen klassen voor alles buiten de vragen zelf, net als _geel: op /contact/ hangen er aan .p-contact
+    paneelregels op .vragen__kop, .vragen__bel en .vragen__lijst. Met kaart gaat "Nu bereikbaar" het podium in."""
+    nu = ctx.bereikbaar("bereikbaar vragen__nu")
+    podium = ""
+    if kaart:
+        src, cb, ch = COLLEGA
+        podium = ('\n      <div class="vragen__podium"><span class="vragen__staan" aria-hidden="true">'
+                  f'<img class="vragen__collega" src="{src}" alt="" width="{cb}" height="{ch}" loading="lazy" decoding="async">'
+                  f'</span>{nu}</div>')
+        nu = ""
+    klasse = "b-vragen--gesprek b-vragen--kaart" if kaart else "b-vragen--gesprek"
+    nu = f"\n      {nu}" if nu else ""
+    return f'''<section class="sectie sectie--{sectie} b-vragen {klasse}" id="{kid}" aria-labelledby="{kid}-kop">
+  <div class="wrap vragen__in">
+    <div class="vragen__zij">
+      {kopgroep}{nu}
+      <p class="vragen__beller"><span class="vragen__belvraag">{ctx.inline(bel) if bel else "Staat uw vraag er niet bij?"}</span><span class="vragen__belnr"><a href="{ctx.telhref}">Bel {ctx.tel}</a></span></p>{podium}
+    </div>
+    <div class="vragen__gesprek" data-reveal>
+      {"".join(vragen)}
+    </div>
+  </div>
+</section>'''
+
+
 def html(ctx, kopij, sectie="mist", open=None, stijl=None, **opties):
     k = kopij
     kid = ctx.esc(k.id or "vragen")
@@ -162,6 +206,9 @@ def html(ctx, kopij, sectie="mist", open=None, stijl=None, **opties):
         bel = bel.replace(f"Bel {ctx.tel}.", "").replace(f"Bel {ctx.tel}", "").replace(ctx.tel, "").strip()
     if stijl == "geel":
         return _geel(ctx, kid, ctx.kopgroep(k), vragen, bel, opties.get("afdruk", "zakelijk"))
+    if stijl in ("gesprek", "kaart"):
+        # sectie volgt de pagina (standaard mist, zie de parameter hierboven); /contact/ geeft wit mee
+        return _gesprek(ctx, kid, ctx.kopgroep(k), vragen, bel, kaart=stijl == "kaart", sectie=sectie)
     binnen =f'''{ctx.bereikbaar("bereikbaar vragen__status")}
         <p>{ctx.inline(bel) if bel else "Staat uw vraag er niet bij?"}</p>
         {ctx.belknop("blauw")}'''

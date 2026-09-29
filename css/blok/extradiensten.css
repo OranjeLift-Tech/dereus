@@ -1,7 +1,7 @@
 /* Verhuisbedrijf De Reus · blok extradiensten (/kosten/: opslag, verhuislift, montage, woningontruiming)
    Variant "Blauwverloop": vier kaarten op een rij die van wit naar Diepblauw verlopen, met op elke kaart
    een 3D-voorwerp dat er bovenuit steekt. De kaart houdt bovenin ruimte vrij en mag daarom niet knippen;
-   de kleuren en de dikte staan in css/blok/kosten-diepte.css. Er beweegt niets. */
+   de kleuren en de dikte staan in css/blok/kosten-diepte.css. Alleen het voorwerp groeit onder de muis. */
 .b-extradiensten{--ease:cubic-bezier(.22,.61,.36,1)}
 /* de rij houdt bovenaan ruimte vrij voor de voorwerpen die boven de kaarten uitsteken */
 .b-extradiensten__rooster{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(1rem,1.6vw,1.5rem);padding-top:4.4rem}
@@ -11,7 +11,11 @@
    object-fit contain met object-position 50% 100% zet het altijd onderaan in zijn vak. */
 .b-extradiensten__obj{position:absolute;left:8%;bottom:calc(100% - 7.6rem);width:84%;height:12rem;
   display:block;max-width:none;object-fit:contain;object-position:50% 100%;pointer-events:none;
-  filter:drop-shadow(3px 4px 2px rgba(11,35,82,.28)) drop-shadow(14px 20px 16px rgba(11,35,82,.34))}
+  filter:drop-shadow(3px 4px 2px rgba(11,35,82,.28)) drop-shadow(14px 20px 16px rgba(11,35,82,.34));
+  transform-origin:50% 100%;transition:scale .45s cubic-bezier(.4,0,.2,1)}
+/* onder de muis groeit het voorwerp vanaf zijn voet, zodat het op de lijn van de andere drie blijft staan */
+@media (hover:hover){.b-extradiensten__obj{pointer-events:auto}.b-extradiensten__obj:hover{scale:1.08}}
+@media (prefers-reduced-motion:reduce){.b-extradiensten__obj{transition:none}}
 .b-extradiensten__kop{margin:0;color:var(--brand-primary);font:var(--weight-display) var(--text-h3)/var(--leading-heading) var(--font-display);
   font-stretch:var(--font-display-stretch);text-wrap:balance}
 .b-extradiensten__kaart>p{margin:0;max-width:none}

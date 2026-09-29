@@ -15,7 +15,8 @@ PAGINA = Pagina(
     header="transparant",
     body_klasse="p-over-ons",
     feiten=("OPRICHTINGSJAAR", "EIGENAAR", "TEAM", "RECHTSVORM", "KVK"),
-    extra_css=("reviews-ster",),   # de 3D-ster op de uitgelichte review
+    # "reviews-ster" (de 3D-ster op de uitgelichte review) hoort bij het reviewblok "reviews"; zet hem terug als dat
+    # blok hieronder weer aan gaat.
     blokken=[
         ("kop", {}),
         ("offertepil", {"variant": "los", "over_kop": True, "kopij": None}),
@@ -26,7 +27,11 @@ PAGINA = Pagina(
         # met ronde 2 en 3 ("Take r3 onto /over-ons/"). Hiervoor stond hier
         # ("kernwaarden", {"kopij_id": "zo-werken-wij", "foto": "particulier-v2", "compact": "krap"}); dat blok bestaat nog.
         ("waardenblad", {"kopij_id": "zo-werken-wij"}),
-        ("reviews", {}),
+        # het reviewblok van /werkwijze/ (scorepodium + rail, referentie B) sinds 29-09-2026: de klant wilde het in
+        # alle reviewsecties. Mist, zoals het blok hiervoor.
+        ("reviewrail", {"kopij_id": "reviews", "sectie": "mist", "accent": "over ons zeggen"}),
+        # variant A, aan door deze regel te wisselen met de regel erboven (en "reviews-ster" terug in extra_css):
+        # ("reviews", {}),
         # keuze A (28-09-2026): de drie regels van de home. Van werkgebied r2 alleen de routelijn: het adres staat in de
         # intro en de routeknop eronder, en het grote formulier volgt direct, dus geen adresplaat en geen knoppen.
         ("werkgebied", {"kopij_id": "den-haag", "regels_van": ("home", "werkgebied"), "alineas": False,

@@ -14,11 +14,14 @@ PAGINA = Pagina(
     blokken=[
         ("kop", {}),
         ("antwoord", {"chips": CHIPS, "beeld": ("/img/verhuisdozen-uit.webp", 562, 522)}),
-        ("opbouw", {"voorwerpen": True}),                           # 3D-voorwerpen op gele schijven (css/blok/opbouw-3d.css)
+        # 3D-voorwerpen op gele schijven (css/blok/opbouw-3d.css); all-in en regie als fotoduo (29-09-2026, onderaan
+        # css/blok/kosten-diepte.css). Zonder "duo" komen de twee betaalpassen terug; hun CSS staat er nog.
+        ("opbouw", {"voorwerpen": True, "duo": "foto"}),
         ("treden", {"kopij_id": "verhuizing", "figuren": True}),   # verhuizers op trede 1 en 2, beeldmerk op trede 3
         ("extradiensten", {"kopij_ids": EXTRA}),
         ("annuleren", {}),
-        ("vragen", {"kopij_id": "vragen", "beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),   # hetzelfde blauwe paneel als op de home, /werkwijze/ en /contact/ (23-09-2026)
+        ("vragen", {"kopij_id": "vragen", "stijl": "kaart"}),   # de blauwe kaart met de collega, zoals op /contact/ (29-09-2026)
+        # tot 29-09-2026: ("vragen", {"kopij_id": "vragen", "beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),
         # de twee-dozen-verhuizer staat hier al op de treden, dus in de offertekaart een andere uitsnede
         ("offertepil", {"variant": "los", "beeld": ("/img/verhuizer-doos-zijgreep-uit.webp", 489, 1200)}),
     ],

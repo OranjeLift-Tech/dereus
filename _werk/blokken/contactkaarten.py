@@ -29,13 +29,17 @@ KANALEN = [
     ("doos", "/offerte/", "Offerte aanvragen"),
 ]
 
-# Per icoon het voorwerp: sinds 28-09-2026 het klei-icoon in img/clay/<naam>-240/480.webp (vierkant,
-# website/review/clay-iconen-20260928/) in plaats van de 3D-render uit img/contact-3d/. Naam, breedte, hoogte.
+# Per icoon het voorwerp. Sinds 29-09-2026 echte foto's, vrijstaand, in img/contact-echt/<naam>-<breedte>.webp:
+# de klei-iconen (img/clay/) vond de gebruiker "te AI, gemaakt". Telefoon, envelop en klembord zijn
+# Unsplash-foto's met het belscherm, de briefkaart en het formulier van De Reus erop gedrukt; de dozen komen uit
+# img/voorbereiding-dozen.webp. Ze staan op een goudgele schijf (ontwerp 05, _ontwerpen/contactkaarten-echt-varianten.html).
+# Bron en werkwijze: _ai-beelden/contact-echt/LEESMIJ.md.
+# Naam, breedte 1x, breedte 2x, hoogte 1x, weergavebreedte (sizes; gelijk aan de breedte in contactkaarten.css).
 VOORWERP = {
-    "telefoon": ("telefoon", 240, 240),
-    "mail": ("envelop", 240, 240),
-    "document": ("formulier", 240, 240),
-    "doos": ("dozen", 240, 240),
+    "telefoon": ("telefoon", 240, 480, 154, "15rem"),
+    "mail": ("envelop", 216, 432, 182, "13.5rem"),
+    "document": ("klembord", 136, 272, 218, "8.5rem"),
+    "doos": ("dozen", 166, 307, 205, "10.4rem"),
 }
 
 
@@ -50,10 +54,11 @@ def _kanaal(ctx, i, it):
     linktekst = it.veld("linktekst") or std
     geen_wa = " data-geen-whatsapp" if doel == "tel" else ""   # de belkaart erboven heeft de knop al
     if icoon in VOORWERP:                  # een echt voorwerp dat uit de kaart steekt, in plaats van het lijnicoon
-        naam, b, h = VOORWERP[icoon]
+        naam, b, b2, h, maat = VOORWERP[icoon]
+        pad = f"/img/contact-echt/{naam}"
         beeld = (f'<span class="b-{NAAM}__ic b-{NAAM}__ic--3d" aria-hidden="true"><img class="b-{NAAM}__obj b-{NAAM}__obj--{naam}" '
-                 f'src="/img/clay/{naam}-240.webp" srcset="/img/clay/{naam}-240.webp 240w, /img/clay/{naam}-480.webp 480w" '
-                 f'sizes="10rem" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
+                 f'src="{pad}-{b}.webp" srcset="{pad}-{b}.webp {b}w, {pad}-{b2}.webp {b2}w" '
+                 f'sizes="{maat}" alt="" width="{b}" height="{h}" loading="lazy" decoding="async"></span>')
     else:
         beeld = f'<span class="b-{NAAM}__ic" aria-hidden="true">{ctx.icoon(icoon)}</span>'
     return f'''<li class="b-{NAAM}__kanaal">
@@ -89,8 +94,8 @@ def html(ctx, kopij, **opties) -> str:
             beeld += ctx.beeld(vsrc, "", vbreed, vhoog, klasse=f"b-{NAAM}__voorgrond")
         maten = f"--uit-breed:{breed};--uit-hoog:{hoog};--uit-x:{ux};--uit-y:{uy};--uit-w:{uw};--uit-h:{uh}"
         figuur = f'<div class="uitsnede b-{NAAM}__figuur" style="{maten}" aria-hidden="true">{beeld}</div>'
-    # stijl="groen": de versie van Tugche (origin/main 9dbb9a8, 28-09-2026), de groene zijkant onder de muis en een
-    # grotere verhuizer; zie css/blok/contactkaarten.css
+    # stijl="groen": de versie van Tugche (origin/main 9dbb9a8, 28-09-2026), de plaatrand in rust en een
+    # grotere verhuizer; de groene zijkant onder de muis staat sinds 29-09-2026 altijd aan (css/blok/contactkaarten.css)
     stijl = " b-" + NAAM + "--groen" if opties.get("stijl") == "groen" else ""
     return f'''<section class="b-{NAAM}{stijl} sectie sectie--wit" id="{sid}" aria-labelledby="{sid}-kop">
       <div class="wrap">

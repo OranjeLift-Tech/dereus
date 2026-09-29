@@ -61,8 +61,25 @@
 .b-contactkaarten__ic--3d::after{background:var(--brand-accent)}
 .b-contactkaarten__obj{position:absolute;z-index:1;left:2rem;bottom:-.6rem;width:auto;height:9.8rem;max-width:none;
   filter:drop-shadow(2px 3px 2px color-mix(in srgb,var(--brand-secondary) 35%,transparent)) drop-shadow(10px 20px 14px color-mix(in srgb,var(--brand-secondary) 38%,transparent))}
-.b-contactkaarten__obj--telefoon{left:2.9rem;height:10.2rem}
-.b-contactkaarten__obj--doos{left:1.7rem;height:9.2rem}
+/* 29-09-2026: echte foto's in plaats van de klei-iconen ("te AI, gemaakt"): telefoon met het belscherm van De Reus,
+   envelop met briefkaart, klembord met het contactformulier, de dozen met het logo (img/contact-echt/).
+   Daarna "te klein en flets": gekozen is ontwerp 05 "Gele schijf" uit _ontwerpen/contactkaarten-echt-varianten.html,
+   zoals de schijven bij "Hoe de prijs tot stand komt" op /kosten/. Witte kaart, geen geel huis; elk voorwerp staat
+   groot en gecentreerd op een dikke goudgele schijf en steekt ver boven de kaart uit. Iets meer kleur en contrast
+   op de foto's, een neutrale slagschaduw (inkt). Breedte en hoogte per voorwerp horen bij sizes in contactkaarten.py. */
+.b-contactkaarten__kanalen{margin-top:calc(clamp(2.5rem,1.8rem + 2.5vw,4rem) + 5.5rem)}
+.b-contactkaarten__kanaal{--kaart-vlak:var(--white);border-color:var(--primary-100)}
+.b-contactkaarten__ic--3d{height:7rem;margin-bottom:2.2rem}
+.b-contactkaarten__ic--3d::after{display:none}
+.b-contactkaarten__ic--3d::before{content:"";position:absolute;left:50%;bottom:-.9rem;width:min(12.5rem,100%);height:3rem;translate:-50% 0;border-radius:50%;
+  background:radial-gradient(60% 70% at 40% 35%,#FFE08A,var(--brand-accent) 60%,#F2B800);
+  box-shadow:0 8px 0 #D9A200,0 9px 0 color-mix(in srgb,var(--ink) 18%,transparent),0 22px 26px -10px color-mix(in srgb,var(--ink) 40%,transparent)}
+.b-contactkaarten__obj--telefoon,.b-contactkaarten__obj--envelop,.b-contactkaarten__obj--klembord,.b-contactkaarten__obj--dozen{left:50%;translate:-50% 0;
+  filter:saturate(1.18) contrast(1.07) brightness(1.02) drop-shadow(2px 4px 3px color-mix(in srgb,var(--ink) 30%,transparent)) drop-shadow(14px 26px 22px color-mix(in srgb,var(--ink) 32%,transparent))}
+.b-contactkaarten__obj--telefoon{bottom:.4rem;width:min(15rem,100%);height:auto}
+.b-contactkaarten__obj--envelop{bottom:-.1rem;width:min(13.5rem,100%);height:auto}
+.b-contactkaarten__obj--klembord{bottom:-.2rem;height:13.6rem;rotate:-3deg}
+.b-contactkaarten__obj--dozen{bottom:-.3rem;height:12.8rem}
 /* Muis op de kaart (ontwerp 06 "Groene 3D-zijkant", _ontwerpen/contactkaarten-hover-varianten.html): de kaart
    schuift 5 px naar linksboven en groeit 2%; rechts en onder komt een groene zijkant tevoorschijn, als een blok,
    in de kleur van de knop Offerte aanvragen (--color-cta, naar achteren donkerder). Rust en hover hebben evenveel
@@ -73,16 +90,21 @@
    binnen de rand en twee erbuiten), en een rustiger overgang: 450 ms in plaats van 200 ms, want 200 ms was
    "te snel". Via --duration-base, zodat het bij verminderde beweging op 0 blijft.
    Samenvoeging 28-09-2026: dit is de versie van Tugche (origin/main 9dbb9a8). Live staan de vlakke kaarten van
-   hierboven; deze regels, de grotere verhuizer en zijn hover gelden alleen met stijl="groen" (.b-contactkaarten--groen).
-   De klei-iconen blijven dan staan. */
-.b-contactkaarten--groen .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{
-  box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px transparent,0 0 0 2px transparent,0 6px 0 0 #D5E2F8,0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent),0 0 12px 2px transparent,4px 4px 34px 8px transparent;
+   hierboven; de plaatrand in rust, de grotere verhuizer en zijn hover gelden alleen met stijl="groen" (.b-contactkaarten--groen).
+   De klei-iconen blijven dan staan.
+   29-09-2026, vraag van de gebruiker: de groene neonhover weer op alle kaarten ("onu geri getir"), ook op de vlakke.
+   In rust dan negen doorzichtige schaduwen, zodat de overgang naar de hover even vloeiend blijft. */
+.b-contactkaarten__kanalen>.b-contactkaarten__kanaal{
+  box-shadow:inset 0 1px 0 transparent,inset 0 0 14px transparent,0 0 0 2px transparent,0 0 0 0 transparent,0 0 0 0 transparent,0 0 0 0 transparent,0 0 0 transparent,0 0 12px 2px transparent,4px 4px 34px 8px transparent;
   transition:opacity .55s var(--ease),transform .55s var(--ease),translate calc(var(--duration-base) * 2.25) var(--ease-out),scale calc(var(--duration-base) * 2.25) var(--ease-out),box-shadow calc(var(--duration-base) * 2.25) var(--ease-out)}
-@media(hover:hover){.b-contactkaarten--groen .b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover{translate:-5px -5px;scale:1.02;
+.b-contactkaarten--groen .b-contactkaarten__kanalen>.b-contactkaarten__kanaal{
+  box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px transparent,0 0 0 2px transparent,0 6px 0 0 #D5E2F8,0 7px 0 color-mix(in srgb,var(--ink) 8%,transparent),0 16px 26px -16px color-mix(in srgb,var(--ink) 30%,transparent),0 46px 70px -44px color-mix(in srgb,var(--brand-secondary) 55%,transparent),0 0 12px 2px transparent,4px 4px 34px 8px transparent}
+@media(hover:hover){.b-contactkaarten__kanalen>.b-contactkaarten__kanaal:hover{translate:-5px -5px;scale:1.02;
   box-shadow:inset 0 1px 0 var(--white),inset 0 0 14px color-mix(in srgb,var(--color-cta) 22%,transparent),0 0 0 2px var(--color-cta),3px 3px 0 2px var(--color-cta),6px 6px 0 2px var(--color-cta-hover),9px 9px 0 2px var(--color-cta-active),16px 22px 30px -10px color-mix(in srgb,var(--ink) 30%,transparent),0 0 12px 2px color-mix(in srgb,var(--color-cta) 85%,transparent),4px 4px 34px 8px color-mix(in srgb,var(--color-cta) 45%,transparent)}}
 /* de groene WhatsApp-knop onder het nummer: eigen breedte en lucht, niet tegen de link aan */
 .b-contactkaarten__kanaal>.wa-link{align-self:flex-start;margin:.7rem 0 0;margin-inline-start:0}
-@media(max-width:1080px){.b-contactkaarten__kanalen{row-gap:4.6rem}}
+/* 8rem: de voorwerpen op de gele schijf steken bijna 5rem boven de kaart uit (29-09-2026) */
+@media(max-width:1080px){.b-contactkaarten__kanalen{row-gap:8rem}}
 
 /* Minder ruimte tussen de kaart met het adres en de contactmogelijkheden. */
 .p-contact .b-kaart { padding-bottom: calc(var(--ruimte) * .5); }
@@ -109,8 +131,10 @@
    Hoogte 28-09-2026 van 21vw/19.5rem naar 24vw/23rem ("stond te klein"): op een laptop (1536) 368 in
    plaats van 312 px, zodat hij boven de belkaart uitsteekt; bij 1024 maar 246 px (was 240), want daar
    heeft het nummer in de belkaart de breedte nodig. Die hoogte is van Tugche en geldt alleen met stijl="groen";
-   live blijft 21vw/19.5rem (samenvoeging 28-09-2026). */
-.b-contactkaarten__boven .b-contactkaarten__figuur{align-self:end;height:clamp(15rem,21vw,19.5rem);width:auto;overflow:visible;pointer-events:none;
+   live bleef 21vw/19.5rem (samenvoeging 28-09-2026).
+   29-09-2026 ("bi tık daha büyük"): live van 21vw/19.5rem naar 23vw/21.5rem, op 1536 344 in plaats van
+   312 px en op 1280 294 in plaats van 269; bij 1024 blijft hij 240 px, voor de breedte van het nummer. */
+.b-contactkaarten__boven .b-contactkaarten__figuur{align-self:end;height:clamp(15rem,23vw,21.5rem);width:auto;overflow:visible;pointer-events:none;
   --uit-schaduw:0 10px 14px rgb(14 26 51 / .24);
   --uit-plaat-vulling:linear-gradient(158deg,var(--primary-300),var(--primary-200));
   --uit-plaat-rand:rgb(23 70 162 / .14);

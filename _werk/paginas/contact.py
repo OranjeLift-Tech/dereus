@@ -25,7 +25,7 @@ PAGINA = Pagina(
         ("contactkaarten", {"figuur": ("/img/verhuizer-doos-deken-uit.webp", 698, 1200, 0, 0, 698, 1200),
                             "voorgrond": ("/img/verhuisdozen-uit.webp", 562, 522)}),
         # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
-        # de kaarten met een groene zijkant en gloed onder de muis, de verhuizer groter (optie stijl in contactkaarten.py)
+        # de kaarten met een plaatrand, de verhuizer groter (optie stijl in contactkaarten.py); de groene hover staat altijd aan
         # ("contactkaarten", {"figuur": ("/img/verhuizer-doos-deken-uit.webp", 698, 1200, 0, 0, 698, 1200), "voorgrond": ("/img/verhuisdozen-uit.webp", 562, 522), "stijl": "groen"}),
         # Sinds 28-09-2026 de schuine actielijn, hetzelfde blok als #cijfers op de home: "make it slanted", "a more
         # interesting background color", "a quick overview like some sort of action line". Hiervoor stond direct onder
@@ -44,11 +44,21 @@ PAGINA = Pagina(
         # uit, een Koningsblauw paneel met schuine bovenkant valt over hun onderlichaam. helpen-drie-uit.webp: de
         # adviseur met het echte borstmerk vooraan, twee mannen uit team-hero erachter (_ai-beelden/helpen-drie/).
         # ("formulier", {"variant": "contact", "figuur": ("/img/helpen-drie-uit.webp", 685, 591), "grond": "lucht"}),
-        ("na-bericht", {}),
-        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
+        # Sinds 29-09-2026 de adviseur zonder kamer in een witte boog, als "Na uw aanvraag" bij referentie A
+        # (de gebruiker: haar achtergrond weg en iets wits erachter, zoals daar; optie beeld in na-bericht.py).
+        ("na-bericht", {"beeld": "boog"}),
+        # Tot 29-09-2026 de foto in de lijst met het huisvlak erachter, aan door deze regel te wisselen met de regel erboven:
+        # ("na-bericht", {}),
+        # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de eerste regel hierboven:
         # de adviseur aan haar bureau met de Goudgele duim (optie beeld in na-bericht.py)
         # ("na-bericht", {"beeld": "bureau"}),
-        ("vragen", {"sectie": "wit", "beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),   # hetzelfde blauwe paneel als op de home, /werkwijze/ en /kosten/ (23-09-2026)
+        # Sinds 29-09-2026 de Koningsblauwe kaart met de collega die erboven uitsteekt (ontwerp 03 uit
+        # _ontwerpen/vragen-contact-ronde3.html). Het paneel hieronder stond te druk, "gesprek" was te sober.
+        ("vragen", {"stijl": "kaart", "sectie": "wit"}),
+        # Een paar uur op 29-09-2026: dezelfde opzet zonder kaart en zonder collega, aan door deze regel te wisselen met de regel erboven:
+        # ("vragen", {"stijl": "gesprek"}),
+        # Tot 29-09-2026 het blauwe paneel met headset, vraagtekens en verhuizer, aan door deze regel te wisselen met de regel erboven:
+        # ("vragen", {"sectie": "wit", "beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),   # hetzelfde blauwe paneel als op de home, /werkwijze/ en /kosten/ (23-09-2026)
         # Tugche (origin/main 9dbb9a8, 28-09-2026), aan door deze regel te wisselen met de regel erboven:
         # Goudgele band met foto-afdruk (ontwerp 07), net als /werkwijze/. Afdruk zakelijk: de klantenservice staat al
         # in na-bericht en de adviseur in het formulier.

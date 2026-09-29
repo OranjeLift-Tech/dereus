@@ -179,3 +179,31 @@
   .b-na-bericht--bureau .b-na-bericht__duim{left:-12%}
 }
 @media(max-width:560px){.b-na-bericht--bureau .b-na-bericht__beeld{width:min(84%,21rem)}.b-na-bericht--bureau .b-na-bericht__duim{left:-10%;width:20%}}
+
+/* ---- Beeld boog (optie beeld="boog", 29-09-2026) ----
+   De gebruiker: haar achtergrond weg en iets wits erachter, zoals "Na uw aanvraag" bij referentie A
+   (.venster__boog): een lichte boog met een dunne binnenlijn in de accentkleur, die op de onderrand van de
+   band staat, met de persoon erin. Hier is de boog wit, net als de sectie eronder (vragen, sectie--wit),
+   dus hij loopt daar naadloos in over; de binnenlijn is Goudgeel. Omdat het bureau erbij hoort is dit een
+   scene en geen losse figuur, en een scene hoort in de vorm: het beeld wordt op de boog geknipt (zelfde
+   ronding als de boog), het bureau houdt dus op aan de rand van de boog. Het beeld heeft precies de maat
+   van de boog (850x730); de uitsnede is zo gekozen dat zij met haar rug en haar kruin binnen de ronding
+   blijft (_ai-beelden/na-bericht-boog/).
+   De sectie heeft geen padding onder, de figuur staat onderaan in de rij en de tekst in het midden, met de
+   padding die de sectie onder niet meer heeft. De filter komt vóór de clip-path, dus de zachte schaduw
+   blijft binnen de boog, als de schaduw rond de persoon bij de referentie. */
+.b-na-bericht--boog{padding-bottom:0}
+.b-na-bericht--boog .b-na-bericht__in{align-items:end}
+.b-na-bericht--boog .b-na-bericht__tekst{align-self:center;padding-bottom:var(--ruimte)}
+.b-na-bericht--boog .b-na-bericht__beeld{container-type:normal;justify-self:end;width:min(100%,35rem);margin:0}
+.b-na-bericht--boog .b-na-bericht__beeld::before{content:none}
+.b-na-bericht__boog{position:absolute;z-index:0;inset:0;border-radius:999px 999px 0 0;background:var(--white)}
+.b-na-bericht__boog::after{content:"";position:absolute;inset:clamp(10px,2.6%,14px) clamp(10px,2.6%,14px) 0;
+  border:2px solid var(--brand-accent);border-bottom:0;border-radius:999px 999px 0 0}
+.b-na-bericht--boog .b-na-bericht__foto{position:relative;top:auto;left:auto;z-index:1;display:block;width:100%;height:auto;max-width:none;
+  clip-path:inset(0 round 999px 999px 0 0);filter:drop-shadow(0 14px 26px rgba(11,35,82,.28))}
+@media(max-width:860px){
+  .b-na-bericht--boog .b-na-bericht__in{grid-template-columns:1fr;row-gap:0}
+  .b-na-bericht--boog .b-na-bericht__tekst{padding-bottom:2.5rem}
+  .b-na-bericht--boog .b-na-bericht__beeld{justify-self:center;width:min(92%,28rem);margin-top:0}
+}

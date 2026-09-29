@@ -2,7 +2,7 @@
 Namen letterlijk, avatars als initialen (geen foto's). Nooit een aantal reviews noemen (open vraag 1.4).
 
 Varianten:
-  volledig  (home, /diensten/, /werkwijze/, /over-ons/)  scorepaneel in Diepblauw met de ploeg erachter,
+  volledig  (nu nergens; tot 29-09-2026 home, /diensten/, /over-ons/, daarna reviewrail)  scorepaneel in Diepblauw met de ploeg erachter,
             de uitgelichte review groot, daaronder de andere
   compact   (nu nergens)  drie reviews in een rij met de score erboven
 Optie sectie: "mist" of "wit" (standaard mist bij volledig, wit bij compact).

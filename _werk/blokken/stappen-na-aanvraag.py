@@ -32,19 +32,23 @@ JS = False
 # op /offerte/ met een regel terug te zetten (samenvoeging 28-09-2026)
 AFHANKELIJK = ["offerte-diepte"]
 
-# Per station een klei-icoon (img/clay/<naam>-144/240.webp, vierkant), sinds de samenvoeging van 28-09-2026 in
-# plaats van de 3D-renders. De telefoon bij "Wij bellen u", het klembord bij het gesprek, en de envelop bij "U
-# ontvangt uw offerte", net als bij "Offerte ontvangen" in de stappen op /werkwijze/, waar hetzelfde verhaal staat.
-VOORWERPEN = ["telefoon", "klembord", "envelop"]
+# Per station een 3D-render: map, bestandsnaam, breedte en hoogte. Dezelfde reeks als op /contact/.
+# De samenvoeging van 28-09-2026 had hier klei-iconen (img/clay/) van gemaakt; op 29-09-2026 op verzoek van de
+# gebruiker terug naar deze renders ("önceki yaptığım stil"), net als de CSS (versie 9dbb9a8).
+VOORWERPEN = [
+    ("contact-3d", "telefoon", 208, 400),
+    ("kaart-3d", "klembord", 600, 792),
+    ("contact-3d", "formulier", 346, 400),
+]
 
 # De verhuizer links. Wit gerande dozen, dus het vlak eronder is blauw (zie de CSS).
 FIGUUR = ("/img/verhuizer-steekwagen-uit.webp", 734, 1200)
 
 
 def _station(ctx, it, nr):
-    naam = VOORWERPEN[(nr - 1) % len(VOORWERPEN)]
-    beeld = ctx.beeld(f"/img/clay/{naam}-240.webp", "", 240, 240, klasse=f"b-{NAAM}__obj b-{NAAM}__obj--{naam}",
-                      srcset=f"/img/clay/{naam}-144.webp 144w, /img/clay/{naam}-240.webp 240w", sizes="5.6rem")
+    map_, naam, breedte, hoogte = VOORWERPEN[(nr - 1) % len(VOORWERPEN)]
+    beeld = ctx.beeld(f"/img/{map_}/{naam}.webp", "", breedte, hoogte,
+                      klasse=f"b-{NAAM}__obj b-{NAAM}__obj--{naam}")
     return f'''<li class="b-{NAAM}__stap">
               <span class="b-{NAAM}__ic" aria-hidden="true">{beeld}</span>
               <div class="b-{NAAM}__plaat">

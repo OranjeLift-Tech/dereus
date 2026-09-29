@@ -22,7 +22,8 @@ PAGINA = Pagina(
     header="transparant",
     body_klasse="p-home",
     preload_beeld=_preload(),
-    extra_css=("reviews-ster",),              # de gouden 3D-ster op de uitgelichte review, alleen hier
+    # "reviews-ster" (de gouden 3D-ster op de uitgelichte review) hoort bij het reviewblok "reviews"; zet hem terug
+    # als dat blok hieronder weer aan gaat.
     blokken=[
         ("hero", {"kopij_id": "offerte"}),
         ("diensten", {}),
@@ -36,7 +37,12 @@ PAGINA = Pagina(
         # routeband or option A (28-09-2026): A on Koningsblauw" (website/review/zowerkthet-home-vergelijk-20260928/).
         # Daarvoor de routeband (intro-route-band); dat blok en zijn CSS blijven staan.
         ("stapkaarten", {"kopij_id": "werkwijze", "grond": "blauw"}),
-        ("reviews", {}),
+        # het reviewblok van /werkwijze/ (scorepodium + rail, referentie B) sinds 29-09-2026: de klant wilde het in
+        # alle reviewsecties. Mist, zoals het blok hiervoor.
+        ("reviewrail", {"kopij_id": "reviews", "sectie": "mist", "accent": "over ons zeggen"}),
+        # variant A (trio achter het donkere scorepaneel), aan door deze regel te wisselen met de regel erboven (en
+        # "reviews-ster" terug in extra_css):
+        # ("reviews", {}),
         # feiten: False sinds 28-09-2026, toen het KvK-nummer in config.FEITEN kwam: "Sterk waar het zwaar is" blijft zoals
         # goedgekeurd, zonder feitenrijen. Het KvK-nummer staat in de footer, op /contact/ en in de JSON-LD.
         ("over-ons", {"kopij_van": ("over-ons", "verhaal"), "feiten": False, "motto": False}),   # een kopie van /over-ons/ #verhaal
@@ -44,7 +50,10 @@ PAGINA = Pagina(
         # kopkaart: de sectiekop hoort in de belkaart. De headset verhuist mee naar de
         # rechterbovenhoek van die kaart ("hoek"); het gat dat "headset-huis" vulde bestaat
         # niet meer zodra de kop in de kaart staat.
-        ("vragen", {"beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),
+        # Sinds 29-09-2026 de blauwe kaart met de collega, zoals op /contact/ (de gebruiker: alle vragenblokken zo).
+        ("vragen", {"stijl": "kaart"}),
+        # Tot 29-09-2026 het blauwe paneel, aan door deze regel te wisselen met de regel erboven:
+        # ("vragen", {"beeld": "headset-hoek", "kopkaart": True, "stijl": "paneel"}),
         ("aanvraag", {"kopij": None}),
         # homecontact ("Wilt u iets bespreken over uw verhuizing?") is eraf sinds 28-09-2026:
         # "remove from homepage as it sits right below the other form". Blok en CSS blijven bestaan.
@@ -59,8 +68,10 @@ NAADICONEN = {
     # Ster in plaats van het schild (28-09-2026, "sure replace"): het schild stond al op de kaart "Standaard verzekerd".
     "waarom": ("waarom", [("ster", "links", 70, -52)]),
     "stapkaarten": ("werkwijze", [("nationaal", "rechts", 50, 148)]),
-    "reviews": ("reviews", [("telefoon", "links", 22, 19)]),
-    "over-ons": ("over-ons", [("verhuislift", "links", 66, -58)]),
+    # Rechts sinds 29-09-2026: de reviewrail zet de kop links, waar de telefoon (links 22) over het label en de kop viel.
+    "reviewrail": ("reviews", [("telefoon", "rechts", 22, 19)]),
+    # -40 sinds 29-09-2026 (was -58): de Google-knop onder het reviewpodium staat erboven, op 1100-1366 raakte de lift hem.
+    "over-ons": ("over-ons", [("verhuislift", "links", 66, -40)]),
     "werkgebied": ("werkgebied", [("internationaal", "links", 82, -18)]),
     # Het klembord hangt sinds 28-09-2026 aan de formulierkaart, op de rechterbovenhoek, met een hover:
     # "Vertel ons over uw verhuizing in homepage - make the artifact of the list next to the section be part of the section and have a hover effect."

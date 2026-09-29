@@ -3,10 +3,11 @@
    Koningsblauw naar Diepblauw, een zichtbare dikte onder de onderrand, één schaduw naar beneden, een
    goudgeel tabje op de bovenrand en het huisje uit het logo in de hoek. Het 3D-klembord hangt over de
    bovenrand. De kop en de intro staan links erboven op wit, zodat de plaat het enige gekleurde vlak is.
-   In de plaat: links de foto, in de huisvorm uit het logo geknipt met een goudgeel huis er net iets
-   omheen (het diepte-idee van de panelen op /diensten/, maar met één laag), rechts de afvinklijst in twee
-   kolommen, en daaronder de slotregel als tipvak met een goudgele kantlijn.
-   Alles staat stil. Geen zweven, geen hover-animaties, alleen de eigen data-reveal van de site.
+   In de plaat: links de foto, verzonken in een dikke Diepblauwe plaat met de verhuizer die er bovenuit
+   leunt (29-09-2026), rechts de afvinklijst in twee kolommen, en daaronder de slotregel als tipvak met
+   een goudgele kantlijn.
+   Alles staat stil, met één uitzondering op verzoek: onder de muis zoomt de foto met de verhuizer iets
+   in. Verder alleen de eigen data-reveal van de site.
    Alle klassen staan onder b-lijstplaat, zodat dit blok geen naam deelt met een ander blok op de pagina. */
 
 /* knippen op de sectie, niet op de plaat: de plaat moet het klembord boven zijn rand laten uitsteken */
@@ -80,25 +81,125 @@
    aspect-ratio bleef er op 1440 nog 165 px blauw onder het beeld staan, en een ratio klopt maar
    op één schermbreedte; zo vult het beeld de kolom op elke breedte. */
 .b-lijstplaat__zij{ min-width: 0; display: flex; flex-direction: column; }
-/* Het beeld vult de kolom. Sinds 23-09-2026 geen huisvorm en geen goudgele rand meer; de reden staat
-   in _werk/blokken/lijstplaat.py bij FOTO, met zijn woorden erbij. Wat er nu staat is een rechthoek
-   met een zachte hoek die even hoog wordt als de lijst ernaast.
-   De slagschaduw hing aan de ::before die de huisvorm droeg. Die is weg, dus hij hangt nu aan het
-   beeld zelf; haal hem daar niet weg zonder er iets voor terug te zetten, anders ligt de foto plat
-   op de plaat. Er komt met opzet GEEN geel terug in deze kolom. */
+/* ---- De verhuizer leunt uit een diepe plaat (29-09-2026) ----
+   Het beeld vult de kolom en is even hoog als de lijst ernaast. De foto zit verzonken in een dikke
+   Diepblauwe plaat; de verhuizer leunt eruit naar voren, met zijn hoofd en zijn hand aan de kast boven
+   de rand. Dezelfde opbouw als lijstplaat-geel (ontwerp 09 "Diepe plaat"), hier op de blauwe plaat.
+   Er komt met opzet GEEN geel terug in deze kolom (zie FOTO in lijstplaat.py).
+
+   Hoe het werkt: foto en uitsnede (UITSNEDE in lijstplaat.py) zijn even groot en liggen precies op
+   elkaar. De foto wordt op het kader geknipt, de uitsnede niet, dus alles wat boven het kader valt is
+   de verhuizer zelf. De lagen:
+     __beeld   het kadervak in de kolom
+     __kader   de dikke plaat: Diepblauw verloop, dikte in drie stappen, lange schaduw
+     __podium  het kadervak plus de ruimte erboven waar hij in uitsteekt (--boven, als deel van de
+               kaderhoogte). Een size-container: de beelden rekenen in cqh/cqw van dit vak.
+     __uit     de verhuizer met slagschaduw, ONDER de foto: zijn schaduw valt zo alleen buiten de foto
+     __foto    op het kader geknipt, --rand binnen de plaat
+     __glas    de schaduw van de verdieping op de foto
+     __voor    de verhuizer nog eens, schoon, voor het glas: hij staat voor de verdieping, niet erin
+   Let op: container-type maakt van het podium een stapelcontext, dus lagen die tussen foto en
+   verhuizer moeten liggen, horen IN het podium.
+
+   Het beeld hangt aan zijn rug: bronpixel --rug (van de 1200 breed, 1030 hoog) staat op --rug-marge
+   van de rechterrand. Zo blijft hij op elke breedte heel in beeld; aan de linkerkant schuift de kast
+   in en uit. min() houdt de linkerrand van het beeld op of links van het kader, anders blijft er op de
+   telefoon links een lege strook.
+   Tussen 1000 en 1280 is de kolom smal en hoog (de lijst ernaast loopt over veel regels), dus de foto
+   wordt daar groot en schuift zijn hoofd en hand over "Uw lijstje" (gemeten op 1001: zijn hoofd over
+   de "e"). Daarom wijkt de rugmarge: zijn opgeheven hand (bronpixel --hand) blijft altijd --kop-ruimte
+   van de linkerrand, ook als zijn rug daarvoor achter de rechterrand van het kader verdwijnt. Waar de
+   kolom breed genoeg is, blijft het --rug-marge. */
 .b-lijstplaat__beeld{
-  position: relative; display: block; flex: 1 1 auto; min-height: 0;
-  filter: drop-shadow(0 14px 18px color-mix(in srgb, var(--brand-secondary) 55%, transparent));
+  --boven: .45; --rug: 966; --rug-marge: 22px; --hand: 626; --kop-ruimte: 8rem;
+  --rand: 12px; --kader-r: 18px; --foto-r: 8px;
+  /* de dikte van de plaat in drie stappen, steeds iets donkerder dan Diepblauw */
+  --dikte-1: color-mix(in srgb, var(--brand-secondary) 80%, var(--ink));
+  --dikte-2: color-mix(in srgb, var(--brand-secondary) 40%, var(--ink));
+  --dikte-3: color-mix(in srgb, var(--ink) 85%, black);
+  position: relative; display: block; flex: 1 1 auto; min-height: 16rem; isolation: isolate;
 }
-.b-lijstplaat__huis{
-  position: relative; display: block; height: 100%; min-height: 11rem;
-  background: var(--primary-600); border-radius: 14px; overflow: hidden;
+.b-lijstplaat__kader{
+  position: absolute; inset: 0; z-index: 0; border-radius: var(--kader-r);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--brand-primary) 55%, var(--brand-secondary)), var(--brand-secondary));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--white) 16%, transparent),
+    0 4px 0 var(--dikte-1), 0 8px 0 var(--dikte-2), 0 12px 0 var(--dikte-3),
+    0 26px 30px -12px color-mix(in srgb, var(--ink) 80%, transparent),
+    0 56px 70px -34px color-mix(in srgb, var(--ink) 65%, transparent);
 }
-/* Het vak is hoger dan breed zodra het de kolom vult, dus van een liggende foto blijft ongeveer de
-   helft van de breedte over. Daarom staat de uitsnede nu in het MIDDEN en niet meer op 25 procent:
-   die 25 procent hoorde bij de huisvorm, waar het onderwerp links moest staan. Exporteer een bron
-   met marge aan weerszijden (zie _werk/export-lijstplaat-trap.cjs), niet het volle kader. */
-.b-lijstplaat__foto{ display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% center; }
+.b-lijstplaat__podium{
+  position: absolute; left: 0; right: 0; bottom: 0; top: calc(-100% * var(--boven));
+  container-type: size; pointer-events: none;
+}
+.b-lijstplaat__podium > *{
+  --f: calc(100cqh / (1 + var(--boven)));                                            /* de kaderhoogte */
+  --marge: min(var(--rug-marge), calc(100cqw - var(--kop-ruimte) - (var(--rug) - var(--hand)) * 100cqh / 1030));
+  --l: min(0px, calc(100cqw - var(--marge) - var(--rug) * 100cqh / 1030));          /* linkerrand van het beeld */
+}
+.b-lijstplaat__podium > img{
+  position: absolute; top: 0; left: var(--l); display: block;
+  width: auto; height: 100cqh; max-width: none; object-fit: fill;
+}
+/* de verhuizer mag alleen BOVEN het kader uit; links, rechts en onder wordt hij op het kader geknipt,
+   anders valt de schaduw van zijn benen onder de plaat. Bij --zoom 1 (zie hieronder) is dat
+   inset(0, 100% + --l - 100cqw, --rand, -(--l)); de deling door --zoom houdt de knip bij het inzoomen
+   op het kader. */
+.b-lijstplaat__uit, .b-lijstplaat__voor{
+  clip-path: inset(0
+    calc(100% - var(--zoom-x) - (100cqw - var(--l) - var(--zoom-x)) / var(--zoom))
+    calc(var(--rand) / var(--zoom))
+    calc(var(--zoom-x) - (var(--zoom-x) + var(--l)) / var(--zoom)));
+}
+.b-lijstplaat__uit{
+  z-index: 1;
+  filter: drop-shadow(3px 6px 4px color-mix(in srgb, var(--brand-secondary) 60%, transparent))
+    drop-shadow(14px 24px 20px color-mix(in srgb, var(--brand-secondary) 52%, transparent));
+}
+/* de foto op het kader, --rand erbinnen. Bij --zoom 1: inset(--f * --boven + --rand,
+   100% + --l - 100cqw + --rand, --rand, --rand - --l, round --foto-r) */
+.b-lijstplaat__foto{
+  z-index: 2;
+  clip-path: inset(calc(100% - (100% - var(--f) * var(--boven) - var(--rand-boven, var(--rand))) / var(--zoom))
+    calc(100% - var(--zoom-x) - (100cqw - var(--l) - var(--rand) - var(--zoom-x)) / var(--zoom))
+    calc(var(--rand) / var(--zoom))
+    calc(var(--zoom-x) - (var(--zoom-x) - var(--rand) + var(--l)) / var(--zoom))
+    round calc(var(--foto-r-boven, var(--foto-r)) / var(--zoom)) calc(var(--foto-r-boven, var(--foto-r)) / var(--zoom))
+      calc(var(--foto-r) / var(--zoom)) calc(var(--foto-r) / var(--zoom)));
+}
+.b-lijstplaat__glas{
+  position: absolute; z-index: 3; inset: calc(var(--f) * var(--boven) + var(--rand-boven, var(--rand))) var(--rand) var(--rand);
+  border-radius: var(--foto-r-boven, var(--foto-r)) var(--foto-r-boven, var(--foto-r)) var(--foto-r) var(--foto-r);
+  box-shadow: inset 0 16px 18px -12px color-mix(in srgb, black 62%, transparent),
+    inset 14px 0 16px -14px color-mix(in srgb, black 45%, transparent),
+    inset -8px 0 14px -12px color-mix(in srgb, black 35%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--white) 6%, transparent);
+}
+.b-lijstplaat__voor{ z-index: 4; }
+
+/* ---- Onder de muis wordt de verhuizer groter (vraag van de gebruiker, 28-09-2026; net als in #reviews
+   en op /contact/ en /offerte/) ----
+   De foto groeit mee: alleen de uitsnede vergroten liet de verhuizer in de foto eronder als een tweede
+   hand en arm zichtbaar. Foto en uitsnede schalen dus samen, rond zijn voeten (--zoom-x van de
+   beeldbreedte, onderrand van het kader). Een clip-path schaalt mee met het element; de knippen van
+   __uit, __voor en __foto hierboven zijn daarom door --zoom gedeeld, zodat ze op het scherm op het kader
+   blijven liggen. Het kader zelf en het glas staan stil: de foto zoomt in het kader en hij komt er
+   verder bovenuit. Het vak vangt de muis, want het podium laat hem door. */
+.b-lijstplaat__beeld{ --zoom: 1; --zoom-x: 71%; }
+.b-lijstplaat__podium > img{
+  transform-origin: var(--zoom-x) 100%; scale: var(--zoom);
+  transition: scale .35s var(--ease), clip-path .35s var(--ease);
+}
+@media (hover: hover){
+  .b-lijstplaat__beeld:hover{ --zoom: 1.05; }
+}
+@media (prefers-reduced-motion: reduce){
+  .b-lijstplaat__podium > img{ transition: none; }
+}
+/* tussen 1000 en 1280 is de kolom smaller en de lijst hoger: dan komt zijn hand tegen "Uw lijstje"
+   aan. Minder ruimte boven het kader houdt hem eronder. */
+@media (min-width: 1001px) and (max-width: 1279px){
+  .b-lijstplaat__beeld{ --boven: .38; }
+}
 
 .b-lijstplaat__lijst{
   list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -138,9 +239,9 @@
   /* gestapeld: er staat geen lijst meer naast, dus er valt niets te vullen. Het beeld pakt de volle
      kolombreedte met een eigen verhouding in plaats van de hoogte van de buurman. */
   .b-lijstplaat__zij{ display: block; }
-  .b-lijstplaat__huis{ height: auto; aspect-ratio: 16 / 10; }
+  /* gestapeld: een eigen verhouding, en ruimte erboven voor zijn hoofd */
+  .b-lijstplaat__beeld{ width: 100%; aspect-ratio: 16 / 10; min-height: 0; margin-top: clamp(2.5rem, 8vw, 4rem); }
   .b-lijstplaat__lijstkop{ padding-right: clamp(5.5rem, 12vw, 9rem); }
-  .b-lijstplaat__beeld{ width: 100%; }
 }
 @media (max-width: 860px){
   .b-lijstplaat__lijst{ grid-template-columns: minmax(0, 1fr); }
@@ -183,3 +284,49 @@
     top: calc(var(--overgang-hoogte) * .9 - var(--naad-breed) * 420 / 477 * .72);
   }
 }
+
+/* ---- Goudgele plaat (29-09-2026, optie plaat="geel" in lijstplaat.py) ----
+   /werkwijze/ werd te blauw, dus daar is de plaat het geel van het logo: het vlak precies --brand-accent
+   (geen verloop), de dikte eronder --accent-700 en alle tekst Diepblauw. Het vinkje draait om: een
+   Diepblauwe schijf met een goudgeel haakje, en ook het tabje, de kantlijn van het tipvak en het huisje
+   in de hoek worden Diepblauw. Dezelfde kleuren als lijstplaat-geel (css/blok/lijstplaat-geel.css).
+   Het kader om de foto is hier een witte fotolijst in plaats van de dikke Diepblauwe plaat (29-09-2026,
+   vraag van de gebruiker): 8px wit, hoek 14px, de foto erin met hoek 8px, één zachte schaduw eronder en
+   geen dikte. De foto ligt vlak in de lijst, dus het glas laat alleen een haarlijn over. */
+.b-lijstplaat--geel .b-lijstplaat__plaat{
+  --plaat-rand: var(--accent-700);
+  --plaat-vlak: color-mix(in srgb, var(--brand-secondary) 8%, transparent);
+  --plaat-lijn: color-mix(in srgb, var(--brand-secondary) 20%, transparent);
+  --plaat-tekst: color-mix(in srgb, var(--brand-secondary) 88%, transparent);
+  color: var(--brand-secondary);
+  background: var(--brand-accent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--white) 50%, transparent),
+    0 7px 0 var(--plaat-rand),
+    0 26px 40px -18px color-mix(in srgb, var(--brand-secondary) 38%, transparent),
+    0 60px 90px -40px color-mix(in srgb, var(--brand-secondary) 34%, transparent);
+}
+.b-lijstplaat--geel .b-lijstplaat__plaat::before{ background: color-mix(in srgb, var(--brand-secondary) 7%, transparent); }
+.b-lijstplaat--geel .b-lijstplaat__plaat::after{ background: var(--brand-secondary); }
+.b-lijstplaat--geel .b-lijstplaat__plaat a:not(.knop){ color: var(--brand-secondary); text-decoration-color: var(--brand-secondary); }
+.b-lijstplaat--geel .b-lijstplaat__lijstkop,
+.b-lijstplaat--geel .b-lijstplaat__lijst b{ color: var(--brand-secondary); }
+.b-lijstplaat--geel .b-lijstplaat__lijst .ic{ background: var(--brand-secondary); color: var(--brand-accent); }
+.b-lijstplaat--geel .b-lijstplaat__slot{
+  color: var(--brand-secondary);
+  box-shadow: inset 5px 0 0 var(--brand-secondary), inset 0 1px 0 color-mix(in srgb, var(--white) 30%, transparent);
+}
+.b-lijstplaat--geel .b-lijstplaat__link{ color: var(--brand-secondary); }
+.b-lijstplaat--geel .b-lijstplaat__link span{ text-decoration-color: var(--brand-secondary); }
+.b-lijstplaat--geel .b-lijstplaat__link:hover{ color: var(--brand-primary); }
+.b-lijstplaat--geel .b-lijstplaat__link:hover span{ text-decoration-color: var(--brand-primary); }
+.b-lijstplaat--geel .b-lijstplaat__link:focus-visible{ outline-color: var(--brand-secondary); }
+/* de witte fotolijst, open aan de bovenkant: de foto loopt door tot de bovenrand en het wit zit alleen links,
+   rechts en onder, zodat de verhuizer niet over een witte lat heen leunt (--rand-boven en --foto-r-boven
+   gebruiken de knip van __foto en __glas hierboven). De bovenhoeken van de foto zijn even rond als de
+   lijst, zodat het wit zacht om de hoek loopt; met rechte hoeken stond het te scherp. */
+.b-lijstplaat--geel .b-lijstplaat__beeld{ --rand: 8px; --rand-boven: 0px; --kader-r: 14px; --foto-r: 8px; --foto-r-boven: 14px; }
+.b-lijstplaat--geel .b-lijstplaat__kader{
+  background: var(--white);
+  box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--ink) 60%, transparent);
+}
+.b-lijstplaat--geel .b-lijstplaat__glas{ box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 8%, transparent); }

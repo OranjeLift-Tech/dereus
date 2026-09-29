@@ -234,3 +234,41 @@
   .p-kosten .b-opbouw__soort--a{padding-bottom:3.2rem}
   .p-kosten .b-opbouw__of{margin:-2.2rem auto -2.2rem}
 }
+
+/* ---- All-in prijs of Regieprijs als fotoduo (29-09-2026) ----
+   De gebruiker vond de twee betaalpassen geen blok en vroeg hier om een passend blok. Dit is de opzet van het blok
+   "Een verhuislift of opslag erbij" van referentie C (.b-liftopslag__duo, __vak, __foto, __kaart, de schijf op de
+   naad): twee echte foto's die op een schuine naad tegen elkaar staan, met een Goudgele "of"-schijf midden op die
+   naad, en onder elke foto een witte plaat (dezelfde plaatrand als de rest van de pagina) met een rond icoon op de
+   bovenrand. De tweede foto is 10% breder en schuift onder de eerste door; het knippad maakt de schuine naad, met
+   .7rem lucht ertussen. Geen hover: de vakken zijn geen links. Markup: opbouw.py, optie duo="foto" (FOTODUO).
+   De betaalpassen hierboven blijven staan voor de weg terug (pagina zonder "duo"). */
+.p-kosten .b-opbouw__duo--foto{--ar:2.1;container-type:inline-size;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;padding:0;margin-bottom:var(--space-6)}
+.p-kosten .b-opbouw__vak{position:relative;display:flex;flex-direction:column;min-width:0;scroll-margin-top:6.5rem}
+.p-kosten .b-opbouw__foto{margin:0;aspect-ratio:var(--ar);overflow:hidden;background:var(--primary-200)}
+.p-kosten .b-opbouw__foto img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--snede,50% 50%)}
+.p-kosten .b-opbouw__vak:first-child .b-opbouw__foto{border-radius:var(--radius-media) 0 0 var(--radius-media);
+  clip-path:polygon(0 0,calc(100% - .35rem) 0,calc(90% - .35rem) 100%,0 100%)}
+.p-kosten .b-opbouw__vak:last-child .b-opbouw__foto{width:110%;margin-left:-10%;aspect-ratio:calc(var(--ar) * 1.1);border-radius:0 var(--radius-media) var(--radius-media) 0;
+  clip-path:polygon(calc(9.09% + .35rem) 0,100% 0,100% 100%,.35rem 100%)}
+/* de plaat valt 3.2rem over de foto; beide platen even hoog */
+.p-kosten .b-opbouw__vakkaart{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;gap:.45rem;margin:-3.2rem clamp(.8rem,2vw,1.6rem) 0;
+  padding:1.35rem 1.5rem 1.45rem;border-radius:var(--radius-card);background:var(--white);box-shadow:var(--plaat)}
+.p-kosten .b-opbouw__vakkop{margin:0;padding-right:4rem;font:var(--weight-display) clamp(1.55rem,2.2vw,2rem)/1.05 var(--font-display);font-stretch:var(--font-display-stretch);color:var(--brand-primary)}
+.p-kosten .b-opbouw__vakkaart p{margin:0;max-width:34rem;color:var(--color-text-muted);line-height:var(--leading-text)}
+/* het ronde icoon op de bovenrand van de plaat, met een Goudgele ring */
+.p-kosten .b-opbouw__ic{position:absolute;right:1.1rem;top:-1.9rem;display:grid;place-items:center;width:3.7rem;height:3.7rem;border-radius:50%;background:linear-gradient(160deg,#2A5FC4,var(--brand-primary) 55%,var(--primary-600));color:var(--white);
+  box-shadow:0 0 0 4px var(--brand-accent),0 5px 0 4px var(--accent-700),0 16px 24px -10px rgba(11,35,82,.5)}
+.p-kosten .b-opbouw__ic .ic{width:1.9rem;height:1.9rem}
+/* de schijf midden op de schuine naad: halverwege de fotohoogte, waar de naad op 47,5% van de breedte ligt */
+.p-kosten .b-opbouw__naad{position:absolute;z-index:2;left:calc(47.5% - 1.9rem);top:calc(50cqw / var(--ar) / 2 - 1.9rem);display:grid;place-items:center;width:3.8rem;height:3.8rem;
+  border-radius:50%;background:linear-gradient(180deg,#FFD75E,var(--brand-accent) 60%);color:var(--ink);
+  font:var(--weight-display) 1.35rem/1 var(--font-display);font-stretch:var(--font-display-stretch);text-transform:uppercase;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.55),inset 0 0 0 3px rgba(219,148,14,.35),0 4px 0 var(--accent-700),0 0 0 6px #E3EDFF,0 18px 22px -8px rgba(11,35,82,.5)}
+@media (max-width:760px){
+  /* onder elkaar: elke foto recht met een schuine onderkant, de schijf in de stroom tussen de twee */
+  .p-kosten .b-opbouw__duo--foto{grid-template-columns:minmax(0,1fr)}
+  .p-kosten .b-opbouw__vak .b-opbouw__foto,.p-kosten .b-opbouw__vak:first-child .b-opbouw__foto,.p-kosten .b-opbouw__vak:last-child .b-opbouw__foto{width:auto;margin:0;aspect-ratio:16/10;
+    border-radius:var(--radius-media);clip-path:polygon(0 0,100% 0,100% 86%,0 100%)}
+  .p-kosten .b-opbouw__naad{position:relative;left:auto;top:auto;justify-self:center;margin:.4rem 0 1rem}
+}

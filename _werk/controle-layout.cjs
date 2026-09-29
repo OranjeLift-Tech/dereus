@@ -349,12 +349,27 @@ async function draai({ browser, basis, snel = false } = {}) {
               assert.ok(await page.locator('.b-lijstplaat-geel__klembord').evaluate(el => el.complete && el.naturalWidth > 0
                 && el.getAttribute('src').startsWith('/img/clay/')), `${width}: het klei-icoon op de plaatrand is geladen`);
             } else {
-              /* De foto hoort er ook echt te zijn: een pad dat verschuift laat een leeg geel huis achter,
-                 en dat valt op een blauwe plaat niet op. */
-              await beeldenKlaar('.b-lijstplaat__foto');
-              assert.ok(await page.locator('.b-lijstplaat__foto').evaluate(el => el.complete && el.naturalWidth > 0),
-                `${width}: de foto in de huisvorm is geladen`);
+              /* Sinds 29-09-2026 leunt de verhuizer ook uit de blauwe plaat (zelfde opbouw als lijstplaat-geel): foto
+                 en uitsnede moeten geladen en even groot zijn, anders liggen ze niet op elkaar (UITSNEDE in lijstplaat.py). */
+              await beeldenKlaar('.b-lijstplaat__podium img');
+              assert.deepEqual(await page.locator('.b-lijstplaat__podium img').evaluateAll(els => els.map(el =>
+                el.complete && el.naturalWidth > 0 ? `${el.className} ${el.naturalWidth}x${el.naturalHeight}` : `${el.className} niet geladen`)),
+                ['b-lijstplaat__uit 1200x1030', 'b-lijstplaat__foto 1200x1030', 'b-lijstplaat__voor 1200x1030'],
+                `${width}: foto en uitsnede van de verhuizer zijn geladen en even groot`);
             }
+            /* Wat boven het kader uitsteekt (zijn hoofd en opgeheven hand: bron x 626 tot 966, vanaf y 218 in de
+               1200x1030 uitsnede) mag "Uw lijstje" niet raken. Op 1001 viel zijn hoofd over de laatste letter
+               voordat de rugmarge in lijstplaat.css ging wijken. */
+            assert.deepEqual(await page.evaluate(lp => {
+              const kop = document.querySelector(`.${lp}__lijstkop`), im = document.querySelector(`.${lp}__voor`);
+              const kader = document.querySelector(`.${lp}__beeld`).getBoundingClientRect();
+              const r = document.createRange(); r.selectNodeContents(kop); const tekst = r.getBoundingClientRect();
+              const b = im.getBoundingClientRect(), s = b.height / 1030;
+              const uit = { l: b.left + 626 * s, t: b.top + 218 * s, r: b.left + 966 * s, b: kader.top };
+              const raakt = tekst.right > uit.l - 4 && tekst.bottom > uit.t - 4 && tekst.left < uit.r && tekst.top < uit.b;
+              return raakt ? [`tekst ${Math.round(tekst.left)}-${Math.round(tekst.right)} x ${Math.round(tekst.top)}-${Math.round(tekst.bottom)}`,
+                `verhuizer ${Math.round(uit.l)}-${Math.round(uit.r)} x ${Math.round(uit.t)}-${Math.round(uit.b)}`] : [];
+            }, lp), [], `${width}: de verhuizer steekt over "Uw lijstje"`);
             /* Zelfde val als bij de tijdlijn: het klembord steekt boven de plaatrand uit en mag de lijstkop
                en de eerste regel niet afdekken. Het staat rechtsboven, de lijstkop links, en die twee
                kwamen op smal scherm tegen elkaar aan. */

@@ -462,6 +462,10 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 /* ---- Header: een rij zoals referentie A en Brocken, licht zodra vast ---- */
 .header { position: fixed; inset: 0 0 auto; z-index: 50; color: var(--white); transition: background-color .35s var(--ease), box-shadow .35s var(--ease), color .35s var(--ease); }
 .header__balk .wrap { display: flex; align-items: center; gap: clamp(.75rem, 1.4vw, 1.25rem); min-height: var(--header-h); padding-block: .9rem; transition: min-height .35s var(--ease), padding .35s var(--ease); }
+/* De balk is smaller dan de pagina, zoals bij referentie A (29-09-2026, "logo staat te veel links"): 1200 px breed
+   met 40 px binnenrand. Op 1536 px begint het logo daardoor op 208 px in plaats van 167 px, net als daar, en de
+   offerteknop schuift even ver naar binnen. */
+@media (min-width: 768px) { .header__balk .wrap { --pad: 2.5rem; max-width: 1200px; } }
 .header__logo { position: relative; display: block; flex: none; line-height: 0; }
 .header__logo img { height: 42px; width: auto; transition: opacity .35s var(--ease), height .35s var(--ease); }
 .header__logo--zonder-tagline img { height: 64px; }
@@ -494,6 +498,14 @@ mark { background: linear-gradient(180deg, transparent 62%, var(--accent-200) 62
 .header__reviews > .ic { width: 20px; height: 20px; }
 .header__reviews__ster { display: inline-flex; color: var(--brand-accent); font-size: .9375rem; }
 .header__reviews b { font: var(--weight-bold) .9375rem/1 var(--font-sans); }
+/* De pil verschijnt pas na het scrollen, zoals bij referentie A (29-09-2026). Bovenaan staan alleen telefoon en
+   offerteknop. Hij schuift dicht in plaats van display: none, anders springt het menu in één tik opzij; de -1rem
+   heft de gap van .header__acties op zolang hij dicht is. visibility haalt hem dan ook uit de tabvolgorde. */
+.header__reviews { flex: none; max-width: 8rem; overflow: hidden; white-space: nowrap;
+  transition: background-color .35s var(--ease), box-shadow .35s var(--ease), opacity .35s var(--ease),
+    max-width .35s var(--ease), padding .35s var(--ease), margin .35s var(--ease), visibility 0s; }
+.header:not(.is-vast) .header__reviews { max-width: 0; padding-inline: 0; margin-right: -1rem; opacity: 0; visibility: hidden;
+  transition-delay: 0s, 0s, 0s, 0s, 0s, 0s, .35s; }
 .header__cta { min-height: 46px; padding: .7rem 1.1rem; font-size: .875rem; white-space: nowrap; }
 .header__menu {
   display: none; place-items: center; width: 46px; height: 46px; margin-left: .25rem; border: 1px solid rgba(255, 255, 255, .45);
@@ -624,8 +636,11 @@ body.lade-open { overflow: hidden; }
    niet hoger van. Het verloop ligt erover heen; de uitnodiging staat er met z-index 1 bovenop. */
 .footer__wagen { position: absolute; z-index: 0; top: 0; bottom: 0; right: calc(50% - 50vw); left: auto;
   width: min(76%, 72rem); max-width: none; height: 100%; object-fit: cover; object-position: 50% 42%;
-  /* de linkerkant van de foto zelf vervaagt, anders tekent de rand van het beeld zich af tegen het Diepblauw */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); }
+  /* De linkerkant van de foto vervaagt over bijna de halve foto, anders tekent de rand van het beeld zich af tegen
+     het Diepblauw (29-09-2026: "çok keskin", de cabine mag in het donker). Rechts loopt de foto tot de schermrand
+     door, zonder vervagen: "sağdaki boşluklar neden var, komple kaplasın". */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 24%, #000 48%);
+  mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 24%, #000 48%); }
 .footer__intro::after { content: ""; position: absolute; z-index: 0; inset: 0 calc(50% - 50vw); pointer-events: none;
   background: linear-gradient(90deg, var(--brand-secondary) 0 30%, rgba(11, 35, 82, .9) 44%, rgba(11, 35, 82, .52) 64%, rgba(11, 35, 82, .22) 100%),
     linear-gradient(0deg, rgba(11, 35, 82, .55), rgba(11, 35, 82, 0) 55%); }
@@ -635,6 +650,24 @@ body.lade-open { overflow: hidden; }
    cover precies rij 64 tot 796 laat zien, op elke breedte. Rechts uitgelijnd en het masker blijven zoals ze waren. */
 @media (min-width: 768px) {
   .footer__wagen { width: auto; aspect-ratio: 1200 / 732; object-position: 50% 55.7%; }
+}
+/* 29-09-2026: "araba fotoğrafı biraz daha sola gelsin", en rechts moet de foto de band helemaal vullen. Achter de
+   oplegger staat nog maar 30 px weg in de foto, dus de wagen komt alleen naar links als de foto iets groter wordt:
+   het vak toont rij 120 tot 774 (654 rijen) in plaats van 64 tot 796. Dak (rij ~308) en wielen (tot ~745) blijven
+   erin. Op 1536 staat de neus zo ~70 px verder naar links. Het verloop schuift even ver mee, zodat de cabine niet
+   donkerder wordt dan hij was. Pas vanaf 1200px: daaronder zou de cabine onder de knoppen schuiven.
+   Later op 29-09-2026: "karanlık arabanın önünü çok kapatıyor, biraz daha sola alalım". De bumper staat op 3% van de
+   foto en de cabine loopt tot 27%, dus het masker tot 48% legde de hele cabine in het donker. Nu vervaagt alleen de
+   strook straat links van de bumper (dekkend op 14%) en is het verloop verder naar links geschoven (20/32/46/60),
+   zodat de cabine nog maar licht getint is. Vanaf 1200px staat de tekst niet meer boven de foto; daaronder wel,
+   daar blijft het donker zoals het was. */
+@media (min-width: 1200px) {
+  .footer__wagen { aspect-ratio: 1200 / 654; object-position: 50% 62%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 5%, #000 14%);
+    mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 5%, #000 14%); }
+  .footer__intro::after {
+    background: linear-gradient(90deg, var(--brand-secondary) 0 20%, rgba(11, 35, 82, .9) 32%, rgba(11, 35, 82, .5) 46%, rgba(11, 35, 82, .26) 60%, rgba(11, 35, 82, .2) 100%),
+      linear-gradient(0deg, rgba(11, 35, 82, .55), rgba(11, 35, 82, 0) 55%); }
 }
 /* ---- De bredere wagen van Tugche (origin/main 9dbb9a8, 28-09-2026), alleen met .footer__wagen--breed ----
    Live staat img/footer-wagen.webp, de wagen die de gebruiker op 28-09-2026 goedkeurde. De regel voor
