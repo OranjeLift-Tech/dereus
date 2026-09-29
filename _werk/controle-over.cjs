@@ -63,7 +63,8 @@ async function draai({ browser, basis, snel = false } = {}) {
           };
         });
         assert.equal(m.geladen, true, `${width}: het teambeeld laadt`);
-        assert.equal(m.alt, '', `${width}: het teambeeld is gegenereerd en claimt niet wie het zijn (alt leeg)`);
+        // tot 29-09-2026 alt leeg; sinds de SEO-ronde zegt hij wat er te zien is en dat het een illustratie is, niet wie het zijn
+        assert.ok(/^Illustratief beeld van .+/.test(m.alt || ''), `${width}: het teambeeld is gegenereerd en claimt niet wie het zijn (alt begint met "Illustratief beeld van", kreeg ${JSON.stringify(m.alt)})`);
         assert.ok(Math.abs(m.kruin) <= 1, `${width}: de kruin staat op de bovenrand van het podium (${m.kruin.toFixed(1)}px)`);
         assert.ok(Math.abs(m.snede) <= 1, `${width}: de snede door de heupen valt op de onderrand van de platen (${m.snede.toFixed(1)}px)`);
         assert.ok(Math.abs(m.plaatTop - .23) < .01, `${width}: de platen beginnen op 23% van de uitsnede (${(m.plaatTop * 100).toFixed(1)}%)`);
