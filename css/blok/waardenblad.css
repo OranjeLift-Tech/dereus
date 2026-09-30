@@ -70,3 +70,30 @@
   .wb__knop .ic { transition: translate .25s ease; }
   .wb__knop:is(:hover, :focus-visible) .ic { translate: 4px 0; }
 }
+
+/* ---- echte voorwerpen in gele tegels (optie voorwerpen="echt", 29-09-2026) ----
+   De tegels van Tugche uit "Zo werken wij" (8971f9e, css/blok/kernwaarden.css) op de plek van het klei-icoon: een dik
+   goudgeel blok (licht linksboven, harde onderkant #D9A200, op wit een lichtere slagschaduw) dat --wb-uit boven de
+   kaart uitsteekt, met een echt voorwerp dat op de onderkant staat en boven de bovenrand uitkomt. */
+.wb__tegel { position: relative; flex: none; width: 3.5rem; height: 3.5rem; margin: calc(-1 * var(--wb-uit)) 0 0; border-radius: 14px;
+  background: radial-gradient(75% 75% at 32% 28%, #FFE08A, var(--brand-accent) 58%, #F2B800);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .55), 0 5px 0 #D9A200, 0 6px 0 rgb(0 0 0 / .12), 0 14px 20px -8px rgb(14 26 51 / .35); }
+.wb__tegel::after { content: ""; position: absolute; z-index: 0; left: 50%; bottom: .2rem; translate: -50% 0; width: 2.6rem; height: .55rem; border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(90 60 0 / .5), transparent); }
+.wb__tegel--munten::after { width: 3.6rem; }
+.wb__tegel + h3 { margin-top: .85rem; }
+.wb__obj { position: absolute; z-index: 1; left: 50%; bottom: .25rem; translate: -50% 0; height: auto; max-width: none; pointer-events: none;
+  filter: saturate(1.12) contrast(1.06) drop-shadow(1px 3px 2px rgb(5 14 35 / .35)) drop-shadow(5px 10px 8px rgb(5 14 35 / .3)); }
+.wb__obj--dozen { bottom: .55rem; width: 3.2rem; }
+.wb__obj--plant { bottom: .2rem; width: 3.9rem; }
+.wb__obj--wekker { bottom: .3rem; width: 2.9rem; }
+.wb__obj--munten { bottom: .2rem; width: 4.7rem; margin-left: -.2rem; }
+.wb__obj--headset { bottom: .2rem; width: 3.3rem; }
+@media (max-width: 560px) {
+  .wb__tegel { grid-row: 1 / 2; margin: calc(-1 * var(--wb-uit)) 0 0; }
+  .wb__tegel + h3 { margin: 0 0 .15rem; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wb__tegel { transition: translate .25s ease; }
+  .wb__item:hover .wb__tegel { translate: 0 -3px; }
+}

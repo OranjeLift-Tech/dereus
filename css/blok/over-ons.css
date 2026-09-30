@@ -124,13 +124,13 @@
 /* Op /over-ons/ houden beide overgangen hun dakrand, met minder ruimte aan weerszijden. */
 .p-over-ons .b-over { padding-top: var(--ruimte); padding-bottom: calc(var(--ruimte) * .5); }
 .p-over-ons .b-kernwaarden--krap { padding-top: calc(var(--ruimte) * .5 + var(--dak)); }
-.p-over-ons .b-reviews { padding-bottom: calc(var(--ruimte) * .5); }
+.p-over-ons :is(.b-reviews, .b-reviewrail) { padding-bottom: calc(var(--ruimte) * .5); }
 /* Zo werken wij naar de reviews (29-09-2026), de gebruiker: "Wat klanten over ons zeggen in over-ons - reduce the space
    with the section above this one." Van de laatste kaart van het blad tot het label van de reviews: 179 / 118 px naar
    104 / 67 px bij 1440 / 390, zoals de reviews op /diensten/ (103 / 66). Alleen ruimte; de grond en een schuine lijn
    laten we aan de naadopties van /over-ons/. */
-.p-over-ons .b-waardenblad:has(+ .b-reviews) { padding-bottom: calc(var(--ruimte) * .6); }
-.p-over-ons .b-waardenblad + .b-reviews { padding-top: calc(var(--ruimte) * .5); }
+.p-over-ons .b-waardenblad:has(+ :is(.b-reviews, .b-reviewrail)) { padding-bottom: calc(var(--ruimte) * .6); }
+.p-over-ons .b-waardenblad + :is(.b-reviews, .b-reviewrail) { padding-top: calc(var(--ruimte) * .5); }
 .p-over-ons .b-werkgebied { padding-top: calc(var(--ruimte) * .5 + var(--dak)); }
 @media (min-width: 900px) {
   .p-over-ons .b-kernwaarden--krap .kwhoofd { align-items: start; }

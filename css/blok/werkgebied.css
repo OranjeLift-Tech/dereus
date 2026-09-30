@@ -202,3 +202,40 @@
   .wg__klei { transition: translate .5s var(--wg-ease); }
   .wg__kaart:hover .wg__klei { translate: 0 -4px; }
 }
+
+/* ---- echte voorwerpen in de gele tegels (optie voorwerpen="echt", Tugche 8971f9e, 29-09-2026) ----
+   "bu bölümdeki figürleri de gerçek ve kutudan çıkacakmış gibi yap": dezelfde opbouw als de tegels op /contact/ #kaart
+   (css/blok/kaart.css). De tegel wordt een dik goudgeel blok, licht linksboven, een harde onderkant in #D9A200 en een
+   zachte slagschaduw op het Diepblauw; het voorwerp staat in de tegel en steekt boven de bovenrand uit. Den Haag de
+   blauwe punaise (met de naald in het blok), Nederland de bakwagen van De Reus, het buitenland een wereldbol; die twee
+   staan op de onderkant met een contactschaduw. De bakwagen is breder dan de tegel en steekt aan beide kanten uit; de
+   regel krijgt daarom iets meer ruimte tussen tegel en tekst. Pas vanaf 1280 px, waar links naast de kolom ruimte is,
+   is hij groter en steekt hij links verder uit dan rechts. Smaller zou hij de schermrand raken (820: 24 px rand). */
+.b-werkgebied .wg__regel:has(> .wg__tegel) { gap: 1.4rem; }
+.b-werkgebied .wg__tegel { position: relative; width: 3.5rem; height: 3.5rem; border-radius: 14px;
+  background: radial-gradient(75% 75% at 32% 28%, #FFE08A, var(--brand-accent) 58%, #F2B800);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .55), 0 5px 0 #D9A200, 0 6px 0 rgb(0 0 0 / .2), 0 18px 24px -8px rgb(0 0 0 / .55); }
+.wg__tegel::after { content: ""; position: absolute; z-index: 0; left: 50%; translate: -50% 0; border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(90 60 0 / .5), transparent); }
+.wg__tegel--punaise::after { bottom: .6rem; width: 1.4rem; height: .5rem; margin-left: -.05rem; }
+.wg__tegel--bakwagen::after { bottom: .2rem; width: 4.4rem; height: .6rem; margin-left: -.15rem; }
+.wg__tegel--wereldbol::after { bottom: .2rem; width: 2.6rem; height: .55rem; }
+.wg__obj { position: absolute; z-index: 1; left: 50%; translate: -50% 0; height: auto; max-width: none; pointer-events: none; transform-origin: 50% 100%;
+  filter: saturate(1.15) contrast(1.06) drop-shadow(1px 3px 2px rgb(5 14 35 / .35)) drop-shadow(5px 10px 8px rgb(5 14 35 / .3)); }
+.wg__obj--punaise { bottom: .75rem; width: 2.6rem; margin-left: .3rem; rotate: -7deg;
+  filter: brightness(1.28) saturate(1.2) contrast(1.05) drop-shadow(1px 3px 2px rgb(5 14 35 / .35)) drop-shadow(5px 10px 8px rgb(5 14 35 / .3)); }   /* Koningsblauw, anders verdwijnt de kop in het Diepblauw */
+.wg__obj--bakwagen { bottom: .45rem; width: 5.2rem; margin-left: -.15rem; }
+.wg__obj--wereldbol { bottom: .25rem; width: 3.6rem; }
+@media (min-width: 1280px) {
+  .wg__obj--bakwagen { width: 5.6rem; margin-left: -.45rem; }
+  .wg__tegel--bakwagen::after { width: 4.6rem; margin-left: -.45rem; }
+}
+@media (max-width: 560px) {
+  .b-werkgebied .wg__regel:has(> .wg__tegel) { gap: 1.2rem; }
+  .wg__obj--bakwagen { width: 4.8rem; margin-left: 0; }
+  .wg__tegel--bakwagen::after { width: 4rem; margin-left: 0; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wg__obj { transition: translate .35s var(--wg-ease), scale .35s var(--wg-ease); }
+  .b-werkgebied .wg__regel:hover .wg__obj { translate: -50% -3px; scale: 1.06; }
+}

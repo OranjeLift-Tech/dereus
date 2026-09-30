@@ -487,12 +487,12 @@
    62 / 40 naar 46 / 29; streep tot de foto van het formulier 104 / 68 naar 79 / 51. */
 /* de kaart ligt boven de reviews, zodat zijn schaduw over de naad valt in plaats van erop af te breken */
 .b-dienstenpanelen--woningontruiming{z-index:1;padding-bottom:calc(var(--bandpad) * .6)}
-.p-diensten .b-dienstenpanelen--woningontruiming + .b-reviews.sectie{
+.p-diensten .b-dienstenpanelen--woningontruiming + :is(.b-reviews,.b-reviewrail).sectie{
   padding-top:calc(var(--overgang-hoogte) * .5 + 1.5rem);padding-bottom:calc(var(--ruimte) * .3);
   background:linear-gradient(to bottom left,var(--off-white) 50%,transparent 50%) top center/100% var(--overgang-hoogte) no-repeat,var(--white)}
 .p-diensten .b-actielijn + .b-formulier.sectie--mist{padding-top:calc(var(--ruimte) * .7)}
 @media (forced-colors:active){
-  .p-diensten .b-dienstenpanelen--woningontruiming + .b-reviews.sectie{background-image:none}
+  .p-diensten .b-dienstenpanelen--woningontruiming + :is(.b-reviews,.b-reviewrail).sectie{background-image:none}
   .b-dienstenpanelen{--naadschaduw:none}
   .b-dienstenpanelen+.b-dienstenpanelen::after{display:none}
   .b-dienstenpanelen__kader::before,[data-vorm=about-window-intro] .b-dienstenpanelen__kader::after,

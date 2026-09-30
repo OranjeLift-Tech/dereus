@@ -27,10 +27,11 @@
 <link rel="preload" href="/fonts/archivo-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" fetchpriority="high" href="/img/team/team-hero-dozen-700.webp" imagesrcset="/img/team/team-hero-dozen-700.webp 700w, /img/team/team-hero-dozen-1100.webp 1100w, /img/team/team-hero-dozen-1600.webp 1600w" imagesizes="(min-width: 768px) and (min-height: 850px) 620px, (min-width: 768px) 470px, min(88vw, 390px)" type="image/webp">
-<link rel="stylesheet" href="/css/min/pagina/home.min.css?v=3f18b61135">
+<link rel="stylesheet" href="/css/min/pagina/home.min.css?v=45cb1b727d">
 <script src="/js/site.js?v=25be2bb02c" defer></script>
 <script src="/js/blok/herocollage.js?v=042b2ef0fc" defer></script>
 <script src="/js/blok/hero.js?v=e363e27096" defer></script>
+<script src="/js/blok/reviewrail.js?v=6f42ca93ce" defer></script>
 <script src="/js/blok/vragen.js?v=85542f83ec" defer></script>
 <script src="/js/blok/formulier.js?v=184d0a1596" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"MovingCompany","@id":"https://www.verhuisbedrijfdereus.nl/#bedrijf","name":"Verhuisbedrijf De Reus","url":"https://www.verhuisbedrijfdereus.nl/","telephone":"+31850005647","email":"info@verhuisbedrijfdereus.nl","address":{"@type":"PostalAddress","streetAddress":"Lau Mazirellaan 336","postalCode":"2525 ZJ","addressLocality":"Den Haag","addressCountry":"NL"},"geo":{"@type":"GeoCoordinates","latitude":52.0596297,"longitude":4.29913794},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"08:00","closes":"20:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"09:00","closes":"17:00"}],"areaServed":[{"@type":"City","name":"Den Haag"},{"@type":"Country","name":"Nederland"}],"logo":{"@type":"ImageObject","url":"https://www.verhuisbedrijfdereus.nl/img/logo/dereus-logo.svg","width":1000,"height":828},"image":"https://www.verhuisbedrijfdereus.nl/img/og.jpg","knowsLanguage":"nl","identifier":{"@type":"PropertyValue","propertyID":"KvK","value":"91699568"}},{"@type":"WebSite","@id":"https://www.verhuisbedrijfdereus.nl/#website","url":"https://www.verhuisbedrijfdereus.nl/","name":"Verhuisbedrijf De Reus","inLanguage":"nl-NL","publisher":{"@id":"https://www.verhuisbedrijfdereus.nl/#bedrijf"}},{"@type":"WebPage","@id":"https://www.verhuisbedrijfdereus.nl/#pagina","url":"https://www.verhuisbedrijfdereus.nl/","isPartOf":{"@id":"https://www.verhuisbedrijfdereus.nl/#website"},"about":{"@id":"https://www.verhuisbedrijfdereus.nl/#bedrijf"},"inLanguage":"nl-NL","name":"Verhuisbedrijf Den Haag | Verhuisbedrijf De Reus","description":"Verhuisbedrijf in Den Haag met één vaste verhuisadviseur, geen voorrijkosten en uw inboedel standaard verzekerd. Vraag vrijblijvend een offerte aan.","primaryImageOfPage":{"@type":"ImageObject","url":"https://www.verhuisbedrijfdereus.nl/img/og.jpg"}},{"@type":"FAQPage","@id":"https://www.verhuisbedrijfdereus.nl/#vragen","isPartOf":{"@id":"https://www.verhuisbedrijfdereus.nl/#pagina"},"mainEntity":[{"@type":"Question","name":"Hoe lang van tevoren moet ik een verhuisbedrijf regelen?","acceptedAnswer":{"@type":"Answer","text":"Zo vroeg als u kunt. Vraag een offerte aan zodra u uw verhuisdatum weet, dan is er de meeste keus in data. Heeft u haast? Bel ons, want ook spoedklussen pakken wij op."}},{"@type":"Question","name":"Is mijn inboedel verzekerd tijdens de verhuizing?","acceptedAnswer":{"@type":"Answer","text":"Ja, uw inboedel is standaard verzekerd tijdens de verhuizing. De vergoeding is maximaal € 23.000 per inboedel, met een eigen risico van € 500. Wilt u meer dekking, dan kunt u zelf een aanvullende verzekering afsluiten. Schade meldt u direct op de verhuisdag."}},{"@type":"Question","name":"Wat doet De Reus, en wat doe ik zelf?","acceptedAnswer":{"@type":"Answer","text":"Dat bepaalt u. Wij kunnen inpakken, verhuizen, uitpakken en uw meubels weer opbouwen. U kunt ook zelf inpakken en ons alleen het zware werk laten doen. Uw verhuisadviseur neemt het vooraf met u door."}},{"@type":"Question","name":"Wat mag er niet mee?","acceptedAnswer":{"@type":"Answer","text":"Gevaarlijke stoffen meldt u vooraf. Niet gemelde gevaarlijke stoffen nemen wij niet mee. Dieren verhuizen wij niet, en gasleidingen sluiten wij niet af of aan."}},{"@type":"Question","name":"Verhuist De Reus ook buiten Den Haag?","acceptedAnswer":{"@type":"Answer","text":"Ja. Ons hoofdkantoor staat in Den Haag, en wij verhuizen door heel Nederland. Ook van en naar het buitenland, over de weg."}},{"@type":"Question","name":"Hoe snel hoor ik iets na mijn aanvraag?","acceptedAnswer":{"@type":"Answer","text":"Binnen 24 uur belt uw verhuisadviseur u. Samen bespreekt u uw wensen en uw inboedel. Daarna ontvangt u een vrijblijvende offerte op maat. Waar de prijs van afhangt, leest u op onze pagina Wat kost een verhuisbedrijf?"}}]}]}</script>
@@ -286,52 +287,46 @@
     </ol>
     <div class="knoppen b-stapkaarten__knoppen"><a class="knop knop--cta" href="/offerte/"><span>Offerte aanvragen</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></a><a class="knop knop--licht" href="/werkwijze/"><span>Bekijk hoe wij werken</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></a></div>
   </div>
-<img class="naadicoon naadicoon--links" src="/img/clay/woningontruiming-240.webp" srcset="/img/clay/woningontruiming-240.webp 240w, /img/clay/woningontruiming-480.webp 480w" sizes="120px" width="120" height="120" alt="" loading="lazy" decoding="async" style="--ni-x:105px;--ni-y:-30px;--ni-o:0.5"><img class="naadicoon naadicoon--rechts" src="/img/clay/zakelijk-240.webp" srcset="/img/clay/zakelijk-240.webp 240w, /img/clay/zakelijk-480.webp 480w" sizes="120px" width="120" height="120" alt="" loading="lazy" decoding="async" style="--ni-x:180px;--ni-y:-35px;--ni-o:0.47"></section><section class="sectie sectie--mist b-reviews" id="reviews" aria-labelledby="reviews-kop">
-  <div class="wrap">
-    <div class="kopgroep"><p class="label">Reviews</p><h2 id="reviews-kop">Wat klanten over ons zeggen</h2><p class="intro">Zoekt u een betrouwbaar verhuisbedrijf in Den Haag? Lees wat klanten over ons schrijven. Wij nemen hun woorden letterlijk over.</p></div>
-    <ul class="rraster" role="list" data-reveal-groep><li class="rplek"><img class="rkaart__klant rkaart__klant--ploeg" src="/img/review-verhuizers.webp" srcset="/img/review-verhuizers-400.webp 400w, /img/review-verhuizers.webp 760w" sizes="auto, (max-width: 767px) 193px, (max-width: 1100px) 230px, 314px" alt="" width="760" height="504" loading="lazy" decoding="async"><div class="rpaneel">
-        <span class="rpaneel__g rpaneel__g--klei"><img src="/img/clay/google-144.webp" srcset="/img/clay/google-144.webp 144w, /img/clay/google-240.webp 240w" sizes="4rem" alt="" width="240" height="240" loading="lazy" decoding="async"></span>
-        <p class="rpaneel__score"><b>4,9</b><span>uit 5<small>op Google</small></span></p>
-        <span class="sterren rpaneel__sterren" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><clipPath id="sterknip2"><rect width="21.2" height="24"/></clippath><use href="#i-ster" opacity=".28"/><use href="#i-ster" clip-path="url(#sterknip2)"/></svg></span>
-
-        <a class="knop knop--licht rpaneel__link" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" rel="noopener" target="_blank"><span>Bekijk alle reviews op Google</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-extern"/></svg><span class="vh"> (opent Google in een nieuw tabblad)</span></a>
-      </div></li><li class="rkaart rkaart--groot">
-        <figure>
-          <div class="rkaart__kop"><span class="sterren" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg></span><span class="vh">5 van 5 sterren</span><img class="rkaart__quote rkaart__quote--klei" src="/img/clay/quote-144.webp" srcset="/img/clay/quote-144.webp 144w, /img/clay/quote-240.webp 240w" sizes="3.25rem" alt="" width="240" height="240" loading="lazy" decoding="async"></div>
-          <blockquote><p>Verhuisbedrijf de Reus, absoluut top!! Netjes, voorzichtig en respectvol met m&#x27;n spullen! Een aanrader!</p></blockquote>
-          <figcaption class="rkaart__wie">
-            <span class="avatar avatar--a" aria-hidden="true">MV</span>
-            <span><b>Mick Versnel</b><small><svg class="ic ic--google" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-google"/></svg>Review op Google</small></span>
-          </figcaption>
-        </figure>
-      </li><li class="rkaart">
-        <figure>
-          <div class="rkaart__kop"><span class="sterren" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg></span><span class="vh">5 van 5 sterren</span><img class="rkaart__quote rkaart__quote--klei" src="/img/clay/quote-144.webp" srcset="/img/clay/quote-144.webp 144w, /img/clay/quote-240.webp 240w" sizes="3.25rem" alt="" width="240" height="240" loading="lazy" decoding="async"></div>
-          <blockquote><p>Dennis jack en Vincent. Bedankt voor de goede verhuizing. Zeer netjes gewerkt. Alles netjes neergezet. De montage liep vlekkeloos. Zeker een aanrader. Bedankt jongens.</p></blockquote>
-          <figcaption class="rkaart__wie">
-            <span class="avatar avatar--b" aria-hidden="true">DH</span>
-            <span><b>Daniëlle Van haaften</b><small><svg class="ic ic--google" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-google"/></svg>Review op Google</small></span>
-          </figcaption>
-        </figure>
-      </li><li class="rkaart">
-        <figure>
-          <div class="rkaart__kop"><span class="sterren" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg></span><span class="vh">5 van 5 sterren</span><img class="rkaart__quote rkaart__quote--klei" src="/img/clay/quote-144.webp" srcset="/img/clay/quote-144.webp 144w, /img/clay/quote-240.webp 240w" sizes="3.25rem" alt="" width="240" height="240" loading="lazy" decoding="async"></div>
-          <blockquote><p>Deze jongens zijn de hardstwerkende, eerlijkste en liefste mensen die ik ooit had kunnen vinden. Mijn verhuizing was echt zwaar en moeilijk, maar Omar bleef altijd positief, vrolijk en professioneel.</p></blockquote>
-          <figcaption class="rkaart__wie">
-            <span class="avatar avatar--c" aria-hidden="true">CK</span>
-            <span><b>Charlie K</b><small><svg class="ic ic--google" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-google"/></svg>Review op Google</small></span>
-          </figcaption>
-        </figure>
-      </li><li class="rkaart">
-        <figure>
-          <div class="rkaart__kop"><span class="sterren" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg></span><span class="vh">5 van 5 sterren</span><img class="rkaart__quote rkaart__quote--klei" src="/img/clay/quote-144.webp" srcset="/img/clay/quote-144.webp 144w, /img/clay/quote-240.webp 240w" sizes="3.25rem" alt="" width="240" height="240" loading="lazy" decoding="async"></div>
-          <blockquote><p>Goede en duidelijke communicatie, hele fijne samenwerking. Gaat zorgvuldig met de items om en is zeer behulpzaam. Top professional en zou dit bedrijf zeker weer inhuren voor een volgende verhuizing!</p></blockquote>
-          <figcaption class="rkaart__wie">
-            <span class="avatar avatar--d" aria-hidden="true">DS</span>
-            <span><b>Dennis Strijk</b><small><svg class="ic ic--google" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-google"/></svg>Review op Google</small></span>
-          </figcaption>
-        </figure>
-      </li></ul>
+<img class="naadicoon naadicoon--links" src="/img/clay/woningontruiming-240.webp" srcset="/img/clay/woningontruiming-240.webp 240w, /img/clay/woningontruiming-480.webp 480w" sizes="120px" width="120" height="120" alt="" loading="lazy" decoding="async" style="--ni-x:105px;--ni-y:-30px;--ni-o:0.5"><img class="naadicoon naadicoon--rechts" src="/img/clay/zakelijk-240.webp" srcset="/img/clay/zakelijk-240.webp 240w, /img/clay/zakelijk-480.webp 480w" sizes="120px" width="120" height="120" alt="" loading="lazy" decoding="async" style="--ni-x:180px;--ni-y:-35px;--ni-o:0.47"></section><section class="sectie sectie--mist b-reviewrail" id="reviews" aria-labelledby="reviews-kop">
+  <div class="wrap b-reviewrail__in">
+    <div class="kopgroep b-reviewrail__kop"><p class="label">Reviews</p><h2 id="reviews-kop">Wat klanten <em>over ons zeggen</em></h2><p class="intro">Zoekt u een betrouwbaar verhuisbedrijf in Den Haag? Lees wat klanten over ons schrijven. Wij nemen hun woorden letterlijk over.</p></div>
+    <div class="b-reviewrail__score">
+      <div class="b-reviewrail__podium">
+        <span class="b-reviewrail__stapel" aria-hidden="true"></span>
+        <span class="b-reviewrail__persoon" aria-hidden="true"><img src="/img/verhuizer-doos-schouder-uit.webp" alt="" width="489" height="1200" loading="lazy" decoding="async"></span>
+        <div class="b-reviewrail__boog">
+          <svg class="b-reviewrail__ring" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="54" pathLength="100" stroke-dasharray="98 100"/></svg>
+          <p class="b-reviewrail__getal"><span class="vh">4,9 van de 5 sterren op Google</span><span aria-hidden="true"><b>4,9</b><span class="sterren b-reviewrail__gemiddeld" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><clipPath id="sterknip2"><rect width="21.2" height="24"/></clippath><use href="#i-ster" opacity=".28"/><use href="#i-ster" clip-path="url(#sterknip2)"/></svg></span></span></p>
+        </div>
+      </div>
+      <a class="b-reviewrail__profiel" href="https://www.google.com/search?q=reviews+voor+verhuisbedrijf+de+reus" rel="noopener" target="_blank"><svg class="ic ic--google" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-google"/></svg><span>Bekijk alle reviews op Google</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-extern"/></svg><span class="vh"> (opent Google in een nieuw tabblad)</span></a>
+    </div>
+    <div class="b-reviewrail__rail">
+      <ul class="b-reviewrail__kaarten" role="list" tabindex="0" aria-label="Reviews van klanten, letterlijk van Google">
+        <li class="b-reviewrail__kaart">
+          <p class="b-reviewrail__cijfer"><span class="vh">5 van de 5 sterren</span><span class="sterren b-reviewrail__sterren" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg></span></p>
+          <blockquote class="b-reviewrail__tekst"><p>Verhuisbedrijf de Reus, absoluut top!! Netjes, voorzichtig en respectvol met m&#x27;n spullen! Een aanrader!</p></blockquote>
+          <p class="b-reviewrail__wie"><span class="b-reviewrail__avatar b-reviewrail__avatar--a" aria-hidden="true">MV</span><span><b>Mick Versnel</b><small><svg class="ic ic--google" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-google"/></svg>Review op Google</small></span></p>
+        </li><li class="b-reviewrail__kaart">
+          <p class="b-reviewrail__cijfer"><span class="vh">5 van de 5 sterren</span><span class="sterren b-reviewrail__sterren" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg></span></p>
+          <blockquote class="b-reviewrail__tekst"><p>Dennis jack en Vincent. Bedankt voor de goede verhuizing. Zeer netjes gewerkt. Alles netjes neergezet. De montage liep vlekkeloos. Zeker een aanrader. Bedankt jongens.</p></blockquote>
+          <p class="b-reviewrail__wie"><span class="b-reviewrail__avatar b-reviewrail__avatar--b" aria-hidden="true">DH</span><span><b>Daniëlle Van haaften</b><small><svg class="ic ic--google" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-google"/></svg>Review op Google</small></span></p>
+        </li><li class="b-reviewrail__kaart">
+          <p class="b-reviewrail__cijfer"><span class="vh">5 van de 5 sterren</span><span class="sterren b-reviewrail__sterren" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg></span></p>
+          <blockquote class="b-reviewrail__tekst"><p>Deze jongens zijn de hardstwerkende, eerlijkste en liefste mensen die ik ooit had kunnen vinden. Mijn verhuizing was echt zwaar en moeilijk, maar Omar bleef altijd positief, vrolijk en professioneel.</p></blockquote>
+          <p class="b-reviewrail__wie"><span class="b-reviewrail__avatar b-reviewrail__avatar--c" aria-hidden="true">CK</span><span><b>Charlie K</b><small><svg class="ic ic--google" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-google"/></svg>Review op Google</small></span></p>
+        </li><li class="b-reviewrail__kaart">
+          <p class="b-reviewrail__cijfer"><span class="vh">5 van de 5 sterren</span><span class="sterren b-reviewrail__sterren" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-ster"/></svg></span></p>
+          <blockquote class="b-reviewrail__tekst"><p>Goede en duidelijke communicatie, hele fijne samenwerking. Gaat zorgvuldig met de items om en is zeer behulpzaam. Top professional en zou dit bedrijf zeker weer inhuren voor een volgende verhuizing!</p></blockquote>
+          <p class="b-reviewrail__wie"><span class="b-reviewrail__avatar b-reviewrail__avatar--d" aria-hidden="true">DS</span><span><b>Dennis Strijk</b><small><svg class="ic ic--google" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-google"/></svg>Review op Google</small></span></p>
+        </li>
+      </ul>
+      <div class="b-reviewrail__nav" hidden>
+        <button type="button" class="b-reviewrail__knop b-reviewrail__knop--terug" aria-label="Vorige reviews"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></button>
+        <span class="b-reviewrail__voortgang" aria-hidden="true"><i></i></span>
+        <button type="button" class="b-reviewrail__knop b-reviewrail__knop--verder" aria-label="Volgende reviews"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></button>
+      </div>
+    </div>
   </div>
 <img class="naadicoon naadicoon--links" src="/img/clay/telefoon-240.webp" srcset="/img/clay/telefoon-240.webp 240w, /img/clay/telefoon-480.webp 480w" sizes="120px" width="120" height="120" alt="" loading="lazy" decoding="async" style="--ni-x:92px;--ni-y:-84px;--ni-o:0.46"></section><section class="sectie sectie--wit b-over" id="over-ons" aria-labelledby="verhaal-kop">
   <div class="wrap">
@@ -361,22 +356,22 @@
   <div class="wrap wg">
     <div class="wg__tekst">
       <div class="kopgroep"><p class="label">Werkgebied</p><h2 id="werkgebied-kop">Vanuit Den Haag, door heel Nederland</h2><p class="intro">Ons hoofdkantoor staat in Den Haag. Van daaruit verhuizen wij binnen de stad, door heel Nederland en van en naar het buitenland.</p></div>
-      <ul class="wg__regels wg__regels--route wg__regels--klei" role="list" data-reveal-groep><li class="wg__regel">
-          <span class="wg__icoon wg__icoon--klei" aria-hidden="true"><img src="/img/clay/particulier-144.webp" alt="" width="144" height="144" srcset="/img/clay/particulier-144.webp 144w, /img/clay/particulier-240.webp 240w, /img/clay/particulier-480.webp 480w" sizes="(max-width: 560px) 48px, 56px" loading="lazy" decoding="async"></span>
+      <ul class="wg__regels wg__regels--route" role="list" data-reveal-groep><li class="wg__regel">
+          <span class="wg__icoon wg__tegel wg__tegel--punaise" aria-hidden="true"><img class="wg__obj wg__obj--punaise" src="/img/contact-echt/punaise-44.webp" srcset="/img/contact-echt/punaise-44.webp 44w, /img/contact-echt/punaise-88.webp 88w" sizes="2.75rem" alt="" width="44" height="76" loading="lazy" decoding="async"></span>
           <div>
             <h3 class="wg__titel">Den Haag</h3>
             <p>Ons hoofdkantoor staat aan de Lau Mazirellaan. Van een bovenwoning met een smalle trap tot een kantoor: wij verhuizen door de hele stad.</p>
             <a class="wg__link" href="/contact/"><span>Contact en adres</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></a>
           </div>
         </li><li class="wg__regel">
-          <span class="wg__icoon wg__icoon--klei" aria-hidden="true"><img src="/img/clay/nationaal-144.webp" alt="" width="144" height="144" srcset="/img/clay/nationaal-144.webp 144w, /img/clay/nationaal-240.webp 240w, /img/clay/nationaal-480.webp 480w" sizes="(max-width: 560px) 48px, 56px" loading="lazy" decoding="async"></span>
+          <span class="wg__icoon wg__tegel wg__tegel--bakwagen" aria-hidden="true"><img class="wg__obj wg__obj--bakwagen" src="/img/contact-echt/bakwagen-96.webp" srcset="/img/contact-echt/bakwagen-96.webp 96w, /img/contact-echt/bakwagen-192.webp 192w" sizes="5.6rem" alt="" width="96" height="63" loading="lazy" decoding="async"></span>
           <div>
             <h3 class="wg__titel">Door heel Nederland</h3>
             <p>Van Den Haag naar elke plek in het land, of andersom. Met dezelfde verhuisadviseur en dezelfde zorg als dichtbij.</p>
             <a class="wg__link" href="/diensten/#nationaal"><span>Verhuizen door heel Nederland</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg></a>
           </div>
         </li><li class="wg__regel">
-          <span class="wg__icoon wg__icoon--klei" aria-hidden="true"><img src="/img/clay/internationaal-144.webp" alt="" width="144" height="144" srcset="/img/clay/internationaal-144.webp 144w, /img/clay/internationaal-240.webp 240w, /img/clay/internationaal-480.webp 480w" sizes="(max-width: 560px) 48px, 56px" loading="lazy" decoding="async"></span>
+          <span class="wg__icoon wg__tegel wg__tegel--wereldbol" aria-hidden="true"><img class="wg__obj wg__obj--wereldbol" src="/img/contact-echt/wereldbol-58.webp" srcset="/img/contact-echt/wereldbol-58.webp 58w, /img/contact-echt/wereldbol-116.webp 116w" sizes="3.6rem" alt="" width="58" height="86" loading="lazy" decoding="async"></span>
           <div>
             <h3 class="wg__titel">Van en naar het buitenland</h3>
             <p>Gaat u over de grens verhuizen, of komt u naar Nederland? Wij verhuizen van en naar Nederland, over de weg.</p>
@@ -393,25 +388,19 @@
         <img class="wg__beeld" src="/img/kaart-den-haag.svg" alt="Kaart van Den Haag met het hoofdkantoor van Verhuisbedrijf De Reus aan de Lau Mazirellaan 336" width="1400" height="933" loading="lazy" decoding="async">
       </div>
       <img class="wg__man" src="/img/verhuizer-doos-deken-uit.webp" alt="" width="698" height="1200" loading="lazy" decoding="async">
-      <img class="wg__klei" src="/img/clay/verhuislift-144.webp" alt="" width="144" height="144" srcset="/img/clay/verhuislift-144.webp 144w, /img/clay/verhuislift-240.webp 240w, /img/clay/verhuislift-480.webp 480w" sizes="(max-width: 560px) 5rem, 8.5rem" loading="lazy" decoding="async">
+
       <div class="wg__adres"><span class="wg__adres-ic" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pin"/></svg></span><div><p><strong>Lau Mazirellaan 336</strong>2525 ZJ Den Haag</p><a class="wg__link" href="https://www.openstreetmap.org/directions?to=52.05963%2C4.29914#map=17/52.05963/4.29914" rel="noopener" target="_blank"><span>Route plannen</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-pijl"/></svg><span class="vh"> (opent OpenStreetMap in een nieuw tabblad)</span></a></div></div>
       <figcaption class="wg__bron"><span>Kaartgegevens © <a href="https://www.openstreetmap.org/copyright" rel="noopener" target="_blank">OpenStreetMap-bijdragers</a></span></figcaption>
     </figure>
   </div>
-<img class="naadicoon naadicoon--links" src="/img/clay/internationaal-240.webp" srcset="/img/clay/internationaal-240.webp 240w, /img/clay/internationaal-480.webp 480w" sizes="120px" width="120" height="120" alt="" loading="lazy" decoding="async" style="--ni-x:82px;--ni-y:-19px;--ni-o:0.52"></section><section class="sectie sectie--mist b-vragen b-vragen--paneel" id="vragen" aria-labelledby="vragen-kop">
-  <div class="wrap vragen">
-    <div class="vragen__kop vragen__kop--kaart">
-
-      <div class="vragen__bel vragen__bel--kop">
-        <img class="vragen__beeld" src="/img/clay/headset-240.webp" srcset="/img/clay/headset-240.webp 240w, /img/clay/headset-480.webp 480w" sizes="(max-width: 899.98px) 7rem, 11rem" alt="" width="240" height="240" loading="lazy" decoding="async"><div class="vragen__beltekst">
-          <div class="kopgroep"><p class="label">Vragen</p><h2 id="vragen-kop">Veelgestelde vragen</h2></div>
-          <span class="bereikbaar vragen__status" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span>
-        <p>Staat uw vraag er niet bij?</p>
-        <a class="knop knop--blauw knop--icoon-voor" href="tel:+31850005647"><span>Bel 085 000 5647</span><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-telefoon"/></svg></a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a>
-        </div>
-      </div><span class="vragen__vul" aria-hidden="true"><img class="vragen__vulbeeld" src="/img/clay/vraagtekens-240.webp" srcset="/img/clay/vraagtekens-240.webp 240w, /img/clay/vraagtekens-480.webp 480w" sizes="12rem" alt="" width="240" height="240" loading="lazy" decoding="async"></span><span class="vragen__werker" aria-hidden="true" style="--werker-b:407;--werker-h:744"><img class="vragen__werkerbeeld" src="/img/verhuizer-twee-dozen-uit.webp" alt="" width="407" height="1200" loading="lazy" decoding="async"></span>
+<img class="naadicoon naadicoon--links" src="/img/clay/internationaal-240.webp" srcset="/img/clay/internationaal-240.webp 240w, /img/clay/internationaal-480.webp 480w" sizes="120px" width="120" height="120" alt="" loading="lazy" decoding="async" style="--ni-x:82px;--ni-y:-19px;--ni-o:0.52"></section><section class="sectie sectie--mist b-vragen b-vragen--gesprek b-vragen--kaart" id="vragen" aria-labelledby="vragen-kop">
+  <div class="wrap vragen__in">
+    <div class="vragen__zij">
+      <div class="kopgroep"><p class="label">Vragen</p><h2 id="vragen-kop">Veelgestelde vragen</h2></div>
+      <p class="vragen__beller"><span class="vragen__belvraag">Staat uw vraag er niet bij?</span><span class="vragen__belnr"><a href="tel:+31850005647">Bel 085 000 5647</a><a class="wa-link" href="https://wa.me/31850005647" data-whatsapp-business aria-label="Contact met Verhuisbedrijf De Reus via WhatsApp" title="Contact via WhatsApp"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-whatsapp-wit"/></svg><span class="wa-link__tekst">WhatsApp</span></a></span></p>
+      <div class="vragen__podium"><span class="vragen__staan" aria-hidden="true"><img class="vragen__collega" src="/img/contact-uit.webp" alt="" width="1200" height="800" loading="lazy" decoding="async"></span><span class="bereikbaar vragen__nu" data-bereikbaar data-open="Nu bereikbaar" data-dicht="Nu gesloten" data-morgen="Morgen weer bereikbaar vanaf {tijd} uur" hidden><span class="bereikbaar__stip" aria-hidden="true"></span><span class="bereikbaar__tekst"></span></span></div>
     </div>
-    <div class="vragen__lijst" data-reveal>
+    <div class="vragen__gesprek" data-reveal>
       <details class="vraag" id="vragen-1" name="vragen">
         <summary><span class="vraag__nr" aria-hidden="true">01</span><span class="vraag__tekst">Hoe lang van tevoren moet ik een verhuisbedrijf regelen?</span><span class="vraag__plus" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false" overflow="visible"><use href="#i-plus"/></svg></span></summary>
         <div class="vraag__antwoord"><p>Zo vroeg als u kunt. Vraag een offerte aan zodra u uw verhuisdatum weet, dan is er de meeste keus in data. Heeft u haast? Bel ons, want ook spoedklussen pakken wij op.</p></div>
