@@ -1,0 +1,889 @@
+/* =====================================================================
+   Verhuisbedrijf De Reus: verhuisblog (overzicht + artikel)
+   Laadt na /css/min/site.min.css en /css/min/offertepil.min.css. Kop, voet, knoppen (.knop, .knop--cta,
+   .knop--blauw, .knop--licht), .label, .wrap, .sectie--* en de lettertypes komen van de site; hier staat
+   alleen wat de blog zelf heeft.
+
+   Diepte komt uit het materiaal, niet uit beweging: mensen en spullen stappen uit hun eigen foto
+   (zelfde foto twee keer, de uitsnede ligt 1-op-1 op de foto en steekt boven het kader uit), echte
+   voorwerpen staan op goudgele schijven, witte platen hebben een goudgele zijkant.
+   Beweging alleen bij hover en focus, en uit bij prefers-reduced-motion.
+   ===================================================================== */
+
+.p-blog{
+  --b-diep:var(--brand-secondary); --b-blauw:var(--brand-primary); --b-geel:var(--brand-accent);
+  --b-geel-100:var(--accent-100); --b-geel-200:var(--accent-200); --b-geel-600:var(--accent-600); --b-geel-700:var(--accent-700); --b-geel-800:#B27607;
+  --b-inkt:var(--ink); --b-zacht:var(--grey-600); --b-lijn:var(--grey-200); --b-lucht:var(--primary-50);
+  --b-kop:var(--font-display);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  /* zijkant van platen: 8 lagen naar rechtsonder, van licht naar donker */
+  --zij-geel:1px 1px 0 var(--b-geel-600),2px 2px 0 var(--b-geel-600),3px 3px 0 var(--b-geel-600),4px 4px 0 var(--b-geel-700),5px 5px 0 var(--b-geel-700),6px 6px 0 var(--b-geel-700),7px 7px 0 var(--b-geel-800),8px 8px 0 var(--b-geel-800);
+  --zij-diep:1px 1px 0 #081B42,2px 2px 0 #081B42,3px 3px 0 #081B42,4px 4px 0 #061534,5px 5px 0 #061534,6px 6px 0 #061534,7px 7px 0 #040F26,8px 8px 0 #040F26;
+  --val:0 44px 60px -28px rgb(8 18 42 / .6);
+  --val-licht:0 30px 44px -26px rgb(8 18 42 / .38);
+  overflow-x:clip;
+}
+body.p-blog{background:var(--white)}   /* de site zet Mist op body; de blog wisselt wit en Lucht */
+.p-blog main img{display:block}
+.p-blog main :is(h1,h2,h3){letter-spacing:0}
+.bic{width:1.1em;height:1.1em;flex:none}
+
+/* knoppen: aanvullingen op die van de site */
+.knop--klein{min-height:42px;padding:.55rem 1.05rem;font-size:.92rem}
+.knop--diep{background:var(--b-diep);color:var(--white)}
+.knop--diep:hover{background:var(--b-blauw);color:var(--white)}
+.knoppen-rij{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem}
+.p-blog main .pijl{display:inline-flex;align-items:center;gap:.45rem;font-weight:700;text-decoration:none;color:var(--b-blauw)}
+.pijl .ic{width:16px;height:16px;transition:translate .2s var(--ease)}
+.pijl:hover .ic{translate:4px 0}
+
+/* =====================================================================
+   UIT DE FOTO. Een kader (.pop__raam) knipt de foto; dezelfde foto als uitsnede
+   (alleen het onderwerp, zelfde formaat) ligt er precies overheen, maar alleen het
+   deel BOVEN het kader (.pop__boven) en eventueel ONDER het kader (.pop__onder) is
+   zichtbaar. Zo stapt het onderwerp over de rand naar u toe, zonder dat het groter
+   wordt of dubbel staat.
+     --z   breedte van de foto in kaderbreedtes
+     --x   hoe ver de foto naar links schuift (in procenten van de kaderbreedte)
+     --y   hoe ver naar boven: de kaderrand ligt op --y procent van de kaderbreedte
+     --arn verhouding van het kader als getal (breedte / hoogte)
+   Alles in cqw, dus beide lagen schalen met het kader mee en blijven op elkaar.
+   ===================================================================== */
+.pop{--pop-r:10px;position:relative;container-type:inline-size;aspect-ratio:var(--arn,1.3333)}
+.pop__raam{position:absolute;inset:0;z-index:1;overflow:hidden;border-radius:var(--pop-r);background:var(--b-lijn)}
+.p-blog .pop__laag{position:absolute;display:block;max-width:none;height:auto;width:calc(var(--z) * 100cqw)}
+.pop__raam .pop__laag{left:calc(var(--x) * -1cqw);top:calc(var(--y) * -1cqw)}
+.pop__boven,.pop__onder{position:absolute;z-index:3;left:0;width:100cqw;overflow:hidden;pointer-events:none;filter:drop-shadow(0 9px 7px rgb(8 18 42 / .42))}
+.pop__boven{bottom:calc(100% - 2px);height:calc(100cqw + 2px);clip-path:inset(-40px var(--uit-r,0%) 0 var(--uit-l,0%))}
+.pop__boven .pop__laag{left:calc(var(--x) * -1cqw);top:calc(100cqw - var(--y) * 1cqw)}
+.pop__onder{top:calc(100% - 2px);height:calc(70cqw + 2px)}
+.pop__onder .pop__laag{left:calc(var(--x) * -1cqw);top:calc(2px - (var(--y) * 1cqw + 100cqw / var(--arn)))}
+/* afdruk: wit fotopapier op een goudgele drager, met een lange slagschaduw */
+.pop--afdruk{--rand:12px}
+.pop--afdruk::before{content:"";position:absolute;z-index:0;inset:calc(-1 * var(--rand));border-radius:calc(var(--pop-r) + var(--rand));background:var(--white);box-shadow:var(--zij-geel),var(--val)}
+.pop--afdruk .pop__raam{box-shadow:inset 0 0 0 1px rgb(14 26 51 / .08)}
+
+/* plakband over een hoek: goudgeel, licht doorschijnend, gerafelde uiteinden */
+.plakband{position:absolute;z-index:4;width:96px;height:28px;background:linear-gradient(180deg,rgb(255 214 92 / .9),rgb(247 190 40 / .86));box-shadow:0 1px 2px rgb(8 18 42 / .18);clip-path:polygon(3% 0,97% 4%,100% 22%,97% 42%,100% 63%,96% 100%,4% 96%,0 78%,3% 56%,0 35%);pointer-events:none}
+.plakband--links{top:-8px;left:-26px;rotate:-38deg}
+.plakband--rechts{top:-8px;right:-26px;rotate:38deg}
+
+/* onderwerppil */
+.p-blog .onderwerp{display:inline-flex;align-items:center;min-height:28px;padding:.3rem .75rem;border-radius:999px;background:var(--primary-100);color:var(--b-blauw);box-shadow:inset 0 -2px 0 var(--primary-200);font:700 .72rem/1 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
+.p-blog a.onderwerp:hover{background:var(--primary-200);color:var(--b-diep)}
+.p-blog .onderwerp--donker{background:var(--b-geel);color:var(--b-diep);box-shadow:inset 0 -2px 0 var(--b-geel-700)}
+.p-blog a.onderwerp--donker:hover{background:var(--b-geel-200)}
+
+.p-blog .meta{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .9rem;margin:0;color:var(--b-zacht);font-size:.88rem;line-height:1.3}
+.meta__wie{display:inline-flex;align-items:center;gap:.55rem;color:var(--b-inkt)}
+.p-blog .meta__wie img{width:34px;height:34px;padding:6px 3px;border-radius:50%;object-fit:contain;background:var(--white);box-shadow:0 0 0 2px var(--white),0 0 0 3px var(--b-geel)}
+.meta__wie b{font-weight:700}
+.meta__los{display:inline-flex;align-items:center;gap:.35rem}
+.meta__los .bic{width:15px;height:15px;color:var(--b-blauw)}
+
+/* =====================================================================
+   KOP: de paginakop (.pk) en de offertekaart (.pk-pil) zijn die van de site, zoals op elke pagina.
+   Hier alleen de kruimels en de korrel, die de artikelkop nog gebruikt.
+   ===================================================================== */
+.korrel{position:absolute;z-index:-1;inset:0;opacity:.06;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.artikelkop .label{color:var(--b-geel)}
+.kruimels{margin:0 0 1.4rem;font-size:.88rem}
+.kruimels ol{display:flex;flex-wrap:wrap;gap:.3rem .6rem;margin:0;padding:0;list-style:none}
+.kruimels li{display:inline-flex;align-items:center;gap:.6rem;color:rgb(255 255 255 / .75)}
+.kruimels li+li::before{content:"";width:.4rem;height:.4rem;border-top:2px solid var(--b-geel);border-right:2px solid var(--b-geel);rotate:45deg}
+.p-blog .kruimels a{color:var(--white);font-weight:600;text-decoration:none}
+.p-blog .kruimels a:hover{text-decoration:underline}
+
+/* zoeken: een witte pil met een goudgele zijkant, midden boven de tegels */
+.zoek{display:flex;align-items:center;gap:.4rem;width:min(100%,36rem);margin:1.6rem auto 0;padding:.45rem .45rem .45rem 1.1rem;border-radius:999px;background:var(--white);color:var(--b-inkt);box-shadow:0 0 0 1px var(--b-lijn),0 6px 0 var(--b-geel-700),0 26px 40px -24px rgb(8 18 42 / .45)}
+.zoek .bic{width:20px;height:20px;color:var(--b-zacht)}
+.zoek input{flex:1;min-width:0;min-height:44px;border:0;outline:0;background:none;font:inherit;font-size:1.02rem;color:inherit}
+.zoek input::placeholder{color:#737B8A}
+.zoek input::-webkit-search-cancel-button{cursor:pointer}
+.zoek:focus-within{box-shadow:0 0 0 1px var(--b-lijn),0 6px 0 var(--b-geel-700),0 0 0 3px var(--b-geel),0 26px 40px -24px rgb(8 18 42 / .45)}
+.onderwerpen__vaak{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.5rem;margin:1.3rem 0 0!important;font-size:.9rem;color:var(--b-zacht)}
+.onderwerpen__vaak button{padding:.35rem .8rem;border:1px solid var(--primary-200);border-radius:999px;background:var(--primary-50);color:var(--b-blauw);font:inherit;font-size:.88rem;font-weight:600;cursor:pointer;transition:background-color .2s,border-color .2s}
+.onderwerpen__vaak button:hover{background:var(--primary-100);border-color:var(--b-blauw)}
+
+/* =====================================================================
+   ONDERWERPEN: tegels met een echt voorwerp op een goudgele schijf; ze werken
+   als filter voor de artikelen
+   ===================================================================== */
+.onderwerpen{position:relative;z-index:1;padding:clamp(3.5rem,6vw,5rem) 0 0;background:var(--white)}
+.onderwerpen__kop{max-width:46rem;margin:0 auto clamp(4.5rem,6vw,5.5rem);text-align:center}
+.onderwerpen__kop .label{justify-content:center;color:var(--b-blauw)}
+.onderwerpen__kop h2{margin:0}
+.onderwerpen__lijst{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:clamp(.6rem,1.2vw,1.1rem);margin:0;padding:0;list-style:none}
+.tegel{position:relative;display:flex;flex-direction:column;align-items:center;width:100%;height:100%;padding:4.4rem .5rem 1rem;border:0;border-radius:18px;background:var(--white);color:var(--b-diep);font:inherit;cursor:pointer;text-align:center;box-shadow:0 0 0 1px var(--b-lijn),var(--zij-geel),var(--val-licht);transition:translate .25s var(--ease),background-color .2s,color .2s}
+.tegel__schijf{position:absolute;left:50%;top:2.35rem;translate:-50% 0;width:5.4rem;height:1.45rem;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,var(--b-geel-200),var(--b-geel) 62%);box-shadow:0 5px 0 var(--b-geel-700),0 14px 14px -6px rgb(8 18 42 / .45)}
+.p-blog .tegel__ding{position:absolute;left:50%;bottom:calc(100% - 3.1rem);translate:-50% 0;width:auto;max-width:6.6rem;height:var(--h,5.2rem);object-fit:contain;filter:drop-shadow(0 10px 7px rgb(8 18 42 / .38));transform-origin:50% 100%;transition:scale .3s var(--ease)}
+.tegel__naam{font:800 1.08rem/1.12 var(--b-kop)}
+.tegel__aantal{margin-top:.25rem;color:var(--b-zacht);font-size:.78rem;font-weight:600}
+.tegel[aria-pressed="true"]{background:var(--b-diep);color:var(--white);box-shadow:0 0 0 1px var(--b-diep),var(--zij-diep),var(--val-licht)}
+.tegel[aria-pressed="true"] .tegel__aantal{color:var(--primary-300)}
+@media (hover:hover){
+  .tegel:hover{translate:0 -4px}
+  .tegel:hover .tegel__ding{scale:1.08}
+}
+
+/* =====================================================================
+   UITGELICHT (wit)
+   ===================================================================== */
+.uitgelicht{padding:clamp(5.5rem,9vw,8rem) 0 clamp(4.5rem,7vw,6.5rem)}
+.uitgelicht__rooster{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(2.5rem,6vw,6rem);align-items:center}
+.uitgelicht__beeld{position:relative;rotate:-1.4deg;margin:0 14px 14px}
+.uitgelicht__vlag{position:absolute;z-index:5;left:-18px;bottom:22%;rotate:-6deg;padding:.55rem 1rem;border-radius:8px;background:var(--b-geel);color:var(--b-diep);font:800 1.2rem/1 var(--b-kop);box-shadow:0 4px 0 var(--b-geel-700),0 16px 22px -12px rgb(8 18 42 / .6)}
+.p-blog :is(.uitgelicht,.auteur) .label{color:var(--b-blauw)}
+.uitgelicht__tekst h2{font-size:clamp(2.1rem,1.4rem + 2.2vw,3.2rem);line-height:1.02;margin:1rem 0 1rem}
+.p-blog .uitgelicht__tekst h2 a{color:inherit;text-decoration:none}
+.p-blog .uitgelicht__tekst h2 a:hover{text-decoration:underline;text-decoration-color:var(--b-geel);text-decoration-thickness:4px;text-underline-offset:7px}
+.uitgelicht__tekst>p{font-size:1.14rem;color:var(--b-zacht);max-width:34rem}
+.uitgelicht__tekst .meta{margin:1.4rem 0 1.8rem}
+
+/* =====================================================================
+   ARTIKELEN: witte kaarten op de Koningsblauwe band van de site (.sectie--blauw, met dak).
+   De site kleurt koppen, tekst en links op die band wit; in de kaarten zetten we ze terug.
+   ===================================================================== */
+.artikelen__kop{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 2rem}
+.artikelen__kop h2{margin:0}
+.artikelen__aantal{margin:0!important;padding:.45rem .9rem;border-radius:999px;background:rgb(255 255 255 / .12);color:var(--white)!important;font-size:.9rem;font-weight:600}
+/* gefilterd: het uitgelichte blok gaat weg, dus de groep staat direct onder de tegels */
+.uitgelicht[hidden]{display:none}
+.uitgelicht[hidden]+.artikelen{margin-top:clamp(3.5rem,6vw,5rem)}
+.artikelen__stand{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem}
+.artikelrij.is-gefilterd>.artikelrij__cta{order:1}
+.artikelen__filter{display:none;align-items:center;gap:.5rem;margin:0!important}
+.artikelen__filter.is-aan{display:inline-flex}
+.artikelen__filter button{border:0;background:none;color:var(--b-geel);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
+.artikelrij{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(5.6rem,7vw,6.4rem) clamp(1.3rem,2.4vw,2.2rem);margin:clamp(5.5rem,7vw,6.5rem) 0 0;padding:0;list-style:none}
+.artikelrij>li[hidden]{display:none}
+.artikelkaart{--draai:0deg;position:relative;display:flex;flex-direction:column;height:100%;padding:12px 12px 0;border-radius:18px;background:var(--white);color:var(--b-inkt);rotate:var(--draai);box-shadow:var(--zij-geel),var(--val);transition:translate .3s var(--ease),rotate .3s var(--ease)}
+.artikelrij>li:nth-child(3n+1) .artikelkaart{--draai:-.9deg}
+.artikelrij>li:nth-child(3n+2) .artikelkaart{--draai:.7deg}
+.artikelrij>li:nth-child(3n) .artikelkaart{--draai:-.5deg}
+.artikelkaart .pop{--pop-r:10px}
+.artikelkaart__tekst{display:flex;flex:1;flex-direction:column;align-items:flex-start;padding:1.2rem .55rem 1.25rem}
+.p-blog .artikelkaart h3{font-size:1.5rem;line-height:1.1;margin:.8rem 0 .55rem;color:var(--b-diep)}
+.p-blog .artikelkaart h3 a{color:inherit;text-decoration:none}
+.p-blog .artikelkaart h3 a:hover{text-decoration:underline;text-decoration-color:var(--b-geel);text-decoration-thickness:3px;text-underline-offset:4px}
+.p-blog .artikelkaart p{margin:0 0 1.1rem;color:var(--b-zacht);font-size:.97rem;line-height:1.55}
+.artikelkaart__voet{display:flex;align-items:center;justify-content:space-between;gap:.6rem;width:100%;margin-top:auto;padding-top:.95rem;border-top:1px dashed var(--b-lijn)}
+.p-blog .artikelkaart__voet .meta{margin:0;font-size:.83rem}
+.p-blog .artikelkaart__voet .meta__wie img{width:30px;height:30px;padding:5px 2px}
+.p-blog .artikelkaart .onderwerp{color:var(--b-blauw)}
+.p-blog .artikelkaart .pijl{color:var(--b-blauw)}
+@media (hover:hover){.artikelkaart:hover{translate:0 -6px;rotate:0deg}}
+
+/* offertekaart tussen de artikelen: een goudgele plaat */
+.ctakaart{position:relative;display:flex;flex-direction:column;height:100%;padding:12px 12px 1.5rem;border-radius:18px;background:var(--b-geel);color:var(--b-diep);rotate:.7deg;box-shadow:1px 1px 0 var(--b-geel-600),2px 2px 0 var(--b-geel-600),3px 3px 0 var(--b-geel-700),4px 4px 0 var(--b-geel-700),5px 5px 0 var(--b-geel-800),6px 6px 0 var(--b-geel-800),7px 7px 0 #8E5E05,8px 8px 0 #8E5E05,var(--val)}
+.ctakaart .pop__raam{background:var(--b-geel-700)}
+.ctakaart__tekst{padding:1.2rem .55rem 0}
+.p-blog .ctakaart .label{color:var(--b-diep);margin-bottom:.6rem}
+.p-blog .ctakaart h3{font-size:1.65rem;margin:0 0 .6rem;color:var(--b-diep)}
+.p-blog .ctakaart p{color:var(--b-diep);font-size:.98rem;margin:0 0 1.2rem}
+.artikelen__leeg{margin:3rem 0 0;padding:2rem;border-radius:18px;background:rgb(255 255 255 / .1);text-align:center}
+.artikelen__leeg[hidden]{display:none}
+.artikelen__leeg p{margin:0}
+.artikelen__leeg button{margin-top:.8rem}
+
+/* =====================================================================
+   BEGIN HIER (cijfers met een goudgele zijkant) + CHECKLIST, op Lucht
+   ===================================================================== */
+.leesband__rooster{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(3rem,6vw,6rem);align-items:start}
+.toplijst{margin:1.6rem 0 0;padding:0;list-style:none;counter-reset:top}
+.toplijst li{display:grid;grid-template-columns:5.6rem minmax(0,1fr);align-items:center;gap:1.1rem;padding:1.05rem 0;border-top:1px solid var(--primary-200)}
+.toplijst li:last-child{border-bottom:1px solid var(--primary-200)}
+.toplijst li::before{counter-increment:top;content:counter(top,decimal-leading-zero);font:800 3.7rem/1 var(--b-kop);color:var(--b-lucht);-webkit-text-stroke:2px var(--b-diep);text-shadow:1px 1px 0 var(--b-geel),2px 2px 0 var(--b-geel),3px 3px 0 var(--b-geel-600),4px 4px 0 var(--b-geel-600),5px 5px 0 var(--b-geel-700),6px 6px 0 var(--b-geel-700)}
+.p-blog .toplijst a{display:block;font:800 1.35rem/1.15 var(--b-kop);color:var(--b-diep);text-decoration:none}
+.p-blog .toplijst a:hover{color:var(--b-blauw);text-decoration:underline;text-underline-offset:4px}
+.toplijst span{display:block;margin-top:.3rem;color:var(--b-zacht);font-size:.86rem}
+
+.lijstpaneel{position:relative;margin-top:5.5rem;padding:clamp(1.6rem,3vw,2.3rem);border-radius:22px;background:var(--b-geel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .38 0 0 0 0 .02 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");color:var(--b-diep);box-shadow:var(--zij-geel),var(--val)}
+.lijstvel{position:relative;z-index:1;margin:-6.5rem 2.2rem 1.6rem 0;padding:1.2rem 1.3rem 1rem;border-radius:4px;background:var(--white);rotate:-3.5deg;box-shadow:0 1px 0 rgb(0 0 0 / .05),4px 6px 0 rgb(255 255 255 / .55),5px 7px 0 rgb(0 0 0 / .06),0 26px 30px -16px rgb(8 18 42 / .55);font-size:.9rem}
+.lijstvel b{display:block;font:800 1.15rem/1.2 var(--b-kop);color:var(--b-diep);margin-bottom:.55rem}
+.lijstvel ul{margin:0;padding:0;list-style:none}
+.lijstvel li{display:flex;align-items:center;gap:.55rem;padding:.3rem 0;border-bottom:1px solid var(--b-lijn);color:var(--b-zacht)}
+.lijstvel li::before{content:"";width:15px;height:15px;flex:none;border:2px solid var(--primary-300);border-radius:4px}
+.lijstvel li.is-af{color:var(--b-inkt);text-decoration:line-through;text-decoration-color:var(--b-blauw)}
+.lijstvel li.is-af::before{border-color:var(--b-blauw);background:var(--b-blauw) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.p-blog .lijstpaneel__wekker{position:absolute;z-index:2;right:-1.2rem;top:-5.8rem;width:auto;height:7.6rem;rotate:8deg;filter:drop-shadow(10px 16px 10px rgb(8 18 42 / .45))}
+.p-blog .lijstpaneel h2{position:relative;font-size:clamp(1.7rem,1.2rem + 1.2vw,2.2rem);margin:0 0 .5rem;color:var(--b-diep)}
+.lijstpaneel p{position:relative;margin:0 0 1.2rem;color:var(--b-diep)}
+
+/* het offerteblok van de site: ruimte voor de verhuizer die boven de doos uitsteekt */
+.p-blog .b-offertepil{padding-top:clamp(4.5rem,7vw,6rem)}
+
+/* =====================================================================
+   ARTIKEL
+   ===================================================================== */
+.leesbalk{position:fixed;inset:0 0 auto;z-index:70;height:4px;pointer-events:none}
+.leesbalk span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--b-geel),var(--b-geel-600));transform-origin:0 50%;scale:var(--gelezen,0) 1}
+.artikelkop{position:relative;isolation:isolate;background:var(--b-diep);color:var(--white);padding:calc(var(--header-h) + clamp(3rem,5vw,4rem)) 0 clamp(3rem,5vw,4rem)}
+.artikelkop::before{content:"";position:absolute;z-index:-2;inset:0;background:radial-gradient(50% 70% at 80% 60%,rgb(255 204 51 / .14),transparent 72%),radial-gradient(55% 70% at 0% 0%,rgb(23 70 162 / .7),transparent 70%)}
+.artikelkop__rooster{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(2rem,5vw,5rem);align-items:end}
+.artikelkop__tekst{padding-bottom:clamp(0rem,2vw,1.5rem)}
+.p-blog .artikelkop h1{font-size:var(--text-h1);line-height:1.02;color:var(--white);margin:1rem 0 1.1rem}
+.artikelkop__lead{font-size:clamp(1.08rem,1rem + .35vw,1.25rem);color:rgb(255 255 255 / .86);max-width:36rem;margin:0 0 1.7rem}
+.p-blog .artikelkop .meta{color:rgb(255 255 255 / .78)}
+.artikelkop .meta__wie{color:var(--white)}
+.artikelkop .meta__wie small{display:block;font-size:.8rem;color:rgb(255 255 255 / .68)}
+.artikelkop .meta__los .bic{color:var(--b-geel)}
+/* de foto hangt over de rand van de band heen */
+.artikelkop__beeld{position:relative;margin:clamp(4.5rem,7vw,6rem) 14px -10rem 0;rotate:1.3deg;z-index:2}
+.artikel__rooster{display:grid;grid-template-columns:15rem minmax(0,44rem);justify-content:center;gap:clamp(2rem,5vw,5.5rem);padding-top:clamp(12rem,15vw,13.5rem);padding-bottom:clamp(3rem,6vw,5rem)}
+.artikel__zij{position:sticky;top:calc(var(--header-h) + 24px);align-self:start;display:grid;gap:1.4rem}
+.inhoud{padding:1.2rem 1.2rem 1rem;border-radius:16px;background:var(--white);box-shadow:0 0 0 1px var(--b-lijn),var(--val-licht)}
+.inhoud__kop{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 .6rem;font:700 .76rem/1.3 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--b-blauw)}
+.inhoud__kop span{letter-spacing:0;text-transform:none;color:var(--b-zacht);font-weight:600}
+.inhoud ol{margin:0;padding:0;list-style:none;counter-reset:toc}
+.p-blog .inhoud a{position:relative;display:grid;grid-template-columns:1.6rem 1fr;gap:.2rem;padding:.42rem .2rem .42rem .55rem;border-left:3px solid var(--b-lijn);color:var(--b-zacht);font-size:.9rem;line-height:1.35;text-decoration:none;counter-increment:toc;transition:color .2s,border-color .2s}
+.inhoud a::before{content:counter(toc,decimal-leading-zero);font-weight:700;font-size:.78rem;color:var(--primary-300)}
+.p-blog .inhoud a:hover{color:var(--b-inkt)}
+.p-blog .inhoud a.is-actief{border-left-color:var(--b-geel);color:var(--b-diep);font-weight:700}
+.inhoud a.is-actief::before{color:var(--b-blauw)}
+.deel{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+.deel__label{width:100%;margin:0;font:700 .76rem/1.3 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--b-zacht)}
+.p-blog .deelknop{display:inline-grid;place-items:center;width:42px;height:42px;border:0;border-radius:50%;background:var(--white);color:var(--b-diep);box-shadow:0 0 0 1px var(--b-lijn),0 3px 0 var(--b-lijn);cursor:pointer;text-decoration:none;transition:background-color .2s}
+.deelknop:hover{background:var(--accent-50)}
+.deelknop :is(.ic,.bic){width:18px;height:18px}
+.p-blog .deelknop.is-gekopieerd{background:var(--success);color:var(--white)}
+.zijkaart{padding:1.2rem;border-radius:16px;background:var(--b-diep);color:var(--white);box-shadow:var(--zij-diep),var(--val-licht)}
+.zijkaart b{display:block;font:800 1.3rem/1.15 var(--b-kop);margin-bottom:.4rem}
+.zijkaart p{font-size:.88rem;color:rgb(255 255 255 / .82);margin:0 0 .9rem}
+.zijkaart .knop{width:100%}
+
+/* ---------- lopende tekst ---------- */
+.tekst{font-size:var(--text-body);line-height:1.75;min-width:0}
+.tekst>*:first-child{margin-top:0}
+.p-blog .tekst .intro{max-width:none;margin:0 0 1.2em;font-size:1.28rem;line-height:1.6;color:var(--b-inkt)}
+.tekst .intro::first-letter{float:left;margin:.08em .12em 0 0;font:800 4.3em/.8 var(--b-kop);color:var(--b-blauw);text-shadow:1px 1px 0 var(--b-geel),2px 2px 0 var(--b-geel),3px 3px 0 var(--b-geel-600),4px 4px 0 var(--b-geel-700)}
+.tekst h2{font-size:var(--text-h2);margin:3.2rem 0 1rem;scroll-margin-top:calc(var(--header-h) + 24px)}
+.tekst h3{font-size:var(--text-h3);margin:2rem 0 .6rem}
+.tekst p,.tekst ul,.tekst ol{margin:0 0 1.2em}
+.tekst ul,.tekst ol{padding-left:1.3em}
+.tekst li{margin:.35em 0}
+.tekst ul li::marker{color:var(--b-blauw)}
+.p-blog .tekst a:not(.knop):not(.onderwerp):not(.pijl){color:var(--b-blauw);font-weight:600;text-decoration-thickness:2px;text-underline-offset:3px}
+.tekst strong{font-weight:700}
+
+/* tip: de verhuizer steekt boven het crème paneel uit */
+.tip{position:relative;display:grid;grid-template-columns:12rem minmax(0,1fr);gap:1.2rem;align-items:end;margin:5.5rem 0 2.6rem;padding:1.4rem 1.6rem 1.4rem 0;border-radius:18px;background:var(--accent-50);box-shadow:0 0 0 1px var(--b-geel-200),var(--zij-geel),var(--val-licht)}
+.tip__wie{position:relative;align-self:stretch}
+.p-blog .tip__foto{position:absolute;left:-.3rem;bottom:0;width:12.8rem;max-width:none;height:auto;filter:drop-shadow(6px 10px 8px rgb(8 18 42 / .35))}
+.tip__label{display:inline-flex;align-items:center;gap:.4rem;margin:0 0 .35rem!important;font:700 .74rem/1.3 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--b-blauw)}
+.tip p{margin:0;font-size:1.05rem;line-height:1.6}
+.tip cite{display:block;margin-top:.6rem;font-style:normal;font-size:.88rem;color:var(--b-zacht);font-weight:600}
+
+/* genummerde stappen met goudgele cijfertegels */
+.tekst .stappen{margin:1.6rem 0 2rem;padding:0;list-style:none;counter-reset:stap;display:grid;gap:1rem}
+.stappen li{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:1rem;align-items:start;margin:0}
+.stappen li::before{counter-increment:stap;content:counter(stap);display:grid;place-items:center;width:3rem;height:3rem;border-radius:12px;background:var(--b-geel);color:var(--b-diep);font:800 1.55rem/1 var(--b-kop);box-shadow:1px 1px 0 var(--b-geel-600),2px 2px 0 var(--b-geel-600),3px 3px 0 var(--b-geel-700),4px 4px 0 var(--b-geel-700),5px 5px 0 var(--b-geel-800),0 14px 16px -10px rgb(8 18 42 / .5)}
+.stappen b{display:block;font:800 1.25rem/1.25 var(--b-kop);color:var(--b-diep);margin:.2rem 0 .2rem}
+
+/* foto in de tekst: afdruk met plakband */
+.foto{position:relative;margin:2.6rem 10px 2.4rem 0;rotate:-.9deg}
+.foto__afdruk{position:relative;padding:12px;border-radius:14px;background:var(--white);box-shadow:var(--zij-geel),var(--val)}
+.p-blog .foto img{width:100%;border-radius:8px}
+.foto figcaption{padding:.8rem .3rem .1rem;color:var(--b-zacht);font-size:.9rem;line-height:1.45}
+
+/* tabel */
+.tabelvak{margin:1.6rem 0 2rem;overflow-x:auto;border-radius:16px;background:var(--white);box-shadow:0 0 0 1px var(--b-lijn),var(--val-licht)}
+.tabel{width:100%;min-width:34rem;border-collapse:collapse;font-size:.96rem;line-height:1.45}
+.tabel th{padding:.85rem 1rem;background:var(--b-diep);color:var(--white);font:700 .8rem/1.3 var(--font-sans);letter-spacing:.06em;text-transform:uppercase;text-align:left;white-space:nowrap}
+.tabel td{padding:.8rem 1rem;border-top:1px solid var(--b-lijn);vertical-align:top}
+.tabel tr:nth-child(even) td{background:var(--b-lucht)}
+.tabel td:first-child{font-weight:700;color:var(--b-diep)}
+
+/* afvinklijst, onthoudt per bezoeker wat al klaar is */
+.afvink{margin:1.6rem 0 2rem;padding:1.3rem 1.4rem;border-radius:18px;background:var(--white);box-shadow:0 0 0 1px var(--b-lijn),var(--val-licht)}
+.afvink__kop{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.6rem;margin-bottom:.8rem}
+.afvink__kop b{font:800 1.3rem/1.2 var(--b-kop);color:var(--b-diep)}
+.afvink__stand{font-size:.85rem;font-weight:700;color:var(--b-diep);background:var(--accent-100);padding:.3rem .7rem;border-radius:999px}
+.tekst .afvink ul{margin:0;padding:0;list-style:none}
+.tekst .afvink li{margin:0;border-top:1px solid var(--b-lijn)}
+.afvink label{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem 0;cursor:pointer;font-size:1rem;line-height:1.45}
+.afvink input{flex:none;appearance:none;-webkit-appearance:none;width:22px;height:22px;margin:.1rem 0 0;border:2px solid var(--primary-300);border-radius:6px;background:var(--white);cursor:pointer;transition:background-color .15s,border-color .15s}
+.afvink input:checked{border-color:var(--b-blauw);background:var(--b-blauw) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.afvink input:checked+span{color:var(--b-zacht);text-decoration:line-through;text-decoration-color:var(--b-blauw)}
+.afvink__wis{border:0;background:none;color:var(--b-zacht);font:inherit;font-size:.85rem;text-decoration:underline;cursor:pointer}
+
+/* citaat */
+.citaat{position:relative;margin:2.8rem 0;padding:0 0 0 4.2rem}
+.citaat::before{content:"\201C";position:absolute;left:0;top:-.6rem;font:800 6.5rem/1 var(--b-kop);color:var(--b-blauw);text-shadow:2px 2px 0 var(--b-geel),4px 4px 0 var(--b-geel-600)}
+.citaat p{margin:0 0 .7rem;font:800 clamp(1.5rem,1.2rem + 1vw,2rem)/1.25 var(--b-kop);color:var(--b-diep)}
+.citaat cite{font-style:normal;color:var(--b-zacht);font-size:.95rem}
+
+/* dozenschatter */
+.schatter{display:grid;grid-template-columns:minmax(0,1fr) 13.5rem;gap:1.2rem;margin:1.8rem 0 2.2rem;padding:1.4rem;border-radius:20px;background:var(--white);box-shadow:0 0 0 1px var(--b-lijn),var(--val-licht)}
+.schatter__velden{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;align-content:start}
+.tekst .schatter__kop{grid-column:1/-1;margin:0 0 .2rem;font:800 1.35rem/1.2 var(--b-kop);color:var(--b-diep)}
+.schatter label{display:flex;flex-direction:column;gap:.25rem;font:700 .7rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--b-zacht)}
+.schatter input,.schatter select{min-height:46px;padding:.55rem .75rem;border:1px solid var(--grey-400);border-radius:var(--radius-control);background:var(--b-lucht);font:inherit;font-size:1rem;font-weight:700;letter-spacing:0;text-transform:none;color:var(--b-inkt)}
+.schatter input:focus,.schatter select:focus{outline:2px solid var(--b-blauw);outline-offset:1px}
+.schatter__uit{display:flex;flex-direction:column;justify-content:center;gap:.2rem;padding:1.1rem;border-radius:16px;background:var(--b-diep);color:var(--white);box-shadow:var(--zij-diep)}
+.schatter__uit small{font:700 .7rem/1.3 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--primary-300)}
+.schatter__getal{white-space:nowrap;font:800 2.6rem/1 var(--b-kop);color:var(--b-geel)}
+.schatter__bereik,.schatter__detail{font-size:.85rem;color:rgb(255 255 255 / .82);line-height:1.4}
+
+/* aanbod in de tekst: de ploeg stapt uit de foto, boven het Diepblauwe paneel uit */
+.aanbod{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:1.6rem;align-items:center;margin:6.5rem 0 2.6rem;padding:1.4rem 1.6rem 1.4rem 1.4rem;border-radius:22px;background:var(--b-diep);color:var(--white);box-shadow:var(--zij-diep),var(--val)}
+.aanbod .pop{margin:-5.2rem 0 0;rotate:-2deg}
+.aanbod .pop--afdruk{--rand:10px}
+.p-blog .aanbod h3{margin:0 0 .5rem;font-size:1.7rem;color:var(--white)}
+.tekst .aanbod p{margin:0 0 1rem;color:rgb(255 255 255 / .84);font-size:1rem;line-height:1.6}
+.p-blog .aanbod .label{margin-bottom:.5rem;color:var(--b-geel)}
+.aanbod .knop--licht{background:transparent;border-color:rgb(255 255 255 / .6);color:var(--white)}
+.aanbod .knop--licht:hover{background:rgb(255 255 255 / .12)}
+
+
+.labels{display:flex;flex-wrap:wrap;gap:.5rem;margin:2.6rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--b-lijn)}
+
+/* schrijver: het beeldmerk op een goudgele schijf */
+.auteur{display:grid;grid-template-columns:10rem minmax(0,1fr);gap:1.6rem;align-items:center;max-width:62rem;margin:0 auto clamp(4rem,7vw,6rem);padding:1.6rem 2rem 1.6rem 1.6rem;border-radius:22px;background:var(--white);box-shadow:0 0 0 1px var(--b-lijn),var(--zij-geel),var(--val-licht)}
+.auteur__beeld{position:relative;height:8rem}
+.auteur__schijf{position:absolute;left:50%;bottom:.4rem;translate:-50% 0;width:9rem;height:2.1rem;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,var(--b-geel-200),var(--b-geel) 62%);box-shadow:0 6px 0 var(--b-geel-700),0 16px 16px -6px rgb(8 18 42 / .45)}
+.p-blog .auteur__foto{position:absolute;left:50%;bottom:1.7rem;translate:-50% 0;width:8.6rem;max-width:none;height:auto;filter:drop-shadow(0 8px 6px rgb(8 18 42 / .3))}
+.auteur .label{margin-bottom:.4rem}
+.p-blog .auteur h2{font-size:var(--text-h3);margin:0 0 .5rem}
+.auteur p{margin:0 0 1rem;color:var(--b-zacht)}
+
+.gerelateerd .artikelrij{margin-top:clamp(5rem,7vw,6rem)}
+
+/* =====================================================================
+   RESPONSIEF
+   ===================================================================== */
+@media (max-width:1180px){
+  .onderwerpen__lijst{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:3.2rem}
+}
+@media (max-width:1020px){
+  .uitgelicht__rooster,.leesband__rooster,.artikelkop__rooster{grid-template-columns:minmax(0,1fr)}
+  .artikelrij{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .artikelkop__beeld{max-width:40rem;margin:5rem auto -9rem;width:calc(100% - 28px)}
+  .artikel__rooster{grid-template-columns:minmax(0,1fr);max-width:48rem;margin-inline:auto}
+  .artikel__zij{position:static;grid-template-columns:1fr 1fr;align-items:start}
+}
+@media (max-width:767px){
+  .onderwerpen__lijst{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:2.8rem}
+  .onderwerpen__lijst>li:first-child{grid-column:1/-1}
+  .artikelrij{grid-template-columns:minmax(0,1fr)}
+  .artikel__zij{grid-template-columns:1fr}
+  .zijkaart{display:none}
+  .schatter{grid-template-columns:minmax(0,1fr)}
+  .aanbod{grid-template-columns:minmax(0,1fr);margin-top:7rem}
+  .aanbod .pop{max-width:20rem}
+  .tip{grid-template-columns:minmax(0,1fr);gap:1rem;padding:0 1.3rem 1.3rem;margin-top:4.5rem}
+  .tip__wie{height:5.8rem;border-bottom:2px solid var(--b-geel-200)}
+  .p-blog .tip__foto{left:0;bottom:0;width:8.8rem}
+  .auteur{grid-template-columns:minmax(0,1fr);text-align:left;padding:1.4rem}
+  .auteur__beeld{width:10rem}
+  /* niets mag buiten het scherm steken: dan maakt de telefoon de hele pagina breder */
+  .plakband{width:72px;height:24px}
+  .plakband--rechts{right:-8px}
+  .plakband--links{left:-8px}
+  .p-blog .lijstpaneel__wekker{right:-.2rem;height:6.4rem;top:-5rem}
+  .uitgelicht__vlag{left:-8px}
+  .citaat{padding-left:3.2rem}
+  .citaat::before{font-size:4.8rem}
+}
+@media (max-width:480px){
+  .zoek .knop{padding-inline:.9rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .p-blog *,.p-blog *::before,.p-blog *::after{transition-duration:.01ms!important}
+}
+@media print{
+  .header,.lade,.mcta,.whatsapp,.leesbalk,.artikel__zij,.b-offertepil,.footer,.gerelateerd,.aanbod{display:none!important}
+  .artikelkop{background:none;color:var(--b-inkt);padding-top:0}
+  .p-blog .artikelkop h1,.artikelkop__lead,.p-blog .artikelkop .meta{color:var(--b-inkt)}
+  .artikel__rooster{display:block;padding-top:2rem}
+}
+
+/* =====================================================================
+   Artikelkop = paginakop. Elk artikel begint zoals elke pagina van de site: .pk met een kopfoto van de site
+   (per onderwerp) achter de waas en de offertekaart (.pk-pil) eronder. Kruimelpad en schrijversregel wit.
+   Diepte: op brede schermen staat de verhuizer van de site (.pk__figuur, img/verhuizer-*-uit.webp) scherp
+   vóór de gedimde foto, rechts van de dan linkslijnende tekst; zijn voeten verdwijnen achter de offertekaart,
+   zodat hij uit de kaart omhoog komt. Geen beweging, alleen slagschaduw.
+   ===================================================================== */
+.pk--artikel .kruimels{margin:0 0 1.1rem}
+.pk--artikel .kruimels ol{justify-content:center}
+.pk--artikel .pk__h1{text-wrap:balance}
+.p-blog .pk--artikel .meta{justify-content:center;margin:1.1rem 0 0;color:rgb(255 255 255 / .8)}
+.pk--artikel .meta__wie{color:var(--white)}
+.pk--artikel .meta__wie small{display:block;font-size:.8rem;color:rgb(255 255 255 / .68)}
+.pk--artikel .meta__los .bic{color:var(--b-geel)}
+.pk--artikel .pk__bel{margin-top:1.25rem}
+.pk__figuur{display:none}
+/* vanaf 1280px: smaller is de zijkolom te smal en zou de figuur over de tekst vallen */
+@media (min-width:1280px){
+  /* tekst gecentreerd op de pagina (zoals elke .pk), de figuur in de rechter zijkolom */
+  .pk--artikel .pk__wrap{display:grid;grid-template-columns:1fr minmax(0,44rem) 1fr;align-items:end;column-gap:clamp(1.5rem,3vw,3rem)}
+  .pk--artikel .pk__tekst{grid-column:2;max-width:44rem;margin:0;text-align:center}
+  .pk--artikel .pk__figuur{grid-column:3;justify-self:end}
+  /* --voet: zoveel van de figuur zakt onder de rij, achter de kaart (de kaart begint 3rem onder de rij) */
+  /* --bw/--bh: de pixelmaat van de uitsnede (uit de HTML), zodat de kolom al vóór het laden de juiste breedte heeft */
+  .pk--artikel .pk__figuur{--voet:6.5rem;position:relative;z-index:1;display:block;height:clamp(27rem,30vw,32rem);aspect-ratio:var(--bw,489)/var(--bh,1200);margin:0 .5rem calc(-1 * var(--voet)) 0;pointer-events:none;filter:drop-shadow(0 26px 20px rgb(8 18 42 / .55)) drop-shadow(0 2px 4px rgb(8 18 42 / .35))}
+  .p-blog .pk--artikel .pk__figuur img{display:block;width:100%;height:100%;max-width:none}
+}
+/* geen overhangende foto meer, dus de tekst begint gewoon onder de kaart */
+.p-blog-artikel .artikel__rooster{padding-top:clamp(2.5rem,5vw,4rem)}
+
+/* =====================================================================
+   ARTIKELLICHAAM (30-09-2026): het artikel als reeks volle banden, naar de opbouw van de
+   inpaktips-pagina van referentie A. Per h2 een band (Lucht, wit, Mist om en om) met links de
+   sectiekop en rechts iemand die boven de band uitstapt: in de eerste band de eigen foto van
+   het artikel (uit de foto), daarna de verhuizers van de site (img/*-uit). De bouwstenen staan
+   in de volle breedte: stappen als genummerde regels naast elkaar in één paneel, losse lijsten
+   als puntenrij met goudgele schijven, het citaat als Diepblauwe plaat. Geen zijbalk: de ankers
+   staan onder de kop, delen en schrijver in de slotband. Vervangt het blok ARTIKELTEKST.
+   ===================================================================== */
+.artikel__lichaam{position:relative}
+
+/* ankers onder de kop */
+.ankerrij{background:var(--white);padding:1.6rem 0 .6rem}
+.ankers{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1.2rem}
+.ankers__kop{margin:0;font:700 .76rem/1.3 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--b-zacht)}
+.ankers__kop span{margin-left:.5rem;letter-spacing:0;text-transform:none;font-weight:600}
+.ankers ol{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0;list-style:none}
+.p-blog .ankers a{display:inline-flex;align-items:center;gap:.55rem;min-height:42px;padding:.4rem 1rem .4rem .55rem;border-radius:999px;background:var(--white);box-shadow:0 0 0 1px var(--b-lijn),0 3px 0 var(--primary-200);color:var(--b-diep);font-size:.92rem;font-weight:600;text-decoration:none;transition:background-color .2s,box-shadow .2s,color .2s}
+.ankers a b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--b-geel);color:var(--b-diep);font:800 .74rem/1 var(--font-sans);box-shadow:0 2px 0 var(--b-geel-700)}
+.p-blog .ankers a:hover{background:var(--b-lucht)}
+.p-blog .ankers a.is-actief{background:var(--b-diep);color:var(--white);box-shadow:0 0 0 1px var(--b-diep),0 3px 0 var(--b-geel-700)}
+
+/* de band: sectiekop links, figuur rechts */
+.artsectie .wrap{position:relative}
+.arttop{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 40%;gap:clamp(1rem,3vw,2.5rem);align-items:end;margin-bottom:clamp(2rem,1.5rem + 2vw,3rem)}
+.arttop--breed{grid-template-columns:minmax(0,1fr)}
+.artkop{max-width:46rem}
+.artkop .label{margin-bottom:.9rem}
+.p-blog .artkop h2{margin:0;font-size:clamp(2.1rem,1.6rem + 1.8vw,3rem);line-height:1.04;color:var(--b-diep);text-wrap:balance;scroll-margin-top:calc(var(--header-h) + 1.5rem)}
+.p-blog .artkop .intro{max-width:60ch;margin:1.1rem 0 0;font-size:1.15rem;line-height:1.6;color:var(--b-zacht)}
+.artsectie:not(.artsectie--eerste) .intro::first-letter{float:none;margin:0;font:inherit;color:inherit;text-shadow:none}
+.artsectie--eerste .artkop .intro{font-size:1.28rem;color:var(--b-inkt)}
+.artsectie--midden .artkop{margin-inline:auto;text-align:center}
+.artsectie--midden .artkop .label{justify-content:center}
+.artsectie--midden .artkop .intro{margin-inline:auto}
+/* de verhuizer stapt boven de band uit en staat met zijn voeten op het paneel eronder */
+.arttop__figuur{position:relative;align-self:stretch;margin:0}
+.arttop__figuur img{position:absolute;z-index:2;right:0;bottom:-1.6rem;width:100%;height:calc(100% + 9.5rem);max-width:none;object-fit:contain;object-position:right bottom;filter:drop-shadow(0 22px 22px rgb(8 18 42 / .32))}
+/* de eigen foto van het artikel als afdruk, het onderwerp stapt over de rand */
+.arttop__pop{position:relative;align-self:end;margin:3rem 14px .6rem 0;rotate:-1.4deg}
+
+/* lopende tekst blijft leesbaar smal, de panelen zijn vol */
+.artsectie .tekst>p,.artsectie .tekst>h3{max-width:68ch}
+.artsectie .tekst>h3{margin:1.8rem 0 .6rem}
+.artsectie .tekst>p{margin-bottom:1.2em}
+
+/* stappen: genummerde regels naast elkaar in één paneel (referentie A .stappen) */
+.tekst .stappen{--tussen:clamp(1rem,2vw,1.6rem);grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:var(--tussen);margin:0 0 2rem;padding:clamp(1.4rem,2.4vw,2.2rem);border-radius:24px;background:var(--white);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+.tekst .stappen li{display:block;margin:0}
+.tekst .stappen li+li{padding-left:var(--tussen);border-left:1px solid var(--primary-200)}
+.tekst .stappen li::before{margin-bottom:.9rem}
+.tekst .stappen b{display:flex;align-items:flex-end;min-height:2.5em;margin:0 0 .45rem;font-size:1.15rem;line-height:1.2}
+.tekst .stappen li div{font-size:.98rem;line-height:1.55;color:var(--b-zacht)}
+.sectie--wit .tekst .stappen{background:var(--b-lucht)}
+
+/* puntenrij: losse lijsten uit de tekst, elk punt met een goudgele schijf (referentie A .usps--rij) */
+.tekst .punten{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1.3rem 1.6rem;margin:0 0 2rem;padding:clamp(1.4rem,2.4vw,2.2rem);list-style:none;border-radius:24px;background:var(--white);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+.tekst .punten li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:.9rem;align-items:center;margin:0}
+.punt__ic{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 50% 35%,var(--b-geel-200),var(--b-geel) 65%);color:var(--b-diep);box-shadow:0 4px 0 var(--b-geel-700),0 10px 14px -8px rgb(8 18 42 / .45)}
+.punt__ic .ic{width:22px;height:22px}
+.tekst .punten p{margin:0;font-weight:700;font-size:1.05rem;line-height:1.4;color:var(--b-diep)}
+.sectie--wit .tekst .punten{background:var(--b-lucht)}
+
+/* tip: breed crème paneel, de verhuizer groot */
+.tekst .tip{grid-template-columns:15rem minmax(0,1fr);gap:1.6rem;margin:5.5rem 0 2.4rem;padding:1.6rem 2rem 1.6rem 0}
+.p-blog .tekst .tip__foto{width:15.5rem;left:0}
+.tekst .tip p{font-size:1.12rem}
+
+/* citaat: Diepblauwe plaat met een goudgeel aanhalingsteken */
+.tekst .citaat{margin:2.4rem 0 2rem;padding:clamp(1.8rem,3vw,2.6rem) clamp(1.6rem,3vw,2.8rem) clamp(1.8rem,3vw,2.6rem) clamp(5rem,9vw,8rem);border-radius:24px;background:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);color:var(--white);box-shadow:var(--zij-geel),var(--val)}
+.tekst .citaat::before{left:clamp(1.2rem,2.5vw,2.2rem);top:.6rem;color:var(--b-geel);text-shadow:2px 2px 0 var(--b-geel-700),4px 4px 0 rgb(0 0 0 / .25)}
+.tekst .citaat p{max-width:none;color:var(--white);font-size:clamp(1.5rem,1.2rem + 1.2vw,2.2rem)}
+.tekst .citaat cite{color:var(--b-geel)}
+
+/* aanbod (Diepblauw paneel met de ploeg): breder */
+.tekst .aanbod{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);margin-top:6rem;padding:clamp(1.6rem,3vw,2.6rem)}
+.p-blog .tekst .aanbod h3{font-size:clamp(1.6rem,1.3rem + 1vw,2.2rem)}
+
+/* tabel, afvinklijst, schatter, foto: platen met een goudgele zijkant; op de witte band op Lucht */
+.tekst :is(.tabelvak,.afvink,.schatter){box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+.sectie--wit .tekst :is(.tabelvak,.afvink,.schatter){background:var(--b-lucht)}
+.sectie--wit .tekst .schatter input,.sectie--wit .tekst .schatter select{background:var(--white)}
+.sectie--wit .tekst .tabel tr:nth-child(even) td{background:var(--white)}
+.tekst .foto{max-width:52rem}
+
+/* slotband: schrijver + delen */
+.artvoet__rooster{display:grid;grid-template-columns:minmax(0,1fr) 15rem;gap:clamp(1.5rem,4vw,3rem);align-items:start}
+.artvoet .auteur{max-width:none;margin:0}
+.artvoet__zij{display:grid;gap:1.4rem;padding-top:.4rem}
+.artvoet .labels{margin:0;padding:0;border:0}
+
+@media (max-width:1020px){
+  .artvoet__rooster{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:899px){
+  .arttop{grid-template-columns:minmax(0,1fr);align-items:start}
+  .arttop__figuur{height:16rem;margin-top:.5rem}
+  .arttop__figuur img{right:auto;left:50%;translate:-50% 0;height:calc(100% + 1.6rem);object-position:center bottom}
+  .arttop__pop{max-width:32rem;margin:2.5rem auto .6rem;width:calc(100% - 24px)}
+}
+@media (max-width:767px){
+  .ankerrij{padding-top:1.2rem}
+  .tekst .stappen{grid-template-columns:minmax(0,1fr)}
+  .tekst .stappen li+li{padding:var(--tussen) 0 0;border-left:0;border-top:1px solid var(--primary-200)}
+  .tekst .stappen b{min-height:0}
+  .tekst .tip{grid-template-columns:minmax(0,1fr);gap:1rem;padding:0 1.3rem 1.3rem;margin-top:4.5rem}
+  .p-blog .tekst .tip__foto{left:0;bottom:0;width:8.8rem}
+  .tekst .citaat{padding:1.6rem 1.3rem 1.6rem 3.4rem}
+  .tekst .citaat::before{left:.7rem;top:.4rem;font-size:4.8rem}
+  .tekst .aanbod{grid-template-columns:minmax(0,1fr)}
+}
+@media print{
+  .ankerrij,.arttop__figuur,.arttop__pop,.artvoet__zij{display:none!important}
+  .artsectie{background:none;padding-block:1rem}
+}
+
+/* Duidelijke overgang per deel (30-09, later): om en om een lichte band en de Koningsblauwe band van de site
+   (.sectie--blauw, met dak). Op de blauwe band worden kop en lopende tekst wit; de platen erin houden hun eigen kleuren. */
+.artsectie.sectie--blauw .artkop h2,.p-blog .artsectie.sectie--blauw .artkop h2{color:var(--white)}
+.p-blog .artsectie.sectie--blauw .artkop .intro{color:rgb(255 255 255 / .86)}
+.artsectie.sectie--blauw .tekst>p,.artsectie.sectie--blauw .tekst>h3{color:rgb(255 255 255 / .92)}
+.artsectie.sectie--blauw .tekst :is(.stappen,.punten,.tip,.tabelvak,.afvink,.schatter,.foto) :is(p,li,label,span,td,b,cite,small){color:var(--b-inkt)}
+.artsectie.sectie--blauw .tekst :is(.stappen b,.punten p,.afvink__kop b,.tabel td:first-child){color:var(--b-diep)}
+.artsectie.sectie--blauw .tekst .tip cite,.artsectie.sectie--blauw .tekst .stappen li div,.artsectie.sectie--blauw .tekst .foto figcaption{color:var(--b-zacht)}
+.artsectie.sectie--blauw .tekst .tip__label{color:var(--b-blauw)}
+.artsectie.sectie--blauw .tekst .tabel th{color:var(--white)}
+.artsectie.sectie--blauw .tekst .schatter__uit :is(small,span){color:var(--white)}
+.artsectie.sectie--blauw .tekst .schatter__getal{color:var(--b-geel)}
+.artsectie.sectie--blauw .tekst .stappen,.artsectie.sectie--blauw .tekst .punten,.artsectie.sectie--blauw .tekst :is(.tabelvak,.afvink,.schatter){box-shadow:var(--zij-geel),0 40px 60px -28px rgb(0 0 0 / .55)}
+/* het citaat op de blauwe band: witte plaat, Diepblauwe tekst */
+.artsectie.sectie--blauw .tekst .citaat{background:var(--white);color:var(--b-diep);box-shadow:var(--zij-geel),0 40px 60px -28px rgb(0 0 0 / .55)}
+.artsectie.sectie--blauw .tekst .citaat p{color:var(--b-diep)}
+.artsectie.sectie--blauw .tekst .citaat cite{color:var(--b-blauw)}
+.artsectie.sectie--blauw .tekst .citaat::before{text-shadow:2px 2px 0 var(--b-geel-700),4px 4px 0 rgb(8 18 42 / .2)}
+.artsectie.sectie--blauw .tekst .aanbod{box-shadow:var(--zij-geel),0 40px 60px -28px rgb(0 0 0 / .6)}
+.artsectie.sectie--blauw .arttop__figuur img{filter:drop-shadow(0 22px 22px rgb(0 0 0 / .45))}
+
+/* Meer vulling per band (30-09, later): de foto van de site in een dikke plaat met een goudgeel vlak erachter en een
+   onderschrift op de foto; de verhuizer stapt boven de plaat uit (zelfde foto twee keer, de uitsnede ligt 1-op-1 op
+   de foto, alleen het deel boven het kader is zichtbaar). */
+.fotopop{--pop-r:14px;position:relative;container-type:inline-size;aspect-ratio:var(--ar,4 / 3);isolation:isolate}
+.fotopop__raam{position:absolute;z-index:1;inset:0;overflow:hidden;border-radius:var(--pop-r);background:var(--primary-100)}
+.p-blog .fotopop__laag{position:absolute;left:calc(var(--l) * -100cqw);top:calc(var(--t) * -100cqw);width:calc(var(--z) * 100cqw);max-width:none;height:auto}
+.fotopop__buiten{position:absolute;z-index:2;left:0;right:0;top:-60cqw;bottom:0;overflow:hidden;pointer-events:none}
+.fotopop__buiten .fotopop__laag{top:calc(var(--t) * -100cqw + 60cqw)}
+.fotopop__uit{-webkit-mask-image:linear-gradient(#000 calc(var(--zicht) - 6%),transparent var(--zicht));mask-image:linear-gradient(#000 calc(var(--zicht) - 6%),transparent var(--zicht));filter:drop-shadow(0 12px 9px rgb(11 35 82 / .42))}
+.fotopop--plaat{--rand:10px}
+.fotopop--plaat::before{content:"";position:absolute;z-index:0;inset:calc(-1 * var(--rand));border-radius:calc(var(--pop-r) + var(--rand));background:var(--white);box-shadow:2px 2px 0 var(--b-geel-600),4px 4px 0 var(--b-geel-600),6px 6px 0 var(--b-geel-600),8px 8px 0 var(--b-geel-600),10px 10px 0 var(--b-geel-600),12px 12px 0 var(--b-geel-700),14px 14px 0 var(--b-geel-700),0 48px 70px -30px rgb(9 25 56 / .75)}
+.arttop__foto{position:relative;isolation:isolate;align-self:end;margin:4rem 24px 1.2rem 12px}
+.arttop__foto::before{content:"";position:absolute;z-index:-1;right:-2.2rem;bottom:-2.2rem;width:62%;height:56%;border-radius:20px;background:var(--b-geel);box-shadow:0 8px 0 var(--b-geel-700)}
+.arttop__foto figcaption{position:absolute;z-index:3;left:1rem;right:1rem;bottom:1rem;margin:0;padding:.6rem .95rem;border-radius:10px;background:rgb(11 35 82 / .78);color:var(--white);font:700 .78rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(4px)}
+.artsectie.sectie--blauw .arttop__foto::before{box-shadow:0 8px 0 var(--b-geel-700),0 30px 40px -20px rgb(0 0 0 / .5)}
+@media (max-width:899px){.arttop__foto{max-width:30rem;width:calc(100% - 44px);margin:3.5rem auto 1.4rem}}
+
+/* Minder lege ruimte per band (30-09, einde middag): de kop stond onder aan een rij die zo hoog was als de foto-plaat,
+   dus boven elke kop zat 150-250 px niets en onder de intro nog eens een rij. Nu zweeft de plaat rechts (float) en lopen
+   kop, intro en lopende tekst er langs; de brede panelen (stappen, tip, foto, aanbod, vragen) beginnen onder de plaat,
+   de smallere (punten, tabel, afvinklijst, citaat) mogen ernaast. De uitstapper steekt boven de band uit via de bandvulling,
+   dus de plaat heeft geen extra ruimte boven zich nodig. Onder de band eindigt het laatste element zonder eigen marge. */
+@media (min-width:900px){
+  .arttop:has(.arttop__foto,.arttop__pop){display:block;margin-bottom:1.5rem}
+  .arttop:has(.arttop__foto,.arttop__pop)::after{content:none}
+  .arttop__foto{float:right;width:34%;margin:0 24px 2.4rem clamp(1.5rem,3vw,2.5rem)}
+  .arttop__pop{float:right;width:40%;margin:3.2rem 14px 1.6rem clamp(1.5rem,3vw,2.5rem)}
+  .arttop:has(.arttop__foto,.arttop__pop) .artkop{max-width:none}
+  .p-blog .arttop:has(.arttop__foto,.arttop__pop) .artkop .intro{max-width:62ch}
+  .artsectie .tekst>:is(.tip,.foto,.aanbod,.schatter){clear:both}
+  .artsectie .tekst>.stappen{grid-template-columns:repeat(auto-fit,minmax(12rem,1fr))}
+  .artsectie .tekst>:is(.afvink,.citaat,.punten,.tabelvak){display:flow-root}
+  .artsectie .tekst>.punten{display:grid}
+  .artsectie .tekst>h3{clear:none}
+}
+.artsectie .tekst>:last-child{margin-bottom:0}
+.artsectie .tekst>.arttop:last-child{margin-bottom:0}
+.tekst .aanbod{margin-top:8.5rem}
+.artsectie--midden .arttop{margin-bottom:1.5rem}
+/* de losse uitsnede (helpen-drie, adviseur, montage) zweeft ook rechts, groot genoeg en boven de band uit; de tabel of
+   tekst loopt ernaast door. Links in lopende tekst op de blauwe band zijn goudgeel, anders vallen ze weg. */
+@media (min-width:900px){
+  .arttop:has(.arttop__figuur){display:block;margin-bottom:1.5rem}
+  .arttop__figuur{float:right;width:32%;height:21rem;margin:-3rem 0 1.2rem clamp(1.5rem,3vw,2.5rem)}
+  .arttop__figuur img{inset:auto 0 0 0;height:100%;width:100%}
+  .artsectie .tekst>.arttop:has(.arttop__figuur):last-child{margin-bottom:0;min-height:18rem}
+}
+.p-blog .artsectie.sectie--blauw .tekst>p a:not(.knop),.p-blog .artsectie.sectie--blauw .tekst>h3 a:not(.knop),.p-blog .artsectie.sectie--blauw .artkop .intro a:not(.knop){color:var(--b-geel);font-weight:600;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.p-blog .artsectie.sectie--blauw .tekst>p a:not(.knop):hover,.p-blog .artsectie.sectie--blauw .artkop .intro a:not(.knop):hover{color:var(--white)}
+
+/* Aanbod-paneel ruimer (30-09, later): de afdruk stak met -5.2rem plus de uitstappende koppen over de alinea erboven heen.
+   Nu: kleinere afdruk, gecentreerd in zijn kolom, steekt 2.5rem boven het paneel uit en het paneel begint 9.5rem onder de
+   tekst zodat de koppen vrij staan. Link op de blauwe band was Koningsblauw op Koningsblauw: nu wit met goudgele streep. */
+.tekst .aanbod{margin-top:9.5rem;gap:clamp(1.6rem,3vw,2.8rem);grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr)}
+.aanbod .pop{margin:-2.5rem auto 0;max-width:20rem;width:100%}
+.p-blog .tekst .aanbod p{max-width:52ch}
+.artsectie.sectie--blauw .tekst>p a:not(.knop){color:var(--white);text-decoration-color:var(--b-geel)}
+.artsectie.sectie--blauw .tekst>p a:not(.knop):hover{color:var(--b-geel)}
+@media (max-width:899px){
+  .tekst .aanbod{margin-top:9rem;grid-template-columns:minmax(0,1fr)}
+  .aanbod .pop{margin:-3.5rem auto 0;max-width:18rem}
+}
+.artsectie .tekst{display:flow-root}   /* de zwevende plaat of uitsnede telt mee in de hoogte van de band */
+@media (max-width:899px){.arttop .artkop{order:-1}}   /* de figuur staat in de html vóór de kop (float naast de kop); op mobiel toch de kop eerst */
+
+/* 30-09 avond, artikel Verhuizen met kinderen: eigen foto groter en hoger; tip niet tegen de fotoplaat; ook de aanbod-band
+   krijgt rechts een foto; de auteurskaart in de slotband loopt over de volle breedte met delen + labels als derde kolom */
+@media (min-width:900px){
+  .arttop__pop{width:44%;margin-top:1.6rem}
+  .artsectie:has(.tekst>.tip) .arttop__foto{margin-bottom:5rem}   /* clear:both meet vanaf de ondermarge van de plaat, niet vanaf de tip-marge */
+}
+.artvoet__rooster{grid-template-columns:minmax(0,1fr)}
+.artvoet .auteur{grid-template-columns:10rem minmax(0,1fr) 14rem}
+.artvoet .auteur .artvoet__zij{align-self:stretch;align-content:center;padding:.2rem 0 .2rem 1.8rem;border-left:1px solid var(--b-lijn)}
+@media (max-width:899px){
+  .artvoet .auteur{grid-template-columns:minmax(0,1fr)}
+  .artvoet .auteur .artvoet__zij{padding:1.2rem 0 0;border-left:0;border-top:1px solid var(--b-lijn)}
+}
+
+/* 30-09 avond, artikel Een bank de trap af (blok ARTIKELLICHAAM):
+   1. De losse uitsnede (montage, drietal, adviseur) stond los op de band en de rechterhelft oogde leeg. Nu staat er, naar
+      de grote cirkel achter het drietal in het splitblok van referentie A (.split__cirkel), een goudgele schijf achter de
+      man: rond, iets breder dan de figuur, met de donkere onderlip van de fotoplaat. De schijf loopt onder zijn rechte
+      onderrand door, zodat die rand op goud valt en niet op de band; de figuur zelf blijft er scherp voor (z-index 2).
+   2. Zonder intro (de h2 wordt direct gevolgd door een breed paneel zoals .stappen) begon de fotoplaat rechts op de hoogte
+      van het label, boven het paneel. Nu begint hij gelijk met dat paneel: label + h2 + 1.5rem kopmarge = 6.9rem lager. */
+.arttop__figuur::before{content:"";position:absolute;z-index:1;left:var(--mx,50%);bottom:-4.2rem;width:100%;aspect-ratio:1;translate:-50% 0;border-radius:50%;
+  background:radial-gradient(70% 70% at 38% 30%,#FFE08A,var(--b-geel) 62%,#F2B800);
+  box-shadow:0 8px 0 var(--b-geel-700),0 9px 0 rgb(8 18 42 / .16),0 26px 30px -12px rgb(8 18 42 / .35)}
+.artsectie.sectie--blauw .arttop__figuur::before{box-shadow:0 8px 0 var(--b-geel-700),0 30px 40px -20px rgb(0 0 0 / .5)}
+@media (min-width:900px){
+  .arttop__figuur{width:38%;height:23rem;margin-bottom:5rem}
+  .arttop__figuur img{object-position:center bottom}
+  .arttop:has(.arttop__foto):not(:has(.intro)) .arttop__foto{margin-top:6.9rem}
+}
+@media (max-width:899px){
+  .arttop__figuur::before{left:50%;width:min(100%,22rem);bottom:-2.4rem}
+  .arttop__figuur img{translate:calc(0px - var(--mx,50%)) 0}   /* de figuur zelf in het midden, niet het canvas */
+  .arttop__figuur{margin-bottom:3.4rem}
+}
+
+/* 30-09 avond, breekbaar-inpakken (blok ARTIKELLICHAAM): beide foto's rechts een tik lager. In band 1 stonden de vijf
+   stappen in twee kolommen naast de afdruk, dus het paneel was veel hoger dan de foto en rechts eronder bleef het leeg.
+   Nu passen er drie stappen naast de afdruk (twee rijen), dan eindigen paneel en afdruk ongeveer gelijk. */
+@media (min-width:900px){
+  .arttop__pop{margin-top:3.2rem}
+  .arttop:has(.intro) .arttop__foto{margin-top:2.2rem}
+  .artsectie .tekst>.stappen{grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr))}
+}
+
+/* 30-09 avond, artikel Opslag tijdens verbouwing: (1) een band waarin de stappen direct op de kop volgen wordt een rooster,
+   zodat de fotoplaat rechts in het midden naast het stappenpaneel hangt in plaats van bovenaan; (2) de plaat boven een tip
+   krijgt meer ruimte onder zich, zodat de uitstapper van de tip niet tegen de plaat aanzit; (3) in een band met alleen kop +
+   aanbod zakt de kop een stukje; (4) een sitefoto in de eerste band (a.banden) hangt iets lager. */
+@media (min-width:900px){
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen){display:grid;grid-template-columns:minmax(0,1fr) 34%;column-gap:clamp(1.5rem,3vw,2.5rem);align-items:start}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.arttop{display:contents}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen) .artkop{grid-column:1;grid-row:1;margin-bottom:1.5rem}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen{grid-column:1;grid-row:2;margin-bottom:0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen) .arttop__foto{grid-column:2;grid-row:2;align-self:center;float:none;width:auto;margin:0 24px 0 0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>:not(.arttop,.stappen){grid-column:1 / -1}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen+*{margin-top:2.4rem}
+  .artsectie:has(.tekst>.tip) .arttop__foto{margin-bottom:7rem}
+  .artsectie .tekst>.tip{margin-top:7rem}
+  .artsectie .tekst:has(>.arttop+.aanbod) .artkop{padding-top:2.5rem}
+  .artsectie--eerste .arttop__foto{margin-top:1.5rem}
+}
+
+/* 30-09 avond, artikel Kantoorverhuizing: de kop van de man was rechts afgeknipt (uit-r 42 % in artikelen.cjs, nu 30 %);
+   de eigen foto en de foto van deel 02 een tik lager. De stappenpanelen krijgen op desktop vaste rijen van drie, en een
+   rij die niet vol is (stap 4) staat in het midden in plaats van links; de eerste stap van elke rij zonder scheidingslijn. */
+@media (min-width:900px){
+  .artikel[data-slug="kantoorverhuizing-zonder-stilstand"] .arttop__pop{margin-top:3.2rem}
+  .artikel[data-slug="kantoorverhuizing-zonder-stilstand"] .arttop__foto{margin-top:1.6rem}
+  .artsectie .tekst>.stappen{display:flex;flex-wrap:wrap;justify-content:center}
+  .artsectie .tekst>.stappen li{flex:0 0 calc((100% - 2 * var(--tussen)) / 3);max-width:calc((100% - 2 * var(--tussen)) / 3)}
+  .artsectie .tekst>.stappen li:nth-child(3n+1){padding-left:0;border-left:0}
+}
+
+/* 30-09 avond, breekbaar-inpakken, vervolg: ook de eigen afdruk (arttop__pop) naast een stappenpaneel wordt een rooster,
+   zoals hierboven voor de sitefoto: kop + stappen links, de afdruk rechts over beide rijen en verticaal gecentreerd,
+   zodat er onder de foto geen lege rechterhelft meer overblijft. */
+@media (min-width:900px){
+  .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen){display:grid;grid-template-columns:minmax(0,1fr) 42%;column-gap:clamp(1.5rem,3vw,2.5rem);row-gap:1.5rem;align-items:center}
+  .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen)>.arttop{display:contents}
+  .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen) .artkop{grid-column:1;grid-row:1;align-self:end;margin-bottom:0}
+  .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen)>.stappen{grid-column:1;grid-row:2;margin:0}
+  .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen) .arttop__pop{grid-column:2;grid-row:1 / 3;align-self:center;float:none;width:auto;margin:1rem 14px 1rem 0}
+  .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen)>:not(.arttop,.stappen){grid-column:1 / -1}
+  .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen)>.tip{margin-top:4.5rem}   /* de uitstapper van de tip steekt ~5rem boven het paneel uit */
+}
+
+/* 30-09 avond, verhuisdozen-inpakken: (1) een band met alleen kop + sitefoto (Deel 05) was zo hoog als de zwevende plaat,
+   met niets onder de intro; nu een rooster met de kop verticaal in het midden naast de plaat, dus de band is precies zo
+   hoog als de plaat. (2) Onder een stappenpaneel kreeg de tip maar 2.4rem (regel .stappen+*), zodat de uitstapper tegen
+   het paneel zat; de tip krijgt daar 6rem. */
+@media (min-width:900px){
+  .artsectie .tekst>.arttop:has(.arttop__foto):last-child{display:grid;grid-template-columns:minmax(0,1fr) 34%;column-gap:clamp(1.5rem,3vw,2.5rem);align-items:center;margin-bottom:0}
+  .artsectie .tekst>.arttop:has(.arttop__foto):last-child .artkop{grid-column:1;grid-row:1;margin-bottom:0}
+  .artsectie .tekst>.arttop:has(.arttop__foto):last-child .arttop__foto{grid-column:2;grid-row:1;float:none;width:auto;margin:0 24px 2.4rem 0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen+.tip{margin-top:8rem}   /* 8rem: op 6rem stond het hoofd 10 px onder de gele rand van het stappenpaneel */
+}
+
+/* 30-09 avond, verhuischecklist deel 02: de losse uitsnede (adviseur op een grote goudgele schijf naast de afvinklijst)
+   oogde amateuristisch. De reeksen inpakken/planning/kosten/gezin/zakelijk in bouw-blog.cjs gebruiken nu alleen nog de
+   fotoplaat van de site (.arttop__foto). Naast een afvinklijst hangt die plaat, net als naast een stappenpaneel, verticaal
+   in het midden van kop + lijst, dus geen lege rechterhelft onder de foto en geen lijst die onder de plaat doorloopt. */
+@media (min-width:900px){
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink){display:grid;grid-template-columns:minmax(0,1fr) 34%;column-gap:clamp(1.5rem,3vw,2.5rem);row-gap:1.5rem;align-items:center}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink)>.arttop{display:contents}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink) .artkop{grid-column:1;grid-row:1;align-self:end;margin-bottom:0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink)>.afvink{grid-column:1;grid-row:2;margin:0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink) .arttop__foto{grid-column:2;grid-row:1 / 3;align-self:center;float:none;width:auto;margin:1rem 24px 1rem 0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink)>:not(.arttop,.afvink){grid-column:1 / -1}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink)>.tip{margin-top:4.5rem}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink)>.afvink+p{margin-top:.5rem}
+}
+
+
+/* 30-09 avond, verhuisdozen-inpakken (tugce-ed): (1) tabel met rechts een Diepblauw kader (h.tabelmet), zodat de ruimte
+   naast de tabel niet leeg blijft; (2) een echt voorwerp op een goudgele schijf rechts van de kop (a.kopdingen, .artding),
+   in de rechterkolom van het rooster met stappen; (3) de losse foto (h.fotomet) kleiner, met rechts een witte tekstplaat
+   en een etiket "Breekbaar" met plakband. */
+.tabelrij{clear:both;margin:1.6rem 0 2rem}
+.tabelrij .tabelvak{margin:0}
+.tabelkader{position:relative;margin:4rem 0 0;padding:1.5rem 1.6rem 1.6rem;border-radius:20px;background:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);color:var(--white);box-shadow:var(--zij-geel),var(--val-licht)}
+.tabelkader p{margin:0;font-size:1.02rem;line-height:1.55}
+.tabelkader__label{margin:0 0 .55rem!important;padding-right:4.5rem;font:800 .78rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--b-geel)}
+.tabelkader .knop{margin-top:1.1rem}
+.tabelkader__schijf{position:absolute;right:1.1rem;top:-.1rem;width:5.6rem;height:1.5rem;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,var(--b-geel-200),var(--b-geel) 62%);box-shadow:0 5px 0 var(--b-geel-700),0 14px 14px -6px rgb(8 18 42 / .45)}
+.p-blog .tabelkader__ding{position:absolute;right:1.1rem;bottom:calc(100% - .65rem);width:5.6rem;height:var(--h,5.2rem);object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 10px 7px rgb(8 18 42 / .38))}
+.artding{display:none}
+.fotorij{clear:both;margin:2.6rem 0 2.4rem}
+.fotorij .foto{max-width:30rem;margin:0 auto}
+.fotorij__vak{position:relative;margin-top:2.4rem;padding:1.7rem 1.8rem 1.6rem;border-radius:22px;background:var(--white);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+.fotorij__vak p{margin:0;font-size:1.05rem;line-height:1.6}
+.fotorij__label{margin:0 0 .55rem!important;font:800 .78rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--b-blauw)}
+.fotorij__etiket{position:absolute;right:1.2rem;top:-1.5rem;padding:.45rem 1rem .4rem;border-radius:6px;background:var(--white);color:var(--b-inkt);font:800 1.05rem/1.2 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;box-shadow:0 0 0 1px rgb(14 26 51 / .1),0 10px 18px -10px rgb(8 18 42 / .45);rotate:3deg}
+.fotorij__etiket .plakband{width:64px;height:20px;top:-10px;left:-18px}
+@media (min-width:900px){
+  .tabelrij{display:grid;grid-template-columns:minmax(0,1fr) 19.5rem;column-gap:clamp(1.5rem,3vw,2.5rem);align-items:start}
+  .tabelkader{margin:2.6rem 0 0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen) .artding{display:flex;justify-content:center;align-items:end;grid-column:2;grid-row:1;align-self:center;position:relative;height:100%;min-height:11rem;margin:0 24px 1.5rem 0}
+  .artding__schijf{position:absolute;left:50%;bottom:2.6rem;translate:-50% 0;width:9.4rem;height:2.5rem;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,var(--b-geel-200),var(--b-geel) 62%);box-shadow:0 7px 0 var(--b-geel-700),0 22px 22px -8px rgb(8 18 42 / .5)}
+  .p-blog .artding__ding{position:relative;z-index:1;width:auto;max-width:11rem;height:var(--h,8rem);margin-bottom:3.2rem;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 14px 10px rgb(8 18 42 / .42))}
+  .fotorij{display:grid;grid-template-columns:minmax(0,36%) minmax(0,1fr);column-gap:clamp(1.8rem,3.5vw,3rem);align-items:center}
+  .fotorij .foto{max-width:none;margin:0 10px 0 0}
+  .fotorij__vak{margin-top:0}
+  .fotorij__etiket{right:1.6rem;top:-1.25rem}
+}
+
+/* 30-09 avond, artikel Wat kost een verhuizing (drie keer "bi tık"):
+   (1) deel 01: de eigen afdruk hing in het midden naast kop + stappenpaneel, met veel lege ruimte boven en onder de foto
+       (een 4:3-foto kan een kolom van 900 px nooit vullen). Nu: kop + intro links, de afdruk rechts (44 %) op gelijke
+       hoogte, en het stappenpaneel over de volle breedte eronder met de vijf stappen op één rij (vanaf 1200 px).
+   (2) deel 02 (blauwe band): kop, tabel en alinea stonden bovenaan naast de fotoplaat; de kop begint 3.5rem lager zodat
+       de tekst naast de plaat in het midden hangt.
+   (3) tussen de banden zat te veel lucht (88 px onder het paneel + roof + 88 px boven "Deel 02"); de artikelbanden
+       krijgen 3.5rem, de blauwe band dak + 3.5rem. */
+@media (min-width:900px){
+  .artsectie{padding-block:3.5rem}
+  .artsectie.sectie--blauw{padding-block:calc(var(--dak) + 3.5rem) 3.5rem}
+  .artsectie--eerste{padding-top:5rem}   /* de eerste band: de afdruk raakte anders bijna de ankerchips */
+  .artikel[data-slug="wat-kost-een-verhuizing"] .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen){grid-template-columns:minmax(0,1fr) 44%;row-gap:2.5rem;align-items:center}
+  .artikel[data-slug="wat-kost-een-verhuizing"] .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen) .artkop{grid-row:1;align-self:center}
+  .artikel[data-slug="wat-kost-een-verhuizing"] .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen) .arttop__pop{grid-row:1;align-self:start;margin:.5rem 14px 0 0}   /* start, niet midden: gecentreerd stak de foto boven de band uit, over de ankerchips */
+  .artikel[data-slug="wat-kost-een-verhuizing"] .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen)>.stappen{grid-column:1 / -1;grid-row:2}
+  .artikel[data-slug="wat-kost-een-verhuizing"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.tabelvak) .artkop{padding-top:3.5rem}
+}
+@media (min-width:1200px){
+  .artikel[data-slug="wat-kost-een-verhuizing"] .artsectie .tekst>.stappen li{flex-basis:calc((100% - 4 * var(--tussen)) / 5);max-width:calc((100% - 4 * var(--tussen)) / 5)}
+  .artikel[data-slug="wat-kost-een-verhuizing"] .artsectie .tekst>.stappen li:nth-child(3n+1){padding-left:var(--tussen);border-left:1px solid var(--primary-200)}
+  .artikel[data-slug="wat-kost-een-verhuizing"] .artsectie .tekst>.stappen li:first-child{padding-left:0;border-left:0}
+}
+
+/* 30-09 avond, verhuisdozen-inpakken: de losse alinea onder het puntenpaneel (deel 04, "Handig: geef elke kamer een eigen
+   kleur tape") en onder de dozenschatter (deel 06, "Neem liever een paar dozen te veel") liepen tot 68ch en stopten
+   op 60 % van de band; ze lopen nu van links naar rechts over de hele breedte, net als het paneel erboven. */
+.artikel[data-slug="verhuisdozen-inpakken"] .artsectie .tekst>:is(.punten,.schatter)+p{max-width:none}
+
+/* 30-09 avond (tugce-fa), artikel Opslag tijdens verbouwing, Deel 01: de fotoplaat naast kop + puntenlijst hing een stuk te hoog.
+   Net als bij de stappen wordt zo'n band een rooster, maar hier staat de plaat in het midden van kop én puntenlijst samen
+   (twee rijen). LET OP: dit blok is al eens verdwenen doordat een andere sessie het hele bestand terugschreef; laat het staan. */
+@media (min-width:900px){
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.punten){display:grid;grid-template-columns:minmax(0,1fr) 34%;column-gap:clamp(1.5rem,3vw,2.5rem);align-items:start}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.punten)>.arttop{display:contents}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.punten) .artkop{grid-column:1;grid-row:1;margin-bottom:1.5rem}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.punten)>.punten{grid-column:1;grid-row:2;margin-bottom:0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.punten) .arttop__foto{grid-column:2;grid-row:1 / span 2;align-self:center;float:none;width:auto;margin:0 24px 0 0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.punten)>:not(.arttop,.punten){grid-column:1 / -1}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.punten)>.punten+*{margin-top:2.4rem}
+}
+
+/* 30-09 avond (tugce-ed): Deel 02 kopding = twee gestapelde De Reus-dozen, een tik groter; alleen gericht toegevoegd, niets herschreven */
+@media (min-width:900px){
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen) .artding{min-height:13rem}
+  .p-blog .artding__ding{max-width:13rem}
+  .artding__schijf{width:10.4rem}
+}
+
+/* 30-09 avond, artikel Een bank de trap af (twee keer "fix"):
+   (1) deel 01: het citaat liep naast de zwevende afdruk en stopte op de helft van de band; het staat nu onder de afdruk
+       en loopt van links naar rechts over de hele breedte.
+   (2) deel 02: vier stappen in een paneel van drie kolommen gaf 3 boven en 1 eenzaam onder. Naast de fotoplaat staan ze
+       nu als 2 x 2, elke stap even breed; de scheidingslijn komt voor de tweede kolom. */
+@media (min-width:900px){
+  .artikel[data-slug="bank-de-trap-af"] .artsectie .tekst>.citaat{clear:both;display:block;margin-top:3rem}
+  .artikel[data-slug="bank-de-trap-af"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li{flex:0 0 calc((100% - var(--tussen)) / 2);max-width:calc((100% - var(--tussen)) / 2);padding-left:var(--tussen);border-left:1px solid var(--primary-200)}
+  .artikel[data-slug="bank-de-trap-af"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li:nth-child(odd){padding-left:0;border-left:0}
+  .artikel[data-slug="bank-de-trap-af"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li:nth-child(n+3){padding-top:var(--tussen);border-top:1px solid var(--primary-200)}
+}
+
+/* 30-09 avond (tugce-ed): Deel 02 dozen nog groter (h 15rem) */
+@media (min-width:900px){
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen) .artding{min-height:17rem}
+  .p-blog .artding__ding{max-width:16rem}
+  .artding__schijf{width:12.5rem;height:3.2rem}
+}
+
+/* 30-09 avond (tugce-fa), verhuisdozen-inpakken deel 06 (Hoeveel dozen heeft u nodig?): kop + intro stonden bovenaan naast de
+   fotoplaat met lege ruimte eronder; de kop begint 5.75rem lager en hangt zo verticaal in het midden naast de plaat. Alleen de
+   band met de dozenschatter. (Herstel van een eerder blok van tugce-62 dat bij een terugschrijfactie verloren ging.) */
+@media (min-width:900px){
+  .artikel[data-slug="verhuisdozen-inpakken"] .artsectie .tekst:has(>.arttop+.schatter) .artkop{padding-top:5.75rem}
+}
+
+/* 30-09 avond: tabel en kader naast elkaar gelijk aan de bovenkant (tugce) */
+@media (min-width:900px){.tabelrij .tabelvak{margin-top:2.6rem}}
+
+/* 30-09 avond, artikel Verhuischecklist (planning), laatste band: het aanbodpaneel "Liever uit handen geven?" hing te ver
+   onder de afvinklijst; een tik omhoog (9.5rem -> 6rem, mobiel 9rem -> 6.5rem). Alleen dit artikel. */
+.artikel[data-slug="verhuischecklist"] .tekst .aanbod{margin-top:6rem}
+@media (max-width:899px){.artikel[data-slug="verhuischecklist"] .tekst .aanbod{margin-top:6.5rem}}
+
+/* 30-09 avond, artikel Kantoorverhuizing, deel 01: het citaat "Vrijdag de deur dicht..." liep naast de zwevende
+   afdruk en stopte op de helft van de band; het staat nu onder de afdruk en loopt van links naar rechts. */
+@media (min-width:900px){
+  .artikel[data-slug="kantoorverhuizing-zonder-stilstand"] .artsectie .tekst>.citaat{clear:both;display:block;margin-top:3rem}
+}
+
+/* 30-09 avond, artikel Opslag tijdens verbouwing, deel 02 (Zo werkt het): vier stappen naast de fotoplaat als 2 x 2,
+   gelijk aan "Een bank de trap af" hierboven. Alleen dit artikel; alleen aangevuld, niets herschreven. */
+@media (min-width:900px){
+  .artikel[data-slug="opslag-tijdens-verbouwing"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li{flex:0 0 calc((100% - var(--tussen)) / 2);max-width:calc((100% - var(--tussen)) / 2);padding-left:var(--tussen);border-left:1px solid var(--primary-200)}
+  .artikel[data-slug="opslag-tijdens-verbouwing"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li:nth-child(odd){padding-left:0;border-left:0}
+  .artikel[data-slug="opslag-tijdens-verbouwing"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li:nth-child(n+3){padding-top:var(--tussen);border-top:1px solid var(--primary-200)}
+}
+
+/* 30-09 avond, artikel Breekbaar inpakken, laatste band: het aanbodpaneel hing ~150px onder de laatste alinea terwijl de
+   verhuizers maar ~65px boven het paneel uitsteken. Marge omlaag (9.5rem -> 5rem), alleen dit artikel, alleen desktop. */
+@media (min-width:900px){
+  .artikel[data-slug="breekbaar-inpakken"] .tekst .aanbod{margin-top:5rem}
+}
+
+/* 30-09 avond, artikel Kantoorverhuizing, deel 02 (Een draaiboek voor één weekend): vier stappen naast de fotoplaat
+   als 2 x 2 in plaats van 3 + 1, gelijk aan "Een bank de trap af" en "Opslag tijdens verbouwing". Alleen aangevuld. */
+@media (min-width:900px){
+  .artikel[data-slug="kantoorverhuizing-zonder-stilstand"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li{flex:0 0 calc((100% - var(--tussen)) / 2);max-width:calc((100% - var(--tussen)) / 2);padding-left:var(--tussen);border-left:1px solid var(--primary-200)}
+  .artikel[data-slug="kantoorverhuizing-zonder-stilstand"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li:nth-child(odd){padding-left:0;border-left:0}
+  .artikel[data-slug="kantoorverhuizing-zonder-stilstand"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li:nth-child(n+3){padding-top:var(--tussen);border-top:1px solid var(--primary-200)}
+}

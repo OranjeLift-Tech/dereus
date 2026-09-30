@@ -175,15 +175,19 @@ ZICHTBAAR = set()
 
 ASSETS = ("/css/", "/js/", "/img/", "/fonts/", "/docs/", "/favicon")
 
+# Delen van de site die een ander script bouwt dan deze build. Links ernaar mogen blijven staan.
+# /blog/: node _werk/blog/bouw-blog.cjs (zie _werk/blog/LEESMIJ.md), sinds 30-09-2026 in het hoofdmenu.
+BUITEN_BUILD = ("/blog/",)
+
 
 def is_live(href):
     """True als een link naar href in deze build mag staan. Externe links, mailto, tel, ankers op de eigen
     pagina en bestanden: True. Een pagina: alleen als ze in deze build zit (een concept dat uit staat, of
-    een pagina die nog niet bestaat, geeft False)."""
+    een pagina die nog niet bestaat, geeft False), of als een ander script haar bouwt (BUITEN_BUILD)."""
     pad = (href or "").split("#")[0].split("?")[0]
     if not pad or not pad.startswith("/") or pad.startswith("//") or pad.startswith(ASSETS):
         return True
-    return pad in ZICHTBAAR
+    return pad in ZICHTBAAR or pad.startswith(BUITEN_BUILD)
 
 
 def _lijst_tekst(waarden):

@@ -3,6 +3,8 @@ import html as _html
 import re
 from pathlib import Path
 
+from kit import BUITEN_BUILD
+
 DASHES = ("\u2013", "\u2014")   # en-dash en em-dash, als escape zodat dit bestand zelf schoon blijft
 
 # Hele woorden of vaste woordgroepen, hoofdletterongevoelig. Controle op de zichtbare tekst.
@@ -151,6 +153,11 @@ def controleer(uitvoer, paginas, wortel, volledig=True, verborgen=()):
             doel = pad_deel or pad
             if doel in verborgen:
                 fouten.append(f"{naam}: link naar conceptpagina {href}, die staat nog uit (gebruik ctx.live of ctx.href)")
+                continue
+            if doel.startswith(BUITEN_BUILD):
+                # een ander script bouwt deze pagina (kit.BUITEN_BUILD); het bestand moet er dan wel staan
+                if not (wortel / doel.lstrip("/") / "index.html").exists():
+                    fouten.append(f"{naam}: link naar {href}, maar die pagina is nog niet gebouwd")
                 continue
             if doel not in bekende_paden:
                 if volledig:

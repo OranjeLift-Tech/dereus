@@ -1,6 +1,7 @@
 """Menu, topbalk, header, drawer, footer en mobiele belbalk. Eén bron voor alle pagina's.
 
-Hoofdmenu (besluit gebruiker): Diensten, Over ons, Werkwijze, Contact, plus de CTA-knop. Diensten staat
+Hoofdmenu (besluit gebruiker): Diensten, Over ons, Werkwijze, Blog, Contact, plus de CTA-knop. Blog sinds
+30-09-2026; die pagina's bouwt _werk/blog/bouw-blog.cjs, daarom staat /blog/ in kit.BUITEN_BUILD. Diensten staat
 sinds 28-09-2026 vooraan ("shift the navigation diensten to the left"). Kosten staat niet
 in het menu maar wel in de footer. Volgorde en labels komen uit website/content/gedeeld.md (#menu, de lijst
 van #footer); de standaard hieronder geldt als die ontbreken. Conceptpagina's (BOUWPLAN 12) verschijnen
@@ -38,6 +39,7 @@ MENU = [
     ("Diensten", "/diensten/"),
     ("Over ons", "/over-ons/"),
     ("Werkwijze", "/werkwijze/"),
+    ("Blog", "/blog/"),
     ("Contact", "/contact/"),
 ]
 # Standaard voor de footerkolom De Reus
