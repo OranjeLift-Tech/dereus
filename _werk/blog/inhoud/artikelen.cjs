@@ -11,6 +11,7 @@
 module.exports = [
   {
     slug: 'verhuisdozen-inpakken',
+    voorwerpen: { 'dichtplakken-en-opschrijven': { ding: 'tape', tekst: 'Tape over de naad, kamer op de zijkant' } },   // 01-10: één echt voorwerp op een goudgele schijf in plaats van een fotoplaat
     uitgelicht: true,
     titel: 'Verhuisdozen inpakken zoals een verhuizer het doet',
     kort: 'Zwaar onder, licht boven, en nooit een doos die u zelf niet kunt tillen. De vuistregels van onze verhuizers, plus een schatter voor het aantal dozen.',
@@ -37,6 +38,11 @@ ${h.stappen([
   ['Plak de bodem kruislings dicht', 'Eén strook tape in het midden is niet genoeg. Plak een kruis en daarna een strook langs beide randen, dan draagt de bodem ook de zware dozen.'],
   ['Zware spullen onderin', 'Boeken, borden en blikken gaan plat op de bodem. Zo ligt het gewicht laag en kantelt de doos niet in uw armen.'],
   ['Vul elk gat op', 'Een doos die rammelt, gaat kapot. Prop kranten, theedoeken of handdoeken in elke lege hoek.'],
+])}
+
+<h2>Dichtplakken en opschrijven</h2>
+<p>Een doos is pas klaar als hij plat sluit, als u hem zelf kunt tillen en als op de zijkant staat waar hij heen moet. Drie dingen die onze verhuizers bij elke doos doen.</p>
+${h.stappen([
   ['Niet boller dan de rand', 'De deksel moet plat sluiten. Een bolle doos kunt u niet stapelen en hij drukt de doos eronder in.'],
   ['Til hem op voor u hem dichtplakt', 'Kunt u hem niet makkelijk dragen, haal er dan iets uit. Wij tillen hem ook, maar uw rug telt mee als u zelf nog iets verplaatst.'],
   ['Schrijf op twee zijkanten', 'Tape over de naad, en daarna de kamer en de inhoud op twee zijkanten. Niet op de deksel: die ziet niemand meer als de dozen gestapeld staan.'],
@@ -46,6 +52,8 @@ ${h.tip('verhuizer', 'Twijfelt u of een doos te zwaar is? Til hem tot kniehoogte
 <h2>Breekbaar: vullen tot niets meer schuift</h2>
 <p>Borden zet u op hun kant, als in een afwasrek. Plat gestapeld drukken ze op elkaar en breekt de onderste bij de eerste drempel. Glazen gaan met de opening naar beneden, elk in een eigen vel papier.</p>
 ${h.fotomet('mok-inpakken', 'Handen pakken een mok in, in een doos vol opvulmateriaal', 'Elk kopje in een eigen vel, en de lege ruimte vol opvulmateriaal. Schud de doos zachtjes: hoort u iets, dan moet er meer in.', { etiket: 'Breekbaar &uarr;', label: 'Op de doos', tekst: '<p>Gebruik voor breekbare spullen de kleinere dozen en schrijf er in grote letters BREEKBAAR op, met een pijl naar boven. Dan weten de verhuizers dat die doos bovenop hoort, en niet onder een stapel boeken.</p>' })}
+
+<h2>Schud voor u dichtplakt</h2>
 ${h.citaat('Een doos die rammelt, is een doos die breekt. Schud elke doos met breekbare spullen even voor u hem dichtplakt.', 'De verhuizers van De Reus')}
 
 <h2>Etiketten die de verhuizers echt lezen</h2>
@@ -57,6 +65,8 @@ ${h.citaat('Een doos die rammelt, is een doos die breekt. Schud elke doos met br
   <li>een nummer, zodat u kunt nagaan of alles er is.</li>
 </ul>
 <p>Handig: geef elke kamer een eigen kleur tape. Plak een stukje van die kleur op de deur van de kamer in het nieuwe huis, dan hoeft niemand te zoeken.</p>
+
+<h2>De laatste check</h2>
 ${h.afvink('inpakken-laatste-check', 'Laatste check voor de verhuisdag', [
   'Alle dozen kruislings dichtgeplakt',
   'Kamer en inhoud op twee zijkanten geschreven',
@@ -73,6 +83,8 @@ ${h.afvink('inpakken-laatste-check', 'Laatste check voor de verhuisdag', [
 <h2>Hoeveel dozen heeft u nodig?</h2>
 <p>Een ruwe schatting: iemand alleen in een appartement komt uit op 25 tot 35 dozen, een gezin in een eengezinswoning op 60 tot 90. Vul hieronder uw eigen huis in voor een schatting op maat.</p>
 ${h.schatter()}
+
+<h2>Liever te veel dan te weinig</h2>
 <p>Neem liever een paar dozen te veel dan te weinig. Een halve kamer die op de verhuisdag nog ingepakt moet worden, kost meer tijd dan een lege doos.</p>
 ${h.aanbod({ titel: 'Liever laten inpakken?', tekst: 'U kunt alles zelf inpakken en ons alleen het zware werk laten doen, of wij pakken voor u in. En weer uit, als u dat wilt. U wijst aan wat mee moet, wij doen de rest.', knop: 'Offerte aanvragen' })}
 
@@ -87,6 +99,7 @@ ${h.vragen([
 
   {
     slug: 'verhuischecklist',
+    voorwerpen: { 'de-laatste-week': { ding: 'wekker', tekst: 'Nog zeven dagen' } },   // 01-10: één echt voorwerp op een goudgele schijf in plaats van een fotoplaat
     titel: 'Verhuischecklist: acht weken tot de sleutel',
     kort: 'Wat regelt u wanneer? Van huur opzeggen en adreswijzigingen tot de laatste meterstanden. Een planning die u gewoon kunt afvinken.',
     lead: 'De meeste verhuisstress komt van dingen die op het laatste moment opduiken. Met deze planning heeft u alles op tijd geregeld, week voor week.',
@@ -132,11 +145,17 @@ ${h.afvink('checklist-dag', 'De verhuisdag', [
   'Kinderen en huisdieren bij iemand onderbrengen',
   'Sleutels overdragen',
 ])}
-<p>Wat er op de verhuisdag zelf gebeurt, van aankomst tot uitladen en opbouwen, leest u op <a href="/werkwijze/">onze werkwijze</a>. Liever op papier? Print deze pagina: de navigatie en de knoppen vallen weg, alleen de lijsten blijven over.</p>`,
+
+<h2>Meer over de dag zelf</h2>
+<ul>
+<li><strong>Wat gebeurt er op de dag zelf?</strong> Van aankomst tot uitladen en opbouwen: u leest het op <a href="/werkwijze/">onze werkwijze</a>.</li>
+<li><strong>Liever op papier?</strong> Print deze pagina: de navigatie en de knoppen vallen weg, alleen de lijsten blijven over.</li>
+</ul>`,
   },
 
   {
     slug: 'wat-kost-een-verhuizing',
+    voorwerpen: { 'zo-bespaart-u-echt': { ding: 'dozen', tekst: 'Zelf inpakken, wij doen het zware werk' } },   // 01-10: één echt voorwerp op een goudgele schijf in plaats van een fotoplaat
     titel: 'Wat kost een verhuizing? Zo komt de prijs tot stand',
     kort: 'All-in of regieprijs, verhuislift of trap, wel of niet inpakken. Waar het bedrag uit bestaat en waar u zelf op kunt besparen.',
     lead: 'Een verhuizing kost geen vast bedrag, maar de opbouw is wel altijd hetzelfde. Kent u die, dan kunt u offertes vergelijken en ziet u waar u kunt besparen.',
@@ -177,11 +196,14 @@ ${h.tabel(['Woning', 'Waar de tijd in zit'], [
   <li><strong>Zorg dat de wagen voor de deur kan staan.</strong> Elke meter lopen kost tijd. Vraag op tijd een ontheffing aan.</li>
   <li><strong>Vergelijk offertes op wat erin staat.</strong> Een lage prijs zonder montage, verhuislift of parkeerplek wordt op de verhuisdag vaak alsnog duurder.</li>
 </ul>
+
+<h2>Meer over de prijsopbouw</h2>
 <p>Alles over de prijsopbouw, ook voor opslag, een verhuislift, montage en woningontruiming, leest u op <a href="/kosten/">wat kost een verhuisbedrijf</a>.</p>`,
   },
 
   {
     slug: 'verhuizen-met-kinderen',
+    voorwerpen: { 'laat-ze-zelf-een-doos-inpakken': { ding: 'doos', tekst: 'Als laatste erin, als eerste eruit' } },   // 01-10: één echt voorwerp op een goudgele schijf in plaats van een fotoplaat
     titel: 'Verhuizen met kinderen: zo blijft het rustig in huis',
     kort: 'Kinderen merken alles van een verhuizing. Met een paar vaste afspraken voelen ze zich sneller thuis in het nieuwe huis.',
     lead: 'Voor kinderen is een verhuizing groot nieuws, ook als ze er blij mee zijn. Een beetje voorbereiding scheelt veel tranen, bij hen en bij u.',
@@ -207,11 +229,22 @@ ${h.tip('verhuizer', 'Laat u ons de meubels weer opbouwen? Begin dan met de kind
 </ul>
 
 <h2>De eerste weken</h2>
-<p>Richt de kinderkamer zoveel mogelijk in zoals de oude. Nieuw mag later. Loop samen een rondje door de buurt: waar is de speeltuin, waar is de school, waar is de bakker?</p>`,
+<p>Het huis staat nog vol dozen, maar voor kinderen begint het nieuwe thuis bij hun eigen kamer. Een beetje houvast in de eerste weken maakt het verschil.</p>
+${h.stappen([
+  ['De kinderkamer eerst', 'Richt de kamer zoveel mogelijk in zoals de oude: het bed op dezelfde plek, dezelfde lamp, dezelfde knuffels op het kussen. Nieuw mag later.'],
+  ['Een rondje door de buurt', 'Loop samen naar de speeltuin, de school en de bakker. Zo wordt de nieuwe straat snel vertrouwd, en weet uw kind de weg voor de eerste schooldag.'],
+  ['Het oude ritme terug', 'Dezelfde etenstijd, dezelfde bedtijd, hetzelfde voorleesboek. Hoe gewoner de dagen, hoe sneller het huis als thuis voelt.'],
+])}
+
+<h2>Wennen aan het nieuwe huis</h2>
+<p>En afscheid nemen mag. Een kaartje naar de oude buren of een foto van het oude huis aan de muur: heimwee hoort erbij, en gaat vanzelf over.</p>
+${h.tip('adviseur', 'Verhuist u met schoolgaande kinderen? Plan de verhuisdag als het kan net voor een weekend of in een vakantie. Dan heeft uw kind een paar dagen om te wennen voordat de nieuwe school of opvang begint.')}
+<p>Wilt u ook de dag zelf goed voorbereiden? Alles wat u vooraf kunt regelen staat in onze <a href="/blog/verhuischecklist/">verhuischecklist</a>.</p>`,
   },
 
   {
     slug: 'verhuizen-met-huisdieren',
+    voorwerpen: { 'in-het-nieuwe-huis': { ding: 'hond', tekst: 'Eerst wennen, dan verkennen' } },   // 01-10: één echt voorwerp op een goudgele schijf in plaats van een fotoplaat
     titel: 'Verhuizen met uw hond of kat zonder gedoe',
     kort: 'Een open voordeur, vreemde mensen en overal dozen. Zo houdt u uw huisdier rustig en veilig op de verhuisdag.',
     lead: 'Voor een hond of kat is de verhuisdag vooral onrustig: open deuren, zware stappen en een huis dat leeg raakt. Met deze tips blijft uw dier kalm.',
@@ -267,6 +300,7 @@ ${h.tip('verhuizer', 'Onze regel: moet een meubel drie keer gedraaid worden, dan
 
   {
     slug: 'kantoorverhuizing-zonder-stilstand',
+    voorwerpen: { 'archief-en-opslag': { ding: 'dozen', tekst: 'Verhuizing en opslag in één offerte' } },   // 01-10: één echt voorwerp op een goudgele schijf in plaats van een fotoplaat
     titel: 'Kantoorverhuizing: zo ligt uw bedrijf geen dag stil',
     kort: 'Vrijdag de deur dicht, maandag gewoon aan het werk. Zo plant u een kantoorverhuizing zonder dat er een dag werk verloren gaat.',
     lead: 'Een kantoor verhuizen is vooral plannen. Als iedereen weet wat er van hem verwacht wordt, staat maandagochtend elke computer weer aan.',
@@ -296,6 +330,7 @@ ${h.tip('adviseur', 'Laat elke medewerker één doos inpakken met een label met 
 
   {
     slug: 'opslag-tijdens-verbouwing',
+    voorwerpen: { 'wat-kost-het': { ding: 'munten', tekst: 'Alles in één offerte' } },   // 01-10: één echt voorwerp op een goudgele schijf in plaats van een fotoplaat
     titel: 'Tijdelijk opslaan tijdens een verbouwing: zo werkt het',
     kort: 'Een nieuwe keuken, een nieuwe vloer of een huis dat nog niet klaar is. Zo slaat u uw spullen een paar weken of maanden op.',
     lead: 'Tussen twee huizen in, of midden in een verbouwing: soms moeten uw spullen even ergens anders staan. Zo gaat opslag bij De Reus.',
@@ -337,6 +372,7 @@ ${h.tip('inpakker', 'Maak een lijst van wat in welke doos zit, en neem er een fo
 
   {
     slug: 'breekbaar-inpakken',
+    voorwerpen: { 'opvullen-en-markeren': { ding: 'tape', tekst: 'Breekbaar, pijl naar boven' } },   // 01-10: één echt voorwerp op een goudgele schijf in plaats van een fotoplaat
     titel: 'Servies, glas en spiegels: breekbaar inpakken in vijf stappen',
     kort: 'Borden op hun kant, glazen met de opening naar beneden en spiegels tussen twee platen karton. Zo komt alles heel aan.',
     lead: 'Er gaat bij een verhuizing zelden veel kapot, maar als het gebeurt, is het bijna altijd servies of glas. Met deze vijf stappen voorkomt u dat.',
@@ -351,6 +387,10 @@ ${h.stappen([
   ['Een laag proppen op de bodem', 'Zo staat niets direct op het karton, en vangt de bodem de klappen op.'],
   ['Borden op hun kant', 'Elk bord in een vel papier, rechtop naast elkaar, als in een afwasrek.'],
   ['Glazen ondersteboven', 'Met de opening naar beneden, elk in een eigen vel. Stop ook papier in het glas.'],
+])}
+
+<h2>Opvullen en markeren</h2>
+${h.stappen([
   ['Opvullen tot niets meer schuift', 'Schud zachtjes aan de doos. Hoort u iets, dan moet er meer papier in.'],
   ['Markeren', 'BREEKBAAR in grote letters, een pijl naar boven, en nooit iets zwaars bovenop.'],
 ])}

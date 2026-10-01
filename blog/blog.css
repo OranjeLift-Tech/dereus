@@ -887,3 +887,266 @@ body.p-blog{background:var(--white)}   /* de site zet Mist op body; de blog wiss
   .artikel[data-slug="kantoorverhuizing-zonder-stilstand"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li:nth-child(odd){padding-left:0;border-left:0}
   .artikel[data-slug="kantoorverhuizing-zonder-stilstand"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen li:nth-child(n+3){padding-top:var(--tussen);border-top:1px solid var(--primary-200)}
 }
+
+/* 01-10, artikel Verhuischecklist: (1) de eigen afdruk in deel 01 een tik lager, de uitstapper hing los boven de kop en
+   oogde als losse stukken; (2) de tip in deel 02 dichter onder de afvinklijst met een kleinere uitsnede, zodat lijst en
+   tip samen in één schermhoogte passen; (3) het aanbodpaneel in deel 04 dichter onder de tekst (6rem -> 3.6rem), zelfde reden. */
+@media (min-width:900px){
+  .artikel[data-slug="verhuischecklist"] .arttop__pop{margin-top:7rem}
+  .artikel[data-slug="verhuischecklist"] .artsectie .tekst>.afvink+.tip{margin:3.4rem 0 2rem}
+  .p-blog .artikel[data-slug="verhuischecklist"] .tekst .tip__foto{width:12.5rem}
+  .artikel[data-slug="verhuischecklist"] .tekst .aanbod{margin-top:3.6rem}
+}
+
+/* 01-10, artikel Verhuischecklist deel 02 (Vier weken van tevoren): kop, afvinklijst en tip pasten niet in één
+   schermhoogte (1536x730: 723 px van label tot onderkant tip, de tip liep onder het scherm door). De eerdere regel
+   .afvink+.tip (3.4rem) verloor van de :has-regel erboven (4.5rem) en deed niets. Nu: compactere lijstrijen, kleinere
+   rij-afstand en de tip dichter onder de lijst. Alleen dit artikel, alleen de band met lijst + tip, alleen desktop. */
+@media (min-width:900px){
+  .artikel[data-slug="verhuischecklist"] .artsectie .tekst:has(>.arttop+.afvink+.tip){row-gap:1rem}
+  .artikel[data-slug="verhuischecklist"] .artsectie .tekst:has(>.arttop+.afvink+.tip)>.afvink{padding:1.1rem 1.4rem 1rem}
+  .artikel[data-slug="verhuischecklist"] .artsectie .tekst:has(>.arttop+.afvink+.tip)>.afvink .afvink__kop{margin-bottom:.5rem}
+  .artikel[data-slug="verhuischecklist"] .artsectie .tekst:has(>.arttop+.afvink+.tip)>.afvink label{padding:.45rem 0}
+  .artikel[data-slug="verhuischecklist"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink)>.tip{margin-top:2.25rem;padding-block:1.3rem}
+}
+
+/* 01-10, artikel Verhuizen met kinderen, deel 02: de tip hing 7rem onder het citaat en viel bij 100 % buiten het scherm;
+   nu dichter onder citaat en fotoplaat, met een kleinere uitsnede, zodat kop, citaat en tip samen in beeld staan. */
+@media (min-width:900px){
+  .artikel[data-slug="verhuizen-met-kinderen"] .artsectie:has(.tekst>.tip) .arttop__foto{margin-bottom:3.6rem}
+  .artikel[data-slug="verhuizen-met-kinderen"] .artsectie .tekst>.tip{margin-top:3.6rem}
+  .p-blog .artikel[data-slug="verhuizen-met-kinderen"] .tekst .tip__foto{width:12.5rem}
+}
+
+/* 01-10, artikel Verhuisdozen inpakken: (1) deel 01: de eigen afdruk kleiner en de tabelrij er direct onder, zodat kop,
+   tekst en tabel bij 100 % op één scherm staan; (2) deel 02 "Zwaar onder, licht boven": de losse dozenuitsnede op de
+   goudgele schijf naast de kop is weg (oogde amateuristisch, zie ook verhuischecklist deel 02); de fotoplaat hangt nu
+   naast kop + intro en het stappenpaneel loopt eronder over de volle breedte in drie kolommen; de tip dichter eronder. */
+@media (min-width:900px){
+  .artikel[data-slug="verhuisdozen-inpakken"] .arttop__pop{width:36%;margin-top:1.4rem;margin-bottom:1rem}
+  .artikel[data-slug="verhuisdozen-inpakken"] .tabelrij{margin-top:.6rem}
+  .artikel[data-slug="verhuisdozen-inpakken"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen) .artding{display:none}
+  .artikel[data-slug="verhuisdozen-inpakken"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen) .artkop{grid-row:1;align-self:center;margin-bottom:0}
+  .artikel[data-slug="verhuisdozen-inpakken"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen) .arttop__foto{grid-column:2;grid-row:1;align-self:center;margin:1rem 24px 1.2rem 0}
+  .artikel[data-slug="verhuisdozen-inpakken"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen{grid-column:1 / -1;grid-row:2;margin-top:1rem}
+  .artikel[data-slug="verhuisdozen-inpakken"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen+.tip{margin-top:4rem}
+  .p-blog .artikel[data-slug="verhuisdozen-inpakken"] .tekst .tip__foto{width:12.5rem}
+}
+
+/* 01-10, ALLE artikelen: elk deel moet bij het scrollen als één blok in beeld staan (kop, panelen, tip of aanbod samen),
+   dus geen marges van 6-9rem meer tussen de panelen en de tip of het aanbodpaneel. Dit blok vervangt de losse regels
+   hierboven voor verhuischecklist, verhuizen-met-kinderen en verhuisdozen-inpakken (die blijven staan, dit wint door
+   volgorde en specificiteit). De uitsnede in de tip is kleiner, zodat het hoofd niet 5rem boven de plaat uitsteekt. */
+@media (min-width:900px){
+  .p-blog .artikel .artsectie .tekst>.tip,
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen+.tip,
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen)>.tip,
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink)>.tip{margin-top:3.6rem;margin-bottom:2rem}
+  .p-blog .artikel .artsectie:has(.tekst>.tip) .arttop__foto{margin-bottom:3.6rem}
+  .p-blog .artikel .tekst .tip__foto{width:12.5rem}
+  .p-blog .artikel .tekst .aanbod{margin-top:3.6rem}
+  .p-blog .artikel .tabelrij{margin-top:.6rem}
+  .p-blog .artikel .artsectie .tekst>.stappen+*{margin-top:2rem}
+  .p-blog .artikel .artsectie .tekst>.stappen+.tip{margin-top:3.6rem}
+}
+
+/* 01-10, ALLE artikelen, ronde 2 ("her bölümü bir kerede görebileyim"): elk deel moet bij 100 % op een laptopscherm
+   (1536x~730) in één keer te zien zijn. Gemeten voor deze ronde: delen van 440 tot 1540 px. Daarom overal compacter:
+   minder bandvulling, kleinere kop en intro, kleinere fotoplaat, krappere panelen (afvink, stappen, punten, tabel, citaat,
+   tip, aanbod) en korte marges ertussen. Alleen desktop; mobiel blijft zoals het was. */
+@media (min-width:900px){
+  .p-blog .artikel .artsectie{padding-block:2.5rem}
+  .p-blog .artikel .artsectie.sectie--blauw{padding-block:calc(var(--dak) + 2.25rem) 2.5rem}
+  .p-blog .artikel .artsectie--eerste{padding-top:4rem}
+  .p-blog .artikel .artkop .label{margin-bottom:.45rem}
+  .p-blog .artikel .artkop h2{font-size:clamp(1.9rem,1.4rem + 1.4vw,2.45rem)}
+  .p-blog .artikel .artkop .intro{margin-top:.7rem;font-size:1.06rem;line-height:1.55}
+  .p-blog .artikel .artsectie--eerste .artkop .intro{font-size:1.12rem}
+  .p-blog .artikel .arttop{margin-bottom:1rem}
+  .p-blog .artikel .arttop__foto{width:30%}
+  .p-blog .artikel .arttop__pop{width:34%}
+  .p-blog .artikel .artsectie .tekst>p{margin-bottom:.9em;font-size:1.02rem;line-height:1.55}
+  .p-blog .artikel .tekst .afvink{margin:1rem 0 1.4rem;padding:1rem 1.3rem .9rem}
+  .p-blog .artikel .afvink__kop{margin-bottom:.4rem}
+  .p-blog .artikel .afvink__kop b{font-size:1.15rem}
+  .p-blog .artikel .afvink label{padding:.38rem 0;font-size:.96rem;line-height:1.4}
+  .p-blog .artikel .tekst .stappen{margin:0 0 1.4rem;padding:1.2rem 1.4rem;gap:.9rem var(--tussen)}
+  .p-blog .artikel .tekst .stappen li::before{width:2.4rem;height:2.4rem;font-size:1.25rem;margin-bottom:.5rem;border-radius:10px}
+  .p-blog .artikel .tekst .stappen b{min-height:0;margin-bottom:.3rem;font-size:1.04rem}
+  .p-blog .artikel .tekst .stappen li div{font-size:.92rem;line-height:1.45}
+  .p-blog .artikel .tekst .punten{margin-bottom:1.4rem;padding:1.1rem 1.4rem;gap:.8rem 1.4rem}
+  .p-blog .artikel .tekst .punten p{font-size:.98rem}
+  .p-blog .artikel .tabel th{padding:.6rem .9rem}
+  .p-blog .artikel .tabel td{padding:.55rem .9rem;font-size:.95rem}
+  .p-blog .artikel .tabelrij{margin:.4rem 0 1.4rem}
+  .p-blog .artikel .tabelkader{padding:1.2rem 1.4rem 1.3rem}
+  .p-blog .artikel .tekst .citaat{margin:1.2rem 0 1.4rem;padding:1.3rem 1.6rem 1.3rem 5rem}
+  .p-blog .artikel .tekst .citaat p{font-size:clamp(1.25rem,1rem + 1vw,1.7rem)}
+  .p-blog .artikel .tekst .citaat::before{font-size:5rem;top:.3rem}
+  .p-blog .artikel .artsectie .tekst>.tip,
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.stappen)>.stappen+.tip,
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen)>.tip,
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink)>.tip,
+  .p-blog .artikel .artsectie .tekst>.stappen+.tip{margin-top:2.2rem;margin-bottom:0;padding:1.1rem 1.6rem 1.1rem 0;grid-template-columns:12rem minmax(0,1fr)}
+  .p-blog .artikel .artsectie .tekst>:last-child{margin-bottom:0}
+  .p-blog .artikel .tekst .tip p{font-size:1rem;line-height:1.5}
+  .p-blog .artikel .tekst .tip__foto{width:10.5rem}
+  .p-blog .artikel .artsectie:has(.tekst>.tip) .arttop__foto{margin-bottom:2.2rem}
+  .p-blog .artikel .tekst .aanbod{margin-top:2.6rem;padding:1.3rem 1.8rem 1.3rem 1.4rem;gap:1.6rem}
+  .p-blog .artikel .aanbod .pop{max-width:14rem;margin-top:-1.8rem}
+  .p-blog .artikel .aanbod h3{font-size:clamp(1.4rem,1.2rem + .8vw,1.8rem);margin-bottom:.35rem}
+  .p-blog .artikel .tekst .aanbod p{font-size:.95rem;line-height:1.5;margin-bottom:.8rem}
+  .p-blog .artikel .artsectie .tekst>.stappen+*{margin-top:1.4rem}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.afvink),
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__pop):has(>.arttop+.stappen){row-gap:1rem}
+}
+
+/* 01-10-2026: losse alinea's in het artikel = eigen plaat (.alinea): gouden label, het voorwerp van het onderwerp op een
+   goudgele schijf links (steekt boven de plaat uit), tekst rechts, dunne gouden binnenlijn. Grid = eigen BFC, dus naast een
+   zwevende fotoplaat wordt de plaat smaller in plaats van eronder door te lopen. */
+.tekst .alinea{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:1.2rem;margin:1.5rem 0 2rem;padding:clamp(1.4rem,2.4vw,2.1rem) clamp(1.4rem,2.6vw,2.4rem);border-radius:24px;background:var(--white);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+.tekst .alinea::before{content:"";position:absolute;inset:10px;border:1px solid var(--b-geel-600);border-radius:16px;opacity:.55;pointer-events:none}
+.sectie--wit .tekst .alinea{background:var(--b-lucht)}
+.alinea__podium{position:relative;display:flex;justify-content:center;align-items:flex-end;height:6.4rem}
+.alinea__schijf{position:absolute;left:50%;bottom:0;translate:-50% 0;width:7.6rem;height:2rem;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,var(--b-geel-200),var(--b-geel) 62%);box-shadow:0 6px 0 var(--b-geel-700),0 18px 18px -8px rgb(8 18 42 / .35)}
+.p-blog .alinea__ding{position:relative;z-index:1;width:auto;max-width:8.5rem;height:calc(var(--h,4.5rem) * 1.25);margin-bottom:.55rem;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 12px 10px rgb(8 18 42 / .4))}
+.alinea__tekst{position:relative;min-width:0}
+.tekst .alinea .alinea__label{display:inline-flex;align-items:center;gap:.5rem;margin:0 0 .55rem;font:800 .78rem/1.2 var(--b-kop);letter-spacing:.14em;text-transform:uppercase;color:var(--b-blauw)}
+.tekst .alinea .alinea__label::before{content:"";width:1.6rem;height:4px;border-radius:2px;background:var(--b-geel);box-shadow:1px 1px 0 var(--b-geel-700)}
+.tekst .alinea p{max-width:none;margin:0 0 1em;font-size:1.08rem;line-height:1.65;color:var(--b-inkt)}
+.tekst .alinea p:last-child{margin-bottom:0}
+.tekst .alinea p:not(.alinea__label)::first-line{font-weight:700;color:var(--b-diep)}
+.artsectie.sectie--blauw .tekst .alinea{box-shadow:var(--zij-geel),0 40px 60px -28px rgb(0 0 0 / .55)}
+.artsectie.sectie--blauw .tekst .alinea p{color:var(--b-inkt)}
+.p-blog .artsectie.sectie--blauw .tekst .alinea a:not(.knop){color:var(--b-blauw)}
+.tekst .alinea+.aanbod{margin-top:8.5rem}
+@media (min-width:700px){
+  .tekst .alinea{grid-template-columns:8.5rem minmax(0,1fr);gap:clamp(1.2rem,2.5vw,2rem);align-items:center;margin-top:3rem}
+  .alinea__podium{height:auto;align-self:stretch;margin-top:-3.2rem;margin-bottom:-.2rem}
+  .p-blog .alinea__ding{height:calc(var(--h,4.5rem) * 1.45);max-width:9.5rem}
+}
+
+/* 01-10, artikel Verhuisdozen inpakken, deel 03 (Breekbaar): de intro is drie regels, de fotoplaat rechts is 110 px
+   hoger, en de fotorij (mok + vak) moest onder de zwevende plaat beginnen. Dus stond er 180 px niets onder de intro.
+   Nu, zoals bij kop + stappenpaneel: de tekst wordt een raster, kop + intro links boven, de fotorij links eronder,
+   de plaat rechts over beide rijen. De rest (citaat) loopt weer over de volle breedte. */
+@media (min-width:900px){
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.fotorij){display:grid;grid-template-columns:minmax(0,1fr) 34%;column-gap:clamp(1.5rem,3vw,2.5rem);align-items:start}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.fotorij)>.arttop{display:contents}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.fotorij) .artkop{grid-column:1;grid-row:1;margin-bottom:0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.fotorij) .arttop__foto{grid-column:2;grid-row:1 / 3;align-self:start;float:none;width:auto;margin:2.2rem 24px 0 0}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.fotorij)>.fotorij{grid-column:1;grid-row:2;clear:none;margin:1.6rem 0 0;grid-template-columns:minmax(0,40%) minmax(0,1fr);column-gap:clamp(1.2rem,2.5vw,2rem)}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.fotorij)>:not(.arttop,.fotorij){grid-column:1 / -1}
+  .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.fotorij)>.fotorij+*{margin-top:2.4rem}
+}
+.p-blog .tekst .alinea .alinea__label::before{content:"";display:block;width:1.6rem;height:4px;border-radius:2px;background:var(--b-geel);box-shadow:1px 1px 0 var(--b-geel-700)}
+
+/* 01-10, artikel Wat kost een verhuizing, deel 02 (All-in prijs of regieprijs?): de fotoplaat rechts een tik lager,
+   zodat hij niet meer boven de kop begint maar op gelijke hoogte met de tabel hangt. */
+@media (min-width:900px){
+  .artikel[data-slug="wat-kost-een-verhuizing"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.tabelvak) .arttop__foto{margin-top:9.5rem}   /* was 6.9rem (regel zonder intro) */
+}
+
+/* 01-10, echte voorwerpen in plaats van een fotoplaat ("te veel foto's"): in één band per artikel staat rechts geen foto
+   maar een echt voorwerp uit blog/img/voorwerp, groot op een dikke goudgele schijf, naar de kanaalkaarten van /contact/
+   (variant Gele schijf): het voorwerp staat scherp vóór de schijf, steekt er bovenuit en werpt een slagschaduw; eronder
+   een korte pil. De figuur deelt de klasse .arttop__foto (a.voorwerpen in artikelen.cjs, voorwerpFiguur in bouw-blog.cjs),
+   dus alle zweef- en roosterregels van de fotoplaat gelden ook hier; alleen het gele blok en het onderschrift óp de foto niet. */
+.arttop__foto.arttop__voorwerp::before{content:none}
+.voorwerp{position:relative;container-type:inline-size;aspect-ratio:10 / 9;isolation:isolate}   /* schijf tot 83cqw, voorwerp tot ~89cqw: geen lege lucht erboven */
+.voorwerp__schijf{position:absolute;z-index:0;left:50%;bottom:5cqw;translate:-50% 0;width:78cqw;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(70% 70% at 38% 30%,#FFE08A,var(--b-geel) 62%,#F2B800);
+  box-shadow:0 9px 0 var(--b-geel-700),0 10px 0 rgb(8 18 42 / .16),0 30px 34px -14px rgb(8 18 42 / .38)}
+.p-blog .voorwerp__ding{position:absolute;z-index:1;left:50%;bottom:15cqw;translate:-50% 0;width:auto;max-width:92cqw;height:var(--h,70cqw);object-fit:contain;object-position:50% 100%;
+  filter:saturate(1.08) contrast(1.05) drop-shadow(0 18px 14px rgb(8 18 42 / .42)) drop-shadow(0 4px 4px rgb(8 18 42 / .25))}
+.arttop__foto.arttop__voorwerp figcaption{position:static;display:table;margin:.4rem auto 0;padding:.6rem .95rem;border-radius:10px;background:var(--b-diep);color:var(--white);font:700 .78rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;text-align:center;backdrop-filter:none;box-shadow:0 4px 0 rgb(0 0 0 / .22)}
+.artsectie.sectie--blauw .voorwerp__schijf{box-shadow:0 9px 0 var(--b-geel-700),0 34px 44px -18px rgb(0 0 0 / .55)}
+.artsectie.sectie--blauw .arttop__foto.arttop__voorwerp figcaption{background:var(--white);color:var(--b-diep);box-shadow:0 4px 0 rgb(0 0 0 / .3)}
+@media (max-width:899px){.arttop__foto.arttop__voorwerp{max-width:20rem;margin-top:2.5rem}}
+
+/* 01-10, artikel Verhuizen met kinderen, deel 02 en 05 (fotoplaat + kop + intro + tip): de tip moest met clear:both
+   onder de zwevende plaat wachten, dus stond er ~205 px niets tussen de intro en de tip. Nu, net als naast een
+   afvinklijst: kop + intro links boven, de tip links eronder, de plaat rechts over beide rijen (verticaal gecentreerd).
+   De rest (alinea, aanbod) loopt weer over de volle breedte. */
+@media (min-width:900px){
+  .p-blog .artikel[data-slug="verhuizen-met-kinderen"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.tip){display:grid;grid-template-columns:minmax(0,1fr) 30%;column-gap:clamp(1.5rem,3vw,2.5rem);row-gap:1.4rem;align-items:center}
+  .p-blog .artikel[data-slug="verhuizen-met-kinderen"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.tip)>.arttop{display:contents}
+  .p-blog .artikel[data-slug="verhuizen-met-kinderen"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.tip) .artkop{grid-column:1;grid-row:1;align-self:end;margin-bottom:0}
+  .p-blog .artikel[data-slug="verhuizen-met-kinderen"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.tip)>.tip{grid-column:1;grid-row:2;clear:none;margin-top:.6rem;margin-bottom:0}
+  .p-blog .artikel[data-slug="verhuizen-met-kinderen"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.tip) .arttop__foto{grid-column:2;grid-row:1 / 3;align-self:center;float:none;width:auto;margin:0 24px 0 0}
+  .p-blog .artikel[data-slug="verhuizen-met-kinderen"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.tip)>:not(.arttop,.tip){grid-column:1 / -1}
+  .p-blog .artikel[data-slug="verhuizen-met-kinderen"] .artsectie .tekst:has(>.arttop>.arttop__foto):has(>.arttop+.tip)>.tip+.alinea{margin-top:2rem}
+}
+
+/* 01-10-2026: fotorij-vak op de blauwe band. De band zet alle tekst wit, maar de plaat "Op de doos" is wit:
+   tekst Inkt, label Bresserblauw, diepe val zoals de andere platen op blauw. */
+.artsectie.sectie--blauw .tekst .fotorij__vak{box-shadow:var(--zij-geel),0 40px 60px -28px rgb(0 0 0 / .55)}
+.artsectie.sectie--blauw .tekst .fotorij__vak p{color:var(--b-inkt)}
+.artsectie.sectie--blauw .tekst .fotorij__vak .fotorij__label{color:var(--b-blauw)}
+.p-blog .artsectie.sectie--blauw .tekst .fotorij__vak a:not(.knop){color:var(--b-blauw)}
+
+/* 01-10, artikel Verhuisdozen inpakken, deel 05 (Schud voor u dichtplakt: kop + citaat naast de fotoplaat, geen intro):
+   de plaat hing 6.9rem lager dan de kop, dus links stond 140 px niets onder het citaat. Nu hangt de plaat 2rem onder de
+   bandrand en beginnen kop + citaat 2.9rem lager, zodat ze verticaal in het midden naast de plaat staan. */
+@media (min-width:900px){
+  .p-blog .artikel[data-slug="verhuisdozen-inpakken"] .artsectie .tekst:has(>.arttop+.citaat):not(:has(.intro)) .arttop__foto{margin-top:2rem}
+  .p-blog .artikel[data-slug="verhuisdozen-inpakken"] .artsectie .tekst:has(>.arttop+.citaat):not(:has(.intro)) .artkop{padding-top:2.9rem}
+}
+
+/* 01-10, artikel Verhuisdozen inpakken, deel 03 (Dichtplakken en opschrijven: kop + stappen naast het tape-voorwerp):
+   de slug-regel voor deel 02 (plaat naast kop + intro, stappen vol-breed eronder) ving ook deze band, maar hier stond
+   links alleen een kop naast een voorwerp van 390 px, dus de band oogde leeg. Nu: kop + intro links boven, de drie stappen
+   onder elkaar als rijen (cijfertegel links, tekst rechts) in dezelfde linkerkolom, en het voorwerp rechts over beide rijen
+   in het midden. De tip loopt eronder over de volle breedte. Geldt voor elke band met voorwerp + stappenpaneel. */
+@media (min-width:900px){
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen){grid-template-columns:minmax(0,1fr) 32%;column-gap:clamp(2rem,4vw,3.5rem);row-gap:1.4rem;align-items:center}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen) .artkop{grid-column:1;grid-row:1;align-self:end;margin:0;padding:0}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen) .arttop__foto{grid-column:2;grid-row:1 / 3;align-self:center;float:none;width:auto;margin:0 24px 0 0}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen)>.stappen{grid-column:1;grid-row:2;align-self:start;display:grid;grid-template-columns:minmax(0,1fr);gap:0;margin:0;padding:.4rem 1.5rem}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen)>.stappen li{display:grid;grid-template-columns:2.6rem minmax(0,1fr);column-gap:1rem;align-items:start;flex:none;max-width:none;padding:.95rem 0;border-left:0;border-top:1px solid var(--primary-200)}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen)>.stappen li:first-child{border-top:0}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen)>.stappen li::before{width:2.6rem;height:2.6rem;margin:.1rem 0 0;font-size:1.3rem}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen)>.stappen b{display:block;min-height:0;margin:0 0 .25rem;font-size:1.08rem;line-height:1.25}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen)>.stappen li div{font-size:.95rem;line-height:1.5}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen)>:not(.arttop,.stappen){grid-column:1 / -1}
+  .p-blog .artikel .artsectie .tekst:has(>.arttop>.arttop__foto.arttop__voorwerp):has(>.arttop+.stappen)>.stappen+.tip{margin-top:3.2rem}
+}
+
+/* ===== 01-10, blok voor blok: elk blok vult het scherm (tugce-2f) =====
+   De klant wil de site blok voor blok: één band = één scherm (1536x730, vaste header 72px).
+   Alleen op desktop; de inhoud hangt verticaal in het midden van de band. Hoge banden blijven hoger. */
+@media (min-width:900px) and (min-height:600px){
+  .p-blog{--scherm:min(calc(100svh - 72px),920px)}
+  .p-blog .pk{min-height:min(100svh,990px)}
+  .p-blog .artikel .artsectie,
+  .p-blog .artikel .b-vragen,
+  .p-blog .artvoet,
+  .p-blog .gerelateerd,
+  .p-blog .onderwerpen,
+  .p-blog .uitgelicht,
+  .p-blog .artikelen,
+  .p-blog .leesband,
+  .p-blog .b-offertepil{box-sizing:border-box;min-height:var(--scherm);display:flex;flex-direction:column;justify-content:center}
+  .p-blog .artikel .artsectie>.wrap,
+  .p-blog .artikel .b-vragen>.wrap,
+  .p-blog .artvoet>.wrap,
+  .p-blog .gerelateerd>.wrap,
+  .p-blog .onderwerpen>.wrap,
+  .p-blog .uitgelicht>.wrap,
+  .p-blog .artikelen>.wrap,
+  .p-blog .leesband>.wrap,
+  .p-blog .b-offertepil>.wrap{width:100%}
+}
+
+/* 01-10, artikel Een bank de trap af, deel 01 (Meten voor u tilt): de eigen afdruk rechts "een tik lager", zodat hij
+   niet op de hoogte van het label begint maar in het midden naast kop + alineaplaat hangt. */
+@media (min-width:900px){
+  .p-blog .artikel[data-slug="bank-de-trap-af"] .artsectie--eerste .arttop__pop{margin-top:6.4rem}
+}
+
+/* 01-10, slotband (.artvoet, auteurblok): het blok "blok voor blok" hierboven gaf ook deze band een minimale hoogte van
+   één scherm, dus stond er ~195 px niets boven en onder de auteursplaat. De auteursplaat is een afsluiting, geen inhoudsblok;
+   de band is nu zo hoog als de plaat plus 4rem bandvulling. */
+@media (min-width:900px) and (min-height:600px){
+  .p-blog .artvoet{min-height:0;padding-block:4rem}
+}

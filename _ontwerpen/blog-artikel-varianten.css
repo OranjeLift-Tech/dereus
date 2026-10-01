@@ -1,0 +1,482 @@
+/* =====================================================================
+   Ontwerpvarianten voor het lichaam van een blogartikel (01-10-2026).
+   Laadt na site.min.css, kop.min.css, offertepil.min.css en blog/blog.css.
+   De secties heten hier .vsectie/.vtop/.vkop/.vfoto/.vpop/.vtekst, zodat het blok
+   ARTIKELLICHAAM uit blog.css er niet op werkt; de bouwstenen (.stappen, .tip,
+   .citaat, .punten, .alinea, .aanbod, .pop, .fotopop, .voorwerp) komen wel uit blog.css.
+   Per ontwerp staan de regels onder [data-o="NN"].
+   ===================================================================== */
+
+/* ---------- de pagina zelf ---------- */
+.index{padding:3.5rem 0 2.2rem;background:var(--b-diep);color:#fff}
+.index .label{color:var(--b-geel)}
+.index h1{margin:0 0 .6rem;font-size:clamp(2rem,1.6rem + 1.5vw,3rem);line-height:1.05;color:#fff}
+.index__uitleg{max-width:64ch;margin:0 0 1.5rem;color:rgb(255 255 255 / .8)}
+.index__lijst{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0;list-style:none}
+.p-blog .index__lijst a{display:inline-flex;align-items:center;gap:.5rem;min-height:40px;padding:.3rem .95rem .3rem .4rem;border-radius:999px;background:#fff;color:var(--b-diep);font-weight:700;font-size:.9rem;text-decoration:none;box-shadow:0 3px 0 var(--b-geel-700)}
+.index__lijst b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--b-geel);font-size:.78rem}
+.ontwerp__kop{position:sticky;top:0;z-index:30;background:var(--b-inkt);color:#fff;box-shadow:0 6px 20px -8px rgb(0 0 0 / .5)}
+.ontwerp__kop .wrap{display:flex;align-items:center;gap:1.2rem;padding-block:.7rem}
+.ontwerp__nr{display:grid;place-items:center;flex:none;width:3rem;height:3rem;border-radius:50%;background:var(--b-geel);color:var(--b-diep);font:800 1.3rem/1 var(--b-kop);box-shadow:0 3px 0 var(--b-geel-700)}
+.p-blog .ontwerp__naam{margin:0;font-size:1.3rem;line-height:1.1;color:#fff}
+.ontwerp__kop p{margin:.15rem 0 0;max-width:100ch;font-size:.85rem;line-height:1.35;color:rgb(255 255 255 / .75)}
+.p-blog .ontwerp__terug{margin-left:auto;flex:none;color:var(--b-geel);font-size:.85rem;font-weight:700}
+
+/* ---------- gedeelde basis van de delen ---------- */
+.vartikel{counter-reset:deel}
+.vsectie{--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:#fff;
+  --cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-diep);--pil-kl:#fff;
+  position:relative;counter-increment:deel;padding-block:3rem;color:var(--tekst)}
+.vsectie--wit{background:#fff;--plaat:var(--b-lucht)}
+.vsectie--lucht{background:var(--b-lucht)}
+.vsectie--blauw{background:var(--b-blauw);--kop:#fff;--tekst:#fff;--intro:rgb(255 255 255 / .86);--lbl:var(--b-geel);--cit-bg:#fff;--cit-kl:var(--b-diep);--cit-cite:var(--b-blauw);--pil-bg:#fff;--pil-kl:var(--b-diep)}
+.vsectie .wrap{position:relative}
+.vtekst{font-size:1.02rem;line-height:1.6;min-width:0}
+.vtekst>:last-child{margin-bottom:0}
+.vtop{display:grid;grid-template-columns:minmax(0,1fr) 32%;column-gap:clamp(1.5rem,3vw,3rem);align-items:center;margin-bottom:1.5rem}
+.vkop{order:-1;max-width:46rem;min-width:0}
+.vkop .label{margin-bottom:.5rem;color:var(--lbl)}
+.p-blog .vkop h2{margin:0;font-size:clamp(1.9rem,1.4rem + 1.4vw,2.5rem);line-height:1.05;color:var(--kop);text-wrap:balance}
+.p-blog .vkop .intro{max-width:60ch;margin:.8rem 0 0;font-size:1.08rem;line-height:1.55;color:var(--intro)}
+.vkop .intro::first-letter{float:none;margin:0;font:inherit;color:inherit;text-shadow:none}
+.vfoto,.vpop{position:relative;isolation:isolate;margin:2.5rem 24px 0 0;align-self:center;min-width:0}
+.vpop{rotate:-1.4deg;margin-right:14px}
+.vfoto figcaption{position:absolute;z-index:3;left:1rem;right:1rem;bottom:1rem;margin:0;padding:.55rem .9rem;border-radius:10px;background:rgb(11 35 82 / .78);color:#fff;font:700 .76rem/1.3 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(4px)}
+.vvoorwerp figcaption{position:static;display:table;margin:.4rem auto 0;background:var(--pil-bg);color:var(--pil-kl);text-align:center;backdrop-filter:none;box-shadow:0 4px 0 rgb(0 0 0 / .22)}
+
+/* panelen */
+.vtekst .stappen{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem 1.4rem;margin:0 0 1.4rem;padding:1.3rem 1.5rem;list-style:none;counter-reset:stap;border-radius:20px;background:var(--plaat);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+.vtekst .stappen li{display:block;margin:0}
+.vtekst .stappen li+li{padding-left:1.4rem;border-left:1px solid var(--primary-200)}
+.vtekst .stappen li::before{width:2.4rem;height:2.4rem;margin-bottom:.6rem;border-radius:10px;font-size:1.25rem}
+.vtekst .stappen b{margin:0 0 .3rem;font-size:1.05rem;line-height:1.2;color:var(--b-diep)}
+.vtekst .stappen li div{font-size:.94rem;line-height:1.45;color:var(--b-zacht)}
+.vtekst .punten{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.9rem 1.4rem;margin:0 0 1.4rem;padding:1.2rem 1.5rem;list-style:none;border-radius:20px;background:var(--plaat);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+.vtekst .punten li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:.9rem;align-items:center;margin:0}
+.vtekst .punten p{margin:0;font-weight:700;font-size:1rem;line-height:1.4;color:var(--b-diep)}
+.vtekst .alinea{position:relative;display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:1.6rem;align-items:center;margin:2.6rem 0 1.4rem;padding:1.4rem 2rem;border-radius:20px;background:var(--plaat);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+.vtekst .alinea__podium{height:auto;align-self:stretch;margin:-2.6rem 0 -.2rem}
+.p-blog .vtekst .alinea__ding{height:calc(var(--h,4.5rem) * 1.45);max-width:9.5rem}
+.p-blog .vtekst .alinea__label{display:inline-flex;align-items:center;gap:.5rem;margin:0 0 .4rem;font:800 .76rem/1.2 var(--b-kop);letter-spacing:.14em;text-transform:uppercase;color:var(--b-blauw)}
+.p-blog .vtekst .alinea__label::before{content:"";display:block;width:1.6rem;height:4px;border-radius:2px;background:var(--b-geel);-webkit-mask:none;mask:none}
+.vtekst .alinea p{margin:0 0 .8em;font-size:1.04rem;line-height:1.6;color:var(--b-inkt)}
+.vtekst .alinea p:last-child{margin:0}
+.vtekst .alinea p:not(.alinea__label)::first-line{font-weight:700;color:var(--b-diep)}
+.vtekst .citaat{margin:1.4rem 0;padding:1.3rem 1.6rem 1.3rem 5rem;border-radius:20px;background:var(--cit-bg);color:var(--cit-kl);box-shadow:var(--zij-geel),var(--val)}
+.vtekst .citaat::before{left:1.4rem;top:.3rem;font-size:5rem;color:var(--b-geel);text-shadow:2px 2px 0 var(--b-geel-700)}
+.vtekst .citaat p{max-width:none;margin:0 0 .5rem;font-size:clamp(1.25rem,1rem + 1vw,1.7rem);color:var(--cit-kl)}
+.vtekst .citaat cite{color:var(--cit-cite)}
+.vtekst .tip{margin:2.4rem 0 0;padding:1.1rem 1.6rem 1.1rem 0;grid-template-columns:12rem minmax(0,1fr)}
+.p-blog .vtekst .tip__foto{width:10.5rem}
+.vtekst .tip p{margin:0;font-size:1rem;line-height:1.5;color:var(--b-inkt)}
+.vtekst .tip cite{color:var(--b-zacht)}
+.vtekst .aanbod{margin:3rem 0 0;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:1.6rem;padding:1.3rem 1.8rem 1.3rem 1.4rem}
+.vtekst .aanbod .pop{max-width:14rem;margin:-1.8rem auto 0}
+.p-blog .vtekst .aanbod h3{margin:0 0 .35rem;font-size:clamp(1.4rem,1.2rem + .8vw,1.8rem);color:#fff}
+.vtekst .aanbod p{margin:0 0 .8rem;color:rgb(255 255 255 / .84);font-size:.95rem;line-height:1.5}
+.vtekst .aanbod .label{color:var(--b-geel)}
+.pop__vol{display:none}
+
+@media (max-width:899px){
+  .vtop{grid-template-columns:minmax(0,1fr)}
+  .vfoto,.vpop{max-width:28rem;width:calc(100% - 44px);margin:3rem auto 0}
+  .vtekst .stappen{grid-template-columns:minmax(0,1fr)}
+  .vtekst .stappen li+li{padding:1rem 0 0;border-left:0;border-top:1px solid var(--primary-200)}
+  .vtekst .alinea{grid-template-columns:minmax(0,1fr);margin-top:4rem}
+  .vtekst .alinea__podium{height:6.4rem;align-self:auto;margin:-3.4rem 0 0}
+  .vtekst .tip{grid-template-columns:minmax(0,1fr);padding:0 1.3rem 1.3rem;margin-top:4.5rem}
+  .p-blog .vtekst .tip__foto{position:relative;width:8.8rem;margin-top:-3rem}
+  .vtekst .aanbod{grid-template-columns:minmax(0,1fr);margin-top:4rem}
+  .vtekst .aanbod .pop{margin-top:-3.5rem}
+  .ontwerp__kop p{display:none}
+}
+
+/* =====================================================================
+   01 FOTOSTROOK: een hoge strook tot aan de schermrand (Diepblauw rechts, Goudgeel links,
+   om en om), de foto op de strook, de tekst ernaast op wit. Geen platen onder de tekst.
+   ===================================================================== */
+[data-o="01"] .vsectie{background:#fff;padding-block:0;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:var(--b-lucht);--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-geel);--pil-kl:var(--b-diep)}
+[data-o="01"] .vsectie::before{content:"";position:absolute;top:0;bottom:0;right:0;width:40vw;background:linear-gradient(180deg,var(--b-blauw),var(--b-diep))}
+[data-o="01"] .vsectie:nth-of-type(even)::before{right:auto;left:0;background:linear-gradient(180deg,#FFD95C,var(--b-geel) 60%,var(--b-geel-600))}
+[data-o="01"] .vsectie:nth-of-type(even) .fotopop--plaat::before{box-shadow:var(--zij-diep),0 48px 70px -30px rgb(9 25 56 / .55)}
+[data-o="01"] .vsectie:nth-of-type(even) .voorwerp__schijf{background:radial-gradient(70% 70% at 38% 30%,#3D6CD6,var(--b-blauw) 62%,var(--b-diep));box-shadow:0 9px 0 #061534,0 10px 0 rgb(8 18 42 / .16),0 30px 34px -14px rgb(8 18 42 / .45)}
+[data-o="01"] .vsectie:nth-of-type(even) .vvoorwerp figcaption{background:var(--b-diep);color:#fff}
+[data-o="01"] .vtekst .citaat{background:var(--b-lucht);color:var(--b-diep);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+[data-o="01"] .vtekst .citaat p{color:var(--b-diep)}
+[data-o="01"] .vtekst .citaat cite{color:var(--b-blauw)}
+@media (min-width:900px){
+  [data-o="01"] .vtekst{display:grid;grid-template-columns:minmax(0,1fr) 30%;column-gap:4rem;padding-block:4rem;align-items:center}
+  [data-o="01"] .vtop{display:contents}
+  [data-o="01"] .vkop{grid-column:1;order:0;margin-bottom:.5rem}
+  [data-o="01"] .vfoto,[data-o="01"] .vpop{grid-column:2;grid-row:1 / span 6;align-self:center;margin:2.5rem 0 0;rotate:0}
+  [data-o="01"] .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:1}
+  [data-o="01"] .vsectie:nth-of-type(even) .vtekst{grid-template-columns:30% minmax(0,1fr)}
+  [data-o="01"] .vsectie:nth-of-type(even) .vkop,[data-o="01"] .vsectie:nth-of-type(even) .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:2}
+  [data-o="01"] .vsectie:nth-of-type(even) .vfoto,[data-o="01"] .vsectie:nth-of-type(even) .vpop{grid-column:1}
+}
+@media (max-width:899px){[data-o="01"] .vsectie{padding-block:2.5rem}[data-o="01"] .vsectie::before{display:none}}
+
+/* =====================================================================
+   02 GOUDEN RAIL: één doorlopende Lucht-achtergrond, links een goudgele rail met per deel
+   een nummerschijf; de foto als scheve afdruk, panelen als witte kaarten met gouden rand.
+   ===================================================================== */
+[data-o="02"] .vsectie{background:var(--b-lucht);padding-block:0;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:#fff;--cit-bg:#fff;--cit-kl:var(--b-diep);--cit-cite:var(--b-blauw);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="02"] .vsectie--eerste{padding-top:2.5rem}
+[data-o="02"] .vsectie:last-of-type{padding-bottom:3rem}
+[data-o="02"] .vtekst{position:relative;padding:2.5rem 0 2.5rem 6rem}
+[data-o="02"] .vtekst::before{content:"";position:absolute;left:1.55rem;top:0;bottom:0;width:8px;border-radius:4px;background:var(--b-geel);box-shadow:3px 0 0 var(--b-geel-700)}
+[data-o="02"] .vsectie--eerste .vtekst::before{top:2.5rem}
+[data-o="02"] .vsectie:last-of-type .vtekst::before{bottom:auto;height:6rem}
+[data-o="02"] .vtekst::after{content:counter(deel,decimal-leading-zero);position:absolute;left:0;top:2.2rem;display:grid;place-items:center;width:3.7rem;height:3.7rem;border-radius:50%;background:radial-gradient(circle at 40% 30%,#FFE08A,var(--b-geel) 65%);color:var(--b-diep);font:800 1.35rem/1 var(--b-kop);box-shadow:0 5px 0 var(--b-geel-700),0 14px 16px -8px rgb(8 18 42 / .45)}
+[data-o="02"] .vkop .label{display:none}
+[data-o="02"] .vfoto{rotate:2deg}
+[data-o="02"] .vpop{rotate:-2.5deg}
+[data-o="02"] .fotopop--plaat,[data-o="02"] .pop--afdruk{--rand:14px}
+[data-o="02"] .fotopop--plaat::before,[data-o="02"] .pop--afdruk::before{box-shadow:0 0 0 1px rgb(14 26 51 / .08),var(--val)}
+[data-o="02"] .fotopop__raam,[data-o="02"] .pop__raam{border-radius:6px}
+[data-o="02"] .vfoto:not(.vvoorwerp) figcaption{position:static;margin:1.4rem 0 0;padding:0;background:none;color:var(--b-zacht);font:600 .9rem/1.4 var(--font-sans);letter-spacing:0;text-transform:none;text-align:center;backdrop-filter:none}
+[data-o="02"] .vtekst :is(.stappen,.punten,.alinea,.citaat,.aanbod){border-left:8px solid var(--b-geel);border-radius:14px}
+[data-o="02"] .vtekst :is(.stappen,.punten,.alinea,.citaat){box-shadow:0 0 0 1px var(--b-lijn),var(--val-licht)}
+[data-o="02"] .vtekst .tip{border-radius:14px}
+@media (max-width:899px){[data-o="02"] .vtekst{padding-left:3.6rem}[data-o="02"] .vtekst::after{width:2.8rem;height:2.8rem;font-size:1.1rem;left:-.2rem}[data-o="02"] .vtekst::before{left:1rem}}
+
+/* =====================================================================
+   03 DAKKAART: elk deel is één Koningsblauwe kaart met het dak van de site; de foto hangt over
+   de rechterbovenhoek van de kaart, de panelen zijn wit.
+   ===================================================================== */
+[data-o="03"] .vsectie{background:#fff;padding-block:2.5rem 2.5rem;--kop:#fff;--tekst:#fff;--intro:rgb(255 255 255 / .86);--lbl:var(--b-geel);--plaat:#fff;--cit-bg:#fff;--cit-kl:var(--b-diep);--cit-cite:var(--b-blauw);--pil-bg:#fff;--pil-kl:var(--b-diep)}
+[data-o="03"] .vsectie:nth-of-type(even){background:var(--b-lucht)}
+[data-o="03"] .vsectie--eerste{padding-top:5.5rem}
+[data-o="03"] .vtekst{position:relative;isolation:isolate;padding:calc(var(--dak) + 2rem) 2.5rem 2.5rem;border-radius:0 0 28px 28px}
+[data-o="03"] .vtekst::before{content:"";position:absolute;z-index:-1;inset:0;border-radius:0 0 28px 28px;background:linear-gradient(180deg,var(--b-blauw),#123780 75%);clip-path:polygon(0 var(--dak),50% 0,100% var(--dak),100% 100%,0 100%)}
+[data-o="03"] .vtekst::after{content:"";position:absolute;z-index:-2;left:10px;right:-10px;top:14px;bottom:-10px;border-radius:0 0 28px 28px;background:var(--b-geel);clip-path:polygon(0 var(--dak),50% 0,100% var(--dak),100% 100%,0 100%)}
+[data-o="03"] .vtekst .stappen li div,[data-o="03"] .vtekst .tip cite{color:var(--b-zacht)}
+@media (min-width:900px){
+  [data-o="03"] .vtop{align-items:start}
+  [data-o="03"] .vfoto,[data-o="03"] .vpop{align-self:start;margin:calc(-1 * var(--dak) - 3.5rem) 0 0;rotate:0}
+}
+
+/* =====================================================================
+   04 MAGAZINE: links nummer, kop en standfirst (blijft plakken), midden de tekst zonder platen,
+   rechts een smalle scheve afdruk. Dunne lijnen tussen de delen.
+   ===================================================================== */
+[data-o="04"] .vsectie{background:#fff;padding-block:2.5rem;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:transparent;--cit-bg:none;--cit-kl:var(--b-diep);--cit-cite:var(--b-zacht);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="04"] .vsectie:not(.vsectie--eerste){border-top:1px solid var(--b-lijn)}
+[data-o="04"] .vkop .label{display:none}
+[data-o="04"] .vkop::before{content:counter(deel,decimal-leading-zero);display:block;margin:0 0 .3rem -.1rem;font:800 5.6rem/.9 var(--b-kop);color:var(--b-blauw);text-shadow:2px 2px 0 var(--b-geel),4px 4px 0 var(--b-geel),6px 6px 0 var(--b-geel-600),8px 8px 0 var(--b-geel-700)}
+.p-blog [data-o="04"] .vkop h2{font-size:1.75rem}
+.p-blog [data-o="04"] .vkop .intro{font-size:.98rem;line-height:1.55}
+[data-o="04"] .vtekst :is(.stappen,.punten,.alinea){padding:0;border-radius:0;background:none;box-shadow:none}
+[data-o="04"] .vtekst .stappen{display:block}
+[data-o="04"] .vtekst .stappen li{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:1rem;align-items:start;padding:.9rem 0;border:0;border-top:1px solid var(--b-lijn)}
+[data-o="04"] .vtekst .stappen li:last-child{border-bottom:1px solid var(--b-lijn)}
+[data-o="04"] .vtekst .stappen li::before{width:2.2rem;height:2.2rem;margin:0;font-size:1.1rem;border-radius:8px}
+[data-o="04"] .vtekst .punten{grid-template-columns:minmax(0,1fr);gap:0}
+[data-o="04"] .vtekst .punten li{padding:.7rem 0;border-top:1px solid var(--b-lijn);grid-template-columns:38px minmax(0,1fr)}
+[data-o="04"] .vtekst .punten li:last-child{border-bottom:1px solid var(--b-lijn)}
+[data-o="04"] .vtekst .punten .punt__ic{width:38px;height:38px}
+[data-o="04"] .vtekst .punten .punt__ic .ic{width:18px;height:18px}
+[data-o="04"] .vtekst .alinea{grid-template-columns:minmax(0,1fr);margin:1.8rem 0 1.4rem;padding:.2rem 0 .2rem 1.4rem;border-left:5px solid var(--b-geel)}
+[data-o="04"] .vtekst .alinea__podium{display:none}
+[data-o="04"] .vtekst .citaat{padding:0 0 0 4.2rem;border-radius:0;box-shadow:none}
+[data-o="04"] .vtekst .citaat::before{left:0;color:var(--b-blauw);text-shadow:2px 2px 0 var(--b-geel),4px 4px 0 var(--b-geel-600)}
+[data-o="04"] .vtekst .citaat p{font-size:clamp(1.4rem,1.1rem + 1vw,1.9rem)}
+[data-o="04"] .vfoto,[data-o="04"] .vpop{rotate:1.5deg}
+[data-o="04"] .fotopop--plaat,[data-o="04"] .pop--afdruk{--rand:12px}
+[data-o="04"] .vfoto:not(.vvoorwerp) figcaption{position:static;margin:1.2rem 0 0;padding:0;background:none;color:var(--b-zacht);font:600 .85rem/1.4 var(--font-sans);letter-spacing:0;text-transform:none;backdrop-filter:none}
+@media (min-width:900px){
+  [data-o="04"] .vtekst{display:grid;grid-template-columns:16rem minmax(0,1fr) 27%;column-gap:2.75rem;align-items:start}
+  [data-o="04"] .vtop{display:contents}
+  [data-o="04"] .vkop{grid-column:1;grid-row:1 / span 9;position:sticky;top:5.5rem;order:0;max-width:none;margin:0}
+  [data-o="04"] .vfoto,[data-o="04"] .vpop{grid-column:3;grid-row:1;align-self:start;margin:2.4rem 0 1rem}
+  [data-o="04"] .vtekst>:nth-child(2){grid-column:2;grid-row:1}
+  [data-o="04"] .vtekst>:nth-child(n+3){grid-column:2 / -1}
+  [data-o="04"] .vtekst .aanbod{margin-top:2.4rem}
+}
+
+/* =====================================================================
+   05 STAPPENTRAP: de stappen als oplopende trap van goudgele platen (naar de trap op /werkwijze/),
+   de foto naast de bovenste trede. Witte en Lucht-banden om en om.
+   ===================================================================== */
+[data-o="05"] .vsectie{background:#fff;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:var(--b-lucht);--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="05"] .vsectie:nth-of-type(even){background:var(--b-lucht);--plaat:#fff}
+[data-o="05"] .vtekst .stappen{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:0 .7rem;margin:1.2rem 0 1.4rem;padding:0;background:none;box-shadow:none}
+[data-o="05"] .vtekst .stappen li{position:relative;min-height:12rem;padding:2.6rem 1.3rem 1.3rem;border:0;border-radius:14px;background:linear-gradient(180deg,#FFE08A,var(--b-geel) 45%);color:var(--b-diep);box-shadow:var(--zij-geel),var(--val-licht)}
+[data-o="05"] .vtekst .stappen li:nth-child(2){min-height:15rem}
+[data-o="05"] .vtekst .stappen li:nth-child(3){min-height:18rem}
+[data-o="05"] .vtekst .stappen li::before{position:absolute;top:-1.2rem;left:1.2rem;width:2.6rem;height:2.6rem;margin:0;border-radius:50%;background:#fff;color:var(--b-diep);font-size:1.25rem;box-shadow:0 4px 0 var(--b-geel-700),0 10px 14px -8px rgb(8 18 42 / .45)}
+[data-o="05"] .vtekst .stappen b{color:var(--b-diep)}
+[data-o="05"] .vtekst .stappen li div{color:rgb(11 35 82 / .82)}
+@media (min-width:900px){
+  [data-o="05"] .vtekst{display:grid;grid-template-columns:minmax(0,1fr) 30%;column-gap:3rem;align-items:end}
+  [data-o="05"] .vtop{display:contents}
+  [data-o="05"] .vkop{grid-column:1;grid-row:1;order:0;align-self:start;margin:0 0 .5rem}
+  [data-o="05"] .vfoto,[data-o="05"] .vpop{grid-column:2;grid-row:1 / span 2;align-self:end;margin:2.5rem 0 0;rotate:0}
+  [data-o="05"] .vtekst>:nth-child(2){grid-column:1;grid-row:2}
+  [data-o="05"] .vtekst>:nth-child(n+3){grid-column:1 / -1}
+}
+@media (max-width:899px){[data-o="05"] .vtekst .stappen{grid-template-columns:minmax(0,1fr);gap:1.6rem}[data-o="05"] .vtekst .stappen li{min-height:0;padding-top:2rem}}
+
+/* =====================================================================
+   06 FOTODAK: elk deel begint met een brede fotoband met Diepblauwe waas en de kop in het wit;
+   de verhuizer staat scherp vóór de waas. Deel 02 (voorwerp) krijgt een Diepblauwe balk.
+   ===================================================================== */
+[data-o="06"] .vsectie{background:#fff;padding-block:0 3rem;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:var(--b-lucht);--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-geel);--pil-kl:var(--b-diep)}
+[data-o="06"] .vsectie:nth-of-type(even){background:var(--b-lucht);--plaat:#fff}
+[data-o="06"] .fotopop__uit{-webkit-mask-image:none;mask-image:none}
+[data-o="06"] .pop__vol{display:block;position:absolute;inset:0;z-index:3;overflow:hidden;border-radius:22px;pointer-events:none}
+[data-o="06"] .pop__vol .pop__laag{left:calc(var(--x) * -1cqw);top:calc(var(--y) * -1cqw)}
+[data-o="06"] .vfoto figcaption{left:auto;right:1.2rem;bottom:1.2rem;background:var(--b-geel);color:var(--b-diep);backdrop-filter:none}
+@media (min-width:900px){
+  [data-o="06"] .vtop{display:block;position:relative;margin:0 0 -3.5rem}
+  [data-o="06"] .vfoto,[data-o="06"] .vpop{margin:0;width:100%;max-width:none;rotate:0}
+  [data-o="06"] .fotopop,[data-o="06"] .pop{aspect-ratio:2.4}
+  [data-o="06"] .fotopop--plaat::before,[data-o="06"] .pop--afdruk::before{content:none}
+  [data-o="06"] .fotopop__raam,[data-o="06"] .pop__raam{border-radius:22px}
+  [data-o="06"] .fotopop__raam::after,[data-o="06"] .pop__raam::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgb(11 35 82 / .94) 0,rgb(11 35 82 / .8) 38%,rgb(11 35 82 / .22) 100%)}
+  [data-o="06"] .vpop .plakband{display:none}
+  [data-o="06"] .vtop:not(:has(.vvoorwerp)) .vkop{position:absolute;z-index:4;left:3rem;bottom:5.5rem;max-width:42%;order:0;--kop:#fff;--intro:rgb(255 255 255 / .88);--lbl:var(--b-geel)}
+  [data-o="06"] .vtop:has(.vvoorwerp){display:grid;grid-template-columns:minmax(0,1fr) 15rem;column-gap:2rem;align-items:center;min-height:15rem;padding:2.5rem 3rem 2.5rem;border-radius:22px;background:linear-gradient(90deg,var(--b-diep),var(--b-blauw));--kop:#fff;--intro:rgb(255 255 255 / .88);--lbl:var(--b-geel)}
+  [data-o="06"] .vtop:has(.vvoorwerp) .vkop{padding-bottom:3.5rem}
+  [data-o="06"] .vvoorwerp{width:15rem;margin:-4rem 0 0}
+  [data-o="06"] .vtekst>:not(.vtop){position:relative;z-index:5}
+  [data-o="06"] .vtekst>.vtop+*{margin-left:3rem;margin-right:3rem}
+  [data-o="06"] .vtekst>.vtop+.citaat{margin-top:0}
+  [data-o="06"] .vtekst>.vtop+.stappen,[data-o="06"] .vtekst>.vtop+.punten{box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val)}
+  [data-o="06"] .vtekst>.vtop+*+*{margin-left:3rem;margin-right:3rem}
+  [data-o="06"] .vtekst>.vtop~*{margin-left:3rem;margin-right:3rem}
+}
+
+/* =====================================================================
+   07 VASTE FOTO: de foto als dikke plaat rechts die blijft staan terwijl de tekst van het deel
+   erlangs scrolt; panelen met een Koningsblauwe omlijning en een goudgele bovenrand.
+   ===================================================================== */
+[data-o="07"] .vsectie{background:#fff;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:#fff;--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="07"] .vsectie:nth-of-type(even){background:var(--b-lucht)}
+[data-o="07"] .fotopop--plaat,[data-o="07"] .pop--afdruk{--rand:14px}
+[data-o="07"] .vtekst :is(.stappen,.punten,.alinea){border-top:10px solid var(--b-geel);border-radius:16px;box-shadow:0 0 0 2px var(--b-blauw),var(--val-licht)}
+[data-o="07"] .vtekst .stappen{grid-template-columns:minmax(0,1fr);gap:0}
+[data-o="07"] .vtekst .stappen li{display:grid;grid-template-columns:3rem minmax(0,1fr);gap:1rem;align-items:start;padding:.9rem 0}
+[data-o="07"] .vtekst .stappen li+li{padding-left:0;border-left:0;border-top:1px solid var(--b-lijn)}
+[data-o="07"] .vtekst .stappen li::before{width:2.6rem;height:2.6rem;margin:0;border-radius:50%}
+[data-o="07"] .vtekst .tip{border-radius:16px}
+@media (min-width:900px){
+  [data-o="07"] .vtekst{display:grid;grid-template-columns:minmax(0,1fr) 34%;column-gap:3.5rem;align-items:start}
+  [data-o="07"] .vtop{display:contents}
+  [data-o="07"] .vkop{grid-column:1;order:0;margin:0 0 1.5rem}
+  [data-o="07"] .vfoto,[data-o="07"] .vpop{grid-column:2;grid-row:1 / span 9;position:sticky;top:7.5rem;align-self:start;margin:4.5rem 0 0;rotate:0}
+  [data-o="07"] .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:1}
+}
+
+/* =====================================================================
+   08 NUMMERBAND: elk deel begint met een Diepblauwe balk over de volle breedte met het nummer
+   op een goudgele schijf; daaronder de foto rechts en de panelen links.
+   ===================================================================== */
+[data-o="08"] .vsectie{background:#fff;padding-block:2.5rem;--kop:#fff;--tekst:var(--b-inkt);--intro:rgb(255 255 255 / .86);--lbl:var(--b-geel);--plaat:var(--b-lucht);--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="08"] .vsectie:nth-of-type(even){background:var(--b-lucht);--plaat:#fff}
+[data-o="08"] .vkop{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:1.4rem;align-items:center;max-width:none;padding:.9rem 1.6rem .9rem 1rem;border-radius:16px;background:linear-gradient(90deg,var(--b-diep),#123780);color:#fff;box-shadow:var(--zij-geel),var(--val-licht)}
+[data-o="08"] .vkop::before{content:counter(deel,decimal-leading-zero);grid-row:1 / span 2;display:grid;place-items:center;width:4rem;height:4rem;border-radius:50%;background:radial-gradient(circle at 40% 30%,#FFE08A,var(--b-geel) 65%);color:var(--b-diep);font:800 1.6rem/1 var(--b-kop);box-shadow:0 5px 0 var(--b-geel-700)}
+[data-o="08"] .vkop .label{grid-column:2;margin:0 0 .2rem}
+.p-blog [data-o="08"] .vkop h2{grid-column:2;font-size:1.9rem}
+.p-blog [data-o="08"] .vkop .intro{grid-column:1 / -1;max-width:none;margin:.9rem 0 0;padding-top:.9rem;border-top:1px solid rgb(255 255 255 / .16)}
+@media (min-width:900px){
+  [data-o="08"] .vtekst{display:grid;grid-template-columns:minmax(0,1fr) 30%;column-gap:3rem;align-items:start}
+  [data-o="08"] .vtop{display:contents}
+  [data-o="08"] .vkop{grid-column:1 / -1;grid-row:1;order:0;margin:0 0 1.6rem}
+  [data-o="08"] .vfoto,[data-o="08"] .vpop{grid-column:2;grid-row:2 / span 9;align-self:start;margin:4rem 0 0;rotate:0}
+  [data-o="08"] .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:1}
+}
+
+/* =====================================================================
+   09 GESTAPELDE PLATEN: foto links vóór de witte tekstplaat, het eerste paneel valt onder de
+   tekstplaat door. Diepe slagschaduwen, Lucht en wit om en om.
+   ===================================================================== */
+[data-o="09"] .vsectie{background:var(--b-lucht);--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:#fff;--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="09"] .vsectie:nth-of-type(even){background:#fff;--plaat:var(--b-lucht)}
+[data-o="09"] .vkop{padding:1.6rem 1.8rem;border-radius:24px;background:var(--plaat);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val)}
+@media (min-width:900px){
+  [data-o="09"] .vtekst{display:grid;grid-template-columns:36% minmax(0,1fr);align-items:center}
+  [data-o="09"] .vtop{display:contents}
+  [data-o="09"] .vfoto,[data-o="09"] .vpop{grid-column:1;grid-row:1;position:relative;z-index:5;margin:2.5rem 0 0;rotate:-2deg}
+  [data-o="09"] .vkop{grid-column:2;grid-row:1;order:0;position:relative;z-index:2;max-width:none;margin:0 0 0 -4.5rem;padding:2.4rem 2.6rem 3.4rem 6.5rem}
+  [data-o="09"] .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:1 / -1;position:relative;z-index:4;margin:-2.4rem 0 0 7rem}
+  [data-o="09"] .vtekst>:nth-child(n+3){margin-top:1.6rem}
+  [data-o="09"] .vtekst>.tip{margin-top:3.2rem}
+}
+
+/* =====================================================================
+   10 RONDE FOTO: de foto in een cirkel met goudgele rand; de verhuizer staat helemaal vóór de
+   cirkel (hele uitsnede zichtbaar), niet alleen met het hoofd erboven.
+   ===================================================================== */
+[data-o="10"] .vsectie{background:#fff;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:var(--b-lucht);--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="10"] .vsectie:nth-of-type(even){background:var(--b-lucht);--plaat:#fff}
+[data-o="10"] .fotopop--plaat::before,[data-o="10"] .pop--afdruk::before{inset:auto;left:50%;top:50%;translate:-50% -50%;width:calc(75cqw + 26px);height:auto;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 30%,#FFE08A,var(--b-geel) 65%);box-shadow:0 10px 0 var(--b-geel-700),0 12px 0 rgb(8 18 42 / .1),var(--val)}
+[data-o="10"] .fotopop__raam,[data-o="10"] .pop__raam{clip-path:circle(37.5cqw at 50% 50%);border-radius:0;box-shadow:none}
+[data-o="10"] .fotopop__uit{-webkit-mask-image:none;mask-image:none}
+[data-o="10"] .pop__vol{display:block;position:absolute;inset:0;z-index:3;overflow:hidden;pointer-events:none}
+[data-o="10"] .pop__vol .pop__laag{left:calc(var(--x) * -1cqw);top:calc(var(--y) * -1cqw)}
+[data-o="10"] .vpop .plakband{display:none}
+[data-o="10"] .vpop{rotate:0}
+[data-o="10"] .vfoto:not(.vvoorwerp) figcaption{position:static;display:table;margin:.8rem auto 0;background:var(--b-diep);backdrop-filter:none;box-shadow:0 4px 0 rgb(0 0 0 / .22)}
+@media (min-width:900px){
+  [data-o="10"] .vtop{grid-template-columns:minmax(0,1fr) 34%;align-items:center}
+  [data-o="10"] .vfoto,[data-o="10"] .vpop{margin:3rem 24px 0 0}
+}
+
+/* =====================================================================
+   11 SCHUINE NAAD: elke band schuin in tweeën, wit en Koningsblauw; de foto op de naad, de
+   panelen vallen over de naad heen. Richting wisselt per deel.
+   ===================================================================== */
+[data-o="11"] .vsectie{background:#fff;overflow:hidden;padding-block:3.5rem;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:#fff;--cit-bg:#fff;--cit-kl:var(--b-diep);--cit-cite:var(--b-blauw);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="11"] .vsectie::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,var(--b-blauw),var(--b-diep));clip-path:polygon(64% 0,100% 0,100% 100%,50% 100%)}
+[data-o="11"] .vsectie:nth-of-type(even)::before{clip-path:polygon(0 0,36% 0,50% 100%,0 100%)}
+[data-o="11"] .vtekst :is(.stappen,.punten,.alinea,.citaat){box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val)}
+@media (min-width:900px){
+  [data-o="11"] .vtekst{display:grid;grid-template-columns:minmax(0,1fr) 34%;column-gap:3rem;align-items:center}
+  [data-o="11"] .vtop{display:contents}
+  [data-o="11"] .vkop{grid-column:1;grid-row:1;order:0;margin:0 0 1.2rem}
+  [data-o="11"] .vfoto,[data-o="11"] .vpop{grid-column:2;grid-row:1 / span 9;align-self:center;margin:2.5rem 0 0;rotate:0}
+  [data-o="11"] .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:1}
+  [data-o="11"] .vsectie:nth-of-type(even) .vtekst{grid-template-columns:34% minmax(0,1fr)}
+  [data-o="11"] .vsectie:nth-of-type(even) .vkop,[data-o="11"] .vsectie:nth-of-type(even) .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:2}
+  [data-o="11"] .vsectie:nth-of-type(even) .vfoto,[data-o="11"] .vsectie:nth-of-type(even) .vpop{grid-column:1}
+}
+@media (max-width:899px){[data-o="11"] .vsectie::before{display:none}[data-o="11"] .vsectie:nth-of-type(even){background:var(--b-lucht)}}
+
+/* =====================================================================
+   12 KAARTENRIJ: kop bovenaan, daaronder een rij gelijke kaarten: de foto als eerste kaart,
+   dan elke stap of elk punt als eigen kaart. Koningsblauwe en witte banden om en om.
+   ===================================================================== */
+[data-o="12"] .vsectie{background:var(--b-blauw);--kop:#fff;--tekst:#fff;--intro:rgb(255 255 255 / .86);--lbl:var(--b-geel);--plaat:#fff;--cit-bg:#fff;--cit-kl:var(--b-diep);--cit-cite:var(--b-blauw);--pil-bg:#fff;--pil-kl:var(--b-diep)}
+[data-o="12"] .vsectie:nth-of-type(even){background:#fff;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:var(--b-lucht);--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="12"] .vtekst .stappen li,[data-o="12"] .vtekst .punten li{display:block;margin:0;padding:1.3rem;border:0;border-radius:18px;background:var(--plaat);color:var(--b-inkt);box-shadow:0 0 0 1px rgb(14 26 51 / .06),var(--zij-geel),var(--val-licht)}
+[data-o="12"] .vtekst .stappen li::before{width:2.6rem;height:2.6rem;margin-bottom:.7rem;border-radius:10px}
+[data-o="12"] .vtekst .punten li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:.9rem;align-items:center}
+[data-o="12"] .vtekst .stappen,[data-o="12"] .vtekst .punten{padding:0;background:none;box-shadow:none;gap:1.4rem}
+@media (min-width:900px){
+  [data-o="12"] .vtekst{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.4rem;align-items:stretch}
+  [data-o="12"] .vtop{display:contents}
+  [data-o="12"] .vkop{grid-column:1 / -1;order:0;max-width:52rem;margin:0 0 .4rem}
+  [data-o="12"] .vfoto,[data-o="12"] .vpop{grid-column:1;grid-row:2;align-self:end;margin:3.5rem 0 0;rotate:0}
+  [data-o="12"] .vtekst:has(.stappen>li:nth-child(2):last-child) .vfoto,[data-o="12"] .vtekst:has(.stappen>li:nth-child(2):last-child) .vpop{grid-column:1 / span 2}
+  [data-o="12"] .vtekst .stappen,[data-o="12"] .vtekst .punten{display:contents}
+  [data-o="12"] .vtekst>:is(.tip,.alinea,.aanbod){grid-column:1 / -1}
+  [data-o="12"] .vtekst>.citaat{grid-column:2 / -1;grid-row:2;align-self:center;margin:3.5rem 0 0}
+  [data-o="12"] .vtekst>.tip{margin-top:1rem}
+  [data-o="12"] .vtekst>.alinea{margin-top:2.4rem}
+}
+
+/* =====================================================================
+   13 KRANT: compact en redactioneel. Groot nummer links, tekst in het midden met dunne lijnen in
+   plaats van platen (de alinea in twee kolommen), de foto klein en scheef rechts.
+   ===================================================================== */
+[data-o="13"] .vsectie{background:#fff;padding-block:2.2rem;border-top:3px solid var(--b-diep);--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:transparent;--cit-bg:none;--cit-kl:var(--b-diep);--cit-cite:var(--b-zacht);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="13"] .vsectie--eerste{border-top:0}
+[data-o="13"] .vkop .label{display:none}
+.p-blog [data-o="13"] .vkop h2{font-size:1.8rem}
+.p-blog [data-o="13"] .vkop .intro{font-size:1rem}
+[data-o="13"] .vtekst :is(.stappen,.punten,.alinea){padding:0;border-radius:0;background:none;box-shadow:none}
+[data-o="13"] .vtekst .stappen{display:block}
+[data-o="13"] .vtekst .stappen li{display:grid;grid-template-columns:2.4rem minmax(0,1fr);gap:.9rem;align-items:start;padding:.75rem 0;border:0;border-top:1px solid var(--b-lijn)}
+[data-o="13"] .vtekst .stappen li:last-child{border-bottom:1px solid var(--b-lijn)}
+[data-o="13"] .vtekst .stappen li::before{width:2.1rem;height:2.1rem;margin:0;font-size:1.05rem;border-radius:6px}
+[data-o="13"] .vtekst .stappen b{font-size:1rem}
+[data-o="13"] .vtekst .stappen li div{font-size:.92rem}
+[data-o="13"] .vtekst .punten{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem 1.6rem}
+[data-o="13"] .vtekst .punten li{grid-template-columns:36px minmax(0,1fr);padding:.5rem 0;border-top:1px solid var(--b-lijn)}
+[data-o="13"] .vtekst .punten .punt__ic{width:36px;height:36px}
+[data-o="13"] .vtekst .punten .punt__ic .ic{width:17px;height:17px}
+[data-o="13"] .vtekst .alinea{display:block;margin:1.6rem 0 1.4rem;padding:1rem 0 0;border-top:1px solid var(--b-lijn)}
+[data-o="13"] .vtekst .alinea__podium{display:none}
+[data-o="13"] .vtekst .alinea__tekst{columns:2;column-gap:2.2rem}
+.p-blog [data-o="13"] .vtekst .alinea__label{column-span:all;display:flex}
+[data-o="13"] .vtekst .alinea p{font-size:.98rem}
+[data-o="13"] .vtekst .citaat{padding:.4rem 0 .4rem 3.8rem;border-radius:0;box-shadow:none;border-left:0}
+[data-o="13"] .vtekst .citaat::before{left:0;top:-.2rem;font-size:4.6rem;color:var(--b-blauw);text-shadow:2px 2px 0 var(--b-geel),4px 4px 0 var(--b-geel-600)}
+[data-o="13"] .vtekst .citaat p{font-size:1.45rem}
+[data-o="13"] .vfoto:not(.vvoorwerp) figcaption{position:static;margin:1.1rem 0 0;padding:0;background:none;color:var(--b-zacht);font:600 .82rem/1.4 var(--font-sans);letter-spacing:0;text-transform:none;backdrop-filter:none}
+@media (min-width:900px){
+  [data-o="13"] .vtekst{display:grid;grid-template-columns:7.5rem minmax(0,1fr) 26%;column-gap:2.5rem;align-items:start}
+  [data-o="13"] .vtekst::before{content:counter(deel,decimal-leading-zero);grid-column:1;grid-row:1 / span 9;font:800 6rem/.85 var(--b-kop);letter-spacing:-.04em;color:var(--b-blauw);text-shadow:3px 3px 0 var(--b-geel),6px 6px 0 var(--b-geel-600)}
+  [data-o="13"] .vtop{display:contents}
+  [data-o="13"] .vkop{grid-column:2;order:0;margin:0 0 1.2rem}
+  [data-o="13"] .vfoto,[data-o="13"] .vpop{grid-column:3;grid-row:1 / span 9;align-self:start;margin:2.5rem 0 0;rotate:2deg}
+  [data-o="13"] .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:2}
+  [data-o="13"] .vtekst .aanbod{margin-top:2rem}
+}
+
+/* =====================================================================
+   14 TEGELS OP DIEPBLAUW: het hele artikel op één Diepblauwe achtergrond; elk deel een lichte
+   tegel met ronde hoeken, de foto steekt boven de tegel uit in het donker.
+   ===================================================================== */
+[data-o="14"] .vsectie{background:var(--b-diep);padding-block:4rem;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:#fff;--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="14"] .vsectie+.vsectie{padding-top:0}
+[data-o="14"] .vsectie--eerste{padding-top:6rem}
+[data-o="14"] .vtekst{border-radius:28px;background:var(--b-lucht);padding:2.5rem 2.75rem;box-shadow:0 0 0 1px rgb(255 255 255 / .08),var(--zij-geel),0 40px 60px -28px rgb(0 0 0 / .6)}
+[data-o="14"] .vsectie:nth-of-type(even) .vtekst{background:#fff}
+[data-o="14"] .vsectie:nth-of-type(even){--plaat:var(--b-lucht)}
+[data-o="14"] .fotopop--plaat::before,[data-o="14"] .pop--afdruk::before{box-shadow:var(--zij-geel),0 40px 60px -28px rgb(0 0 0 / .7)}
+@media (min-width:900px){
+  [data-o="14"] .vtekst{display:grid;grid-template-columns:minmax(0,1fr) 30%;column-gap:3rem;align-items:start}
+  [data-o="14"] .vtop{display:contents}
+  [data-o="14"] .vkop{grid-column:1;order:0;margin:0 0 1.5rem}
+  [data-o="14"] .vfoto,[data-o="14"] .vpop{grid-column:2;grid-row:1 / span 9;align-self:start;margin:-4.75rem 0 0;rotate:0}
+  [data-o="14"] .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:1}
+}
+@media (max-width:899px){[data-o="14"] .vtekst{padding:1.6rem 1.2rem}[data-o="14"] .vsectie{padding-block:2rem}}
+
+/* =====================================================================
+   15 BOOGVENSTER: de foto in een wit boogvenster met een dunne gouden binnenlijn (naar /contact/);
+   het hoofd komt boven de boog uit. Stappen en punten als lijsten met gouden lijnen.
+   ===================================================================== */
+[data-o="15"] .vsectie{background:#fff;--kop:var(--b-diep);--tekst:var(--b-inkt);--intro:var(--b-zacht);--lbl:var(--b-blauw);--plaat:var(--b-lucht);--cit-bg:linear-gradient(135deg,var(--b-blauw),var(--b-diep) 65%);--cit-kl:#fff;--cit-cite:var(--b-geel);--pil-bg:var(--b-diep);--pil-kl:#fff}
+[data-o="15"] .vsectie:nth-of-type(even){background:var(--b-lucht);--plaat:#fff}
+[data-o="15"] .fotopop--plaat,[data-o="15"] .pop--afdruk{--rand:14px}
+[data-o="15"] .fotopop__raam,[data-o="15"] .pop__raam{border-radius:50cqw 50cqw 14px 14px}
+[data-o="15"] .fotopop--plaat::before,[data-o="15"] .pop--afdruk::before{border-radius:calc(50cqw + 14px) calc(50cqw + 14px) 28px 28px;box-shadow:0 0 0 1px rgb(14 26 51 / .08),var(--val)}
+[data-o="15"] .fotopop::after,[data-o="15"] .pop::after{content:"";position:absolute;z-index:1;inset:-7px;border:2px solid var(--b-geel);border-radius:calc(50cqw + 7px) calc(50cqw + 7px) 21px 21px;pointer-events:none}
+[data-o="15"] .vpop{rotate:0}
+[data-o="15"] .vpop .plakband{display:none}
+[data-o="15"] .vfoto:not(.vvoorwerp) figcaption{position:static;display:table;margin:1.2rem auto 0;background:var(--b-diep);backdrop-filter:none;box-shadow:0 4px 0 rgb(0 0 0 / .22)}
+[data-o="15"] .vtekst :is(.stappen,.punten){padding:0;border-radius:0;background:none;box-shadow:none}
+[data-o="15"] .vtekst .stappen{display:block}
+[data-o="15"] .vtekst .stappen li{display:grid;grid-template-columns:3rem minmax(0,1fr);gap:1rem;align-items:start;padding:1rem 0;border:0;border-top:2px solid var(--b-geel-200)}
+[data-o="15"] .vtekst .stappen li:last-child{border-bottom:2px solid var(--b-geel-200)}
+[data-o="15"] .vtekst .stappen li::before{width:2.6rem;height:2.6rem;margin:0;border-radius:50%}
+[data-o="15"] .vtekst .punten{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 2rem}
+[data-o="15"] .vtekst .punten li{padding:.8rem 0;border-top:2px solid var(--b-geel-200)}
+[data-o="15"] .vtekst .alinea{box-shadow:0 0 0 1px var(--b-geel-200),var(--val-licht)}
+@media (min-width:900px){
+  [data-o="15"] .vtop{grid-template-columns:minmax(0,1fr) 30%}
+  [data-o="15"] .vfoto,[data-o="15"] .vpop{margin:3.5rem 24px 0 0}
+}
+
+/* correcties na de eerste controle (01-10) */
+@media (min-width:900px){
+  [data-o="06"] .vsectie{padding-top:19rem}   /* de uitstapper van de brede fotoband steekt tot 300 px boven de band uit */
+  [data-o="06"] .vsectie:has(.vvoorwerp){padding-top:6rem}
+  [data-o="06"] .vfoto figcaption{top:1.2rem;bottom:auto}
+  [data-o="06"] .vvoorwerp figcaption{width:max-content;max-width:none;white-space:nowrap;position:static;margin-top:.6rem}
+  [data-o="09"] .vtekst>:nth-child(2){margin-left:calc(36% + 1.5rem)}
+}
+
+/* correcties na de tweede controle (01-10) */
+[data-o="12"] .vtekst{counter-reset:stap}   /* een ol met display:contents telt niet mee; de teller staat nu op de band */
+[data-o="13"] .vtekst .alinea__tekst{columns:auto}
+@media (min-width:900px){
+  [data-o="06"] .vtop:has(.vvoorwerp){padding-bottom:6.5rem}
+  [data-o="06"] .vvoorwerp{width:17rem;margin-top:-4.5rem}
+  [data-o="12"] .vtekst{align-items:start}
+  [data-o="12"] .vfoto,[data-o="12"] .vpop{align-self:end}
+  /* 02, 10 en 15: kop én panelen links in één kolom, de figuur rechts over alle rijen in het midden, zodat de
+     linkerhelft naast een hoog voorwerp niet leeg blijft */
+  :is([data-o="02"],[data-o="10"],[data-o="15"]) .vtekst{display:grid;grid-template-columns:minmax(0,1fr) 32%;column-gap:3rem;align-items:center}
+  :is([data-o="02"],[data-o="10"],[data-o="15"]) .vtop{display:contents}
+  :is([data-o="02"],[data-o="10"],[data-o="15"]) .vkop{grid-column:1;grid-row:1;order:0;margin:0 0 1.2rem}
+  :is([data-o="02"],[data-o="10"],[data-o="15"]) .vfoto,:is([data-o="02"],[data-o="10"],[data-o="15"]) .vpop{grid-column:2;grid-row:1 / span 9;align-self:center;margin:2.5rem 0 0}
+  :is([data-o="02"],[data-o="10"],[data-o="15"]) .vtekst>:not(.vtop,.vkop,.vfoto,.vpop){grid-column:1}
+  [data-o="10"] .vpop,[data-o="15"] .vpop{rotate:0}
+  [data-o="02"] .vpop{rotate:-2.5deg}
+  [data-o="02"] .vfoto{rotate:2deg}
+  [data-o="15"] .vtekst .punten{grid-template-columns:minmax(0,1fr)}
+}

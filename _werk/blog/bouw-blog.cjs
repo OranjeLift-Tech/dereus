@@ -228,6 +228,15 @@ function pop(naam, o = {}) {
     + `</figure>`;
 }
 
+// Echte voorwerpen (blog/img/voorwerp) die in één band per artikel de fotoplaat vervangen (01-10, "te veel foto's"):
+// groot op een dikke goudgele schijf, naar de kanaalkaarten van /contact/ (variant Gele schijf), met een korte pil eronder.
+// a.voorwerpen in artikelen.cjs: h2-id -> { ding, tekst, h? }. Hoogte in cqw van de figuurbreedte; niet meer dan één per artikel.
+const VOORWERP_H = { tape: '74cqw', doos: '70cqw', wekker: '74cqw', rekenmachine: '56cqw', hond: '74cqw', dozen: '68cqw', munten: '50cqw', stoel: '76cqw', plant: '72cqw' };
+function voorwerpFiguur({ ding, h, tekst }) {
+  if (!fs.existsSync(path.join(WORTEL, 'blog/img/voorwerp', `${ding}.webp`))) throw new Error(`Onbekend voorwerp ${ding} (blog/img/voorwerp)`);
+  return `<figure class="arttop__foto arttop__voorwerp"><div class="voorwerp" aria-hidden="true"><span class="voorwerp__schijf"></span><img class="voorwerp__ding" src="/blog/img/voorwerp/${ding}.webp" alt="" style="--h:${h || VOORWERP_H[ding] || '70cqw'}" loading="lazy" decoding="async"></div>${tekst ? `<figcaption>${tekst}</figcaption>` : ''}</figure>`;
+}
+
 /* ---------- bouwstenen voor in een artikel ---------- */
 const h = {
   tip: (wie, tekst) => {
@@ -482,6 +491,11 @@ function artikelpagina(a) {
     // losse lijsten in de tekst worden een rij punten met een goudgele schijf (afvinklijsten niet)
     rest = rest.replace(/<ul>\s*((?:<li>[\s\S]*?<\/li>\s*)+)<\/ul>/g, (m, li) => (m.includes('<input') ? m
       : `<ul class="punten">${li.replace(/<li>([\s\S]*?)<\/li>/g, (x, t) => `<li><span class="punt__ic" aria-hidden="true">${ic('vink')}</span><p>${t.trim()}</p></li>`)}</ul>`));
+    // losse alinea's (geen intro, niet in een paneel) worden een eigen plaat: gouden label, het voorwerp van het onderwerp op een
+    // goudgele schijf links, en de tekst rechts. Opeenvolgende alinea's delen één plaat.
+    const ow = site.onderwerpen[a.onderwerp];
+    rest = rest.replace(/(?:^<p>[^\n]*<\/p>[ \t]*(?:\n|$))+/gm, (run) => `<div class="alinea"><span class="alinea__podium" aria-hidden="true"><span class="alinea__schijf"></span><img class="alinea__ding" src="/blog/img/voorwerp/${ow.ding}.webp" alt="" style="--h:${ow.h}" loading="lazy" decoding="async"></span><div class="alinea__tekst"><p class="label alinea__label">Goed om te weten</p>${run.trim()}</div></div>
+`);
     if (i === delen.length - 1 && !tekst.includes('class="aanbod"')) {
       rest += h.aanbod({ label: 'Offerte op maat', titel: 'Liever uit handen geven?', tekst: 'U wijst aan wat mee moet, wij pakken in, dragen en bouwen alles weer op. Een offerte op maat, gratis en vrijblijvend. Binnen 24 uur belt uw verhuisadviseur u.', knop: 'Offerte aanvragen' });
     }
@@ -489,6 +503,8 @@ function artikelpagina(a) {
     let figuur = '';
     if (i === 0 && eigenFoto) {
       figuur = `<div class="arttop__pop">${pop(a.foto, { P: 24, arn: 4 / 3, afdruk: true, alt: a.alt, breed: 460, laden: 'eager', ...(a.pop || {}) })}<span class="plakband plakband--${maten[a.foto].cx > 0.5 ? 'links' : 'rechts'}" aria-hidden="true"></span></div>`;
+    } else if (a.voorwerpen && a.voorwerpen[id]) {   // een echt voorwerp op een goudgele schijf in plaats van de fotoplaat (01-10)
+      figuur = voorwerpFiguur(a.voorwerpen[id]);
     } else if (!vragen) {   // ook de band met het aanbod krijgt rechts een foto; het aanbod staat er met clear:both onder
       const f = figuren[nf++ % figuren.length];
       figuur = f.foto
